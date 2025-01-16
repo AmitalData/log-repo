@@ -84,7 +84,7 @@ namespace CustomsWorkerRole
 
 
                 myClass = this.GetType().Name;
-				_CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), General.GetTenantDB());
+				_CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig());
 
 
                 var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
@@ -165,7 +165,7 @@ namespace CustomsWorkerRole
                 else
                 {
                     var myClass = this.GetType().Name;
-                    _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), General.GetTenantDB());
+                    _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig());
                 }
             }
             catch (Exception ex)

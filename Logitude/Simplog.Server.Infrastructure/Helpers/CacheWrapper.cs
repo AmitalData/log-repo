@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Caching;
+ 
 
 namespace Simplog.Server.Infrastructure.Helpers
 {
@@ -128,27 +130,22 @@ namespace Simplog.Server.Infrastructure.Helpers
         }
         private string GetCacheKey<T>(int? tenant) => $"Table_({typeof(T).Name}_{tenant})";
         private string GetCacheKey(string key, int tenant) => $"DB_({GetDB(tenant)})_OriginalKey_({key})";
+
+
+ 
+
         private string GetDB(int tenant)
         {
             if (tenant == -1)
             {
-                if (HttpContext.Current.Items.Contains("Tenant"))
+
+                if (HttpContext.Current != null && HttpContext.Current.Items.Contains("Tenant"))
                 {
                     tenant = Convert.ToInt32(HttpContext.Current.Items["Tenant"]);
                 }
-                //else if (HttpContext.Current.Items.Contains("authToken"))
-                //{
-                //    tenant = (HttpContext.Current.Items["authToken"] as AuthenticationToken).Tenant;
-                //}
-                //else
-                //{
-                //    string token = HttpContext.Current.Request.Headers["Token"];
-                //    if (!string.IsNullOrEmpty(token))
-                //    {
-                //        string cacheKey = $"Token_({token})";
-                //        tenant = ((AuthenticationToken)cache.Get(cacheKey)).Tenant;
-                //    }
-                //}
+                else {
+                    tenant = SettingUtil.GetTenantDBFromConfig();
+                }
             }
             if (GlobalDBs.ContainsKey(tenant))
             {

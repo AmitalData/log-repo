@@ -43,7 +43,7 @@ namespace Simplog.Server.Infrastructure.Helpers
 
             public static readonly string[] LogboxAndAccountingProduction = Cloud.Concat(Logbox).ToArray();
 
-            
+
 
 
             public static bool IsDBStage(params string[] deploymentstage)
@@ -60,6 +60,13 @@ namespace Simplog.Server.Infrastructure.Helpers
                 }
                 return false;
             }
+        }
+
+        public static int GetTenantDBFromConfig()
+        {
+            string tenantValue = ConfigurationManager.AppSettings["TenantDB"];
+            int tenant = string.IsNullOrEmpty(tenantValue) ? 0 : Convert.ToInt32(tenantValue);
+            return tenant;
         }
         //private const string _CustomsDeploymentStage = "CustomsDeploymentStage";
         //public enum CustomsDeploymentStage

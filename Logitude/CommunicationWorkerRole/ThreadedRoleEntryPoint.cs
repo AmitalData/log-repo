@@ -833,7 +833,7 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.WorkerRoleName = LogitudeSettings.WorkerRoleName?? "production";
             }
             Dictionary<int, string> globalDBs = new Dictionary<int, string>();
-            List<GlobalTenant> globalTenants = new GlobalDomainService().GetActiveTenants();
+            List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
             foreach (var item in globalTenants)
             {
                 globalDBs.Add(item.Id, item.GlobalDBId);

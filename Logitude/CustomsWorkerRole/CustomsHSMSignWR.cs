@@ -108,7 +108,7 @@ where not exists(select *
                 //else
                 {
                     base.WorkerQueueType = WorkerQueueType.DB;
-					_CustomDbQueueService = new CustomDbQueueService(myClass, General.GetTenantDB());
+					_CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig());
                 }
 
 

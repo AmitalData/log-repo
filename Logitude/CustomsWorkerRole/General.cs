@@ -31,11 +31,6 @@ namespace CustomsWorkerRole
                 return false;
             }
         }
-        public static int GetTenantDB()
-        {
-			string tenantValue = ConfigurationManager.AppSettings["TenantDB"];
-			int tenant = string.IsNullOrEmpty(tenantValue) ? 0 : Convert.ToInt32(tenantValue);
-            return tenant;
-		}
+
     }
 }
