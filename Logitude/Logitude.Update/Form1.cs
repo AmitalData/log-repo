@@ -189,7 +189,7 @@ namespace Logitude.Update
             InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
             Dictionary<int, string> globalDBs = new Dictionary<int, string>();
-            List<GlobalTenant> globalTenants = new GlobalDomainService().GetActiveTenants();
+            List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
             foreach (var item in globalTenants)
             {
                 globalDBs.Add(item.Id, item.GlobalDBId);
