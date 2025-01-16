@@ -12,9 +12,12 @@
 	width: 0px;
 	background: transparent;
 }
-
+/*#114428 fix responsive:*/
 .conetntContainerData {
 	min-width: 100%;
+	white-space: pre-wrap;
+  text-overflow: ellipsis;
+	max-width: 95%;
 }
 
 .detailsSlide {
