@@ -327,7 +327,7 @@ export class MainDisplayComponent implements OnInit {
 			if (element) {
 				const { bottom } = element.getBoundingClientRect();
 				if (bottom > window.innerHeight - 150 && !isMultiOpen)
-					window.scrollBy({ top: bottom - window.innerHeight + 300, behavior: 'smooth' });
+					window.scrollBy({ top: bottom - window.innerHeight + 200, behavior: 'smooth' });
 			}
 		}, 0);
 	}
@@ -366,8 +366,10 @@ export class MainDisplayComponent implements OnInit {
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
 			if (filters.CustomsItemHierarchic === '') {
-				filters.Reamarks = true;
-				filters.Rules = true;
+				// filters.Reamarks = true;
+				// filters.Rules = true;
+				filters.Reamarks = false;
+				filters.Rules = false;
 				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
 			}
 
@@ -392,8 +394,10 @@ export class MainDisplayComponent implements OnInit {
 			this.isLoadingMode.next(true); // update loading mode
 			if (filters.CustomsItemHierarchic === '') {
 				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
-				filters.Reamarks = true;
-				filters.Rules = true;
+				filters.Reamarks = false;
+				filters.Rules = false;
+				// filters.Reamarks = true;
+				// filters.Rules = true;
 			}
 
 			if (filters.CustomsItemHierarchic == "6" || filters.CustomsItemHierarchic == "7" || filters.CustomsItemHierarchic == "6,7") {
