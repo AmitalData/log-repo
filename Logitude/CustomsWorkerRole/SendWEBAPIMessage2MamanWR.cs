@@ -235,7 +235,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         _IQueueService = new DbQueueService();
-                        _IQueueService.InitializeQueue(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString(), General.GetTenantDB());
+                        _IQueueService.InitializeQueue(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString(), SettingUtil.GetTenantDBFromConfig());
 
                         using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
                         {
