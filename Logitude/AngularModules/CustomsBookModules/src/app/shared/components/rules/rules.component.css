@@ -203,11 +203,11 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
     padding-bottom: 10px;
     font-size: 14px;
 }
-
+/* #114428 TODO: check sanity for this */
 .rulesList {
     counter-reset: section;
     /* max-height: 400px; */
-    max-height: 560px;
+    max-height: 600px;
     overflow: auto;
     padding: 0 10px;
 }
@@ -291,11 +291,11 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
     padding-bottom: 0;
     margin-bottom: 0px;
 }
-
-/* ::-webkit-scrollbar {
+/* #114428 TODO: check sanity for this */
+::-webkit-scrollbar {
     width: 0px;
     background: transparent; 
-} */
+}
 .commentsList {
     overflow-y: scroll;
     scrollbar-width: thin;

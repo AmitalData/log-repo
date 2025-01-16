@@ -1,11 +1,22 @@
 .conetnt_container {
-	display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 100vh; /* #114428 TODO: check sanity for this */
+  max-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
+
+::-webkit-scrollbar {
+	width: 0px;
+	background: transparent;
+}
+
 .conetntContainerData {
 	min-width: 100%;
 }
+
 .detailsSlide {
 	transition: width 0.6s ease-in-out;
 }
@@ -23,9 +34,11 @@
 	box-shadow: -16px 16px 16px -16px rgba(0, 0, 0, 0.6) inset;
 	gap: 30px;
 }
-.showDetailsStatus{
+
+.showDetailsStatus {
 	display: none;
 }
+
 .icon {
 	color: var(--greyText);
 	transition: all 0.1s ease-in-out;
