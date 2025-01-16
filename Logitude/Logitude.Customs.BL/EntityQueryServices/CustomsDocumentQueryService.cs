@@ -188,8 +188,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             CustomsDocumentPointerQueryService customsDocumentPointerQuery = new CustomsDocumentPointerQueryService(context);
             List<CustomsDocumentPointerPM> pointers = customsDocumentPointerQuery.GetCustomsDocumentPointersByParentIdAndSentCustoms(declarationPM.Id, declarationPM.Tenant);
-            
-            foreach (var item in declarationPM.SupplierInvoices)
+
+            SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(context);
+            var invoices = supplierInvoiceQueryService.GetSupplierInvoicesForDeclaration(declarationPM.Id, declarationPM.Tenant, false);
+      
+
+            foreach (var item in invoices)
             {
                 if (pointers.Count(x => x.Child1EntityId == item.SequenceNumeric.ToString()) < 1) return false;
             }

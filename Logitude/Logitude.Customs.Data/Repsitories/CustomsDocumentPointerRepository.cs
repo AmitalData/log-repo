@@ -245,20 +245,37 @@ namespace Logitude.Customs.Data.Repsitories
         public IQueryable<CustomsDocumentPointer> GetCustomsDocumentPointersByParentIdAndSentCustoms(string parentEntityId, int tenant)
         {
             (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+ 
 
-            IQueryable<CustomsDocumentPointer> pointers = (from p in context.CustomsDocumentPointers
+            var validDocuments = context.CustomsDocuments
+           .Where(c => !string.IsNullOrEmpty(c.CustomsDocId))
+           .Select(c => c.DocumentsFiling);
 
-                                                           join t in context.CustomsDocumentsTickets
+            // Step 2: Filter CustomsDocumentsTickets
+            var tickets = context.CustomsDocumentsTickets
+                .Where(t => validDocuments.Contains(t.DocumentsFiling))
+                .Select(t => t.Id);
 
-                                                           on p.CustomsDocumentsTicketId equals t.Id
+            // Step 3: Filter CustomsDocumentPointers
+            var pointers = context.CustomsDocumentPointers
+                .Where(p => p.Tenant == tenant &&
+                            p.ParentEntityId == parentEntityId &&
+                            tickets.Contains(p.CustomsDocumentsTicketId));
 
-                                                           join c in context.CustomsDocuments
 
-                                                          on t.DocumentsFiling equals c.DocumentsFiling
+            //IQueryable<CustomsDocumentPointer> pointers = (from p in context.CustomsDocumentPointers
 
-                                                           where p.Tenant == tenant &&  p.ParentEntityId == parentEntityId && !string.IsNullOrEmpty( c.CustomsDocId)
+            //                                               join t in context.CustomsDocumentsTickets
 
-                                                           select p);
+            //                                               on p.CustomsDocumentsTicketId equals t.Id
+
+            //                                               join c in context.CustomsDocuments
+
+            //                                              on t.DocumentsFiling equals c.DocumentsFiling
+
+            //                                               where p.Tenant == tenant &&  p.ParentEntityId == parentEntityId && !string.IsNullOrEmpty( c.CustomsDocId)
+
+            //                                               select p);
             return pointers;
         }
     }
