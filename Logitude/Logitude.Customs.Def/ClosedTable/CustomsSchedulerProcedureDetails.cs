@@ -88,13 +88,6 @@ namespace Logitude.Customs.Def.ClosedTable
             });
             all.Add(new CustomsSchedulerProcedureDetails()
             {
-                Code = "RetrievingPOAThatIsAboutToExpire",
-                Name = "RetrievingPOAThatIsAboutToExpire",
-                SearchFields = "RetrievingPOAThatIsAboutToExpire,RetrievingPOAThatIsAboutToExpire",
-                Description = "RetrievingPOAThatIsAboutToExpire",
-            });
-            all.Add(new CustomsSchedulerProcedureDetails()
-            {
                 Code = "CustomsUpdateClosedTables",
                 Name = "CustomsUpdateClosedTables",
                 SearchFields = "CustomsUpdateClosedTables,CustomsUpdateClosedTables",
