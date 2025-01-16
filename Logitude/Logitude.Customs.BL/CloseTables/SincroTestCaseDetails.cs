@@ -307,6 +307,22 @@ MainInterfaceCode ="5002"
                      Param1= @"{}",
 
                 },
+                          new SincroTestCaseDetail()
+                {
+                    Code = "8235Valid",
+                    Name = "תיקון הצהרה (אושר) יצוא",
+                    Entity="Declaration",
+                     Param1= @"{ ""withSignature"":""false""}",
+
+                },
+                          new SincroTestCaseDetail()
+                {
+                    Code = "8235Rejected",
+                    Name = "תיקון הצהרה (דחיה) יצוא",
+                    Entity="Declaration",
+                     Param1= @"{ ""withSignature"":""false""}",
+
+                },
 
 
 

@@ -275,6 +275,8 @@
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint.cs" />
     <Compile Include="FakeMessagingServices\Fake_2450_NotFound.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DF_NG_8237_ValidExportDeclerationAmendmentReplyResponseService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_DF_NG_8237_NotValidExportDeclerationAmendmentReplyResponseService.cs" />
     <Compile Include="FakeMessagingServices\Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_SumbitPayment.cs" />
     <Compile Include="FakeMessagingServices\Fake_5117_MSG14003_AmendmentReplyMsg.cs" />
