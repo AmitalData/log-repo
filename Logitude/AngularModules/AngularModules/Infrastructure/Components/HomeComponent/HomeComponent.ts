@@ -1143,7 +1143,8 @@ export class HomeComponent implements OnDestroy{
 
     Close(tabItem: SessionTabItem) {
         var ClosedTabEditComponent = tabItem.SessionComponent.CurrentEditComponent;
-        ServiceHelper.DeleteGeneralLock(ClosedTabEditComponent.EntityId ,ClosedTabEditComponent.ObjectTableName);
+        if (ClosedTabEditComponent != null) 
+            ServiceHelper.DeleteGeneralLock(ClosedTabEditComponent.EntityId ,ClosedTabEditComponent.ObjectTableName);
 
         var itemIndex = this.Tabs.indexOf(tabItem);
         if (itemIndex > -1) {
