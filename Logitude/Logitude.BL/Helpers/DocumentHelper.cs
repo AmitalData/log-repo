@@ -49,6 +49,7 @@ using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling
 using Customer = Simplog.Data.CommonDataModel.EntityPOCOs.Customer;
 using DocumentType = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentType;
 using Contact = Simplog.Data.CommonDataModel.EntityPOCOs.Contact;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
 
 namespace Logitude.BL.Helpers
 {
@@ -298,9 +299,37 @@ namespace Logitude.BL.Helpers
             return context.Database.Connection.ConnectionString;
         }
 
-      
-        
-        
+
+        public void RetrySignature(string documentId, int tenant)
+        {
+
+            try
+            {
+                DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
+                DocumentOutPM documentOutPM = documentOutQuery.GetSinglePM(documentId, tenant);
+                if (documentOutPM != null)
+                {
+
+                    IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+                    FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
+                    DocumentHelper DocumentHelper = new DocumentHelper();
+                    if (accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) && !string.IsNullOrEmpty(accountingSettings.HSMaddress) && !string.IsNullOrEmpty(accountingSettings.HSMtoken))
+                        Sign(documentOutPM.Id, tenant, accountingSettings);
+
+                }
+            }
+           
+            catch (Exception ex)
+            {
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "ProccessHSMSign-MarkExportSignTaskAsDone", "", null);
+
+
+            }
+        }
+
+
 
         public void StartSignPDFInvoice(ARInvoice invocie, int tenant, ARInvoiceRepository repository,string contactEmail, FullAccountingSettingPM accountingSettings)
         {
