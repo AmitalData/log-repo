@@ -1644,7 +1644,7 @@ export class ShipmentPMService {
         }
     }
     MapShipmentDeliveries(entityPM: ShipmentPM, jsonPM: any, mapParent: boolean = true) {
-
+       
         var oldCollection: ShipmentDeliveryPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldCollection = entityPM.OldEntityPM.ShipmentDeliveries;
@@ -1694,6 +1694,7 @@ export class ShipmentPMService {
 
 
             if (mapParent) {
+                itemPM.EntityParentPM.DisableMarkAsDirty = true;
                 itemPM.UniqueKey = Guid.newGuid();
                 itemPM.ChangeSetOp = "None";
                 itemJson.ChangeSetOp = "None";
@@ -1708,6 +1709,7 @@ export class ShipmentPMService {
                     var clonedInside = this.clone(itemPM.ShipmentPickUpDeliveryPackages[k]);
                     itemPM.OldEntityPM.ShipmentPickUpDeliveryPackages.push(clonedInside);
                 }
+                itemPM.EntityParentPM.DisableMarkAsDirty = false;
             }
 
             else {

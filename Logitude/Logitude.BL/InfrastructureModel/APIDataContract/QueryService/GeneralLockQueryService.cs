@@ -105,7 +105,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 		{
 			ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
 
-			ObjectTablePM objectTable = tablesQuery.GetObjectTableByName(objectTableName, tenant);
+			ObjectTablePM objectTable = tablesQuery.GetObjectTableByNameOrId(objectTableName, tenant);
 
 
 			var repo = new GeneralLockRepository(tenant);
