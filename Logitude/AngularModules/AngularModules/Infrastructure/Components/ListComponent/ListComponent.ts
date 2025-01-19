@@ -1982,6 +1982,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             };
             logWindow.EditComponentArguments = { EntityId: $event.rowData.Id, ObjectTableName: 'Customs.CustomBank', IsNew: false, EntityPM: $event.rowData };
             logWindow.Show(this.ObjectTable.NewWizardComponentPath);
+            logWindow.WindowClosed.subscribe(($event1: any) => {
+                this.DoRefresh();
+            });
 
             return;
         }
