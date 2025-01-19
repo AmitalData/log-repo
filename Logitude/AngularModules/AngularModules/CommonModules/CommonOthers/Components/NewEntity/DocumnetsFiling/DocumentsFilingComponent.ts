@@ -6,7 +6,7 @@ import { CommonDomainService } from "Common/Services/CommonDomainService";
 import { DocumentsFilingExtendedPMService } from "Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService";
 import { DocumentTypeMetaDataExtendedService } from "Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService";
 import { DocumentsFilingPMService } from "Common/Services/StandardPMs/DocumentsFilingPMService";
-import { LogitudeWindow, LogitudeWindowTemplateComponent } from "Controls/Windows/LogitudeWindow";
+import { LogitudeWindowTemplateComponent } from "Controls/Windows/LogitudeWindow";
 import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
@@ -14,8 +14,10 @@ import { EntityResourceService } from "Infrastructure/Services/EntityResourceSer
 import { TraceEventTypeCodes, TraceEventExtendedPMService } from "Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService";
 import { LogtuideTableDataService } from "Infrastructure/Services/logtuide-table-data.service";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { Observable } from "rxjs";
+import { officeFileExtensions } from "./DocumentsFilingMetadata";
+import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
+import { CustomDocumentTypeMetaDataListService } from "Customs/Services/StandardLists/CustomDocumentTypeMetaDataListService";
 
 @Component({
     selector: "app-new-documents-filing",
@@ -24,9 +26,10 @@ import { Observable } from "rxjs";
 })
 export class DocumentsFilingComponent {
     documentsFilingPM: DocumentsFilingPM = new DocumentsFilingPM();
+    orginalDocumentsFilingPM: DocumentsFilingPM & any = null;
     fileData: string = '';
     base64File: string = '';
-    allowedExtensions: string[] = ['pdf', 'tif', 'tiff', 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'xml', 'xlsx', 'xls', 'json'];
+    allowedExtensions: string[] = ['pdf', 'tif', 'tiff', 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'xml', 'json'].concat(officeFileExtensions);
     documentTypeMetaDataList: DocumentTypeMetaDataPM[];
     documentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
     isNew: boolean = false;
@@ -63,18 +66,15 @@ export class DocumentsFilingComponent {
             this.initExistsData(entityArgs.EntityPM);
     }
 
-    ngAfterViewInit() {
-        console.log('ngAfterViewInit *********');
-    }
-
     listner(): void {
         if (this.isEditComponent) {
             SessionLocator.SelectedSession.CurrentEditComponent.SaveStart.subscribe(() => this.inSavingProcess = true);
 
             SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe(async (isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.sendTraceEvent(this.documentsFilingPM.Id);
+                    this.sendTraceEvent(this.documentsFilingPM.DocumentId);
                     await this.documentTypeChanged(true);
+                    this.orginalDocumentsFilingPM = JSON.parse(JSON.stringify(new DocumentsFilingPMService().MapJsonToEntityPM(this.documentsFilingPM)));
                 }
 
                 this.inSavingProcess = false;
@@ -102,17 +102,18 @@ export class DocumentsFilingComponent {
         this.initData(documentsFilingPM);
     }
 
-    initExistsData(documentsFilingPM: DocumentsFilingPM): void {
+    async initExistsData(documentsFilingPM: DocumentsFilingPM): Promise<void> {
         this.initDocument(documentsFilingPM.DocumentId);
-        this.initData(documentsFilingPM);
+        await this.initData(documentsFilingPM);
+        this.orginalDocumentsFilingPM = JSON.parse(JSON.stringify(new DocumentsFilingPMService().MapJsonToEntityPM(documentsFilingPM)));
     }
 
-    initData(documentsFilingPM: DocumentsFilingPM): void {
+    async initData(documentsFilingPM: DocumentsFilingPM): Promise<void> {
         this.documentsFilingPM = documentsFilingPM;
-        this.documentTypeChanged(true);
         this.documentsFilingPM.UIProperties = new UIProperties();
         this.documentsFilingPM['_isDFComponent'] = true;
         this.dataReady = true;
+        await this.documentTypeChanged(true);
 
         setTimeout(() => {
             this.cdr.detectChanges();
@@ -121,11 +122,13 @@ export class DocumentsFilingComponent {
     }
 
     async initDocument(documentId: string): Promise<void> {
+        SessionLocator.SelectedSession.StartBusyIndicator('');
         const documentBase64: string =
             await LogtuideTableDataService.createInstance().getDataFromService(
                 new CommonDomainService().GetFilingAttachPdfReport(documentId));
 
         this.fileData = documentBase64;
+        SessionLocator.SelectedSession.StopBusyIndicator();
     }
 
     onFileSelected(file: FileList | File): void {
@@ -137,7 +140,7 @@ export class DocumentsFilingComponent {
 
         const reader = new FileReader();
         reader.onload = (e: any) => {
-            const blob = new Blob([e.target.result], { type: file.type });
+            const blob = new Blob([e.target.result], { type: (<File>file)?.type });
             this.fileData = URL.createObjectURL(blob);
         }
         reader.readAsArrayBuffer(file);
@@ -166,10 +169,8 @@ export class DocumentsFilingComponent {
             this.documentTypeMetaDataExtendedService.GetDocumentTypeMetaDataByDocumentTypeId(this.documentsFilingPM.DocumentTypeId, SessionLocator.Tenant).subscribe((myResult: ServiceResponse) =>
                 resolve(myResult.Result as DocumentTypeMetaDataPM[])));
 
-        if (!initialSelected && this.finishInitialCdr) {
-            console.log('documentTypeMetaDataList *********');
-            this.documentsFilingPM.DocumentsFilingMetaDataValues = [];
-        }
+        if (!initialSelected && this.finishInitialCdr)
+            this.documentsFilingPM.DocumentsFilingMetaDataValues = [];        
 
         this.documentTypeMetaDataList.forEach((item) => {
             let value: DocumentsFilingMetaDataValuePM & any = this.documentsFilingPM.DocumentsFilingMetaDataValues?.find(a => a.DocumentsMetaDataTypeId == item.DocumentsMetaDataTypeId);
@@ -211,7 +212,7 @@ export class DocumentsFilingComponent {
         if (result.HasError)
             this.errors = result.ErrorsArray;
         else 
-            this.sendTraceEvent(result.Result.Id);
+            this.sendTraceEvent((<DocumentsFilingPM>result.Result).DocumentId);
 
         SessionLocator.SelectedSession.StopBusyIndicator();
 
@@ -223,9 +224,26 @@ export class DocumentsFilingComponent {
             this.documentsFilingPM.IsDirty = true;
     }
 
-    sendTraceEvent(documentsFilingId: string): void {        
+    sendTraceEvent(documentsId: string): void {        
         const traceEventTypeCode = this.isNew ? TraceEventTypeCodes.CREATE : TraceEventTypeCodes.UPDATE;
-        documentsFilingId = documentsFilingId.substring(0, 15);
-        new TraceEventExtendedPMService().CreateTraceEvent(SessionLocator.Tenant, documentsFilingId, 'DocumentsFiling', traceEventTypeCode).subscribe();
+        const notes: string = this.calculateChanges();
+        new TraceEventExtendedPMService().CreateTraceEvent(SessionLocator.Tenant, documentsId, 'DocumentsFiling', traceEventTypeCode, '', notes).subscribe();
+    }
+
+    calculateChanges(): string {
+        let changes: string = '';
+        this.documentsFilingPM.DocumentsFilingMetaDataValues.forEach((newValue) => {
+            const originalValue: DocumentsFilingMetaDataValuePM & any = this.orginalDocumentsFilingPM.documentsFilingMetaDataValues?.find(a => a.id == newValue.Id);
+            if (originalValue.metaDataValue !== newValue.MetaDataValue)
+                changes += `Field: ${originalValue.DocumentsMetaDataTypeEnglishName} - Old Value: ${originalValue.metaDataValue} - New Value: ${newValue.MetaDataValue}, `;            
+        });
+
+        const filedNames: string[] = ['documentTypeId', 'fileName', 'description', 'notes'];
+        filedNames.forEach((field) => {
+            if (this.documentsFilingPM[field] !== this.orginalDocumentsFilingPM[field])
+                changes += `Field: ${field} - Old Value: ${this.orginalDocumentsFilingPM[field]} - New Value: ${this.documentsFilingPM[field]}, `;
+        });
+
+        return changes;
     }
 }

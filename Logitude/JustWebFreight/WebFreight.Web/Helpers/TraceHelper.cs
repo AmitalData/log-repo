@@ -11,7 +11,7 @@ namespace WebFreight.Web.Helpers
 {
     public class TraceHelper
     {
-        public static void Create(int tenant, string entityId, string tableName, string eventTypeCode, string loggedUserEmail)
+        public static void Create(int tenant, string entityId, string tableName, string notes, string eventTypeCode, string loggedUserEmail)
         {
             User loggedUser = new UserRepository(tenant).GetSingleUserByEmail(loggedUserEmail, tenant, true);
             EventTypePM eventTypePM = new EventTypeQuery(tenant).GetSinglePMByCode(eventTypeCode, tenant);
@@ -29,6 +29,7 @@ namespace WebFreight.Web.Helpers
                 EntityId = entityId,
                 IsAddedManually = false,
                 EventTypeId = eventTypePM.Id,
+                Notes = notes
             };
             traceEventRepository.Add(newEvent);
             traceEventRepository.SubmitChanges();

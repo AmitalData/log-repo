@@ -31,15 +31,15 @@
                             (SelectedTypeValueChanged)="item.MetaDataValue = $event;metadataChanged()">
                         </BooleanFilter>
                         <LogTextBox *ngSwitchCase="'string'" [ObjectFieldName]="'MetaDataValue'" [DataContext]="item"
-                            [NoValidation]="true" [ObjectTableName]="'DocumentsFilingMetaDataValue'"
+                            [ObjectTableName]="'DocumentsFilingMetaDataValue'"
                             (ValueChanged)="metadataChanged()">
                         </LogTextBox>
-                        <LogDatePicker *ngSwitchCase="'datetime'" [ObjectFieldName]="'MetaDataValue'"
+                        <LogDatePicker [ForceSubscribe]="true" *ngSwitchCase="'datetime'" [ObjectFieldName]="'MetaDataValue'"
                             [DataContext]="item" [ObjectTableName]="'DocumentsFilingMetaDataValue'"
                             (ValueChanged)="metadataChanged()">
                         </LogDatePicker>
                         <LogTextBox *ngSwitchCase="'integer'" [ObjectFieldName]="'MetaDataValue'" [DataContext]="item"
-                            [NoValidation]="true" [ObjectTableName]="'DocumentsFilingMetaDataValue'"
+                            [ObjectTableName]="'DocumentsFilingMetaDataValue'"
                             [InputType]="'integer'" (ValueChanged)="metadataChanged()"></LogTextBox>
                     </div>
                 </div>

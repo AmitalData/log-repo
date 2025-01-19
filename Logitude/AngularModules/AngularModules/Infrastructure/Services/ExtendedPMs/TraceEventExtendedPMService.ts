@@ -28,11 +28,11 @@ export class TraceEventExtendedPMService {
         });
     }
 
-    CreateTraceEvent(tenant: number, entityId: string, tableName: string, eventTypeCode: string, loggedUserEmail: string = '') {
+    CreateTraceEvent(tenant: number, entityId: string, tableName: string, eventTypeCode: string, loggedUserEmail: string = '', notes: string = '') {
         return defer(() => {
             return this._http.post(
                 this._apiUrl + '/PostTraceEvent', 
-                {tenant, entityId, tableName, eventTypeCode, loggedUserEmail}, 
+                {tenant, entityId, tableName, eventTypeCode, loggedUserEmail, notes}, 
                 ServiceHelper.GetHttpHeaders()
             ).pipe(map(() => new ServiceResponse()), catchError(ServiceHelper.HandleServiceError));
         });

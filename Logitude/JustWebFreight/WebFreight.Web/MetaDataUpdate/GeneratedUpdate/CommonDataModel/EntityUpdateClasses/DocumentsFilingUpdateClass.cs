@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentsFilingUpdateClass
    {  		
-		public const string HashString = "b2f42f6f709dd58ace3601b546c44364";
+		public const string HashString = "c91a321b1e725d7a3caa2403998b9f23";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7995,6 +7995,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 QueryColumn GeneralDocumentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "DocumentsFiling.IsSharedWithForwarder" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn GeneralDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DocumentsFiling.IsRequested" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter GeneralDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "DocumentsFiling.DirectionCode", PredefinedValue = "I",PredefinedValue2 = null, CustomPredefined = false, QueryId = GeneralDocumentsQuery.Id,QueryCode = GeneralDocumentsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

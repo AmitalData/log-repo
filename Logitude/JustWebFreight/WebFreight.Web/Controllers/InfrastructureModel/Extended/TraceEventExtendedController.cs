@@ -124,7 +124,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 if(string.IsNullOrEmpty(args.loggedUserEmail))
                     args.loggedUserEmail = authToken.Email;
                 
-                TraceHelper.Create(args.tenant, args.entityId, args.tableName, args.eventTypeCode, args.loggedUserEmail);
+                TraceHelper.Create(args.tenant, args.entityId, args.tableName, args.notes, args.eventTypeCode, args.loggedUserEmail);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
 
