@@ -57,7 +57,7 @@ import { ProceduralFaultsGeneralTabComponent } from 'CustomsModules/CustomsProce
 import { SharedManifestComponent } from 'ShipmentModules/ShipmentSharedManifest/Components/SharedManifestComponent';
 import { CargoSplitGeneralTabComponent } from 'CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent';
 import { LogisticActionRequestGeneralTabComponent } from 'CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent';
- import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { IsMultiUpdateValid } from 'Infrastructure/Helpers/MultiUpdateHelper';
 import { IsMultiPrintValid } from 'Infrastructure/Helpers/MultiPrintHelper';
 import { WorkFlowPMService } from 'Workflow/Services/StandardPMs/WorkFlowPMService';
@@ -68,7 +68,7 @@ import { CustomizationPermissionService } from '../../../InfrastructureModules/I
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
- 
+
 @Component({
 
     templateUrl: './ListComponent.html',
@@ -105,12 +105,12 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsAdvancedSearchOpened: boolean = false;
     LayoutDirection: string = 'ltr';
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
-     public HasCustomsFilterMenu: boolean = false;
+    public HasCustomsFilterMenu: boolean = false;
     public IsPhysicalCheckObjectTable: boolean = false;
     public IsReportExecutionLogObjectTable: boolean = false;
 
     public IsLogisticActionRequestObjectTable: boolean = false;
-     WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
+    WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
     private _declarationWebService: DeclarationWebService = new DeclarationWebService();
     public onChangeCheckBoxesState: EventEmitter<any> = new EventEmitter();
     public ScreenQueryAction = {};
@@ -120,7 +120,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             actionTranslationPrefix: "Customs.Declaration.O."
         }
     };
- 
+
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
     public IsShowTipArea: boolean = false;
@@ -743,18 +743,18 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         if (this.ObjectTableName != "PortTimeZone") {
-            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) { 
+            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) {
                 this.HasPermition = false;
             }
         }
         this.Filterchangeevent = new LogEvents.EventManager();
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
- 
+
         this.Listen();
-         //this.CD.detectChanges();
+        //this.CD.detectChanges();
         if (this.ObjectTable.ClientModuleName == "Customs") {
             this.HasCustomsFilterMenu = true;
- 
+
         }
 
         if (this.ObjectTableName == "Customs.PhysicalCheck") {
@@ -785,7 +785,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.ReloadAllListEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "ReloadAllList") {
                     this.RefreshBtnClick();
-                }else if(s == "ReloadAllList" + this.ObjectTableName){
+                } else if (s == "ReloadAllList" + this.ObjectTableName) {
                     this.RefreshBtnClick();
                 }
             });
@@ -1019,7 +1019,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 myComponentPath = (myObjectTableName == "LogisticActionRequest") ? myComponentPath += "/CustomsLogisticActionRequest" : myComponentPath;
                                 myComponentPath = (myObjectTableName == "PhysicalCheck") ? myComponentPath += "/CustomsPhysicalCheck" : myComponentPath;
                                 myComponentPath = (myObjectTableName == "Declaration") ? myComponentPath += "/CustomsDeclarationModules/DeclarationOthers" : myComponentPath;
-                                myComponentPath = (myObjectTableName == "Containerization") ? myComponentPath += "/CustomsContainerization/" : myComponentPath;                                
+                                myComponentPath = (myObjectTableName == "Containerization") ? myComponentPath += "/CustomsContainerization/" : myComponentPath;
                                 myComponentPath += "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             }
 
@@ -1081,7 +1081,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
                 this.Title = this.listArgs.DisplayTitle;
             }
- 
+
 
             this.QueryCode = args.QueryCode;
             this.ObjectTableName = args.ObjectTableName;
@@ -1091,8 +1091,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.MethodName = args.MethodName;
             this.BackBtnTitle = args.BackButtonTitle;
             this.ShowViews = args.ShowViews;
-             this.MenuTableQuerySection = args.QuerySection ? args.QuerySection : args.ObjectTableName;
- 
+            this.MenuTableQuerySection = args.QuerySection ? args.QuerySection : args.ObjectTableName;
+
 
             this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
             this.ObjectTableDisplayName = new TextCodeTranslationPipe().transform(this.ObjectTable.Name)
@@ -1112,7 +1112,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             this.GetQueries();
             this.RunComponent();
- 
+
         }
     }
 
@@ -1128,20 +1128,20 @@ export class ListComponent implements OnInit, AfterViewInit {
         else return false;
     }
     private IsMultiPrintFeatureOn(): boolean {
-         if (this.ObjectTableName == "ARInvoice" ) {
-             return true;
-         }
-         else {
-             return ((this.ObjectTableName == "Shipment") && FeatureLocator.HasFeaturePermession("General", "MultiPrint"));
-         }
+        if (this.ObjectTableName == "ARInvoice") {
+            return true;
+        }
+        else {
+            return ((this.ObjectTableName == "Shipment") && FeatureLocator.HasFeaturePermession("General", "MultiPrint"));
+        }
     }
- 
- 
+
+
     MutliUpdate() {
         if (!IsMultiUpdateValid(this.ObjectTable.DBTableName, this.dataSource.rowCount)) {
             return;
         }
-         let newWindow = new LogitudeWindow();
+        let newWindow = new LogitudeWindow();
         newWindow.Width = 1050;
         newWindow.Height = 700;
         newWindow.Title = "Multi Update " + this.ObjectTable.DBTableName;
@@ -1201,7 +1201,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
 
-    ApplyQueriesAdvancedFilter(allQueries:any) {
+    ApplyQueriesAdvancedFilter(allQueries: any) {
         if (this.ObjectTableName != "Shipment")
             return this.Queries;
         if (SessionLocator.TenantPM.ApproveUploadedDocuments == false) {
@@ -1209,12 +1209,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         return this.Queries;
     }
-    CustomerCareDeploymentPackage(objectTableName : string){
-        if(objectTableName!="DeploymentPackage")
+    CustomerCareDeploymentPackage(objectTableName: string) {
+        if (objectTableName != "DeploymentPackage")
             return false;
-        if(FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage"))
+        if (FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage"))
             return false;
-        if((SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev"))
+        if ((SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev"))
             return true;
         return false;
     }
@@ -1224,12 +1224,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         allQueries = this.FilterQuerysByQuerySection(allQueries);
 
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
- 
-        if(this.ObjectTableName=="DeploymentPackage")
+
+        if (this.ObjectTableName == "DeploymentPackage")
             this.listArgs.DontCheckQueryFeature = true;
         if (!this.ObjectTable.IsClosed && !this.listArgs.DontCheckQueryFeature) {
-            this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode))|| this.CustomerCareDeploymentPackage(x.ObjectTableName) );
- 
+            this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode)) || this.CustomerCareDeploymentPackage(x.ObjectTableName));
+
         }
         this.Queries = this.ApplyQueriesAdvancedFilter(allQueries);
 
@@ -1239,7 +1239,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
             this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.ObjectTable?.IsCustom ||this.CustomerCareDeploymentPackage(f.ObjectTableName)) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.ObjectTable?.IsCustom || this.CustomerCareDeploymentPackage(f.ObjectTableName)) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
@@ -1252,7 +1252,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             else {
                 this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.' + this.QueryCode))[0];
             }
-            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode)||this.CustomerCareDeploymentPackage(f.ObjectTableName)) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.CustomerCareDeploymentPackage(f.ObjectTableName)) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
@@ -1957,8 +1957,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log("SuppressOnRowSelected");
             return;
         }
-        
-        if (this.ObjectTableName == "ARPaymentCheque" ) {
+
+        if (this.ObjectTableName == "ARPaymentCheque") {
             this._ListComponentArgs.SuppressOnRowSelectedField = true;
         }
 
@@ -1970,13 +1970,28 @@ export class ListComponent implements OnInit, AfterViewInit {
                 });
             return;
         }
+        if (this.ObjectTableName == "Customs.CustomBank") {
+
+            let logWindow = new LogitudeWindow();
+            logWindow.Width = 600;
+            logWindow.Height = 570;
+            logWindow.IsEditComponent = true;
+            logWindow.WindowArgs = {
+                EntityPM: $event.rowData,
+                EntityId: $event.row
+            };
+            logWindow.EditComponentArguments = { EntityId: $event.rowData.Id, ObjectTableName: 'Customs.CustomBank', IsNew: false, EntityPM: $event.rowData };
+            logWindow.Show(this.ObjectTable.NewWizardComponentPath);
+
+            return;
+        }
 
         var myObjectTableName = this.ObjectTableName;
 
         if (this.ObjectTableName == "OccasionContact") {
             myObjectTableName = "Contact";
         }
-       
+
         if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
             this._ListComponentArgs.SuppressOnRowSelectedField = false;
             console.log("SuppressOnRowSelectedField");
@@ -2068,7 +2083,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Show('./ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardLoadComponent');
 
                         logWindow.WindowClosed.subscribe(($event1: any) => {
-                            $event.isEntityChange =  this.getIsEntityChange(logWindow);
+                            $event.isEntityChange = this.getIsEntityChange(logWindow);
                             this.isEditControlOpened = false;
                             this.OnBackFromEdit(selectedEntityId, $event)
                         });
@@ -2119,7 +2134,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                         logWindow.Show(this.SelectedQuery.EditWizardComponentPath);
                         logWindow.WindowClosed.subscribe(($event1: any) => {
-                            this.isEditControlOpened = false;                            
+                            this.isEditControlOpened = false;
                             this.OnBackFromEdit(selectedEntityId, $event);
                         });
                     }
@@ -2164,7 +2179,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             logWindow.Show('./ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardLoadComponent');
 
                             logWindow.WindowClosed.subscribe(($event1: any) => {
-                                $event.isEntityChange =  this.getIsEntityChange(logWindow);
+                                $event.isEntityChange = this.getIsEntityChange(logWindow);
                                 this.isEditControlOpened = false;
                                 this.OnBackFromEdit(selectedEntityId, $event)
                             });
@@ -2305,7 +2320,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                     logWindow.Show('./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent');
 
                                                     logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                        $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as ClientEditComponent).isEntityChange;
+                                                        $event.isEntityChange = (logWindow.InstanceComponent.ComponentInstance as ClientEditComponent).isEntityChange;
                                                         this.isEditControlOpened = false;
                                                         this.OnBackFromEdit(selectedEntityId, $event);
                                                     });
@@ -2359,7 +2374,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                             logWindow.Show('./CustomsModules/CustomsVendor/Components/EditTabs/VendorEditComponent');
 
                                                             logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                                $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as VendorEditComponent).GENERAL.isEntityChange;
+                                                                $event.isEntityChange = (logWindow.InstanceComponent.ComponentInstance as VendorEditComponent).GENERAL.isEntityChange;
                                                                 this.isEditControlOpened = false;
                                                                 this.OnBackFromEdit(selectedEntityId, $event);
                                                             });
@@ -2403,7 +2418,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                                     logWindow.Show('./CustomsModules/CustomsCollateral/Components/CustomsCollateralComponent');
 
                                                                     logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                                        $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as CustomsCollateralComponent).isEntityChange;
+                                                                        $event.isEntityChange = (logWindow.InstanceComponent.ComponentInstance as CustomsCollateralComponent).isEntityChange;
                                                                         this.isEditControlOpened = false;
                                                                         this.OnBackFromEdit(selectedEntityId, $event);
                                                                     });
@@ -2441,7 +2456,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                     logWindow.Show('./CustomsModules/CustomsProceduralFault/Components/EditTabs/General/ProceduralFaultsGeneralTabComponent');
 
                                                     logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                        $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as ProceduralFaultsGeneralTabComponent).isEntityChange;
+                                                        $event.isEntityChange = (logWindow.InstanceComponent.ComponentInstance as ProceduralFaultsGeneralTabComponent).isEntityChange;
                                                         this.isEditControlOpened = false;
                                                         this.OnBackFromEdit(selectedEntityId, $event);
                                                     });
@@ -2467,11 +2482,11 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                                     logWindow.WindowClosed.subscribe(($event1: any) => {
                                         this.isEditControlOpened = false;
-                                        $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as SharedManifestComponent).isEntityChange;
+                                        $event.isEntityChange = (logWindow.InstanceComponent.ComponentInstance as SharedManifestComponent).isEntityChange;
                                         this.OnBackFromEdit(selectedEntityId, $event);
                                         this.RefreshBtnClick();
                                     });
-                                    
+
                                     break;
                                 }
                                 case "QuoteTemplate": {
@@ -2528,7 +2543,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                         logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
 
                                                         logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                            $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as CargoSplitGeneralTabComponent).isEntityChange;
+                                                            $event.isEntityChange = (logWindow.InstanceComponent.ComponentInstance as CargoSplitGeneralTabComponent).isEntityChange;
                                                             this.isEditControlOpened = false;
                                                             this.OnBackFromEdit(selectedEntityId, $event);
                                                         });
@@ -2570,7 +2585,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                 logWindow.Show('./CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent');
 
                                                 logWindow.WindowClosed.subscribe(($event1: any) => {
-                                                    $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as LogisticActionRequestGeneralTabComponent).isEntityChange;
+                                                    $event.isEntityChange = (logWindow.InstanceComponent.ComponentInstance as LogisticActionRequestGeneralTabComponent).isEntityChange;
                                                     this.isEditControlOpened = false;
                                                     this.OnBackFromEdit(selectedEntityId, $event);
                                                 });
@@ -2610,7 +2625,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 });
 
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
-                                    $event.isEntityChange =  (cmpRef.instance as BIReportPreviewComponent).isEntityChange;
+                                    $event.isEntityChange = (cmpRef.instance as BIReportPreviewComponent).isEntityChange;
                                     this.isEditControlOpened = false;
                                     this.OnBackFromEdit(selectedEntityId, $event)
                                     this.RefreshBtnClick();
@@ -2813,7 +2828,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                     }
                     else if (myObjectTableName == "Card") {
-                       
+
                         this._entityListService.getAllFromCache("PartnerType", new ApiQueryFilters()).then((res3: any) => {
                             res3.subscribe(res4 => {
                                 this.PartnerTypes = res4.Result;
@@ -2831,7 +2846,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                             })
                         });
-                       
+
                     }
                     else {
 
@@ -3009,7 +3024,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         else if (this.ObjectTableName == "ShippingLine" || this.ObjectTableName == "Airline" || this.ObjectTableName == "Port") {
             isVisible = true;
         }
-      
+
         this.IsAddButtonVisible = isVisible;
     }
 
@@ -3050,16 +3065,15 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsNewEntityButtonDisabled: boolean = false;
     private SetNewEntityButton() {
 
-        if((!this.HaveFeatureNewExportDeclararion()) || (this.HaveFeatureNewExportDeclararion() && !AmitalGatewayUtil.Instance.AmitalBrowserInUse))
-        {
+        if ((!this.HaveFeatureNewExportDeclararion()) || (this.HaveFeatureNewExportDeclararion() && !AmitalGatewayUtil.Instance.AmitalBrowserInUse)) {
             this.SetNewEntityLabel();
             this.SetNewEntityButtonDisabled();
             this.SetNewEntityButtonVisibility();
         }
     }
-    
+
     private SetNewEntityLabel() {
-        
+
         if (this.HaveFeatureNewExportDeclararion()) {
             this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.NewExportDeclaration');
         } else
@@ -3075,7 +3089,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
- 
+
             else {
                 //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
                 if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
@@ -3087,18 +3101,16 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
                     var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
                     if (useLocal == true) {
-                    var GeneralText = TextCodeTranslator.Translate(
-                        'General.O.AddNewEntity'
-                    );
- 
-                        var ChangedText = GeneralText.split('%')[0];
-                    if(this.ObjectTableName=="Customs.Vehicle" ){
+                        var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
 
-                        ChangedText= TextCodeTranslator.Translate("General.O.New");
-                        
-                    }
-                       
-                       
+                        var ChangedText = GeneralText.split('%')[0];
+                        if (this.ObjectTableName == "Customs.Vehicle") {
+
+                            ChangedText = TextCodeTranslator.Translate("General.O.New");
+
+                        }
+
+
                         var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
                         var FinalText = NewText + " " + ChangedText;
                         if (this.ObjectTableName == "Customer") {
@@ -3149,8 +3161,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.IsNewEntityButtonDisabled = !isEnabled;
     }
     private SetNewEntityButtonVisibility() {
-        
-        var isVisible = true;    
+
+        var isVisible = true;
         if (this.TenantPM.IsHybrid && (this.ObjectTableName == "User" || this.ObjectTableName == "Branche" || this.ObjectTableName == "Department" || this.ObjectTableName == "City" || this.ObjectTableName == "Vessel" || this.ObjectTableName == " Specialservice")) {
             isVisible = false;
         }
@@ -3180,7 +3192,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             break;
                         }
 
-                    case "ARPaymentCheque":{
+                    case "ARPaymentCheque": {
                         isVisible = false;
                         break;
                     }
@@ -3258,7 +3270,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         let b2 = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN");
         if (this.MenuTableQuerySection == "Customs.ExportDeclaration") {
 
-        return b1 && b2;
+            return b1 && b2;
         }
     }
 
@@ -3268,7 +3280,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.ShowAddNewEntityValidationMsg();
             return;
         }
-       if (this.SelectedQuery != null) {
+        if (this.SelectedQuery != null) {
 
             if (!this.CheckPermissions(this.ObjectTableName, "NEW", true) && !this.ObjectTable?.IsCustom) {
                 return;
@@ -3281,7 +3293,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (useLocal == true) {
                     var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
                     var ChangedText = GeneralText.split('%')[0];
-                   
+
 
                     var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
                     var FinalText = NewText + " " + ChangedText;
@@ -3315,10 +3327,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                         if (this.QueryCode == "Masters" || this.QueryCode == "Open Payables Masters" || this.QueryCode == "All Masters" || IsOriginalMaster) {
                             this.RunNewMasterWizard();
                         } else {
-                            if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewDeclarationControlCommand" ) {
-                                if(this.HaveFeatureNewExportDeclararion())
+                            if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewDeclarationControlCommand") {
+                                if (this.HaveFeatureNewExportDeclararion())
                                     this.RunNewExportDeclaration();
-                                else if(FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ADDNEWDECLARATION") && this.MenuTableQuerySection == "Customs.Declaration"){
+                                else if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ADDNEWDECLARATION") && this.MenuTableQuerySection == "Customs.Declaration") {
                                     this.RunNewDeclaration();
                                 }
 
@@ -3329,7 +3341,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewContainerizationControlCommand") {
                                     this.RunNewContainerization();
                                 }
- 
+
                                 else {
                                     this.RunNewEntityWizard(this.SelectedQuery.ObjectTableNewWizardControlName);
                                 }
@@ -3406,8 +3418,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     private OnContainerizationWindowClosed($event: any) {
 
 
-         if($event!=null && $event!="0"&& $event!="cancel"){
-            var item = this.CurrentQueryFilters.AdditionalFilters.filter(d=> d.FieldName == "Id")[0];
+        if ($event != null && $event != "0" && $event != "cancel") {
+            var item = this.CurrentQueryFilters.AdditionalFilters.filter(d => d.FieldName == "Id")[0];
 
             if (item) {
                 var index = this.CurrentQueryFilters.AdditionalFilters.indexOf(item);
@@ -3586,7 +3598,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 200;
                         break;
                     }
-        
+
 
             }
 
@@ -3611,9 +3623,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.ObjectTableName == "Currency") {
                 str = TextCodeTranslator.Translate("General.B.Add") + " Currency";
             }
-            
+
             if (this.ObjectTableName == "Customs.Vehicle") {
-                str = TextCodeTranslator.TranslateTable(this.ObjectTableName)+" "+TextCodeTranslator.Translate("General.O.New") ;
+                str = TextCodeTranslator.TranslateTable(this.ObjectTableName) + " " + TextCodeTranslator.Translate("General.O.New");
             }
 
             if (this.ObjectTableName == "Vendor") {
@@ -3643,7 +3655,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             if (this.ObjectTableName == 'Shipment') {
                 var args = new NewEntityArgs();
-                args.QueryNameTextCode = AppTool.IsNullOrEmpty(this.SelectedQuery)? null: this.SelectedQuery.QuerySection;
+                args.QueryNameTextCode = AppTool.IsNullOrEmpty(this.SelectedQuery) ? null : this.SelectedQuery.QuerySection;
                 logWindow.WindowArgs = args;
 
                 str = TextCodeTranslator.Translate('Shipment.O.NewShipment');
@@ -3901,7 +3913,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
     }
-  
+
     RefreshBtntimerToken: any;
     RefreshBtnClick() {
         if (this.RefreshBtntimerToken) {
@@ -4087,7 +4099,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             if (Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[0].Width > 0) {
                                 querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[0].Width;
                             }
-                            else if (SessionLocator.HomeComponent.SelectedTabItem.Index && Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[SessionLocator.HomeComponent.SelectedTabItem.Index].Width > 0) {                                        
+                            else if (SessionLocator.HomeComponent.SelectedTabItem.Index && Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[SessionLocator.HomeComponent.SelectedTabItem.Index].Width > 0) {
                                 querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[SessionLocator.HomeComponent.SelectedTabItem.Index].Width;
                             }
                             this.GeneralEntitiesArgs.QueryColumnsPMs.push(querycolumn);
@@ -4420,7 +4432,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     CalculateSelectedCount() {
-        this.SelectedCount = this.IsSelected? this.dataCount - this.ExcludedItems.Collection.length: this.SelectedItems.Collection.length;
+        this.SelectedCount = this.IsSelected ? this.dataCount - this.ExcludedItems.Collection.length : this.SelectedItems.Collection.length;
         this.SelectedRows.emit(this.IsSelected || this.SelectedItems.Collection.length);
     }
 
@@ -4445,8 +4457,8 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         var params = {
             Action: action,
-            IsAllSelected: this.IsSelected, 
-            SelectedIds: this.IsSelected? this.ExcludedItems.Collection: this.SelectedItems.Collection, 
+            IsAllSelected: this.IsSelected,
+            SelectedIds: this.IsSelected ? this.ExcludedItems.Collection : this.SelectedItems.Collection,
             LoggingUserId: SessionLocator.LoggedUserId
         };
 
@@ -4454,15 +4466,15 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (confirmWindow.Yes) {
 
                 if (this.ObjectTable.Name == "Customs.Declaration") {
-                    this._declarationWebService.PostActionOnDeclarationBatch(params, this.CurrentQueryFilters).subscribe((response:any) => {
+                    this._declarationWebService.PostActionOnDeclarationBatch(params, this.CurrentQueryFilters).subscribe((response: any) => {
 
                         // deselect the rows
                         if (this.SelectedItems.Collection.length > 0) {
-                            let emittedArray = this.SelectedItems.Collection.map((res) => ({ rowData: {Id: res}, IsChecked: false, RowIndex: -1, ById: true }));
+                            let emittedArray = this.SelectedItems.Collection.map((res) => ({ rowData: { Id: res }, IsChecked: false, RowIndex: -1, ById: true }));
                             this.onChangeCheckBoxesState.emit(emittedArray);
                         }
                         if (this.ExcludedItems.Collection.length > 0) {
-                            let emittedArray = this.ExcludedItems.Collection.map((res) => ({ rowData: {Id: res}, IsChecked: false, RowIndex: -1, ById: true }));
+                            let emittedArray = this.ExcludedItems.Collection.map((res) => ({ rowData: { Id: res }, IsChecked: false, RowIndex: -1, ById: true }));
                             this.onChangeCheckBoxesState.emit(emittedArray);
                         }
                         this.SelectAllRowsChecked(false);
@@ -4470,10 +4482,10 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                         // show message
                         var myMessageWindow = new MessageWindow();
-                        if(!AppTool.IsNullOrEmpty(response.RequestInProgressList)){
-                            myMessageWindow.ShowEventButton=true;
-                            myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
-                        }  
+                        if (!AppTool.IsNullOrEmpty(response.RequestInProgressList)) {
+                            myMessageWindow.ShowEventButton = true;
+                            myMessageWindow.EventButtonText = TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                        }
                         myMessageWindow.Show(response.Message);
                         // myMessageWindow.WindowClosed.subscribe(s => {
                         //     this.RefreshButtonClicked();
@@ -4532,6 +4544,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         else {
             return parentObjectName;
         }
-       
+
     }
 }
