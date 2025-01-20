@@ -13,7 +13,6 @@ import { DWFilterSettings } from './Components/DWQueryBuilder/DWFilterSettings';
 
 import { ProductTypeGeneralTabComponent } from './Components/ProductType/EditTabs/ProductTypeGeneralTabComponent';
 import { DocumentsFilingComponent } from './Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent';
-import { CloseSaveButtonsComponent } from 'InfrastructureModules/InfrastructureOthers/AmitalAPI/components/CloseSaveButtonsComponent';
 import { DragDropFileInputComponent } from './Components/drag-drop-file-input/drag-drop-file-input.component';
 
 
@@ -33,7 +32,6 @@ export const Components =
         //DWAskUserFiltersComponent
         ProductTypeGeneralTabComponent,
         DocumentsFilingComponent,
-        CloseSaveButtonsComponent,
         DragDropFileInputComponent,
     ];
 

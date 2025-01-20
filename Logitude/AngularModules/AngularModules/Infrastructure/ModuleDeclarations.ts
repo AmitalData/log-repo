@@ -213,6 +213,7 @@ import { NewCustomObjectComponent } from './Components/NewEntity/NewCustomObject
 import { DataProviderFieldsNestedList } from '../Report/Components/DataProviderFieldsNestedList';
 import { TreeComponent } from './Components/LogitudeComponents/tree';
 import { NLogSettingsComponent } from './Components/Maintenance/NLogSettingsComponent';
+import { CloseSaveButtonsComponent } from './Components/LogitudeComponents/CloseSaveButtonsComponent';
 
  //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives = [
@@ -339,7 +340,8 @@ export const ControlsComponents = [
     OnUpdateDocumentResultComponent,
     MonthpickerComponent,
     DataProviderFieldsNestedList,
-    SatisfactionSurveyComponent
+    SatisfactionSurveyComponent,
+    CloseSaveButtonsComponent,
 ];
 export const Components = [
     RootComponent,
@@ -572,6 +574,7 @@ export class ModuleDeclarations {
                 myResult = SatisfactionSurveyComponent;
                 break;
             }
+            case 'DataProviderFieldsNestedList': { myResult = DataProviderFieldsNestedList; break; }
         }
  
         return myResult;
