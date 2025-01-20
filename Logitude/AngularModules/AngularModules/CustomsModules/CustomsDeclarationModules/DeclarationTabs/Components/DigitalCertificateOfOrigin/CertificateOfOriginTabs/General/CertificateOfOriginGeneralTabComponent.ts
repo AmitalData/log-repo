@@ -36,7 +36,7 @@ import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPM
 import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import * as xmlbuilder from 'xmlbuilder';
- 
+
 
 
 class UpdateGeneralArgsParams {
@@ -56,7 +56,7 @@ class UpdateGeneralParams {
     public Title: string;
     public Arguments: UpdateGeneralArgsParams;
 }
- 
+
 @Component({
     styleUrls: ['./CertificateOfOriginGeneralTabComponent.scss'],
     templateUrl: './CertificateOfOriginGeneralTabComponent.html',
@@ -93,10 +93,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         OriginCriterionCode: { LookUpTableName: 'Customs.OriginCriterion', ObjectTableName: 'Customs.CertificateOfOriginItem', QueryFilterItems: null },
         ItemDescription: { IsMultiline: true },
     }
-     public ErrorsList: string[];
+    public ErrorsList: string[];
      public StatusCode:string = "4";
     private _declarationPMService: DeclarationPMService = new DeclarationPMService();
- 
+
     constructor() {
         super();
         this.BuildUpdateParams();
@@ -154,8 +154,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
 
-    
-    
+
+
     InitMoreDataScreenValues() {
         this.certificateOfOriginWebService.GetCityOfDeclarationByImporterID(this.currentDeclaration.ImporterId, this.currentDeclaration.Tenant).subscribe(myResult => {
             if (!myResult.HasError && myResult.Result != null) {
@@ -175,7 +175,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         }
     }
     initSelectionValueFields() {
-         this.selectedValueOriginCountry = this.entityPM.OriginGroupOfCountry && !this.entityPM.OriginCountry ? this.fieldNameOriginGroupOfCountry : this.fieldNameOriginCountry;
+        this.selectedValueOriginCountry = this.entityPM.OriginGroupOfCountry && !this.entityPM.OriginCountry ? this.fieldNameOriginGroupOfCountry : this.fieldNameOriginCountry;
         this.selectedValueDestinationCountry = this.entityPM.DestinationGroupOfCountries && !this.entityPM.DestinationCountry ? this.fieldNameDestinationGroupOfCountries : this.fieldNameDestinationCountry;
         this.selectedValueTradeAgreement = this.entityPM.TradeAgreementGroupOfCountries && !this.entityPM.TradeAgreementCountry2 ? this.fieldNameTradeAgreementGroupOfCountries : this.fieldNameTradeAgreementCountry2;
     }
@@ -536,7 +536,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, true, item);
 
 
-             const certificateOfOriginItemLine = new CertificateOfOriginItemLine(item, this);
+            const certificateOfOriginItemLine = new CertificateOfOriginItemLine(item, this);
             this.CertificateOriginItemItems.Insert(certificateOfOriginItemLine);
             this.originalItemSource.Insert(certificateOfOriginItemLine);
         });
@@ -606,7 +606,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 //     }
                 // });
             }
-         });
+        });
     }
 
     updateEntity(EntityPM: CertificateOfOriginPM) {
@@ -1140,10 +1140,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     //             item[updateField] = args.FinalValue;
     //     }
 
- 
+
     //  }
- 
- 
+
+
     //#endregion
     checkCouplesErrorMessages(ValidationErrors) {
         if (this.isMandatorySelectedOriginCountry) {
@@ -1386,8 +1386,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         }
         if (this.entityPM.CooTypeCode) {
             this.entityPM.CertificateOriginItemItems.forEach(item => {
-                this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, false, item);
+                item.OriginCriterionCode = null;
+                item.OriginCriterionCodeName = null;
+
             });
+
         }
         this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
         this.entityPM.IsDirty = true;
