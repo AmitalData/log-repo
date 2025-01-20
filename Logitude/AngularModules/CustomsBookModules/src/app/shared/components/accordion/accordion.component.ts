@@ -26,6 +26,8 @@ export class AccordionComponent implements OnInit {
   tableData1: TableData;
   tableData2: TableData;
   tableData3: TableData;
+  tableData3A: TableData;
+  tableData3B: TableData;
   tableData4: TableData;
   MainEntity: MainEntity = new MainEntity([], [], [], []);
 
@@ -44,7 +46,6 @@ export class AccordionComponent implements OnInit {
 
   ngOnInit() {
     this.InitData();
-
     this.listenToChanges();
   }
 
@@ -106,6 +107,16 @@ export class AccordionComponent implements OnInit {
       ],
       data: []
     };
+    // tableData3 is contain full data of tableData3A and tableData3B:
+    this.tableData3A = {
+      columns: this.tableData3.columns,
+      data: []
+    };
+    this.tableData3B = {
+      columns: this.tableData3.columns,
+      data: []
+    };
+
     this.tableData4 = {
       columns: [
         { key: 'classificationGuidanceNumber', displayName: 'מספר הנחיה', dataType: 'button', visible: true },
@@ -123,6 +134,8 @@ export class AccordionComponent implements OnInit {
     this.tableData1.data = [];
     this.tableData2.data = [];
     this.tableData3.data = [];
+    this.tableData3A.data = [];
+    this.tableData3B.data = [];
     this.tableData4.data = [];
     this.ClassificationGuidanceId.next("");
   }
@@ -152,11 +165,18 @@ export class AccordionComponent implements OnInit {
         if (!result) return;
         this.MainEntity.CB_RequirementComputedDataList = result;
         this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList;
+        this.tableData3A.data = this.filterTableData(this.tableData3.data, "חופשי");
+        this.tableData3B.data = this.filterTableData(this.tableData3.data, "אישי");
       },
       (error) => {
         console.log(error.message);
       }
     );
+  }
+
+  filterTableData(data: any[], origin: string) {
+    let list: CB_RequirementComputedDataList[] = data.filter(item => item.RequirementValidOrigin.includes(origin));
+    return list?.length > 0 ? list : [];
   }
 
   // הנחיות סיווג
