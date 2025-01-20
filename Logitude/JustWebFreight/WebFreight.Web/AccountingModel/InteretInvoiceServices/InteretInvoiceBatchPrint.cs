@@ -302,19 +302,25 @@ namespace Logitude.Accounting.BL.InterestService
                 string documentOutId = null;
                 string email = Email;
                 bool IsPrinted = false;
-
+                ARInvoice aRInvoice = null;
                 DocumentOut doucmentOut = null;
                 if (commonContext == null)
                 {
                     commonContext = CommonDataContext.GetContext((tenant != null ? (int)tenant : 0));
                 }
-
+                if (invoiceContext == null)
+                {
+                    invoiceContext = InvoiceContext.GetContext((tenant != null ? (int)tenant : 0));
+                }
+                
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery((int)tenant);
                 string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant(DocumentCode, (int)tenant);
 
 
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery((int)tenant);
-
+                aRInvoice=(from a in invoiceContext.ARInvoices
+                           where a.Id == SelectId
+                           select a).FirstOrDefault();
 
                 doucmentOut = (from a in commonContext.DocumentOuts
                                join docFile in commonContext.DocumentsFilings on a.Id equals docFile.Id
@@ -331,7 +337,7 @@ namespace Logitude.Accounting.BL.InterestService
                     DocumentOutCopy copy = GetDocumentCopyByCode(commonContext, (int)tenant, documentOutId, DocumentCode);
 
 
-                    if (copy!=null && doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
+                    if (copy!=null &&( string.IsNullOrEmpty(aRInvoice?.IsSigned)|| aRInvoice?.IsSigned=="0") && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
                     {
                         copy = GetDocumentCopyByCode(commonContext,(int)tenant, documentOutId, "999G1");
                     }
