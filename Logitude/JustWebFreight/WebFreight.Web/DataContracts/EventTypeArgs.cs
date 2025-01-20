@@ -28,4 +28,13 @@ namespace WebFreight.Web.DataContracts
 
     }
 
+    public class PostTraceEventArgs
+    {
+        public int tenant { get; set; }
+        public string entityId { get; set; }
+        public string tableName { get; set; }
+        public string notes { get; set; }
+        public string eventTypeCode { get; set; }
+        public string loggedUserEmail { get; set; } = "";
+    }
 }

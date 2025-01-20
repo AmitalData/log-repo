@@ -206,24 +206,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ComputedCustomerDocumentId"
-    Type="varchar"
-    Size="40">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="SecurityId"
     Type="varchar"
     Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-
-  <Column
-  Name="ComputedCustomerDocumentId"
-  Type="varchar"
-  Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -412,6 +397,11 @@
       Nullable="true" />
   </Column>
   <Relation
+    ForeignKeyColumn="DocumentId"
+    ReferencedTable="Documents"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="ChildObjectTableId"
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"
@@ -497,10 +487,8 @@
     Columns="SearchFields" />
   <Index
     Columns="Tenant,ExternalEntityReference,ExternalEntityName" />
-
-	<Index
-  Columns="EntityId,ObjectTableId,EntityReference,DirectionCode" />
-    Columns="Tenant,IsDeleted,IsTransferdToQBO" />
+  <Index
+    Columns="EntityId,ObjectTableId,EntityReference,DirectionCode" />
   <UniqueConstraint
     Env="logbox"
     Columns="Tenant,ComputedForwarderDocumentId" />

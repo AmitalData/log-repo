@@ -320,7 +320,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.AddViewModeContainerEvents();
     }
 
-    private logWindow: LogitudeWindow;
+    public logWindow: LogitudeWindow;
     public InjectWindowComponent(myComponentPath: string, logWindow: LogitudeWindow) {
         this.logWindow = logWindow;
         this.IsEditComponent = false;
@@ -399,7 +399,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.LoadChildComponent();
     }
 
-    private SetWindowSize() {
+    public SetWindowSize() {
         var ApplicationSession = document.getElementById("ApplicationSession");
         if (ApplicationSession) {
             var SetOverProperty: boolean = false;

@@ -114,10 +114,24 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
         }
 
 
+        public HttpResponseMessage PostTraceEvent([FromBody] PostTraceEventArgs args)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
+                if(string.IsNullOrEmpty(args.loggedUserEmail))
+                    args.loggedUserEmail = authToken.Email;
+                
+                TraceHelper.Create(args.tenant, args.entityId, args.tableName, args.notes, args.eventTypeCode, args.loggedUserEmail);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
 
-
-
-
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
