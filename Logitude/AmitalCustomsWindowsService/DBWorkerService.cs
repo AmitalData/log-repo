@@ -67,6 +67,7 @@ namespace AmitalCustomsWindowsService
             Program.ThreadStartStaticIsMustB4UsingTheDB();
             if (!HaveDB()  )
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("no connection to db, stop all threads");
                 StopThreads();
                 return;
             }

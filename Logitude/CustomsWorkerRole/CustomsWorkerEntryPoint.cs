@@ -4,6 +4,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,9 @@ namespace CustomsWorkerRole
             }
             else
             {
+                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+                LogitudeSettings.DatabaseManagementSystem = dbms;
+
                 Dictionary<int, string> globalDBs = new Dictionary<int, string>();
                 List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
                 foreach (var item in globalTenants)
