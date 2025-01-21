@@ -19,7 +19,8 @@
 				<ng-container *ngIf="!isLoading">
 
 					<ul *ngFor="let item of data" class="wtree">
-						<app-data-row [fullClassificationLengthCharToDisplay]="" [showTaxData]="false"
+						<app-data-row id="{{item.CustomsItemID}}" [fullClassificationLengthCharToDisplay]="" [showTaxData]="false"
+							[level]="1"
 							[showDetailsOpen]="showDetailsOpen" [data]="item"
 							[isSelected]="showDetails && selectedItemId == item.CustomsItemID"
 							[searchItem]="searchValue" (showCommentSidebar)="showAddComment = !showAddComment"
@@ -31,7 +32,8 @@
 							<ng-container *ngIf="item.IsShowChildren">
 								<ng-container *ngFor="let key2 of Object.keys(item.children)">
 									<li [@inOutAnimation]>
-										<app-data-row [fullClassificationLengthCharToDisplay]="2" [showTaxData]="false"
+										<app-data-row id="{{item.children[key2].CustomsItemID}}" [fullClassificationLengthCharToDisplay]="2" [showTaxData]="false"
+											[level]="2"
 											[showDetailsOpen]="showDetailsOpen" [data]="item?.children[key2]"
 											[searchItem]="searchValue"
 											[isSelected]="showDetails && selectedItemId == item?.children[key2]?.CustomsItemID"
@@ -55,7 +57,8 @@
 												<ng-container
 													*ngFor="let key3 of Object.keys(item.children[key2].children)">
 													<li [@inOutAnimation]>
-														<app-data-row [fullClassificationLengthCharToDisplay]="4"
+														<app-data-row id="{{item.children[key2].children[key3].CustomsItemID}}"[fullClassificationLengthCharToDisplay]="4"
+															[level]="3"
 															[showTaxData]="true" [showDetailsOpen]="showDetailsOpen"
 															[data]="item?.children[key2]?.children[key3]"
 															[searchItem]="searchValue"
@@ -74,8 +77,9 @@
 																<ng-container
 																	*ngFor="let key4 of Object.keys(item.children[key2].children[key3].children)">
 																	<li [@inOutAnimation]>
-																		<app-data-row
-																			[fullClassificationLengthCharToDisplay]="5"
+																		<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4].CustomsItemID}}"
+																			[level]="4" 
+																			[fullClassificationLengthCharToDisplay]=""
 																			[showTaxData]="true"
 																			[showDetailsOpen]="showDetailsOpen"
 																			[data]="item?.children[key2]?.children[key3]?.children[key4]"
@@ -94,7 +98,8 @@
 																				<ng-container
 																					*ngFor="let key5 of Object.keys(item.children[key2].children[key3].children[key4].children)">
 																					<li [@inOutAnimation]>
-																						<app-data-row
+																						<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID}}"
+																							[level]="5"
 																							[fullClassificationLengthCharToDisplay]=""
 																							[showTaxData]="true"
 																							[showDetailsOpen]="showDetailsOpen"
@@ -115,7 +120,8 @@
 																									*ngFor="let key6 of Object.keys(item.children[key2].children[key3].children[key4].children[key5].children)">
 																									<li
 																										[@inOutAnimation]>
-																										<app-data-row
+																										<app-data-row  id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6].CustomsItemID}}"
+																											[level]="6"
 																											[fullClassificationLengthCharToDisplay]=""
 																											[showTaxData]="true"
 																											[showDetailsOpen]="showDetailsOpen"
@@ -137,7 +143,8 @@
 																													*ngFor="let key7 of Object.keys(item.children[key2].children[key3].children[key4].children[key5].children[key6].children)">
 																													<li
 																														[@inOutAnimation]>
-																														<app-data-row
+																														<app-data-row  id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]?.children[key7].CustomsItemID}}"
+																															[level]="7"
 																															[fullClassificationLengthCharToDisplay]=""
 																															[showTaxData]="true"
 																															[showDetailsOpen]="showDetailsOpen"

@@ -52,9 +52,7 @@ export class MainDisplayComponent implements OnInit {
 
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
-	// childrenToDesplay: number[] = [];
 	private _filters;
-	//data: any | never | undefined = {};
 	data: CB_CustomsItemComputedDataList[] = [];
 	fullData: CB_CustomsItemComputedDataList[] = [];
 	KeyValue = Object.keys;
@@ -105,7 +103,6 @@ export class MainDisplayComponent implements OnInit {
 					this.fullData = [];
 					this.isLoadingMode.next(false);
 					this.isFeaturePermessionCB.next(true);
-					// this.router.navigate(['/Customs-Book/login']);
 				}
 				else {
 					this.isFeaturePermessionCB.next(false);
@@ -126,7 +123,6 @@ export class MainDisplayComponent implements OnInit {
 		this.getCommentsData(SessionInfo.LoggedUserTenant);
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
-			// if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) return;
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
@@ -211,10 +207,10 @@ export class MainDisplayComponent implements OnInit {
 
 	onToggleAll(event: Event, item: CB_CustomsItemComputedDataList): void {
 		const checked = (event.target as HTMLInputElement)?.checked;
-		item.checked = checked;
+		if (item.ItemHierarchicLocationID == "2")
+			item.checked = checked;
 		this.toggleVisibility(checked, item.children);
 	}
-
 
 	searchToggleAllChildren(expend: boolean) {
 		this.toggleVisibilitySearch(expend, this.data); // Assuming this.data is your main data array
@@ -254,7 +250,7 @@ export class MainDisplayComponent implements OnInit {
 				if (searchText.length == 4 && itemHierarchicLocationID > 3) {
 					return;
 				}
-				this.showChildern(expend, item);
+				this.showChildern(expend, item, true);
 				shouldExpandParent = true;
 			}
 		});
@@ -265,8 +261,9 @@ export class MainDisplayComponent implements OnInit {
 
 	toggleVisibility(expend: boolean, data: CB_CustomsItemComputedDataList[]) {
 		data.forEach(item => {
-			item.checked = expend;
-			this.showChildern(expend, item);
+			if (item.ItemHierarchicLocationID == "2")
+				item.checked = expend;
+			this.showChildern(expend, item, true);
 
 			if (item.children && item.children.length > 0) {
 				this.toggleVisibility(expend, item.children); // Recursively toggle children
@@ -319,16 +316,20 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 
-	showChildern(openAction: any, item: CB_CustomsItemComputedDataList) {
+	showChildern(openAction: any, item: CB_CustomsItemComputedDataList, isMultiOpen: boolean = false) {
 		item.IsShowChildren = openAction; // #109074- fix open children display
+		if (openAction) this.scrollDown(item, isMultiOpen);  // #114429- fix scroll to the last child
+	}
 
-		// const isShown = this.childrenToDesplay.indexOf(item.CustomsItemID);
-		// if (openAction && isShown === -1) {
-		// 	this.childrenToDesplay.push(item.CustomsItemID);
-		// }
-		// else if (!openAction && isShown !== -1) {
-		// 	this.childrenToDesplay.splice(isShown);
-		// }
+	scrollDown(item: CB_CustomsItemComputedDataList, isMultiOpen: boolean) {
+		setTimeout(() => {
+			const element = document.getElementById(`${item.CustomsItemID}`);
+			if (element) {
+				const { bottom } = element.getBoundingClientRect();
+				if (bottom > window.innerHeight - 150 && !isMultiOpen)
+					window.scrollBy({ top: bottom - window.innerHeight + 200, behavior: 'smooth' });
+			}
+		}, 0);
 	}
 
 	getCustomsItemHierarchic(filtersSearch: FiltersSearch): string {
@@ -365,13 +366,15 @@ export class MainDisplayComponent implements OnInit {
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
 			if (filters.CustomsItemHierarchic === '') {
-				filters.Reamarks = true;
-				filters.Rules = true;
+				// filters.Reamarks = true;
+				// filters.Rules = true;
+				filters.Reamarks = false;
+				filters.Rules = false;
 				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
 			}
-			
+
 			if (filters.CustomsItemHierarchic == "6" || filters.CustomsItemHierarchic == "7" || filters.CustomsItemHierarchic == "6,7") {
-        filters.CustomsItemHierarchic = null;
+				filters.CustomsItemHierarchic = null;
 			}
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe(
 				(data: any) => {
@@ -391,10 +394,12 @@ export class MainDisplayComponent implements OnInit {
 			this.isLoadingMode.next(true); // update loading mode
 			if (filters.CustomsItemHierarchic === '') {
 				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
-				filters.Reamarks = true;
-				filters.Rules = true;
+				filters.Reamarks = false;
+				filters.Rules = false;
+				// filters.Reamarks = true;
+				// filters.Rules = true;
 			}
-			
+
 			if (filters.CustomsItemHierarchic == "6" || filters.CustomsItemHierarchic == "7" || filters.CustomsItemHierarchic == "6,7") {
 				filters.CustomsItemHierarchic = null;
 			}
@@ -420,7 +425,6 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	handleClearResults() {
-		// if (this.searchMode === TableTopState.ViewAll) return;
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
@@ -432,7 +436,6 @@ export class MainDisplayComponent implements OnInit {
 		this.countSearchResult = 0;
 		this.filterPopupService.toggleFilterPopup(false);
 		this.data = this.fullData;
-		// this.searchToggleAllChildren(false);
 		this.toggleVisibility(false, this.data)
 	}
 
@@ -446,11 +449,6 @@ export class MainDisplayComponent implements OnInit {
 			});
 			return children;
 		};
-
-		//let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
-		//if (rootItems.length === 0) {
-		//  rootItems = data;
-		//}
 
 		const deleteFromRootChildrens = (CustomsItemID) => {
 			rootItems = rootItems.filter((x) => x.CustomsItemID != CustomsItemID);
@@ -532,7 +530,6 @@ export class MainDisplayComponent implements OnInit {
 	@HostListener('window:resize', ['$event'])
 	onResize(event: Event): void {
 		this.screenWidth = (event.target as Window).innerWidth;
-		// console.log(this.screenWidth);
 	}
 }
 
