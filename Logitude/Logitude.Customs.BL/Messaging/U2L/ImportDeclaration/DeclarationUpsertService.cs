@@ -349,7 +349,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 						{
 							this._MyDeclarationPM.Consignments[0].CargoTypeCode = "11";
 						}
-						else if (_AmitalCustomsFile.TransportModeId == "L")
+						else if (_AmitalCustomsFile.TransportModeId == "I")
 						{
 							this._MyDeclarationPM.Consignments[0].CargoTypeCode = "20";
 						}
@@ -1189,7 +1189,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				}
 
 
-				if (_MyDeclarationPM.TransportModeId == "L") //TransportMod- land
+				if (_MyDeclarationPM.TransportModeId == "I") //TransportMod- land
 				{
 				
 					if (!string.IsNullOrEmpty(_MyDeclarationPM.Consignments[0].CargoTypeCodeForExport)) exportDeclarationClosingDataPM.FinalCargoTypeCode = _MyDeclarationPM.Consignments[0].CargoTypeCodeForExport;
