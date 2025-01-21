@@ -195,7 +195,7 @@
     ListLableDefaultText="&quot;DocumentId&quot;"
     ListLocalDefaultText="&quot;DocumentId&quot;"
     IsNullable="false"
-    IsForeignKey="true"
+    IsForeignKey="false"
     ForeignEntity="&quot;Document&quot;"
     DontBuildRelationOnDB="false"
     NavigationPropertyName="&quot;Document&quot;"
