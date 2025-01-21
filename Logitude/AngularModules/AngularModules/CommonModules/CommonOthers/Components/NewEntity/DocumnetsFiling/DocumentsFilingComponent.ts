@@ -16,8 +16,6 @@ import { LogtuideTableDataService } from "Infrastructure/Services/logtuide-table
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { Observable } from "rxjs";
 import { officeFileExtensions } from "./DocumentsFilingMetadata";
-import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
-import { CustomDocumentTypeMetaDataListService } from "Customs/Services/StandardLists/CustomDocumentTypeMetaDataListService";
 
 @Component({
     selector: "app-new-documents-filing",
@@ -226,7 +224,7 @@ export class DocumentsFilingComponent {
 
     sendTraceEvent(documentsId: string): void {        
         const traceEventTypeCode = this.isNew ? TraceEventTypeCodes.CREATE : TraceEventTypeCodes.UPDATE;
-        const notes: string = this.calculateChanges();
+        const notes: string = this.isNew ? '' : this.calculateChanges();
         new TraceEventExtendedPMService().CreateTraceEvent(SessionLocator.Tenant, documentsId, 'DocumentsFiling', traceEventTypeCode, '', notes).subscribe();
     }
 
