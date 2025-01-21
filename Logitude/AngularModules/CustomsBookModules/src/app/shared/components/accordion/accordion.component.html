@@ -26,7 +26,7 @@
 	</div>
 </div>
 
-<div class="detailsSlide_box" *ngIf="tableData3?.data?.length > 0">
+<div class="detailsSlide_box" *ngIf="tableData3?.data?.length > 0 && (tableData3A?.data?.length > 0 && tableData3B?.data?.length > 0)">
 	<div class="detailsSlide_toggle" (click)="expandedArea2 = !expandedArea2">
 		<div>
 			<h3 class="main_title">דרישות חוקיות</h3>
@@ -37,14 +37,14 @@
 	</div>
 	<div class="detailsSlide_ddown" [class.active]="expandedArea2" id="detailsSlide_ddown01">
 		<!-- First section: יבוא חופשי-->
-		<section class="title" *ngIf="!expandedArea2">
+		<section class="title" *ngIf="!expandedArea2 && tableData3A?.data?.length > 0">
 			<h4 class="sub_title">יבוא חופשי</h4>
 			<div class="tableContainer">
 				<app-generic-table [tableData]="tableData3A"></app-generic-table>
 			</div>
 		</section>
 		<!-- Second section: יבוא אישי  -->
-		<section *ngIf="!expandedArea2" >
+		<section *ngIf="!expandedArea2 && tableData3B?.data?.length > 0" >
 			<h4 class="sub_title">יבוא אישי</h4>
 			<div class="tableContainer">
 				<app-generic-table [tableData]="tableData3B"></app-generic-table>
