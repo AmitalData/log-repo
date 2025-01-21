@@ -30,6 +30,7 @@ export class DataRowComponent implements OnInit {
 	@Input() state = 'search';
 	@Input() searchItem?: string = '';
 	@Input() fullClassificationLengthCharToDisplay?: number = 0;
+	@Input() level: number = 0;
 
 	faStar = faStar;
 	faStarBold = faStarBold;
