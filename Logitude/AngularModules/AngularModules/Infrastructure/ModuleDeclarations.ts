@@ -213,6 +213,8 @@ import { NewCustomObjectComponent } from './Components/NewEntity/NewCustomObject
 import { DataProviderFieldsNestedList } from '../Report/Components/DataProviderFieldsNestedList';
 import { TreeComponent } from './Components/LogitudeComponents/tree';
 import { NLogSettingsComponent } from './Components/Maintenance/NLogSettingsComponent';
+import { GeneralLockComponent } from './Components/Maintenance/GeneralLockComponent';
+import { GeneralLockListTemplate } from './Components/Templates/GeneralLockListTemplate';
 
  //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives = [
@@ -339,7 +341,8 @@ export const ControlsComponents = [
     OnUpdateDocumentResultComponent,
     MonthpickerComponent,
     DataProviderFieldsNestedList,
-    SatisfactionSurveyComponent
+    SatisfactionSurveyComponent,
+    GeneralLockListTemplate
 ];
 export const Components = [
     RootComponent,
@@ -435,6 +438,8 @@ export const Components = [
     GridScreenSectionComponent,
     AddEditChildEntityComponent,
     NewCustomObjectComponent,
+    GeneralLockComponent,
+
  ];
  
 export class ModuleDeclarations {
@@ -572,6 +577,9 @@ export class ModuleDeclarations {
                 myResult = SatisfactionSurveyComponent;
                 break;
             }
+            case "GeneralLockComponent": { myResult = GeneralLockComponent; break; }
+            case "GeneralLockListTemplate": { myResult = GeneralLockListTemplate; break; }
+
         }
  
         return myResult;

@@ -878,6 +878,7 @@
     <Compile Include="InfrastructureModel\DataContracts\ObjectCustomFieldDataContractPM.cs" />
     <Compile Include="InfrastructureModel\EntityAMs\EntityStatusAM.cs" />
     <Compile Include="InfrastructureModel\EntityAMs\EventTypeAM.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\GeneralLockList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EventRemarkList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldsMainObjectList.cs" />

@@ -77,6 +77,19 @@ export class GeneralLockService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    DeleteGeneralLockByGeneralKey(generalKey:string) {       
+        return defer(() => {
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var url = this._apiUrl + '/DeleteGeneralLockByGeneralKey';
+
+            return this._http.post(url + '?generalKey=' + generalKey, null, ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     MapJsonToEntityList(jsonList: any) {
         var entityList: CacheKey;
         entityList = new CacheKey();

@@ -131,6 +131,7 @@ import { SchedulerReportMessageTemplateService } from './Components/StimulsoftCo
 import { DefaultAndConfigurationListService } from './Services/StandardLists/DefaultAndConfigurationListService';
 import { DefaultAndConfigurationPMService } from './Services/StandardPMs/DefaultAndConfigurationPMService';
 import { DefaultAndConfigurationKeyListService } from './Services/StandardLists/DefaultAndConfigurationKeyListService';
+import { GeneralLockListService } from './Services/StandardLists/GeneralLockListService';
 
 export class ModuleProviders {
 
@@ -264,6 +265,8 @@ export class ModuleProviders {
             case "DefaultAndConfigurationListService": { myResult = new DefaultAndConfigurationListService(); break; }
             case "DefaultAndConfigurationPMService": { myResult = new DefaultAndConfigurationPMService(); break; }
             case "DefaultAndConfigurationKeyListService": { myResult = new DefaultAndConfigurationKeyListService(); break; }
+            case "GeneralLockListService": { myResult = new GeneralLockListService(); break; }
+
         }
 
         return myResult;

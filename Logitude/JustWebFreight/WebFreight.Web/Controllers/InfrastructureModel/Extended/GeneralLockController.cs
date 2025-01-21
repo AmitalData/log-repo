@@ -108,6 +108,28 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 			}
 
 		}
+		[HttpPost]
+		public HttpResponseMessage DeleteGeneralLockByGeneralKey(string generalKey)
+		{
+			try
+			{
+				string token = HttpContext.Current.Request.Headers["Token"];			
+				AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+				int tenant = authToken.Tenant;
+				SecurityUtility.AuthenticationOnTenant(tenant);
+
+				GeneralLockQueryService generalLockQueryService = new GeneralLockQueryService(tenant);
+				generalLockQueryService.DeleteGeneralLockByGeneralKey(tenant, generalKey);
+				string res = null;
+
+				return Request.CreateResponse(HttpStatusCode.OK, res);
+			}
+			catch (Exception ex)
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+
+		}
 		public HttpResponseMessage PostCheckLock(string userId, string entityId, string objectTableName,bool isFromCahnge = false)
         {
             try

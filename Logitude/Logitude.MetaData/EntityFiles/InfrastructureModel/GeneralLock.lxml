@@ -44,7 +44,7 @@
   LocalDefaultTextBack_up="&quot;נעילות&quot;"
   LocalDefaultText="&quot;BS64:Iteg16LXmdec15XXqiI=&quot;"
   DefaultText="&quot;General Lock&quot;"
-  Code="&quot;4adc&quot;"
+  Code="&quot;d24c&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
@@ -1188,6 +1188,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SessionId&quot;"
     ListPropertyPath="&quot;SessionId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1276,6 +1277,14 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;GeneralLock.O.IsDeleteGeneralLock&quot;"
+      DefaultText="&quot;Is Delete General Lock&quot;"
+      LocalDefaultTextBack_up="&quot;האם אתה בטוח שברצונך לבטל את הנעילה?&quot;"
+      LocalDefaultText="&quot;BS64:IteU15DXnSDXkNeq15Qg15HXmNeV15cg16nXkdeo16bXldeg15og15zXkdeY15wg15DXqiDXlNeg16LXmdec15Q/Ig==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
