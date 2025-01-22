@@ -9,6 +9,7 @@ import {DateTimeToDatePipe} from '../../../../../../Controls/Pipes/DateTimeToDat
 import {AppTool} from '../../../../../../Infrastructure/Tools';
 import {PrintDocumentComponent} from '../../PrintDocumentComponent';
 import {Guid} from '../../../../../../Infrastructure/Utilities/Guid';
+declare var window: any;
 
 export class DocumentCopiesViewModel {
     public ObjectTableName: string;
@@ -53,7 +54,7 @@ export class DocumentCopiesViewModel {
         this.ChildEntityId = childEntityId;
         this.CurrentEntityId = currentEntityId;
         this.ChildObjectTableId = childObjectTableId;
-
+        this.ObjectTableName = window.ObjectTables.filter(f => f.Id === this.CurrentObjectTableId)[0]?.Name;
         this.CurrentDocumentType = documenttype;
 
 
@@ -89,8 +90,19 @@ export class DocumentCopiesViewModel {
 
             this.PrintedByMessage = "";
             if (this.CurrentDocumentOutCopy != null) {
+                if(this.ObjectTableName=="ARInvoice"  && this.CurrentDocumentTypeCopy.IsOriginal && this.CurrentDocumentOutCopy.LastPrintedByUserId != null && this.CurrentDocumentOutCopy.LastPrintedByUserId != undefined) {
+                    var data = "";
 
-                if (this.CurrentDocumentType.IsDocumentOneTimePrintLimited && this.CurrentDocumentType.LimitedPrintCopyId == this.CurrentDocumentOutCopy.DocumentTypeCopyId && this.CurrentDocumentOutCopy.LastPrintedByUserId != null && this.CurrentDocumentOutCopy.LastPrintedByUserId != undefined) {
+                    if (this.CurrentDocumentOutCopy.LastPrintDate) {
+                        var date = DateTimeToDatePipe.Pipe(this.CurrentDocumentOutCopy.LastPrintDate);
+                        var time = DateTimeToTimePipe.Pipe(this.CurrentDocumentOutCopy.LastPrintDate);
+                        date = date + " " + time;
+                    }
+
+
+                    this.PrintedByMessage = "This document is already printed by " + this.CurrentDocumentOutCopy.LastPrintedByUserName + " at " + date;
+                }
+                else if (this.ObjectTableName!="ARInvoice" && this.CurrentDocumentType.IsDocumentOneTimePrintLimited && this.CurrentDocumentType.LimitedPrintCopyId == this.CurrentDocumentOutCopy.DocumentTypeCopyId && this.CurrentDocumentOutCopy.LastPrintedByUserId != null && this.CurrentDocumentOutCopy.LastPrintedByUserId != undefined) {
 
                     var data = "";
 
@@ -129,7 +141,10 @@ export class DocumentCopiesViewModel {
         this.IsPrintButtonEnabled = true;
         if (this.CurrentDocumentOutCopy != null) {
 
-            if (this.CurrentDocumentType.IsDocumentOneTimePrintLimited && this.CurrentDocumentType.LimitedPrintCopyId == this.CurrentDocumentOutCopy.DocumentTypeCopyId && !AppTool.IsNullOrEmpty(this.CurrentDocumentOutCopy.LastPrintedByUserId)) {
+            if (this.ObjectTableName!="ARInvoice" &&this.CurrentDocumentType.IsDocumentOneTimePrintLimited && this.CurrentDocumentType.LimitedPrintCopyId == this.CurrentDocumentOutCopy.DocumentTypeCopyId && !AppTool.IsNullOrEmpty(this.CurrentDocumentOutCopy.LastPrintedByUserId)) {
+                this.IsPrintButtonEnabled = false;
+            }
+            else if(this.ObjectTableName=="ARInvoice" && this.CurrentDocumentTypeCopy.IsOriginal && !AppTool.IsNullOrEmpty(this.CurrentDocumentOutCopy.LastPrintedByUserId)) {
                 this.IsPrintButtonEnabled = false;
             }
         }
@@ -143,8 +158,19 @@ export class DocumentCopiesViewModel {
         this.PrintedByMessage = "";
 
         if (this.CurrentDocumentOutCopy) {
+            if(this.ObjectTableName=="ARInvoice"  && this.CurrentDocumentTypeCopy.IsOriginal &&   !AppTool.IsNullOrEmpty(this.CurrentDocumentOutCopy.LastPrintedByUserId)) {
+                var data = "";
 
-            if (this.CurrentDocumentType.IsDocumentOneTimePrintLimited && this.CurrentDocumentType.LimitedPrintCopyId == this.CurrentDocumentOutCopy.DocumentTypeCopyId && !AppTool.IsNullOrEmpty(this.CurrentDocumentOutCopy.LastPrintedByUserId)) {
+                if (this.CurrentDocumentOutCopy.LastPrintDate) {
+                    var date = DateTimeToDatePipe.Pipe(this.CurrentDocumentOutCopy.LastPrintDate);
+                    var time = DateTimeToTimePipe.Pipe(this.CurrentDocumentOutCopy.LastPrintDate);
+                    date = date + " " + time;
+                }
+
+
+                this.PrintedByMessage = "This document is already printed by " + this.CurrentDocumentOutCopy.LastPrintedByUserName + " at " + date;
+            }
+            else if (this.ObjectTableName!="ARInvoice" && this.CurrentDocumentType.IsDocumentOneTimePrintLimited && this.CurrentDocumentType.LimitedPrintCopyId == this.CurrentDocumentOutCopy.DocumentTypeCopyId && !AppTool.IsNullOrEmpty(this.CurrentDocumentOutCopy.LastPrintedByUserId)) {
 
                 var data = "";
 
