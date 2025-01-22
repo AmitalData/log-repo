@@ -412,8 +412,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         JournalPM journal = GetJournalPM(entityPM);
                         ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(entityPM.Tenant);
-                        var ARInvoice = arInvoiceQuery.GetSinglePM(journal?.AccountingEntityId, entityPM.Tenant);
-                        if (ARInvoice?.ConfirmationNumberStatus == "6")
+                       var  ARInvoice=arInvoiceQuery.GetSinglePM(journal?.AccountingEntityId, entityPM.Tenant);
+                        if(ARInvoice?.ConfirmationNumberStatus=="6")
                             entityPM.TransmitStatusCode = "1";
                     }
                     scope.Complete();
