@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;fa74&quot;"
+  Code="&quot;61b0&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5997,6 +5997,12 @@
       DefaultText="&quot;Cards&quot;"
       LocalDefaultText="&quot;כרטיסים&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.NoReportsDisplay&quot;"
+      DefaultText="&quot;No reports to display&quot;"
+      LocalDefaultText="&quot;אין דוחות להצגה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

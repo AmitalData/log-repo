@@ -51,16 +51,16 @@ export class ReportMenuComponent implements OnDestroy {
     
     get CurrentReportId() { return this.currentReportId; }
     set CurrentReportId(newValue: string) {
-        
+        if(!AppTool.IsNullOrEmpty(newValue)){
+            this.LoadReports();
+        }
         if (this.currentReportId != newValue) {
             this.currentReportId = newValue;
         }
     }
     get IsReportPanelVisible() { return this.isReportPanelVisible; }
     set IsReportPanelVisible(newValue: boolean) {
-        if(newValue){
-            this.LoadReports();
-        }
+        
         if (this.isReportPanelVisible != newValue) {
             this.isReportPanelVisible = newValue;
         }

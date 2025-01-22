@@ -1,5 +1,5 @@
 <style>
-       .DocumentsDropDown {
+    .DocumentsDropDown {
         background: #f7f7f7;
         position: absolute;
         /*z-index: 99;*/
@@ -15,6 +15,7 @@
         overflow: auto;
         padding-bottom: 10px;
     }
+
     .DocsListButton {
         transition: .5s all;
         width: 215px;
@@ -32,6 +33,7 @@
     .DocsListButton:active {
         background: #f0f0f0;
     }
+
     .RelatedDocItem {
         cursor: pointer;
         user-select: none;
@@ -49,149 +51,179 @@
         background: -moz-linear-gradient(#E7F5FE, #62AAC4);
         /* For Firefox 3.6 to 15 */
         background: linear-gradient(#E7F5FE, #62AAC4);
-       
-       
+
+
     }
+
     .timeline {
-    display: flex;
-    flex-direction: column;
-    margin-right: 10px;
+        display: flex;
+        flex-direction: column;
+        margin-right: 10px;
     }
 
 
-.step-indicator {
-  height: 10px;
-  background-color: #0271ba;
-  
-  transition: width 0.5s;
-}
+    .step-indicator {
+        height: 10px;
+        background-color: #0271ba;
 
-.step-label {
-  
-  font-weight: bold;
-  font-size: 10px;
-  color: #312C31; 
-  
-}
-.TextTrimming{
-    font-size: 10px;
-    color: #312C31; 
-}
-.failure-message{
-    color: #9f1f1f;
-    font-size: 12px;
-    font-weight: bold;
-}
-.failed-text {
-    color: #9f1f1f;
-    font-weight: bold;
-    text-decoration: underline;
-}
-.red-border {
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-}
+        transition: width 0.5s;
+    }
+
+    .step-label {
+
+        font-weight: bold;
+        font-size: 10px;
+        color: #312C31;
+
+    }
+
+    .TextTrimming {
+        font-size: 10px;
+        color: #312C31;
+    }
+
+    .failure-message {
+        color: #9f1f1f;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .failed-text {
+        color: #9f1f1f;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .red-border {
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    }
 </style>
 
 <div class="DocumentsDropDown">
     <table>
-       
+
         <tr>
             <td style="vertical-align:top;">
                 <ul style="width: 100%;">
-                     
+                    <li *ngIf="!(RelatedReport$ | async)?.length"
+                        style="width: 100%; padding: 10px;  text-align: center;height: 20px;line-height: 20px; font-size: 18px; color: #1B90CB;">
+                        {{'Accounting.General.O.NoReportsDisplay' | TextCodeTranslationPipe}} </li>
                     <!-- Ticket Item -->
-                    <li *ngFor="let relatedRep of RelatedReport$ | async"
-                        style="width: 100%; padding: 10px;padding-bottom: 0px;  font-size: 10px;
-        color: #312C31; "
-                        >
-                        
-                            <div class="RelatedDocItem" [class.selectedticket]="SelectedReport == relatedRep" [ngClass]="relatedRep.Id==currentReportId ?  'red-border' : ''">
+                    <li *ngFor="let relatedRep of RelatedReport$ | async" style="width: 100%; padding: 10px;padding-bottom: 0px;  font-size: 10px;
+                                             color: #312C31; ">
+
+                        <div class="RelatedDocItem" [class.selectedticket]="SelectedReport == relatedRep"
+                            [ngClass]="relatedRep.Id==currentReportId ?  'red-border' : ''">
                             <table>
 
                                 <!--Header-->
                                 <tr>
-                                    
+
                                     <td>
                                         <table>
-                                            <tr  style="height: 10px;"  >
-                                                <td  >
-                                                    <div >
-                                                        <img [title]="'Delete'" class="LeftCenter" style="width: 10px; height: 10px; cursor: pointer;" src="./Images/Buttons/Delete.over.png" (click)="DeleteReport(relatedRep)" />
-                                                    </div>
-                                                   
-                                                </td>
-                                                
-                                            </tr>
-                                            <tr  style="height: 20px;"  >
+                                            <tr style="height: 10px;">
                                                 <td>
-                                                   
-                                                    <div class="TextTrimming" style="font-weight: bold; text-align: center; padding-bottom: 3px;">
+                                                    <div>
+                                                        <img [title]="'Delete'" class="LeftCenter"
+                                                            style="width: 10px; height: 10px; cursor: pointer;"
+                                                            src="./Images/Buttons/Delete.over.png"
+                                                            (click)="DeleteReport(relatedRep)" />
+                                                    </div>
+
+                                                </td>
+
+                                            </tr>
+                                            <tr style="height: 20px;">
+                                                <td>
+
+                                                    <div class="TextTrimming"
+                                                        style="font-weight: bold; text-align: center; padding-bottom: 3px;">
                                                         {{relatedRep.ReportName}}
                                                     </div>
                                                 </td>
-                                                <td [hidden]="relatedRep.StatusCode!=='D'" style="width: 20px; vertical-align: top;">
-                                                    <img  [title]="'View Report'"  style="width: 20px; height: 22px; cursor: pointer;" src="./Images/Split/view-report.png" (click)="ViewReport(relatedRep)" />
+                                                <td [hidden]="relatedRep.StatusCode!=='D'"
+                                                    style="width: 20px; vertical-align: top;">
+                                                    <img [title]="'View Report'"
+                                                        style="width: 20px; height: 22px; cursor: pointer;"
+                                                        src="./Images/Split/view-report.png"
+                                                        (click)="ViewReport(relatedRep)" />
                                                 </td>
-                                               
+
                                             </tr>
-                                            
+
                                             <tr>
                                                 <td>
-                                                    <div class="TextTrimming" style="text-align: center; padding-bottom: 3px;">
-                                                     {{'Reconciliations.F.CreatedByUser' | TextCodeTranslationPipe}}: {{relatedRep.CreatedByUserName}}
+                                                    <div class="TextTrimming"
+                                                        style="text-align: center; padding-bottom: 3px;">
+                                                        {{'Reconciliations.F.CreatedByUser' | TextCodeTranslationPipe}}:
+                                                        {{relatedRep.CreatedByUserName}}
                                                     </div>
                                                 </td>
-                                               
-                                                
+
+
                                             </tr>
                                             <tr>
-                                               
+
                                                 <td>
-                                                    <div class="TextTrimming" style="text-align: center; padding-bottom: 3px;">
-                                                        {{'Accounting.General.O.CreateDate' | TextCodeTranslationPipe}}: {{relatedRep.CreateDate | DateTimeToDatePipe}}
+                                                    <div class="TextTrimming"
+                                                        style="text-align: center; padding-bottom: 3px;">
+                                                        {{'Accounting.General.O.CreateDate' | TextCodeTranslationPipe}}:
+                                                        {{relatedRep.CreateDate | DateTimeToDatePipe}}
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                               
+
                                                 <td>
                                                     <div style="margin-right:6px;overflow:hidden">
-                                                       
-                                                        <div class="timeline" *ngIf="relatedRep.StatusCode !== 'F'; else failureTemplate">
-                                                            <div  style="width: 100%;  border: 0.5px solid #3994c3;border-radius:3px">
-                                                              <div class="step-indicator" [style.width.%]="getPercentage(relatedRep.StatusCode)"></div>
+
+                                                        <div class="timeline"
+                                                            *ngIf="relatedRep.StatusCode !== 'F'; else failureTemplate">
+                                                            <div
+                                                                style="width: 100%;  border: 0.5px solid #3994c3;border-radius:3px">
+                                                                <div class="step-indicator"
+                                                                    [style.width.%]="getPercentage(relatedRep.StatusCode)">
+                                                                </div>
                                                             </div>
-                                                             <div class="step-label">
-                                                                {{ relatedRep.StatusName}} ({{ getPercentage(relatedRep.StatusCode) }}%)
-                                                              </div>
-                                                            
+                                                            <div class="step-label">
+                                                                {{ relatedRep.StatusName}} ({{
+                                                                getPercentage(relatedRep.StatusCode) }}%)
+                                                            </div>
+
                                                         </div>
 
-                                                       
-                                                        
-                                                      <ng-template #failureTemplate>
-                                                        <div class="failure-message">
-                                                            <p  class="failed-text" *ngIf="!relatedRep.ExceptionMessage?.startsWith('Stopped manually by')" >Build failed!</p>
-                                                            <p style="text-decoration: line-through;" [title]="relatedRep.ExceptionMessage" *ngIf="relatedRep.ExceptionMessage?.startsWith('Stopped manually by')" class="canceled-text">Canceled</p>
-                                                        </div>
-                                                      </ng-template>
+
+
+                                                        <ng-template #failureTemplate>
+                                                            <div class="failure-message">
+                                                                <p class="failed-text"
+                                                                    *ngIf="!relatedRep.ExceptionMessage?.startsWith('Stopped manually by')">
+                                                                    Build failed!</p>
+                                                                <p style="text-decoration: line-through;"
+                                                                    *ngIf="relatedRep.ExceptionMessage?.startsWith('Stopped manually by')"
+                                                                    class="canceled-text">Canceled</p>
+                                                            </div>
+                                                        </ng-template>
                                                     </div>
-                                                    
+
                                                 </td>
-                                                <td [hidden]="relatedRep.StatusCode=='D' ||relatedRep.StatusCode=='F'" style="width: 1px; vertical-align: top;">
-                                                    <img style="width: 18px;height: 18px;" [title]="'Cancel'"  (click)="CancelReport(relatedRep)" src="./_Resources/Images/Icons/All/BlackDeleteIcon.png"  />                                           
+                                                <td [hidden]="relatedRep.StatusCode=='D' ||relatedRep.StatusCode=='F'"
+                                                    style="width: 1px; vertical-align: top;">
+                                                    <img style="width: 18px;height: 18px;" [title]="'Cancel'"
+                                                        (click)="CancelReport(relatedRep)"
+                                                        src="./_Resources/Images/Icons/All/BlackDeleteIcon.png" />
 
                                                 </td>
 
-                                                     
-                                            
+
+
                                             </tr>
-                                           
+
                                         </table>
                                     </td>
                                 </tr>
 
-                               
+
 
                             </table>
                         </div>
