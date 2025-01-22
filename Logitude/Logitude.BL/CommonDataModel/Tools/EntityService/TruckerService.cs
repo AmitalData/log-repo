@@ -40,6 +40,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
+        private CardService cardService;
 
         public TruckerService(ICommonDataContext objectContext, int tenant)
         {
@@ -51,6 +52,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            cardService = new CardService(objectContext, tenant);
+
             this.GetLoggedContact();
         }
 
@@ -66,6 +69,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
+            cardService = new CardService(objectContext, tenant);
+
         }
 
         private void GetLoggedContact()
@@ -187,6 +192,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
             new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Trucker", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<TruckerPM> { entityPM }.Cast<object>().ToList() }).Update();
+            cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityCard.Tenant);
 
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Trucker");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
