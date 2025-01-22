@@ -468,7 +468,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public List<TasksSchedulerPM> GetAllInprogressTasksSchedulerPMs()
         {
             return (from a in repository.context.TasksSchedulers
-                    where a.Status == "In progress" && a.InActive == false
+                    where a.Status == "In progress" && a.InActive == false 
                     select new TasksSchedulerPM()
                     {
                         Id = a.Id,
@@ -515,8 +515,57 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                     }).ToList();
         }
+		public List<TasksSchedulerPM> GetAllTasksSchedulerNextRunTimePastPMs()
+		{
+			return (from a in repository.context.TasksSchedulers
+					where a.Status == null && a.InActive == false && a.NextRunTime <= DateTime.Now
+					select new TasksSchedulerPM()
+					{
+						Id = a.Id,
+						Tenant = a.Tenant,
+						CreateDateTime = a.CreateDateTime,
+						CreatedBy = a.CreatedBy,
+						Description = a.Description,
+						Friday = a.Friday,
+						InActive = a.InActive,
+						IsLastRunError = a.IsLastRunError,
+						LastRunResult = a.LastRunResult,
+						LastRunStartTime = a.LastRunStartTime,
+						Monday = a.Monday,
+						Name = a.Name,
+						NextRunTime = a.NextRunTime,
+						RepeatInMinutes = a.RepeatInMinutes,
+						Satarday = a.Satarday,
+						ProcedureCode = a.ProcedureCode,
+						StartDateTime = a.StartDateTime,
+						Sunday = a.Sunday,
+						Thursday = a.Thursday,
+						TriggerType = a.TriggerType,
+						Tuesday = a.Tuesday,
+						UpdateDateTime = a.UpdateDateTime,
+						UpdatedBy = a.UpdatedBy,
+						Wednesday = a.Wednesday,
+						Type = a.Type,
+						NextRunTimeUTC = a.NextRunTimeUTC,
+						StartDateTimeUTC = a.StartDateTimeUTC,
+						LastRunStartTimeUTC = a.LastRunStartTimeUTC,
+						Version = a.Version,
+						Status = a.Status,
+						Retries = a.Retries,
+						LastRunEndTime = a.LastRunEndTime,
+						LastRunEndTimeUTC = a.LastRunEndTimeUTC,
+						AverageRunTime = a.AverageRunTime,
+						Duration = a.AverageRunTime,
+						SchedulerDetailsXML = a.SchedulerDetailsXML,
+						EntityId = a.EntityId,
+						ResultType = a.ResultType,
+						Format = a.Format,
+						AdvancedFormat = a.AdvancedFormat,
+						ExecutedByServerName = a.ExecutedByServerName,
 
-        public bool GetIsEntityHasScheduler(string entityId, int tenant)
+					}).ToList();
+		}
+		public bool GetIsEntityHasScheduler(string entityId, int tenant)
         {
 
             bool result = (from a in repository.context.TasksSchedulers
