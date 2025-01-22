@@ -74,7 +74,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                     Uploader up = new Uploader();
                     byte[] imageBytes = null;
                     imageBytes = up.GetPageTiffAsB64FromTarByTenantComIdPage(documentId, tenant, currPage, out TiffPageLines, out ErrorMessage);
-                    if (imageBytes != null)
+					if (imageBytes != null)
                     {
                         Bitmap bmp = GetBitmap(imageBytes);
                         RotateBitmap(bmp,angle);
@@ -87,9 +87,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         var TiffPages = new List<string>(TiffPageLines.Split(new char[] { '\n' }));
                         pageObj.Count = TiffPages.Count - 1;
                     }
+					pageObj.ErrorMessage = ErrorMessage;
 
-                }
-                else
+				}
+				else
                 {
                     currPage = currPage + 1;
                     Uploader up = new Uploader();
