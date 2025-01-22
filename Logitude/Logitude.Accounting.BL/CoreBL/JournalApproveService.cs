@@ -585,6 +585,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     scope.Complete();
 
                 }
+                catch (Exception e)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + e );
+
+
+                }
                 finally
                 {
                     //logger.ToString();
@@ -598,6 +604,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
+
+                
             }
         }
         public void CreateInterestTransactionsByDate(DateTime date)
