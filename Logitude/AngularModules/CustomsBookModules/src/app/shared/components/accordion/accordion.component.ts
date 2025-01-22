@@ -93,7 +93,7 @@ export class AccordionComponent implements OnInit {
     this.tableData3 = {
       columns: [
         { key: 'RequirementValidOrigin', displayName: 'המקור החוקי לדרישה', dataType: 'string', visible: true, width: '120px' },
-        { key: '', displayName: 'נובע מפרק/ פרט', dataType: 'string', visible: false },
+        { key: 'FromEpisodeDetail', displayName: 'נובע מפרק/ פרט', dataType: 'string', visible: true },
         { key: 'RequirementGoodsDescription', displayName: 'תיאור טובין בדרישה/תיאור הזהרות', dataType: 'string', visible: true },
         { key: 'Authority', displayName: 'גורם מאשר (הפניה לאיש קשר)', dataType: 'string', visible: true },
         { key: 'ConfirmationType', displayName: 'סוג אישור', dataType: 'string', visible: true },
