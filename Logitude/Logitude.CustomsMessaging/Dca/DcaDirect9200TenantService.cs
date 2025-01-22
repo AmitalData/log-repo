@@ -37,17 +37,19 @@ namespace Logitude.CustomsMessaging.Dca
         int NumOfMessages;
         private bool _SaveError;
         private static DateTime _LastErrordateTime;
+		private List<string> _AllDcaPreFixByEnvironment;
 
-        public DcaDirect9200TenantService(
+		public DcaDirect9200TenantService(
             CustomsSettingPM costomSetting, List<string> allDcaPreFixWithoutInOutUpper, List<InterfaceTenantDefinitionManagementPM> interfaceListDCA,
-            List<InterfaceTenantDefinitionManagementPM> allInterface, DedicatedCourierDCAModel dedicatedCourierDCAModel)
+            List<InterfaceTenantDefinitionManagementPM> allInterface, DedicatedCourierDCAModel dedicatedCourierDCAModel,List<string> allDcaPreFixByEnvironment)
         {
             this._CustomsSettingPM = costomSetting;
             this._AllDcaPreFixWithoutInOutUpper = allDcaPreFixWithoutInOutUpper;
             this._InterfaceListDCA = interfaceListDCA;
             this._AllInterface = allInterface;
             this._DedicatedCourierDCAModel = dedicatedCourierDCAModel;
-        }
+			this._AllDcaPreFixByEnvironment = allDcaPreFixByEnvironment;
+		}
 
         public Action SetLastActivity { get; set; }
         public Action LogDoneItemInMemoryAction { get; set; }
@@ -177,7 +179,7 @@ namespace Logitude.CustomsMessaging.Dca
                                         
                     var dcaUtil = new DcaFilterByEnvironmentService(); 
                     var res =  dcaUtil
-                        .FilterByEnvironmentOutGoing(_CustomsSettingPM.Tenant, response.OutgoingMessage.ToList());
+                        .FilterByEnvironmentOutGoing(_CustomsSettingPM.Tenant, response.OutgoingMessage.ToList(), _AllDcaPreFixByEnvironment);
                     var outgoingMessageFilterByEnvironment = res.OutgoingMessage;
                     sbFilenameQueue.Enqueue(res.SbLocal.ToString());
 
@@ -267,7 +269,7 @@ namespace Logitude.CustomsMessaging.Dca
                     
                     var dcaUtil = new DcaFilterByEnvironmentService();
                     var resFilterByEnvironmentOutGoing = dcaUtil
-                        .FilterByEnvironmentOutGoing(_CustomsSettingPM.Tenant, response.OutgoingMessage.ToList());
+                        .FilterByEnvironmentOutGoing(_CustomsSettingPM.Tenant, response.OutgoingMessage.ToList(), _AllDcaPreFixByEnvironment);
                     var outgoingMessageFilterByEnvironment = resFilterByEnvironmentOutGoing.OutgoingMessage;
                     sbFilename.AppendLine(resFilterByEnvironmentOutGoing.SbLocal.ToString());
 
