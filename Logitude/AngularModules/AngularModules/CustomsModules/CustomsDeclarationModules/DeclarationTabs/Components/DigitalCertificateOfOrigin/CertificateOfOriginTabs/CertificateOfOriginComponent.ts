@@ -370,7 +370,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     ValidationErrors = [];
     GeneralValidationErrors = [];
     MoreDataValidationErrors = [];
-    
+
     originCriterionListService: OriginCriterionListService = new OriginCriterionListService();
     private _length;
 
@@ -390,17 +390,19 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
 
     async SendButtonClicked(customSendOptionsArgs: any) {
-        
+
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
+        this._length = 0;
 
         this.getOriginCriterionCodesByCooTypeCode().toPromise().then(() => {
-            if (this._length > 0 && AppTool.IsNullOrEmpty(this.EntityPM.CertificateOriginItemItems?.OriginCriterionCode)) {
+
+            if (this._length > 0 && this.EntityPM?.CertificateOriginItemItems.some(x => AppTool.IsNullOrUndefined(x?.OriginCriterionCode) === true)) {
                 this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired"));
             }
         }).then(() => {
- 
+
             if (AppTool.IsNullOrEmpty(this.DecalarationData.DeclarationNumber)) {
                 this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotDeclaration"));
             }
@@ -409,17 +411,17 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 this.checkRequestReasonCode();
                 if (this.SelectedTabCode == "GENERAL") {
                     this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
-    
+
                     this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors);
                 }
                 else if (this.SelectedTabCode == "MOREDATA") {
                     this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
                     this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
-    
+
                     this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors)
                         .concat(this.MoreDataValidationErrors);
                 }
-    
+
                 // check duplicates items: 
                 if (this.ValidationErrors.length > 0) {
                     this.ValidationErrors = Array.from(new Set(this.ValidationErrors));
@@ -436,7 +438,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             }
         }
         );
-        
+
 
         // var generalScreen = "כללי";
         // var moreDataScreen = "נוספים";
