@@ -165,18 +165,13 @@ export class AccordionComponent implements OnInit {
         if (!result) return;
         this.MainEntity.CB_RequirementComputedDataList = result;
         this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList;
-        this.tableData3A.data = this.filterTableData(this.tableData3.data, "חופשי");
-        this.tableData3B.data = this.filterTableData(this.tableData3.data, "אישי");
+        this.tableData3A.data = this.tableData3.data?.filter(item => !item.RequirementValidOrigin.includes("אישי"));
+        this.tableData3B.data = this.tableData3.data?.filter(item => item.RequirementValidOrigin.includes("אישי"));
       },
       (error) => {
         console.log(error.message);
       }
     );
-  }
-
-  filterTableData(data: any[], origin: string) {
-    let list: CB_RequirementComputedDataList[] = data.filter(item => item.RequirementValidOrigin.includes(origin));
-    return list?.length > 0 ? list : [];
   }
 
   // הנחיות סיווג

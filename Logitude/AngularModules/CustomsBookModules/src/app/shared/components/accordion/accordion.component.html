@@ -26,7 +26,7 @@
 	</div>
 </div>
 
-<div class="detailsSlide_box" *ngIf="tableData3?.data?.length > 0 && (tableData3A?.data?.length > 0 && tableData3B?.data?.length > 0)">
+<div class="detailsSlide_box" *ngIf="tableData3?.data?.length > 0 && (tableData3A?.data?.length > 0 || tableData3B?.data?.length > 0)">
 	<div class="detailsSlide_toggle" (click)="expandedArea2 = !expandedArea2">
 		<div>
 			<h3 class="main_title">דרישות חוקיות</h3>
