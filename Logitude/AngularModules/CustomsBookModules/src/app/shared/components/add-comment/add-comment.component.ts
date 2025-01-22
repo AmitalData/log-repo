@@ -35,9 +35,10 @@ export class AddCommentComponent implements OnInit, OnChanges {
     });
     this.addCommentService.itemData.subscribe((data: CB_CustomsItemComputedDataList) => {
 
-      if(!data?.CustomsItemID) return
+      if (!data?.CustomsItemID) return
       this.currentItem = data;
-      this.allCommentCount = this.addCommentService.allComments.getValue().length;
+      // this.allCommentCount = this.addCommentService.allComments.getValue().length;
+      this.allCommentCount = this.currentItem?.remarksClassificationList?.length;
       this.showComments();
     });
 
@@ -91,7 +92,11 @@ export class AddCommentComponent implements OnInit, OnChanges {
           return;
         }
         this.showMessage('הערה נוספה בהצלחה');
-        this.addCommentService.allComments.next([...this.addCommentService.allComments.getValue(), data.body]);
+        //this.addCommentService.allComments.next([...this.addCommentService.allComments.getValue(), data.body]);
+
+        //update fullCommentsData with the new comment
+        this.addCommentService.fullCommentsData.next([...this.addCommentService.fullCommentsData.getValue(), data.body]);
+
       });
     }
     else if (this.addCommentService.CommentMode.getValue() == CommentState.Edit) {
@@ -105,7 +110,14 @@ export class AddCommentComponent implements OnInit, OnChanges {
         }
         this.showMessage('הערה נערכה בהצלחה');
 
-        this.addCommentService.allComments.next([data.body]);
+        //this.addCommentService.allComments.next([data.body]);
+
+        let list = this.addCommentService.fullCommentsData.getValue();
+        let index = list.findIndex(x => x?.CustomsItemsID === data.body?.CustomsItemsID);
+        if (index !== -1) {
+            list[index] = data.body; // Directly update the item
+            this.addCommentService.fullCommentsData.next(list);
+        }
       });
     }
     this.addCommentService.setIsOpened(false);
@@ -145,7 +157,12 @@ export class AddCommentComponent implements OnInit, OnChanges {
           return;
         }
         this.showMessage('הערה נמחקה בהצלחה');
-        this.addCommentService.allComments.next([]);
+        //this.addCommentService.allComments.next([]);
+
+        // delete the comment from the fullCommentsData
+        this.addCommentService.fullCommentsData.next(
+          this.addCommentService.fullCommentsData.getValue()?.filter(x => x.CustomsItemsID !== this.remarksClassificationPM.customsItemsID)
+        );
       });
     }
   }

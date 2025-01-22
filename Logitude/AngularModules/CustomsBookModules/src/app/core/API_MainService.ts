@@ -78,6 +78,11 @@ export class API_MainService extends BaseService {
 		return this.Get(url);
 	}
 
+	GetAllCustomsBookRulesData() {
+		const url = `${this._apiUrl}CB_RuleClassificationExtended/GetAllCustomsBookRulesData`;
+		return this.Get(url);
+	}
+
 	GetCustomsBookMainViewSearchByClassification(filters: Filters) {
 		// if (!this.checkIsFeaturePermessionCustomsBook()) return;
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainViewSearchByClassification`;
@@ -94,6 +99,12 @@ export class API_MainService extends BaseService {
 		const url = `${this._apiUrl}CB_TariffExtended/GetCustomsBookTaxRates?customsItemId=${customsItemId}`;
 		return this.Get(url);
 	}
+
+	GetAllComments( tenant: number) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetAllComments?tenant=${tenant}`;
+		return this.Get(url);
+	}
+	
 	GetAllCommentsByCustomsItemId(customsItemId: number, tenant: number) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetAllCommentsByCustomsItemId?customsItemId=${customsItemId}&tenant=${tenant}`;
 		return this.Get(url);

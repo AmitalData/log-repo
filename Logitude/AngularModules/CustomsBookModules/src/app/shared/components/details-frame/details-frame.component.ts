@@ -5,7 +5,7 @@ import { faSquareCaretRight, faFileText, faSquareCheck, faCommentAlt, faStar, fa
 import { AccordionComponent } from '../accordion/accordion.component';
 import { Output, Input, EventEmitter } from '@angular/core';
 import { CommentsComponent } from '../comments/comments.component';
-import { CB_CustomsItemComputedDataList, ItemData, RemarksClassificationList } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, RemarksClassificationList } from '../main-display/main-display.component';
 import { BehaviorSubject } from 'rxjs';
 import { API_MainService } from '../../../core/API_MainService';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
@@ -54,7 +54,7 @@ export class DetailsFrameComponent implements OnInit {
   ngOnInit() {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
       if (data?.CustomsItemID != null) {
-        this.item = data
+        this.item = data;
 
         this.countOfComments = this.item?.remarksClassificationList?.length > 0 ? this.item?.remarksClassificationList?.length : 0;
         this.addCommentService.allComments.next(this.item?.remarksClassificationList);
@@ -65,9 +65,13 @@ export class DetailsFrameComponent implements OnInit {
           this.showRules = isOpen;
         });
 
-        this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
-          this.countOfComments = data?.length > 0 ? data.length : 0;
-        });
+        // this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
+        //   this.countOfComments = data?.length > 0 ? data.length : 0;
+        // });
+        this.addCommentService.fullCommentsData.subscribe((data: RemarksClassificationList[]) => {
+          this.item.remarksClassificationList = data.filter(x => x.CustomsItemsID == this.item?.CustomsItemID);
+          this.countOfComments = this.item.remarksClassificationList?.length > 0 ? this.item.remarksClassificationList?.length : 0;
+        }); 
       }
     });
   }

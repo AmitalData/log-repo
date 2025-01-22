@@ -192,6 +192,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int ListCounter  { get; set; }
        [DataMember]
        public string VesselName  { get; set; }
+       [DataMember]
+       public string Vessel  { get; set; }
    }
 
 }

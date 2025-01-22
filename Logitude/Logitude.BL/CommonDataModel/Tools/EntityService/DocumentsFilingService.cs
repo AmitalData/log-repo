@@ -381,7 +381,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            this.OpenKPIDocumentUploderQueue(theEntityPm);
+            //this.OpenKPIDocumentUploderQueue(theEntityPm);
             RunDocumentPopulateAutomaticDatesService(theEntityPm);
             RunAutomation(theEntityPm, "OnDocumentUpdate");
             ///move after adding (was Devart.Data.Oracle.OracleException: ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_N1103284768) הופר - מפתח אב לא נמצא )
@@ -833,7 +833,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
 
-            this.OpenKPIDocumentUploderQueue(theEntityPm);
+            //this.OpenKPIDocumentUploderQueue(theEntityPm);
             if (!tenantPM.IsDocumentsArchive)
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
@@ -1028,7 +1028,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
 
-            this.OpenKPIDocumentUploderQueue(theEntityPm);
+            //this.OpenKPIDocumentUploderQueue(theEntityPm);
             this.SendQueueOfEntityDocumnetsToQuickbooks(theEntityPm);
 
             RunDocumentPopulateAutomaticDatesService(theEntityPm);

@@ -762,6 +762,9 @@ namespace Logitude.Customs.BL.BL
                 valid = true;
             }
             LogMessagingUtil.Instance.AppendLine("valid 903:" + valid);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("stack start");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Stack Trace: {Environment.StackTrace}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("stack end");
 
             if (valid)
             {

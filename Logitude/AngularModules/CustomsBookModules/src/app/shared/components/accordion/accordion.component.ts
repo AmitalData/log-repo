@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { GenericTableComponent, TableData } from '../generic-table/generic-table.component';
-import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, ItemData, MainEntity } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, MainEntity } from '../main-display/main-display.component';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { CommonModule, NgStyle } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
@@ -18,8 +18,6 @@ import { ClasisificationGuidanceComponent } from "../clasisification-guidance/cl
   styleUrl: './accordion.component.css',
 })
 export class AccordionComponent implements OnInit {
-  // add input type customs:
-  // @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
   itemData: CB_CustomsItemComputedDataList;
   isShowTableClassificationGuidance: boolean = false;
@@ -28,6 +26,8 @@ export class AccordionComponent implements OnInit {
   tableData1: TableData;
   tableData2: TableData;
   tableData3: TableData;
+  tableData3A: TableData;
+  tableData3B: TableData;
   tableData4: TableData;
   MainEntity: MainEntity = new MainEntity([], [], [], []);
 
@@ -46,7 +46,6 @@ export class AccordionComponent implements OnInit {
 
   ngOnInit() {
     this.InitData();
-
     this.listenToChanges();
   }
 
@@ -108,6 +107,16 @@ export class AccordionComponent implements OnInit {
       ],
       data: []
     };
+    // tableData3 is contain full data of tableData3A and tableData3B:
+    this.tableData3A = {
+      columns: this.tableData3.columns,
+      data: []
+    };
+    this.tableData3B = {
+      columns: this.tableData3.columns,
+      data: []
+    };
+
     this.tableData4 = {
       columns: [
         { key: 'classificationGuidanceNumber', displayName: 'מספר הנחיה', dataType: 'button', visible: true },
@@ -125,6 +134,8 @@ export class AccordionComponent implements OnInit {
     this.tableData1.data = [];
     this.tableData2.data = [];
     this.tableData3.data = [];
+    this.tableData3A.data = [];
+    this.tableData3B.data = [];
     this.tableData4.data = [];
     this.ClassificationGuidanceId.next("");
   }
@@ -154,11 +165,18 @@ export class AccordionComponent implements OnInit {
         if (!result) return;
         this.MainEntity.CB_RequirementComputedDataList = result;
         this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList;
+        this.tableData3A.data = this.filterTableData(this.tableData3.data, "חופשי");
+        this.tableData3B.data = this.filterTableData(this.tableData3.data, "אישי");
       },
       (error) => {
         console.log(error.message);
       }
     );
+  }
+
+  filterTableData(data: any[], origin: string) {
+    let list: CB_RequirementComputedDataList[] = data.filter(item => item.RequirementValidOrigin.includes(origin));
+    return list?.length > 0 ? list : [];
   }
 
   // הנחיות סיווג

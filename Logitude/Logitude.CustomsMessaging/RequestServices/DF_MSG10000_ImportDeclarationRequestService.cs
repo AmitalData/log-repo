@@ -2359,8 +2359,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             declarationImporter.DMExtensions = new DeclarationImporterDMExtensions()
             {
                 
-                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.ImporterAddress, _forbiddenSigns),
-                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.ImporterName, _forbiddenSigns),
+                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars(importerAddress, _forbiddenSigns),
+                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(importerName, _forbiddenSigns),
                 EntitlementTypeCode = new EntitlementTypeCodeType()
                 {
                     Value = declarationPM.MainImporterEntitlemntTypeCode

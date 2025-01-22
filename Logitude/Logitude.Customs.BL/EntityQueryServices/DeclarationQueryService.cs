@@ -2079,25 +2079,51 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 // get all declaration Customs Document
                 var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
+ 
                 var customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
 
-                // determine how many supplier invoices documents had been successfully sent to the mekhes
-                int sentSupplierInvoices = customsDocumentPMList.Where(document => (document.DocumentTypeCode == "380" || document.DocumentTypeCode == "325") && document.DocumentStatusCode == "1").Count();
+ 
+                //// determine how many supplier invoices documents had been successfully sent to the mekhes
+                //int sentSupplierInvoices = customsDocumentPMList.Where(document => (document.DocumentTypeCode == "380" || document.DocumentTypeCode == "325") && document.DocumentStatusCode == "1").Count();
 
-                // get all supplier invoices count of the declaration
-                SupplierInvoiceListQueryService supplierInvoiceQuery = new SupplierInvoiceListQueryService(context);
-                QueryOperations queryOperations = new QueryOperations();
-                queryOperations.SetFilter("DeclarationId", declarationPM.Id, false, "Equals", null, false, false, "string");
-                int declarationSupplierInvoiceCount = supplierInvoiceQuery.GetListCount(queryOperations, declarationPM.Tenant);
+                //// get all supplier invoices count of the declaration
+                //SupplierInvoiceListQueryService supplierInvoiceQuery = new SupplierInvoiceListQueryService(context);
+                //QueryOperations queryOperations = new QueryOperations();
+                //queryOperations.SetFilter("DeclarationId", declarationPM.Id, false, "Equals", null, false, false, "string");
+                //int declarationSupplierInvoiceCount = supplierInvoiceQuery.GetListCount(queryOperations, declarationPM.Tenant);
 
-                // the declaration may be sent if documents about all its supplier invoices have been sent to the mehes and received simuhin
-                declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
+                //// the declaration may be sent if documents about all its supplier invoices have been sent to the mehes and received simuhin
+                //declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
+                declarationReadyForSending = myCustomsDocumentQueryService.checkIfExistTicketsForAllSupplierInvoice(declarationPM);
+
                 if (declarationReadyForSending && declarationPM.ProcedureCurrentCode == "1000041")
-                {
-                    bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
-                    .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
+                 {
+                    if (declarationPM.ProcedureCurrentCode == "1000041")
+                    {
+                        bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
+                        .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
 
-                    return containsAllCodes;
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"contains code: {containsAllCodes}");
+                        return containsAllCodes;
+                    }
+                    else
+                    {
+                        int shtarMitanDocumentCount = customsDocumentsTicketPMList.Where(document => document.DocumentTypeCode == "419" && !string.IsNullOrEmpty(document.CustomsDocId)).Count();
+                        if (shtarMitanDocumentCount == 0)
+                        {
+                            List<CustomsDocumentsTicketPM> customsDocumentsTicketsWithDeclClosingData = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "ExportDeclarationClosingData").ToList();
+                            shtarMitanDocumentCount = customsDocumentsTicketsWithDeclClosingData.Where(document => document.DocumentTypeCode == "419" && !string.IsNullOrEmpty(document.CustomsDocId)).Count();
+                            if (shtarMitanDocumentCount == 0)
+                            {
+                                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("shatr mitan with simukhin not found");
+                                declarationReadyForSending = false;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
                 }
                 /* if need to check for every invoice, the relation between document and invoice is
                  * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */

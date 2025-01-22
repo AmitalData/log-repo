@@ -16,7 +16,7 @@
 				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)">
 				{{ data.CIH_GoodsDescription }}
 			</span>
-			<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search')"
+			<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'); else getMeasurementUnitName"
 				class="item_details">
 				<a> {{TariffListCount }} </a>
 				<a> {{ TariffList1?.CustomsRate }} </a>
@@ -26,12 +26,22 @@
 					TariffList2?.OptionalTaxAddition }} </a>
 				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
 			</div>
+			<ng-template #getMeasurementUnitName>
+				<div *ngIf="!isShowDetailsOpen && level > 3 && data?.MeasurementUnitName "
+					class="item_details">
+					<a> </a>
+					<a> </a>
+					<a> {{ data?.MeasurementUnitName }} </a>
+					<a> </a>
+					<a> </a>
+				</div>
+			</ng-template>
 		</a>
 	</div>
 	<div></div>
 	<div class="mainTable_itemActions" *ngIf="!this.showDetailsOpen.getValue() && !widthSmaller">
 		<ul>
-			<li>
+			<li *ngIf="this.data?.rulesData?.length > 0">
 				<div class="mainTable_itemDocument" (click)="showRulesClick()" (click)="showCommentsClick()">
 					<a class="icon">
 						<i role="img"
