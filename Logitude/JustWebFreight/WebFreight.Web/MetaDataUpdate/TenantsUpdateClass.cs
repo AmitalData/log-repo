@@ -950,7 +950,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                 Dictionary<string, EntityStatus> tenantZeroEntityStatus = TenantZeroEntityStatus;
 
-                Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+                Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).GroupBy(d => d.Code+d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
                 Dictionary<string, EventType> tenantZeroEventTypes;
 
