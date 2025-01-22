@@ -161,14 +161,10 @@ export class AccordionComponent implements OnInit {
   buildRegularityRequirementList() {
     this.API_MainService.GetCustomsBookRegularityRequirementData(this.customsItemId).subscribe(
       (data: any) => {
-        console.log(data.body);
         const result: CB_RequirementComputedDataList[] = data.body;
         if (!result) return;
         this.MainEntity.CB_RequirementComputedDataList = result;
         this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList;
-        console.log(this.tableData3.data);
-        
-        debugger
         this.tableData3A.data = this.tableData3.data?.filter(item => !item.RequirementValidOrigin.includes("אישי"));
         this.tableData3B.data = this.tableData3.data?.filter(item => item.RequirementValidOrigin.includes("אישי"));
       },
