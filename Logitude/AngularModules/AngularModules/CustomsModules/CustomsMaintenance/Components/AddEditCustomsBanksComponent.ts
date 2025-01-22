@@ -28,7 +28,6 @@ import { CardPM } from 'Common/EntityPMs/CardPM';
 
 export class AddEditCustomsBanksComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.CustomBank";
-    public EntityPM: CustomBankPM;
     public CustomBankListService = new CustomBankPMService();
     public AmitalAPIRequestsComponent: AmitalAPIRequestsComponent = new AmitalAPIRequestsComponent();
     private _requiredFields: string[] = ["BankCode", "BranchCode", "AccountNumber", "LocalName", "PayerTypeCode"];
@@ -63,34 +62,33 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
 
     SetWindowArgs(_WindowArgs) {
 
-        this._entityResourceService.getEntityResourceByTableName("Customs.CustomBank").subscribe((response: any) => {
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this.CustomBankListService
-                .get
-                (_WindowArgs)
-                .subscribe((rsp: any) => {
-                    Object.keys(rsp.Result).forEach((key) => {
-                        this.EntityPM[key] = rsp.Result[key]
-                    });
-                    new CardListService().getAll().subscribe((response: any) => {
-                        this.cardsList = response.Result;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        const cardMap = new Map();
+        Object.keys(_WindowArgs.EntityPM).forEach((key) => {
+            this.EntityPM[key] = _WindowArgs.EntityPM[key]
+        })
 
-                        const cardMap = new Map();
-                        this.cardsList.forEach((card) => {
-                            cardMap.set(card.Id, card);
-                        });
+        this.CustomBankPMService.get(this.EntityPM.Id).toPromise().then((response: any) => {
 
-                        this.EntityPM.CustomBanksCards.forEach((Bcard: CustomBanksCardPM) => {
-                            const card = cardMap.get(Bcard.CardId);
-                            this.currentCardList[Bcard.CardId] = card?.Code;
-                            Bcard.CardName = card?.LocalName || card?.EnglishName;
-                        });
+            this.EntityPM = response.Result;
+            this.CustomBankCardItems = new ObservableCollection(response.Result.CustomBanksCards || [])
 
-                        this.CurrentSession.StopBusyIndicator();
-                    });
-
-                    this.CustomBankCardItems = new ObservableCollection(this.EntityPM.CustomBanksCards || [])
+            new CardListService().getAll().toPromise().then((response: any) => {
+                this.cardsList = response.Result;
+                this.cardsList?.forEach((card) => {
+                    cardMap.set(card.Id, card);
                 });
+
+            }).then(() => {
+                response.Result.CustomBanksCards.forEach((Bcard: CustomBanksCardPM) => {
+                    const card = cardMap.get(Bcard.CardId);
+                    this.currentCardList[Bcard.CardId] = card?.Code;
+                    Bcard.CardName = card?.LocalName || card?.EnglishName;
+                });
+
+            }).finally(() => {
+                this.CurrentSession.StopBusyIndicator();
+            });
         })
     }
 
@@ -119,6 +117,7 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
 
 
     OkButtonClicked() {
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         var errors = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
@@ -204,7 +203,7 @@ export class AddEditCustomsBanksComponent extends BaseComponent {
 
     RemoveBankCardLine(card: CustomBanksCardPM) {
         const confirmWindow = new ConfirmWindow();
-        confirmWindow.Show(TextCodeTranslator.Translate("General.O.UnSavedChanges"));
+        confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.Areyousuredeleteline"));
         confirmWindow.WindowClosed.subscribe(() => {
             if (confirmWindow.Yes) {
                 if (card != null) {
