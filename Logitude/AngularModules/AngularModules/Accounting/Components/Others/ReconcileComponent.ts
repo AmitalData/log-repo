@@ -887,8 +887,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     //#endregion
 
     //#region Buttons Handlers
+    IsReconcileButtonClicked: boolean = false;
     ReconcilButton(auto: boolean = false) {
-
+        if (!auto) this.IsReconcileButtonClicked = true;
         var errors: string[] = [];
         this.ValidationErrorsList = errors;
 
@@ -1506,11 +1507,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     onDataLoaded(rows: any) {
         if (rows && rows.length > 0) {
             rows.forEach(row => {
+                if (this.IsReconcileButtonClicked && row?.rowData?.IsChecked) {
+                    row.rowData.IsChecked = false;
+                }
                 if (row?.rowData?.IsChecked) {
                     this.PushLine(row?.rowData, row?.rowIndex);
                 }
             });
         }
+        if (this.IsReconcileButtonClicked) this.IsReconcileButtonClicked = false;
         this.MarkIsChecked.emit({ SelectedLines: this.SelectedLines });
         this.RaiseEvent();
 
@@ -1845,6 +1850,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             var _callback: RecoCallback = mm.Result;
 
             if (_callback && _callback.communicationLogId && _callback.communicationLogId != null) {
+                if (this.IsReconcileButtonClicked) this.IsReconcileButtonClicked = false;
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 this.getReconciliationCommunicationLog(_callback);
             }
@@ -1874,6 +1880,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 }
 
                 else {
+                    if (this.IsReconcileButtonClicked) this.IsReconcileButtonClicked = false;
                     if (mm.ErrorsArray.length > 0 && mm.ErrorsArray.find(e => e === "GLAccounts.O.MarkedByAnother")) {
                         this.ValidationErrorsList = mm.ErrorsArray.map(error =>
                             error === "GLAccounts.O.MarkedByAnother" ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother") : error
