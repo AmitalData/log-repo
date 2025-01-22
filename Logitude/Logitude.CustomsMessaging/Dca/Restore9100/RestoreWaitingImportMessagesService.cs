@@ -173,7 +173,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
         private List<NG_9101_MSG_OutgoingMessageResponseOutgoingMessage> FilterOnlyNewImportMessagges(NG_9101_MSG_OutgoingMessageResponse response)
         {
-            var onlyImportMessages = response.OutgoingMessage.Where(r => !r.Filename.Contains("_EX_") && !_AllDcaPreFixByEnvironment.Any(prefix => r.Filename.Contains(prefix))).ToList();
+            var onlyImportMessages = response.OutgoingMessage.Where(r => !r.Filename.Contains("_EX_") && !_AllDcaPreFixByEnvironment.Any(prefix => r.Filename.StartsWith(prefix))).ToList();
 
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"onlyImportMessages-OutgoingMessage == {string.Join(",", onlyImportMessages.Select(x=>x.Filename))}");
 
