@@ -7,6 +7,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityLists;
@@ -139,6 +140,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             TaxReportPM taxReportPM = GetTaxReport(taxReportLinePM.TaxReportId, taxReportLinePM.Tenant);
             List<TaxReportLinePM> taxReportLinesPM = GetTaxReportLines(taxReportLinePM.TaxReportId, taxReportLinePM.Tenant);
 
+            var index = taxReportLinesPM.FindIndex(r => r.Line == taxReportLinePM.Line && r.TaxReportId == taxReportLinePM.TaxReportId && r.Tenant == taxReportLinePM.Tenant);
+            if (index != -1)
+            {
+                taxReportLinesPM[index] = taxReportLinePM;
+            }
+
             TaxReportService.CalculateReportTotals(taxReportPM, taxReportLinesPM);
             SubmitTaxReportChanges(taxReportPM);
         }
@@ -184,7 +191,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private static JournalAdditionalDataPM MapJournalAdditionalDataPM(JournalAdditionalDataPM journalAdditionalDataPM, TaxReportLinePM taxReportLine)
         {
-            journalAdditionalDataPM.TaxReportTransmitStatusCode = taxReportLine.TransmitStatusCode;
+            journalAdditionalDataPM.TaxReportTransmitStatusCode = taxReportLine.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate ? TaxReportLineTransmitStatusValues.Fortransmit : taxReportLine.TransmitStatusCode;
             journalAdditionalDataPM.TaxReportId = taxReportLine.TaxReportId;
             journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
             return journalAdditionalDataPM;
