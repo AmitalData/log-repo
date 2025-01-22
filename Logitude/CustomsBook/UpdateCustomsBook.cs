@@ -145,7 +145,7 @@ namespace CustomsBook
 
             using (HttpClient client = new HttpClient())
             {
-                client.Timeout = TimeSpan.FromMinutes(10);
+                client.Timeout = TimeSpan.FromMinutes(60);
 
                 // Create a cancellation token source
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
