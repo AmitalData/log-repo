@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralLockUpdateClass
    {  		
-		public const string HashString = "dc42fb2a87067769b9823aa80344e0d6";
+		public const string HashString = "259dd33262e2ef6145ff922557e665ad";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -68,7 +68,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    LocalDefaultTextBack_up =  "נעילות",
 			      				    LocalDefaultText =  "BS64:Iteg16LXmdec15XXqiI=",
 			      				    DefaultText =  "General Lock",
-			      				    Code =  "4adc",
+			      				    Code =  "d24c",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -1049,6 +1049,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SessionId",
 					  						ListPropertyPath =  "SessionId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1174,7 +1175,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable GeneralLockObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GeneralLock" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode GeneralLockTextCode_GeneralLockOIsDeleteGeneralLock = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GeneralLock.O.IsDeleteGeneralLock", DefaultText = "Is Delete General Lock",LocalDefaultText = @"BS64:IteU15DXnSDXkNeq15Qg15HXmNeV15cg16nXkdeo16bXldeg15og15zXkdeY15wg15DXqiDXlNeg16LXmdec15Q/Ig==", ObjectTableId = GeneralLockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

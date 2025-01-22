@@ -32,11 +32,38 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             repository = generalLockRepository;
         }
-        
 
-      
+		public GeneralLockPM GetSinglePM(int tenant, string entityId, string objectTableId)
+		{
+			GeneralLockPM generalLockPM = null;
+			GeneralLock generalLock = repository.GetSingleGeneralLock(tenant, entityId, objectTableId);
+			UserRepository userRepository = new UserRepository(tenant);
+			if (generalLock != null)
+			{
+				generalLockPM = new GeneralLockPM()
+				{
 
-        public GeneralLockPM GetSingleGeneralLock(int tenant, string entityId, string objectTableId)
+					CreatedAt = generalLock.CreatedAt,
+					Tenant = generalLock.Tenant,
+					GeneralKey = generalLock.GeneralKey,
+					EntityId1 = generalLock.EntityId1,
+					EntityId2 = generalLock.EntityId2,
+					ObjectTable1 = generalLock.ObjectTable1,
+					ObjectTable2 = generalLock.ObjectTable2,
+					UserId = generalLock.UserId,
+					SessionId = generalLock.SessionId,
+					UserName = userRepository.GetSingleUserById(generalLock.UserId)?.Code,
+
+
+				};
+
+				return generalLockPM;
+			}
+			return null;
+		}
+
+
+		public GeneralLockPM GetSingleGeneralLock(int tenant, string entityId, string objectTableId)
 		{
             GeneralLockPM generalLockPM = null;
             GeneralLock generalLock = repository.GetSingleGeneralLock(tenant, entityId, objectTableId);
@@ -64,5 +91,26 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
             return null;
         }
-    }
+
+		public IQueryable<GeneralLockList> GetIQueryableEntityList(IQueryable<GeneralLock> iQueryable)
+		{
+			IQueryable<GeneralLockList> result = from a in iQueryable//.Include("User").Include("Contact")
+												 select new GeneralLockList()
+												  {
+													  CreatedAt = a.CreatedAt,
+													  Tenant = a.Tenant,
+													  GeneralKey = a.GeneralKey,
+													  EntityId1 = a.EntityId1,
+													  EntityId2 = a.EntityId2,
+													  ObjectTableName1 = a.ObjectTable1.Name,
+													  ObjectTableName2 = a.ObjectTable2.Name,
+													  UserId = a.UserId,
+													  SessionId = a.SessionId,
+													  UserName = a.UsedByUser.Contact.EnglishName,
+													  ObjectTableId1 = a.ObjectTableId1,
+													  ObjectTableId2 = a.ObjectTableId2
+												  };
+			return result;
+		}
+	}
 }

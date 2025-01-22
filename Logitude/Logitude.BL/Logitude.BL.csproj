@@ -889,6 +889,7 @@
     <Compile Include="InfrastructureModel\EntityAMs\EventTypeAM.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationKeyList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\GeneralLockList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EventRemarkList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldsMainObjectList.cs" />

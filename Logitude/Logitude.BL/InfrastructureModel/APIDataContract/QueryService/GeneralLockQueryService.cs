@@ -145,5 +145,19 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 			}
 
 		}
+		public void DeleteGeneralLockByGeneralKey(int tenant, string generalKey)
+		{
+			var repo = new GeneralLockRepository(tenant);
+
+			using (var scope = TransactionFactory.GetTransaction())
+			{
+				
+				repo.FastDeleteGeneralLockByGeneralKey(tenant, generalKey);
+
+				repo.SubmitChanges();
+				scope.Complete();
+			}
+
+		}
 	}
 }

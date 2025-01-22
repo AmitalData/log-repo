@@ -2951,7 +2951,7 @@ export class MaintenanceComponent {
                     logitudeWindow.Title = 'General Lock'
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 650;
-                    logitudeWindow.Width = 800;
+                    logitudeWindow.Width = 900;
 
                     logitudeWindow.Show(
                         './Infrastructure/Components/Maintenance/GeneralLockComponent'

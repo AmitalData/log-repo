@@ -84,6 +84,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 			(context as DbContextBase)
 				.DeleteWhere<GeneralLock>(rec => rec.Tenant == tenant && rec.SessionId.Contains(sessionId));
 		}
+		public void FastDeleteGeneralLockByGeneralKey(int tenant, string generalKey)
+		{
+			(context as DbContextBase)
+				.DeleteWhere<GeneralLock>(rec => rec.Tenant == tenant && rec.GeneralKey == generalKey);
+		}
+		public IQueryable<GeneralLock> GetGeneralLocks(int tenant)
+		{
+			return context.GeneralLocks;
+		}
 		public IQueryable<GeneralLock> GetGeneralLocks()
         {
             return context.GeneralLocks;
