@@ -27,11 +27,23 @@
 					TariffList2?.OptionalTaxAddition }} </a>
 				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
 			</div>-->
-			<div *ngIf="!isShowDetailsOpen" class="item_details">
-				<a *ngIf="data?.PurchaseTax"> {{ data?.PurchaseTax }} </a>
-				<a *ngIf="data?.MeasurementUnitName"> {{ data?.MeasurementUnitName }} </a>
-				<a *ngIf="data?.CustomsRate"> {{ data?.CustomsRate }} </a>
-				<a *ngIf="data?.OptionalTaxAddition"> {{ data?.OptionalTaxAddition }} </a>
+			<div *ngIf="!isShowDetailsOpen && !(!data?.PurchaseTax && !data?.MeasurementUnitName && !data?.CustomsRate && !data?.OptionalTaxAddition)" class="item_details">
+				<a *ngIf="data?.PurchaseTax; else emptyPurchaseTax"> {{ data?.PurchaseTax }} </a>
+				<ng-template #emptyPurchaseTax>
+					<a></a>
+				</ng-template>
+				<a *ngIf="data?.MeasurementUnitName; else emptyMeasurementUnitName"> {{ data?.MeasurementUnitName }} </a>
+				<ng-template #emptyMeasurementUnitName>
+					<a></a>
+				</ng-template>
+				<a *ngIf="data?.CustomsRate; else emptyCustomsRate"> {{ data?.CustomsRate }} </a>
+				<ng-template #emptyCustomsRate>
+					<a></a>
+				</ng-template>
+				<a *ngIf="data?.OptionalTaxAddition; else emptyOptionalTaxAddition"> {{ data?.OptionalTaxAddition }} </a>
+				<ng-template #emptyOptionalTaxAddition>
+					<a></a>
+				</ng-template>
 			</div>
 		</a>
 	</div>

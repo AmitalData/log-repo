@@ -223,8 +223,8 @@ export class DataRowComponent implements OnInit {
 
 	showCommentsClick() {
 		this.showComments = !this.showComments;
-		this.data.remarksClassificationList = this.comments;
-		// this.data.agreementsList = this.TariffListData;
+		this.data.remarksClassificationList = this.comments; 
+    // this.data.agreementsList = this.TariffListData;#114817
 		this.showCommentsOpen.emit(true);
 		this.showDetails.emit();
 	}
