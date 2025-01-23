@@ -88,53 +88,54 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
 
                     int recocount = 0;
-                    //var taxrepnum = taxReportPM.TaxReportNumber;
                     JournalQueryService journalQueryService = new JournalQueryService(tenant);
-                    JournalPM journalPM = journalQueryService.GetByAccountingEntityIdAndAccountingEntityCode(taxReportId, "13", tenant); // 13 is tax report;
-                    if (journalPM != null)
+                    JournalPM closingJournalPM = journalQueryService.GetByAccountingEntityIdAndAccountingEntityCode(taxReportId, "13", tenant); // 13 is tax report;
+                    if (closingJournalPM != null)
                     {
-                        List<string> jIds = reconciledLines.Select(rl => rl.JournalId).Distinct().ToList();
-                        if (jIds != null && jIds.Count > 0)
+                        // First, get all recos of the closingJournalPM
+                        IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+                        LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
+                        List<ReconciliationPM> Reconciliations = transactionsQuery.GetReconciliationsByJournalId(closingJournalPM.Id, tenant);
+                        if (Reconciliations != null && Reconciliations.Count > 0)
                         {
-                            foreach (var jrnlId in jIds)
+                            // Then, cancel those recos
+                            recocount = Reconciliations.Count;
+                            ReconciliationUpdateService service = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                            foreach (var item in Reconciliations)
                             {
-                                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                                LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
-                                List<ReconciliationPM> Reconciliations = transactionsQuery.GetReconciliationsByJournalId(jrnlId, tenant);
-                                if (Reconciliations != null && Reconciliations.Count > 0)
+                                if (item != null && !item.IsCancelled)
                                 {
-                                    recocount = Reconciliations.Count;
-                                    ReconciliationUpdateService service = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                                    foreach (var item in Reconciliations)
+                                    try
                                     {
-                                        if (item != null && !item.IsCancelled)
+                                        List<string> refs = item.SearchFields.Split(',').ToList();
+                                        if (refs != null && refs.Count > 2
+                                            && refs.ElementAt(1).Trim() == closingJournalPM.JournalNumber
+                                            && refs.ElementAt(2).Trim() == taxReportPM.TaxReportNumber)
                                         {
-                                            try
-                                            {
-                                                List<string> refs = item.SearchFields.Split(',').ToList();
-                                                if (refs != null && refs.Count > 2
-                                                    && refs.ElementAt(1).Trim() == journalPM.JournalNumber
-                                                    && refs.ElementAt(2).Trim() == taxReportPM.TaxReportNumber)
-                                                {
-                                                    item.IsCancelled = true;
-                                                    service.InitializeEntityPM(item);
-                                                    item.ChangeSetOp = ChangeSetOperation.Update;
-                                                    service.Update(item, true);
-                                                    reco_cancelled += 1;
-                                                }
-                                            }
-                                            catch (Exception)
-                                            {
-                                                throw;
-                                            }
+                                            item.IsCancelled = true;
+                                            service.InitializeEntityPM(item);
+                                            item.ChangeSetOp = ChangeSetOperation.Update;
+                                            service.Update(item, true);
+                                            reco_cancelled += 1;
                                         }
+                                    }
+                                    catch (Exception)
+                                    {
+                                        throw;
                                     }
                                 }
                             }
                         }
-                        if (reco_cancelled == recocount) skip_other_checks = true;
-                    }
 
+                        List<string> jIds = reconciledLines.Select(rl => rl.JournalId).Distinct().ToList();
+                        if (jIds != null && jIds.Count > 0)  
+                        {
+                            if (!jIds.Any(id => id != closingJournalPM.Id) && reco_cancelled == recocount) // no other journals in reconciledLines, and we just cancelled all the recos
+                            {
+                                skip_other_checks = true;
+                            }
+                        }
+                    }
                 }
             }
             if (!skip_other_checks)
