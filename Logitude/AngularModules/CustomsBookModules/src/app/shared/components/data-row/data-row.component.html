@@ -27,23 +27,12 @@
 					TariffList2?.OptionalTaxAddition }} </a>
 				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
 			</div>-->
-			<div *ngIf="!isShowDetailsOpen && !(!data?.PurchaseTax && !data?.MeasurementUnitName && !data?.CustomsRate && !data?.OptionalTaxAddition)" class="item_details">
-				<a *ngIf="data?.PurchaseTax; else emptyPurchaseTax"> {{ data?.PurchaseTax }} </a>
-				<ng-template #emptyPurchaseTax>
-					<a></a>
-				</ng-template>
-				<a *ngIf="data?.MeasurementUnitName; else emptyMeasurementUnitName"> {{ data?.MeasurementUnitName }} </a>
-				<ng-template #emptyMeasurementUnitName>
-					<a></a>
-				</ng-template>
-				<a *ngIf="data?.CustomsRate; else emptyCustomsRate"> {{ data?.CustomsRate }} </a>
-				<ng-template #emptyCustomsRate>
-					<a></a>
-				</ng-template>
-				<a *ngIf="data?.OptionalTaxAddition; else emptyOptionalTaxAddition"> {{ data?.OptionalTaxAddition }} </a>
-				<ng-template #emptyOptionalTaxAddition>
-					<a></a>
-				</ng-template>
+			<div *ngIf="!isShowDetailsOpen && !(!data?.PurchaseTax && !data?.MeasurementUnitName && !data?.CustomsRate && !data?.OptionalTaxAddition)"
+				class="item_details">
+				<a>{{ data?.PurchaseTax ?? '-' }}</a>
+				<a>{{ data?.MeasurementUnitName ?? '-' }}</a>
+				<a>{{ data?.CustomsRate ?? '-' }}</a>
+				<a>{{ data?.OptionalTaxAddition ?? '-' }}</a>
 			</div>
 		</a>
 	</div>
@@ -69,7 +58,8 @@
 			<li *ngIf="countOfComments > 0; else newComment">
 				<div class="mainTable_itemComment" (click)="showCommentsClick()">
 					<a class="icon" aria-expanded="true">
-						<i role="img" [ngClass]="isSelected || isSearchItemExistRemark? 'icon-comment_full' : 'icon-comment'"></i>
+						<i role="img"
+							[ngClass]="isSelected || isSearchItemExistRemark? 'icon-comment_full' : 'icon-comment'"></i>
 						<!-- <i role="img" [ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i> -->
 					</a>
 					<span class="countOfComments">{{ countOfComments }}</span>
