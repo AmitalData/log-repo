@@ -13,6 +13,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -288,7 +289,7 @@ namespace CommunicationWorkerRole
 		private void TasksSchedulerToQueue()
 		{
 			IsUpdating = true;
-			var objectContext = WebFreightContext.GetContext(General.GetTenantDB());
+			var objectContext = WebFreightContext.GetContext(SettingUtil.GetTenantDBFromConfig());
 			TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
 			TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
 			List<TasksSchedulerPM> NextRunTimePastTasks = TasksSchedulerQuery.GetAllTasksSchedulerNextRunTimePastPMs();
