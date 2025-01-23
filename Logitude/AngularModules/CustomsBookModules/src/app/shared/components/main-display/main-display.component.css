@@ -353,7 +353,6 @@ a.searchResults_filterPop_clear {
 }
 
 
-
 @media (max-width: 1350px) {
 	.mainTable_list .data_row_container {
 		min-width: 46%;
@@ -383,3 +382,22 @@ a.searchResults_filterPop_clear {
 		width: 100%;
 	}
 }
+/* #114428 fix responsive */
+@media (max-width: 740px) {
+	.mainTable_list .details_frame_container.active {
+		width: 100%;
+	}
+}
+
+@media (min-width: 741px) and (max-width: 1399px) {
+	.mainTable_list .details_frame_container.active {
+		width: 54%;
+	}
+}
+
+@media (min-width: 1400px) {
+	.mainTable_list .details_frame_container.active {
+		width: 70%;
+	}
+}
+

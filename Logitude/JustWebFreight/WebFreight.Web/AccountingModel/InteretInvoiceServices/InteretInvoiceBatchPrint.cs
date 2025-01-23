@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.InterestService.HelperClasses;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
@@ -160,7 +161,22 @@ namespace Logitude.Accounting.BL.InterestService
             DocumentOutCopy copy = GetDocumentCopyByCode(commonContext, (int)tenant, documentOutId, documentCode);
             if (copy != null && documentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && documentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
             {
-                copy = GetDocumentCopyByCode(commonContext, (int)tenant, documentOutId, "999G1");
+                bool print999G1copy = true;
+
+                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery((int)tenant);
+                var aRInvoice = aRInvoiceQuery.GetSingleARInvoice(invoiceId, (int)tenant);
+                if (aRInvoice != null)
+                {
+                    string signStatus = aRInvoice.IsSigned;
+                    if (signStatus == "1" || signStatus == "3" || signStatus == "4")
+                    {
+                        print999G1copy = false;  // print current 'copy' value, i. e. with documentCode
+                    }
+                }
+                if (print999G1copy)
+                {
+                    copy = GetDocumentCopyByCode(commonContext, (int)tenant, documentOutId, "999G1");
+                }
             }
             if (copy == null)
             {
@@ -339,7 +355,24 @@ namespace Logitude.Accounting.BL.InterestService
 
                     if (copy!=null &&( string.IsNullOrEmpty(aRInvoice?.IsSigned)|| aRInvoice?.IsSigned=="0") && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
                     {
-                        copy = GetDocumentCopyByCode(commonContext,(int)tenant, documentOutId, "999G1");
+                        bool print999G1copy = true;
+
+                        ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery((int)tenant);
+                        var aRInvoice = aRInvoiceQuery.GetSingleARInvoice(SelectId, (int)tenant);
+
+                        if (aRInvoice != null)
+                        {
+                            string signStatus = aRInvoice.IsSigned;
+                            if (signStatus == "1" || signStatus == "3" || signStatus == "4")
+                            {
+                                print999G1copy = false;  // print current 'copy' value, i. e. with DocumentCode
+                            }
+                        }
+                        
+                        if (print999G1copy)
+                        {
+                            copy = GetDocumentCopyByCode(commonContext, (int)tenant, documentOutId, "999G1");
+                        }
                     }
                     if (copy == null)
                     {
