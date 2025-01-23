@@ -583,8 +583,8 @@ export interface CB_CustomsItemComputedDataList {
 	PH_IsCarItem?: boolean;
 	FullGoodsDescription: string;
 	Agreements?: number;
-	CustomsRate: string;
-	PurchaseTax: string;
+	CustomsRate: string; // ממס קניה
+	PurchaseTax: string; // מכס כללי
 	OptionalTaxAddition?: number;
 	MeasurementUnitName: string;
 	Remarks: string;

@@ -16,8 +16,9 @@
 				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)">
 				{{ data.CIH_GoodsDescription }}
 			</span>
-			<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'); else getMeasurementUnitName"
-				class="item_details">
+			<!--#114817-->
+			<!--<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'); else getMeasurementUnitName"
+				class	="item_details">
 				<a> {{TariffListCount }} </a>
 				<a> {{ TariffList1?.CustomsRate }} </a>
 				<a> {{ TariffList1?.MeasurementUnitName }} </a>
@@ -25,17 +26,13 @@
 				<a *ngIf="TariffList2?.OptionalTaxAddition"> {{
 					TariffList2?.OptionalTaxAddition }} </a>
 				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
+			</div>-->
+			<div *ngIf="!isShowDetailsOpen" class="item_details">
+				<a *ngIf="data?.PurchaseTax"> {{ data?.PurchaseTax }} </a>
+				<a *ngIf="data?.MeasurementUnitName"> {{ data?.MeasurementUnitName }} </a>
+				<a *ngIf="data?.CustomsRate"> {{ data?.CustomsRate }} </a>
+				<a *ngIf="data?.OptionalTaxAddition"> {{ data?.OptionalTaxAddition }} </a>
 			</div>
-			<ng-template #getMeasurementUnitName>
-				<div *ngIf="!isShowDetailsOpen && level > 3 && data?.MeasurementUnitName "
-					class="item_details">
-					<a> </a>
-					<a> </a>
-					<a> {{ data?.MeasurementUnitName }} </a>
-					<a> </a>
-					<a> </a>
-				</div>
-			</ng-template>
 		</a>
 	</div>
 	<div></div>
@@ -58,7 +55,7 @@
 				</div>
 			</li> -->
 			<li *ngIf="countOfComments > 0; else newComment">
-				<div class="mainTable_itemComment" (click)="showCommentsClick()" >
+				<div class="mainTable_itemComment" (click)="showCommentsClick()">
 					<a class="icon" aria-expanded="true">
 						<i role="img" [ngClass]="isSelected || isSearchItemExistRemark? 'icon-comment_full' : 'icon-comment'"></i>
 						<!-- <i role="img" [ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i> -->
