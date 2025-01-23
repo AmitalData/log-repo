@@ -335,9 +335,9 @@ namespace Logitude.Accounting.BL.InterestService
 
 
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery((int)tenant);
-                aRInvoice=(from a in invoiceContext.ARInvoices
-                           where a.Id == SelectId
-                           select a).FirstOrDefault();
+                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery((int)tenant);
+
+                aRInvoice = aRInvoiceQuery.GetSingleARInvoice(SelectId, (int)tenant);
 
                 doucmentOut = (from a in commonContext.DocumentOuts
                                join docFile in commonContext.DocumentsFilings on a.Id equals docFile.Id
@@ -357,11 +357,7 @@ namespace Logitude.Accounting.BL.InterestService
                     if (copy!=null &&( string.IsNullOrEmpty(aRInvoice?.IsSigned)|| aRInvoice?.IsSigned=="0") && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
                     {
                         bool print999G1copy = true;
-
-                        ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery((int)tenant);
-                        var aRInvoice = aRInvoiceQuery.GetSingleARInvoice(SelectId, (int)tenant);
-
-                        if (aRInvoice != null)
+                         if (aRInvoice != null)
                         {
                             string signStatus = aRInvoice.IsSigned;
                             if (signStatus == "1" || signStatus == "3" || signStatus == "4")
