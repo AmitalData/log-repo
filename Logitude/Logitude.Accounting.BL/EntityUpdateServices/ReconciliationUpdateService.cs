@@ -338,11 +338,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
             {
-                throw new ApplicationException("Delete Reconciliation Is not allowed (try to Cancell)");
+                throw new ApplicationException("Delete Reconciliation Is not allowed (try to cancel)");
             }
             if (entityPOCO.IsCancelled)
             {
-                throw new ApplicationException("Reconciliation Is Cancelled (update not allowed)");
+                throw new ApplicationException("Reconciliation " + entityPOCO.Number + " is Cancelled (update not allowed)");
             }
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
@@ -352,7 +352,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else
                 {
-                    throw new ApplicationException("Updating Reconciliation allowed only to cancell");
+                    throw new ApplicationException("Updating Reconciliation allowed only to cancel");
                 }
             }
             //if (_CancelledAction == true)
