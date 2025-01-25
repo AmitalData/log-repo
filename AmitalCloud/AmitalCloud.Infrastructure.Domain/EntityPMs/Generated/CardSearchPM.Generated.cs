@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CardSearchPM : BaseEntityPM   {
+   #region Constructors
+   public CardSearchPM() : base() {} 
+   public CardSearchPM(CardSearch entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_recordDate = entity.RecordDate;
+		_keyword = entity.Keyword;
+		_weight = entity.Weight;
+		_cardId = entity.CardId;
+		_partnerTypeId = entity.PartnerTypeId;
+		_inActive = entity.InActive;
+		_isCustomer = entity.IsCustomer;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -167,4 +184,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

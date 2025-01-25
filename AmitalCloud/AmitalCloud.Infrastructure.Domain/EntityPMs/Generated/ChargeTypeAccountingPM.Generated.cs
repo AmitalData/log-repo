@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,24 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ChargeTypeAccountingPM : BaseEntityPM   {
+   #region Constructors
+   public ChargeTypeAccountingPM() : base() {} 
+   public ChargeTypeAccountingPM(ChargeTypeAccounting entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_vatTypeId = entity.VatTypeId;
+		_chargeTypeId = entity.ChargeTypeId;
+		_payableDebitAccount = entity.PayableDebitAccount;
+		_receivableCreditAccount = entity.ReceivableCreditAccount;
+		_changeSetOp = default;
+		_vatTypeName = default;
+		_chargeTypeName = default;
+		_payableDebitGLAcountId = entity.PayableDebitGLAcountId;
+		_receivableCreditGLAccountId = entity.ReceivableCreditGLAccountId;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -199,4 +218,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

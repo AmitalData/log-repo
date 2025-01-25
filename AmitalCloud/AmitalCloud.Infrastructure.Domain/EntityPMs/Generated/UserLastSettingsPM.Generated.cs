@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class UserLastSettingsPM : BaseEntityPM   {
+   #region Constructors
+   public UserLastSettingsPM() : base() {} 
+   public UserLastSettingsPM(UserLastSettings entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_userId = entity.UserId;
+		_controlNameSpace = entity.ControlNameSpace;
+		_filterName = entity.FilterName;
+		_filterValue = entity.FilterValue;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -119,4 +133,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DWObjectTableList
+   public partial class DWObjectTableList   
    {
+       #region Constructors
+       public DWObjectTableList() : base() {}
+       public DWObjectTableList(DWObjectTable entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Name  = entity.Name;
+          Code  = entity.Code;
+          TypeCode  = entity.TypeCode;
+          IsClosed  = entity.IsClosed;
+          DefaultFilterBy  = entity.DefaultFilterBy;
+          DataViewName  = entity.DataViewName;
+          HasPivotColumn  = entity.HasPivotColumn;
+          PivotFieldCode  = entity.PivotFieldCode;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string Id  { get; set; }
        [DataMember]
@@ -41,6 +59,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool HasPivotColumn  { get; set; }
        [DataMember]
        public string PivotFieldCode  { get; set; }
+         #endregion Properties
    }
 
 }

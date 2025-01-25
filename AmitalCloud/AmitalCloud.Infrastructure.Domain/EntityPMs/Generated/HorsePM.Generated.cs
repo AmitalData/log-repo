@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,35 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class HorsePM : BaseEntityPM   {
+   #region Constructors
+   public HorsePM() : base() {} 
+   public HorsePM(Horse entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_updateDate = entity.UpdateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_searchFields = entity.SearchFields;
+		_name = entity.Name;
+		_yearOfBirth = entity.YearOfBirth;
+		_color = entity.Color;
+		_genderName = default;
+		_breed = entity.Breed;
+		_discipline = entity.Discipline;
+		_travelBehavior = entity.TravelBehavior;
+		_micochipNumber = entity.MicochipNumber;
+		_passportNumber = entity.PassportNumber;
+		_countryOfBirthId = entity.CountryOfBirthId;
+		_currentStable = entity.CurrentStable;
+		_owner = entity.Owner;
+		_remarks = entity.Remarks;
+		_inactive = entity.Inactive;
+		_genderCode = entity.GenderCode;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -375,4 +405,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

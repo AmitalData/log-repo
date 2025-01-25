@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,23 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class SATInterfaceSettingPM : BaseEntityPM   {
+   #region Constructors
+   public SATInterfaceSettingPM() : base() {} 
+   public SATInterfaceSettingPM(SATInterfaceSetting entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_sATInterfaceCode = entity.SATInterfaceCode;
+		_token = entity.Token;
+		_sATInterfaceName = default;
+		_activationDate = entity.ActivationDate;
+		_metodoPagoCode = entity.MetodoPagoCode;
+		_isARInvoiceTransferEnabled = entity.IsARInvoiceTransferEnabled;
+		_isCartaPorteTransferEnabled = entity.IsCartaPorteTransferEnabled;
+		_sATCompanyName = entity.SATCompanyName;
+		_transferExpenseCharges = entity.TransferExpenseCharges;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -183,4 +201,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ChargesGroupList
+   public partial class ChargesGroupList   
    {
+       #region Constructors
+       public ChargesGroupList() : base() {}
+       public ChargesGroupList(ChargesGroup entity) : base()
+       {
+          SearchFields  = entity.SearchFields;
+          Code  = entity.Code;
+          Name  = entity.Name;
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          LocalName  = entity.LocalName;
+          ViewOrder  = entity.ViewOrder;
+          QuoteGroupSectionID  = entity.QuoteGroupSectionID;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
@@ -37,6 +53,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int ViewOrder  { get; set; }
        [DataMember]
        public string QuoteGroupSectionID  { get; set; }
+         #endregion Properties
    }
 
 }

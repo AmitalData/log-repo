@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class PackageList
+   public partial class PackageList   
    {
+       #region Constructors
+       public PackageList() : base() {}
+       public PackageList(Package entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          FeaturePackageTypeCode  = entity.FeaturePackageTypeCode;
+          InActive  = entity.InActive;
+            FeaturePackageTypeName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool InActive  { get; set; }
        [DataMember]
        public string FeaturePackageTypeName  { get; set; }
+         #endregion Properties
    }
 
 }

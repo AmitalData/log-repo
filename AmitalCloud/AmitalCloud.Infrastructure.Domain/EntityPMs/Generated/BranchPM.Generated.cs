@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,34 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class BranchPM : BaseEntityPM   {
+   #region Constructors
+   public BranchPM() : base() {} 
+   public BranchPM(Branch entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_code = entity.Code;
+		_notes = entity.Notes;
+		_searchFields = entity.SearchFields;
+		_englishName = entity.EnglishName;
+		_localName = entity.LocalName;
+		_computedLocalName = default;
+		_inActive = entity.InActive;
+		_isSecured = default;
+		_isHybrid = default;
+		_partnerCode = default;
+		_addressId = entity.AddressId;
+		_externalId = entity.ExternalId;
+		_signature = entity.Signature;
+		_iNTTRAId = entity.INTTRAId;
+		_iNTTRAContactId = entity.INTTRAContactId;
+		_iNTTRAAlias = entity.INTTRAAlias;
+		_counterCode = entity.CounterCode;
+		_calculatedEnglishName = default;
+		_calculatedLocalName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -359,4 +388,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

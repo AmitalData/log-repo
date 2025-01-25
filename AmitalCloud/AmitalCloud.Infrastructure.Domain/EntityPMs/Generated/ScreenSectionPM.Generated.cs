@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ScreenSectionPM : BaseEntityPM   {
+   #region Constructors
+   public ScreenSectionPM() : base() {} 
+   public ScreenSectionPM(ScreenSection entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_createdByUserId = entity.CreatedByUserId;
+		_name = entity.Name;
+		_screenCode = entity.ScreenCode;
+		_numberOfRows = entity.NumberOfRows;
+		_number = entity.Number;
+		_inactive = entity.Inactive;
+		_relatedScreenCode = entity.RelatedScreenCode;
+		_type = entity.Type;
+		_id = entity.Id;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -183,4 +201,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

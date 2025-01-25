@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,30 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class HelpResourcePM : BaseEntityPM   {
+   #region Constructors
+   public HelpResourcePM() : base() {} 
+   public HelpResourcePM(HelpResource entity) : base()
+   {
+		_code = entity.Code;
+		_name = entity.Name;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_language = entity.Language;
+		_type = entity.Type;
+		_category = entity.Category;
+		_videoURL = entity.VideoURL;
+		_duration = entity.Duration;
+		_fileName = entity.FileName;
+		_searchFields = entity.SearchFields;
+		_isNew = entity.IsNew;
+		_featureCode = entity.FeatureCode;
+		_tenant = entity.Tenant;
+		_file = default;
+		_fileExtension = default;
+		_inactive = entity.Inactive;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _code ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -295,4 +320,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

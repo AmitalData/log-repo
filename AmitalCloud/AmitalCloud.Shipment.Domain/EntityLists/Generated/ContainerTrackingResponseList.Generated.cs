@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ContainerTrackingResponseList
+   public partial class ContainerTrackingResponseList   
    {
+       #region Constructors
+       public ContainerTrackingResponseList() : base() {}
+       public ContainerTrackingResponseList(ContainerTrackingResponse entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          SearchFields  = entity.SearchFields;
+          ContainerTrackingRequestId  = entity.ContainerTrackingRequestId;
+          CommunicationLogId  = entity.CommunicationLogId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string ContainerTrackingRequestId  { get; set; }
        [DataMember]
        public string CommunicationLogId  { get; set; }
+         #endregion Properties
    }
 
 }

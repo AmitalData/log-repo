@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,33 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class MessagingStockPM : BaseEntityPM   {
+   #region Constructors
+   public MessagingStockPM() : base() {} 
+   public MessagingStockPM(MessagingStock entity) : base()
+   {
+		_id = entity.Id;
+		_searchFields = entity.SearchFields;
+		_amount = entity.Amount;
+		_remaining = entity.Remaining;
+		_startDate = entity.StartDate;
+		_endDate = entity.EndDate;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_isCancelled = entity.IsCancelled;
+		_status = default;
+		_notes = entity.Notes;
+		_tenantNumber = entity.TenantNumber;
+		_totalPrice = entity.TotalPrice;
+		_isTotalPriceChanged = default;
+		_isOtherFieldsChanged = default;
+		stockUsageHistories = default;
+		_dummyTenant = default;
+		_stockType = entity.StockType;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -360,4 +388,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

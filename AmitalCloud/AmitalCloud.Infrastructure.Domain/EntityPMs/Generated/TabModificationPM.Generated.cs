@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TabModificationPM : BaseEntityPM   {
+   #region Constructors
+   public TabModificationPM() : base() {} 
+   public TabModificationPM(TabModification entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_name = entity.Name;
+		_tabCode = entity.TabCode;
+		_id = entity.Id;
+		_tabId = entity.TabId;
+		_indexOrder = entity.IndexOrder;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -119,4 +133,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

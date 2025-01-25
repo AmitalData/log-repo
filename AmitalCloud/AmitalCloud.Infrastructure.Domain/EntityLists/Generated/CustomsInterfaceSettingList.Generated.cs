@@ -13,12 +13,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomsInterfaceSettingList
+   public partial class CustomsInterfaceSettingList   
    {
+       #region Constructors
+       public CustomsInterfaceSettingList() : base() {}
+       public CustomsInterfaceSettingList(CustomsInterfaceSetting entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          ActivateCustomsManagementInShipments  = entity.ActivateCustomsManagementInShipments;
+          LocalCustomsInterfaceCode  = entity.LocalCustomsInterfaceCode;
+          ImportToUSAInterfaceCode  = entity.ImportToUSAInterfaceCode;
+          ExportFromUSAInterfaceCode  = entity.ExportFromUSAInterfaceCode;
+          LocalCompanyId  = entity.LocalCompanyId;
+          LocalUserId  = entity.LocalUserId;
+          LocalPassword  = entity.LocalPassword;
+          ArtemusOutSettingsId  = entity.ArtemusOutSettingsId;
+          ArtemusInSettingsId  = entity.ArtemusInSettingsId;
+            CustomsInterfaceCode  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -43,6 +62,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ArtemusInSettingsId  { get; set; }
        [DataMember]
        public string CustomsInterfaceCode  { get; set; }
+         #endregion Properties
    }
 
 }

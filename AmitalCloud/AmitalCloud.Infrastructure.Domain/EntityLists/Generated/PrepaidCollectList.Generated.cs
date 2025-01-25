@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class PrepaidCollectList
+   public partial class PrepaidCollectList   
    {
+       #region Constructors
+       public PrepaidCollectList() : base() {}
+       public PrepaidCollectList(PrepaidCollect entity) : base()
+       {
+          Id  = entity.Id;
+          Name  = entity.Name;
+          DisplayInLOV  = entity.DisplayInLOV;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -29,6 +41,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool DisplayInLOV  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

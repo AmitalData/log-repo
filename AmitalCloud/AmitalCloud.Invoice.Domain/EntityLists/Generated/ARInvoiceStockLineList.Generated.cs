@@ -13,18 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ARInvoiceStockLineList
+   public partial class ARInvoiceStockLineList   
    {
+       #region Constructors
+       public ARInvoiceStockLineList() : base() {}
+       public ARInvoiceStockLineList(ARInvoiceStockLine entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
        public string Id  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+         #endregion Properties
    }
 
 }

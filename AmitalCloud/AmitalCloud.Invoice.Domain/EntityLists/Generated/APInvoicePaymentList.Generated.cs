@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class APInvoicePaymentList
+   public partial class APInvoicePaymentList   
    {
+       #region Constructors
+       public APInvoicePaymentList() : base() {}
+       public APInvoicePaymentList(APInvoicePayment entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          APInvoiceId  = entity.APInvoiceId;
+          APPaymentId  = entity.APPaymentId;
+          ForeignCurrencyId  = entity.ForeignCurrencyId;
+          ForeignAmount  = entity.ForeignAmount;
+          LocalAmount  = entity.LocalAmount;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public double? ForeignAmount  { get; set; }
        [DataMember]
        public double? LocalAmount  { get; set; }
+         #endregion Properties
    }
 
 }

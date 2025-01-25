@@ -29,13 +29,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
             CardContactProductPM entity = (from a in context.CardContactProducts.Include("ProductType")
                                            where a.Tenant == tenant && a.Id == id
-                                           select new CardContactProductPM()
+                                           select new CardContactProductPM(a)
                                            {
-                                               Id = a.Id,
-                                               CardContactId = a.CardContactId,
-                                               ProductTypeCode = a.ProductTypeCode,
-                                               Tenant = a.Tenant,
-                                               ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
+                                                ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
                                            }).FirstOrDefault();
 
             return entity;
@@ -44,16 +40,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public List<CardContactProductPM> GetCardContactProductPMsByCardContactId(string CardContactId, int tenant)
         {
             List<CardContactProductPM> result =
-
                 (from a in context.CardContactProducts.Include("ProductType")
                  where a.Tenant == tenant && a.CardContactId == CardContactId
-                 select new CardContactProductPM()
+                 select new CardContactProductPM(a)
                  {
-                     Id = a.Id,
-                     CardContactId = a.CardContactId,
-                     ProductTypeCode = a.ProductTypeCode,
-                     Tenant = a.Tenant,
-                     ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
+                      ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
                  }).ToList();
 
             return result;

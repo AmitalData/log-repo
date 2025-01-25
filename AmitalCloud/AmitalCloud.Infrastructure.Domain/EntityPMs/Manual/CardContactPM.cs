@@ -9,6 +9,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
     [DataContract]
     public class CardContactPM
     {
+        public CardContactPM()
+        {
+            this.CardContactProducts = new List<CardContactProductPM>();
+            this.CardContactAdditionalServices = new List<CardContactAdditionalServicePM>();
+        }   
+
+
         [Key]
         [DataMember]
         public string Id { get; set; }

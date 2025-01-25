@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BluesnapContractList
+   public partial class BluesnapContractList   
    {
+       #region Constructors
+       public BluesnapContractList() : base() {}
+       public BluesnapContractList(BluesnapContract entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          ContractId  = entity.ContractId;
+          InActive  = entity.InActive;
+          Id  = entity.Id;
+          BluesnapContractTypeCode  = entity.BluesnapContractTypeCode;
+            BluesnapContractTypeName  = default;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string Code  { get; set; }
        [DataMember]
@@ -37,6 +53,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string BluesnapContractTypeCode  { get; set; }
        [DataMember]
        public string BluesnapContractTypeName  { get; set; }
+         #endregion Properties
    }
 
 }

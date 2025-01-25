@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class AWBDescriptionOfGoodsPM : BaseEntityPM   {
+   #region Constructors
+   public AWBDescriptionOfGoodsPM() : base() {} 
+   public AWBDescriptionOfGoodsPM(AWBDescriptionOfGoods entity) : base()
+   {
+		_id = entity.Id;
+		_service = entity.Service;
+		_isTemperatureSensitive = entity.IsTemperatureSensitive;
+		_name = entity.Name;
+		_shortDescriptionOfGoods = entity.ShortDescriptionOfGoods;
+		_searchFields = entity.SearchFields;
+		_airlineCode = entity.AirlineCode;
+		_productCode = entity.ProductCode;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -151,4 +167,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class SchedulerProcedureList
+   public partial class SchedulerProcedureList   
    {
+       #region Constructors
+       public SchedulerProcedureList() : base() {}
+       public SchedulerProcedureList(SchedulerProcedure entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          Description  = entity.Description;
+          IsInternallyDefined  = entity.IsInternallyDefined;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Description  { get; set; }
        [DataMember]
        public bool? IsInternallyDefined  { get; set; }
+         #endregion Properties
    }
 
 }

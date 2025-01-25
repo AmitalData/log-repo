@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class DigitalPortalScreenPM : BaseEntityPM   {
+   #region Constructors
+   public DigitalPortalScreenPM() : base() {} 
+   public DigitalPortalScreenPM(DigitalPortalScreen entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_objectTableId = entity.ObjectTableId;
+		_screenCode = entity.ScreenCode;
+		_name = entity.Name;
+		_content = entity.Content;
+		_draftContent = entity.DraftContent;
+		_profileId = entity.ProfileId;
+		_profileCode = default;
+		_isList = entity.IsList;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -215,4 +235,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,67 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentComputedFieldsList
+   public partial class ShipmentComputedFieldsList   
    {
+       #region Constructors
+       public ShipmentComputedFieldsList() : base() {}
+       public ShipmentComputedFieldsList(ShipmentComputedFields entity) : base()
+       {
+          FirstPickupATD  = entity.FirstPickupATD;
+          Id  = entity.Id;
+          FirstPickupATA  = entity.FirstPickupATA;
+          FinalDeliveryETD  = entity.FinalDeliveryETD;
+          FinalDeliveryETA  = entity.FinalDeliveryETA;
+          FinalDeliveryATD  = entity.FinalDeliveryATD;
+          FinalDeliveryATA  = entity.FinalDeliveryATA;
+          ContainersNumbers  = entity.ContainersNumbers;
+          FirstPickupLocation  = entity.FirstPickupLocation;
+          IsMissingDocuments  = entity.IsMissingDocuments;
+          DocumentsSearchFields  = entity.DocumentsSearchFields;
+          LastDocumentDateTime  = entity.LastDocumentDateTime;
+          MissingDocumentsCount  = entity.MissingDocumentsCount;
+          MissingDocumentsNames  = entity.MissingDocumentsNames;
+          IsRequestedDocuments  = entity.IsRequestedDocuments;
+          RequestedDocumentsCount  = entity.RequestedDocumentsCount;
+          NumberOfHouses  = entity.NumberOfHouses;
+          IsDigitalSignRequired  = entity.IsDigitalSignRequired;
+          IsDepositionRequired  = entity.IsDepositionRequired;
+          Commodity  = entity.Commodity;
+          CreatedFromDigital  = entity.CreatedFromDigital;
+          DeliveryTruckerId  = entity.DeliveryTruckerId;
+          DeliveryTruckerNumber  = entity.DeliveryTruckerNumber;
+          DeliveryDriver  = entity.DeliveryDriver;
+          DeliveryTrailerNumber  = entity.DeliveryTrailerNumber;
+          DeliveryNotes  = entity.DeliveryNotes;
+          PickupTruckerId  = entity.PickupTruckerId;
+          PickupTruckerNumber  = entity.PickupTruckerNumber;
+          PickupDriver  = entity.PickupDriver;
+          PickupTrailerNumber  = entity.PickupTrailerNumber;
+          PickupNotes  = entity.PickupNotes;
+          DeliveryDate  = entity.DeliveryDate;
+          OnHandDate  = entity.OnHandDate;
+          PODDate  = entity.PODDate;
+          BookingConfirmationSent  = entity.BookingConfirmationSent;
+          PreAlertSent  = entity.PreAlertSent;
+          DeliveryNoticeSent  = entity.DeliveryNoticeSent;
+          ExpectedArrivalNoticeSent  = entity.ExpectedArrivalNoticeSent;
+          T1Received  = entity.T1Received;
+          ArrivalNoticeSent  = entity.ArrivalNoticeSent;
+          ContainersNumbersandTypesArray  = entity.ContainersNumbersandTypesArray;
+          MainCarriageETA  = entity.MainCarriageETA;
+          MainCarriageETD  = entity.MainCarriageETD;
+          MainCarriageATA  = entity.MainCarriageATA;
+          MainCarriageATD  = entity.MainCarriageATD;
+          PackagesQuantityAndType  = entity.PackagesQuantityAndType;
+          IsDocumentsNeedApprove  = entity.IsDocumentsNeedApprove;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public DateTime? FirstPickupATD  { get; set; }
 
@@ -115,6 +170,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string PackagesQuantityAndType  { get; set; }
        [DataMember]
        public bool IsDocumentsNeedApprove  { get; set; }
+         #endregion Properties
    }
 
 }

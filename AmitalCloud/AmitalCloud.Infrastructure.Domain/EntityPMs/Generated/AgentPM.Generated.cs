@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,90 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class AgentPM : BaseEntityPM   {
+   #region Constructors
+   public AgentPM() : base() {} 
+   public AgentPM(Agent entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_bankName = default;
+		_bankAddress = default;
+		_swift = default;
+		_accountNumber = default;
+		_iBANNumber = default;
+		_sharedLogisticsInvitationStatusName = default;
+		_cargoTrackingInvitationStatusName = default;
+		_lastLoginDate = default;
+		_enableConsolidationInvoices = default;
+		_cASSCode = entity.CASSCode;
+		_iATACode = entity.IATACode;
+		_regulatedAgentCode = entity.RegulatedAgentCode;
+		_invoiceCurrencyId = default;
+		_vatTypeId = default;
+		_website = default;
+		_code = default;
+		_englishName = default;
+		_localName = default;
+		_computedLocalName = default;
+		_inActive = default;
+		_vatNumber = default;
+		_accountingCard = default;
+		_paymentTermId = default;
+		_notes = default;
+		_isSecured = default;
+		_isHybrid = default;
+		_createDate = default;
+		_updateDate = default;
+		_createdByUserId = default;
+		_updatedByUserId = default;
+		_tenantAddressId = default;
+		_fieldsChanged = default;
+		_cardPMId = default;
+		_existedContactId = default;
+		_partnerTypeId = default;
+		_searchFields = default;
+		_isExternal = default;
+		_primaryContactId = default;
+		_isFirstContactToAdd = default;
+		_cityName = default;
+		_countryId = default;
+		_countryCode = default;
+		_countryName = default;
+		_card = default;
+		addresses = default;
+		contacts = default;
+		cardExternalCodeByCurrencies = default;
+		_sATForeignRFC = default;
+		_metodoPagoCode = default;
+		_usoCFDICode = default;
+		_agentSharedLogisticsKey = entity.AgentSharedLogisticsKey;
+		_isCreditLimitEnabled = entity.IsCreditLimitEnabled;
+		_blockNewInvoiceCreation = entity.BlockNewInvoiceCreation;
+		_blockNewShipmentCreation = entity.BlockNewShipmentCreation;
+		_externalId2 = default;
+		_iRSPlace = default;
+		_iRSNumber = default;
+		_receivablesAccountingCard = default;
+		_payablesAccountingCard = default;
+		_externalAccountingBusinessArea = default;
+		_paymentMethodCode = default;
+		_primaryContactName = entity.PrimaryContactName;
+		_primaryContactEmail = entity.PrimaryContactEmail;
+		_primaryContactPhone = entity.PrimaryContactPhone;
+		_gLAccountId = default;
+		_storageFreeDays = default;
+		_accountingVATSplit = default;
+		_gLAccountNumber = default;
+		_billToId = default;
+		_imageDetailId = default;
+		_regimenFiscalCode = default;
+		_sATReceptorName = default;
+		_exportLocalCustomerGroupId = default;
+		_importLocalCustomerGroupId = default;
+		_eORInumber = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -1462,4 +1547,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,212 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerPM : BaseEntityPM   {
+   #region Constructors
+   public CustomerPM() : base() {} 
+   public CustomerPM(Customer entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_field4 = entity.Field4;
+		_field5 = entity.Field5;
+		_field6 = entity.Field6;
+		_field7 = entity.Field7;
+		_field8 = entity.Field8;
+		_field9 = entity.Field9;
+		_field10 = entity.Field10;
+		_beforeDeactiveStatusCode = entity.BeforeDeactiveStatusCode;
+		_freelancerId = entity.FreelancerId;
+		_logBoxActivated = entity.LogBoxActivated;
+		_invoiceCurrencyId = default;
+		_cityName = default;
+		_lastShipmentDate = entity.LastShipmentDate;
+		_rankId = entity.RankId;
+		_startWorkingManuallySet = entity.StartWorkingManuallySet;
+		_startWorkingDate = entity.StartWorkingDate;
+		_phoneNumber = default;
+		_faxNumber = default;
+		_cityWithCountry = default;
+		_rankCode = default;
+		_billToName = default;
+		_vatTypeId = default;
+		_bankName = default;
+		_bankAddress = default;
+		_swift = default;
+		_accountNumber = default;
+		_iBANNumber = default;
+		_sharedLogisticsInvitationStatusName = default;
+		_cargoTrackingInvitationStatusName = default;
+		_lastLoginDate = default;
+		_invitationDate = default;
+		_creditLimit = entity.CreditLimit;
+		_industryId = entity.IndustryId;
+		_leadSourceId = entity.LeadSourceId;
+		_collectorId = entity.CollectorId;
+		_classifierId = entity.ClassifierId;
+		_industryName = default;
+		_aTTN = default;
+		_createDate = default;
+		_leadDescription = entity.LeadDescription;
+		_collectorName = default;
+		_classifierName = default;
+		_customsAgentId = entity.CustomsAgentId;
+		_forwarderId = entity.ForwarderId;
+		_mediatorId = entity.MediatorId;
+		_city_Potential = default;
+		_address1_Potential = default;
+		_address2_Potential = default;
+		_countryId_Potential = default;
+		_stateId_Potential = default;
+		_zipCode_Potential = default;
+		_phoneNumber_Potential = default;
+		_faxNumber_Potential = default;
+		_aTTN_Potential = default;
+		_leadSourceName = default;
+		_customerStatusName = default;
+		_primaryContactName = entity.PrimaryContactName;
+		_primaryContactPhone = entity.PrimaryContactPhone;
+		_codeMyCustomer = default;
+		_readyForActivationDate = entity.ReadyForActivationDate;
+		_isCustomer = entity.IsCustomer;
+		_customerStatusCode = entity.CustomerStatusCode;
+		_customerProducts = default;
+		_createdByUserId = default;
+		_updatedByUserId = default;
+		_primaryContactId = default;
+		_regionId = entity.RegionId;
+		_regionName = default;
+		_customerSizeId = entity.CustomerSizeId;
+		_countryName = default;
+		_updateDate = default;
+		_lastCallDate = entity.LastCallDate;
+		_lastMeetingDate = entity.LastMeetingDate;
+		_lastOpportunityDate = entity.LastOpportunityDate;
+		_firstInvoiceDate = entity.FirstInvoiceDate;
+		_firstShipmentDate = entity.FirstShipmentDate;
+		_lastQuoteDate = entity.LastQuoteDate;
+		_lastInteractionDate = entity.LastInteractionDate;
+		_countryId = default;
+		_enableConsolidationInvoices = default;
+		_salesmanBusinessUnitId = default;
+		_activityWatch = entity.ActivityWatch;
+		_primaryContactEmail = entity.PrimaryContactEmail;
+		_knownConsignor = entity.KnownConsignor;
+		_kCExpirationDate = entity.KCExpirationDate;
+		_code = default;
+		_englishName = default;
+		_localName = default;
+		_computedLocalName = default;
+		_inActive = default;
+		_accountManagerUserId = entity.AccountManagerUserId;
+		_salesmanUserId = entity.SalesmanUserId;
+		_website = default;
+		_billToId = default;
+		_vatNumber = default;
+		_accountingCard = default;
+		_paymentTermId = default;
+		_accountManagerUserEnglishName = default;
+		_salesmanUserEnglishName = default;
+		_rankName = default;
+		_notes = default;
+		_isSecured = default;
+		_fieldsChanged = default;
+		_partnerTypeId = default;
+		_searchFields = default;
+		_cardPMId = default;
+		_existedContactId = default;
+		_cityCode = default;
+		_countryCode = default;
+		_imageDetailId = default;
+		_isActiveForMobile = default;
+		_isHybrid = default;
+		_freelancerName = default;
+		_forwarderName = default;
+		_customsAgentName = default;
+		_mediatorName = default;
+		_googleAddressString = default;
+		_isExternal = default;
+		_setReActivated = default;
+		_setInActive = default;
+		_setReady = default;
+		_setActivated = default;
+		_eventNote = default;
+		_isLocalLanguage = default;
+		_isFirstContactToAdd = default;
+		_savedForActivation = default;
+		_queueMessageLockToken = default;
+		_questionnaireAnsewrsHtmlString = default;
+		_setAsPotential = default;
+		_updatedByUserCode = default;
+		_card = default;
+		addresses = default;
+		contacts = default;
+		sharedLogisticContacts = default;
+		customerProductActualDatas = default;
+		customerCompetitors = default;
+		customerAdditionalServices = default;
+		salesNotes = default;
+		customerSalesmanByProducts = default;
+		customerAccountManagerByProducts = default;
+		customerCustomsAgentByProducts = default;
+		customerForwarderByProducts = default;
+		customerMediatorByProducts = default;
+		cardExternalCodeByCurrencies = default;
+		_isLogBox = default;
+		_sATForeignRFC = default;
+		_metodoPagoCode = default;
+		_usoCFDICode = default;
+		_activatedByUserId = entity.ActivatedByUserId;
+		_setAsInactiveByUserId = entity.SetAsInactiveByUserId;
+		_activationRequestedByUserId = entity.ActivationRequestedByUserId;
+		_isPrivateLabelCustomer = entity.IsPrivateLabelCustomer;
+		_blockNewInvoiceCreation = entity.BlockNewInvoiceCreation;
+		_blockNewShipmentCreation = entity.BlockNewShipmentCreation;
+		_externalId2 = default;
+		_supportNotes = default;
+		_iRSPlace = default;
+		_iRSNumber = default;
+		_requestedAirlines = default;
+		_registeredAirlines = default;
+		_pendingAirlines = default;
+		_receivablesAccountingCard = default;
+		_payablesAccountingCard = default;
+		_competitorFields = entity.CompetitorFields;
+		_isCreditLimitEnabled = entity.IsCreditLimitEnabled;
+		_creditLimitAmount = entity.CreditLimitAmount;
+		_creditLimitOpenBalance = entity.CreditLimitOpenBalance;
+		_creditLimitWarningPercentage = entity.CreditLimitWarningPercentage;
+		_externalAccountingBusinessArea = default;
+		_paymentMethodCode = default;
+		_activationDate = entity.ActivationDate;
+		_inactiveDate = entity.InactiveDate;
+		_activationRequestDate = entity.ActivationRequestDate;
+		_isCustomerAllowed = default;
+		_customerTenant = default;
+		_mainAddressId = default;
+		_billingAddressId = default;
+		_gLAccountId = default;
+		_lastOpportunitySubject = entity.LastOpportunitySubject;
+		_lastOpportunityStatus = entity.LastOpportunityStatus;
+		_createdByPartner = default;
+		_storageFreeDays = default;
+		_accountingVATSplit = default;
+		_gLAccountNumber = default;
+		_eORInumber = entity.EORInumber;
+		_isAutonomy = default;
+		_insuredcreditLimit = entity.InsuredcreditLimit;
+		_regimenFiscalCode = default;
+		_teamId = entity.TeamId;
+		_teamName = default;
+		_exportLocalCustomerGroupId = entity.ExportLocalCustomerGroupId;
+		_importLocalCustomerGroupId = entity.ImportLocalCustomerGroupId;
+		_sATCustomerName = default;
+		_lastLoginDateViaPC = default;
+		_lastLoginDateViaMobile = default;
+		_cargoTrackingInvitationDate = default;
+		_contactForAccounting = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -3470,4 +3677,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

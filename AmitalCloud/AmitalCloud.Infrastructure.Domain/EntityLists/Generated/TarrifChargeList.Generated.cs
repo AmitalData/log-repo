@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TarrifChargeList
+   public partial class TarrifChargeList   
    {
+       #region Constructors
+       public TarrifChargeList() : base() {}
+       public TarrifChargeList(TarrifCharge entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          TarrifHeaderId  = entity.TarrifHeaderId;
+          CurrencyId  = entity.CurrencyId;
+          ChargesTypeId  = entity.ChargesTypeId;
+          MeasurementId  = entity.MeasurementId;
+          MinPrice  = entity.MinPrice;
+          MaxPrice  = entity.MaxPrice;
+          UnitPrice  = entity.UnitPrice;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public decimal? MaxPrice  { get; set; }
        [DataMember]
        public decimal? UnitPrice  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,24 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentCustomsTransmissionPM : BaseEntityPM   {
+   #region Constructors
+   public ShipmentCustomsTransmissionPM() : base() {} 
+   public ShipmentCustomsTransmissionPM(ShipmentCustomsTransmission entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_shipmentId = entity.ShipmentId;
+		_sentByUserId = entity.SentByUserId;
+		_communicationLogId = entity.CommunicationLogId;
+		_lastSendDate = entity.LastSendDate;
+		_error = entity.Error;
+		_messageCode = entity.MessageCode;
+		_status = entity.Status;
+		_statusName = default;
+		_byUserName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -199,4 +218,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

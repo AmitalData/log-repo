@@ -13,12 +13,126 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CardList
+   public partial class CardList   
    {
+       #region Constructors
+       public CardList() : base() {}
+       public CardList(Card entity) : base()
+       {
+          Id  = entity.Id;
+          BankName  = entity.BankName;
+          BankAddress  = entity.BankAddress;
+          Swift  = entity.Swift;
+          AccountNumber  = entity.AccountNumber;
+          IBANNumber  = entity.IBANNumber;
+          Tenant  = entity.Tenant;
+          Website  = entity.Website;
+          InvoiceCurrencyId  = entity.InvoiceCurrencyId;
+          VatTypeId  = entity.VatTypeId;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          CountryCode  = entity.CountryCode;
+          SalesmanUserId  = entity.SalesmanUserId;
+          IRSPlace  = entity.IRSPlace;
+          IRSNumber  = entity.IRSNumber;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+            PartnerTypeName  = default;
+          SharedLogisticsInvitationStatusCode  = entity.SharedLogisticsInvitationStatusCode;
+            SharedLogisticsInvitationStatusName  = default;
+          InvitationDate  = entity.InvitationDate;
+          CargoTrackingInvitationStatusCode  = entity.CargoTrackingInvitationStatusCode;
+            CargoTrackingInvitationStatusName  = default;
+          CargoTrackingInvitationDate  = entity.CargoTrackingInvitationDate;
+          LastLoginDate  = entity.LastLoginDate;
+          CollectorId  = entity.CollectorId;
+          PrimaryContactId  = entity.PrimaryContactId;
+          IsCustomer  = entity.IsCustomer;
+          CountryId  = entity.CountryId;
+          EnableConsolidationInvoices  = entity.EnableConsolidationInvoices;
+            CASSCode  = default;
+            IATACode  = default;
+          IsActiveForMobile  = entity.IsActiveForMobile;
+            KnownConsignor  = default;
+            RegulatedAgentCode  = default;
+            KCExpirationDate  = default;
+          SearchFields  = entity.SearchFields;
+          Code  = entity.Code;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+          VatNumber  = entity.VatNumber;
+          InActive  = entity.InActive;
+          PaymentTermId  = entity.PaymentTermId;
+          PartnerTypeId  = entity.PartnerTypeId;
+            AccountingCard  = default;
+          Notes  = entity.Notes;
+          CityName  = entity.CityName;
+          CountryName  = entity.CountryName;
+            MainAddressId  = default;
+            SalesmanBusinessUnitId  = default;
+            Prefix  = default;
+            ContactId  = default;
+            PaymentTermName  = default;
+            ICAO  = default;
+            InUse  = default;
+            RecentlyAdded  = default;
+            AirlineAccountNumber  = default;
+            PickupDeliveryAddressId  = default;
+            CustomerStatusCode  = default;
+            CustomerStatusName  = default;
+            SalesmanUserEnglishName  = default;
+            AccountManagerUserName  = default;
+            AccountManagerUserId  = default;
+          UsoCFDICode  = entity.UsoCFDICode;
+          GLAccountId  = entity.GLAccountId;
+            BillingAddressId  = default;
+          Address1  = entity.Address1;
+          Address2  = entity.Address2;
+          IsInternationalPartner  = entity.IsInternationalPartner;
+          IsAutonomy  = entity.IsAutonomy;
+          SATPaymentMethodCode  = entity.SATPaymentMethodCode;
+          ExternalId2  = entity.ExternalId2;
+          SupportNotes  = entity.SupportNotes;
+          ReceivablesAccountingCard  = entity.ReceivablesAccountingCard;
+          PayablesAccountingCard  = entity.PayablesAccountingCard;
+          StateName  = entity.StateName;
+          ExternalAccountingBusinessArea  = entity.ExternalAccountingBusinessArea;
+            GLAccountCurrency  = default;
+            IsCreditLimitEnabled  = default;
+            CreditLimitAmount  = default;
+            CreditLimitOpenBalance  = default;
+            CreditLimitWarningPercentage  = default;
+            BlockNewInvoiceCreation  = default;
+            BlockNewShipmentCreation  = default;
+            FirmCode  = default;
+            CalculatedLocalName  = default;
+            CalculatedEnglishName  = default;
+          CreatedByPartner  = entity.CreatedByPartner;
+          StorageFreeDays  = entity.StorageFreeDays;
+            RankId  = default;
+            IndustryId  = default;
+          AccountingVATSplit  = entity.AccountingVATSplit;
+          UploadingUniqueKey  = entity.UploadingUniqueKey;
+          GLAccountDisplayNumber  = entity.GLAccountDisplayNumber;
+          BillToId  = entity.BillToId;
+            AccountingPartnerCreditLimit  = default;
+          RegimenFiscalCode  = entity.RegimenFiscalCode;
+            TeamId  = default;
+          SATCustomerName  = entity.SATCustomerName;
+          SingleInvoiceTemplateId  = entity.SingleInvoiceTemplateId;
+          CustomsInvoiceTemplateId  = entity.CustomsInvoiceTemplateId;
+          ConsolidationInvoiceTemplateId  = entity.ConsolidationInvoiceTemplateId;
+          ManifestInvoiceTemplateId  = entity.ManifestInvoiceTemplateId;
+          EmailForSendingSingArinvoice  = entity.EmailForSendingSingArinvoice;
+          SendingInterestReport  = entity.SendingInterestReport;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -233,6 +347,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string EmailForSendingSingArinvoice  { get; set; }
        [DataMember]
        public bool SendingInterestReport  { get; set; }
+         #endregion Properties
    }
 
 }

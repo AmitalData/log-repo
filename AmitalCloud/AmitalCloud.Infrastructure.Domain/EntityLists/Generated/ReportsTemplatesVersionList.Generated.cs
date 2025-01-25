@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ReportsTemplatesVersionList
+   public partial class ReportsTemplatesVersionList   
    {
+       #region Constructors
+       public ReportsTemplatesVersionList() : base() {}
+       public ReportsTemplatesVersionList(ReportsTemplatesVersion entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+            InActive  = default;
+            IsSystem  = default;
+          ReportId  = entity.ReportId;
+          TemplateId  = entity.TemplateId;
+          ReportDocumentId  = entity.ReportDocumentId;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          Version  = entity.Version;
+            UpdateByUserName  = default;
+          IsRestored  = entity.IsRestored;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -49,6 +71,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string UpdateByUserName  { get; set; }
        [DataMember]
        public bool IsRestored  { get; set; }
+         #endregion Properties
    }
 
 }

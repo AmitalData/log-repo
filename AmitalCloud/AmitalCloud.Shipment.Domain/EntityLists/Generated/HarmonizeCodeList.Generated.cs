@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class HarmonizeCodeList
+   public partial class HarmonizeCodeList   
    {
+       #region Constructors
+       public HarmonizeCodeList() : base() {}
+       public HarmonizeCodeList(HarmonizeCode entity) : base()
+       {
+          Code  = entity.Code;
+          SearchFields  = entity.SearchFields;
+          Description  = entity.Description;
+          ChapterCode  = entity.ChapterCode;
+          ChapterDescription  = entity.ChapterDescription;
+          SubChapterCode  = entity.SubChapterCode;
+          SubChapterDescription  = entity.SubChapterDescription;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string SubChapterCode  { get; set; }
        [DataMember]
        public string SubChapterDescription  { get; set; }
+         #endregion Properties
    }
 
 }

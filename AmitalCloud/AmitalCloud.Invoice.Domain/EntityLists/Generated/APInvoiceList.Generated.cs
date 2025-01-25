@@ -13,12 +13,116 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class APInvoiceList
+   public partial class APInvoiceList   
    {
+       #region Constructors
+       public APInvoiceList() : base() {}
+       public APInvoiceList(APInvoice entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          RefundAmount  = entity.RefundAmount;
+          Description  = entity.Description;
+          PaymentTermExternalId  = entity.PaymentTermExternalId;
+          IsGeneralInvoice  = entity.IsGeneralInvoice;
+          InternalNumber  = entity.InternalNumber;
+          InvoiceNumber  = entity.InvoiceNumber;
+          VendorId  = entity.VendorId;
+            VendorName  = default;
+          VATNumber  = entity.VATNumber;
+          InvoiceDate  = entity.InvoiceDate;
+          PaymentTermId  = entity.PaymentTermId;
+            PaymentTermName  = default;
+          DueDate  = entity.DueDate;
+          InvoiceCurrencyExchangeRate  = entity.InvoiceCurrencyExchangeRate;
+          ExchangeRateDate  = entity.ExchangeRateDate;
+          InvoiceCurrencyId  = entity.InvoiceCurrencyId;
+            InvoiceCurrencyCode  = default;
+          LocalCurrencyId  = entity.LocalCurrencyId;
+          InternalNotes  = entity.InternalNotes;
+          SubTotalInLocalCurrency  = entity.SubTotalInLocalCurrency;
+          SubTotalInInvoiceCurrency  = entity.SubTotalInInvoiceCurrency;
+          AmountInInvoiceCurrency  = entity.AmountInInvoiceCurrency;
+          AmountInLocalCurrency  = entity.AmountInLocalCurrency;
+          StatusCode  = entity.StatusCode;
+            StatusName  = default;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+            CreatedByUserName  = default;
+          IsClosed  = entity.IsClosed;
+          ProfitCurrencyId  = entity.ProfitCurrencyId;
+            ProfitCurrencyCode  = default;
+          ProfitCurrencyExchangeRate  = entity.ProfitCurrencyExchangeRate;
+          AmountInProfitCurrency  = entity.AmountInProfitCurrency;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+            UpdatedByUserName  = default;
+          UpdateDate  = entity.UpdateDate;
+          MainEntityId  = entity.MainEntityId;
+          MainEntityReference  = entity.MainEntityReference;
+          SearchFields  = entity.SearchFields;
+          AmountDue  = entity.AmountDue;
+          AmountDueInLocalCurrency  = entity.AmountDueInLocalCurrency;
+          AmountDueInProfitCurrency  = entity.AmountDueInProfitCurrency;
+          BranchId  = entity.BranchId;
+            LocalCurrencyCode  = default;
+          HouseNumber  = entity.HouseNumber;
+          MasterNumber  = entity.MasterNumber;
+          TransferTries  = entity.TransferTries;
+          TransferError  = entity.TransferError;
+          IsTransferStarted  = entity.IsTransferStarted;
+          TransferStatusCode  = entity.TransferStatusCode;
+          AccountingExternalCode  = entity.AccountingExternalCode;
+            ReadyForTransfer  = default;
+          CreditAccount  = entity.CreditAccount;
+            TransferStatusName  = default;
+          IsMultipleEntities  = entity.IsMultipleEntities;
+            VendorCode  = default;
+          ApprovedDate  = entity.ApprovedDate;
+            ApprovedByUserName  = default;
+          ApprovedByUserId  = entity.ApprovedByUserId;
+          OperationalDate  = entity.OperationalDate;
+          VendorGLAccountId  = entity.VendorGLAccountId;
+          AccountingDate  = entity.AccountingDate;
+          IsExternalEntity  = entity.IsExternalEntity;
+            APInvoiceTypeName  = default;
+            APInvoiceTypeCode  = default;
+            AmountPaid  = default;
+            IsDueDateColorRed  = default;
+          FirstApproveDate  = entity.FirstApproveDate;
+            JournalNumber  = default;
+            BranchName  = default;
+            VendorLocalName  = default;
+            VendorCity  = default;
+            VendorCountry  = default;
+          CreatedByPartner  = entity.CreatedByPartner;
+          Field1  = entity.Field1;
+          Field2  = entity.Field2;
+          Field3  = entity.Field3;
+          Field4  = entity.Field4;
+          Field5  = entity.Field5;
+          Field6  = entity.Field6;
+          Field7  = entity.Field7;
+          Field8  = entity.Field8;
+          Field9  = entity.Field9;
+          Field10  = entity.Field10;
+          TotalVATOnly  = entity.TotalVATOnly;
+          PaidDate  = entity.PaidDate;
+          ShipmentsNumbers  = entity.ShipmentsNumbers;
+          MasterNumbers  = entity.MasterNumbers;
+          MasterShipmentNumbers  = entity.MasterShipmentNumbers;
+          HouseNumbers  = entity.HouseNumbers;
+          GlobalTaxCalculation  = entity.GlobalTaxCalculation;
+          IsEquipment  = entity.IsEquipment;
+          ConnectedPaymentsNumbers  = entity.ConnectedPaymentsNumbers;
+          ConfirmationNumber  = entity.ConfirmationNumber;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -213,6 +317,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string ConnectedPaymentsNumbers  { get; set; }
        [DataMember]
        public string ConfirmationNumber  { get; set; }
+         #endregion Properties
    }
 
 }

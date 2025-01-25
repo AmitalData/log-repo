@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class PackagePM : BaseEntityPM   {
+   #region Constructors
+   public PackagePM() : base() {} 
+   public PackagePM(Package entity) : base()
+   {
+		_code = entity.Code;
+		_name = entity.Name;
+		_searchFields = entity.SearchFields;
+		_featurePackageTypeCode = entity.FeaturePackageTypeCode;
+		_inActive = entity.InActive;
+		_featurePackageTypeName = default;
+		connectedPackages = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _code ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -152,4 +167,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
              set {  deletedConnectedPackages = value; }
 	    }
 	 }
+#endregion Properties
 }

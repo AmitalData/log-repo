@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CardContactAdditionalServicePM : BaseEntityPM   {
+   #region Constructors
+   public CardContactAdditionalServicePM() : base() {} 
+   public CardContactAdditionalServicePM(CardContactAdditionalService entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_cardContactId = entity.CardContactId;
+		_additionalServiceId = entity.AdditionalServiceId;
+		_additionalServiceName = default;
+		_cardId = default;
+		_contactId = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -135,4 +150,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class FilingInboxPM : BaseEntityPM   {
+   #region Constructors
+   public FilingInboxPM() : base() {} 
+   public FilingInboxPM(FilingInbox entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_sender = entity.Sender;
+		_subject = entity.Subject;
+		_isDeleted = entity.IsDeleted;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_bodyDocumentId = entity.BodyDocumentId;
+		_fileName = default;
+		_searchFields = entity.SearchFields;
+		_emailBody = default;
+		_senderName = default;
+		filingInboxAttachments = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -259,4 +281,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
              set {  deletedFilingInboxAttachments = value; }
 	    }
 	 }
+#endregion Properties
 }

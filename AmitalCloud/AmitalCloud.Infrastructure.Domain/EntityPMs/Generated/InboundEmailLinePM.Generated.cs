@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,30 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class InboundEmailLinePM : BaseEntityPM   {
+   #region Constructors
+   public InboundEmailLinePM() : base() {} 
+   public InboundEmailLinePM(InboundEmailLine entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_fullBody = entity.FullBody;
+		_hTMLFullBody = entity.HTMLFullBody;
+		_bcc = entity.Bcc;
+		_internalUsers = entity.InternalUsers;
+		_entityLineId = entity.EntityLineId;
+		_inboundEmailId = entity.InboundEmailId;
+		_createDate = entity.CreateDate;
+		_sender = entity.Sender;
+		_recepient = entity.Recepient;
+		_subject = entity.Subject;
+		_direction = entity.Direction;
+		_cCs = entity.CCs;
+		_communicationLogId = entity.CommunicationLogId;
+		_body = entity.Body;
+		_inboundEmail = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -295,4 +320,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

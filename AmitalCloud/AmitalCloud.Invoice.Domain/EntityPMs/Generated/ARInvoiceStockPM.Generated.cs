@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,31 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ARInvoiceStockPM : BaseEntityPM   {
+   #region Constructors
+   public ARInvoiceStockPM() : base() {} 
+   public ARInvoiceStockPM(ARInvoiceStock entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_updateDate = entity.UpdateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_name = entity.Name;
+		_description = entity.Description;
+		_inactive = entity.Inactive;
+		_statusCode = entity.StatusCode;
+		_startDate = entity.StartDate;
+		_endDate = entity.EndDate;
+		_amount = entity.Amount;
+		_remaining = entity.Remaining;
+		_statusName = default;
+		aRInvoiceStockLines = default;
+		_notes = entity.Notes;
+		_linesCount = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -328,4 +354,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

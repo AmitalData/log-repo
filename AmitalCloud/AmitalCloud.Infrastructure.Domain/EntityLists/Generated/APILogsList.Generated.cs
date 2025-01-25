@@ -13,12 +13,45 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class APILogsList
+   public partial class APILogsList   
    {
+       #region Constructors
+       public APILogsList() : base() {}
+       public APILogsList(APILogs entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          BatchNumber  = entity.BatchNumber;
+          CustomerId  = entity.CustomerId;
+          CreateDate  = entity.CreateDate;
+          CreateDateUTC  = entity.CreateDateUTC;
+          LastUpdateDate  = entity.LastUpdateDate;
+          LastUpdateDateUTC  = entity.LastUpdateDateUTC;
+          Id  = entity.Id;
+          Direction  = entity.Direction;
+          Status  = entity.Status;
+          NumberOfRetries  = entity.NumberOfRetries;
+          ExpirationDate  = entity.ExpirationDate;
+          Subject  = entity.Subject;
+          EntityId  = entity.EntityId;
+          ObjectTableId  = entity.ObjectTableId;
+          PartnerName  = entity.PartnerName;
+          Refrence  = entity.Refrence;
+          SearchFields  = entity.SearchFields;
+          LastExceptionMessage  = entity.LastExceptionMessage;
+          CorrelationId  = entity.CorrelationId;
+            StatusName  = default;
+            ObjectTableName  = default;
+            DiagnosticLog  = default;
+            ExceptionsMessage  = default;
+            BodyData  = default;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
@@ -71,6 +104,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ExceptionsMessage  { get; set; }
        [DataMember]
        public string BodyData  { get; set; }
+         #endregion Properties
    }
 
 }

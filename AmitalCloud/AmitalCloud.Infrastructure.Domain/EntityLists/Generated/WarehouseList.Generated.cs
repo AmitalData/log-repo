@@ -13,12 +13,81 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class WarehouseList
+   public partial class WarehouseList   
    {
+       #region Constructors
+       public WarehouseList() : base() {}
+       public WarehouseList(Warehouse entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+            Code  = default;
+            EnglishName  = default;
+            LocalName  = default;
+          AddedManually  = entity.AddedManually;
+            InActive  = default;
+            Notes  = default;
+            VatNumber  = default;
+            AccountingCard  = default;
+            PaymentTermId  = default;
+            PaymentTermEnglishName  = default;
+            InvoiceCurrencyId  = default;
+            VatTypeId  = default;
+            EnableConsolidationInvoices  = default;
+            SearchFields  = default;
+            Website  = default;
+            CityName  = default;
+            CountryId  = default;
+            CountryCode  = default;
+            CountryName  = default;
+            Remark  = default;
+            MetodoPagoCode  = default;
+            UsoCFDICode  = default;
+            SATForeignRFC  = default;
+            ExternalId2  = default;
+          FirmCode  = entity.FirmCode;
+          TypeCode  = entity.TypeCode;
+          MyWarehouse  = entity.MyWarehouse;
+            ReceivablesAccountingCard  = default;
+            PayablesAccountingCard  = default;
+            ExternalAccountingBusinessArea  = default;
+            PaymentMethodCode  = default;
+          PrimaryContactName  = entity.PrimaryContactName;
+          PrimaryContactEmail  = entity.PrimaryContactEmail;
+          PrimaryContactPhone  = entity.PrimaryContactPhone;
+            StateName  = default;
+          ChargeStorage  = entity.ChargeStorage;
+          CurrencyId  = entity.CurrencyId;
+          AirWeightMeasurementCode  = entity.AirWeightMeasurementCode;
+          OceanWeightMeasurementCode  = entity.OceanWeightMeasurementCode;
+          InlandWeightMeasurementCode  = entity.InlandWeightMeasurementCode;
+          AirWeightRoundingCode  = entity.AirWeightRoundingCode;
+          OceanWeightRoundingCode  = entity.OceanWeightRoundingCode;
+          InlandWeightRoundingCode  = entity.InlandWeightRoundingCode;
+            GLAccountNumber  = default;
+            Address1  = default;
+            Address2  = default;
+          Field1  = entity.Field1;
+          Field2  = entity.Field2;
+          Field3  = entity.Field3;
+          Field4  = entity.Field4;
+          Field5  = entity.Field5;
+          Field6  = entity.Field6;
+          Field7  = entity.Field7;
+          Field8  = entity.Field8;
+          Field9  = entity.Field9;
+          Field10  = entity.Field10;
+            RegimenFiscalCode  = default;
+            SATReceptorName  = default;
+            GLAccountId  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -143,6 +212,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string SATReceptorName  { get; set; }
        [DataMember]
        public string GLAccountId  { get; set; }
+         #endregion Properties
    }
 
 }

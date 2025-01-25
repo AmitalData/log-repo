@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,211 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TenantManagementPM : BaseEntityPM   {
+   #region Constructors
+   public TenantManagementPM() : base() {} 
+   public TenantManagementPM(TenantManagement entity) : base()
+   {
+		_enableBranding = entity.EnableBranding;
+		_trialStartDate = entity.TrialStartDate;
+		_trialEndDate = entity.TrialEndDate;
+		_paidUntilDate = entity.PaidUntilDate;
+		_isTrial = entity.IsTrial;
+		_numberOfUsers = entity.NumberOfUsers;
+		_searchFields = entity.SearchFields;
+		_countryName = entity.CountryName;
+		_timeZone = default;
+		_isActive = default;
+		_globalDBId = default;
+		_tTY = entity.TTY;
+		_freeUsers = entity.FreeUsers;
+		_bluesnapContractQTY = entity.BluesnapContractQTY;
+		_bluesnapCRMContractQTY = entity.BluesnapCRMContractQTY;
+		_bluesnapEAWBContractQTY = entity.BluesnapEAWBContractQTY;
+		_bluesnapEAWBSContractQTY = entity.BluesnapEAWBSContractQTY;
+		_bluesnapOneTimeContractQTY = entity.BluesnapOneTimeContractQTY;
+		_isRecurring = entity.IsRecurring;
+		_licensePrice = entity.LicensePrice;
+		_notes = entity.Notes;
+		_lastFWBSentDate = entity.LastFWBSentDate;
+		_lastFHLSentDate = entity.LastFHLSentDate;
+		_statisticsUpdateDate = entity.StatisticsUpdateDate;
+		_shipmentLastDate = entity.ShipmentLastDate;
+		_shipmentTotalLastWeek = entity.ShipmentTotalLastWeek;
+		_shipmentTotalLastMonth = entity.ShipmentTotalLastMonth;
+		_quoteLastDate = entity.QuoteLastDate;
+		_quoteTotalLastWeek = entity.QuoteTotalLastWeek;
+		_quoteTotalLastMonth = entity.QuoteTotalLastMonth;
+		_aRInvoiceLastDate = entity.ARInvoiceLastDate;
+		_aRInvoiceTotalLastWeek = entity.ARInvoiceTotalLastWeek;
+		_aRInvoiceTotalLastMonth = entity.ARInvoiceTotalLastMonth;
+		_aPInvoiceLastDate = entity.APInvoiceLastDate;
+		_aPInvoiceTotalLastWeek = entity.APInvoiceTotalLastWeek;
+		_aPInvoiceTotalLastMonth = entity.APInvoiceTotalLastMonth;
+		_customerLastDate = entity.CustomerLastDate;
+		_customerTotalLastWeek = entity.CustomerTotalLastWeek;
+		_customerTotalLastMonth = entity.CustomerTotalLastMonth;
+		_lastLoginDateTime = entity.LastLoginDateTime;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_mainContract = entity.MainContract;
+		_temporalStartDate = entity.TemporalStartDate;
+		_temporalEndDate = entity.TemporalEndDate;
+		_firstPaymentDate = entity.FirstPaymentDate;
+		_isAWBStockPrepaid = entity.IsAWBStockPrepaid;
+		_manageLicencesPerUser = entity.ManageLicencesPerUser;
+		_isCargonautEnabled = entity.IsCargonautEnabled;
+		_isSystemSupportEnabled = entity.IsSystemSupportEnabled;
+		_isDistributorSupportEnabled = entity.IsDistributorSupportEnabled;
+		_isEAWBOnlyDemo = entity.IsEAWBOnlyDemo;
+		_isRestrictedByAirline = entity.IsRestrictedByAirline;
+		_managesRegisteredAgent = entity.ManagesRegisteredAgent;
+		_lastFFRSentDate = entity.LastFFRSentDate;
+		_opportunityLastDate = entity.OpportunityLastDate;
+		_opportunityTotalLastWeek = entity.OpportunityTotalLastWeek;
+		_opportunityTotalLastMonth = entity.OpportunityTotalLastMonth;
+		_activityLastDate = entity.ActivityLastDate;
+		_activityTotalLastWeek = entity.ActivityTotalLastWeek;
+		_activityTotalLastMonth = entity.ActivityTotalLastMonth;
+		_fSRLastSentDate = entity.FSRLastSentDate;
+		_fSULastReceivedDate = entity.FSULastReceivedDate;
+		_fSALastReceivedDate = entity.FSALastReceivedDate;
+		_resellerCommission = entity.ResellerCommission;
+		_billingByLogitude = entity.BillingByLogitude;
+		_isDEXXConnectionEnabled = entity.IsDEXXConnectionEnabled;
+		_lastFHLCargonautSentDate = entity.LastFHLCargonautSentDate;
+		_lastFWBCargonautSentDate = entity.LastFWBCargonautSentDate;
+		_paymentFailure = entity.PaymentFailure;
+		_suspendDate = entity.SuspendDate;
+		_internalNotes = entity.InternalNotes;
+		_bluesnapAccount = entity.BluesnapAccount;
+		_pIMA = entity.PIMA;
+		_signupRequestRecipients = entity.SignupRequestRecipients;
+		_loginPageNotes = entity.LoginPageNotes;
+		_tenantConnectedToAirlineCode = entity.TenantConnectedToAirlineCode;
+		_supportActivated = entity.SupportActivated;
+		_supportEmail = entity.SupportEmail;
+		_isMultiPackage = entity.IsMultiPackage;
+		_id = entity.Id;
+		_name = entity.Name;
+		_packageCode = entity.PackageCode;
+		_temporalPackageCode = entity.TemporalPackageCode;
+		_recurringPeriodCode = entity.RecurringPeriodCode;
+		_paymentMethodCode = entity.PaymentMethodCode;
+		_paymentChannelCode = entity.PaymentChannelCode;
+		_paymentCurrencyCode = entity.PaymentCurrencyCode;
+		_distributorCode = entity.DistributorCode;
+		_technology = entity.Technology;
+		_bluesnapCRMContractId = entity.BluesnapCRMContractId;
+		_bluesnapEAWBContractId = entity.BluesnapEAWBContractId;
+		_bluesnapEAWBSContractId = entity.BluesnapEAWBSContractId;
+		_bluesnapOneTimeContract = entity.BluesnapOneTimeContract;
+		_bluesnapContractId = entity.BluesnapContractId;
+		_aWBMessagesCCSTypeCode = entity.AWBMessagesCCSTypeCode;
+		_tenantTypeCode = entity.TenantTypeCode;
+		_temporalPackageName = default;
+		_doBlocking = default;
+		_trailDaysLeft = default;
+		_paidDaysLeft = default;
+		_suspendDaysLeft = default;
+		packagesCodes_PK = default;
+		packagesCodes_BS = default;
+		_globalTenant = default;
+		tenantManagementLicenses = default;
+		addOns = default;
+		_hideSharedlogistics = entity.HideSharedlogistics;
+		_contactEmail = entity.ContactEmail;
+		_customerURL = entity.CustomerURL;
+		_updateByUserId = default;
+		_silverlightEndDate = entity.SilverlightEndDate;
+		_agentSharedLogisticsStatisticsLastDate = entity.AgentSharedLogisticsStatisticsLastDate;
+		_agentSharedLogisticsStatisticsLastWeek = entity.AgentSharedLogisticsStatisticsLastWeek;
+		_agentSharedLogisticsStatisticsLastMonth = entity.AgentSharedLogisticsStatisticsLastMonth;
+		_stockTypeCode = entity.StockTypeCode;
+		_packageName = entity.PackageName;
+		_mobileLastDate = entity.MobileLastDate;
+		_mobileTotalLastWeek = entity.MobileTotalLastWeek;
+		_mobileTotalLastMonth = entity.MobileTotalLastMonth;
+		_shardLogisticLastDate = entity.ShardLogisticLastDate;
+		_shardLogisticTotalLastWeek = entity.ShardLogisticTotalLastWeek;
+		_shardLogisticTotalLastMonth = entity.ShardLogisticTotalLastMonth;
+		_requestedAirlines = entity.RequestedAirlines;
+		_registeredAirlines = entity.RegisteredAirlines;
+		_pendingAirlines = entity.PendingAirlines;
+		_privateLabelId = default;
+		_isParentTenant = entity.IsParentTenant;
+		_parentTenantId = entity.ParentTenantId;
+		_changeHeaderColor = entity.ChangeHeaderColor;
+		_documentShareAsDefault = default;
+		_isINTTRAStockPrepaid = entity.IsINTTRAStockPrepaid;
+		_packageCodeSearchField = entity.PackageCodeSearchField;
+		_isINTTRAOnlyDemo = entity.IsINTTRAOnlyDemo;
+		_autoArchiveOnInvoice = default;
+		_bluesnapInttraStockContractId = entity.BluesnapInttraStockContractId;
+		_bluesnapInttraStockContractQTY = entity.BluesnapInttraStockContractQTY;
+		_isTestTenant = default;
+		_mainAdditionalPackageApplied = entity.MainAdditionalPackageApplied;
+		_totalPrice = entity.TotalPrice;
+		_supportDomain = entity.SupportDomain;
+		_totalNumberOfUsers = entity.TotalNumberOfUsers;
+		_totalFreeUsers = entity.TotalFreeUsers;
+		_averagePrice = entity.AveragePrice;
+		_totalPaymentamount = entity.TotalPaymentamount;
+		_mainColor = entity.MainColor;
+		_secondaryColor = entity.SecondaryColor;
+		_backgroundId = entity.BackgroundId;
+		_noPaymentForChildTenants = entity.NoPaymentForChildTenants;
+		_comapnylogoId = entity.ComapnylogoId;
+		_browserIconId = entity.BrowserIconId;
+		_lastEbookingSentDate = entity.LastEbookingSentDate;
+		_lastSISentDate = entity.LastSISentDate;
+		_numberOfBookingSentLastWeek = entity.NumberOfBookingSentLastWeek;
+		_numberOfSISentLastWeek = entity.NumberOfSISentLastWeek;
+		_lastContainerStatusReceived = entity.LastContainerStatusReceived;
+		_shipmentHeaderImageId = entity.ShipmentHeaderImageId;
+		_invertedLogoId = entity.InvertedLogoId;
+		_lastTariffUpdateDate = entity.LastTariffUpdateDate;
+		_lastTariffUsageDate = entity.LastTariffUsageDate;
+		_lastWeekCreatedTariffs = entity.LastWeekCreatedTariffs;
+		_lastMonthCreatedTariffs = entity.LastMonthCreatedTariffs;
+		_scheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport;
+		_isHybrid = default;
+		_whatsAppMessagingPhoneNumber = entity.WhatsAppMessagingPhoneNumber;
+		_activatedforDeclarationApprove = entity.ActivatedforDeclarationApprove;
+		_declarationMessage = entity.DeclarationMessage;
+		_permissionBuildMonths = entity.PermissionBuildMonths;
+		_cargoTokenTimeout = entity.CargoTokenTimeout;
+		_privateLabelName = default;
+		_activatePrivateSite = entity.ActivatePrivateSite;
+		_enableExportToExcel = entity.EnableExportToExcel;
+		_autoArchiveOnPODExport = default;
+		_tertiaryColor = entity.TertiaryColor;
+		_isContainerTrackingPrepaid = entity.IsContainerTrackingPrepaid;
+		_showMoneyOrder = entity.ShowMoneyOrder;
+		_mobileBackgroundId = entity.MobileBackgroundId;
+		_digitalPortalLastDate = entity.DigitalPortalLastDate;
+		_digitalPortalTotalLastWeek = entity.DigitalPortalTotalLastWeek;
+		_digitalPortalTotalLastMonth = entity.DigitalPortalTotalLastMonth;
+		_digitalPortalMobileLastDate = entity.DigitalPortalMobileLastDate;
+		_digitalPortalMobTotalLastWeek = entity.DigitalPortalMobTotalLastWeek;
+		_digitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth;
+		_dPArchiveShipmentCreateFilter = entity.DPArchiveShipmentCreateFilter;
+		_dPArchiveShipmentArrivalFilter = entity.DPArchiveShipmentArrivalFilter;
+		_dPArchiveShipmentDepartFilter = entity.DPArchiveShipmentDepartFilter;
+		_cargoTrackingPublicShowEvents = entity.CargoTrackingPublicShowEvents;
+		_cargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents;
+		_logoURL = entity.LogoURL;
+		_serviceAgreementURL = entity.ServiceAgreementURL;
+		_ecommerceSupportEmail = default;
+		_amitalApiToken = entity.AmitalApiToken;
+		_headerColor = entity.HeaderColor;
+		_ecommerceTenant = default;
+		_exportLoginCredintial = entity.ExportLoginCredintial;
+		_exportTenant = entity.ExportTenant;
+		_tranzilaPaymentWithBit = entity.TranzilaPaymentWithBit;
+		_searchAbsoluteValuePublic = entity.SearchAbsoluteValuePublic;
+   }
+   #endregion Constructors
+   #region Properties
    	  private bool _enableBranding ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3249,4 +3455,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

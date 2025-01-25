@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentCustomsTransmissionList
+   public partial class ShipmentCustomsTransmissionList   
    {
+       #region Constructors
+       public ShipmentCustomsTransmissionList() : base() {}
+       public ShipmentCustomsTransmissionList(ShipmentCustomsTransmission entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ShipmentId  = entity.ShipmentId;
+          SentByUserId  = entity.SentByUserId;
+          CommunicationLogId  = entity.CommunicationLogId;
+          LastSendDate  = entity.LastSendDate;
+          Error  = entity.Error;
+          MessageCode  = entity.MessageCode;
+          Status  = entity.Status;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string MessageCode  { get; set; }
        [DataMember]
        public string Status  { get; set; }
+         #endregion Properties
    }
 
 }

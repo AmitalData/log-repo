@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class IATACodePM : BaseEntityPM   {
+   #region Constructors
+   public IATACodePM() : base() {} 
+   public IATACodePM(IATACode entity) : base()
+   {
+		_id = entity.Id;
+		_code = entity.Code;
+		_name = entity.Name;
+		_measurementCode = entity.MeasurementCode;
+		_dueTypeCode = entity.DueTypeCode;
+		_isIATA = entity.IsIATA;
+		_inActive = entity.InActive;
+		_airlineId = entity.AirlineId;
+		_searchFields = entity.SearchFields;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -167,4 +184,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

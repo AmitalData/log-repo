@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,127 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class DocumentsFilingPM : BaseEntityPM   {
+   #region Constructors
+   public DocumentsFilingPM() : base() {} 
+   public DocumentsFilingPM(DocumentsFiling entity) : base()
+   {
+		_id = entity.Id;
+		_documentId = entity.DocumentId;
+		_entityId = entity.EntityId;
+		_childEntityId = entity.ChildEntityId;
+		_childEntityReference = entity.ChildEntityReference;
+		_childObjectTableId = entity.ChildObjectTableId;
+		_notes = entity.Notes;
+		_createDate = entity.CreateDate;
+		_hasCopies = entity.HasCopies;
+		_received = entity.Received;
+		_updateDate = entity.UpdateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_receivedByUserId = entity.ReceivedByUserId;
+		_receivedDate = entity.ReceivedDate;
+		_statusCode = entity.StatusCode;
+		_entityReference = entity.EntityReference;
+		_externalEntityName = entity.ExternalEntityName;
+		_externalEntityReference = entity.ExternalEntityReference;
+		_folderId = entity.FolderId;
+		_isDeleted = entity.IsDeleted;
+		_deletedByUserId = entity.DeletedByUserId;
+		_deleteDateTime = entity.DeleteDateTime;
+		_isDigitallySigned = entity.IsDigitallySigned;
+		_signersList = entity.SignersList;
+		_branchId = entity.BranchId;
+		_departmentId = entity.DepartmentId;
+		_isSharedWithForwarder = entity.IsSharedWithForwarder;
+		_isSharedWithCustomer = entity.IsSharedWithCustomer;
+		_forwarderDocumentId = entity.ForwarderDocumentId;
+		_customerDocumentId = entity.CustomerDocumentId;
+		_securityId = entity.SecurityId;
+		_customerTenantNumber = entity.CustomerTenantNumber;
+		_tenant = entity.Tenant;
+		_code = entity.Code;
+		_documentTypeId = entity.DocumentTypeId;
+		_documentTypeName = default;
+		_directionCode = entity.DirectionCode;
+		_objectTableId = entity.ObjectTableId;
+		_objectTableName = default;
+		_createdByUserId = entity.CreatedByUserId;
+		_createdByUserName = default;
+		_ownerId = entity.OwnerId;
+		_ownerName = default;
+		_description = entity.Description;
+		_searchFields = entity.SearchFields;
+		_noAddToTasksQueue = default;
+		_followUpId = default;
+		_fileExtension = default;
+		_hasFile = default;
+		_followUpCount = default;
+		_documentTypeCode = default;
+		_doucmentTypeTemplateFormatCode = default;
+		_hasFollowUp = default;
+		_fileSize = default;
+		_fileName = default;
+		_name = default;
+		_isAgentView = default;
+		_isCustomerView = default;
+		_customsDocumentTypeName = default;
+		_customsDocumentTypeCode = default;
+		_isMetaDataReady = default;
+		_isHybrid = default;
+		_folder = default;
+		_fileData = default;
+		_entityNumber = entity.EntityNumber;
+		_isAttachment = default;
+		_createdByUserCode = default;
+		_updatedByUserCode = default;
+		_ownerUserCode = default;
+		_receivedByUserCode = default;
+		_childEntityName = default;
+		documentsFilingMetaDataValues = default;
+		_customsDocumentStatusCode = default;
+		_externalAttachmentId = default;
+		_documentCategoryCode = default;
+		_documentCategoryName = default;
+		_dontAddToQueue = default;
+		_createDateWords = default;
+		_isSharedIn = entity.IsSharedIn;
+		_isSharedOut = entity.IsSharedOut;
+		_isUpdateSharedDocument = default;
+		_lastShareDate = entity.LastShareDate;
+		_backedupExternally = entity.BackedupExternally;
+		_signRequestByUserEmail = entity.SignRequestByUserEmail;
+		_cancellSignRequest = entity.CancellSignRequest;
+		_origionalDocumentId = entity.OrigionalDocumentId;
+		_signDueDate = entity.SignDueDate;
+		_isDigitalSignRequired = entity.IsDigitalSignRequired;
+		_lastVersion = entity.LastVersion;
+		_isRequested = entity.IsRequested;
+		_isFromUnifreightPodMobile = default;
+		_calculatedFileName = default;
+		_receivedByUserName = default;
+		_isAttachSelect = default;
+		_divSelectBackground = default;
+		_blockIdsList = default;
+		_buffer = default;
+		_bufferNumber = default;
+		_sentSize = default;
+		_fullFileName = default;
+		_dontDeleteRealFile = default;
+		_isCustomReference = default;
+		_customReference = default;
+		_ocrStatusCode = default;
+		_ocrScore = default;
+		_ocrReference = default;
+		_ocrNotConnect = default;
+		_isTransferdToQBO = entity.IsTransferdToQBO;
+		_isAgentSharedInMaster = default;
+		_isAgentSharedInDirect = default;
+		_isAgentSharedInHouse = default;
+		_receivedByByContactId = entity.ReceivedByByContactId;
+		_receivedByPartner = entity.ReceivedByPartner;
+		_billToId = entity.BillToId;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -1864,4 +1986,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class HTSCodePM : BaseEntityPM   {
+   #region Constructors
+   public HTSCodePM() : base() {} 
+   public HTSCodePM(HTSCode entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_itemId = entity.ItemId;
+		_code = entity.Code;
+		_approvedByCustomer = entity.ApprovedByCustomer;
+		_inActive = entity.InActive;
+		_destinationCountryId = entity.DestinationCountryId;
+		_countryEnglishName = default;
+		_lineNumber = entity.LineNumber;
+		_vATPercentage = entity.VATPercentage;
+		_dutiesPercentage = entity.DutiesPercentage;
+		_otherDuties = entity.OtherDuties;
+		_remarks = entity.Remarks;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -231,4 +252,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

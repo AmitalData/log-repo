@@ -13,12 +13,52 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class LogitudeLeadList
+   public partial class LogitudeLeadList   
    {
+       #region Constructors
+       public LogitudeLeadList() : base() {}
+       public LogitudeLeadList(LogitudeLead entity) : base()
+       {
+          Id  = entity.Id;
+          SearchFields  = entity.SearchFields;
+          IsUserEmailSent  = entity.IsUserEmailSent;
+          ContactName  = entity.ContactName;
+          CompanyName  = entity.CompanyName;
+          PhoneNumber  = entity.PhoneNumber;
+          Country  = entity.Country;
+          Email  = entity.Email;
+          Comments  = entity.Comments;
+          RequestType  = entity.RequestType;
+          ZipCode  = entity.ZipCode;
+          City  = entity.City;
+          State  = entity.State;
+          OpportunityId  = entity.OpportunityId;
+          CustomerId  = entity.CustomerId;
+          PackageCode  = entity.PackageCode;
+          LeadSource  = entity.LeadSource;
+          CASSCode  = entity.CASSCode;
+          IATACode  = entity.IATACode;
+          NumberOfBranches  = entity.NumberOfBranches;
+          LastUpdateDate  = entity.LastUpdateDate;
+          CreateDate  = entity.CreateDate;
+          IsEmailVerified  = entity.IsEmailVerified;
+          IsSentToCustomer  = entity.IsSentToCustomer;
+          StatusCode  = entity.StatusCode;
+          Street  = entity.Street;
+          IsUserOpened  = entity.IsUserOpened;
+          TenantNumber  = entity.TenantNumber;
+          NumberOfUsers  = entity.NumberOfUsers;
+          ClientId  = entity.ClientId;
+          LeadOrigin  = entity.LeadOrigin;
+          Campaign  = entity.Campaign;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -85,6 +125,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string LeadOrigin  { get; set; }
        [DataMember]
        public string Campaign  { get; set; }
+         #endregion Properties
    }
 
 }

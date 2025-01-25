@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,140 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ObjectFieldPM : BaseEntityPM   {
+   #region Constructors
+   public ObjectFieldPM() : base() {} 
+   public ObjectFieldPM(ObjectField entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_fullNameTextCodeId = entity.FullNameTextCodeId;
+		_fieldName = entity.FieldName;
+		_code = entity.Code;
+		_dataTypeCode = entity.DataTypeCode;
+		_maxLength = entity.MaxLength;
+		_isRequiered = entity.IsRequiered;
+		_isCustom = entity.IsCustom;
+		_helpTextCodeId = entity.HelpTextCodeId;
+		_minLength = entity.MinLength;
+		_lookUpTableId = entity.LookUpTableId;
+		_displayOnLookUp = entity.DisplayOnLookUp;
+		_canFilter = entity.CanFilter;
+		_displayOnly = entity.DisplayOnly;
+		_systemRequired = entity.SystemRequired;
+		_systemMaxLength = entity.SystemMaxLength;
+		_listTextCodeId = entity.ListTextCodeId;
+		_displayInList = entity.DisplayInList;
+		_isCustomFilter = entity.IsCustomFilter;
+		_operator = entity.Operator;
+		_multiLine = entity.MultiLine;
+		_isTimeFrameFilter = entity.IsTimeFrameFilter;
+		_displayInSearchWindowList = entity.DisplayInSearchWindowList;
+		_displayInSearchWindowFilters = entity.DisplayInSearchWindowFilters;
+		_pMPropertyPath = entity.PMPropertyPath;
+		_listPropertyPath = entity.ListPropertyPath;
+		_lookUpControlName = entity.LookUpControlName;
+		_displayInLookUpIndex = entity.DisplayInLookUpIndex;
+		_automaticField = entity.AutomaticField;
+		_uniqueField = entity.UniqueField;
+		_shortNameTextCodeId = entity.ShortNameTextCodeId;
+		_displayInSearchWindowListIndex = entity.DisplayInSearchWindowListIndex;
+		_displayInSearchWindowFiltersIndex = entity.DisplayInSearchWindowFiltersIndex;
+		_isMulti = entity.IsMulti;
+		_multiTableId = entity.MultiTableId;
+		_dependencyFilter1Value = entity.DependencyFilter1Value;
+		_dependencyFilter2Value = entity.DependencyFilter2Value;
+		_dependencyFilter3Value = entity.DependencyFilter3Value;
+		_dependencyFilter1Type = entity.DependencyFilter1Type;
+		_dependencyFilter2Type = entity.DependencyFilter2Type;
+		_dependencyFilter3Type = entity.DependencyFilter3Type;
+		_dependencyFilter1IsList = entity.DependencyFilter1IsList;
+		_dependencyFilter2IsList = entity.DependencyFilter2IsList;
+		_dependencyFilter3IsList = entity.DependencyFilter3IsList;
+		_controlField1 = entity.ControlField1;
+		_controlField2 = entity.ControlField2;
+		_controlField3 = entity.ControlField3;
+		_validForQuerySection1 = entity.ValidForQuerySection1;
+		_validForQuerySection2 = entity.ValidForQuerySection2;
+		_isRestrictable = entity.IsRestrictable;
+		_displayInEntityVariables = entity.DisplayInEntityVariables;
+		_textCase = entity.TextCase;
+		_digitsAfterPoint = entity.DigitsAfterPoint;
+		_searchFields = entity.SearchFields;
+		_displayInLookupColumnSize = entity.DisplayInLookupColumnSize;
+		_displayLongName = entity.DisplayLongName;
+		_customerPermissionTypeCode = entity.CustomerPermissionTypeCode;
+		_agentPermissionTypeCode = entity.AgentPermissionTypeCode;
+		_numberOfDigits = entity.NumberOfDigits;
+		_customPickListCode = entity.CustomPickListCode;
+		_isMaxLength = entity.IsMaxLength;
+		_automationEmailRecipient = entity.AutomationEmailRecipient;
+		_allowedInCustomerFieldsSettings = entity.AllowedInCustomerFieldsSettings;
+		_allowedInAirlineMessaging = entity.AllowedInAirlineMessaging;
+		_generatedComponentPath = entity.GeneratedComponentPath;
+		_displayInDocumentReferences = entity.DisplayInDocumentReferences;
+		_converterName = entity.ConverterName;
+		_dataTemplateName = entity.DataTemplateName;
+		_columnHeaderTemplateName = entity.ColumnHeaderTemplateName;
+		_hasTemplate = entity.HasTemplate;
+		_htmlHeaderComponentUrl = entity.HtmlHeaderComponentUrl;
+		_htmlListComponentUrl = entity.HtmlListComponentUrl;
+		_htmlHeaderComponentName = entity.HtmlHeaderComponentName;
+		_htmlListComponentName = entity.HtmlListComponentName;
+		_fullNameTextCodeDefaultText = default;
+		_objectTableId = entity.ObjectTableId;
+		_canAutomateSetValue = entity.CanAutomateSetValue;
+		_allowedinAutomationConditions = entity.AllowedinAutomationConditions;
+		_objectTableName = default;
+		_fullNameTextCodeLocalDefaultText = default;
+		_objectTable_LookUpTableName = default;
+		_objectTable_MultiTableName = default;
+		_helpTextCodeCode = entity.HelpTextCodeCode;
+		_fullNameTextCodeCode = entity.FullNameTextCodeCode;
+		_listTextCodeCode = entity.ListTextCodeCode;
+		_shortNameTextCodeCode = entity.ShortNameTextCodeCode;
+		_listTextCodeDefaultText = default;
+		_helpTextCodeDefaultText = default;
+		_userTenant = default;
+		_tenantZeroIsRequired = default;
+		_tenantZeroMaxLength = default;
+		_tenantZeroMinLength = default;
+		_restorDefault = default;
+		_shortNameTextCodeDefaultText = default;
+		objectFieldValidations = default;
+		_fullLabelTranslatedText = default;
+		_shortLabelTranslatedText = default;
+		_listHeaderLabelTranslatedText = default;
+		_helpTextTranslatedText = default;
+		_fullLabelFieldTranslationId = default;
+		_shortLabelFieldTranslationId = default;
+		_listHeaderLabelFieldTranslationId = default;
+		_helpTextFieldTranslationId = default;
+		_copyToDW = entity.CopyToDW;
+		_displayOnLookUpLocal = entity.DisplayOnLookUpLocal;
+		_recordType = entity.RecordType;
+		_displayInAutomationAsEnitity = entity.DisplayInAutomationAsEnitity;
+		_fieldCode = entity.FieldCode;
+		_enableFullscreenTextBox = entity.EnableFullscreenTextBox;
+		_additionalQuerySections = entity.AdditionalQuerySections;
+		_leftKey = entity.LeftKey;
+		_rightKey = entity.RightKey;
+		_isForeignKey = entity.IsForeignKey;
+		_foreignEntity = entity.ForeignEntity;
+		_navigationPropertyName = entity.NavigationPropertyName;
+		_defaultAdditionalFilters = entity.DefaultAdditionalFilters;
+		_defaultAdditionalTreeFilters = default;
+		_forMetaDataOnly = entity.ForMetaDataOnly;
+		_isListFilter = entity.IsListFilter;
+		_dataTypeName = default;
+		_indexOrder = default;
+		_inUse = default;
+		_relatedEntities = default;
+		_isRelatedEntity = default;
+		_displayInRequiredFields = entity.DisplayInRequiredFields;
+		_shortName = entity.ShortName;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -2072,4 +2207,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

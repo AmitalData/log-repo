@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class APInvoiceTotalVATList
+   public partial class APInvoiceTotalVATList   
    {
+       #region Constructors
+       public APInvoiceTotalVATList() : base() {}
+       public APInvoiceTotalVATList(APInvoiceTotalVAT entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          InvoiceCurrencyVATAmount  = entity.InvoiceCurrencyVATAmount;
+          LocalVATAmount  = entity.LocalVATAmount;
+          InvoiceCurrencyVatableAmount  = entity.InvoiceCurrencyVatableAmount;
+          LocalVatableAmount  = entity.LocalVatableAmount;
+          VatPercent  = entity.VatPercent;
+          VatTypeId  = entity.VatTypeId;
+            VatTypeName  = default;
+          APInvoiceId  = entity.APInvoiceId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -41,6 +59,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string VatTypeName  { get; set; }
        [DataMember]
        public string APInvoiceId  { get; set; }
+         #endregion Properties
    }
 
 }

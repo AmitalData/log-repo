@@ -13,12 +13,47 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CreditLimitSettingList
+   public partial class CreditLimitSettingList   
    {
+       #region Constructors
+       public CreditLimitSettingList() : base() {}
+       public CreditLimitSettingList(CreditLimitSetting entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          IsCreditLimitEnabled  = entity.IsCreditLimitEnabled;
+          InvoiceCreationWarning  = entity.InvoiceCreationWarning;
+          InvoiceCreationBlock  = entity.InvoiceCreationBlock;
+          ShipmentCreationBlock  = entity.ShipmentCreationBlock;
+          CustomersShipmentsBlock  = entity.CustomersShipmentsBlock;
+          AgentsShipmentsBlock  = entity.AgentsShipmentsBlock;
+          ShipperConsigneeShipmentBlock  = entity.ShipperConsigneeShipmentBlock;
+          CustomsAgentsShipmentsBlock  = entity.CustomsAgentsShipmentsBlock;
+          ShippingAgentsShipmentsBlock  = entity.ShippingAgentsShipmentsBlock;
+          AirlinesShipmentsBlock  = entity.AirlinesShipmentsBlock;
+          ShippingLinesShipmentsBlock  = entity.ShippingLinesShipmentsBlock;
+          TruckersShipmentsBlock  = entity.TruckersShipmentsBlock;
+          VendorsShipmentsBlock  = entity.VendorsShipmentsBlock;
+          WarehousesShipmentsBlock  = entity.WarehousesShipmentsBlock;
+          CustomersInvoicesBlock  = entity.CustomersInvoicesBlock;
+          AgentsInvoicesBlock  = entity.AgentsInvoicesBlock;
+          ShipperConsigneeInvoiceBlock  = entity.ShipperConsigneeInvoiceBlock;
+          CustomsAgentsInvoicesBlock  = entity.CustomsAgentsInvoicesBlock;
+          ShippingAgentsInvoicesBlock  = entity.ShippingAgentsInvoicesBlock;
+          AirlinesInvoicesBlock  = entity.AirlinesInvoicesBlock;
+          ShippingLinesInvoicesBlock  = entity.ShippingLinesInvoicesBlock;
+          TruckersInvoicesBlock  = entity.TruckersInvoicesBlock;
+          VendorsInvoicesBlock  = entity.VendorsInvoicesBlock;
+          WarehousesInvoicesBlock  = entity.WarehousesInvoicesBlock;
+          ShipmentCreationWarning  = entity.ShipmentCreationWarning;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -75,6 +110,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool WarehousesInvoicesBlock  { get; set; }
        [DataMember]
        public bool ShipmentCreationWarning  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,99 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class APPaymentList
+   public partial class APPaymentList   
    {
+       #region Constructors
+       public APPaymentList() : base() {}
+       public APPaymentList(APPayment entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          PrintedByUserId  = entity.PrintedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          ProfitCurrencyExchangeRate  = entity.ProfitCurrencyExchangeRate;
+          AmountInProfitCurrency  = entity.AmountInProfitCurrency;
+          PaymentNo  = entity.PaymentNo;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+            CreatedByUserName  = default;
+          PrintDate  = entity.PrintDate;
+          LocalCurrencyId  = entity.LocalCurrencyId;
+          AmountInLocalCurrency  = entity.AmountInLocalCurrency;
+          VendorId  = entity.VendorId;
+            VendorName  = default;
+          StatusCode  = entity.StatusCode;
+            StatusName  = default;
+          IsClosed  = entity.IsClosed;
+          PaymentCurrencyId  = entity.PaymentCurrencyId;
+            PaymentCurrencyCode  = default;
+          AmountInPaymentCurrency  = entity.AmountInPaymentCurrency;
+            PaymentMethodName  = default;
+          PrintNotes  = entity.PrintNotes;
+          InternalNotes  = entity.InternalNotes;
+          PaymentCurrencyExchangeRate  = entity.PaymentCurrencyExchangeRate;
+          PaymentCurrencyExchangeRateDate  = entity.PaymentCurrencyExchangeRateDate;
+          VendorAddressId  = entity.VendorAddressId;
+          OpenAmount  = entity.OpenAmount;
+          ValueDate  = entity.ValueDate;
+          Bank  = entity.Bank;
+          BankBranch  = entity.BankBranch;
+          SearchFields  = entity.SearchFields;
+          BranchId  = entity.BranchId;
+          ChequeOrPaymentRef  = entity.ChequeOrPaymentRef;
+          RegisterDate  = entity.RegisterDate;
+          CreditCardTypeId  = entity.CreditCardTypeId;
+            LocalCurrencyCode  = default;
+          Account  = entity.Account;
+            SATApprovalDate  = default;
+          ExternalAccountingEntityId  = entity.ExternalAccountingEntityId;
+            PaymentMethodCode  = default;
+          TransferError  = entity.TransferError;
+          TransferStatusCode  = entity.TransferStatusCode;
+            TransferStatusName  = default;
+            ReadyForTransfer  = default;
+          ApprovedByUserId  = entity.ApprovedByUserId;
+          ApprovedDateTime  = entity.ApprovedDateTime;
+          TaxDeductionPercentage  = entity.TaxDeductionPercentage;
+          TaxDeductionLocalAmount  = entity.TaxDeductionLocalAmount;
+          AccountingPaymentMethodId  = entity.AccountingPaymentMethodId;
+          BankAccountId  = entity.BankAccountId;
+            BranchName  = default;
+          FirstApproveDate  = entity.FirstApproveDate;
+            JournalNumber  = default;
+          VendorBankAddress  = entity.VendorBankAddress;
+          VendorBankName  = entity.VendorBankName;
+          VendorBankAccountNumber  = entity.VendorBankAccountNumber;
+          VendorSwift  = entity.VendorSwift;
+          VendorIBANNumber  = entity.VendorIBANNumber;
+            VendorLocalName  = default;
+          AccountingCancelationDate  = entity.AccountingCancelationDate;
+          DontIncludeInDeductionReport  = entity.DontIncludeInDeductionReport;
+          CancelationNotes  = entity.CancelationNotes;
+          Field1  = entity.Field1;
+          Field2  = entity.Field2;
+          Field3  = entity.Field3;
+          Field4  = entity.Field4;
+          Field5  = entity.Field5;
+          Field6  = entity.Field6;
+          Field7  = entity.Field7;
+          Field8  = entity.Field8;
+          Field9  = entity.Field9;
+          Field10  = entity.Field10;
+          ExternalPaymentAmount  = entity.ExternalPaymentAmount;
+          ExternalPaymentDate  = entity.ExternalPaymentDate;
+          ExternalPaymentNotes  = entity.ExternalPaymentNotes;
+            VendorCode  = default;
+          ConnectedInvoicesNumbers  = entity.ConnectedInvoicesNumbers;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -179,6 +266,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string VendorCode  { get; set; }
        [DataMember]
        public string ConnectedInvoicesNumbers  { get; set; }
+         #endregion Properties
    }
 
 }

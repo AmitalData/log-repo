@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,34 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentProductItemPM : BaseEntityPM   {
+   #region Constructors
+   public ShipmentProductItemPM() : base() {} 
+   public ShipmentProductItemPM(ShipmentProductItem entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_shipmentId = entity.ShipmentId;
+		_productItemId = entity.ProductItemId;
+		_description = entity.Description;
+		_hTSCode = entity.HTSCode;
+		_sKU = entity.SKU;
+		_approvedByCustomer = entity.ApprovedByCustomer;
+		_brand = entity.Brand;
+		_name = entity.Name;
+		_aSIN = entity.ASIN;
+		_uPC = entity.UPC;
+		_originCountryId = entity.OriginCountryId;
+		_originCountryName = default;
+		_isEmptyLine = default;
+		_vATPercentage = entity.VATPercentage;
+		_dutiesPercentage = entity.DutiesPercentage;
+		_otherDuties = entity.OtherDuties;
+		_remarks = entity.Remarks;
+		_shipperId = entity.ShipperId;
+		_shipperName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -359,4 +388,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

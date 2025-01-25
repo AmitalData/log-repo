@@ -13,12 +13,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class APPaymentStatusList
+   public partial class APPaymentStatusList   
    {
+       #region Constructors
+       public APPaymentStatusList() : base() {}
+       public APPaymentStatusList(APPaymentStatus entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -29,6 +40,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
    
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

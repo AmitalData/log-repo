@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TextCodeList
+   public partial class TextCodeList   
    {
+       #region Constructors
+       public TextCodeList() : base() {}
+       public TextCodeList(TextCode entity) : base()
+       {
+          Code  = entity.Code;
+          ObjectTableId  = entity.ObjectTableId;
+          TextCodeTypeCode  = entity.TextCodeTypeCode;
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          DefaultText  = entity.DefaultText;
+          DefaultTextPlural  = entity.DefaultTextPlural;
+          LocalDefaultText  = entity.LocalDefaultText;
+            ObjectTableName  = default;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string Code  { get; set; }
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string LocalDefaultText  { get; set; }
        [DataMember]
        public string ObjectTableName  { get; set; }
+         #endregion Properties
    }
 
 }

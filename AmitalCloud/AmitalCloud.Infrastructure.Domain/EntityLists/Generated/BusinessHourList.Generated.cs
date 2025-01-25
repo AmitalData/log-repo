@@ -13,12 +13,52 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BusinessHourList
+   public partial class BusinessHourList   
    {
+       #region Constructors
+       public BusinessHourList() : base() {}
+       public BusinessHourList(BusinessHour entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          SearchFields  = entity.SearchFields;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          Is247  = entity.Is247;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          IsMondayEnabeled  = entity.IsMondayEnabeled;
+          IsTuesdayEnabeled  = entity.IsTuesdayEnabeled;
+          IsWednesdayEnabeled  = entity.IsWednesdayEnabeled;
+          IsThursdayEnabeled  = entity.IsThursdayEnabeled;
+          IsFridayEnabeled  = entity.IsFridayEnabeled;
+          IsSaturdayEnabeled  = entity.IsSaturdayEnabeled;
+          IsSundayEnabeled  = entity.IsSundayEnabeled;
+          MondayFromHour  = entity.MondayFromHour;
+          TuesdayFromHour  = entity.TuesdayFromHour;
+          WednesdayFromHour  = entity.WednesdayFromHour;
+          ThursdayFromHour  = entity.ThursdayFromHour;
+          FridayFromHour  = entity.FridayFromHour;
+          SaturdayFromHour  = entity.SaturdayFromHour;
+          SundayFromHour  = entity.SundayFromHour;
+          MondayToHour  = entity.MondayToHour;
+          TuesdayToHour  = entity.TuesdayToHour;
+          WednesdayToHour  = entity.WednesdayToHour;
+          ThursdayToHour  = entity.ThursdayToHour;
+          FridayToHour  = entity.FridayToHour;
+          SaturdayToHour  = entity.SaturdayToHour;
+          SundayToHour  = entity.SundayToHour;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -85,6 +125,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string SaturdayToHour  { get; set; }
        [DataMember]
        public string SundayToHour  { get; set; }
+         #endregion Properties
    }
 
 }

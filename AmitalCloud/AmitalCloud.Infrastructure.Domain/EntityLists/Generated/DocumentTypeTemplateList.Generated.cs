@@ -13,12 +13,58 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DocumentTypeTemplateList
+   public partial class DocumentTypeTemplateList   
    {
+       #region Constructors
+       public DocumentTypeTemplateList() : base() {}
+       public DocumentTypeTemplateList(DocumentTypeTemplate entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          TemplateType  = entity.TemplateType;
+          LastUpdatedByUserId  = entity.LastUpdatedByUserId;
+          DocumentTypeId  = entity.DocumentTypeId;
+          Subject  = entity.Subject;
+          LastUpdateDate  = entity.LastUpdateDate;
+          InActive  = entity.InActive;
+          EditorTool  = entity.EditorTool;
+          VerticalShift  = entity.VerticalShift;
+          HorizontalShift  = entity.HorizontalShift;
+          OriginalTemplateId  = entity.OriginalTemplateId;
+          Description  = entity.Description;
+          Language  = entity.Language;
+          InternalRemarks  = entity.InternalRemarks;
+          CountryCode  = entity.CountryCode;
+          IsEnabledForCustomers  = entity.IsEnabledForCustomers;
+          IsCopiedAtSignup  = entity.IsCopiedAtSignup;
+            LastUpdateByUserName  = default;
+            IsDefault  = default;
+            OriginalTemplateName  = default;
+            DocumentTypeCode  = default;
+            DocumentTypeName  = default;
+            IsHideDocumentName  = default;
+            CountryName  = default;
+          ObjectTableId  = entity.ObjectTableId;
+            Name  = default;
+          TemplateFooterHtml  = entity.TemplateFooterHtml;
+          TemplateHeaderHtml  = entity.TemplateHeaderHtml;
+          TemplateHeaderHeight  = entity.TemplateHeaderHeight;
+          TemplateFooterHeight  = entity.TemplateFooterHeight;
+          TemplateTechnologyCode  = entity.TemplateTechnologyCode;
+          From  = entity.From;
+          ReplyTo  = entity.ReplyTo;
+          CC  = entity.CC;
+            ContactEmail  = default;
+            IsHaveJsonString  = default;
+          IsSystem  = entity.IsSystem;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -97,6 +143,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsHaveJsonString  { get; set; }
        [DataMember]
        public bool IsSystem  { get; set; }
+         #endregion Properties
    }
 
 }

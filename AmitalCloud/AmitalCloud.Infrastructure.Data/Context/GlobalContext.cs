@@ -80,7 +80,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
         //    return context;
         //}
 
-        public override AmitalCloudDBSchema AmitalCloudDBSchema
+        protected override AmitalCloudDBSchema AmitalCloudDBSchema
         {
             get { return AmitalCloudDBSchema.LOGITUDE_GLOBAL; }
         }

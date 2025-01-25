@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,24 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerProductActualDataPM : BaseEntityPM   {
+   #region Constructors
+   public CustomerProductActualDataPM() : base() {} 
+   public CustomerProductActualDataPM(CustomerProductActualData entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_customerId = entity.CustomerId;
+		_productTypeCode = entity.ProductTypeCode;
+		_month = entity.Month;
+		_year = entity.Year;
+		_chargeableWeight = entity.ChargeableWeight;
+		_tEU = entity.TEU;
+		_numberOfShipments = entity.NumberOfShipments;
+		_revenue = entity.Revenue;
+		_monthCode = default;
+		productLocations = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -219,4 +238,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
              set {  deletedProductLocations = value; }
 	    }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,66 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DocumentTypeList
+   public partial class DocumentTypeList   
    {
+       #region Constructors
+       public DocumentTypeList() : base() {}
+       public DocumentTypeList(DocumentType entity) : base()
+       {
+          Id  = entity.Id;
+            FollowUpTypeId  = default;
+          Notes  = entity.Notes;
+          Subject  = entity.Subject;
+          DocumentTypeDefaultReportTemplateId  = entity.DocumentTypeDefaultReportTemplateId;
+          DocumentTypeDefaultHTMLTemplateId  = entity.DocumentTypeDefaultHTMLTemplateId;
+          DocumentTypeDefaultEditorTool  = entity.DocumentTypeDefaultEditorTool;
+          CustomControl  = entity.CustomControl;
+          SharedDocumentTypeCopyId  = entity.SharedDocumentTypeCopyId;
+          IsReadOnly  = entity.IsReadOnly;
+          IsMaster  = entity.IsMaster;
+          IsDirect  = entity.IsDirect;
+          IsHouse  = entity.IsHouse;
+            ObjectTableName  = default;
+          SearchFields  = entity.SearchFields;
+          IsAgentSharedInHouse  = entity.IsAgentSharedInHouse;
+          IsAgentSharedInDirect  = entity.IsAgentSharedInDirect;
+          IsAgentSharedInMaster  = entity.IsAgentSharedInMaster;
+          IsCustomerView  = entity.IsCustomerView;
+          FileName  = entity.FileName;
+          IsAgentView  = entity.IsAgentView;
+          OrderBy  = entity.OrderBy;
+          IsCopiedAtSignup  = entity.IsCopiedAtSignup;
+          InActive  = entity.InActive;
+          PrintingFieldsScreenCode  = entity.PrintingFieldsScreenCode;
+          IsSystemAdditionalPrintingFields  = entity.IsSystemAdditionalPrintingFields;
+          IsEnabledForCustomers  = entity.IsEnabledForCustomers;
+          CountryCode  = entity.CountryCode;
+          IsDocumentOneTimePrintLimited  = entity.IsDocumentOneTimePrintLimited;
+          IsOcean  = entity.IsOcean;
+          IsAir  = entity.IsAir;
+          Name  = entity.Name;
+          Code  = entity.Code;
+          DocumentTypeCategoryCode  = entity.DocumentTypeCategoryCode;
+          TemplateFormatCode  = entity.TemplateFormatCode;
+          ObjectTableId  = entity.ObjectTableId;
+          LimitedPrintCopyId  = entity.LimitedPrintCopyId;
+          Tenant  = entity.Tenant;
+          IsDocOut  = entity.IsDocOut;
+          IsDocIn  = entity.IsDocIn;
+          IsInland  = entity.IsInland;
+            FollowUpTypeName  = default;
+            DocumentTypeCategoryName  = default;
+            OrderedDisplayName  = default;
+          AddedManually  = entity.AddedManually;
+          IsCustomerUploadPermission  = entity.IsCustomerUploadPermission;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -113,6 +167,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool AddedManually  { get; set; }
        [DataMember]
        public bool IsCustomerUploadPermission  { get; set; }
+         #endregion Properties
    }
 
 }

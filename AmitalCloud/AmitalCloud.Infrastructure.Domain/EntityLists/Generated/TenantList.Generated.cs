@@ -13,12 +13,144 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TenantList
+   public partial class TenantList   
    {
+       #region Constructors
+       public TenantList() : base() {}
+       public TenantList(Tenant entity) : base()
+       {
+          IsHybrid  = entity.IsHybrid;
+          DefaultQuestionnaireId  = entity.DefaultQuestionnaireId;
+            AllowAgentInShipmentCustomersLOV  = default;
+          IsMobileActivated  = entity.IsMobileActivated;
+          AllowEAWBMoreThanTenPackages  = entity.AllowEAWBMoreThanTenPackages;
+            IsDocumentsArchive  = default;
+          Signature  = entity.Signature;
+          IATA  = entity.IATA;
+          VatNumber  = entity.VatNumber;
+          AddressId  = entity.AddressId;
+          Company  = entity.Company;
+          PaymentTermId  = entity.PaymentTermId;
+          AgentId  = entity.AgentId;
+          CurrencyId  = entity.CurrencyId;
+          ProfitCurrencyId  = entity.ProfitCurrencyId;
+          FreightCurrencyId  = entity.FreightCurrencyId;
+          OtherChargesCurrencyId  = entity.OtherChargesCurrencyId;
+          QuoteSaleCurrencyId  = entity.QuoteSaleCurrencyId;
+          VolumeUnitCode  = entity.VolumeUnitCode;
+          DimensionsUnitCode  = entity.DimensionsUnitCode;
+          GrossWeightUnitCode  = entity.GrossWeightUnitCode;
+          ChargeableWeightUnitCode  = entity.ChargeableWeightUnitCode;
+          WeightMeasurementUnitCode  = entity.WeightMeasurementUnitCode;
+          ExportFreightPrepaidCollectId  = entity.ExportFreightPrepaidCollectId;
+          ImportFreightPrepaidCollectId  = entity.ImportFreightPrepaidCollectId;
+          ExportOtherPrepaidCollectId  = entity.ExportOtherPrepaidCollectId;
+          ImportOtherPrepaidCollectId  = entity.ImportOtherPrepaidCollectId;
+          MasterExportFreightPrepaidCollectId  = entity.MasterExportFreightPrepaidCollectId;
+          MasterImportFreightPrepaidCollectId  = entity.MasterImportFreightPrepaidCollectId;
+          MasterExportOtherPrepaidCollectId  = entity.MasterExportOtherPrepaidCollectId;
+          MasterImportOtherPrepaidCollectId  = entity.MasterImportOtherPrepaidCollectId;
+            STDVatPercentage  = default;
+          TimeZoneOffset  = entity.TimeZoneOffset;
+          Language  = entity.Language;
+            CompanyAddress  = default;
+            PaymentTermName  = default;
+            AgentName  = default;
+            AccountingCurrencyCode  = default;
+            ProfitCurrencyCode  = default;
+            FreightCurrencyCode  = default;
+            OtherChargesCurrencyCode  = default;
+            QuoteSaleCurrencyCode  = default;
+          Id  = entity.Id;
+          Email  = entity.Email;
+          Website  = entity.Website;
+          Format  = entity.Format;
+          Direction  = entity.Direction;
+            Version  = default;
+          DayLightOffset  = entity.DayLightOffset;
+          DayLightStartDate  = entity.DayLightStartDate;
+          DayLightEndDate  = entity.DayLightEndDate;
+          PasswordPolicyCode  = entity.PasswordPolicyCode;
+            PasswordStrength  = default;
+          IsDataBackupBuilt  = entity.IsDataBackupBuilt;
+            IsActive  = default;
+            CountryName  = default;
+            PackageCode  = default;
+          InvoiceSection1  = entity.InvoiceSection1;
+          InvoiceSection2  = entity.InvoiceSection2;
+          BankDetails  = entity.BankDetails;
+          DateTimeFormat  = entity.DateTimeFormat;
+          IsSharedLogisticsActivated  = entity.IsSharedLogisticsActivated;
+          SharedLogisticsMessageLink  = entity.SharedLogisticsMessageLink;
+          CASSCode  = entity.CASSCode;
+          LocalCustomsCode  = entity.LocalCustomsCode;
+          VatUniqueTypeCode  = entity.VatUniqueTypeCode;
+          VatMandatoryTypeCode  = entity.VatMandatoryTypeCode;
+          VatUniqueCountryId  = entity.VatUniqueCountryId;
+          VatMandatoryCountryId  = entity.VatMandatoryCountryId;
+          IsCustomerTelRequired  = entity.IsCustomerTelRequired;
+          IsCustomerFaxRequired  = entity.IsCustomerFaxRequired;
+          IsPickDelAdrsRequired  = entity.IsPickDelAdrsRequired;
+          IsCustomerAddress1Required  = entity.IsCustomerAddress1Required;
+          VatMandatoryForPotentialCustomers  = entity.VatMandatoryForPotentialCustomers;
+          HasPrimaryContact  = entity.HasPrimaryContact;
+          IsQuoteSubjectEdited  = entity.IsQuoteSubjectEdited;
+          RegulatedAgentNumber  = entity.RegulatedAgentNumber;
+          RegulatedAgentRegimeActivated  = entity.RegulatedAgentRegimeActivated;
+          CustomerId  = entity.CustomerId;
+            CustomerName  = default;
+          CustomerTenantShareCustomsFile  = entity.CustomerTenantShareCustomsFile;
+            CustomerTenantShareImportFile  = default;
+          IsPotentialTelRequired  = entity.IsPotentialTelRequired;
+          IsPotentialFaxRequired  = entity.IsPotentialFaxRequired;
+            LogBoxAdminUserId  = default;
+          SearchFields  = entity.SearchFields;
+            CountryCode  = default;
+            CurrencyCode  = default;
+          AccountingActivationDate  = entity.AccountingActivationDate;
+          AccountingActivated  = entity.AccountingActivated;
+            CurrencySign  = default;
+          ExportQuotationsToIntegratedSystem  = entity.ExportQuotationsToIntegratedSystem;
+          TenantVATManagement  = entity.TenantVATManagement;
+          StorageEncryptionKey  = entity.StorageEncryptionKey;
+          IsWebAccessActivated  = entity.IsWebAccessActivated;
+          IsInternalTicketByDefault  = entity.IsInternalTicketByDefault;
+          ProrateMasterReceivables  = entity.ProrateMasterReceivables;
+          SCACCode  = entity.SCACCode;
+          FMCNumber  = entity.FMCNumber;
+          IsCorrespondenceRightToLeftEnabled  = entity.IsCorrespondenceRightToLeftEnabled;
+          IsNotesRightToLeftEnabled  = entity.IsNotesRightToLeftEnabled;
+          AllowAgentInCustomersLOV  = entity.AllowAgentInCustomersLOV;
+          TemperatureUnitCode  = entity.TemperatureUnitCode;
+          DefaultSLAId  = entity.DefaultSLAId;
+          NumberFormatCode  = entity.NumberFormatCode;
+          CustomerTenantShareExportFile  = entity.CustomerTenantShareExportFile;
+          EcommerceSupportEmail  = entity.EcommerceSupportEmail;
+          CBSA  = entity.CBSA;
+          CAAT  = entity.CAAT;
+          IsTestTenant  = entity.IsTestTenant;
+          CheckDigitControlAlgorithmCode  = entity.CheckDigitControlAlgorithmCode;
+          HideFCLAllIn  = entity.HideFCLAllIn;
+          AllowCustomersInAgentsLOV  = entity.AllowCustomersInAgentsLOV;
+          IsIncrementalBuildRunning  = entity.IsIncrementalBuildRunning;
+          IsCargoTrackWebAccessActivated  = entity.IsCargoTrackWebAccessActivated;
+          EmptyReturnClosingDays  = entity.EmptyReturnClosingDays;
+          EnableDeliveryOptions  = entity.EnableDeliveryOptions;
+          ShipmentATAClosingDays  = entity.ShipmentATAClosingDays;
+          IsDigitalPortalAccessActivated  = entity.IsDigitalPortalAccessActivated;
+          UseNewTermsOfUse  = entity.UseNewTermsOfUse;
+            DPArchiveShipmentCreateFilter  = default;
+            DPArchiveShipmentArrivalFilter  = default;
+            DPArchiveShipmentDepartFilter  = default;
+          EcommerceTenant  = entity.EcommerceTenant;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public bool IsHybrid  { get; set; }
        [DataMember]
@@ -269,6 +401,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int? DPArchiveShipmentDepartFilter  { get; set; }
        [DataMember]
        public bool EcommerceTenant  { get; set; }
+         #endregion Properties
    }
 
 }

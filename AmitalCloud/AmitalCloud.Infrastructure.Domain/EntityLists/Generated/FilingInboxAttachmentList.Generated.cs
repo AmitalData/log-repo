@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class FilingInboxAttachmentList
+   public partial class FilingInboxAttachmentList   
    {
+       #region Constructors
+       public FilingInboxAttachmentList() : base() {}
+       public FilingInboxAttachmentList(FilingInboxAttachment entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          FileName  = entity.FileName;
+          DocumentId  = entity.DocumentId;
+          FilingInboxId  = entity.FilingInboxId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string DocumentId  { get; set; }
        [DataMember]
        public string FilingInboxId  { get; set; }
+         #endregion Properties
    }
 
 }

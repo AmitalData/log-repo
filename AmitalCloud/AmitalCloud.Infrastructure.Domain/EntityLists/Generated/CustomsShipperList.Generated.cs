@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomsShipperList : CustomFieldList
+   public partial class CustomsShipperList : CustomFieldList   
    {
+       #region Constructors
+       public CustomsShipperList() : base() {}
+       public CustomsShipperList(CustomsShipper entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          SearchFields  = entity.SearchFields;
+          CustomsShipperCode  = entity.CustomsShipperCode;
+          ValidDepositionNumber  = entity.ValidDepositionNumber;
+          ValidityStartDate  = entity.ValidityStartDate;
+          ValidityEndDate  = entity.ValidityEndDate;
+            EnglishName  = default;
+            ShipperVAT  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string EnglishName  { get; set; }
        [DataMember]
        public string ShipperVAT  { get; set; }
+         #endregion Properties
    }
 
 }

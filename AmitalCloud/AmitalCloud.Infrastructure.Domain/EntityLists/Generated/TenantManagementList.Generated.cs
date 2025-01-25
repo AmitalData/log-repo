@@ -13,12 +13,193 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TenantManagementList
+   public partial class TenantManagementList   
    {
+       #region Constructors
+       public TenantManagementList() : base() {}
+       public TenantManagementList(TenantManagement entity) : base()
+       {
+          EnableBranding  = entity.EnableBranding;
+          TrialStartDate  = entity.TrialStartDate;
+          TrialEndDate  = entity.TrialEndDate;
+            ProductionEndDate  = default;
+          PaidUntilDate  = entity.PaidUntilDate;
+          IsTrial  = entity.IsTrial;
+          NumberOfUsers  = entity.NumberOfUsers;
+          SearchFields  = entity.SearchFields;
+          CountryName  = entity.CountryName;
+            TimeZone  = default;
+            IsActive  = default;
+            GlobalDBId  = default;
+          TTY  = entity.TTY;
+          FreeUsers  = entity.FreeUsers;
+          IsRecurring  = entity.IsRecurring;
+          LicensePrice  = entity.LicensePrice;
+          Notes  = entity.Notes;
+          LastFWBSentDate  = entity.LastFWBSentDate;
+          LastFHLSentDate  = entity.LastFHLSentDate;
+          StatisticsUpdateDate  = entity.StatisticsUpdateDate;
+          ShipmentLastDate  = entity.ShipmentLastDate;
+          ShipmentTotalLastWeek  = entity.ShipmentTotalLastWeek;
+          ShipmentTotalLastMonth  = entity.ShipmentTotalLastMonth;
+          QuoteLastDate  = entity.QuoteLastDate;
+          QuoteTotalLastWeek  = entity.QuoteTotalLastWeek;
+          QuoteTotalLastMonth  = entity.QuoteTotalLastMonth;
+          ARInvoiceLastDate  = entity.ARInvoiceLastDate;
+          ARInvoiceTotalLastWeek  = entity.ARInvoiceTotalLastWeek;
+          ARInvoiceTotalLastMonth  = entity.ARInvoiceTotalLastMonth;
+          APInvoiceLastDate  = entity.APInvoiceLastDate;
+          APInvoiceTotalLastWeek  = entity.APInvoiceTotalLastWeek;
+          APInvoiceTotalLastMonth  = entity.APInvoiceTotalLastMonth;
+          CustomerLastDate  = entity.CustomerLastDate;
+          CustomerTotalLastWeek  = entity.CustomerTotalLastWeek;
+          CustomerTotalLastMonth  = entity.CustomerTotalLastMonth;
+          LastLoginDateTime  = entity.LastLoginDateTime;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          TemporalStartDate  = entity.TemporalStartDate;
+          TemporalEndDate  = entity.TemporalEndDate;
+          FirstPaymentDate  = entity.FirstPaymentDate;
+          IsAWBStockPrepaid  = entity.IsAWBStockPrepaid;
+          ManageLicencesPerUser  = entity.ManageLicencesPerUser;
+          IsCargonautEnabled  = entity.IsCargonautEnabled;
+          IsSystemSupportEnabled  = entity.IsSystemSupportEnabled;
+          IsDistributorSupportEnabled  = entity.IsDistributorSupportEnabled;
+          IsEAWBOnlyDemo  = entity.IsEAWBOnlyDemo;
+          IsRestrictedByAirline  = entity.IsRestrictedByAirline;
+          ManagesRegisteredAgent  = entity.ManagesRegisteredAgent;
+          LastFFRSentDate  = entity.LastFFRSentDate;
+          OpportunityLastDate  = entity.OpportunityLastDate;
+          OpportunityTotalLastWeek  = entity.OpportunityTotalLastWeek;
+          OpportunityTotalLastMonth  = entity.OpportunityTotalLastMonth;
+          ActivityLastDate  = entity.ActivityLastDate;
+          ActivityTotalLastWeek  = entity.ActivityTotalLastWeek;
+          ActivityTotalLastMonth  = entity.ActivityTotalLastMonth;
+          FSRLastSentDate  = entity.FSRLastSentDate;
+          FSULastReceivedDate  = entity.FSULastReceivedDate;
+          FSALastReceivedDate  = entity.FSALastReceivedDate;
+          ResellerCommission  = entity.ResellerCommission;
+          BillingByLogitude  = entity.BillingByLogitude;
+          IsDEXXConnectionEnabled  = entity.IsDEXXConnectionEnabled;
+          LastFHLCargonautSentDate  = entity.LastFHLCargonautSentDate;
+          LastFWBCargonautSentDate  = entity.LastFWBCargonautSentDate;
+          PaymentFailure  = entity.PaymentFailure;
+          SuspendDate  = entity.SuspendDate;
+          InternalNotes  = entity.InternalNotes;
+          BluesnapAccount  = entity.BluesnapAccount;
+          PIMA  = entity.PIMA;
+          TenantConnectedToAirlineCode  = entity.TenantConnectedToAirlineCode;
+          SupportActivated  = entity.SupportActivated;
+          SupportEmail  = entity.SupportEmail;
+          IsMultiPackage  = entity.IsMultiPackage;
+          Id  = entity.Id;
+          Name  = entity.Name;
+          PackageCode  = entity.PackageCode;
+          TemporalPackageCode  = entity.TemporalPackageCode;
+          RecurringPeriodCode  = entity.RecurringPeriodCode;
+          PaymentMethodCode  = entity.PaymentMethodCode;
+          PaymentChannelCode  = entity.PaymentChannelCode;
+          PaymentCurrencyCode  = entity.PaymentCurrencyCode;
+          DistributorCode  = entity.DistributorCode;
+          Technology  = entity.Technology;
+          BluesnapCRMContractId  = entity.BluesnapCRMContractId;
+          BluesnapEAWBContractId  = entity.BluesnapEAWBContractId;
+          BluesnapEAWBSContractId  = entity.BluesnapEAWBSContractId;
+          BluesnapOneTimeContract  = entity.BluesnapOneTimeContract;
+          BluesnapContractId  = entity.BluesnapContractId;
+          AWBMessagesCCSTypeCode  = entity.AWBMessagesCCSTypeCode;
+          TenantTypeCode  = entity.TenantTypeCode;
+            TemporalPackageName  = default;
+          HideSharedlogistics  = entity.HideSharedlogistics;
+          ContactEmail  = entity.ContactEmail;
+          CustomerURL  = entity.CustomerURL;
+          SilverlightEndDate  = entity.SilverlightEndDate;
+          AgentSharedLogisticsStatisticsLastDate  = entity.AgentSharedLogisticsStatisticsLastDate;
+          AgentSharedLogisticsStatisticsLastWeek  = entity.AgentSharedLogisticsStatisticsLastWeek;
+          AgentSharedLogisticsStatisticsLastMonth  = entity.AgentSharedLogisticsStatisticsLastMonth;
+          PackageName  = entity.PackageName;
+          MobileLastDate  = entity.MobileLastDate;
+          MobileTotalLastWeek  = entity.MobileTotalLastWeek;
+          MobileTotalLastMonth  = entity.MobileTotalLastMonth;
+          ShardLogisticLastDate  = entity.ShardLogisticLastDate;
+          ShardLogisticTotalLastWeek  = entity.ShardLogisticTotalLastWeek;
+          ShardLogisticTotalLastMonth  = entity.ShardLogisticTotalLastMonth;
+          RequestedAirlines  = entity.RequestedAirlines;
+          RegisteredAirlines  = entity.RegisteredAirlines;
+          PendingAirlines  = entity.PendingAirlines;
+            PrivateLabelId  = default;
+          IsParentTenant  = entity.IsParentTenant;
+          ParentTenantId  = entity.ParentTenantId;
+          ChangeHeaderColor  = entity.ChangeHeaderColor;
+          IsINTTRAStockPrepaid  = entity.IsINTTRAStockPrepaid;
+          PackageCodeSearchField  = entity.PackageCodeSearchField;
+          IsINTTRAOnlyDemo  = entity.IsINTTRAOnlyDemo;
+          BluesnapInttraStockContractId  = entity.BluesnapInttraStockContractId;
+            IsTestTenant  = default;
+          MainAdditionalPackageApplied  = entity.MainAdditionalPackageApplied;
+          TotalPrice  = entity.TotalPrice;
+          TotalNumberOfUsers  = entity.TotalNumberOfUsers;
+          TotalFreeUsers  = entity.TotalFreeUsers;
+          AveragePrice  = entity.AveragePrice;
+          TotalPaymentamount  = entity.TotalPaymentamount;
+          MainColor  = entity.MainColor;
+          SecondaryColor  = entity.SecondaryColor;
+          BackgroundId  = entity.BackgroundId;
+          NoPaymentForChildTenants  = entity.NoPaymentForChildTenants;
+          ComapnylogoId  = entity.ComapnylogoId;
+          BrowserIconId  = entity.BrowserIconId;
+          LastEbookingSentDate  = entity.LastEbookingSentDate;
+          LastSISentDate  = entity.LastSISentDate;
+          NumberOfBookingSentLastWeek  = entity.NumberOfBookingSentLastWeek;
+          NumberOfSISentLastWeek  = entity.NumberOfSISentLastWeek;
+          LastContainerStatusReceived  = entity.LastContainerStatusReceived;
+          ShipmentHeaderImageId  = entity.ShipmentHeaderImageId;
+          InvertedLogoId  = entity.InvertedLogoId;
+          LastTariffUpdateDate  = entity.LastTariffUpdateDate;
+          LastTariffUsageDate  = entity.LastTariffUsageDate;
+          LastWeekCreatedTariffs  = entity.LastWeekCreatedTariffs;
+          LastMonthCreatedTariffs  = entity.LastMonthCreatedTariffs;
+          ScheduledTasksLimitPerReport  = entity.ScheduledTasksLimitPerReport;
+            IsHybrid  = default;
+          WhatsAppMessagingPhoneNumber  = entity.WhatsAppMessagingPhoneNumber;
+          ActivatedforDeclarationApprove  = entity.ActivatedforDeclarationApprove;
+          DeclarationMessage  = entity.DeclarationMessage;
+          PermissionBuildMonths  = entity.PermissionBuildMonths;
+            PrivateLabelName  = default;
+          ActivatePrivateSite  = entity.ActivatePrivateSite;
+          EnableExportToExcel  = entity.EnableExportToExcel;
+          TertiaryColor  = entity.TertiaryColor;
+          IsContainerTrackingPrepaid  = entity.IsContainerTrackingPrepaid;
+          ShowMoneyOrder  = entity.ShowMoneyOrder;
+          MobileBackgroundId  = entity.MobileBackgroundId;
+          DigitalPortalLastDate  = entity.DigitalPortalLastDate;
+          DigitalPortalTotalLastWeek  = entity.DigitalPortalTotalLastWeek;
+          DigitalPortalTotalLastMonth  = entity.DigitalPortalTotalLastMonth;
+          DigitalPortalMobileLastDate  = entity.DigitalPortalMobileLastDate;
+          DigitalPortalMobTotalLastWeek  = entity.DigitalPortalMobTotalLastWeek;
+          DigitalPortalMobTotalLastMonth  = entity.DigitalPortalMobTotalLastMonth;
+          DPArchiveShipmentCreateFilter  = entity.DPArchiveShipmentCreateFilter;
+          DPArchiveShipmentArrivalFilter  = entity.DPArchiveShipmentArrivalFilter;
+          DPArchiveShipmentDepartFilter  = entity.DPArchiveShipmentDepartFilter;
+          CargoTrackingPublicShowEvents  = entity.CargoTrackingPublicShowEvents;
+          CargoTrackingPrivateShowEvents  = entity.CargoTrackingPrivateShowEvents;
+          LogoURL  = entity.LogoURL;
+          ServiceAgreementURL  = entity.ServiceAgreementURL;
+            EcommerceSupportEmail  = default;
+          AmitalApiToken  = entity.AmitalApiToken;
+          HeaderColor  = entity.HeaderColor;
+            EcommerceTenant  = default;
+          ExportLoginCredintial  = entity.ExportLoginCredintial;
+          TranzilaPaymentWithBit  = entity.TranzilaPaymentWithBit;
+          SearchAbsoluteValuePublic  = entity.SearchAbsoluteValuePublic;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public bool EnableBranding  { get; set; }
        [DataMember]
@@ -367,6 +548,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool TranzilaPaymentWithBit  { get; set; }
        [DataMember]
        public bool SearchAbsoluteValuePublic  { get; set; }
+         #endregion Properties
    }
 
 }

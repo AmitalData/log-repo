@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,31 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ReportExecutionLogPM : BaseEntityPM   {
+   #region Constructors
+   public ReportExecutionLogPM() : base() {} 
+   public ReportExecutionLogPM(ReportExecutionLog entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_statusCode = entity.StatusCode;
+		_exceptionMessage = entity.ExceptionMessage;
+		_doneDate = entity.DoneDate;
+		_reportFilterXML = entity.ReportFilterXML;
+		_reportId = entity.ReportId;
+		_reportTemplateId = entity.ReportTemplateId;
+		_retryNumber = entity.RetryNumber;
+		_startDate = entity.StartDate;
+		_disablePreview = entity.DisablePreview;
+		_executedByServerName = entity.ExecutedByServerName;
+		_reportName = default;
+		_statusName = default;
+		_searchFields = entity.SearchFields;
+		_createdByUserName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -311,4 +337,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

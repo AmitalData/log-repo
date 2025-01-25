@@ -13,12 +13,117 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ARPaymentList
+   public partial class ARPaymentList   
    {
+       #region Constructors
+       public ARPaymentList() : base() {}
+       public ARPaymentList(ARPayment entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          DebitAccountId  = entity.DebitAccountId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          ProfitCurrencyExchangeRate  = entity.ProfitCurrencyExchangeRate;
+          AmountInProfitCurrency  = entity.AmountInProfitCurrency;
+          PaymentNo  = entity.PaymentNo;
+          CreateDate  = entity.CreateDate;
+            CreatedByUserName  = default;
+          PrintDate  = entity.PrintDate;
+          PrintByUserId  = entity.PrintByUserId;
+          LocalCurrencyId  = entity.LocalCurrencyId;
+          AmountInLocalCurrency  = entity.AmountInLocalCurrency;
+          BranchId  = entity.BranchId;
+          BillToId  = entity.BillToId;
+            BillToName  = default;
+          ARAccountId  = entity.ARAccountId;
+          StatusCode  = entity.StatusCode;
+            StatusName  = default;
+          IsClosed  = entity.IsClosed;
+          PaymentCurrencyId  = entity.PaymentCurrencyId;
+            PaymentCurrencyCode  = default;
+          AmountInPaymentCurrency  = entity.AmountInPaymentCurrency;
+          PaidBy  = entity.PaidBy;
+            AccountingPaymentMethodCode  = default;
+            PaymentMethodName  = default;
+          PrintNotes  = entity.PrintNotes;
+          InternalNotes  = entity.InternalNotes;
+          PaymentCurrencyExchangeRate  = entity.PaymentCurrencyExchangeRate;
+          ExchangeRateDate  = entity.ExchangeRateDate;
+          BillToAddressId  = entity.BillToAddressId;
+          SearchFields  = entity.SearchFields;
+            CreditAccountName  = default;
+          OpenAmount  = entity.OpenAmount;
+          ValueDate  = entity.ValueDate;
+          ChequeOrPaymentRef  = entity.ChequeOrPaymentRef;
+          Bank  = entity.Bank;
+          BankBranch  = entity.BankBranch;
+          RegisterDate  = entity.RegisterDate;
+          CreditCardTypeId  = entity.CreditCardTypeId;
+            LocalCurrencyCode  = default;
+          Account  = entity.Account;
+            ARAccountName  = default;
+            CreateByUserId  = default;
+          SATPaymentMethodCode  = entity.SATPaymentMethodCode;
+          SATTransferStatusCode  = entity.SATTransferStatusCode;
+          TransmissionError  = entity.TransmissionError;
+          MetodoPagoCode  = entity.MetodoPagoCode;
+          TipoCadenaPago  = entity.TipoCadenaPago;
+          CertPago  = entity.CertPago;
+          CadPago  = entity.CadPago;
+          SelloPago  = entity.SelloPago;
+          CashbookId  = entity.CashbookId;
+          SATApprovalDate  = entity.SATApprovalDate;
+          InvoiceNumber  = entity.InvoiceNumber;
+          ShipmentNumber  = entity.ShipmentNumber;
+            SATTransferStatusName  = default;
+          BankAccountLiteId  = entity.BankAccountLiteId;
+          BankAccountId  = entity.BankAccountId;
+          InvoiceNumbers  = entity.InvoiceNumbers;
+          TransferError  = entity.TransferError;
+          TransferTries  = entity.TransferTries;
+          IsTransferStarted  = entity.IsTransferStarted;
+          TransferStatusCode  = entity.TransferStatusCode;
+            TransferStatusName  = default;
+            ReadyForTransfer  = default;
+          AccountingPaymentMethodId  = entity.AccountingPaymentMethodId;
+            BranchName  = default;
+            BankAccountName  = default;
+            AccountingPaymentMethodName  = default;
+          ApprovedDate  = entity.ApprovedDate;
+          ApprovedByUserId  = entity.ApprovedByUserId;
+          FirstApproveDate  = entity.FirstApproveDate;
+          IsFullAccounting  = entity.IsFullAccounting;
+            GLAccountId  = default;
+            GLAccountRecoMethodCode  = default;
+          IsExternalEntity  = entity.IsExternalEntity;
+            JournalNumber  = default;
+            BillToLocalName  = default;
+          OpenAmountInLocalCurrency  = entity.OpenAmountInLocalCurrency;
+          CreatedByPartner  = entity.CreatedByPartner;
+          IsPaymentNumberManuallySet  = entity.IsPaymentNumberManuallySet;
+          AccountingCancelationDate  = entity.AccountingCancelationDate;
+          CancelationNotes  = entity.CancelationNotes;
+          Field1  = entity.Field1;
+          Field2  = entity.Field2;
+          Field3  = entity.Field3;
+          Field4  = entity.Field4;
+          Field5  = entity.Field5;
+          Field6  = entity.Field6;
+          Field7  = entity.Field7;
+          Field8  = entity.Field8;
+          Field9  = entity.Field9;
+          Field10  = entity.Field10;
+          PartnerId  = entity.PartnerId;
+            BillToCode  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -215,6 +320,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string PartnerId  { get; set; }
        [DataMember]
        public string BillToCode  { get; set; }
+         #endregion Properties
    }
 
 }

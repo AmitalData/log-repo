@@ -13,12 +13,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class BankAccountLiteList
+   public partial class BankAccountLiteList   
    {
+       #region Constructors
+       public BankAccountLiteList() : base() {}
+       public BankAccountLiteList(BankAccountLite entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          SearchFields  = entity.SearchFields;
+          LocalName  = entity.LocalName;
+          EnglishName  = entity.EnglishName;
+          AccountNumber  = entity.AccountNumber;
+          BranchNumber  = entity.BranchNumber;
+          IBAN  = entity.IBAN;
+          SwiftCode  = entity.SwiftCode;
+          BankCode  = entity.BankCode;
+          BranchAddress  = entity.BranchAddress;
+            CurrencyCode  = default;
+          CurrencyId  = entity.CurrencyId;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          Inactive  = entity.Inactive;
+          VatNumber  = entity.VatNumber;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -55,6 +80,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public bool Inactive  { get; set; }
        [DataMember]
        public string VatNumber  { get; set; }
+         #endregion Properties
    }
 
 }

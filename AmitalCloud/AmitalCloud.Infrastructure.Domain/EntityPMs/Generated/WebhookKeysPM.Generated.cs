@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,24 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class WebhookKeysPM : BaseEntityPM   {
+   #region Constructors
+   public WebhookKeysPM() : base() {} 
+   public WebhookKeysPM(WebhookKeys entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_accessKey = entity.AccessKey;
+		_partnerName = entity.PartnerName;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_inActive = entity.InActive;
+		_createdByUserName = entity.CreatedByUserName;
+		_updatedByUserName = entity.UpdatedByUserName;
+		_description = entity.Description;
+		_searchFields = entity.SearchFields;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -199,4 +218,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

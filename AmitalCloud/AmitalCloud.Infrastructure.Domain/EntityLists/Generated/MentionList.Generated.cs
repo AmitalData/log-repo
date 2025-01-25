@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class MentionList
+   public partial class MentionList   
    {
+       #region Constructors
+       public MentionList() : base() {}
+       public MentionList(Mention entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          SearchFields  = entity.SearchFields;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          InActive  = entity.InActive;
+            UpdatedByUserName  = default;
+            CreatedByUserName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string UpdatedByUserName  { get; set; }
        [DataMember]
        public string CreatedByUserName  { get; set; }
+         #endregion Properties
    }
 
 }

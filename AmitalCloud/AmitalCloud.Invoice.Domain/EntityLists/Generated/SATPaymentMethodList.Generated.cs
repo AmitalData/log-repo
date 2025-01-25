@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class SATPaymentMethodList
+   public partial class SATPaymentMethodList   
    {
+       #region Constructors
+       public SATPaymentMethodList() : base() {}
+       public SATPaymentMethodList(SATPaymentMethod entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          LocalName  = entity.LocalName;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -29,6 +41,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string LocalName  { get; set; }
+         #endregion Properties
    }
 
 }

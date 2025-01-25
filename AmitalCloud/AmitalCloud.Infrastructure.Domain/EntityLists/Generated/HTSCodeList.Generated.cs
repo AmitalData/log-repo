@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class HTSCodeList
+   public partial class HTSCodeList   
    {
+       #region Constructors
+       public HTSCodeList() : base() {}
+       public HTSCodeList(HTSCode entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ItemId  = entity.ItemId;
+          Code  = entity.Code;
+          ApprovedByCustomer  = entity.ApprovedByCustomer;
+          InActive  = entity.InActive;
+          DestinationCountryId  = entity.DestinationCountryId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool InActive  { get; set; }
        [DataMember]
        public string DestinationCountryId  { get; set; }
+         #endregion Properties
    }
 
 }

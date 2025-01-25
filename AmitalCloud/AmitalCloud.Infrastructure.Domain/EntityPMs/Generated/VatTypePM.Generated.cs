@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,39 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class VatTypePM : BaseEntityPM   {
+   #region Constructors
+   public VatTypePM() : base() {} 
+   public VatTypePM(VatType entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_externalTAXItemId = entity.ExternalTAXItemId;
+		_searchFields = entity.SearchFields;
+		_code = entity.Code;
+		_englishName = entity.EnglishName;
+		_localName = entity.LocalName;
+		_computedLocalName = default;
+		_description = entity.Description;
+		_localDescription = entity.LocalDescription;
+		_externalVATCard = entity.ExternalVATCard;
+		_addedManually = entity.AddedManually;
+		_inActive = entity.InActive;
+		_isMultiPercentage = entity.IsMultiPercentage;
+		_isSecured = default;
+		_externalVATCardExternalId = default;
+		_externalTAXItemIdExternalId = default;
+		vatTypePercentages = default;
+		vatTypeGroups = default;
+		_newEntityPercentage = default;
+		_newEntityPercentageDate = default;
+		_recognizedPercentage = entity.RecognizedPercentage;
+		_payablesExternalId = entity.PayablesExternalId;
+		_receivablesExternalId = entity.ReceivablesExternalId;
+		_isRegionalTax = entity.IsRegionalTax;
+		_partnerCode = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -473,4 +507,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

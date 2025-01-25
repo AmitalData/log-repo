@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,113 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class AirlinePM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public AirlinePM() : base() {} 
+   public AirlinePM(Airline entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_registrationUpdatedBy = entity.RegistrationUpdatedBy;
+		_invoiceCurrencyId = default;
+		_vatTypeId = default;
+		_checkDigit = entity.CheckDigit;
+		_limitedLength = entity.LimitedLength;
+		_bankName = default;
+		_bankAddress = default;
+		_swift = default;
+		_iBANNumber = default;
+		_tTY = entity.TTY;
+		_accountNumber = entity.AccountNumber;
+		_bankAccountNumber = default;
+		_enableConsolidationInvoices = default;
+		_gLSHKPIMA = entity.GLSHKPIMA;
+		_isGLSHKRegistered = entity.IsGLSHKRegistered;
+		_gLSHKNeedsRegistration = entity.GLSHKNeedsRegistration;
+		_champNeedsRegistration = entity.ChampNeedsRegistration;
+		_isChampRegistered = entity.IsChampRegistered;
+		_champFWB = entity.ChampFWB;
+		_champFHL = entity.ChampFHL;
+		_champFSU = entity.ChampFSU;
+		_champFSRFSA = entity.ChampFSRFSA;
+		_champFVRFVA = entity.ChampFVRFVA;
+		_champFFRFFA = entity.ChampFFRFFA;
+		_gLSHKFWB = entity.GLSHKFWB;
+		_gLSHKFHL = entity.GLSHKFHL;
+		_gLSHKFSU = entity.GLSHKFSU;
+		_gLSHKFSRFSA = entity.GLSHKFSRFSA;
+		_gLSHKFVRFVA = entity.GLSHKFVRFVA;
+		_gLSHKFFRFFA = entity.GLSHKFFRFFA;
+		_isAllowedInAirlinesRestriction = entity.IsAllowedInAirlinesRestriction;
+		_registrationNotes = entity.RegistrationNotes;
+		_champRegistrationRequested = entity.ChampRegistrationRequested;
+		_gLSHKRegistrationRequested = entity.GLSHKRegistrationRequested;
+		_hasAdaptations = entity.HasAdaptations;
+		_iCAO = entity.ICAO;
+		_isManagingProduct = entity.IsManagingProduct;
+		_isProductMandatory = entity.IsProductMandatory;
+		_isDescriptionOfGoodsFromList = entity.IsDescriptionOfGoodsFromList;
+		_scheduleDays = entity.ScheduleDays;
+		_noAvailabilityInFVAMessages = entity.NoAvailabilityInFVAMessages;
+		_website = default;
+		_code = default;
+		_englishName = default;
+		_localName = default;
+		_computedLocalName = default;
+		_prefix = entity.Prefix;
+		_addedManually = entity.AddedManually;
+		_inActive = default;
+		_aWBAccount = entity.AWBAccount;
+		_vatNumber = default;
+		_accountingCard = default;
+		_remark = default;
+		_paymentTermId = default;
+		_isSecured = default;
+		_isHybrid = default;
+		_createDate = default;
+		_updateDate = default;
+		_createdByUserId = default;
+		_updatedByUserId = default;
+		_notes = default;
+		_carrierTypeId = default;
+		_transportModeId = default;
+		_cityName = default;
+		_countryId = default;
+		_countryCode = default;
+		_countryName = default;
+		_searchFields = default;
+		_fieldsChanged = default;
+		_isExternal = default;
+		_primaryContactId = default;
+		_isFirstContactToAdd = default;
+		_card = default;
+		cardExternalCodeByCurrencies = default;
+		_sATForeignRFC = default;
+		_metodoPagoCode = default;
+		_usoCFDICode = default;
+		_externalId2 = default;
+		_iRSPlace = default;
+		_iRSNumber = default;
+		_isDeclined = entity.IsDeclined;
+		_declineNotes = entity.DeclineNotes;
+		_receivablesAccountingCard = default;
+		_payablesAccountingCard = default;
+		_externalAccountingBusinessArea = default;
+		_paymentMethodCode = default;
+		_primaryContactName = entity.PrimaryContactName;
+		_primaryContactEmail = entity.PrimaryContactEmail;
+		_primaryContactPhone = entity.PrimaryContactPhone;
+		_imageDetailId = default;
+		_gLAccountId = default;
+		_accountingVATSplit = default;
+		_gLAccountNumber = default;
+		_billToId = default;
+		_regimenFiscalCode = default;
+		_sATReceptorName = default;
+		_importLocalCustomerGroupId = default;
+		_exportLocalCustomerGroupId = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -2441,4 +2549,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 }
+#endregion Properties
 }

@@ -13,12 +13,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentPackageList
+   public partial class ShipmentPackageList   
    {
+       #region Constructors
+       public ShipmentPackageList() : base() {}
+       public ShipmentPackageList(ShipmentPackage entity) : base()
+       {
+          Id  = entity.Id;
+          Reference1  = entity.Reference1;
+          Reference2  = entity.Reference2;
+          Reference3  = entity.Reference3;
+          CommodityNumber  = entity.CommodityNumber;
+          Notes  = entity.Notes;
+          Make  = entity.Make;
+          Model  = entity.Model;
+          Year  = entity.Year;
+          Color  = entity.Color;
+          ChassisNumber  = entity.ChassisNumber;
+          RegistrationNumber  = entity.RegistrationNumber;
+          CountryId  = entity.CountryId;
+          LCLContainerTypeId  = entity.LCLContainerTypeId;
+            ContainerStatusName  = default;
+            VolumeInCBF  = default;
+            GrossWeightInLB  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -55,6 +80,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public double? VolumeInCBF  { get; set; }
        [DataMember]
        public double? GrossWeightInLB  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class FilingInboxList
+   public partial class FilingInboxList   
    {
+       #region Constructors
+       public FilingInboxList() : base() {}
+       public FilingInboxList(FilingInbox entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Sender  = entity.Sender;
+          Subject  = entity.Subject;
+          IsDeleted  = entity.IsDeleted;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          BodyDocumentId  = entity.BodyDocumentId;
+          SearchFields  = entity.SearchFields;
+            EmailBody  = default;
+            SenderName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -57,6 +77,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string SenderName  { get; set; }
    
+         #endregion Properties
    }
 
 }

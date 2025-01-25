@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerProductActualDataList
+   public partial class CustomerProductActualDataList   
    {
+       #region Constructors
+       public CustomerProductActualDataList() : base() {}
+       public CustomerProductActualDataList(CustomerProductActualData entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          CustomerId  = entity.CustomerId;
+          ProductTypeCode  = entity.ProductTypeCode;
+          Month  = entity.Month;
+          Year  = entity.Year;
+          ChargeableWeight  = entity.ChargeableWeight;
+          TEU  = entity.TEU;
+          NumberOfShipments  = entity.NumberOfShipments;
+          Revenue  = entity.Revenue;
+            MonthCode  = default;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
 
@@ -47,6 +65,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public decimal? Revenue  { get; set; }
        [DataMember]
        public string MonthCode  { get; set; }
+         #endregion Properties
    }
 
 }

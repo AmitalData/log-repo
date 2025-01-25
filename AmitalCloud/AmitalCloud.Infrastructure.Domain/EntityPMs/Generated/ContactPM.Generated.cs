@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,78 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ContactPM : BaseEntityPM   {
+   #region Constructors
+   public ContactPM() : base() {} 
+   public ContactPM(Contact entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_facebookId = entity.FacebookId;
+		_externalId = entity.ExternalId;
+		_signature = entity.Signature;
+		_displayGettingStarted = entity.DisplayGettingStarted;
+		_imageDetailId = entity.ImageDetailId;
+		_dontShowLocalLabels = entity.DontShowLocalLabels;
+		_indexColor = entity.IndexColor;
+		_notes = entity.Notes;
+		_birthdayReminder = entity.BirthdayReminder;
+		_anniversaryReminder = entity.AnniversaryReminder;
+		_doneDate = entity.DoneDate;
+		_birthDayOfYear = entity.BirthDayOfYear;
+		_contactDoneMethodCode = entity.ContactDoneMethodCode;
+		_isAirExport = default;
+		_isAirImport = default;
+		_isOceanExport = default;
+		_isOceanImport = default;
+		_isCustomsImport = default;
+		_isInlandDomestic = default;
+		_isAll = default;
+		_position = entity.Position;
+		_searchFields = entity.SearchFields;
+		_englishName = entity.EnglishName;
+		_localName = entity.LocalName;
+		_computedLocalName = default;
+		_email = entity.Email;
+		_mobile = entity.Mobile;
+		_businessPhone = entity.BusinessPhone;
+		_fax = entity.Fax;
+		_birthday = entity.Birthday;
+		_anniversary = entity.Anniversary;
+		_inActive = entity.InActive;
+		_cardId = default;
+		_hasPassword = default;
+		_password = default;
+		_isUser = default;
+		_signupRole = default;
+		_isHybrid = default;
+		_dontShowLocal = default;
+		_mustChangePassword = default;
+		_isLocked = default;
+		_numberOfRetries = default;
+		_disconectFromCard = default;
+		_fieldsChanged = default;
+		_setAsPrimaryForCard = default;
+		_shippingAgent = default;
+		_contactDoneMethodName = default;
+		_isInlandExport = default;
+		_isInlandImport = default;
+		_hasCardContact = default;
+		_customerId = default;
+		_isCreatedWithPartner = default;
+		_signatureHtml = entity.SignatureHtml;
+		_companyName = entity.CompanyName;
+		_createDate = entity.CreateDate;
+		_isChangeSignatur = default;
+		cardContactAdditionalServices = default;
+		cardContactProducts = default;
+		_updateDate = entity.UpdateDate;
+		_digitalPortalLanguage = entity.DigitalPortalLanguage;
+		_contactForAccounting = entity.ContactForAccounting;
+		_contactLastLogin = entity.ContactLastLogin;
+		_timeZone = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -1097,4 +1170,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

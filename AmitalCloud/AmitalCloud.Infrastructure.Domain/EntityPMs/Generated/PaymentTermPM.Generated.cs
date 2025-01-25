@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,36 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class PaymentTermPM : BaseEntityPM   {
+   #region Constructors
+   public PaymentTermPM() : base() {} 
+   public PaymentTermPM(PaymentTerm entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_externalId = entity.ExternalId;
+		_englishName = entity.EnglishName;
+		_localName = entity.LocalName;
+		_computedLocalName = default;
+		_description = entity.Description;
+		_localDescription = entity.LocalDescription;
+		_days = entity.Days;
+		_addedManually = entity.AddedManually;
+		_inActive = entity.InActive;
+		_displayInLOV = entity.DisplayInLOV;
+		_isManuallySet = entity.IsManuallySet;
+		_searchFields = entity.SearchFields;
+		_isSecured = default;
+		_externalIdExternalId = default;
+		_endOfMonth = entity.EndOfMonth;
+		_fromDateTypeCode = entity.FromDateTypeCode;
+		_calculatedLocalName = default;
+		_calculatedEnglishName = default;
+		_code = entity.Code;
+		_partnerCode = default;
+		_numberOfMonths = entity.NumberOfMonths;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -391,4 +422,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

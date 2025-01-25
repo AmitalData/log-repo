@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerTenantAccessCardsBatchList
+   public partial class CustomerTenantAccessCardsBatchList   
    {
+       #region Constructors
+       public CustomerTenantAccessCardsBatchList() : base() {}
+       public CustomerTenantAccessCardsBatchList(CustomerTenantAccessCardsBatch entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          CustomerId  = entity.CustomerId;
+          CustomerTenantAccessId  = entity.CustomerTenantAccessId;
+          CreateDateTime  = entity.CreateDateTime;
+          DoneDate  = entity.DoneDate;
+          Status  = entity.Status;
+          BatchNumber  = entity.BatchNumber;
+          TotalFailed  = entity.TotalFailed;
+          TotalShipment  = entity.TotalShipment;
+          Totalsucceeded  = entity.Totalsucceeded;
+          FromDateTime  = entity.FromDateTime;
+          ToDateTime  = entity.ToDateTime;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
 
@@ -49,6 +69,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime? FromDateTime  { get; set; }
        [DataMember]
        public DateTime? ToDateTime  { get; set; }
+         #endregion Properties
    }
 
 }

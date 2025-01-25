@@ -13,12 +13,48 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TenantManagmentPrivateLabelsList
+   public partial class TenantManagmentPrivateLabelsList   
    {
+       #region Constructors
+       public TenantManagmentPrivateLabelsList() : base() {}
+       public TenantManagmentPrivateLabelsList(TenantManagmentPrivateLabels entity) : base()
+       {
+          MainLogo  = entity.MainLogo;
+          SmallLogo  = entity.SmallLogo;
+          HybridPartnerId  = entity.HybridPartnerId;
+          Id  = entity.Id;
+          PrivateLabelShortName  = entity.PrivateLabelShortName;
+          PrivateLabelName  = entity.PrivateLabelName;
+          PrivateLabelUrl  = entity.PrivateLabelUrl;
+          ContactUsEmail  = entity.ContactUsEmail;
+          ReceiveAllStatuses  = entity.ReceiveAllStatuses;
+          InActive  = entity.InActive;
+          SearchFields  = entity.SearchFields;
+          BackgroundImageId  = entity.BackgroundImageId;
+          LoginImageId  = entity.LoginImageId;
+          PrivateLabelDomain  = entity.PrivateLabelDomain;
+          MainColor  = entity.MainColor;
+          LoginProgressImageId  = entity.LoginProgressImageId;
+          ForgetPasswordImageId  = entity.ForgetPasswordImageId;
+          SecondaryColor  = entity.SecondaryColor;
+          HasLogboxAccess  = entity.HasLogboxAccess;
+          MainTabHighlightColor  = entity.MainTabHighlightColor;
+          DocumentTypeHighlightColor  = entity.DocumentTypeHighlightColor;
+          IsCustomsActivated  = entity.IsCustomsActivated;
+          IsExportActivated  = entity.IsExportActivated;
+          QueryFiltersHighlightColor  = entity.QueryFiltersHighlightColor;
+          CreateShipmentsWithoutDocs  = entity.CreateShipmentsWithoutDocs;
+          CreateOShipmentsWithoutDocs  = entity.CreateOShipmentsWithoutDocs;
+          FilingInboxDomain  = entity.FilingInboxDomain;
+          DistributorCode  = entity.DistributorCode;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string MainLogo  { get; set; }
        [DataMember]
@@ -77,6 +113,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string FilingInboxDomain  { get; set; }
        [DataMember]
        public string DistributorCode  { get; set; }
+         #endregion Properties
    }
 
 }

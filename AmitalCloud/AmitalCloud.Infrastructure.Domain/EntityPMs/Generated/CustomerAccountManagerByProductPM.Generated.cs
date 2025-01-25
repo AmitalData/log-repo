@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerAccountManagerByProductPM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public CustomerAccountManagerByProductPM() : base() {} 
+   public CustomerAccountManagerByProductPM(CustomerAccountManagerByProduct entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_productTypeCode = entity.ProductTypeCode;
+		_accountManagerId = entity.AccountManagerId;
+		_customerId = entity.CustomerId;
+		_accountManagerName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -105,4 +118,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

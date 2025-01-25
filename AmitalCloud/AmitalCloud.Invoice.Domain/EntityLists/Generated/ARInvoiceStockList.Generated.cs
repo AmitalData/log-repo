@@ -13,12 +13,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ARInvoiceStockList
+   public partial class ARInvoiceStockList   
    {
+       #region Constructors
+       public ARInvoiceStockList() : base() {}
+       public ARInvoiceStockList(ARInvoiceStock entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          Inactive  = entity.Inactive;
+          StartDate  = entity.StartDate;
+          EndDate  = entity.EndDate;
+          Amount  = entity.Amount;
+          Remaining  = entity.Remaining;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+            StatusName  = default;
+          Notes  = entity.Notes;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -55,6 +80,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string StatusName  { get; set; }
        [DataMember]
        public string Notes  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,30 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class BankAccountLitePM : BaseEntityPM   {
+   #region Constructors
+   public BankAccountLitePM() : base() {} 
+   public BankAccountLitePM(BankAccountLite entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_searchFields = entity.SearchFields;
+		_localName = entity.LocalName;
+		_englishName = entity.EnglishName;
+		_accountNumber = entity.AccountNumber;
+		_branchNumber = entity.BranchNumber;
+		_iBAN = entity.IBAN;
+		_swiftCode = entity.SwiftCode;
+		_bankCode = entity.BankCode;
+		_branchAddress = entity.BranchAddress;
+		_currencyCode = default;
+		_currencyId = entity.CurrencyId;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_inactive = entity.Inactive;
+		_vatNumber = entity.VatNumber;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -295,4 +320,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

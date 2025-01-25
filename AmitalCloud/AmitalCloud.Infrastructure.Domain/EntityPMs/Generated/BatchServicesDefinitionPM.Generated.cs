@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,29 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class BatchServicesDefinitionPM : BaseEntityPM   {
+   #region Constructors
+   public BatchServicesDefinitionPM() : base() {} 
+   public BatchServicesDefinitionPM(BatchServicesDefinition entity) : base()
+   {
+		_code = entity.Code;
+		_lastActivity = default;
+		_inActive = default;
+		_numberOfThreads = default;
+		_className = entity.ClassName;
+		_parameter1 = entity.Parameter1;
+		_parameter2 = entity.Parameter2;
+		_cPU = default;
+		_numberOfDoneItems = default;
+		_doneItemsInOneHour = default;
+		_doneItemsInOneMinute = default;
+		_doneItemsInFiveMinutes = default;
+		_waitingItems = default;
+		_failedItems = default;
+		_queueDefinitionCode = entity.QueueDefinitionCode;
+		_useRabbitMQ = entity.UseRabbitMQ;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _code ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -279,4 +303,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

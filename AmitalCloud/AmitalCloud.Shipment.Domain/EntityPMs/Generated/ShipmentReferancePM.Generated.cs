@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,19 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentReferancePM : BaseEntityPM   {
+   #region Constructors
+   public ShipmentReferancePM() : base() {} 
+   public ShipmentReferancePM(ShipmentReferance entity) : base()
+   {
+		_shipmentId = entity.ShipmentId;
+		_tenant = entity.Tenant;
+		_lineNumber = entity.LineNumber;
+		_referenceType = entity.ReferenceType;
+		_partnerId = entity.PartnerId;
+		_referenceValue = entity.ReferenceValue;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _shipmentId ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -119,4 +133,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

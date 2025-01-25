@@ -35,7 +35,7 @@ namespace AmitalCloud.Shipment.Data.Context
         }
         public static IShipmentContext GetContext(int tenant) =>new ShipmentContext(GlobalDbHelper.GetGlobalDB(tenant).DBConnection,tenant);
 
-		public override AmitalCloudDBSchema AmitalCloudDBSchema
+		protected override AmitalCloudDBSchema AmitalCloudDBSchema
         {
             get { return AmitalCloudDBSchema.LOGITUDE_MAIN; }
         }

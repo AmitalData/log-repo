@@ -11,48 +11,24 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class CardContactAdditionalServiceQuery
     {
         IRepository<CardContactAdditionalService> repository;
-        IAmitalCloudContext context;
 
         public CardContactAdditionalServiceQuery(int tenant)
         {
-            context = AmitalCloudContext.GetContext(tenant);
-            repository = new Repository<CardContactAdditionalService>(context);
+            repository = new Repository<CardContactAdditionalService>(AmitalCloudContext.GetContext(tenant));
         }
         public CardContactAdditionalServiceQuery(IRepository<CardContactAdditionalService> repository)
         {
             this.repository = repository;
         }
         public CardContactAdditionalServicePM GetSinglePM(string id, int tenant)
-        {
-            CardContactAdditionalServicePM entity = (from a in context.CardContactAdditionalServices.Include("AdditionalService")
-                                                     where a.Tenant == tenant && a.Id == id
-                                                     select new CardContactAdditionalServicePM()
-                                                     {
-                                                         Id = a.Id,
-                                                         CardContactId = a.CardContactId,
-                                                         Tenant = a.Tenant,
-                                                         AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
-                                                         AdditionalServiceId = a.AdditionalServiceId,
-                                                     }).FirstOrDefault();
-
-            return entity;
-        }
-
+            => repository.GetMulti(a=> a.Tenant == tenant && a.Id == id,a=> new CardContactAdditionalServicePM(a)
+            {
+                AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
+            }, "AdditionalService").FirstOrDefault();
         public List<CardContactAdditionalServicePM> GetCardContactAdditionalServicePMsByCardContactId(string CardContactId, int tenant)
-        {
-            List<CardContactAdditionalServicePM> result =
-                (from a in context.CardContactAdditionalServices.Include("AdditionalService")
-                 where a.Tenant == tenant && a.CardContactId == CardContactId
-                 select new CardContactAdditionalServicePM()
-                 {
-                     Id = a.Id,
-                     CardContactId = a.CardContactId,
-                     Tenant = a.Tenant,
-                     AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
-                     AdditionalServiceId = a.AdditionalServiceId,
-                 }).ToList();
-
-            return result;
-        }
+            => repository.GetMulti(a=> a.Tenant == tenant && a.CardContactId == CardContactId, a => new CardContactAdditionalServicePM(a)
+            {
+                AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
+            }, "AdditionalService").ToList();
     }
 }

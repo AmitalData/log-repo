@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class InboundEmailPM : BaseEntityPM   {
+   #region Constructors
+   public InboundEmailPM() : base() {} 
+   public InboundEmailPM(InboundEmail entity) : base()
+   {
+		_id = entity.Id;
+		_isRejected = entity.IsRejected;
+		_analyzeQueueId = entity.AnalyzeQueueId;
+		_entityId = entity.EntityId;
+		_uniquekey = entity.Uniquekey;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_objectTableId = entity.ObjectTableId;
+		_createdByContactId = entity.CreatedByContactId;
+		_objectTableName = default;
+		_tenant = entity.Tenant;
+		inboundEmailLines = default;
+		_searchFields = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -248,4 +269,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

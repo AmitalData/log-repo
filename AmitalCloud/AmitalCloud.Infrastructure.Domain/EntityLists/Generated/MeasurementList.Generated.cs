@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class MeasurementList
+   public partial class MeasurementList   
    {
+       #region Constructors
+       public MeasurementList() : base() {}
+       public MeasurementList(Measurement entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          IsContainer  = entity.IsContainer;
+          IsContainerMeasurement  = entity.IsContainerMeasurement;
+          Code  = entity.Code;
+          Name  = entity.Name;
+          ShortName  = entity.ShortName;
+          LocalName  = entity.LocalName;
+          InActive  = entity.InActive;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -41,6 +59,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool InActive  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

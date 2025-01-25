@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class APILogsDataList
+   public partial class APILogsDataList   
    {
+       #region Constructors
+       public APILogsDataList() : base() {}
+       public APILogsDataList(APILogsData entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          DiagnosticLog  = entity.DiagnosticLog;
+          ExceptionsMessage  = entity.ExceptionsMessage;
+          Id  = entity.Id;
+          RequestData  = entity.RequestData;
+          ResponseData  = entity.ResponseData;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string RequestData  { get; set; }
        [DataMember]
        public string ResponseData  { get; set; }
+         #endregion Properties
    }
 
 }

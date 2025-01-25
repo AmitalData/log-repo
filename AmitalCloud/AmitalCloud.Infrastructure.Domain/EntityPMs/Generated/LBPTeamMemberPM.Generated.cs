@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class LBPTeamMemberPM : BaseEntityPM   {
+   #region Constructors
+   public LBPTeamMemberPM() : base() {} 
+   public LBPTeamMemberPM(LBPTeamMember entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_memberUserId = entity.MemberUserId;
+		_teamId = entity.TeamId;
+		_addDate = entity.AddDate;
+		_addedByUserId = entity.AddedByUserId;
+		_memberTeamId = entity.MemberTeamId;
+		businessRolesList = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -168,4 +184,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
              set {  deletedBusinessRolesList = value; }
 	    }
 	 }
+#endregion Properties
 }

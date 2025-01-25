@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,24 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ContainerSettingPM : BaseEntityPM   {
+   #region Constructors
+   public ContainerSettingPM() : base() {} 
+   public ContainerSettingPM(ContainerSetting entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_emptyReturnClosingDays = entity.EmptyReturnClosingDays;
+		_shipmentATAClosingDays = entity.ShipmentATAClosingDays;
+		_shipmentATADateIndicator = entity.ShipmentATADateIndicator;
+		_isExport = entity.IsExport;
+		_isDomestic = entity.IsDomestic;
+		_isImport = entity.IsImport;
+		_isDrop = entity.IsDrop;
+		_addedManually = entity.AddedManually;
+		_activationDate = entity.ActivationDate;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -199,4 +218,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

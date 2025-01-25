@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DigitalPreDefinedComponentList
+   public partial class DigitalPreDefinedComponentList   
    {
+       #region Constructors
+       public DigitalPreDefinedComponentList() : base() {}
+       public DigitalPreDefinedComponentList(DigitalPreDefinedComponent entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          Name  = entity.Name;
+          ObjectTableId  = entity.ObjectTableId;
+          Content  = entity.Content;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ObjectTableId  { get; set; }
        [DataMember]
        public string Content  { get; set; }
+         #endregion Properties
    }
 
 }

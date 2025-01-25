@@ -13,12 +13,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CountryList
+   public partial class CountryList   
    {
+       #region Constructors
+       public CountryList() : base() {}
+       public CountryList(Country entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          LocalName  = entity.LocalName;
+            GlobalZoneName  = default;
+          AddedManually  = entity.AddedManually;
+          InActive  = entity.InActive;
+          EC  = entity.EC;
+          Notes  = entity.Notes;
+          HasStates  = entity.HasStates;
+          IsStateRequired  = entity.IsStateRequired;
+          HasCitiesList  = entity.HasCitiesList;
+          SearchFields  = entity.SearchFields;
+          Code  = entity.Code;
+          EnglishName  = entity.EnglishName;
+          IsNorthAmerica  = entity.IsNorthAmerica;
+          IsGreaterChina  = entity.IsGreaterChina;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -53,6 +77,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsNorthAmerica  { get; set; }
        [DataMember]
        public bool IsGreaterChina  { get; set; }
+         #endregion Properties
    }
 
 }

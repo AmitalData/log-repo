@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,63 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ARInvoiceLinePM : BaseEntityPM   {
+   #region Constructors
+   public ARInvoiceLinePM() : base() {} 
+   public ARInvoiceLinePM(ARInvoiceLine entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_aRInvoiceId = entity.ARInvoiceId;
+		_lineNumber = entity.LineNumber;
+		_receivableId = entity.ReceivableId;
+		_isExchangeRateFixed = entity.IsExchangeRateFixed;
+		_entityId = entity.EntityId;
+		_chargesTypeId = entity.ChargesTypeId;
+		_description = entity.Description;
+		_foriegnExchangeRate = entity.ForiegnExchangeRate;
+		_quantity = entity.Quantity;
+		_unitPrice = entity.UnitPrice;
+		_vatTypeId = entity.VatTypeId;
+		_foriegnCurrencyId = entity.ForiegnCurrencyId;
+		_foriegnCurrencyAmount = entity.ForiegnCurrencyAmount;
+		_localCurrencyAmount = entity.LocalCurrencyAmount;
+		_invoiceCurrencyAmount = entity.InvoiceCurrencyAmount;
+		_creditAccount = entity.CreditAccount;
+		_notes = entity.Notes;
+		_profitCurrencyAmount = entity.ProfitCurrencyAmount;
+		_measurementId = entity.MeasurementId;
+		_prepaidCollectId = entity.PrepaidCollectId;
+		_localDescription = entity.LocalDescription;
+		_vatPercentage = entity.VatPercentage;
+		_externalVATCard = default;
+		_exchangeRateDate = entity.ExchangeRateDate;
+		_foriegnCurrencyCode = default;
+		_vatTypeName = default;
+		_measurementCode = default;
+		_viewOrder = default;
+		_objectTableId = default;
+		_entityReference = default;
+		_invoiceLocalCurrencyCode = default;
+		_invoiceCurrencyCode = default;
+		_externalTAXItemId = default;
+		_dateForInterest = entity.DateForInterest;
+		_valueDate = entity.ValueDate;
+		_isBackToBack = entity.IsBackToBack;
+		_isExpense = entity.IsExpense;
+		_gLAccountId = entity.GLAccountId;
+		_lineActionCode = entity.LineActionCode;
+		_vatAmount = default;
+		_vatIsMultiPercentage = default;
+		_isCustomsCharge = default;
+		_isRegionalTax = entity.IsRegionalTax;
+		_invoiceCurrencyExchangeRate = entity.InvoiceCurrencyExchangeRate;
+		_reportedinTaxReport = default;
+		_gLAccountDisplayNumber = default;
+		_gLAccountLocalName = default;
+		_invoiceCurrencyId = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -823,4 +881,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

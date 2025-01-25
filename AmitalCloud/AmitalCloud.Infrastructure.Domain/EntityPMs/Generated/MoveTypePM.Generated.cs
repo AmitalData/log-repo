@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class MoveTypePM : BaseEntityPM   {
+   #region Constructors
+   public MoveTypePM() : base() {} 
+   public MoveTypePM(MoveType entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_moveTypeEnglishName = entity.MoveTypeEnglishName;
+		_moveTypeLocalName = entity.MoveTypeLocalName;
+		_addedManually = entity.AddedManually;
+		_inActive = entity.InActive;
+		_transportModeId = entity.TransportModeId;
+		_code = entity.Code;
+		_searchFields = entity.SearchFields;
+		_isAir = default;
+		_isInland = default;
+		_isOcean = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -215,4 +235,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

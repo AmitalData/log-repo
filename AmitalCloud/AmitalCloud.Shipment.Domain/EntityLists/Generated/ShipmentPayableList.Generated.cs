@@ -13,12 +13,49 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentPayableList
+   public partial class ShipmentPayableList   
    {
+       #region Constructors
+       public ShipmentPayableList() : base() {}
+       public ShipmentPayableList(ShipmentPayable entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ShipmentId  = entity.ShipmentId;
+          ExpectedAmount  = entity.ExpectedAmount;
+          ExpectedAmountLocal  = entity.ExpectedAmountLocal;
+          UpdateByUserId  = entity.UpdateByUserId;
+          UpdateDate  = entity.UpdateDate;
+          ValueDate  = entity.ValueDate;
+          PrepaidCollectId  = entity.PrepaidCollectId;
+          AWBPrint  = entity.AWBPrint;
+          DueTypeCode  = entity.DueTypeCode;
+          MeasurementId  = entity.MeasurementId;
+          Rate  = entity.Rate;
+          CurrencyId  = entity.CurrencyId;
+          UnitPrice  = entity.UnitPrice;
+          Notes  = entity.Notes;
+          ChargesTypeId  = entity.ChargesTypeId;
+          VendorId  = entity.VendorId;
+            PayableStatusTypeCode  = default;
+            Quentity  = default;
+            NotExpected  = default;
+            OpenAmountEditedByUser  = default;
+          ReceivableId  = entity.ReceivableId;
+          TariffId  = entity.TariffId;
+          TariffNumber  = entity.TariffNumber;
+          TariffVersion  = entity.TariffVersion;
+          TariffLineId  = entity.TariffLineId;
+          VatAmountLocal  = entity.VatAmountLocal;
+          VatAmountProfit  = entity.VatAmountProfit;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -79,6 +116,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public double? VatAmountLocal  { get; set; }
        [DataMember]
        public double? VatAmountProfit  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,24 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CardExternalCodeByCurrencyPM : BaseEntityPM   {
+   #region Constructors
+   public CardExternalCodeByCurrencyPM() : base() {} 
+   public CardExternalCodeByCurrencyPM(CardExternalCodeByCurrency entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_cardId = entity.CardId;
+		_currencyId = entity.CurrencyId;
+		_externalRecievableTableId = entity.ExternalRecievableTableId;
+		_externalPayableTableId = entity.ExternalPayableTableId;
+		_currencyCode = default;
+		_externalTableName = default;
+		_externalTableCode = default;
+		_cardName = default;
+		_currencyName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -199,4 +218,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

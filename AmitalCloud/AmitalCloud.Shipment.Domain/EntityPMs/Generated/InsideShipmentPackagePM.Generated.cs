@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,61 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class InsideShipmentPackagePM : BaseEntityPM   {
+   #region Constructors
+   public InsideShipmentPackagePM() : base() {} 
+   public InsideShipmentPackagePM(InsideShipmentPackage entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_originalShipmentPackageId = entity.OriginalShipmentPackageId;
+		_originalInsideShipmentPackageId = entity.OriginalInsideShipmentPackageId;
+		_volumetricWeight = entity.VolumetricWeight;
+		_shipmentPackageId = entity.ShipmentPackageId;
+		_packageTypeId = entity.PackageTypeId;
+		_quantity = entity.Quantity;
+		_height = entity.Height;
+		_width = entity.Width;
+		_length = entity.Length;
+		_volume = entity.Volume;
+		_weight = entity.Weight;
+		_description = entity.Description;
+		_packageTypeName = default;
+		_changeSetOp = default;
+		_reference1 = entity.Reference1;
+		_reference2 = entity.Reference2;
+		_reference3 = entity.Reference3;
+		_commodityNumber = entity.CommodityNumber;
+		_reference4 = entity.Reference4;
+		_commodityName = entity.CommodityName;
+		_packageTypeCode = default;
+		_printAs = default;
+		_containerSize = default;
+		_tEU = default;
+		_isContainer = default;
+		_packageTypeIsAir = default;
+		_packageTypeIsOcean = default;
+		_packageTypeIsInland = default;
+		_packageTypeNote = default;
+		_packageTypeLocalName = default;
+		_packageTypeVolume = default;
+		_isPackageAddedManually = default;
+		_make = entity.Make;
+		_model = entity.Model;
+		_year = entity.Year;
+		_color = entity.Color;
+		_chassisNumber = entity.ChassisNumber;
+		_registrationNumber = entity.RegistrationNumber;
+		_countryId = entity.CountryId;
+		_harmonize = entity.Harmonize;
+		_isMultiHarmonize = entity.IsMultiHarmonize;
+		insidePackageHarmonizes = default;
+		_horseId = entity.HorseId;
+		_horseName = default;
+		_grossWeightInLB = default;
+		_volumeInCBF = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -808,4 +864,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

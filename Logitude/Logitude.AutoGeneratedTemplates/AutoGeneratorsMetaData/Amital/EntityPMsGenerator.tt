@@ -162,6 +162,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using <#= NamespacesDictionary["domaininterfacesspacestring"] #>;
+using <#= NamespacesDictionary["pocosspacestring"] #>;
 <#+ if (!string.IsNullOrEmpty(usingStatements)) { #><#= usingStatements #><#+ } #>
 
 
@@ -172,6 +173,79 @@ namespace <#= pmnamespacestring #>
    [DataContract]
    public partial class <#=tableName #>PM : <#+ if(allowCustomFields){#> ChildEntitiesCustomFieldPM<#+} else {#>BaseEntityPM<#+}#>
    {
+   #region Constructors
+   public <#=tableName #>PM() : base() {} 
+   public <#=tableName #>PM(<#=tableName #> entity) : base()
+   {
+<#+
+ 	foreach(var field in entity["field"])  
+	 { 
+		if( field.IsPrimaryKey.GetType() == typeof(string))
+		{
+			if(field.IsPrimaryKey.ToString() == "false")
+			{
+			  if( field.HasPMField.GetType() == typeof(string))
+			   {
+				 if(field.HasPMField == "false")
+				   {
+					  continue;
+				   }
+			   }
+			}
+		}
+	   string type = GetDataType(field);
+		string privatepropname = FirstCharacterToLower(field.FieldName.Trim('"'));
+		bool isCustom= false;
+		if(field.IsCustom.GetType() == typeof(string) && field.IsCustom == "true")
+		{
+			isCustom = true;
+			continue;
+		}
+
+		if( field.HasDataBaseField.GetType() == typeof(string))
+        {
+          if(field.HasDataBaseField == "false")
+             {
+			 	   if(type == "List")
+					{
+#>
+		<#= privatepropname #> = default;
+<#+
+					}
+				   else
+					{
+
+#>
+		_<#= privatepropname #> = default;
+<#+
+				}
+                continue;
+             }
+         }
+#>
+		_<#= privatepropname #> = entity.<#= field.FieldName.Trim('"') #>;
+<#+
+	   if(type == "List")
+        {
+		    //WritePMList(field);
+        }
+	   else
+        {
+		 if(!isCustom)
+			{
+				  //WritePMProperty(field);
+			}
+			else
+			{
+				//WritePMCustomFieldProperty(field);
+			}
+        }
+	 }
+	  //if(entity.SupportSubEntity.ToString() == "true") {WriteSubEntityProperty();}
+	 #>
+   }
+   #endregion Constructors
+   #region Properties
    <#+
  	foreach(var field in entity["field"])  //get all classes
 	 { 
@@ -211,7 +285,7 @@ namespace <#= pmnamespacestring #>
            }
 	 }
 	  if(entity.SupportSubEntity.ToString() == "true") {WriteSubEntityProperty();}
-	 #>
+#>
 	 <#+
 	 if(entity.ApplyGenericCustomFields.ToString() == "true")
 	 {
@@ -228,6 +302,7 @@ namespace <#= pmnamespacestring #>
 	  }
 	  #>
 }
+#endregion Properties
 }
 <#+
 }	 

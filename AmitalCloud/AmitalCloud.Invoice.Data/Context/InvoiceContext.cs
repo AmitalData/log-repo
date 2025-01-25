@@ -32,7 +32,7 @@ namespace AmitalCloud.Invoice.Data.Context
         }
         public static IInvoiceContext GetContext(int tenant) =>new InvoiceContext(GlobalDbHelper.GetGlobalDB(tenant).DBConnection,tenant);
 
-		public override AmitalCloudDBSchema AmitalCloudDBSchema
+		protected override AmitalCloudDBSchema AmitalCloudDBSchema
         {
             get { return AmitalCloudDBSchema.LOGITUDE_MAIN; }
         }

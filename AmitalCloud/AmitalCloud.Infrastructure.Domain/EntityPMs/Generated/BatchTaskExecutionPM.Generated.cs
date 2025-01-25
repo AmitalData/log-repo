@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,30 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class BatchTaskExecutionPM : BaseEntityPM   {
+   #region Constructors
+   public BatchTaskExecutionPM() : base() {} 
+   public BatchTaskExecutionPM(BatchTaskExecution entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_searchFields = entity.SearchFields;
+		_className = entity.ClassName;
+		_prametersXml = entity.PrametersXml;
+		_statusCode = entity.StatusCode;
+		_errorLog = entity.ErrorLog;
+		_startDateTime = entity.StartDateTime;
+		_doneDateTime = entity.DoneDateTime;
+		_progressMessage = entity.ProgressMessage;
+		_progressPercentage = entity.ProgressPercentage;
+		_statusName = default;
+		_createdByUserName = default;
+		_subject = entity.Subject;
+		_callStack = entity.CallStack;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -295,4 +320,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

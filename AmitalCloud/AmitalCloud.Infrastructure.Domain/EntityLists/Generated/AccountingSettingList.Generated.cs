@@ -13,12 +13,69 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AccountingSettingList
+   public partial class AccountingSettingList   
    {
+       #region Constructors
+       public AccountingSettingList() : base() {}
+       public AccountingSettingList(AccountingSetting entity) : base()
+       {
+          Id  = entity.Id;
+          QBOrealMeID  = entity.QBOrealMeID;
+          AccountingSystemCode  = entity.AccountingSystemCode;
+            TempCard1  = default;
+          AllowMinusInvoicelines  = entity.AllowMinusInvoicelines;
+          AllowVoidARI  = entity.AllowVoidARI;
+          AllowVoidARP  = entity.AllowVoidARP;
+          AllowVoidAPI  = entity.AllowVoidAPI;
+          AllowVoidAPP  = entity.AllowVoidAPP;
+          AllowManualInvoiceNumber  = entity.AllowManualInvoiceNumber;
+          IsVatNumberMandatoryInAR  = entity.IsVatNumberMandatoryInAR;
+          IsVatNumberMandatoryInAP  = entity.IsVatNumberMandatoryInAP;
+          IsARInvoiceChronologicalDates  = entity.IsARInvoiceChronologicalDates;
+            VATableTempCard  = default;
+            VATExemptTempCard  = default;
+          AllowClosureWithoutPayables  = entity.AllowClosureWithoutPayables;
+          IsARInvoicesTransferEnabled  = entity.IsARInvoicesTransferEnabled;
+          IsAPInvoicesTransferEnabled  = entity.IsAPInvoicesTransferEnabled;
+          APInvoiceTransferStartDate  = entity.APInvoiceTransferStartDate;
+          ARInvoiceTransferStartDate  = entity.ARInvoiceTransferStartDate;
+          AllowPositiveAmountsInTheCreditNote  = entity.AllowPositiveAmountsInTheCreditNote;
+          IsSingleTaxPerInvoice  = entity.IsSingleTaxPerInvoice;
+          IsARPaymentsTransferEnabled  = entity.IsARPaymentsTransferEnabled;
+          ARPaymentTransferStartDate  = entity.ARPaymentTransferStartDate;
+            VatNumber  = default;
+          TransferToDropboxActivated  = entity.TransferToDropboxActivated;
+          EnableMultiPercentageVATTypes  = entity.EnableMultiPercentageVATTypes;
+          NotifyPastDateOnInvoiceEdit  = entity.NotifyPastDateOnInvoiceEdit;
+          EnableMultiRateAPInvoices  = entity.EnableMultiRateAPInvoices;
+          RegistryDateTypeCode  = entity.RegistryDateTypeCode;
+          ReceivableVATCard  = entity.ReceivableVATCard;
+          PayableVATCard  = entity.PayableVATCard;
+          EnableMultiCurrencyARPayments  = entity.EnableMultiCurrencyARPayments;
+          IsAPPaymentsTransferEnabled  = entity.IsAPPaymentsTransferEnabled;
+          EnableMultiCurrencyAPPayments  = entity.EnableMultiCurrencyAPPayments;
+          EnableNegativeOffsetARPayments  = entity.EnableNegativeOffsetARPayments;
+          EnableNegativeOffsetAPPayments  = entity.EnableNegativeOffsetAPPayments;
+          PayableVATableTempCard  = entity.PayableVATableTempCard;
+          PayableVATExemptTempCard  = entity.PayableVATExemptTempCard;
+          ReceivableVATableTempCard  = entity.ReceivableVATableTempCard;
+          ReceivableVATExemptTempCard  = entity.ReceivableVATExemptTempCard;
+          IsARPaymentChronologicalDates  = entity.IsARPaymentChronologicalDates;
+          QBOOAuth  = entity.QBOOAuth;
+          AllowManualARPaymentNumber  = entity.AllowManualARPaymentNumber;
+          AllowRegionalTaxManagement  = entity.AllowRegionalTaxManagement;
+          TransferToFTPActivated  = entity.TransferToFTPActivated;
+          TransferFTPDetailId  = entity.TransferFTPDetailId;
+          BlockSendInvoiceOriginalCopy  = entity.BlockSendInvoiceOriginalCopy;
+          APPaymentTransferStartDate  = entity.APPaymentTransferStartDate;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -119,6 +176,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool BlockSendInvoiceOriginalCopy  { get; set; }
        [DataMember]
        public DateTime? APPaymentTransferStartDate  { get; set; }
+         #endregion Properties
    }
 
 }

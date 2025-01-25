@@ -13,18 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ScreenSectionList
+   public partial class ScreenSectionList   
    {
+       #region Constructors
+       public ScreenSectionList() : base() {}
+       public ScreenSectionList(ScreenSection entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          CreatedByUserId  = entity.CreatedByUserId;
+          Inactive  = entity.Inactive;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
        public string CreatedByUserId  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+         #endregion Properties
    }
 
 }

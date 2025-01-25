@@ -13,12 +13,91 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ChargesTypeList : CustomFieldList
+   public partial class ChargesTypeList : CustomFieldList   
    {
+       #region Constructors
+       public ChargesTypeList() : base() {}
+       public ChargesTypeList(ChargesType entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ReceivableAccountId  = entity.ReceivableAccountId;
+          PayableAccountId  = entity.PayableAccountId;
+          AccountingVATSplit  = entity.AccountingVATSplit;
+          PayableDebitAccount  = entity.PayableDebitAccount;
+          ReceivableCreditAccount  = entity.ReceivableCreditAccount;
+          ReceivablesChargesTypeExternalCode  = entity.ReceivablesChargesTypeExternalCode;
+          PayablesChargesTypeExternalCode  = entity.PayablesChargesTypeExternalCode;
+          IATACodeId  = entity.IATACodeId;
+          ViewOrder  = entity.ViewOrder;
+          SearchFields  = entity.SearchFields;
+          Code  = entity.Code;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+          ContainerMeasurementId  = entity.ContainerMeasurementId;
+          MeasurementId  = entity.MeasurementId;
+            MeasurementCode  = default;
+            MeasurementShortName  = default;
+          VatTypeId  = entity.VatTypeId;
+          ChargesGroupCode  = entity.ChargesGroupCode;
+            ChargesGroupName  = default;
+          DueTypeCode  = entity.DueTypeCode;
+          Description  = entity.Description;
+          AddedManually  = entity.AddedManually;
+          InActive  = entity.InActive;
+          IsReceivable  = entity.IsReceivable;
+          IsPayable  = entity.IsPayable;
+          IsAir  = entity.IsAir;
+          IsOcean  = entity.IsOcean;
+          IsInland  = entity.IsInland;
+          IsAutoDisplayInShipment  = entity.IsAutoDisplayInShipment;
+          IsAutoDisplayInQuote  = entity.IsAutoDisplayInQuote;
+          IsAutoDisplayInConsolidation  = entity.IsAutoDisplayInConsolidation;
+          AWBPrintDescription  = entity.AWBPrintDescription;
+            ContainerMeasurementCode  = default;
+            AccountingCard  = default;
+            VatTypeName  = default;
+            VatTypePercentage  = default;
+            DueTypeName  = default;
+          SATExternalId  = entity.SATExternalId;
+          PayableDebitGLAcountId  = entity.PayableDebitGLAcountId;
+          ReceivableCreditGLAccountId  = entity.ReceivableCreditGLAccountId;
+          ChargesGroupId  = entity.ChargesGroupId;
+          IsBackToBack  = entity.IsBackToBack;
+          IsAutoDisplayInCustoms  = entity.IsAutoDisplayInCustoms;
+          IsCustoms  = entity.IsCustoms;
+          IsExpense  = entity.IsExpense;
+            VatIsMultiPercentage  = default;
+          IsExport  = entity.IsExport;
+          IsImport  = entity.IsImport;
+          IsDomestic  = entity.IsDomestic;
+          IsDrop  = entity.IsDrop;
+          ReceivablesDefaultCurrencyId  = entity.ReceivablesDefaultCurrencyId;
+          PayablesDefaultCurrencyId  = entity.PayablesDefaultCurrencyId;
+            ReceivableCreditGLAcountNumber  = default;
+          RecCreditGLAcountLocalName  = entity.RecCreditGLAcountLocalName;
+            PayableDebitGLAcountNumber  = default;
+          PayDebitGLAcountLocalName  = entity.PayDebitGLAcountLocalName;
+          ApplyRegionalTax  = entity.ApplyRegionalTax;
+          HasPickup  = entity.HasPickup;
+          HasDelivery  = entity.HasDelivery;
+          IsDirectionRestricted  = entity.IsDirectionRestricted;
+          IsActiveInExport  = entity.IsActiveInExport;
+          IsActiveInImport  = entity.IsActiveInImport;
+          IsActiveInDomestic  = entity.IsActiveInDomestic;
+          IsActiveInDrop  = entity.IsActiveInDrop;
+          QuoteChargesGroupCode  = entity.QuoteChargesGroupCode;
+          QuoteChargesGroupId  = entity.QuoteChargesGroupId;
+          QuoteGroupSectionID  = entity.QuoteGroupSectionID;
+            QuoteChargesGroupName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -163,6 +242,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string QuoteGroupSectionID  { get; set; }
        [DataMember]
        public string QuoteChargesGroupName  { get; set; }
+         #endregion Properties
    }
 
 }

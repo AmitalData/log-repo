@@ -13,12 +13,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TaskSchedulerHistoryList
+   public partial class TaskSchedulerHistoryList   
    {
+       #region Constructors
+       public TaskSchedulerHistoryList() : base() {}
+       public TaskSchedulerHistoryList(TaskSchedulerHistory entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          StartDateTime  = entity.StartDateTime;
+          EndDateTime  = entity.EndDateTime;
+          RunResult  = entity.RunResult;
+          TaskId  = entity.TaskId;
+          IsError  = entity.IsError;
+          StartDateTimeUTC  = entity.StartDateTimeUTC;
+          EndDateTimeUTC  = entity.EndDateTimeUTC;
+          LogFirstLine  = entity.LogFirstLine;
+          LogType  = entity.LogType;
+            Duration  = default;
+          LogDocumentId  = entity.LogDocumentId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -47,6 +68,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int Duration  { get; set; }
        [DataMember]
        public string LogDocumentId  { get; set; }
+         #endregion Properties
    }
 
 }

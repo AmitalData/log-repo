@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TarrifFromToList
+   public partial class TarrifFromToList   
    {
+       #region Constructors
+       public TarrifFromToList() : base() {}
+       public TarrifFromToList(TarrifFromTo entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          TarrifHeaderId  = entity.TarrifHeaderId;
+          TarrifFromToTypeCode  = entity.TarrifFromToTypeCode;
+          PortId  = entity.PortId;
+          CountryId  = entity.CountryId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string PortId  { get; set; }
        [DataMember]
        public string CountryId  { get; set; }
+         #endregion Properties
    }
 
 }

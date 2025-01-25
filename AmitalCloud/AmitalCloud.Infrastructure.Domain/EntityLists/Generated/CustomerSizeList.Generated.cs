@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerSizeList
+   public partial class CustomerSizeList   
    {
+       #region Constructors
+       public CustomerSizeList() : base() {}
+       public CustomerSizeList(CustomerSize entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          InActive  = entity.InActive;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+            Order  = default;
+          Code  = entity.Code;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int Order  { get; set; }
        [DataMember]
        public string Code  { get; set; }
+         #endregion Properties
    }
 
 }

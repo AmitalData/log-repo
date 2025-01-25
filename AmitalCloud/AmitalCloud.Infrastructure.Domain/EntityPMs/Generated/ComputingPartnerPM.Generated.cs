@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,29 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ComputingPartnerPM : BaseEntityPM   {
+   #region Constructors
+   public ComputingPartnerPM() : base() {} 
+   public ComputingPartnerPM(ComputingPartner entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_name = entity.Name;
+		_remarks = entity.Remarks;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_searchFields = entity.SearchFields;
+		_createdByUserName = default;
+		_updatedByUserName = default;
+		_code = entity.Code;
+		_description = entity.Description;
+		_inActive = entity.InActive;
+		_loggedTenantId = default;
+		partnerTables = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -296,4 +320,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
              set {  deletedPartnerTables = value; }
 	    }
 	 }
+#endregion Properties
 }

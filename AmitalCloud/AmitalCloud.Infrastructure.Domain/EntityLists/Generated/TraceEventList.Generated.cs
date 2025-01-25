@@ -13,12 +13,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TraceEventList
+   public partial class TraceEventList   
    {
+       #region Constructors
+       public TraceEventList() : base() {}
+       public TraceEventList(TraceEvent entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          EntityId  = entity.EntityId;
+          ObjectTableId  = entity.ObjectTableId;
+          Deleted  = entity.Deleted;
+          CustomerCareUserEmail  = entity.CustomerCareUserEmail;
+          PartnerName  = entity.PartnerName;
+          EventTypeId  = entity.EventTypeId;
+          Notes  = entity.Notes;
+          EventDateTime  = entity.EventDateTime;
+          LogDateTime  = entity.LogDateTime;
+          UserId  = entity.UserId;
+          Location  = entity.Location;
+            EventTypeEnglishName  = default;
+            ContactEnglishFirstName  = default;
+            ShortView  = default;
+            EventTypeGroupCode  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -55,6 +80,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool ShortView  { get; set; }
        [DataMember]
        public string EventTypeGroupCode  { get; set; }
+         #endregion Properties
    }
 
 }

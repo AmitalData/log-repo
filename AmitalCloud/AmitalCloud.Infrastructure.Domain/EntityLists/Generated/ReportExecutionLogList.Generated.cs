@@ -13,12 +13,38 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ReportExecutionLogList
+   public partial class ReportExecutionLogList   
    {
+       #region Constructors
+       public ReportExecutionLogList() : base() {}
+       public ReportExecutionLogList(ReportExecutionLog entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          StatusCode  = entity.StatusCode;
+          ExceptionMessage  = entity.ExceptionMessage;
+          DoneDate  = entity.DoneDate;
+          ReportFilterXML  = entity.ReportFilterXML;
+          ReportId  = entity.ReportId;
+          ReportTemplateId  = entity.ReportTemplateId;
+          RetryNumber  = entity.RetryNumber;
+          StartDate  = entity.StartDate;
+          DisablePreview  = entity.DisablePreview;
+          ExecutedByServerName  = entity.ExecutedByServerName;
+            ReportName  = default;
+            StatusName  = default;
+          SearchFields  = entity.SearchFields;
+            CreatedByUserName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -57,6 +83,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string CreatedByUserName  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class LastRunDetailList
+   public partial class LastRunDetailList   
    {
+       #region Constructors
+       public LastRunDetailList() : base() {}
+       public LastRunDetailList(LastRunDetail entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          LastRunDate  = entity.LastRunDate;
+          LastRunByUserId  = entity.LastRunByUserId;
+            LastRunByUserName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string LastRunByUserId  { get; set; }
        [DataMember]
        public string LastRunByUserName  { get; set; }
+         #endregion Properties
    }
 
 }

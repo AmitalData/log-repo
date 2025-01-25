@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 
 
@@ -23,6 +24,119 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ARPaymentPM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public ARPaymentPM() : base() {} 
+   public ARPaymentPM(ARPayment entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_debitAccountId = entity.DebitAccountId;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_updateDate = entity.UpdateDate;
+		_profitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate;
+		_amountInProfitCurrency = entity.AmountInProfitCurrency;
+		_paymentNo = entity.PaymentNo;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_createdByUserName = default;
+		_printDate = entity.PrintDate;
+		_printByUserId = entity.PrintByUserId;
+		_localCurrencyId = entity.LocalCurrencyId;
+		_amountInLocalCurrency = entity.AmountInLocalCurrency;
+		_branchId = entity.BranchId;
+		_billToId = entity.BillToId;
+		_billToName = default;
+		_aRAccountId = entity.ARAccountId;
+		_statusCode = entity.StatusCode;
+		_statusName = default;
+		_isClosed = entity.IsClosed;
+		_paymentCurrencyId = entity.PaymentCurrencyId;
+		_paymentCurrencyCode = default;
+		_amountInPaymentCurrency = entity.AmountInPaymentCurrency;
+		_paidBy = entity.PaidBy;
+		_accountingPaymentMethodCode = default;
+		_printNotes = entity.PrintNotes;
+		_internalNotes = entity.InternalNotes;
+		_paymentCurrencyExchangeRate = entity.PaymentCurrencyExchangeRate;
+		_exchangeRateDate = entity.ExchangeRateDate;
+		_billToAddressId = entity.BillToAddressId;
+		_searchFields = entity.SearchFields;
+		_openAmount = entity.OpenAmount;
+		_valueDate = entity.ValueDate;
+		_chequeOrPaymentRef = entity.ChequeOrPaymentRef;
+		_bank = entity.Bank;
+		_bankBranch = entity.BankBranch;
+		_registerDate = entity.RegisterDate;
+		_creditCardTypeId = entity.CreditCardTypeId;
+		_localCurrencyCode = default;
+		_account = entity.Account;
+		_aRAccountName = default;
+		_isSecured = default;
+		_debitAccountName = default;
+		paymentInvoices = default;
+		_setVoided = default;
+		_setApproved = default;
+		_setCancelApproval = default;
+		_hasInvoicesErrors = default;
+		_sATPaymentMethodCode = entity.SATPaymentMethodCode;
+		_sATXML = entity.SATXML;
+		_sATTransferStatusCode = entity.SATTransferStatusCode;
+		_transmissionError = entity.TransmissionError;
+		_metodoPagoCode = entity.MetodoPagoCode;
+		_tipoCadenaPago = entity.TipoCadenaPago;
+		_certPago = entity.CertPago;
+		_cadPago = entity.CadPago;
+		_selloPago = entity.SelloPago;
+		_cashbookId = entity.CashbookId;
+		_externalAccountingEntityId = entity.ExternalAccountingEntityId;
+		_sATApprovalDate = entity.SATApprovalDate;
+		_invoiceNumber = entity.InvoiceNumber;
+		_shipmentNumber = entity.ShipmentNumber;
+		_sATTransferStatusName = default;
+		_bankAccountLiteId = entity.BankAccountLiteId;
+		_bankAccountId = entity.BankAccountId;
+		_invoiceNumbers = entity.InvoiceNumbers;
+		_transferError = entity.TransferError;
+		_transferTries = entity.TransferTries;
+		_isTransferStarted = entity.IsTransferStarted;
+		_transferStatusCode = entity.TransferStatusCode;
+		_transferStatusName = default;
+		_readyForTransfer = default;
+		_accountingPaymentMethodId = entity.AccountingPaymentMethodId;
+		_branchName = default;
+		_bankAccountName = default;
+		_accountingPaymentMethodName = default;
+		_setReTransfer = default;
+		_setReSendQBO = default;
+		_billToPartnerTypeId = default;
+		_approvedDate = entity.ApprovedDate;
+		_approvedByUserId = entity.ApprovedByUserId;
+		_firstApproveDate = entity.FirstApproveDate;
+		_isFullAccounting = entity.IsFullAccounting;
+		_gLAccountId = default;
+		_gLAccountRecoMethodCode = default;
+		invoicesLedgerTransactions = default;
+		_isExternalEntity = entity.IsExternalEntity;
+		_fechaPago = entity.FechaPago;
+		aRPaymentChequeReplicas = default;
+		_journalNumber = default;
+		_journalId = default;
+		_billToLocalName = default;
+		_openAmountInLocalCurrency = entity.OpenAmountInLocalCurrency;
+		_createdByPartner = entity.CreatedByPartner;
+		_bankAccountNumber = default;
+		_isPaymentNumberManuallySet = entity.IsPaymentNumberManuallySet;
+		_accountingCancelationDate = entity.AccountingCancelationDate;
+		_cancelationNotes = entity.CancelationNotes;
+		_voidedByJournalNumber = default;
+		_partnerId = entity.PartnerId;
+		_forceUsingBankTransferMethod = default;
+		reconcileExternalPagesIds = default;
+		aRPaymentBankTranfers = default;
+		_billToCode = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -1956,4 +2070,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

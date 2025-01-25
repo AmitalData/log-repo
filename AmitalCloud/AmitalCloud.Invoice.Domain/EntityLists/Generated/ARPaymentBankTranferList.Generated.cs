@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ARPaymentBankTranferList
+   public partial class ARPaymentBankTranferList   
    {
+       #region Constructors
+       public ARPaymentBankTranferList() : base() {}
+       public ARPaymentBankTranferList(ARPaymentBankTranfer entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          SearchFields  = entity.SearchFields;
+          PaymentId  = entity.PaymentId;
+          LineNumber  = entity.LineNumber;
+          PaymentRef  = entity.PaymentRef;
+          ValueDate  = entity.ValueDate;
+          BankAccountId  = entity.BankAccountId;
+          CurrencyId  = entity.CurrencyId;
+          LocalAmount  = entity.LocalAmount;
+          ForeignAmount  = entity.ForeignAmount;
+          ExchageRate  = entity.ExchageRate;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public decimal ForeignAmount  { get; set; }
        [DataMember]
        public decimal ExchageRate  { get; set; }
+         #endregion Properties
    }
 
 }

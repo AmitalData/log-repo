@@ -13,12 +13,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class FeatureToggleList
+   public partial class FeatureToggleList   
    {
+       #region Constructors
+       public FeatureToggleList() : base() {}
+       public FeatureToggleList(FeatureToggle entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          SearchFields  = entity.SearchFields;
+          TenantNumber  = entity.TenantNumber;
+          Inactive  = entity.Inactive;
+          ToggleCode  = entity.ToggleCode;
+            ToggleName  = default;
+            CreatedByUser  = default;
+            ToggleDescription  = default;
+          IsMultiTenant  = entity.IsMultiTenant;
+          FromTenantNumber  = entity.FromTenantNumber;
+          ToTenantNumber  = entity.ToTenantNumber;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -53,6 +77,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int? FromTenantNumber  { get; set; }
        [DataMember]
        public int? ToTenantNumber  { get; set; }
+         #endregion Properties
    }
 
 }

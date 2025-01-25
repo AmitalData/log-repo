@@ -13,12 +13,61 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ParticipantList : CustomFieldList
+   public partial class ParticipantList : CustomFieldList   
    {
+       #region Constructors
+       public ParticipantList() : base() {}
+       public ParticipantList(Participant entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          RegistrationUpdatedBy  = entity.RegistrationUpdatedBy;
+          RegistrationDate  = entity.RegistrationDate;
+          TTY  = entity.TTY;
+          Registered  = entity.Registered;
+          RegistrationRequested  = entity.RegistrationRequested;
+            Website  = default;
+            Code  = default;
+            EnglishName  = default;
+            LocalName  = default;
+            ComputedLocalName  = default;
+            InActive  = default;
+            VatNumber  = default;
+            AccountingCard  = default;
+            PaymentTermId  = default;
+            PaymentTermEnglishName  = default;
+            Notes  = default;
+            InvoiceCurrencyId  = default;
+            VatTypeId  = default;
+            AccountNumber  = default;
+          ForwarderTenant  = entity.ForwarderTenant;
+          IsDirect  = entity.IsDirect;
+            CreateDate  = default;
+            UpdateDate  = default;
+            CreatedByUserId  = default;
+            UpdatedByUserId  = default;
+            PartnerTypeId  = default;
+            SearchFields  = default;
+            PrimaryContactId  = default;
+            CityName  = default;
+            CountryId  = default;
+            CountryCode  = default;
+            CountryName  = default;
+            ForwarderTenantName  = default;
+            ReceivablesAccountingCard  = default;
+            PayablesAccountingCard  = default;
+          PrimaryContactName  = entity.PrimaryContactName;
+          PrimaryContactEmail  = entity.PrimaryContactEmail;
+          PrimaryContactPhone  = entity.PrimaryContactPhone;
+            StateName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -103,6 +152,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string PrimaryContactPhone  { get; set; }
        [DataMember]
        public string StateName  { get; set; }
+         #endregion Properties
    }
 
 }

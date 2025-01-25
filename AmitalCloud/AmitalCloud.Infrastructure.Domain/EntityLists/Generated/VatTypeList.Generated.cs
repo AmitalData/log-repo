@@ -13,12 +13,38 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class VatTypeList
+   public partial class VatTypeList   
    {
+       #region Constructors
+       public VatTypeList() : base() {}
+       public VatTypeList(VatType entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ExternalTAXItemId  = entity.ExternalTAXItemId;
+          SearchFields  = entity.SearchFields;
+          Code  = entity.Code;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+            ComputedLocalName  = default;
+          Description  = entity.Description;
+          LocalDescription  = entity.LocalDescription;
+          ExternalVATCard  = entity.ExternalVATCard;
+          AddedManually  = entity.AddedManually;
+          InActive  = entity.InActive;
+          IsMultiPercentage  = entity.IsMultiPercentage;
+          RecognizedPercentage  = entity.RecognizedPercentage;
+          PayablesExternalId  = entity.PayablesExternalId;
+          ReceivablesExternalId  = entity.ReceivablesExternalId;
+          IsRegionalTax  = entity.IsRegionalTax;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -57,6 +83,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ReceivablesExternalId  { get; set; }
        [DataMember]
        public bool IsRegionalTax  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ApiCredintialsPM : BaseEntityPM   {
+   #region Constructors
+   public ApiCredintialsPM() : base() {} 
+   public ApiCredintialsPM(ApiCredintials entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_hashedPrimaryAccessKey = entity.HashedPrimaryAccessKey;
+		_hashedSeconderyAccessKey = entity.HashedSeconderyAccessKey;
+		_usedFor = entity.UsedFor;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_allowedIPs = entity.AllowedIPs;
+		_createdBy = entity.CreatedBy;
+		_updatedBy = entity.UpdatedBy;
+		_maskedPrimaryAccessKey = entity.maskedPrimaryAccessKey;
+		_maskedSeconderyAccessKey = entity.maskedSeconderyAccessKey;
+		_searchFields = default;
+		_tokenExpirationTime = entity.TokenExpirationTime;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -247,4 +269,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

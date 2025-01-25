@@ -13,16 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class AccountingTransferTypeList
+   public partial class AccountingTransferTypeList   
    {
+       #region Constructors
+       public AccountingTransferTypeList() : base() {}
+       public AccountingTransferTypeList(AccountingTransferType entity) : base()
+       {
+          Code  = entity.Code;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
        public string Code  { get; set; }
+         #endregion Properties
    }
 
 }

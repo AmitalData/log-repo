@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerDepositionList
+   public partial class CustomerDepositionList   
    {
+       #region Constructors
+       public CustomerDepositionList() : base() {}
+       public CustomerDepositionList(CustomerDeposition entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CustomsShipperId  = entity.CustomsShipperId;
+          DepositionNumber  = entity.DepositionNumber;
+          ValidityStartDate  = entity.ValidityStartDate;
+          ValidityEndDate  = entity.ValidityEndDate;
+          CreateDate  = entity.CreateDate;
+            ValidityEndDateColor  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -37,6 +53,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime CreateDate  { get; set; }
        [DataMember]
        public string ValidityEndDateColor  { get; set; }
+         #endregion Properties
    }
 
 }

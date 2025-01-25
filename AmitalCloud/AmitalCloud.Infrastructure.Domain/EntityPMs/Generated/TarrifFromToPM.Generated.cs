@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TarrifFromToPM : BaseEntityPM   {
+   #region Constructors
+   public TarrifFromToPM() : base() {} 
+   public TarrifFromToPM(TarrifFromTo entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_tarrifHeaderId = entity.TarrifHeaderId;
+		_tarrifFromToTypeCode = entity.TarrifFromToTypeCode;
+		_portId = entity.PortId;
+		_countryId = entity.CountryId;
+		_portCode = default;
+		_countryCode = default;
+		_changeOp = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -167,4 +184,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

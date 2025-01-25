@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BIReportsExecutionLogList
+   public partial class BIReportsExecutionLogList   
    {
+       #region Constructors
+       public BIReportsExecutionLogList() : base() {}
+       public BIReportsExecutionLogList(BIReportsExecutionLog entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          StatusCode  = entity.StatusCode;
+          ExceptionMessage  = entity.ExceptionMessage;
+          DoneDate  = entity.DoneDate;
+          ReportFilterXML  = entity.ReportFilterXML;
+          BIReportId  = entity.BIReportId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ReportFilterXML  { get; set; }
        [DataMember]
        public string BIReportId  { get; set; }
+         #endregion Properties
    }
 
 }

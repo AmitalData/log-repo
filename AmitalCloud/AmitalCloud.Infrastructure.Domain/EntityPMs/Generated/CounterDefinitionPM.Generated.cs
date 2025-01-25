@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,28 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CounterDefinitionPM : BaseEntityPM   {
+   #region Constructors
+   public CounterDefinitionPM() : base() {} 
+   public CounterDefinitionPM(CounterDefinition entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_parameter1 = entity.Parameter1;
+		_parameter2 = entity.Parameter2;
+		_uniquePerPrefix = entity.UniquePerPrefix;
+		_counterId = entity.CounterId;
+		_prefix = entity.Prefix;
+		_startNumber = entity.StartNumber;
+		_startNumber_Old = default;
+		_isUsed = default;
+		_counterSize = entity.CounterSize;
+		_suffix = entity.Suffix;
+		_inActive = entity.InActive;
+		_usePerBranch = entity.UsePerBranch;
+		_isCustomized = entity.IsCustomized;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -263,4 +286,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

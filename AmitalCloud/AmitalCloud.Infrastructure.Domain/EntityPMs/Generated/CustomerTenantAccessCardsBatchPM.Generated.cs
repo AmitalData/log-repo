@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerTenantAccessCardsBatchPM : BaseEntityPM   {
+   #region Constructors
+   public CustomerTenantAccessCardsBatchPM() : base() {} 
+   public CustomerTenantAccessCardsBatchPM(CustomerTenantAccessCardsBatch entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_customerId = entity.CustomerId;
+		_customerTenantAccessId = entity.CustomerTenantAccessId;
+		_createDateTime = entity.CreateDateTime;
+		_doneDate = entity.DoneDate;
+		_status = entity.Status;
+		_batchNumber = entity.BatchNumber;
+		_totalFailed = entity.TotalFailed;
+		_totalShipment = entity.TotalShipment;
+		_totalsucceeded = entity.Totalsucceeded;
+		_fromDateTime = entity.FromDateTime;
+		_toDateTime = entity.ToDateTime;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -217,4 +237,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

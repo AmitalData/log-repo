@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
     public abstract class DbContextBase : DbContext
     {
         FixedSizedQueue<string> _MyLogQueue = new FixedSizedQueue<string>(30);
-        abstract public AmitalCloudDBSchema AmitalCloudDBSchema { get; }
+        abstract protected AmitalCloudDBSchema AmitalCloudDBSchema { get; }
         public DbContextBase(DbConnection connection, DbCompiledModel model)
 : base(connection, model, contextOwnsConnection: false)
         {

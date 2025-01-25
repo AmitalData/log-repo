@@ -13,12 +13,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AutomationList
+   public partial class AutomationList   
    {
+       #region Constructors
+       public AutomationList() : base() {}
+       public AutomationList(Automation entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ObjectTableId  = entity.ObjectTableId;
+          TemplateId  = entity.TemplateId;
+          DocumentTypeId  = entity.DocumentTypeId;
+          Version  = entity.Version;
+          AutomationXML  = entity.AutomationXML;
+          Type  = entity.Type;
+          ResultCode  = entity.ResultCode;
+          Inactive  = entity.Inactive;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          From  = entity.From;
+          FromEmail  = entity.FromEmail;
+          Order  = entity.Order;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          Code  = entity.Code;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -61,6 +89,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Description  { get; set; }
        [DataMember]
        public string Code  { get; set; }
+         #endregion Properties
    }
 
 }

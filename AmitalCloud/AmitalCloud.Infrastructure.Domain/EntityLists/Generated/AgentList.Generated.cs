@@ -13,12 +13,80 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AgentList
+   public partial class AgentList   
    {
+       #region Constructors
+       public AgentList() : base() {}
+       public AgentList(Agent entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+            SharedLogisticsInvitationStatusName  = default;
+            CargoTrackingInvitationStatusName  = default;
+            LastLoginDate  = default;
+            EnableConsolidationInvoices  = default;
+          CASSCode  = entity.CASSCode;
+          IATACode  = entity.IATACode;
+          RegulatedAgentCode  = entity.RegulatedAgentCode;
+            InvoiceCurrencyId  = default;
+            VatTypeId  = default;
+            Website  = default;
+            Code  = default;
+            EnglishName  = default;
+            LocalName  = default;
+            InActive  = default;
+            VatNumber  = default;
+            AccountingCard  = default;
+            PaymentTermId  = default;
+            PaymentTermEnglishName  = default;
+            Notes  = default;
+            SearchFields  = default;
+            CityName  = default;
+            CountryId  = default;
+            CountryCode  = default;
+            CountryName  = default;
+            SATForeignRFC  = default;
+            MetodoPagoCode  = default;
+            UsoCFDICode  = default;
+          IsCreditLimitEnabled  = entity.IsCreditLimitEnabled;
+          BlockNewInvoiceCreation  = entity.BlockNewInvoiceCreation;
+          BlockNewShipmentCreation  = entity.BlockNewShipmentCreation;
+            ExternalId2  = default;
+            ZipCode  = default;
+            Address1  = default;
+            Address2  = default;
+            Phone  = default;
+            InvoiceCurrencyCode  = default;
+            ReceivablesAccountingCard  = default;
+            PayablesAccountingCard  = default;
+            ExternalAccountingBusinessArea  = default;
+            PaymentMethodCode  = default;
+          PrimaryContactName  = entity.PrimaryContactName;
+          PrimaryContactEmail  = entity.PrimaryContactEmail;
+          PrimaryContactPhone  = entity.PrimaryContactPhone;
+            StateName  = default;
+            StorageFreeDays  = default;
+            GLAccountNumber  = default;
+          Field1  = entity.Field1;
+          Field2  = entity.Field2;
+          Field3  = entity.Field3;
+          Field4  = entity.Field4;
+          Field5  = entity.Field5;
+          Field6  = entity.Field6;
+          Field7  = entity.Field7;
+          Field8  = entity.Field8;
+          Field9  = entity.Field9;
+          Field10  = entity.Field10;
+            RegimenFiscalCode  = default;
+            SATReceptorName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -141,6 +209,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string RegimenFiscalCode  { get; set; }
        [DataMember]
        public string SATReceptorName  { get; set; }
+         #endregion Properties
    }
 
 }

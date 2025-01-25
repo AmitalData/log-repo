@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,33 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CountryPM : BaseEntityPM   {
+   #region Constructors
+   public CountryPM() : base() {} 
+   public CountryPM(Country entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_localName = entity.LocalName;
+		_computedLocalName = default;
+		_globalZoneId = entity.GlobalZoneId;
+		_addedManually = entity.AddedManually;
+		_inActive = entity.InActive;
+		_eC = entity.EC;
+		_notes = entity.Notes;
+		_hasStates = entity.HasStates;
+		_isStateRequired = entity.IsStateRequired;
+		_hasCitiesList = entity.HasCitiesList;
+		_searchFields = entity.SearchFields;
+		_code = entity.Code;
+		_englishName = entity.EnglishName;
+		_isSecured = default;
+		_isHybrid = default;
+		_isNorthAmerica = entity.IsNorthAmerica;
+		_isGreaterChina = entity.IsGreaterChina;
+		_partnerCode = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -343,4 +371,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

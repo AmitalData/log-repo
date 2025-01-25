@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,26 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomsTransferHeaderPM : BaseEntityPM   {
+   #region Constructors
+   public CustomsTransferHeaderPM() : base() {} 
+   public CustomsTransferHeaderPM(CustomsTransferHeader entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createdByUserId = entity.CreatedByUserId;
+		_searchFields = entity.SearchFields;
+		_transferNumber = entity.TransferNumber;
+		_transferDate = entity.TransferDate;
+		_fileName = entity.FileName;
+		_customsTransferTypeCode = entity.CustomsTransferTypeCode;
+		_customsTransferTypeName = default;
+		_notes = entity.Notes;
+		_createdByUserName = default;
+		customsTransferLines = default;
+		_shipmentNumber = entity.ShipmentNumber;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -248,4 +269,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

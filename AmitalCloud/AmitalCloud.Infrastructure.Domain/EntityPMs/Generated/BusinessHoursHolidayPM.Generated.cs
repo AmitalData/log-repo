@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class BusinessHoursHolidayPM : BaseEntityPM   {
+   #region Constructors
+   public BusinessHoursHolidayPM() : base() {} 
+   public BusinessHoursHolidayPM(BusinessHoursHoliday entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_businessHourId = entity.BusinessHourId;
+		_day = entity.Day;
+		_month = entity.Month;
+		_year = entity.Year;
+		_holidayName = entity.HolidayName;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_isRecurring = entity.IsRecurring;
+		_createdByUserId = entity.CreatedByUserId;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_inactive = entity.Inactive;
+		_businessHour = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -247,4 +269,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

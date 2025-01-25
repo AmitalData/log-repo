@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DWCategoriesList
+   public partial class DWCategoriesList   
    {
+       #region Constructors
+       public DWCategoriesList() : base() {}
+       public DWCategoriesList(DWCategories entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+            SearchFields  = default;
+          Index  = entity.Index;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -29,6 +41,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public int Index  { get; set; }
+         #endregion Properties
    }
 
 }

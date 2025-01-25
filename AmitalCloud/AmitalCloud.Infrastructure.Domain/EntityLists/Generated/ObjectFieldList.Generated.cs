@@ -13,12 +13,96 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ObjectFieldList
+   public partial class ObjectFieldList   
    {
+       #region Constructors
+       public ObjectFieldList() : base() {}
+       public ObjectFieldList(ObjectField entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          FullNameTextCodeId  = entity.FullNameTextCodeId;
+          FieldName  = entity.FieldName;
+          Code  = entity.Code;
+          DataTypeCode  = entity.DataTypeCode;
+          MaxLength  = entity.MaxLength;
+          IsRequiered  = entity.IsRequiered;
+          IsCustom  = entity.IsCustom;
+          HelpTextCodeId  = entity.HelpTextCodeId;
+          MinLength  = entity.MinLength;
+          LookUpTableId  = entity.LookUpTableId;
+          DisplayOnLookUp  = entity.DisplayOnLookUp;
+          CanFilter  = entity.CanFilter;
+          DisplayOnly  = entity.DisplayOnly;
+          SystemRequired  = entity.SystemRequired;
+          SystemMaxLength  = entity.SystemMaxLength;
+          ListTextCodeId  = entity.ListTextCodeId;
+          DisplayInList  = entity.DisplayInList;
+          IsCustomFilter  = entity.IsCustomFilter;
+          Operator  = entity.Operator;
+          MultiLine  = entity.MultiLine;
+          IsTimeFrameFilter  = entity.IsTimeFrameFilter;
+          DisplayInSearchWindowList  = entity.DisplayInSearchWindowList;
+          DisplayInSearchWindowFilters  = entity.DisplayInSearchWindowFilters;
+          PMPropertyPath  = entity.PMPropertyPath;
+          ListPropertyPath  = entity.ListPropertyPath;
+          LookUpControlName  = entity.LookUpControlName;
+          DisplayInLookUpIndex  = entity.DisplayInLookUpIndex;
+          AutomaticField  = entity.AutomaticField;
+          UniqueField  = entity.UniqueField;
+          ShortNameTextCodeId  = entity.ShortNameTextCodeId;
+          DisplayInSearchWindowListIndex  = entity.DisplayInSearchWindowListIndex;
+          DisplayInSearchWindowFiltersIndex  = entity.DisplayInSearchWindowFiltersIndex;
+          IsMulti  = entity.IsMulti;
+          MultiTableId  = entity.MultiTableId;
+          DependencyFilter1Value  = entity.DependencyFilter1Value;
+          DependencyFilter2Value  = entity.DependencyFilter2Value;
+          DependencyFilter3Value  = entity.DependencyFilter3Value;
+          DependencyFilter1Type  = entity.DependencyFilter1Type;
+          DependencyFilter2Type  = entity.DependencyFilter2Type;
+          DependencyFilter3Type  = entity.DependencyFilter3Type;
+          DependencyFilter1IsList  = entity.DependencyFilter1IsList;
+          DependencyFilter2IsList  = entity.DependencyFilter2IsList;
+          DependencyFilter3IsList  = entity.DependencyFilter3IsList;
+          ValidForQuerySection1  = entity.ValidForQuerySection1;
+          ValidForQuerySection2  = entity.ValidForQuerySection2;
+          IsRestrictable  = entity.IsRestrictable;
+          DisplayInEntityVariables  = entity.DisplayInEntityVariables;
+          SearchFields  = entity.SearchFields;
+          DisplayInLookupColumnSize  = entity.DisplayInLookupColumnSize;
+          IsMaxLength  = entity.IsMaxLength;
+          AutomationEmailRecipient  = entity.AutomationEmailRecipient;
+          AllowedInCustomerFieldsSettings  = entity.AllowedInCustomerFieldsSettings;
+          DisplayInDocumentReferences  = entity.DisplayInDocumentReferences;
+          ConverterName  = entity.ConverterName;
+          DataTemplateName  = entity.DataTemplateName;
+          ColumnHeaderTemplateName  = entity.ColumnHeaderTemplateName;
+          HasTemplate  = entity.HasTemplate;
+            FullNameTextCodeDefaultText  = default;
+          ObjectTableId  = entity.ObjectTableId;
+          CanAutomateSetValue  = entity.CanAutomateSetValue;
+          AllowedinAutomationConditions  = entity.AllowedinAutomationConditions;
+          ListTextCodeCode  = entity.ListTextCodeCode;
+          CopyToDW  = entity.CopyToDW;
+          DisplayOnLookUpLocal  = entity.DisplayOnLookUpLocal;
+          EnableFullscreenTextBox  = entity.EnableFullscreenTextBox;
+          LeftKey  = entity.LeftKey;
+          RightKey  = entity.RightKey;
+          IsForeignKey  = entity.IsForeignKey;
+          ForeignEntity  = entity.ForeignEntity;
+          NavigationPropertyName  = entity.NavigationPropertyName;
+          DefaultAdditionalFilters  = entity.DefaultAdditionalFilters;
+          ForMetaDataOnly  = entity.ForMetaDataOnly;
+          IsListFilter  = entity.IsListFilter;
+            InUse  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -173,6 +257,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsListFilter  { get; set; }
        [DataMember]
        public bool InUse  { get; set; }
+         #endregion Properties
    }
 
 }

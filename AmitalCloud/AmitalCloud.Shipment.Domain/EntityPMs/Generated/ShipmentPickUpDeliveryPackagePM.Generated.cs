@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,41 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentPickUpDeliveryPackagePM : BaseEntityPM   {
+   #region Constructors
+   public ShipmentPickUpDeliveryPackagePM() : base() {} 
+   public ShipmentPickUpDeliveryPackagePM(ShipmentPickUpDeliveryPackage entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_shipmentPickUpDeliveryId = entity.ShipmentPickUpDeliveryId;
+		_originalShipmentPackageId = entity.OriginalShipmentPackageId;
+		_isMultiHarmonize = entity.IsMultiHarmonize;
+		_make = entity.Make;
+		_model = entity.Model;
+		_year = entity.Year;
+		_color = entity.Color;
+		_chassisNumber = entity.ChassisNumber;
+		_registrationNumber = entity.RegistrationNumber;
+		_countryId = entity.CountryId;
+		_packageTypeId = entity.PackageTypeId;
+		_quantity = entity.Quantity;
+		_volume = entity.Volume;
+		_weight = entity.Weight;
+		_description = entity.Description;
+		_containerNumber = entity.ContainerNumber;
+		_harmonize = entity.Harmonize;
+		_width = entity.Width;
+		_height = entity.Height;
+		_length = entity.Length;
+		_shipperSeal = entity.ShipperSeal;
+		_packageTypeName = default;
+		_packageTypeTEU = default;
+		pickUpDeliveryPackageHarmonizes = default;
+		_containerEntityId = entity.ContainerEntityId;
+		_changeSet = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -488,4 +524,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

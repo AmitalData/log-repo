@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class DocumentFilingBackupBatchPM : BaseEntityPM   {
+   #region Constructors
+   public DocumentFilingBackupBatchPM() : base() {} 
+   public DocumentFilingBackupBatchPM(DocumentFilingBackupBatch entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDateTime = entity.CreateDateTime;
+		_doneDate = entity.DoneDate;
+		_status = entity.Status;
+		_batchNumber = entity.BatchNumber;
+		_totalFailed = entity.TotalFailed;
+		_totalDocuments = entity.TotalDocuments;
+		_totalSucceeded = entity.TotalSucceeded;
+		_includeBackedUp = entity.IncludeBackedUp;
+		_fromDateTime = entity.FromDateTime;
+		_toDateTime = entity.ToDateTime;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -215,4 +235,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

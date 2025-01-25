@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TabModificationList
+   public partial class TabModificationList   
    {
+       #region Constructors
+       public TabModificationList() : base() {}
+       public TabModificationList(TabModification entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          Id  = entity.Id;
+          TabId  = entity.TabId;
+          IndexOrder  = entity.IndexOrder;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
 
@@ -29,6 +41,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string TabId  { get; set; }
        [DataMember]
        public int IndexOrder  { get; set; }
+         #endregion Properties
    }
 
 }

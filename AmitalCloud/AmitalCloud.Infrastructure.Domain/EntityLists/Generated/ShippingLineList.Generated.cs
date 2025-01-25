@@ -13,12 +13,67 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShippingLineList : CustomFieldList
+   public partial class ShippingLineList : CustomFieldList   
    {
+       #region Constructors
+       public ShippingLineList() : base() {}
+       public ShippingLineList(ShippingLine entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+            InvoiceCurrencyId  = default;
+            PaymentTermEnglishName  = default;
+            VatTypeId  = default;
+            EnableConsolidationInvoices  = default;
+            Website  = default;
+            Code  = default;
+          SCACCode  = entity.SCACCode;
+            PaymentTermId  = default;
+            EnglishName  = default;
+            LocalName  = default;
+          AddedManually  = entity.AddedManually;
+            InActive  = default;
+            VatNumber  = default;
+            AccountingCard  = default;
+          OurCreditNumber  = entity.OurCreditNumber;
+            ShippingAgentEnglishName  = default;
+            Remark  = default;
+            Notes  = default;
+            CityName  = default;
+            CountryId  = default;
+            CountryCode  = default;
+            CountryName  = default;
+            SearchFields  = default;
+            SATForeignRFC  = default;
+            MetodoPagoCode  = default;
+            UsoCFDICode  = default;
+            ExternalId2  = default;
+          IsINTTRARegistered  = entity.IsINTTRARegistered;
+          INTTRARegistrationNotes  = entity.INTTRARegistrationNotes;
+            ReceivablesAccountingCard  = default;
+            PayablesAccountingCard  = default;
+            ExternalAccountingBusinessArea  = default;
+            PaymentMethodCode  = default;
+          PrimaryContactName  = entity.PrimaryContactName;
+          PrimaryContactEmail  = entity.PrimaryContactEmail;
+          PrimaryContactPhone  = entity.PrimaryContactPhone;
+          CBSA  = entity.CBSA;
+          CAAT  = entity.CAAT;
+          INTTRAUpdatesShipment  = entity.INTTRAUpdatesShipment;
+            StateName  = default;
+            GLAccountNumber  = default;
+            RegimenFiscalCode  = default;
+            SATReceptorName  = default;
+          IsSupportsContainerTracking  = entity.IsSupportsContainerTracking;
+          IsAutomaticRequestsSent  = entity.IsAutomaticRequestsSent;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -115,6 +170,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsSupportsContainerTracking  { get; set; }
        [DataMember]
        public bool IsAutomaticRequestsSent  { get; set; }
+         #endregion Properties
    }
 
 }

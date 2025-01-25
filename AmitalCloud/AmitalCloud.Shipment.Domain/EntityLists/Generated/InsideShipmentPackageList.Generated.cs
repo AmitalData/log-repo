@@ -13,12 +13,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class InsideShipmentPackageList
+   public partial class InsideShipmentPackageList   
    {
+       #region Constructors
+       public InsideShipmentPackageList() : base() {}
+       public InsideShipmentPackageList(InsideShipmentPackage entity) : base()
+       {
+          Id  = entity.Id;
+          ShipmentPackageId  = entity.ShipmentPackageId;
+          PackageTypeId  = entity.PackageTypeId;
+          Quantity  = entity.Quantity;
+          Height  = entity.Height;
+          Width  = entity.Width;
+          Length  = entity.Length;
+          Volume  = entity.Volume;
+          Weight  = entity.Weight;
+          Reference1  = entity.Reference1;
+          Reference2  = entity.Reference2;
+          Reference3  = entity.Reference3;
+          CommodityNumber  = entity.CommodityNumber;
+          Make  = entity.Make;
+          Model  = entity.Model;
+          Year  = entity.Year;
+          Color  = entity.Color;
+          ChassisNumber  = entity.ChassisNumber;
+          RegistrationNumber  = entity.RegistrationNumber;
+          CountryId  = entity.CountryId;
+            GrossWeightInLB  = default;
+            VolumeInCBF  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -65,6 +95,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public double? GrossWeightInLB  { get; set; }
        [DataMember]
        public double? VolumeInCBF  { get; set; }
+         #endregion Properties
    }
 
 }

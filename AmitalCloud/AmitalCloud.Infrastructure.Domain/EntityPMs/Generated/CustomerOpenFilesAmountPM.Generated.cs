@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerOpenFilesAmountPM : BaseEntityPM   {
+   #region Constructors
+   public CustomerOpenFilesAmountPM() : base() {} 
+   public CustomerOpenFilesAmountPM(CustomerOpenFilesAmount entity) : base()
+   {
+		_customerId = entity.CustomerId;
+		_totalOpenFilesAmount = entity.TotalOpenFilesAmount;
+		_tenant = entity.Tenant;
+		_customerCode = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _customerId ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -87,4 +99,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

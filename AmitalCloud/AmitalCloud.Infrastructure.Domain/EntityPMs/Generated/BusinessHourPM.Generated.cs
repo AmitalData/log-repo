@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,60 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class BusinessHourPM : BaseEntityPM   {
+   #region Constructors
+   public BusinessHourPM() : base() {} 
+   public BusinessHourPM(BusinessHour entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_code = entity.Code;
+		_searchFields = entity.SearchFields;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_name = entity.Name;
+		_description = entity.Description;
+		_is247 = entity.Is247;
+		_createdByUserId = entity.CreatedByUserId;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_isMondayEnabeled = entity.IsMondayEnabeled;
+		_isTuesdayEnabeled = entity.IsTuesdayEnabeled;
+		_isWednesdayEnabeled = entity.IsWednesdayEnabeled;
+		_isThursdayEnabeled = entity.IsThursdayEnabeled;
+		_isFridayEnabeled = entity.IsFridayEnabeled;
+		_isSaturdayEnabeled = entity.IsSaturdayEnabeled;
+		_isSundayEnabeled = entity.IsSundayEnabeled;
+		_mondayFromHour = entity.MondayFromHour;
+		_tuesdayFromHour = entity.TuesdayFromHour;
+		_wednesdayFromHour = entity.WednesdayFromHour;
+		_thursdayFromHour = entity.ThursdayFromHour;
+		_fridayFromHour = entity.FridayFromHour;
+		_saturdayFromHour = entity.SaturdayFromHour;
+		_sundayFromHour = entity.SundayFromHour;
+		_mondayToHour = entity.MondayToHour;
+		_tuesdayToHour = entity.TuesdayToHour;
+		_wednesdayToHour = entity.WednesdayToHour;
+		_thursdayToHour = entity.ThursdayToHour;
+		_fridayToHour = entity.FridayToHour;
+		_saturdayToHour = entity.SaturdayToHour;
+		_sundayToHour = entity.SundayToHour;
+		businessHoursHolidays = default;
+		_mondayFromHourDate = default;
+		_tuesdayFromHourDate = default;
+		_wednesdayFromHourDate = default;
+		_thursdayFromHourDate = default;
+		_fridayFromHourDate = default;
+		_saturdayFromHourDate = default;
+		_sundayFromHourDate = default;
+		_mondayToHourDate = default;
+		_tuesdayToHourDate = default;
+		_wednesdayToHourDate = default;
+		_thursdayToHourDate = default;
+		_fridayToHourDate = default;
+		_saturdayToHourDate = default;
+		_sundayToHourDate = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -792,4 +847,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

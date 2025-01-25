@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ContainersExternalDataList
+   public partial class ContainersExternalDataList   
    {
+       #region Constructors
+       public ContainersExternalDataList() : base() {}
+       public ContainersExternalDataList(ContainersExternalData entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          GateIn  = entity.GateIn;
+          GateOut  = entity.GateOut;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -29,6 +41,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public DateTime? GateIn  { get; set; }
        [DataMember]
        public DateTime? GateOut  { get; set; }
+         #endregion Properties
    }
 
 }

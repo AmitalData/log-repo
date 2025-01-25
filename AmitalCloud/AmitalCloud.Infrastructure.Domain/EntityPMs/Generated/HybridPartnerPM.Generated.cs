@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,28 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class HybridPartnerPM : BaseEntityPM   {
+   #region Constructors
+   public HybridPartnerPM() : base() {} 
+   public HybridPartnerPM(HybridPartner entity) : base()
+   {
+		_id = entity.Id;
+		_logoId = entity.LogoId;
+		_smallLogoId = entity.SmallLogoId;
+		_searchFields = entity.SearchFields;
+		_inActive = entity.InActive;
+		_tenant = default;
+		_name = entity.Name;
+		_localName = entity.LocalName;
+		_partnerTenant = entity.PartnerTenant;
+		_isHasRequest = default;
+		_statusName = default;
+		_isExternalPartner = entity.IsExternalPartner;
+		_receiveAllStatuses = entity.ReceiveAllStatuses;
+		_allowSendingDocsToAgent = entity.AllowSendingDocsToAgent;
+		_isMislakaActivated = entity.IsMislakaActivated;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -263,4 +286,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

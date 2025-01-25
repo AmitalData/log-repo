@@ -13,16 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentPackageHarmonizeList
+   public partial class ShipmentPackageHarmonizeList   
    {
+       #region Constructors
+       public ShipmentPackageHarmonizeList() : base() {}
+       public ShipmentPackageHarmonizeList(ShipmentPackageHarmonize entity) : base()
+       {
+          Id  = entity.Id;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
        public string Id  { get; set; }
+         #endregion Properties
    }
 
 }

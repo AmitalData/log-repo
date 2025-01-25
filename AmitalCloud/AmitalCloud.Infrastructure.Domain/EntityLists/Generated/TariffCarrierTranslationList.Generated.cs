@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TariffCarrierTranslationList
+   public partial class TariffCarrierTranslationList   
    {
+       #region Constructors
+       public TariffCarrierTranslationList() : base() {}
+       public TariffCarrierTranslationList(TariffCarrierTranslation entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          SearchFields  = entity.SearchFields;
+          PortId  = entity.PortId;
+          PartnerCode  = entity.PartnerCode;
+          CarrierId  = entity.CarrierId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -41,6 +59,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string PartnerCode  { get; set; }
        [DataMember]
        public string CarrierId  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,48 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class LogitudeMessagesTransmissionLogList
+   public partial class LogitudeMessagesTransmissionLogList   
    {
+       #region Constructors
+       public LogitudeMessagesTransmissionLogList() : base() {}
+       public LogitudeMessagesTransmissionLogList(LogitudeMessagesTransmissionLog entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          HAWB  = entity.HAWB;
+          CCS  = entity.CCS;
+          AirlineCode  = entity.AirlineCode;
+          MessageTypeCode  = entity.MessageTypeCode;
+          Prefix  = entity.Prefix;
+          AWBNumber  = entity.AWBNumber;
+            HWB  = default;
+          SentDate  = entity.SentDate;
+          Participant  = entity.Participant;
+          IATACode  = entity.IATACode;
+          CASSCode  = entity.CASSCode;
+          UserName  = entity.UserName;
+          Origin  = entity.Origin;
+          Destination  = entity.Destination;
+          Pieces  = entity.Pieces;
+          GrossWeight  = entity.GrossWeight;
+          GrossWeightUnitCode  = entity.GrossWeightUnitCode;
+          ChargeableWeight  = entity.ChargeableWeight;
+          ChargeableWeightUnitCode  = entity.ChargeableWeightUnitCode;
+          Volume  = entity.Volume;
+          VolumeUnitCode  = entity.VolumeUnitCode;
+          DescriptionOfGoods  = entity.DescriptionOfGoods;
+          DirectParticipant  = entity.DirectParticipant;
+          IsUpdatedinAirlineTenant  = entity.IsUpdatedinAirlineTenant;
+          UserEmail  = entity.UserEmail;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -77,6 +113,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string UserEmail  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

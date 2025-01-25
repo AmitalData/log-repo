@@ -13,16 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class INTTRASettingModeList
+   public partial class INTTRASettingModeList   
    {
+       #region Constructors
+       public INTTRASettingModeList() : base() {}
+       public INTTRASettingModeList(INTTRASettingMode entity) : base()
+       {
+          Code  = entity.Code;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
        public string Code  { get; set; }
+         #endregion Properties
    }
 
 }

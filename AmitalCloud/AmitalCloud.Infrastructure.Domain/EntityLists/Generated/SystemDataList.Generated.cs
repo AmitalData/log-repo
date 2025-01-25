@@ -13,16 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class SystemDataList
+   public partial class SystemDataList   
    {
+       #region Constructors
+       public SystemDataList() : base() {}
+       public SystemDataList(SystemData entity) : base()
+       {
+          UserId  = entity.UserId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
        public string UserId  { get; set; }
+         #endregion Properties
    }
 
 }

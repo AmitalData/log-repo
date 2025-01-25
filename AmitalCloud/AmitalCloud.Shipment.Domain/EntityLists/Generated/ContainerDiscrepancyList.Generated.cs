@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ContainerDiscrepancyList
+   public partial class ContainerDiscrepancyList   
    {
+       #region Constructors
+       public ContainerDiscrepancyList() : base() {}
+       public ContainerDiscrepancyList(ContainerDiscrepancy entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          SearchFields  = entity.SearchFields;
+          ContainerID  = entity.ContainerID;
+          ShipmentId  = entity.ShipmentId;
+          DiscrepancyDate  = entity.DiscrepancyDate;
+          Discrepancy  = entity.Discrepancy;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public DateTime DiscrepancyDate  { get; set; }
        [DataMember]
        public string Discrepancy  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,32 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerProductPM : BaseEntityPM   {
+   #region Constructors
+   public CustomerProductPM() : base() {} 
+   public CustomerProductPM(CustomerProduct entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_notesRightToLeft = entity.NotesRightToLeft;
+		_customerId = entity.CustomerId;
+		_productTypeCode = entity.ProductTypeCode;
+		_notes = entity.Notes;
+		_potentialChargeableWeight = entity.PotentialChargeableWeight;
+		_commitmentChargeableWeight = entity.CommitmentChargeableWeight;
+		_potentialTEU = entity.PotentialTEU;
+		_commitmentTEU = entity.CommitmentTEU;
+		_potentialNumberOfShipments = entity.PotentialNumberOfShipments;
+		_commitmentNumberOfShipments = entity.CommitmentNumberOfShipments;
+		_potentialRevenue = entity.PotentialRevenue;
+		_commitmentRevenue = entity.CommitmentRevenue;
+		_lastShipmentDate = entity.LastShipmentDate;
+		_prepaidCollectId = entity.PrepaidCollectId;
+		_customerName = default;
+		_productTypeName = default;
+		_prepaidCollectName = default;
+		productLocations = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -345,4 +372,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
              set {  deletedProductLocations = value; }
 	    }
 	 }
+#endregion Properties
 }

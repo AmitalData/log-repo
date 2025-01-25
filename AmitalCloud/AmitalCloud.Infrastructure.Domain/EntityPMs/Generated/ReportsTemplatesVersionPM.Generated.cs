@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ReportsTemplatesVersionPM : BaseEntityPM   {
+   #region Constructors
+   public ReportsTemplatesVersionPM() : base() {} 
+   public ReportsTemplatesVersionPM(ReportsTemplatesVersion entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_reportId = entity.ReportId;
+		_templateId = entity.TemplateId;
+		_reportDocumentId = entity.ReportDocumentId;
+		_createdByUserId = entity.CreatedByUserId;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_version = entity.Version;
+		_updateByUserName = default;
+		_isRestored = entity.IsRestored;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -215,4 +235,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

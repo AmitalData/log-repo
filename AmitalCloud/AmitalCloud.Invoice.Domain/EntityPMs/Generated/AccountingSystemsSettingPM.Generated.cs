@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,17 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class AccountingSystemsSettingPM : BaseEntityPM   {
+   #region Constructors
+   public AccountingSystemsSettingPM() : base() {} 
+   public AccountingSystemsSettingPM(AccountingSystemsSetting entity) : base()
+   {
+		_updateOnNextRequest = entity.UpdateOnNextRequest;
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_getExternalCodeInterval = entity.GetExternalCodeInterval;
+   }
+   #endregion Constructors
+   #region Properties
    	  private bool _updateOnNextRequest ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -87,4 +99,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

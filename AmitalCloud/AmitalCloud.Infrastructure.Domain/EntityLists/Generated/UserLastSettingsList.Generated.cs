@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class UserLastSettingsList
+   public partial class UserLastSettingsList   
    {
+       #region Constructors
+       public UserLastSettingsList() : base() {}
+       public UserLastSettingsList(UserLastSettings entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          UserId  = entity.UserId;
+          ControlNameSpace  = entity.ControlNameSpace;
+          FilterName  = entity.FilterName;
+          FilterValue  = entity.FilterValue;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string FilterName  { get; set; }
        [DataMember]
        public string FilterValue  { get; set; }
+         #endregion Properties
    }
 
 }

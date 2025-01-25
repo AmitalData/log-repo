@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,16 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class MasterPM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public MasterPM() : base() {} 
+   public MasterPM(Master entity) : base()
+   {
+		_specialServicesTypeId = entity.SpecialServicesTypeId;
+		_documentsClosingDate = entity.DocumentsClosingDate;
+		_statusDate = entity.StatusDate;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _specialServicesTypeId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -71,4 +82,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

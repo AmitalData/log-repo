@@ -13,12 +13,71 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CommunicationLogList
+   public partial class CommunicationLogList   
    {
+       #region Constructors
+       public CommunicationLogList() : base() {}
+       public CommunicationLogList(CommunicationLog entity) : base()
+       {
+          EntityId  = entity.EntityId;
+          DocumentId  = entity.DocumentId;
+          ExceptionMessage  = entity.ExceptionMessage;
+          Logs  = entity.Logs;
+          CorrelationID  = entity.CorrelationID;
+          MessageLockId  = entity.MessageLockId;
+          ReplyToList  = entity.ReplyToList;
+          CreatedByUserId  = entity.CreatedByUserId;
+            CreatedByUserName  = default;
+          CreateDate  = entity.CreateDate;
+          Subject  = entity.Subject;
+          DoneDate  = entity.DoneDate;
+          InOut  = entity.InOut;
+          CC  = entity.CC;
+          DocumentOutId  = entity.DocumentOutId;
+            DocumentInId  = default;
+          To  = entity.To;
+          CommunicationStatusTypeCode  = entity.CommunicationStatusTypeCode;
+            CommunicationStatusTypeName  = default;
+          CommunicationLogTypeCode  = entity.CommunicationLogTypeCode;
+            CommunicationLogTypeName  = default;
+          Retries  = entity.Retries;
+          BCC  = entity.BCC;
+          ObjectTableId  = entity.ObjectTableId;
+            ObjectTableName  = default;
+          From  = entity.From;
+          LastStatusDate  = entity.LastStatusDate;
+          EntityReference  = entity.EntityReference;
+          SearchFields  = entity.SearchFields;
+          Id  = entity.Id;
+          CreateDateUTC  = entity.CreateDateUTC;
+          DoneDateUTC  = entity.DoneDateUTC;
+          LastStatusDateUTC  = entity.LastStatusDateUTC;
+          NextTryDateTimeUTC  = entity.NextTryDateTimeUTC;
+          NextTryDateTime  = entity.NextTryDateTime;
+          QueueName  = entity.QueueName;
+          Priority  = entity.Priority;
+            TenantName  = default;
+          AWBNumber  = entity.AWBNumber;
+          Tenant  = entity.Tenant;
+          ResponseDocumentId  = entity.ResponseDocumentId;
+          ChildEntityId  = entity.ChildEntityId;
+          ChildObjectTableId  = entity.ChildObjectTableId;
+          EmailDeliveryError  = entity.EmailDeliveryError;
+          LogSettings  = entity.LogSettings;
+            SecurityId  = default;
+            IsBodySecured  = default;
+          UniqueNumber  = entity.UniqueNumber;
+          AdditionalFields  = entity.AdditionalFields;
+          WasAnalyzed  = entity.WasAnalyzed;
+          Channel  = entity.Channel;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string EntityId  { get; set; }
        [DataMember]
@@ -123,6 +182,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool? WasAnalyzed  { get; set; }
        [DataMember]
        public string Channel  { get; set; }
+         #endregion Properties
    }
 
 }

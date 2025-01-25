@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,127 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class APInvoicePM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public APInvoicePM() : base() {} 
+   public APInvoicePM(APInvoice entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_refundAmount = entity.RefundAmount;
+		_description = entity.Description;
+		_paymentTermExternalId = entity.PaymentTermExternalId;
+		_isGeneralInvoice = entity.IsGeneralInvoice;
+		_internalNumber = entity.InternalNumber;
+		_invoiceNumber = entity.InvoiceNumber;
+		_vendorId = entity.VendorId;
+		_vendorName = default;
+		_vATNumber = entity.VATNumber;
+		_invoiceDate = entity.InvoiceDate;
+		_paymentTermId = entity.PaymentTermId;
+		_paymentTermName = default;
+		_dueDate = entity.DueDate;
+		_invoiceCurrencyExchangeRate = entity.InvoiceCurrencyExchangeRate;
+		_exchangeRateDate = entity.ExchangeRateDate;
+		_invoiceCurrencyId = entity.InvoiceCurrencyId;
+		_invoiceCurrencyCode = default;
+		_localCurrencyId = entity.LocalCurrencyId;
+		_internalNotes = entity.InternalNotes;
+		_subTotalInLocalCurrency = entity.SubTotalInLocalCurrency;
+		_subTotalInInvoiceCurrency = entity.SubTotalInInvoiceCurrency;
+		_amountInInvoiceCurrency = entity.AmountInInvoiceCurrency;
+		_amountInLocalCurrency = entity.AmountInLocalCurrency;
+		_statusCode = entity.StatusCode;
+		_statusName = default;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_createdByUserName = default;
+		_isClosed = entity.IsClosed;
+		_profitCurrencyId = entity.ProfitCurrencyId;
+		_profitCurrencyCode = default;
+		_profitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate;
+		_amountInProfitCurrency = entity.AmountInProfitCurrency;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_updatedByUserName = default;
+		_updateDate = entity.UpdateDate;
+		_mainEntityId = entity.MainEntityId;
+		_mainEntityReference = entity.MainEntityReference;
+		_searchFields = entity.SearchFields;
+		_amountDue = entity.AmountDue;
+		_amountDueInLocalCurrency = entity.AmountDueInLocalCurrency;
+		_amountDueInProfitCurrency = entity.AmountDueInProfitCurrency;
+		_branchId = entity.BranchId;
+		_localCurrencyCode = default;
+		_houseNumber = entity.HouseNumber;
+		_masterNumber = entity.MasterNumber;
+		_transferTries = entity.TransferTries;
+		_transferError = entity.TransferError;
+		_isTransferStarted = entity.IsTransferStarted;
+		_transferStatusCode = entity.TransferStatusCode;
+		_accountingExternalCode = entity.AccountingExternalCode;
+		_readyForTransfer = default;
+		_creditAccount = entity.CreditAccount;
+		_transferStatusName = default;
+		_isMultipleEntities = entity.IsMultipleEntities;
+		_vendorCode = default;
+		_approvedDate = entity.ApprovedDate;
+		_approvedByUserName = default;
+		_approvedByUserId = entity.ApprovedByUserId;
+		_operationalDate = entity.OperationalDate;
+		_vendorGLAccountId = entity.VendorGLAccountId;
+		_accountingDate = entity.AccountingDate;
+		_isExternalEntity = entity.IsExternalEntity;
+		_isSecured = default;
+		_invoiceExpectedAmount = default;
+		_vendorType = default;
+		_aPInvoiceTypeName = default;
+		_vendorPartnerTypeId = default;
+		_accountingExternalName = default;
+		_isTransferStatusSetManually = default;
+		invoiceLines = default;
+		invoiceEntities = default;
+		invoicePayments = default;
+		invoiceMultipleShipments = default;
+		transferLines = default;
+		totalVATs = default;
+		_setVoided = default;
+		_setApproved = default;
+		_setCancelApproval = default;
+		_setReTransfer = default;
+		_externalAccountingEntityId = entity.ExternalAccountingEntityId;
+		_amountInInvoiceCurrency_Summary = default;
+		_amountInLocalCurrency_Summary = default;
+		_amountInProfitCurrency_Summary = default;
+		_firstApproveDate = entity.FirstApproveDate;
+		_journalNumber = default;
+		_shipmentConcurrencyGUID = default;
+		_shipmentNewConcurrencyGUID = default;
+		_branchName = default;
+		_journalId = default;
+		_vendorLocalName = default;
+		_vendorCity = default;
+		_vendorCountry = default;
+		_createdByPartner = entity.CreatedByPartner;
+		_totalVATOnly = entity.TotalVATOnly;
+		_vendorContactId = default;
+		_vendorVatNumber = default;
+		_paidDate = entity.PaidDate;
+		_shipmentsNumbers = entity.ShipmentsNumbers;
+		_isNew = default;
+		_isCopied = default;
+		_copiedFrom = default;
+		_masterNumbers = entity.MasterNumbers;
+		_masterShipmentNumbers = entity.MasterShipmentNumbers;
+		_houseNumbers = entity.HouseNumbers;
+		_globalTaxCalculation = entity.GlobalTaxCalculation;
+		_concurrencyGUID = entity.ConcurrencyGUID;
+		_newConcurrencyGUID = default;
+		_isEquipment = entity.IsEquipment;
+		_connectedPaymentsNumbers = entity.ConnectedPaymentsNumbers;
+		_totalEquation = entity.TotalEquation;
+		_confirmationNumber = entity.ConfirmationNumber;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -2110,4 +2232,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

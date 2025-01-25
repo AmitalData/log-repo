@@ -13,12 +13,73 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomFieldsMainObjectList
+   public partial class CustomFieldsMainObjectList   
    {
+       #region Constructors
+       public CustomFieldsMainObjectList() : base() {}
+       public CustomFieldsMainObjectList(CustomFieldsMainObject entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          EntityId  = entity.EntityId;
+          ObjectTableId  = entity.ObjectTableId;
+          Field1  = entity.Field1;
+          Field2  = entity.Field2;
+          Field3  = entity.Field3;
+          Field4  = entity.Field4;
+          Field5  = entity.Field5;
+          Field6  = entity.Field6;
+          Field7  = entity.Field7;
+          Field8  = entity.Field8;
+          Field9  = entity.Field9;
+          Field10  = entity.Field10;
+          Field11  = entity.Field11;
+          Field12  = entity.Field12;
+          Field13  = entity.Field13;
+          Field14  = entity.Field14;
+          Field15  = entity.Field15;
+          Field16  = entity.Field16;
+          Field17  = entity.Field17;
+          Field18  = entity.Field18;
+          Field19  = entity.Field19;
+          Field20  = entity.Field20;
+          Field21  = entity.Field21;
+          Field22  = entity.Field22;
+          Field23  = entity.Field23;
+          Field24  = entity.Field24;
+          Field25  = entity.Field25;
+          Field26  = entity.Field26;
+          Field27  = entity.Field27;
+          Field28  = entity.Field28;
+          Field29  = entity.Field29;
+          Field30  = entity.Field30;
+          Field31  = entity.Field31;
+          Field32  = entity.Field32;
+          Field33  = entity.Field33;
+          Field34  = entity.Field34;
+          Field35  = entity.Field35;
+          Field36  = entity.Field36;
+          Field37  = entity.Field37;
+          Field38  = entity.Field38;
+          Field39  = entity.Field39;
+          Field40  = entity.Field40;
+          Field41  = entity.Field41;
+          Field42  = entity.Field42;
+          Field43  = entity.Field43;
+          Field44  = entity.Field44;
+          Field45  = entity.Field45;
+          Field46  = entity.Field46;
+          Field47  = entity.Field47;
+          Field48  = entity.Field48;
+          Field49  = entity.Field49;
+          Field50  = entity.Field50;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
@@ -125,6 +186,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Field49  { get; set; }
        [DataMember]
        public string Field50  { get; set; }
+         #endregion Properties
    }
 
 }

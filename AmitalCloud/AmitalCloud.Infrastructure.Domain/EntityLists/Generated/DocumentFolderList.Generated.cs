@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DocumentFolderList
+   public partial class DocumentFolderList   
    {
+       #region Constructors
+       public DocumentFolderList() : base() {}
+       public DocumentFolderList(DocumentFolder entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+          IsExternalFolder  = entity.IsExternalFolder;
+          SearchFields  = entity.SearchFields;
+          ParentFolderId  = entity.ParentFolderId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -37,6 +53,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string ParentFolderId  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AnalyzeQueueList
+   public partial class AnalyzeQueueList   
    {
+       #region Constructors
+       public AnalyzeQueueList() : base() {}
+       public AnalyzeQueueList(AnalyzeQueue entity) : base()
+       {
+          MessageBody  = entity.MessageBody;
+          StackTrace  = entity.StackTrace;
+          Id  = entity.Id;
+          CommunicationLogId  = entity.CommunicationLogId;
+          EntityReference  = entity.EntityReference;
+          ObjectTableName  = entity.ObjectTableName;
+          From  = entity.From;
+          CreateDate  = entity.CreateDate;
+          FileSize  = entity.FileSize;
+          Status  = entity.Status;
+          ErrorMessage  = entity.ErrorMessage;
+          Tenant  = entity.Tenant;
+          Subject  = entity.Subject;
+          Retries  = entity.Retries;
+          ConnectedToTenant  = entity.ConnectedToTenant;
+          ConnectedToEntity  = entity.ConnectedToEntity;
+          SearchFields  = entity.SearchFields;
+            TenantName  = default;
+          AWBNumber  = entity.AWBNumber;
+          AckReason  = entity.AckReason;
+          DoneDate  = entity.DoneDate;
+          Log  = entity.Log;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string MessageBody  { get; set; }
        [DataMember]
@@ -65,6 +95,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime? DoneDate  { get; set; }
        [DataMember]
        public string Log  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class HybridTenantStatePM : BaseEntityPM   {
+   #region Constructors
+   public HybridTenantStatePM() : base() {} 
+   public HybridTenantStatePM(HybridTenantState entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_failedQueue = entity.FailedQueue;
+		_waitingQueue = entity.WaitingQueue;
+		_lastUpdateDateTime = entity.LastUpdateDateTime;
+		_lastQueueDateTime = entity.LastQueueDateTime;
+		_versionNumber = entity.VersionNumber;
+		_versionDate = entity.VersionDate;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -135,4 +150,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

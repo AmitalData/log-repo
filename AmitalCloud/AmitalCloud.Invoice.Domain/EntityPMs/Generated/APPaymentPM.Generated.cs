@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,105 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class APPaymentPM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public APPaymentPM() : base() {} 
+   public APPaymentPM(APPayment entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_printedByUserId = entity.PrintedByUserId;
+		_updateDate = entity.UpdateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_profitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate;
+		_amountInProfitCurrency = entity.AmountInProfitCurrency;
+		_paymentNo = entity.PaymentNo;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_createdByUserName = default;
+		_printDate = entity.PrintDate;
+		_localCurrencyId = entity.LocalCurrencyId;
+		_amountInLocalCurrency = entity.AmountInLocalCurrency;
+		_vendorId = entity.VendorId;
+		_vendorName = default;
+		_statusCode = entity.StatusCode;
+		_statusName = default;
+		_isClosed = entity.IsClosed;
+		_paymentCurrencyId = entity.PaymentCurrencyId;
+		_paymentCurrencyCode = default;
+		_amountInPaymentCurrency = entity.AmountInPaymentCurrency;
+		_paymentMethodName = default;
+		_printNotes = entity.PrintNotes;
+		_internalNotes = entity.InternalNotes;
+		_paymentCurrencyExchangeRate = entity.PaymentCurrencyExchangeRate;
+		_paymentCurrencyExchangeRateDate = entity.PaymentCurrencyExchangeRateDate;
+		_vendorAddressId = entity.VendorAddressId;
+		_openAmount = entity.OpenAmount;
+		_valueDate = entity.ValueDate;
+		_bank = entity.Bank;
+		_bankBranch = entity.BankBranch;
+		_searchFields = entity.SearchFields;
+		_branchId = entity.BranchId;
+		_chequeOrPaymentRef = entity.ChequeOrPaymentRef;
+		_registerDate = entity.RegisterDate;
+		_creditCardTypeId = entity.CreditCardTypeId;
+		_localCurrencyCode = default;
+		_account = entity.Account;
+		_isSecured = default;
+		paymentInvoices = default;
+		_setVoided = default;
+		_setApproved = default;
+		_setCancelApproval = default;
+		_hasInvoicesErrors = default;
+		_sATApprovalDate = default;
+		_externalAccountingEntityId = entity.ExternalAccountingEntityId;
+		_paymentMethodCode = default;
+		_transferError = entity.TransferError;
+		_transferStatusCode = entity.TransferStatusCode;
+		_transferStatusName = default;
+		_readyForTransfer = default;
+		_approvedByUserId = entity.ApprovedByUserId;
+		_approvedDateTime = entity.ApprovedDateTime;
+		_taxDeductionPercentage = entity.TaxDeductionPercentage;
+		_taxDeductionLocalAmount = entity.TaxDeductionLocalAmount;
+		_accountingPaymentMethodId = entity.AccountingPaymentMethodId;
+		_bankAccountId = entity.BankAccountId;
+		_branchName = default;
+		_vendorPartnerTypeId = default;
+		_firstApproveDate = entity.FirstApproveDate;
+		_automaticPaymentCheque = entity.AutomaticPaymentCheque;
+		_paymentChequeCreationPayToName = default;
+		_paymentChequeCreationNotes = default;
+		_excludeFromDeductionReport = default;
+		_vendorGLAccountId = default;
+		_journalNumber = default;
+		_journalId = default;
+		_vendorBankAddress = entity.VendorBankAddress;
+		_vendorBankName = entity.VendorBankName;
+		_vendorBankAccountNumber = entity.VendorBankAccountNumber;
+		_vendorSwift = entity.VendorSwift;
+		_vendorIBANNumber = entity.VendorIBANNumber;
+		_vendorLocalName = default;
+		_accountingCancelationDate = entity.AccountingCancelationDate;
+		_dontIncludeInDeductionReport = entity.DontIncludeInDeductionReport;
+		_cancelationNotes = entity.CancelationNotes;
+		_voidedByJournalNumber = default;
+		_externalPaymentAmount = entity.ExternalPaymentAmount;
+		_externalPaymentDate = entity.ExternalPaymentDate;
+		_externalPaymentNotes = entity.ExternalPaymentNotes;
+		reconcileInternalTransIds = default;
+		_vendorCode = default;
+		_connectedInvoicesNumbers = entity.ConnectedInvoicesNumbers;
+		_isCreatedFromInvoiceSide = default;
+		_createdFromInvoiceId = default;
+		_invoiceAmountDue = default;
+		_invoiceRate = default;
+		_invoiceCurrencyId = default;
+		_dontDisplayAPInvoices = default;
+		_isFromReconcilePage = default;
+		_isMultiCurrency = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -1685,4 +1785,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

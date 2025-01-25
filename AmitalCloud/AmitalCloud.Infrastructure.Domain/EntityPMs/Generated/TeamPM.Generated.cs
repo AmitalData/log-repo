@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,28 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TeamPM : BaseEntityPM   {
+   #region Constructors
+   public TeamPM() : base() {} 
+   public TeamPM(Team entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_updateDate = entity.UpdateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_searchFields = entity.SearchFields;
+		_name = entity.Name;
+		_localName = entity.LocalName;
+		_inActive = entity.InActive;
+		_managerUserId = entity.ManagerUserId;
+		_managerUserName = default;
+		_notify = entity.Notify;
+		_notes = entity.Notes;
+		memberLines = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -280,4 +303,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
              set {  deletedMemberLines = value; }
 	    }
 	 }
+#endregion Properties
 }

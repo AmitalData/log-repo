@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class AWBOCIList
+   public partial class AWBOCIList   
    {
+       #region Constructors
+       public AWBOCIList() : base() {}
+       public AWBOCIList(AWBOCI entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ShipmentId  = entity.ShipmentId;
+          SupplementaryCustomsInfo  = entity.SupplementaryCustomsInfo;
+          CountryId  = entity.CountryId;
+          AWBCustomsInformationCode  = entity.AWBCustomsInformationCode;
+          AWBInformationCode  = entity.AWBInformationCode;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string AWBCustomsInformationCode  { get; set; }
        [DataMember]
        public string AWBInformationCode  { get; set; }
+         #endregion Properties
    }
 
 }

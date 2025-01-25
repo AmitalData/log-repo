@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentSubTypeList
+   public partial class ShipmentSubTypeList   
    {
+       #region Constructors
+       public ShipmentSubTypeList() : base() {}
+       public ShipmentSubTypeList(ShipmentSubType entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          SearchFields  = entity.SearchFields;
+          Code  = entity.Code;
+          Name  = entity.Name;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+            ShipmentTypeName  = default;
+          Inactive  = entity.Inactive;
+          IsManuallyAdded  = entity.IsManuallyAdded;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -49,6 +71,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public bool Inactive  { get; set; }
        [DataMember]
        public bool IsManuallyAdded  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ApiCredintialsList
+   public partial class ApiCredintialsList   
    {
+       #region Constructors
+       public ApiCredintialsList() : base() {}
+       public ApiCredintialsList(ApiCredintials entity) : base()
+       {
+          UsedFor  = entity.UsedFor;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          AllowedIPs  = entity.AllowedIPs;
+          CreatedBy  = entity.CreatedBy;
+          UpdatedBy  = entity.UpdatedBy;
+          maskedPrimaryAccessKey  = entity.maskedPrimaryAccessKey;
+          maskedSeconderyAccessKey  = entity.maskedSeconderyAccessKey;
+            SearchFields  = default;
+          TokenExpirationTime  = entity.TokenExpirationTime;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string UsedFor  { get; set; }
        [DataMember]
@@ -39,6 +57,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public int? TokenExpirationTime  { get; set; }
+         #endregion Properties
    }
 
 }

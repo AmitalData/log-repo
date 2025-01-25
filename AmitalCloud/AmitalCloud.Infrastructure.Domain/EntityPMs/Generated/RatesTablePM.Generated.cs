@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class RatesTablePM : BaseEntityPM   {
+   #region Constructors
+   public RatesTablePM() : base() {} 
+   public RatesTablePM(RatesTable entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_logDateTime = entity.LogDateTime;
+		_foreignCurrencyId = entity.ForeignCurrencyId;
+		_foreignCurrencyCode = default;
+		_baseCurrencyId = entity.BaseCurrencyId;
+		_rate = entity.Rate;
+		_valueDate = entity.ValueDate;
+		_foreignCurrencyName = default;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_updatedByUserName = default;
+		_updatedDate = entity.UpdatedDate;
+		_unit = entity.Unit;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -231,4 +252,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

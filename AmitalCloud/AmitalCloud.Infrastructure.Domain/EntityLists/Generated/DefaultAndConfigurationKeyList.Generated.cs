@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DefaultAndConfigurationKeyList
+   public partial class DefaultAndConfigurationKeyList   
    {
+       #region Constructors
+       public DefaultAndConfigurationKeyList() : base() {}
+       public DefaultAndConfigurationKeyList(DefaultAndConfigurationKey entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          SetType1  = entity.SetType1;
+          SetKey  = entity.SetKey;
+          ShortDescription  = entity.ShortDescription;
+          FullDesctiption  = entity.FullDesctiption;
+          SetType2  = entity.SetType2;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -37,6 +52,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string FullDesctiption  { get; set; }
        [DataMember]
        public string SetType2  { get; set; }
+         #endregion Properties
    }
 
 }

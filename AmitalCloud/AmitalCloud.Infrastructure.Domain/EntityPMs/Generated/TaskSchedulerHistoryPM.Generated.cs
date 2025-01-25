@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TaskSchedulerHistoryPM : BaseEntityPM   {
+   #region Constructors
+   public TaskSchedulerHistoryPM() : base() {} 
+   public TaskSchedulerHistoryPM(TaskSchedulerHistory entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_startDateTime = entity.StartDateTime;
+		_endDateTime = entity.EndDateTime;
+		_runResult = entity.RunResult;
+		_taskId = entity.TaskId;
+		_isError = entity.IsError;
+		_startDateTimeUTC = entity.StartDateTimeUTC;
+		_endDateTimeUTC = entity.EndDateTimeUTC;
+		_logFirstLine = entity.LogFirstLine;
+		_logType = entity.LogType;
+		_duration = default;
+		_logDocumentId = entity.LogDocumentId;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -231,4 +252,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

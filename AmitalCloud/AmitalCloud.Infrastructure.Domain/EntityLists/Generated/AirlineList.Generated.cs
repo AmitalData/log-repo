@@ -13,12 +13,99 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AirlineList : CustomFieldList
+   public partial class AirlineList : CustomFieldList   
    {
+       #region Constructors
+       public AirlineList() : base() {}
+       public AirlineList(Airline entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          RegistrationUpdatedBy  = entity.RegistrationUpdatedBy;
+            InvoiceCurrencyId  = default;
+            PaymentTermEnglishName  = default;
+            VatTypeId  = default;
+          CheckDigit  = entity.CheckDigit;
+          LimitedLength  = entity.LimitedLength;
+          TTY  = entity.TTY;
+            IsRegistered  = default;
+          AccountNumber  = entity.AccountNumber;
+            EnableConsolidationInvoices  = default;
+          GLSHKPIMA  = entity.GLSHKPIMA;
+          IsGLSHKRegistered  = entity.IsGLSHKRegistered;
+          GLSHKNeedsRegistration  = entity.GLSHKNeedsRegistration;
+          ChampNeedsRegistration  = entity.ChampNeedsRegistration;
+          IsChampRegistered  = entity.IsChampRegistered;
+          ChampFWB  = entity.ChampFWB;
+          ChampFHL  = entity.ChampFHL;
+          ChampFSU  = entity.ChampFSU;
+          ChampFSRFSA  = entity.ChampFSRFSA;
+          ChampFVRFVA  = entity.ChampFVRFVA;
+          ChampFFRFFA  = entity.ChampFFRFFA;
+          GLSHKFWB  = entity.GLSHKFWB;
+          GLSHKFHL  = entity.GLSHKFHL;
+          GLSHKFSU  = entity.GLSHKFSU;
+          GLSHKFSRFSA  = entity.GLSHKFSRFSA;
+          GLSHKFVRFVA  = entity.GLSHKFVRFVA;
+          GLSHKFFRFFA  = entity.GLSHKFFRFFA;
+          IsAllowedInAirlinesRestriction  = entity.IsAllowedInAirlinesRestriction;
+          RegistrationNotes  = entity.RegistrationNotes;
+          ChampRegistrationRequested  = entity.ChampRegistrationRequested;
+          GLSHKRegistrationRequested  = entity.GLSHKRegistrationRequested;
+          HasAdaptations  = entity.HasAdaptations;
+          ICAO  = entity.ICAO;
+          IsManagingProduct  = entity.IsManagingProduct;
+          IsProductMandatory  = entity.IsProductMandatory;
+          IsDescriptionOfGoodsFromList  = entity.IsDescriptionOfGoodsFromList;
+          ScheduleDays  = entity.ScheduleDays;
+          NoAvailabilityInFVAMessages  = entity.NoAvailabilityInFVAMessages;
+            Website  = default;
+            Code  = default;
+            EnglishName  = default;
+            LocalName  = default;
+          Prefix  = entity.Prefix;
+          AddedManually  = entity.AddedManually;
+            InActive  = default;
+          AWBAccount  = entity.AWBAccount;
+            VatNumber  = default;
+            AccountingCard  = default;
+            Remark  = default;
+            PaymentTermId  = default;
+            CreateDate  = default;
+            UpdateDate  = default;
+            CreatedByUserId  = default;
+            UpdatedByUserId  = default;
+            Notes  = default;
+            CityName  = default;
+            CountryId  = default;
+            CountryCode  = default;
+            CountryName  = default;
+            SearchFields  = default;
+            SATForeignRFC  = default;
+            MetodoPagoCode  = default;
+            UsoCFDICode  = default;
+            ExternalId2  = default;
+          IsDeclined  = entity.IsDeclined;
+          DeclineNotes  = entity.DeclineNotes;
+            ReceivablesAccountingCard  = default;
+            PayablesAccountingCard  = default;
+            ExternalAccountingBusinessArea  = default;
+            PaymentMethodCode  = default;
+          PrimaryContactName  = entity.PrimaryContactName;
+          PrimaryContactEmail  = entity.PrimaryContactEmail;
+          PrimaryContactPhone  = entity.PrimaryContactPhone;
+            StateName  = default;
+            GLAccountNumber  = default;
+            RegimenFiscalCode  = default;
+            SATReceptorName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -179,6 +266,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string RegimenFiscalCode  { get; set; }
        [DataMember]
        public string SATReceptorName  { get; set; }
+         #endregion Properties
    }
 
 }

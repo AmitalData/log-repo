@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BluesnapTransactionList
+   public partial class BluesnapTransactionList   
    {
+       #region Constructors
+       public BluesnapTransactionList() : base() {}
+       public BluesnapTransactionList(BluesnapTransaction entity) : base()
+       {
+          Id  = entity.Id;
+          InvoiceAmountInUSD  = entity.InvoiceAmountInUSD;
+          TaxAmountInUSD  = entity.TaxAmountInUSD;
+          ContractNumber  = entity.ContractNumber;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -29,6 +41,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public double? TaxAmountInUSD  { get; set; }
        [DataMember]
        public string ContractNumber  { get; set; }
+         #endregion Properties
    }
 
 }

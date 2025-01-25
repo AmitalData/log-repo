@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerProductLocationPM : BaseEntityPM   {
+   #region Constructors
+   public CustomerProductLocationPM() : base() {} 
+   public CustomerProductLocationPM(CustomerProductLocation entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_customerId = entity.CustomerId;
+		_productTypeCode = entity.ProductTypeCode;
+		_countryId = entity.CountryId;
+		_potentialChargeableWeight = entity.PotentialChargeableWeight;
+		_commitmentChargeableWeight = entity.CommitmentChargeableWeight;
+		_potentialTEU = entity.PotentialTEU;
+		_commitmentTEU = entity.CommitmentTEU;
+		_potentialNumberOfShipments = entity.PotentialNumberOfShipments;
+		_commitmentNumberOfShipments = entity.CommitmentNumberOfShipments;
+		_potentialRevenue = entity.PotentialRevenue;
+		_commitmentRevenue = entity.CommitmentRevenue;
+		_countryCode = default;
+		_countryName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -249,4 +271,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

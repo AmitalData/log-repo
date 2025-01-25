@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DigitalPortalScreenList
+   public partial class DigitalPortalScreenList   
    {
+       #region Constructors
+       public DigitalPortalScreenList() : base() {}
+       public DigitalPortalScreenList(DigitalPortalScreen entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          ObjectTableId  = entity.ObjectTableId;
+          ScreenCode  = entity.ScreenCode;
+          Name  = entity.Name;
+          Content  = entity.Content;
+          DraftContent  = entity.DraftContent;
+          ProfileId  = entity.ProfileId;
+            ProfileCode  = default;
+          IsList  = entity.IsList;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ProfileCode  { get; set; }
        [DataMember]
        public bool IsList  { get; set; }
+         #endregion Properties
    }
 
 }

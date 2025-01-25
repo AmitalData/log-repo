@@ -13,12 +13,45 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class HorseList
+   public partial class HorseList   
    {
+       #region Constructors
+       public HorseList() : base() {}
+       public HorseList(Horse entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          SearchFields  = entity.SearchFields;
+          Name  = entity.Name;
+          YearOfBirth  = entity.YearOfBirth;
+          Color  = entity.Color;
+            GenderName  = default;
+          Breed  = entity.Breed;
+          Discipline  = entity.Discipline;
+          TravelBehavior  = entity.TravelBehavior;
+          MicochipNumber  = entity.MicochipNumber;
+          PassportNumber  = entity.PassportNumber;
+          CountryOfBirthId  = entity.CountryOfBirthId;
+            CountryOfBirthCode  = default;
+            CountryOfBirthName  = default;
+          CurrentStable  = entity.CurrentStable;
+          Owner  = entity.Owner;
+          Remarks  = entity.Remarks;
+          Inactive  = entity.Inactive;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -71,6 +104,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string CreatedByUserName  { get; set; }
        [DataMember]
        public string UpdatedByUserName  { get; set; }
+         #endregion Properties
    }
 
 }

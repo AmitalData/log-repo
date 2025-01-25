@@ -13,12 +13,99 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DocumentsFilingList
+   public partial class DocumentsFilingList   
    {
+       #region Constructors
+       public DocumentsFilingList() : base() {}
+       public DocumentsFilingList(DocumentsFiling entity) : base()
+       {
+          Id  = entity.Id;
+          DocumentId  = entity.DocumentId;
+          EntityId  = entity.EntityId;
+          ChildEntityId  = entity.ChildEntityId;
+          ChildEntityReference  = entity.ChildEntityReference;
+          ChildObjectTableId  = entity.ChildObjectTableId;
+          Notes  = entity.Notes;
+          CreateDate  = entity.CreateDate;
+          HasCopies  = entity.HasCopies;
+          Received  = entity.Received;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          ReceivedByUserId  = entity.ReceivedByUserId;
+          ReceivedDate  = entity.ReceivedDate;
+          StatusCode  = entity.StatusCode;
+          EntityReference  = entity.EntityReference;
+          ExternalEntityName  = entity.ExternalEntityName;
+          ExternalEntityReference  = entity.ExternalEntityReference;
+          FolderId  = entity.FolderId;
+          IsDeleted  = entity.IsDeleted;
+          DeletedByUserId  = entity.DeletedByUserId;
+          DeleteDateTime  = entity.DeleteDateTime;
+          IsDigitallySigned  = entity.IsDigitallySigned;
+          SignersList  = entity.SignersList;
+          IsSharedWithForwarder  = entity.IsSharedWithForwarder;
+          IsSharedWithCustomer  = entity.IsSharedWithCustomer;
+          ForwarderDocumentId  = entity.ForwarderDocumentId;
+          CustomerDocumentId  = entity.CustomerDocumentId;
+          SecurityId  = entity.SecurityId;
+          CustomerTenantNumber  = entity.CustomerTenantNumber;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          DocumentTypeId  = entity.DocumentTypeId;
+            DocumentTypeName  = default;
+          DirectionCode  = entity.DirectionCode;
+          ObjectTableId  = entity.ObjectTableId;
+            ObjectTableName  = default;
+          CreatedByUserId  = entity.CreatedByUserId;
+            CreatedByUserName  = default;
+          OwnerId  = entity.OwnerId;
+            OwnerName  = default;
+          Description  = entity.Description;
+          SearchFields  = entity.SearchFields;
+            FollowUpId  = default;
+            HasFile  = default;
+            FollowUpCount  = default;
+            DocumentTypeCode  = default;
+            DoucmentTypeTemplateFormatCode  = default;
+            HasFollowUp  = default;
+            FileSize  = default;
+            FileName  = default;
+            Name  = default;
+            IsAgentView  = default;
+            IsCustomerView  = default;
+            CustomsDocumentTypeName  = default;
+            CustomsDocumentTypeCode  = default;
+            IsMetaDataReady  = default;
+            Folder  = default;
+            Extension  = default;
+            ExternalCode  = default;
+          IsSharedIn  = entity.IsSharedIn;
+          IsSharedOut  = entity.IsSharedOut;
+          LastShareDate  = entity.LastShareDate;
+          BackedupExternally  = entity.BackedupExternally;
+          SignRequestByUserEmail  = entity.SignRequestByUserEmail;
+          CancellSignRequest  = entity.CancellSignRequest;
+          OrigionalDocumentId  = entity.OrigionalDocumentId;
+          SignDueDate  = entity.SignDueDate;
+          IsDigitalSignRequired  = entity.IsDigitalSignRequired;
+          IsRequested  = entity.IsRequested;
+            CalculatedFileName  = default;
+            CustomsDocId  = default;
+            OcrStatusCode  = default;
+            OcrScore  = default;
+            OcrReference  = default;
+            OcrNotConnect  = default;
+          ReceivedByByContactId  = entity.ReceivedByByContactId;
+          ReceivedByPartner  = entity.ReceivedByPartner;
+          BillToId  = entity.BillToId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -179,6 +266,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ReceivedByPartner  { get; set; }
        [DataMember]
        public string BillToId  { get; set; }
+         #endregion Properties
    }
 
 }

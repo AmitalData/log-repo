@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerSalesNoteList
+   public partial class CustomerSalesNoteList   
    {
+       #region Constructors
+       public CustomerSalesNoteList() : base() {}
+       public CustomerSalesNoteList(CustomerSalesNote entity) : base()
+       {
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+            ChangeSetOp  = default;
+            EventLabel  = default;
+            PostToFollowers  = default;
+       }
+       #endregion Constructors
+       #region Properties
       
        [DataMember]
        public string CreatedByUserName  { get; set; }
@@ -34,6 +47,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [DataMember]
        public bool PostToFollowers  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,24 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class MeasurementPM : BaseEntityPM   {
+   #region Constructors
+   public MeasurementPM() : base() {} 
+   public MeasurementPM(Measurement entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_isContainer = entity.IsContainer;
+		_isContainerMeasurement = entity.IsContainerMeasurement;
+		_code = entity.Code;
+		_name = entity.Name;
+		_shortName = entity.ShortName;
+		_localName = entity.LocalName;
+		_inActive = entity.InActive;
+		_searchFields = entity.SearchFields;
+		_partnerCode = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -199,4 +218,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }
