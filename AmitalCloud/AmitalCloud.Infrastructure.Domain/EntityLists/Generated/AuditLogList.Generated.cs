@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AuditLogList
+   public partial class AuditLogList   
    {
+       #region Constructors
+       public AuditLogList() : base() {}
+       public AuditLogList(AuditLog entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          ObjectTableId  = entity.ObjectTableId;
+          EntityId  = entity.EntityId;
+          ChangesJson  = entity.ChangesJson;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string EntityId  { get; set; }
        [DataMember]
        public string ChangesJson  { get; set; }
+         #endregion Properties
    }
 
 }

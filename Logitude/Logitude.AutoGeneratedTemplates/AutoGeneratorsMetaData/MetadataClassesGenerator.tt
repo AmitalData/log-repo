@@ -25,7 +25,7 @@ dynamic UpdateClassnamespacestring;
 dynamic modelName;
 public void GenerateAllUpdateClasses(string sourceFolder,string destinationFolder, string theModelName)
 {
- 
+ string projectname = theModelName.Replace("Model","");
  UpdateClassnamespacestring = GetUpdateClassNameSpace(destinationFolder).Replace("JustWebFreight.", "");
  modelName = theModelName;
 
@@ -41,7 +41,7 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 {
 
     var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-	GenerateUpdateClass(file,destinationFolder+"/"+fileNameWithoutExtension+"UpdateClass.cs");
+	GenerateUpdateClass(file,destinationFolder+"/"+fileNameWithoutExtension+"UpdateClass.cs",projectname);
 }
 
  
@@ -50,7 +50,7 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 
 <#+  
 
-public void GenerateUpdateClass(string xmlFilePath,string outputFilePath)
+public void GenerateUpdateClass(string xmlFilePath,string outputFilePath,string projectname)
 {
 	if(string.IsNullOrEmpty(UpdateClassnamespacestring))
     {
@@ -58,7 +58,7 @@ public void GenerateUpdateClass(string xmlFilePath,string outputFilePath)
     }
     XElement entity = FromUpdateClassFile(xmlFilePath);
 	 
-   WriteUpdateClassMethod(entity,outputFilePath);
+   WriteUpdateClassMethod(entity,outputFilePath, projectname);
    SaveUpdateClassOutput(outputFilePath);
 }
  
@@ -89,8 +89,9 @@ public dynamic GetBaseUsingNameSpace(string destinationFolder)
 	string spacestring = "";
 	string[] path = destinationFolder.Split('/');
 
-		 if(modelName == "CommonDataModel" 	|| modelName == "GlobalModel" || modelName == "InfrastructureModel" ||modelName == "QuoteModel"	||modelName == "InvoiceModel"
-		 ||modelName == "CustomsModel"
+		 if(modelName == "CommonDataModel" 	|| modelName == "GlobalModel" || modelName == "InfrastructureModel" 
+		 ||modelName == "CustomsModel" ||modelName == "SocialModel"   ||modelName == "ShipmentsModel"
+		 ||modelName == "SystemLogsModel" ||modelName == "QuoteModel" || modelName == "InvoiceModel"
 		 )
 		 {
 		   return spacestring;
@@ -98,9 +99,9 @@ public dynamic GetBaseUsingNameSpace(string destinationFolder)
 
 	
 		 if(modelName == "AccountingModel" //||modelName == "CommonDataModel" 
-		 ||modelName == "InvoiceModel" ||modelName == "QuoteModel" ||modelName == "Infrastructure"  ||modelName ==  "CargoTrackingModel"
+		  ||modelName == "Infrastructure"  ||modelName ==  "CargoTrackingModel"
 		 || modelName == "GlobalModel" || modelName == "CRMModel" || modelName == "TariffModule" || modelName == "Workflow"
-		  || modelName =="CustomsModel"  )
+		  || modelName =="CustomsModel"  ||modelName ==  "TimeManagement" )
 		 {
 		   spacestring =    "Logitude."+ modelName.Replace("Model","") +".";
 		   return spacestring;
@@ -115,7 +116,11 @@ public dynamic GetBaseUsingNameSpace(string destinationFolder)
 		   spacestring =    "Logitude.DashboardModule.";
 		   return spacestring;
 		 }
-
+		 if (modelName == "InvoiceModel" )
+			{
+				spacestring =    "Simplog.Data." + modelName +".";
+				return spacestring;
+			}
 
 	foreach(string dir in path)
     {
@@ -169,7 +174,7 @@ void SaveUpdateClassOutput(string outputFileName)
 Dictionary<string, string> GeneratedTabFeatures = new Dictionary<string, string>();
 Dictionary<string, string> GeneratedTabTextCodes = new Dictionary<string, string>();
  string entityHashString= "NULL";
- private void WriteUpdateClassMethod(XElement entity,string destinationFolder)
+ private void WriteUpdateClassMethod(XElement entity,string destinationFolder,string projectname)
 {
 		
     entityHashString= GenerateHashString(entity.ToString());
@@ -187,13 +192,15 @@ Dictionary<string, string> GeneratedTabTextCodes = new Dictionary<string, string
 
 		bool iswrongname = false;
 		string[] namespacearr = repnamespacestring.ToString().Split('.');
-		string projectname = "";
+		//string projectname = "";
 		if (namespacearr.Count()>1)
 		{
 		namespacearr[1].Replace("Lib","");
 		}
 
-        if (projectname != "Accounting" && projectname != "Booking"  && projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule" && projectname != "CargoTracking" && projectname != "ShipmentOrderModule" && projectname != "Workflow" && projectname != "DashboardModule" && projectname != "Shipment")
+        if (projectname != "Accounting" && projectname != "Booking"  && projectname != "Warehouse" && projectname != "TimeManagement" 
+		&& projectname != "TariffModule" && projectname != "CargoTracking" && projectname != "ShipmentOrderModule" && projectname != "Workflow" 
+		&& projectname != "DashboardModule" && projectname != "Shipment" && projectname != "Quote" )
         {
 		 iswrongname = true;
         }
@@ -227,26 +234,40 @@ Dictionary<string, string> GeneratedTabTextCodes = new Dictionary<string, string
 		blnamespacestring = "";
 		closetablenamespacestring = "";
 	}
+
+
+	if (projectname == "Global")
+	{
+		repositoriesnamespacestring = "Simplog.Global.Data.GlobalModel.Repositories";
+	}
+	if (projectname == "Invoice" || projectname == "Shipments" || projectname == "Quote")
+	{
+		repositoriesnamespacestring = $"Simplog.Data.{projectname}Model.Repositories";
+		pocosnamespacestring = $"Simplog.Data.{projectname}Model.EntityPOCOs";
+	}
+
    #>
 //------------------------------------------------------------------------------
 // <auto-generated>
 //     This code was generated by a logitude.
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
-// </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
+// </auto-generated> MetadataClassesGenerator.tt <#= Path.GetFileName(Host.TemplateFile) #>
 //---
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
+
 <#+	
         if (repositoriesnamespacestring != "")
         {
@@ -1367,20 +1388,10 @@ private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName,int i
 
         var featureInstanceName= GeneratedTabFeatures[FeatureCode];
         var textCodeInstanceName= GeneratedTabTextCodes[TextCodeCode];
-	  	var IsLocked = Tab.Attributes().Where(a => a.Name == "IsLocked").FirstOrDefault();
-	    string Locked;
-        if (IsLocked == null)
-        {
-	    	 Locked = "false";
-        }
-        else
-        {
-	          Locked =  IsLocked.Value;  
-        }
-
+	  
 #>
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= featureInstanceName #>.Id,FeatureUniqeCode = <#= featureInstanceName #>.FeatureUniqeCode, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= textCodeInstanceName #>.Id, TabNameTextCodeCode = <#= textCodeInstanceName #>.Code, Tenant = 0, IndexOrder = <#= IndexOrder #>,IsLocked = <#= Locked #> }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= featureInstanceName #>.Id,FeatureUniqeCode = <#= featureInstanceName #>.FeatureUniqeCode, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= textCodeInstanceName #>.Id, TabNameTextCodeCode = <#= textCodeInstanceName #>.Code, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
    <#+
 }
 

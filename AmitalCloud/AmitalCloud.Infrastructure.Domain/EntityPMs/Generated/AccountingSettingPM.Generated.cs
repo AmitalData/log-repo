@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,69 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class AccountingSettingPM : BaseEntityPM   {
+   #region Constructors
+   public AccountingSettingPM() : base() {} 
+   public AccountingSettingPM(AccountingSetting entity) : base()
+   {
+		_id = entity.Id;
+		_qBOrealMeID = entity.QBOrealMeID;
+		_accountingSystemCode = entity.AccountingSystemCode;
+		_allowMinusInvoicelines = entity.AllowMinusInvoicelines;
+		_allowVoidARI = entity.AllowVoidARI;
+		_allowVoidARP = entity.AllowVoidARP;
+		_allowVoidAPI = entity.AllowVoidAPI;
+		_allowVoidAPP = entity.AllowVoidAPP;
+		_allowManualInvoiceNumber = entity.AllowManualInvoiceNumber;
+		_isVatNumberMandatoryInAR = entity.IsVatNumberMandatoryInAR;
+		_isVatNumberMandatoryInAP = entity.IsVatNumberMandatoryInAP;
+		_isARInvoiceChronologicalDates = entity.IsARInvoiceChronologicalDates;
+		_vATableTempCard = default;
+		_vATExemptTempCard = default;
+		_allowClosureWithoutPayables = entity.AllowClosureWithoutPayables;
+		_isARInvoicesTransferEnabled = entity.IsARInvoicesTransferEnabled;
+		_isAPInvoicesTransferEnabled = entity.IsAPInvoicesTransferEnabled;
+		_aPInvoiceTransferStartDate = entity.APInvoiceTransferStartDate;
+		_aRInvoiceTransferStartDate = entity.ARInvoiceTransferStartDate;
+		_allowPositiveAmountsInTheCreditNote = entity.AllowPositiveAmountsInTheCreditNote;
+		_isSingleTaxPerInvoice = entity.IsSingleTaxPerInvoice;
+		_isARPaymentsTransferEnabled = entity.IsARPaymentsTransferEnabled;
+		_aRPaymentTransferStartDate = entity.ARPaymentTransferStartDate;
+		_vatNumber = default;
+		_paymentTermId = default;
+		_transferToDropboxActivated = entity.TransferToDropboxActivated;
+		_enableMultiPercentageVATTypes = entity.EnableMultiPercentageVATTypes;
+		_notifyPastDateOnInvoiceEdit = entity.NotifyPastDateOnInvoiceEdit;
+		_enableMultiRateAPInvoices = entity.EnableMultiRateAPInvoices;
+		_registryDateTypeCode = entity.RegistryDateTypeCode;
+		_receivableVATCard = entity.ReceivableVATCard;
+		_payableVATCard = entity.PayableVATCard;
+		_enableMultiCurrencyARPayments = entity.EnableMultiCurrencyARPayments;
+		_isAPPaymentsTransferEnabled = entity.IsAPPaymentsTransferEnabled;
+		_accountingActivationDate = default;
+		_accountingActivated = default;
+		_enableMultiCurrencyAPPayments = entity.EnableMultiCurrencyAPPayments;
+		_enableNegativeOffsetARPayments = entity.EnableNegativeOffsetARPayments;
+		_enableNegativeOffsetAPPayments = entity.EnableNegativeOffsetAPPayments;
+		_payableVATableTempCard = entity.PayableVATableTempCard;
+		_payableVATExemptTempCard = entity.PayableVATExemptTempCard;
+		_receivableVATableTempCard = entity.ReceivableVATableTempCard;
+		_receivableVATExemptTempCard = entity.ReceivableVATExemptTempCard;
+		_isARPaymentChronologicalDates = entity.IsARPaymentChronologicalDates;
+		_enableInvoiceStocksManagement = entity.EnableInvoiceStocksManagement;
+		_qBOOAuth = entity.QBOOAuth;
+		_refreshToken = entity.RefreshToken;
+		_allowManualARPaymentNumber = entity.AllowManualARPaymentNumber;
+		_allowRegionalTaxManagement = entity.AllowRegionalTaxManagement;
+		_transferToFTPActivated = entity.TransferToFTPActivated;
+		_enableAPPaymentExternalPayment = entity.EnableAPPaymentExternalPayment;
+		_transferFTPDetailId = entity.TransferFTPDetailId;
+		_transferFTPDetailHost = default;
+		_enableEnteringTotalVAT = entity.EnableEnteringTotalVAT;
+		_blockSendInvoiceOriginalCopy = entity.BlockSendInvoiceOriginalCopy;
+		_aPPaymentTransferStartDate = entity.APPaymentTransferStartDate;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -919,4 +983,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

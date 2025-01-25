@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,35 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CompetitorPM : BaseEntityPM   {
+   #region Constructors
+   public CompetitorPM() : base() {} 
+   public CompetitorPM(Competitor entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_name = entity.Name;
+		_website = entity.Website;
+		_strengths = entity.Strengths;
+		_weaknesses = entity.Weaknesses;
+		_opportunity = entity.Opportunity;
+		_threat = entity.Threat;
+		_addressId = entity.AddressId;
+		_searchFields = entity.SearchFields;
+		_address1 = default;
+		_address2 = default;
+		_zipCode = default;
+		_city = default;
+		_countryId = default;
+		_stateId = default;
+		_phoneNumber = default;
+		_faxNumber = default;
+		_inActive = entity.InActive;
+		_stateName = default;
+		_countryCode = default;
+		_countryName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -375,4 +405,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

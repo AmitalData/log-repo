@@ -13,12 +13,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ARInvoiceLineList
+   public partial class ARInvoiceLineList   
    {
+       #region Constructors
+       public ARInvoiceLineList() : base() {}
+       public ARInvoiceLineList(ARInvoiceLine entity) : base()
+       {
+          Id  = entity.Id;
+          Description  = entity.Description;
+          ForiegnExchangeRate  = entity.ForiegnExchangeRate;
+          Quantity  = entity.Quantity;
+          UnitPrice  = entity.UnitPrice;
+          VatTypeId  = entity.VatTypeId;
+            Amount  = default;
+          ForiegnCurrencyAmount  = entity.ForiegnCurrencyAmount;
+          LocalCurrencyAmount  = entity.LocalCurrencyAmount;
+          MeasurementId  = entity.MeasurementId;
+          PrepaidCollectId  = entity.PrepaidCollectId;
+          ValueDate  = entity.ValueDate;
+          InvoiceCurrencyExchangeRate  = entity.InvoiceCurrencyExchangeRate;
+            ReportedinTaxReport  = default;
+            GLAccountDisplayNumber  = default;
+            GLAccountLocalName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -53,6 +77,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string GLAccountDisplayNumber  { get; set; }
        [DataMember]
        public string GLAccountLocalName  { get; set; }
+         #endregion Properties
    }
 
 }

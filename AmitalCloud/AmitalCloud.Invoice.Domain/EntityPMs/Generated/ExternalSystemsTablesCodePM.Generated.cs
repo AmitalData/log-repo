@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,21 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ExternalSystemsTablesCodePM : BaseEntityPM   {
+   #region Constructors
+   public ExternalSystemsTablesCodePM() : base() {} 
+   public ExternalSystemsTablesCodePM(ExternalSystemsTablesCode entity) : base()
+   {
+		_id = entity.Id;
+		_code = entity.Code;
+		_tenant = entity.Tenant;
+		_name = entity.Name;
+		_logitudeTable = entity.LogitudeTable;
+		_createdDate = entity.CreatedDate;
+		_updatedDate = entity.UpdatedDate;
+		_searchFields = entity.SearchFields;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -151,4 +167,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

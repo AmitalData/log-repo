@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomsShipperPM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public CustomsShipperPM() : base() {} 
+   public CustomsShipperPM(CustomsShipper entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_searchFields = entity.SearchFields;
+		_customsShipperCode = entity.CustomsShipperCode;
+		_validDepositionNumber = entity.ValidDepositionNumber;
+		_validityStartDate = entity.ValidityStartDate;
+		_validityEndDate = entity.ValidityEndDate;
+		_englishName = default;
+		_shipperVAT = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -968,4 +985,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 }
+#endregion Properties
 }

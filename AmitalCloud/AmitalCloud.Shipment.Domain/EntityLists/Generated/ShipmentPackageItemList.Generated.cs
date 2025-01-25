@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentPackageItemList
+   public partial class ShipmentPackageItemList   
    {
+       #region Constructors
+       public ShipmentPackageItemList() : base() {}
+       public ShipmentPackageItemList(ShipmentPackageItem entity) : base()
+       {
+          PackageId  = entity.PackageId;
+          LineNumber  = entity.LineNumber;
+          Tenant  = entity.Tenant;
+          Description  = entity.Description;
+          Quantity  = entity.Quantity;
+          GoodsValue  = entity.GoodsValue;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +49,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public int? Quantity  { get; set; }
        [DataMember]
        public decimal? GoodsValue  { get; set; }
+         #endregion Properties
    }
 
 }

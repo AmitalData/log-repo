@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,45 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class LogitudeMessagesTransmissionLogPM : BaseEntityPM   {
+   #region Constructors
+   public LogitudeMessagesTransmissionLogPM() : base() {} 
+   public LogitudeMessagesTransmissionLogPM(LogitudeMessagesTransmissionLog entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_sourceTenant = entity.SourceTenant;
+		_hAWB = entity.HAWB;
+		_participantId = entity.ParticipantId;
+		_cCS = entity.CCS;
+		_airlineCode = entity.AirlineCode;
+		_messageTypeCode = entity.MessageTypeCode;
+		_prefix = entity.Prefix;
+		_aWBNumber = entity.AWBNumber;
+		_sentDate = entity.SentDate;
+		_participant = entity.Participant;
+		_iATACode = entity.IATACode;
+		_cASSCode = entity.CASSCode;
+		_userName = entity.UserName;
+		_origin = entity.Origin;
+		_destination = entity.Destination;
+		_pieces = entity.Pieces;
+		_grossWeight = entity.GrossWeight;
+		_grossWeightUnitCode = entity.GrossWeightUnitCode;
+		_chargeableWeight = entity.ChargeableWeight;
+		_chargeableWeightUnitCode = entity.ChargeableWeightUnitCode;
+		_volume = entity.Volume;
+		_volumeUnitCode = entity.VolumeUnitCode;
+		_descriptionOfGoods = entity.DescriptionOfGoods;
+		_directParticipant = entity.DirectParticipant;
+		_isUpdatedinAirlineTenant = entity.IsUpdatedinAirlineTenant;
+		_userEmail = entity.UserEmail;
+		_searchFields = entity.SearchFields;
+		_fWBNotifyContacts = default;
+		_fHLNotifyContacts = default;
+		_fFRNotifyContacts = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -535,4 +575,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,58 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class APInvoiceLinePM : BaseEntityPM   {
+   #region Constructors
+   public APInvoiceLinePM() : base() {} 
+   public APInvoiceLinePM(APInvoiceLine entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_entityId = entity.EntityId;
+		_entityPayableId = entity.EntityPayableId;
+		_refundAmount = entity.RefundAmount;
+		_aPInvoiceId = entity.APInvoiceId;
+		_lineNumber = entity.LineNumber;
+		_invoiceCurrencyAmount = entity.InvoiceCurrencyAmount;
+		_localCurrencyAmount = entity.LocalCurrencyAmount;
+		_profitCurrencyAmount = entity.ProfitCurrencyAmount;
+		_notes = entity.Notes;
+		_chargesTypeId = entity.ChargesTypeId;
+		_chargesTypeName = default;
+		_vatTypeId = entity.VatTypeId;
+		_vatTypeName = default;
+		_vatPercentage = entity.VatPercentage;
+		_foriegnCurrencyId = entity.ForiegnCurrencyId;
+		_foriegnExchangeRate = entity.ForiegnExchangeRate;
+		_foriegnCurrencyAmount = entity.ForiegnCurrencyAmount;
+		_description = entity.Description;
+		_localDescription = entity.LocalDescription;
+		_externalVATCard = default;
+		_debitAccount = entity.DebitAccount;
+		_vendorId = default;
+		_openAmount = default;
+		_chargesTypeCode = default;
+		_objectTableId = default;
+		_entityReference = default;
+		_vendorName = default;
+		_otherInvoicesAmounts = default;
+		_expectedAmount = default;
+		_correctionAmount = default;
+		_correctionNote = default;
+		_correctionByUserId = default;
+		_correctionDate = default;
+		_amountTypeCode = default;
+		_foriegnCurrencyCode = default;
+		_externalTAXItemId = default;
+		_chargeTypeGLAccountId = entity.ChargeTypeGLAccountId;
+		_authorizedSignatory = entity.AuthorizedSignatory;
+		_vatIsMultiPercentage = default;
+		_prepaidCollectId = entity.PrepaidCollectId;
+		_vatRecognizedPercentage = default;
+		_containerTypeId = entity.ContainerTypeId;
+		_quantity = entity.Quantity;
+		_localAmountWithVatRecognized = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -744,4 +797,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

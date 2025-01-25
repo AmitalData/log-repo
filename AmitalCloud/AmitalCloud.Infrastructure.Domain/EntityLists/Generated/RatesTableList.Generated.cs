@@ -13,12 +13,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class RatesTableList
+   public partial class RatesTableList   
    {
+       #region Constructors
+       public RatesTableList() : base() {}
+       public RatesTableList(RatesTable entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          LogDateTime  = entity.LogDateTime;
+          ForeignCurrencyId  = entity.ForeignCurrencyId;
+            ForeignCurrencyCode  = default;
+          BaseCurrencyId  = entity.BaseCurrencyId;
+          Rate  = entity.Rate;
+          ValueDate  = entity.ValueDate;
+            ForeignCurrencyName  = default;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+            UpdatedByUserName  = default;
+          UpdatedDate  = entity.UpdatedDate;
+          Unit  = entity.Unit;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -47,6 +68,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime? UpdatedDate  { get; set; }
        [DataMember]
        public int? Unit  { get; set; }
+         #endregion Properties
    }
 
 }

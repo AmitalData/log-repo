@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TarrifHeaderList
+   public partial class TarrifHeaderList   
    {
+       #region Constructors
+       public TarrifHeaderList() : base() {}
+       public TarrifHeaderList(TarrifHeader entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CardId  = entity.CardId;
+          TarrifTypeCode  = entity.TarrifTypeCode;
+          FromDate  = entity.FromDate;
+          ToDate  = entity.ToDate;
+          CreateDate  = entity.CreateDate;
+          InActive  = entity.InActive;
+          Notes  = entity.Notes;
+          TransitTimeNotes  = entity.TransitTimeNotes;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -41,6 +59,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Notes  { get; set; }
        [DataMember]
        public string TransitTimeNotes  { get; set; }
+         #endregion Properties
    }
 
 }

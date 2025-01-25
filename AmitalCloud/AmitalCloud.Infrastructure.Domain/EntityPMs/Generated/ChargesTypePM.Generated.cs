@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,85 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ChargesTypePM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public ChargesTypePM() : base() {} 
+   public ChargesTypePM(ChargesType entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_receivableAccountId = entity.ReceivableAccountId;
+		_payableAccountId = entity.PayableAccountId;
+		_accountingVATSplit = entity.AccountingVATSplit;
+		_payableDebitAccount = entity.PayableDebitAccount;
+		_receivableCreditAccount = entity.ReceivableCreditAccount;
+		_receivablesChargesTypeExternalCode = entity.ReceivablesChargesTypeExternalCode;
+		_payablesChargesTypeExternalCode = entity.PayablesChargesTypeExternalCode;
+		_payableDebitAccountExternalId = default;
+		_receivableCreditAccountExternalId = default;
+		_chargesTypeExternalCodeExternalId = default;
+		_iATACodeId = entity.IATACodeId;
+		_viewOrder = entity.ViewOrder;
+		_searchFields = entity.SearchFields;
+		_code = entity.Code;
+		_englishName = entity.EnglishName;
+		_localName = entity.LocalName;
+		_computedLocalName = default;
+		_containerMeasurementId = entity.ContainerMeasurementId;
+		_measurementId = entity.MeasurementId;
+		_measurementCode = default;
+		_measurementShortName = default;
+		_vatTypeId = entity.VatTypeId;
+		_chargesGroupCode = entity.ChargesGroupCode;
+		_dueTypeCode = entity.DueTypeCode;
+		_description = entity.Description;
+		_addedManually = entity.AddedManually;
+		_inActive = entity.InActive;
+		_isReceivable = entity.IsReceivable;
+		_isPayable = entity.IsPayable;
+		_isAir = entity.IsAir;
+		_isOcean = entity.IsOcean;
+		_isInland = entity.IsInland;
+		_isAutoDisplayInShipment = entity.IsAutoDisplayInShipment;
+		_isAutoDisplayInQuote = entity.IsAutoDisplayInQuote;
+		_isAutoDisplayInConsolidation = entity.IsAutoDisplayInConsolidation;
+		_aWBPrintDescription = entity.AWBPrintDescription;
+		_isSecured = default;
+		_containerMeasurementCode = default;
+		chargeTypeAccountings = default;
+		_vatTypeName = default;
+		_sATExternalId = entity.SATExternalId;
+		_payableDebitGLAcountId = entity.PayableDebitGLAcountId;
+		_receivableCreditGLAccountId = entity.ReceivableCreditGLAccountId;
+		_chargesGroupId = entity.ChargesGroupId;
+		_isBackToBack = entity.IsBackToBack;
+		_isAutoDisplayInCustoms = entity.IsAutoDisplayInCustoms;
+		_isCustoms = entity.IsCustoms;
+		_isExpense = entity.IsExpense;
+		_partnerCode = default;
+		_isExport = entity.IsExport;
+		_isImport = entity.IsImport;
+		_isDomestic = entity.IsDomestic;
+		_isDrop = entity.IsDrop;
+		_receivablesDefaultCurrencyId = entity.ReceivablesDefaultCurrencyId;
+		_payablesDefaultCurrencyId = entity.PayablesDefaultCurrencyId;
+		_receivableCreditGLAcountNumber = default;
+		_recCreditGLAcountLocalName = entity.RecCreditGLAcountLocalName;
+		_payableDebitGLAcountNumber = default;
+		_payDebitGLAcountLocalName = entity.PayDebitGLAcountLocalName;
+		_applyRegionalTax = entity.ApplyRegionalTax;
+		_hasPickup = entity.HasPickup;
+		_hasDelivery = entity.HasDelivery;
+		_isDirectionRestricted = entity.IsDirectionRestricted;
+		_isActiveInExport = entity.IsActiveInExport;
+		_isActiveInImport = entity.IsActiveInImport;
+		_isActiveInDomestic = entity.IsActiveInDomestic;
+		_isActiveInDrop = entity.IsActiveInDrop;
+		_quoteChargesGroupCode = entity.QuoteChargesGroupCode;
+		_quoteChargesGroupId = entity.QuoteChargesGroupId;
+		_quoteGroupSectionID = entity.QuoteGroupSectionID;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -1993,4 +2073,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 }
+#endregion Properties
 }

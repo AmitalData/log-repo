@@ -13,18 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class VATTypesGroupList
+   public partial class VATTypesGroupList   
    {
+       #region Constructors
+       public VATTypesGroupList() : base() {}
+       public VATTypesGroupList(VATTypesGroup entity) : base()
+       {
+            SingleVATTypeName  = default;
+            SingleVATTypePercentage  = default;
+       }
+       #endregion Constructors
+       #region Properties
       
        [DataMember]
        public string SingleVATTypeName  { get; set; }
    
        [DataMember]
        public double SingleVATTypePercentage  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -8,6 +8,9 @@ namespace AmitalCloud.Infrastructure.Domain.BaseClasses
 {
     public abstract class BaseEntityPM : IEntityPM
     {
+        protected BaseEntityPM()
+        {
+        }
         [DataMember]
         public ChangeSetOperation ChangeSetOp { get; set; }
         public virtual int Tenant { get; set; }

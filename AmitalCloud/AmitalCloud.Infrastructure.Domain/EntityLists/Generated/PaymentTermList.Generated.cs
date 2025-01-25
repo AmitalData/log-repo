@@ -13,12 +13,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class PaymentTermList
+   public partial class PaymentTermList   
    {
+       #region Constructors
+       public PaymentTermList() : base() {}
+       public PaymentTermList(PaymentTerm entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ExternalId  = entity.ExternalId;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+            ComputedLocalName  = default;
+          Description  = entity.Description;
+          LocalDescription  = entity.LocalDescription;
+          Days  = entity.Days;
+          AddedManually  = entity.AddedManually;
+          InActive  = entity.InActive;
+          DisplayInLOV  = entity.DisplayInLOV;
+          IsManuallySet  = entity.IsManuallySet;
+          SearchFields  = entity.SearchFields;
+          EndOfMonth  = entity.EndOfMonth;
+          FromDateTypeCode  = entity.FromDateTypeCode;
+            CalculatedLocalName  = default;
+            CalculatedEnglishName  = default;
+          Code  = entity.Code;
+          NumberOfMonths  = entity.NumberOfMonths;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -61,6 +89,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Code  { get; set; }
        [DataMember]
        public int NumberOfMonths  { get; set; }
+         #endregion Properties
    }
 
 }

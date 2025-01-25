@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TeamMemberBusinessRolePM : BaseEntityPM   {
+   #region Constructors
+   public TeamMemberBusinessRolePM() : base() {} 
+   public TeamMemberBusinessRolePM(TeamMemberBusinessRole entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_teamMemberId = entity.TeamMemberId;
+		_addedByUserId = entity.AddedByUserId;
+		_addDate = entity.AddDate;
+		_businessRoleId = entity.BusinessRoleId;
+		_roleName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -135,4 +150,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class InboundEmailLineList
+   public partial class InboundEmailLineList   
    {
+       #region Constructors
+       public InboundEmailLineList() : base() {}
+       public InboundEmailLineList(InboundEmailLine entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          FullBody  = entity.FullBody;
+          HTMLFullBody  = entity.HTMLFullBody;
+          Bcc  = entity.Bcc;
+          InternalUsers  = entity.InternalUsers;
+          EntityLineId  = entity.EntityLineId;
+          InboundEmailId  = entity.InboundEmailId;
+          CreateDate  = entity.CreateDate;
+          Sender  = entity.Sender;
+          Recepient  = entity.Recepient;
+          Subject  = entity.Subject;
+          Direction  = entity.Direction;
+          CCs  = entity.CCs;
+          CommunicationLogId  = entity.CommunicationLogId;
+          Body  = entity.Body;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -53,6 +77,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string CommunicationLogId  { get; set; }
        [DataMember]
        public string Body  { get; set; }
+         #endregion Properties
    }
 
 }

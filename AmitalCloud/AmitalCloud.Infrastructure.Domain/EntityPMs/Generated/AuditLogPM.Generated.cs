@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class AuditLogPM : BaseEntityPM   {
+   #region Constructors
+   public AuditLogPM() : base() {} 
+   public AuditLogPM(AuditLog entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_updateDate = entity.UpdateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_objectTableId = entity.ObjectTableId;
+		_entityId = entity.EntityId;
+		_changesJson = entity.ChangesJson;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -138,4 +153,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

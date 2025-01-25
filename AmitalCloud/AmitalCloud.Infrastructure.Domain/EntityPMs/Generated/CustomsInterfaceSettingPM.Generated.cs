@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,28 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomsInterfaceSettingPM : BaseEntityPM   {
+   #region Constructors
+   public CustomsInterfaceSettingPM() : base() {} 
+   public CustomsInterfaceSettingPM(CustomsInterfaceSetting entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_activateCustomsManagementInShipments = entity.ActivateCustomsManagementInShipments;
+		_localCustomsInterfaceCode = entity.LocalCustomsInterfaceCode;
+		_importToUSAInterfaceCode = entity.ImportToUSAInterfaceCode;
+		_exportFromUSAInterfaceCode = entity.ExportFromUSAInterfaceCode;
+		_localCompanyId = entity.LocalCompanyId;
+		_localUserId = entity.LocalUserId;
+		_localPassword = entity.LocalPassword;
+		_artemusOutSettingsId = entity.ArtemusOutSettingsId;
+		_artemusInSettingsId = entity.ArtemusInSettingsId;
+		_artemusOutSettingsHost = default;
+		_artemusInSettingsHost = default;
+		_aMCAirStartDate = entity.AMCAirStartDate;
+		_aMCOceanStartDate = entity.AMCOceanStartDate;
+		_localCustomsInterfaceName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -263,4 +286,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

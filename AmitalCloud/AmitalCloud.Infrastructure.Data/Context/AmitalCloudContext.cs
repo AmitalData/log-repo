@@ -58,7 +58,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
 				return new AmitalCloudContext(dbConnectionInfo, tenant); ;
 			}
         }
-		public override AmitalCloudDBSchema AmitalCloudDBSchema
+		protected override AmitalCloudDBSchema AmitalCloudDBSchema
         {
             get { return AmitalCloudDBSchema.LOGITUDE_MAIN; }
         }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,18 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ReferenceTypePM : BaseEntityPM   {
+   #region Constructors
+   public ReferenceTypePM() : base() {} 
+   public ReferenceTypePM(ReferenceType entity) : base()
+   {
+		_code = entity.Code;
+		_localName = entity.LocalName;
+		_englishName = entity.EnglishName;
+		_searchFields = entity.SearchFields;
+		_inactive = entity.Inactive;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _code ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -103,4 +116,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

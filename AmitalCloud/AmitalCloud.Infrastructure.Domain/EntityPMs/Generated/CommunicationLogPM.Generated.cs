@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,65 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CommunicationLogPM : BaseEntityPM   {
+   #region Constructors
+   public CommunicationLogPM() : base() {} 
+   public CommunicationLogPM(CommunicationLog entity) : base()
+   {
+		_entityId = entity.EntityId;
+		_documentId = entity.DocumentId;
+		_exceptionMessage = entity.ExceptionMessage;
+		_logs = entity.Logs;
+		_correlationID = entity.CorrelationID;
+		_messageLockId = entity.MessageLockId;
+		_replyToList = entity.ReplyToList;
+		_createdByUserId = entity.CreatedByUserId;
+		_createdByUserName = default;
+		_createDate = entity.CreateDate;
+		_subject = entity.Subject;
+		_doneDate = entity.DoneDate;
+		_inOut = entity.InOut;
+		_cC = entity.CC;
+		_documentOutId = entity.DocumentOutId;
+		_documentInId = default;
+		_to = entity.To;
+		_communicationStatusTypeCode = entity.CommunicationStatusTypeCode;
+		_communicationStatusTypeName = default;
+		_communicationLogTypeCode = entity.CommunicationLogTypeCode;
+		_communicationLogTypeName = default;
+		_retries = entity.Retries;
+		_bCC = entity.BCC;
+		_objectTableId = entity.ObjectTableId;
+		_objectTableName = default;
+		_from = entity.From;
+		_lastStatusDate = entity.LastStatusDate;
+		_entityReference = entity.EntityReference;
+		_searchFields = entity.SearchFields;
+		_id = entity.Id;
+		_createDateUTC = entity.CreateDateUTC;
+		_doneDateUTC = entity.DoneDateUTC;
+		_lastStatusDateUTC = entity.LastStatusDateUTC;
+		_nextTryDateTimeUTC = entity.NextTryDateTimeUTC;
+		_nextTryDateTime = entity.NextTryDateTime;
+		_queueName = entity.QueueName;
+		_priority = entity.Priority;
+		_tenantName = default;
+		_aWBNumber = entity.AWBNumber;
+		_tenant = entity.Tenant;
+		_isWaiting = default;
+		_responseDocumentId = entity.ResponseDocumentId;
+		_childEntityId = entity.ChildEntityId;
+		_childObjectTableId = entity.ChildObjectTableId;
+		_emailDeliveryError = entity.EmailDeliveryError;
+		_logSettings = entity.LogSettings;
+		_securityId = default;
+		_isBodySecured = default;
+		_uniqueNumber = entity.UniqueNumber;
+		_additionalFields = entity.AdditionalFields;
+		_wasAnalyzed = entity.WasAnalyzed;
+		_channel = entity.Channel;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _entityId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -855,4 +915,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

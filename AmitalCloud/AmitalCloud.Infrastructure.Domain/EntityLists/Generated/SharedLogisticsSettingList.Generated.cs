@@ -13,12 +13,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class SharedLogisticsSettingList
+   public partial class SharedLogisticsSettingList   
    {
+       #region Constructors
+       public SharedLogisticsSettingList() : base() {}
+       public SharedLogisticsSettingList(SharedLogisticsSetting entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          Id  = entity.Id;
+          IsShowAmountLocalCurrency  = entity.IsShowAmountLocalCurrency;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
 
@@ -27,6 +38,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Id  { get; set; }
        [DataMember]
        public bool IsShowAmountLocalCurrency  { get; set; }
+         #endregion Properties
    }
 
 }

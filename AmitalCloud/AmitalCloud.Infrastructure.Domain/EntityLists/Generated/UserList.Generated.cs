@@ -13,12 +13,65 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class UserList
+   public partial class UserList   
    {
+       #region Constructors
+       public UserList() : base() {}
+       public UserList(User entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          IsBranchRestricted  = entity.IsBranchRestricted;
+          IsFreelancer  = entity.IsFreelancer;
+          IsProductRestricted  = entity.IsProductRestricted;
+          FreelancerId  = entity.FreelancerId;
+            Email  = default;
+            EnglishName  = default;
+          DepartmentId  = entity.DepartmentId;
+          BranchId  = entity.BranchId;
+            InActive  = default;
+            LocalName  = default;
+            DepartmentName  = default;
+            BranchName  = default;
+          IsSalesman  = entity.IsSalesman;
+          BusinessUnitId  = entity.BusinessUnitId;
+            BusinessUnitName  = default;
+          CreateDate  = entity.CreateDate;
+          ExpirationDate  = entity.ExpirationDate;
+            LastLoginDate  = default;
+          LicencedUser  = entity.LicencedUser;
+          ProductTypeCode  = entity.ProductTypeCode;
+            ProductTypeName  = default;
+          DistributorCode  = entity.DistributorCode;
+          IsDistributor  = entity.IsDistributor;
+          IsShowContactDetailsInTheMobileApp  = entity.IsShowContactDetailsInTheMobileApp;
+          PersonalId  = entity.PersonalId;
+            EmployeeGroupCustomFilter  = default;
+          Notes  = entity.Notes;
+          SearchFields  = entity.SearchFields;
+            FreelancerName  = default;
+            BusinessPhone  = default;
+            Mobile  = default;
+            Fax  = default;
+            IsFollowed  = default;
+            GroupId  = default;
+          IsTwoFactorAuthenticationEnabled  = entity.IsTwoFactorAuthenticationEnabled;
+          SetAngularAsDefault  = entity.SetAngularAsDefault;
+          Technology  = entity.Technology;
+          DocumentFilingInbox  = entity.DocumentFilingInbox;
+          ShowLocalNameInLOV  = entity.ShowLocalNameInLOV;
+          UserRoles  = entity.UserRoles;
+          AdditionalPackagesOnly  = entity.AdditionalPackagesOnly;
+          SignatureImageId  = entity.SignatureImageId;
+          SecurityLevel  = entity.SecurityLevel;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -111,6 +164,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string SignatureImageId  { get; set; }
        [DataMember]
        public int? SecurityLevel  { get; set; }
+         #endregion Properties
    }
 
 }

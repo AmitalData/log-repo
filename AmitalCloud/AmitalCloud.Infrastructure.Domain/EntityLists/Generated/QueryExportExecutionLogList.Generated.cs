@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class QueryExportExecutionLogList
+   public partial class QueryExportExecutionLogList   
    {
+       #region Constructors
+       public QueryExportExecutionLogList() : base() {}
+       public QueryExportExecutionLogList(QueryExportExecutionLog entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          StatusCode  = entity.StatusCode;
+          ExceptionMessage  = entity.ExceptionMessage;
+          DoneDate  = entity.DoneDate;
+          QueryFilterXML  = entity.QueryFilterXML;
+          QueryCode  = entity.QueryCode;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string QueryFilterXML  { get; set; }
        [DataMember]
        public string QueryCode  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,60 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class DocumentTypeTemplatePM : BaseEntityPM   {
+   #region Constructors
+   public DocumentTypeTemplatePM() : base() {} 
+   public DocumentTypeTemplatePM(DocumentTypeTemplate entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_templateBody = entity.TemplateBody;
+		_templateType = entity.TemplateType;
+		_lastUpdatedByUserId = entity.LastUpdatedByUserId;
+		_documentTypeId = entity.DocumentTypeId;
+		_subject = entity.Subject;
+		_lastUpdateDate = entity.LastUpdateDate;
+		_inActive = entity.InActive;
+		_editorTool = entity.EditorTool;
+		_verticalShift = entity.VerticalShift;
+		_horizontalShift = entity.HorizontalShift;
+		_templateBodyHtml = entity.TemplateBodyHtml;
+		_originalTemplateId = entity.OriginalTemplateId;
+		_description = entity.Description;
+		_language = entity.Language;
+		_internalRemarks = entity.InternalRemarks;
+		_countryCode = entity.CountryCode;
+		_isEnabledForCustomers = entity.IsEnabledForCustomers;
+		_isCopiedAtSignup = entity.IsCopiedAtSignup;
+		_lastUpdateByUserName = default;
+		_isDefault = default;
+		_originalTemplateName = default;
+		_documentTypeCode = default;
+		_documentTypeName = default;
+		_isHideDocumentName = default;
+		_countryName = default;
+		_objectTableId = entity.ObjectTableId;
+		_templateFooterHtml = entity.TemplateFooterHtml;
+		_templateHeaderHtml = entity.TemplateHeaderHtml;
+		_templateHeaderHeight = entity.TemplateHeaderHeight;
+		_templateFooterHeight = entity.TemplateFooterHeight;
+		_templateTechnologyCode = entity.TemplateTechnologyCode;
+		_templateBodyjson = entity.TemplateBodyjson;
+		_from = entity.From;
+		_replyTo = entity.ReplyTo;
+		_cC = entity.CC;
+		_contactEmail = default;
+		_bCC = entity.BCC;
+		_defultAttachmentsXML = entity.DefultAttachmentsXML;
+		_documentDefultAttachments = default;
+		_isDefultAttachmentsXMLChanged = default;
+		_to = entity.To;
+		_automationId = entity.AutomationId;
+		_attachedExternalDocumentsIds = entity.AttachedExternalDocumentsIds;
+		_isSystem = entity.IsSystem;
+		_entityId = entity.EntityId;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -775,4 +830,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

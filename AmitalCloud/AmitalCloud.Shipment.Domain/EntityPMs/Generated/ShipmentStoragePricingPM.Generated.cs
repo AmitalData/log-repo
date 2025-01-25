@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,24 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentStoragePricingPM : BaseEntityPM   {
+   #region Constructors
+   public ShipmentStoragePricingPM() : base() {} 
+   public ShipmentStoragePricingPM(ShipmentStoragePricing entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_shipmentId = entity.ShipmentId;
+		_warehouseId = entity.WarehouseId;
+		_stepFrom = entity.StepFrom;
+		_stepTo = entity.StepTo;
+		_days = entity.Days;
+		_salePrice = entity.SalePrice;
+		_amount = entity.Amount;
+		_lineNumber = entity.LineNumber;
+		_chargeableDays = entity.ChargeableDays;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -199,4 +218,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

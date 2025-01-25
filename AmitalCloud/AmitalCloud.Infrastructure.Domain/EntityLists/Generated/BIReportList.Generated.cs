@@ -13,12 +13,41 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BIReportList
+   public partial class BIReportList   
    {
+       #region Constructors
+       public BIReportList() : base() {}
+       public BIReportList(BIReport entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          SearchFields  = entity.SearchFields;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          DWQueryId  = entity.DWQueryId;
+          Inactive  = entity.Inactive;
+          TypeCode  = entity.TypeCode;
+          AGGridOptionsXML  = entity.AGGridOptionsXML;
+          BIReportFolderId  = entity.BIReportFolderId;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+            LastRunDate  = default;
+            LastRunByUserName  = default;
+          FactTableName  = entity.FactTableName;
+          LastRunId  = entity.LastRunId;
+            AvailableForScheduling  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -63,6 +92,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string LastRunId  { get; set; }
        [DataMember]
        public bool AvailableForScheduling  { get; set; }
+         #endregion Properties
    }
 
 }

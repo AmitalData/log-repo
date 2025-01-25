@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,22 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ContainerTrackingProviderPM : BaseEntityPM   {
+   #region Constructors
+   public ContainerTrackingProviderPM() : base() {} 
+   public ContainerTrackingProviderPM(ContainerTrackingProvider entity) : base()
+   {
+		_sourceCode = entity.SourceCode;
+		_name = entity.Name;
+		_searchFields = entity.SearchFields;
+		_callbackURL = entity.CallbackURL;
+		_aPIKey = entity.APIKey;
+		_providerURL = entity.ProviderURL;
+		_logitudeToken = entity.LogitudeToken;
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _sourceCode ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -167,4 +184,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

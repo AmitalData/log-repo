@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class WebhookKeysList
+   public partial class WebhookKeysList   
    {
+       #region Constructors
+       public WebhookKeysList() : base() {}
+       public WebhookKeysList(WebhookKeys entity) : base()
+       {
+          AccessKey  = entity.AccessKey;
+          PartnerName  = entity.PartnerName;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          InActive  = entity.InActive;
+          CreatedByUserName  = entity.CreatedByUserName;
+          UpdatedByUserName  = entity.UpdatedByUserName;
+          Description  = entity.Description;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string AccessKey  { get; set; }
        [DataMember]
@@ -37,6 +54,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Description  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ComputingPartnerTranslationList
+   public partial class ComputingPartnerTranslationList   
    {
+       #region Constructors
+       public ComputingPartnerTranslationList() : base() {}
+       public ComputingPartnerTranslationList(ComputingPartnerTranslation entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          PartnerCode  = entity.PartnerCode;
+          OurCode  = entity.OurCode;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          ObjectTableId  = entity.ObjectTableId;
+          ComputingPartnerId  = entity.ComputingPartnerId;
+            ObjectTableName  = default;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+            ComputingPartnerName  = default;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -51,6 +74,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ComputingPartnerName  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,65 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ParticipantPM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public ParticipantPM() : base() {} 
+   public ParticipantPM(Participant entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_registrationUpdatedBy = entity.RegistrationUpdatedBy;
+		_registrationDate = entity.RegistrationDate;
+		_tTY = entity.TTY;
+		_registered = entity.Registered;
+		_registrationRequested = entity.RegistrationRequested;
+		_website = default;
+		_code = default;
+		_englishName = default;
+		_localName = default;
+		_computedLocalName = default;
+		_inActive = default;
+		_vatNumber = default;
+		_accountingCard = default;
+		_paymentTermId = default;
+		_notes = default;
+		_invoiceCurrencyId = default;
+		_vatTypeId = default;
+		_bankName = default;
+		_bankAddress = default;
+		_swift = default;
+		_accountNumber = default;
+		_iBANNumber = default;
+		_forwarderTenant = entity.ForwarderTenant;
+		_isDirect = entity.IsDirect;
+		_isSecured = default;
+		_isHybrid = default;
+		_createDate = default;
+		_updateDate = default;
+		_createdByUserId = default;
+		_updatedByUserId = default;
+		_partnerTypeId = default;
+		_searchFields = default;
+		_primaryContactId = default;
+		_existedContactId = default;
+		_isFirstContactToAdd = default;
+		_cityName = default;
+		_countryId = default;
+		_countryCode = default;
+		_countryName = default;
+		_card = default;
+		addresses = default;
+		contacts = default;
+		_fWBNotifyContacts = entity.FWBNotifyContacts;
+		_fHLNotifyContacts = entity.FHLNotifyContacts;
+		_fFRNotifyContacts = entity.FFRNotifyContacts;
+		_receivablesAccountingCard = default;
+		_payablesAccountingCard = default;
+		_primaryContactName = entity.PrimaryContactName;
+		_primaryContactEmail = entity.PrimaryContactEmail;
+		_primaryContactPhone = entity.PrimaryContactPhone;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -1686,4 +1746,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 }
+#endregion Properties
 }

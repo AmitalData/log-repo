@@ -13,12 +13,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DirectionList
+   public partial class DirectionList   
    {
+       #region Constructors
+       public DirectionList() : base() {}
+       public DirectionList(Direction entity) : base()
+       {
+          Id  = entity.Id;
+          SearchFields  = entity.SearchFields;
+          Name  = entity.Name;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -27,6 +38,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string Name  { get; set; }
+         #endregion Properties
    }
 
 }

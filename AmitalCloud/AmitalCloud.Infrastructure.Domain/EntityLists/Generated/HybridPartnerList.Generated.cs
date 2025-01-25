@@ -13,12 +13,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class HybridPartnerList
+   public partial class HybridPartnerList   
    {
+       #region Constructors
+       public HybridPartnerList() : base() {}
+       public HybridPartnerList(HybridPartner entity) : base()
+       {
+          Id  = entity.Id;
+          LogoId  = entity.LogoId;
+          SmallLogoId  = entity.SmallLogoId;
+          SearchFields  = entity.SearchFields;
+          InActive  = entity.InActive;
+          Name  = entity.Name;
+          LocalName  = entity.LocalName;
+          PartnerTenant  = entity.PartnerTenant;
+            IsHasRequest  = default;
+            StatusName  = default;
+            ReqId  = default;
+          IsExternalPartner  = entity.IsExternalPartner;
+          ReceiveAllStatuses  = entity.ReceiveAllStatuses;
+          AllowSendingDocsToAgent  = entity.AllowSendingDocsToAgent;
+          IsMislakaActivated  = entity.IsMislakaActivated;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -51,6 +74,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool AllowSendingDocsToAgent  { get; set; }
        [DataMember]
        public bool IsMislakaActivated  { get; set; }
+         #endregion Properties
    }
 
 }

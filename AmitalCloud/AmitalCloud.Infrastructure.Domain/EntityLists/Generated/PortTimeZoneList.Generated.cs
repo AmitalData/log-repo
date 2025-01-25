@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class PortTimeZoneList
+   public partial class PortTimeZoneList   
    {
+       #region Constructors
+       public PortTimeZoneList() : base() {}
+       public PortTimeZoneList(PortTimeZone entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          UTCOffset  = entity.UTCOffset;
+          UTCDSTOffset  = entity.UTCDSTOffset;
+          Inactive  = entity.Inactive;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string UTCDSTOffset  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+         #endregion Properties
    }
 
 }

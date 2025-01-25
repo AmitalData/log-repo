@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class RestrictionList
+   public partial class RestrictionList   
    {
+       #region Constructors
+       public RestrictionList() : base() {}
+       public RestrictionList(Restriction entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Value  = entity.Value;
+          ContactTenantId  = entity.ContactTenantId;
+          ObjectTableId  = entity.ObjectTableId;
+          ObjectFieldId  = entity.ObjectFieldId;
+          ObjectFieldCode  = entity.ObjectFieldCode;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ObjectFieldId  { get; set; }
        [DataMember]
        public string ObjectFieldCode  { get; set; }
+         #endregion Properties
    }
 
 }

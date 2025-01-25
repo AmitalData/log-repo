@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class QuoteTemplateSectionList
+   public partial class QuoteTemplateSectionList   
    {
+       #region Constructors
+       public QuoteTemplateSectionList() : base() {}
+       public QuoteTemplateSectionList(QuoteTemplateSection entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          IsCancel  = entity.IsCancel;
+          QuoteTemplateId  = entity.QuoteTemplateId;
+          SectionDocId  = entity.SectionDocId;
+          Order  = entity.Order;
+          QuoteTemplateSectionTypeCode  = entity.QuoteTemplateSectionTypeCode;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int Order  { get; set; }
        [DataMember]
        public string QuoteTemplateSectionTypeCode  { get; set; }
+         #endregion Properties
    }
 
 }

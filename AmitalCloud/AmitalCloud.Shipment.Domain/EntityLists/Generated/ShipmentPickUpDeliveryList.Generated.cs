@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentPickUpDeliveryList
+   public partial class ShipmentPickUpDeliveryList   
    {
+       #region Constructors
+       public ShipmentPickUpDeliveryList() : base() {}
+       public ShipmentPickUpDeliveryList(ShipmentPickUpDelivery entity) : base()
+       {
+          Id  = entity.Id;
+          ATD  = entity.ATD;
+          ATA  = entity.ATA;
+          ETD  = entity.ETD;
+          ETA  = entity.ETA;
+          ShipmentId  = entity.ShipmentId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public DateTime? ETA  { get; set; }
        [DataMember]
        public string ShipmentId  { get; set; }
+         #endregion Properties
    }
 
 }

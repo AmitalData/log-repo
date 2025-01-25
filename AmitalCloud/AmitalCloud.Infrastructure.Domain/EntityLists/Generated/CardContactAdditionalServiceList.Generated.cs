@@ -13,18 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CardContactAdditionalServiceList
+   public partial class CardContactAdditionalServiceList   
    {
+       #region Constructors
+       public CardContactAdditionalServiceList() : base() {}
+       public CardContactAdditionalServiceList(CardContactAdditionalService entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
        public string Id  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerProductList
+   public partial class CustomerProductList   
    {
+       #region Constructors
+       public CustomerProductList() : base() {}
+       public CustomerProductList(CustomerProduct entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          NotesRightToLeft  = entity.NotesRightToLeft;
+          CustomerId  = entity.CustomerId;
+          ProductTypeCode  = entity.ProductTypeCode;
+          Notes  = entity.Notes;
+          PotentialChargeableWeight  = entity.PotentialChargeableWeight;
+          CommitmentChargeableWeight  = entity.CommitmentChargeableWeight;
+          PotentialTEU  = entity.PotentialTEU;
+          CommitmentTEU  = entity.CommitmentTEU;
+          PotentialNumberOfShipments  = entity.PotentialNumberOfShipments;
+          CommitmentNumberOfShipments  = entity.CommitmentNumberOfShipments;
+          PotentialRevenue  = entity.PotentialRevenue;
+          CommitmentRevenue  = entity.CommitmentRevenue;
+          LastShipmentDate  = entity.LastShipmentDate;
+            CustomerName  = default;
+            ProductTypeName  = default;
+            PrepaidCollectName  = default;
+       }
+       #endregion Constructors
+       #region Properties
       
        [DataMember]
        public int Tenant  { get; set; }
@@ -73,6 +98,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string PrepaidCollectName  { get; set; }
    
+         #endregion Properties
    }
 
 }

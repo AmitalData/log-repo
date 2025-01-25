@@ -13,12 +13,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DigitalFieldSecurityList
+   public partial class DigitalFieldSecurityList   
    {
+       #region Constructors
+       public DigitalFieldSecurityList() : base() {}
+       public DigitalFieldSecurityList(DigitalFieldSecurity entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          ObjectTableId  = entity.ObjectTableId;
+          DefaultSettings  = entity.DefaultSettings;
+          ProfileId  = entity.ProfileId;
+            ProfileName  = default;
+            ObjectTableName  = default;
+            ProfileCode  = default;
+          ParentObjectTableId  = entity.ParentObjectTableId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -43,6 +62,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ProfileCode  { get; set; }
        [DataMember]
        public string ParentObjectTableId  { get; set; }
+         #endregion Properties
    }
 
 }

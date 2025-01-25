@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DeploymentPackagesVersionList
+   public partial class DeploymentPackagesVersionList   
    {
+       #region Constructors
+       public DeploymentPackagesVersionList() : base() {}
+       public DeploymentPackagesVersionList(DeploymentPackagesVersion entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          DeploymentPackageID  = entity.DeploymentPackageID;
+          IsExported  = entity.IsExported;
+          DocumentId  = entity.DocumentId;
+          VersionNumber  = entity.VersionNumber;
+          VersionName  = entity.VersionName;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+            DeploymentPackageName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -49,6 +71,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string UpdatedByUserName  { get; set; }
        [DataMember]
        public string DeploymentPackageName  { get; set; }
+         #endregion Properties
    }
 
 }

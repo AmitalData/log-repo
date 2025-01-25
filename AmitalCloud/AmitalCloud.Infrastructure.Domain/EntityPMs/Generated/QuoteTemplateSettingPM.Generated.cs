@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,200 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class QuoteTemplateSettingPM : BaseEntityPM   {
+   #region Constructors
+   public QuoteTemplateSettingPM() : base() {} 
+   public QuoteTemplateSettingPM(QuoteTemplateSetting entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_showTotalInSaleCurrencyPackages = entity.ShowTotalInSaleCurrencyPackages;
+		_showTotalInSaleCurrencyContainers = entity.ShowTotalInSaleCurrencyContainers;
+		_showTotalInLocalCurrencyPackages = entity.ShowTotalInLocalCurrencyPackages;
+		_showTotalInLocalCurrencyContainers = entity.ShowTotalInLocalCurrencyContainers;
+		_showPricesTablePackages = entity.ShowPricesTablePackages;
+		_showPricesTableContainers = entity.ShowPricesTableContainers;
+		_showChargeCodePackages = entity.ShowChargeCodePackages;
+		_showChargeDescriptionPackages = entity.ShowChargeDescriptionPackages;
+		_showChargeDescriptionContainers = entity.ShowChargeDescriptionContainers;
+		_showChargeCodeContainers = entity.ShowChargeCodeContainers;
+		_showChargeNamePackages = entity.ShowChargeNamePackages;
+		_showChargeNameContainers = entity.ShowChargeNameContainers;
+		_showMeasurementPackages = entity.ShowMeasurementPackages;
+		_showMeasurementContainers = entity.ShowMeasurementContainers;
+		_showFixedPriceContainers = entity.ShowFixedPriceContainers;
+		_showUnitsPackages = entity.ShowUnitsPackages;
+		_showUnitPricePackages = entity.ShowUnitPricePackages;
+		_showLocalCurrencyColumnPackages = entity.ShowLocalCurrencyColumnPackages;
+		_showLocalCurrencyColumnContainers = entity.ShowLocalCurrencyColumnContainers;
+		_showSaleCurrencyColumnPackages = entity.ShowSaleCurrencyColumnPackages;
+		_showSaleCurrencyColumnContainers = entity.ShowSaleCurrencyColumnContainers;
+		_showLocalLanguage = entity.ShowLocalLanguage;
+		_splitChargesbyGroupsPackages = entity.SplitChargesbyGroupsPackages;
+		_splitChargesbyGroupsContainers = entity.SplitChargesbyGroupsContainers;
+		_showContainerNameInsteadOfCodeContainers = entity.ShowContainerNameInsteadOfCodeContainers;
+		_alignRight = entity.AlignRight;
+		_showPriceByContainerColumn = entity.ShowPriceByContainerColumn;
+		_showCodeChargeSaleMinMaxContainers = entity.ShowCodeChargeSaleMinMaxContainers;
+		_showCodeChargeSaleMinMaxPackages = entity.ShowCodeChargeSaleMinMaxPackages;
+		_quoteTemplatePDFMarginLeft = entity.QuoteTemplatePDFMarginLeft;
+		_quoteTemplatePDFMarginRight = entity.QuoteTemplatePDFMarginRight;
+		_pageHeaderArea1Type = entity.PageHeaderArea1Type;
+		_pageHeaderArea2Type = entity.PageHeaderArea2Type;
+		_pageHeaderArea3Type = entity.PageHeaderArea3Type;
+		_pageHeaderArea1ImageDetailId = entity.PageHeaderArea1ImageDetailId;
+		_pageHeaderArea2ImageDetailId = entity.PageHeaderArea2ImageDetailId;
+		_pageHeaderArea3ImageDetailId = entity.PageHeaderArea3ImageDetailId;
+		_pageHeaderArea1FreeText = entity.PageHeaderArea1FreeText;
+		_pageHeaderArea2FreeText = entity.PageHeaderArea2FreeText;
+		_pageHeaderArea3FreeText = entity.PageHeaderArea3FreeText;
+		_pageHeaderArea1FreeTextDesignId = entity.PageHeaderArea1FreeTextDesignId;
+		_pageHeaderArea2FreeTextDesignId = entity.PageHeaderArea2FreeTextDesignId;
+		_pageHeaderArea3FreeTextDesignId = entity.PageHeaderArea3FreeTextDesignId;
+		_pageHeaderArea1Width = entity.PageHeaderArea1Width;
+		_pageHeaderArea2Width = entity.PageHeaderArea2Width;
+		_pageHeaderArea3Width = entity.PageHeaderArea3Width;
+		_pageHeaderImage1Width = entity.PageHeaderImage1Width;
+		_pageHeaderImage2Width = entity.PageHeaderImage2Width;
+		_pageHeaderImage3Width = entity.PageHeaderImage3Width;
+		_pageFooterImage1Width = entity.PageFooterImage1Width;
+		_pageFooterImage2Width = entity.PageFooterImage2Width;
+		_pageFooterImage3Width = entity.PageFooterImage3Width;
+		_pageHeaderAreaHeight = entity.PageHeaderAreaHeight;
+		_pageFooterAreaHeight = entity.PageFooterAreaHeight;
+		_pageHeaderArea1Height = entity.PageHeaderArea1Height;
+		_pageHeaderArea2Height = entity.PageHeaderArea2Height;
+		_pageHeaderArea3Height = entity.PageHeaderArea3Height;
+		_pageHeaderArea1ImageAlignment = entity.PageHeaderArea1ImageAlignment;
+		_pageHeaderArea2ImageAlignment = entity.PageHeaderArea2ImageAlignment;
+		_pageHeaderArea3ImageAlignment = entity.PageHeaderArea3ImageAlignment;
+		_pageFooterArea1Type = entity.PageFooterArea1Type;
+		_pageFooterArea2Type = entity.PageFooterArea2Type;
+		_pageFooterArea3Type = entity.PageFooterArea3Type;
+		_pageFooterArea1ImageDetailId = entity.PageFooterArea1ImageDetailId;
+		_pageFooterArea2ImageDetailId = entity.PageFooterArea2ImageDetailId;
+		_pageFooterArea3ImageDetailId = entity.PageFooterArea3ImageDetailId;
+		_pageFooterArea1FreeText = entity.PageFooterArea1FreeText;
+		_pageFooterArea2FreeText = entity.PageFooterArea2FreeText;
+		_pageFooterArea3FreeText = entity.PageFooterArea3FreeText;
+		_pageFooterArea1FreeTextDesignId = entity.PageFooterArea1FreeTextDesignId;
+		_pageFooterArea2FreeTextDesignId = entity.PageFooterArea2FreeTextDesignId;
+		_pageFooterArea3FreeTextDesignId = entity.PageFooterArea3FreeTextDesignId;
+		_pageFooterArea1Width = entity.PageFooterArea1Width;
+		_pageFooterArea2Width = entity.PageFooterArea2Width;
+		_pageFooterArea3Width = entity.PageFooterArea3Width;
+		_pageFooterArea1Height = entity.PageFooterArea1Height;
+		_pageFooterArea2Height = entity.PageFooterArea2Height;
+		_pageFooterArea3Height = entity.PageFooterArea3Height;
+		_pageFooterArea1ImageAlignment = entity.PageFooterArea1ImageAlignment;
+		_pageFooterArea2ImageAlignment = entity.PageFooterArea2ImageAlignment;
+		_pageFooterArea3ImageAlignment = entity.PageFooterArea3ImageAlignment;
+		_showHeaderQuoteDate = entity.ShowHeaderQuoteDate;
+		_showHeaderExpirationDate = entity.ShowHeaderExpirationDate;
+		_showHeaderQuoteNumber = entity.ShowHeaderQuoteNumber;
+		_showHeaderCustomer = entity.ShowHeaderCustomer;
+		_showDetailsExpirationDate = entity.ShowDetailsExpirationDate;
+		_showDetailsExpirationDays = entity.ShowDetailsExpirationDays;
+		_showDetailsShipperName = entity.ShowDetailsShipperName;
+		_showDetailsShipperAddress = entity.ShowDetailsShipperAddress;
+		_showDetailsShipperContact = entity.ShowDetailsShipperContact;
+		_showDetailsShipperReferences = entity.ShowDetailsShipperReferences;
+		_showDetailsConsigneeName = entity.ShowDetailsConsigneeName;
+		_showDetailsConsigneeAddress = entity.ShowDetailsConsigneeAddress;
+		_showDetailsConsigneeContact = entity.ShowDetailsConsigneeContact;
+		_showDetailsConsigneeReferences = entity.ShowDetailsConsigneeReferences;
+		_showDetailsPickupFrom = entity.ShowDetailsPickupFrom;
+		_showDetailsDeliveryTo = entity.ShowDetailsDeliveryTo;
+		_showDetailsFromPort = entity.ShowDetailsFromPort;
+		_showDetailsToPort = entity.ShowDetailsToPort;
+		_showDetailsIncoterms = entity.ShowDetailsIncoterms;
+		_showDetailsService = entity.ShowDetailsService;
+		_showDetailsSalesMan = entity.ShowDetailsSalesMan;
+		_showDetailsDescriptionOfGoods = entity.ShowDetailsDescriptionOfGoods;
+		_showDetailsDangerousGoods = entity.ShowDetailsDangerousGoods;
+		_showDetailsCarrier = entity.ShowDetailsCarrier;
+		_showDetailsCustomerName = entity.ShowDetailsCustomerName;
+		_showDetailsCustomerAddress = entity.ShowDetailsCustomerAddress;
+		_showDetailsCustomerContact = entity.ShowDetailsCustomerContact;
+		_showDetailsCustomerReferences = entity.ShowDetailsCustomerReferences;
+		_showTitleQuoteDetails = entity.ShowTitleQuoteDetails;
+		_showTitlePricingPackages = entity.ShowTitlePricingPackages;
+		_showTitlePricingContainsers = entity.ShowTitlePricingContainsers;
+		_packagesTableDesignId = entity.PackagesTableDesignId;
+		_containserTableDesignId = entity.ContainserTableDesignId;
+		_totalsPackagesLabelDesignId = entity.TotalsPackagesLabelDesignId;
+		_totalsContainsersLabelDesignId = entity.TotalsContainsersLabelDesignId;
+		_totalsPackagesValueDesignId = entity.TotalsPackagesValueDesignId;
+		_totalsContainsersValueDesignId = entity.TotalsContainsersValueDesignId;
+		_rightToLeft = entity.RightToLeft;
+		_groupByPackagesLabelDesignId = entity.GroupByPackagesLabelDesignId;
+		_groupByPackagesValueDesignId = entity.GroupByPackagesValueDesignId;
+		_groupByContainsersLabelDesignId = entity.GroupByContainsersLabelDesignId;
+		_groupByContainsersValueDesignId = entity.GroupByContainsersValueDesignId;
+		_detailsTableDesignId = entity.DetailsTableDesignId;
+		_detailsSectionHasTwoColumns = entity.DetailsSectionHasTwoColumns;
+		_headerTableDesignId = entity.HeaderTableDesignId;
+		_headerSectionHasTwoColumns = entity.HeaderSectionHasTwoColumns;
+		_detailsTitleDesignId = entity.DetailsTitleDesignId;
+		_pricingPackagesTitleDesignId = entity.PricingPackagesTitleDesignId;
+		_pricingContainsersTitleDesignId = entity.PricingContainsersTitleDesignId;
+		_pageHeaderBorderTypeCode = entity.PageHeaderBorderTypeCode;
+		_pageHeaderBorderColor = entity.PageHeaderBorderColor;
+		_pageHeaderBorderThickness = entity.PageHeaderBorderThickness;
+		_pageFooterBorderTypeCode = entity.PageFooterBorderTypeCode;
+		_pageFooterBorderColor = entity.PageFooterBorderColor;
+		_pageFooterBorderThickness = entity.PageFooterBorderThickness;
+		_headerTableColumWidthType = entity.HeaderTableColumWidthType;
+		_detailsTableColumWidthType = entity.DetailsTableColumWidthType;
+		_detailsTableColumn1LabelWidth = entity.DetailsTableColumn1LabelWidth;
+		_detailsTableColumn1ValueWidth = entity.DetailsTableColumn1ValueWidth;
+		_detailsTableColumn2LabelWidth = entity.DetailsTableColumn2LabelWidth;
+		_detailsTableColumn2ValueWidth = entity.DetailsTableColumn2ValueWidth;
+		_headerTableColumn1LabelWidth = entity.HeaderTableColumn1LabelWidth;
+		_headerTableColumn1ValueWidth = entity.HeaderTableColumn1ValueWidth;
+		_headerTableColumn2LabelWidth = entity.HeaderTableColumn2LabelWidth;
+		_headerTableColumn2ValueWidth = entity.HeaderTableColumn2ValueWidth;
+		_showTotalPerChargeGroupPackages = entity.ShowTotalPerChargeGroupPackages;
+		_showTotalPerChargeGroupContainers = entity.ShowTotalPerChargeGroupContainers;
+		_showPageBreakBeforeTotalPerContainersTable = entity.ShowPageBreakBeforeTotalPerContainersTable;
+		_totalPerContainersAdditionalTextDesignId = entity.TotalPerContainersAdditionalTextDesignId;
+		_totalPerContainersTableDesignId = entity.TotalPerContainersTableDesignId;
+		_totalPerContainersCurrencyType = entity.TotalPerContainersCurrencyType;
+		_showTitleTotalPerContainersTable = entity.ShowTitleTotalPerContainersTable;
+		_showChargeNotePackages = entity.ShowChargeNotePackages;
+		_showChargeNoteContainers = entity.ShowChargeNoteContainers;
+		_showSaleMaxMinAmountPackages = entity.ShowSaleMaxMinAmountPackages;
+		_showSaleMaxMinAmountContainers = entity.ShowSaleMaxMinAmountContainers;
+		_showHeaderLabelsPackages = entity.ShowHeaderLabelsPackages;
+		_showHeaderLabelsContainers = entity.ShowHeaderLabelsContainers;
+		_spaceLinesBeforeContainers = entity.SpaceLinesBeforeContainers;
+		_spaceLinesBeforePackages = entity.SpaceLinesBeforePackages;
+		_spaceLinesBeforeQuoteHeaders = entity.SpaceLinesBeforeQuoteHeaders;
+		_spaceLinesBeforeQuoteDetails = entity.SpaceLinesBeforeQuoteDetails;
+		_spaceLinesBeforeHeaders = entity.SpaceLinesBeforeHeaders;
+		_spaceLinesBeforeFooters = entity.SpaceLinesBeforeFooters;
+		_spaceLinesBeforePerContainers = entity.SpaceLinesBeforePerContainers;
+		_quoteTemplatePDFMarginTop = entity.QuoteTemplatePDFMarginTop;
+		_quoteTemplatePDFMarginBottom = entity.QuoteTemplatePDFMarginBottom;
+		_showIncludedChargesPerContainers = entity.ShowIncludedChargesPerContainers;
+		_showIncludedChargesPackages = entity.ShowIncludedChargesPackages;
+		_showIncludedChargesContainers = entity.ShowIncludedChargesContainers;
+		_showVATTypePackages = entity.ShowVATTypePackages;
+		_showVATTypeContainers = entity.ShowVATTypeContainers;
+		_showVATPercentagePackages = entity.ShowVATPercentagePackages;
+		_showVATPercentageContainers = entity.ShowVATPercentageContainers;
+		_hidePageNumber = entity.HidePageNumber;
+		_pageNumberingTextDesignId = entity.PageNumberingTextDesignId;
+		_showRegionalTAXPackages = entity.ShowRegionalTAXPackages;
+		_showRegionalTAXContainers = entity.ShowRegionalTAXContainers;
+		_xMLData = entity.XMLData;
+		_showUnitsContainers = entity.ShowUnitsContainers;
+		_showSaleIncludingVATContainers = entity.ShowSaleIncludingVATContainers;
+		_showSaleIncludingVATPackages = entity.ShowSaleIncludingVATPackages;
+		_showLocalSaleIncludingVATContainers = entity.ShowLocalSaleIncludingVATContainers;
+		_showLocalSaleIncludingVATPackages = entity.ShowLocalSaleIncludingVATPackages;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -3015,4 +3210,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

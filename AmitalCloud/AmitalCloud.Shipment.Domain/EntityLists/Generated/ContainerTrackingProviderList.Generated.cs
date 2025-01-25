@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ContainerTrackingProviderList
+   public partial class ContainerTrackingProviderList   
    {
+       #region Constructors
+       public ContainerTrackingProviderList() : base() {}
+       public ContainerTrackingProviderList(ContainerTrackingProvider entity) : base()
+       {
+          SourceCode  = entity.SourceCode;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          CallbackURL  = entity.CallbackURL;
+          APIKey  = entity.APIKey;
+          ProviderURL  = entity.ProviderURL;
+          LogitudeToken  = entity.LogitudeToken;
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string SourceCode  { get; set; }
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string Id  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+         #endregion Properties
    }
 
 }

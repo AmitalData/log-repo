@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerTenantAccessRequestPM : BaseEntityPM   {
+   #region Constructors
+   public CustomerTenantAccessRequestPM() : base() {} 
+   public CustomerTenantAccessRequestPM(CustomerTenantAccessRequest entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_requestDateTime = entity.RequestDateTime;
+		_requestStatus = entity.RequestStatus;
+		_statusName = default;
+		_forwarderId = entity.ForwarderId;
+		_forwarderName = default;
+		_isCustoms = entity.IsCustoms;
+		_isExport = entity.IsExport;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -167,4 +184,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class MessagingStockList
+   public partial class MessagingStockList   
    {
+       #region Constructors
+       public MessagingStockList() : base() {}
+       public MessagingStockList(MessagingStock entity) : base()
+       {
+          Id  = entity.Id;
+          SearchFields  = entity.SearchFields;
+          Amount  = entity.Amount;
+          Remaining  = entity.Remaining;
+          StartDate  = entity.StartDate;
+          EndDate  = entity.EndDate;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          IsCancelled  = entity.IsCancelled;
+            Status  = default;
+          Notes  = entity.Notes;
+          TenantNumber  = entity.TenantNumber;
+            TenantName  = default;
+          TotalPrice  = entity.TotalPrice;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -53,6 +77,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string TenantName  { get; set; }
        [DataMember]
        public double? TotalPrice  { get; set; }
+         #endregion Properties
    }
 
 }

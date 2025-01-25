@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ReferenceTypeList
+   public partial class ReferenceTypeList   
    {
+       #region Constructors
+       public ReferenceTypeList() : base() {}
+       public ReferenceTypeList(ReferenceType entity) : base()
+       {
+          Code  = entity.Code;
+          LocalName  = entity.LocalName;
+          EnglishName  = entity.EnglishName;
+          SearchFields  = entity.SearchFields;
+          Inactive  = entity.Inactive;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+         #endregion Properties
    }
 
 }

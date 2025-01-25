@@ -13,12 +13,103 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class MasterList
+   public partial class MasterList   
    {
+       #region Constructors
+       public MasterList() : base() {}
+       public MasterList(Master entity) : base()
+       {
+          SpecialServicesTypeId  = entity.SpecialServicesTypeId;
+            VolumeInCBM  = default;
+            ChargeableWeight  = default;
+            ValueOfGoods  = default;
+            ShipmentLevelName  = default;
+            Routing  = default;
+            AgentName  = default;
+            OpenPayablesInLocalCurrency  = default;
+            OpenPayablesInProfitCurrency  = default;
+            AccountedPayablesInLocalCurrency  = default;
+            AccountedPayablesInProfitCurrency  = default;
+            ChargeableWeightInKG  = default;
+            CutoffDate  = default;
+            OpenReceivablesInProfitCurrency  = default;
+            AccountedReceivablesInProfitCurrency  = default;
+            TrailerNumber  = default;
+            FWBStatusName  = default;
+            FHLStatusName  = default;
+            AWBPrint  = default;
+            CarrierLastStatusName  = default;
+            CarrierLastStatusDate  = default;
+            FWBStatusDate  = default;
+            NextETD  = default;
+            NextETA  = default;
+            IsOperationalClosed  = default;
+            IsAccountingClosed  = default;
+            OpenReceivablesInLocalCurrency  = default;
+            AccountedReceivablesInLocalCurrency  = default;
+            ProfitInLocalCurrency  = default;
+            MasterPayableStatusName  = default;
+            MasterReceivableStatusName  = default;
+            CustomerReference1  = default;
+            CustomerReference2  = default;
+            SpecialServicesTypeName  = default;
+            PackagesQuantity  = default;
+            FHLStatusDate  = default;
+            CargonautFHLStatusName  = default;
+            CargonautFHLStatusDate  = default;
+            CargonautFWBStatusName  = default;
+            CargonautFWBStatusDate  = default;
+            StatusName  = default;
+            ShipmentNumber  = default;
+            ConsolidatorReference  = default;
+            ConsolidatorName  = default;
+            ManifestReason  = default;
+            ShipperReference1  = default;
+            OperationalCloseDate  = default;
+            AccountingCloseDate  = default;
+            CustomsDeclarationNumber  = default;
+            CreateDateTime  = default;
+            MainCarriageVesselName  = default;
+            Shipper  = default;
+            Consignee  = default;
+            CustomsTransmissionsStatusName  = default;
+            CustomsTransmissionsStatusError  = default;
+            CustomsTransmissionsStatusDate  = default;
+            NumberOfHouses  = default;
+            GrossWeightPerTon  = default;
+            DirectionId  = default;
+            TransportModeId  = default;
+            PreCarriageETD  = default;
+            MainCarriageETA  = default;
+            LongMaster  = default;
+            MainCarriageETD  = default;
+            FromPort  = default;
+            ToPort  = default;
+            ShipmentType  = default;
+            FollowUpType  = default;
+            FollowUpDate  = default;
+            FollowUpNotes  = default;
+            FollowUpOwner  = default;
+            FollowUpOwnerId  = default;
+            BookingConfirmationNumber  = default;
+            MAWBOBLDate  = default;
+            ShipmentSubTypeName  = default;
+            InlandDomesticToAddress1  = default;
+            InlandDomesticToAddress2  = default;
+            InlandDomesticToPhone  = default;
+            InlandDomesticToFax  = default;
+            InlandDomesticFromAddress1  = default;
+            InlandDomesticFromAddress2  = default;
+            InlandDomesticFromPhone  = default;
+            InlandDomesticFromFax  = default;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string SpecialServicesTypeId  { get; set; }
        [DataMember]
@@ -185,6 +276,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string InlandDomesticFromPhone  { get; set; }
        [DataMember]
        public string InlandDomesticFromFax  { get; set; }
+         #endregion Properties
    }
 
 }

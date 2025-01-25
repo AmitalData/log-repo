@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,34 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class BIReportPM : BaseEntityPM   {
+   #region Constructors
+   public BIReportPM() : base() {} 
+   public BIReportPM(BIReport entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_updateDate = entity.UpdateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_searchFields = entity.SearchFields;
+		_name = entity.Name;
+		_description = entity.Description;
+		_dWQueryId = entity.DWQueryId;
+		_inactive = entity.Inactive;
+		_typeCode = entity.TypeCode;
+		_aGGridOptionsXML = entity.AGGridOptionsXML;
+		_bIReportFolderId = entity.BIReportFolderId;
+		_createdByUserName = default;
+		_updatedByUserName = default;
+		_lastRunDate = default;
+		_lastRunByUserName = default;
+		_factTableName = entity.FactTableName;
+		_lastRunId = entity.LastRunId;
+		_availableForScheduling = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -359,4 +388,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

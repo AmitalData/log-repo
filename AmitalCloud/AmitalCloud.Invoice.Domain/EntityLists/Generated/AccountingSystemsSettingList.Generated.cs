@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class AccountingSystemsSettingList
+   public partial class AccountingSystemsSettingList   
    {
+       #region Constructors
+       public AccountingSystemsSettingList() : base() {}
+       public AccountingSystemsSettingList(AccountingSystemsSetting entity) : base()
+       {
+          UpdateOnNextRequest  = entity.UpdateOnNextRequest;
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          GetExternalCodeInterval  = entity.GetExternalCodeInterval;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public bool UpdateOnNextRequest  { get; set; }
 
@@ -29,6 +41,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public int GetExternalCodeInterval  { get; set; }
+         #endregion Properties
    }
 
 }

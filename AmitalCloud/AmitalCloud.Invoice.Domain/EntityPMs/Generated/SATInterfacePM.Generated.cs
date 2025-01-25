@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class SATInterfacePM : BaseEntityPM   {
+   #region Constructors
+   public SATInterfacePM() : base() {} 
+   public SATInterfacePM(SATInterface entity) : base()
+   {
+		_code = entity.Code;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _code ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -39,4 +48,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

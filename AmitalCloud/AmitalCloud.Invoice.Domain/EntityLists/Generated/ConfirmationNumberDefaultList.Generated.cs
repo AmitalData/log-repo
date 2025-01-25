@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ConfirmationNumberDefaultList
+   public partial class ConfirmationNumberDefaultList   
    {
+       #region Constructors
+       public ConfirmationNumberDefaultList() : base() {}
+       public ConfirmationNumberDefaultList(ConfirmationNumberDefault entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          FromDate  = entity.FromDate;
+          SearchFields  = entity.SearchFields;
+          AmountForConfirmationNumber  = entity.AmountForConfirmationNumber;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public int AmountForConfirmationNumber  { get; set; }
+         #endregion Properties
    }
 
 }

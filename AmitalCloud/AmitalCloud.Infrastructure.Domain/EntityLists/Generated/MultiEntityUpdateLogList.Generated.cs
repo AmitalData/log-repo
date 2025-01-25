@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class MultiEntityUpdateLogList
+   public partial class MultiEntityUpdateLogList   
    {
+       #region Constructors
+       public MultiEntityUpdateLogList() : base() {}
+       public MultiEntityUpdateLogList(MultiEntityUpdateLog entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          StatusCode  = entity.StatusCode;
+          ExceptionMessage  = entity.ExceptionMessage;
+          DoneDate  = entity.DoneDate;
+          XMLData  = entity.XMLData;
+          ObjectTableId  = entity.ObjectTableId;
+          RetryNumber  = entity.RetryNumber;
+          StartDate  = entity.StartDate;
+          UpdatedEntitiesNumber  = entity.UpdatedEntitiesNumber;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime? StartDate  { get; set; }
        [DataMember]
        public int UpdatedEntitiesNumber  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class PickUpDeliveryTransportModeList
+   public partial class PickUpDeliveryTransportModeList   
    {
+       #region Constructors
+       public PickUpDeliveryTransportModeList() : base() {}
+       public PickUpDeliveryTransportModeList(PickUpDeliveryTransportMode entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -27,6 +38,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string Name  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

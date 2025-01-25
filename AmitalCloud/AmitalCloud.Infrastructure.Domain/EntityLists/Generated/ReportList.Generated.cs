@@ -13,12 +13,39 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ReportList
+   public partial class ReportList   
    {
+       #region Constructors
+       public ReportList() : base() {}
+       public ReportList(Report entity) : base()
+       {
+          ReportGroupId  = entity.ReportGroupId;
+          FeatureId  = entity.FeatureId;
+          ReportDocumentId  = entity.ReportDocumentId;
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Name  = entity.Name;
+          FilterControlName  = entity.FilterControlName;
+          Description  = entity.Description;
+          SearchFields  = entity.SearchFields;
+          Code  = entity.Code;
+          InActive  = entity.InActive;
+            FeatureCode  = default;
+          DefaultTemplateId  = entity.DefaultTemplateId;
+          DefaultMessageTemplateId  = entity.DefaultMessageTemplateId;
+          LocalName  = entity.LocalName;
+          FilterHtmlComponentUrl  = entity.FilterHtmlComponentUrl;
+          FeatureUniqeCode  = entity.FeatureUniqeCode;
+          DisablePreview  = entity.DisablePreview;
+          DefaultExcelTemplateId  = entity.DefaultExcelTemplateId;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string ReportGroupId  { get; set; }
        [DataMember]
@@ -59,6 +86,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool DisablePreview  { get; set; }
        [DataMember]
        public string DefaultExcelTemplateId  { get; set; }
+         #endregion Properties
    }
 
 }

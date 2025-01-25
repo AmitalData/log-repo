@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerAccountManagerByProductList
+   public partial class CustomerAccountManagerByProductList   
    {
+       #region Constructors
+       public CustomerAccountManagerByProductList() : base() {}
+       public CustomerAccountManagerByProductList(CustomerAccountManagerByProduct entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          ProductTypeCode  = entity.ProductTypeCode;
+          AccountManagerId  = entity.AccountManagerId;
+          CustomerId  = entity.CustomerId;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
 
@@ -31,6 +43,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [Key]
        [DataMember]
        public string CustomerId  { get; set; }
+         #endregion Properties
    }
 
 }

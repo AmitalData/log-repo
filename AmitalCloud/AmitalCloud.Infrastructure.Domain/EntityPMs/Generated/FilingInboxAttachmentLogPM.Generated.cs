@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class FilingInboxAttachmentLogPM : BaseEntityPM   {
+   #region Constructors
+   public FilingInboxAttachmentLogPM() : base() {} 
+   public FilingInboxAttachmentLogPM(FilingInboxAttachmentLog entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_documentsFilingId = entity.DocumentsFilingId;
+		_filingInboxAttachmentId = entity.FilingInboxAttachmentId;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -87,4 +99,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CarrierServiceLineList
+   public partial class CarrierServiceLineList   
    {
+       #region Constructors
+       public CarrierServiceLineList() : base() {}
+       public CarrierServiceLineList(CarrierServiceLine entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          SearchFields  = entity.SearchFields;
+          CardId  = entity.CardId;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          PartnerTypeId  = entity.PartnerTypeId;
+          Inactive  = entity.Inactive;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -37,6 +53,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string PartnerTypeId  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+         #endregion Properties
    }
 
 }

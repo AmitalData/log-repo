@@ -13,12 +13,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ReportsTemplateList
+   public partial class ReportsTemplateList   
    {
+       #region Constructors
+       public ReportsTemplateList() : base() {}
+       public ReportsTemplateList(ReportsTemplate entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Description  = entity.Description;
+          InActive  = entity.InActive;
+          IsSystem  = entity.IsSystem;
+          ReportId  = entity.ReportId;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          CurrentVersion  = entity.CurrentVersion;
+            UpdatedByUserName  = default;
+            IsDefault  = default;
+          TemplateType  = entity.TemplateType;
+          From  = entity.From;
+          ReplyTo  = entity.ReplyTo;
+          CC  = entity.CC;
+          Subject  = entity.Subject;
+            UpdateByUserName  = default;
+          ObjectTableId  = entity.ObjectTableId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -61,6 +89,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string UpdateByUserName  { get; set; }
        [DataMember]
        public string ObjectTableId  { get; set; }
+         #endregion Properties
    }
 
 }

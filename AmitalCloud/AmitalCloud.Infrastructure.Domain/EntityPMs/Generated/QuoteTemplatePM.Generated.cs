@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,34 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class QuoteTemplatePM : BaseEntityPM   {
+   #region Constructors
+   public QuoteTemplatePM() : base() {} 
+   public QuoteTemplatePM(QuoteTemplate entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_headerDocId = entity.HeaderDocId;
+		_footerDocId = entity.FooterDocId;
+		_quoteTemplateSettingId = entity.QuoteTemplateSettingId;
+		_name = entity.Name;
+		_isTemplate = entity.IsTemplate;
+		_originalQuoteTemplateId = entity.OriginalQuoteTemplateId;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_searchFields = entity.SearchFields;
+		_templateTypeCode = entity.TemplateTypeCode;
+		_isDefault = entity.IsDefault;
+		_inActive = entity.InActive;
+		_isLastQuoteTemplateDocumentVersion = default;
+		templateSections = default;
+		_isCopiedAtSignup = entity.IsCopiedAtSignup;
+		_isEnabledForCustomers = entity.IsEnabledForCustomers;
+		_tenantName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -374,4 +403,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

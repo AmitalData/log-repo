@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CardSearchList
+   public partial class CardSearchList   
    {
+       #region Constructors
+       public CardSearchList() : base() {}
+       public CardSearchList(CardSearch entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          RecordDate  = entity.RecordDate;
+          Keyword  = entity.Keyword;
+          IsCustomer  = entity.IsCustomer;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Keyword  { get; set; }
        [DataMember]
        public bool IsCustomer  { get; set; }
+         #endregion Properties
    }
 
 }

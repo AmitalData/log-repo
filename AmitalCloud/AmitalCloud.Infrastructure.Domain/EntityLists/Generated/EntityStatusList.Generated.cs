@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class EntityStatusList
+   public partial class EntityStatusList   
    {
+       #region Constructors
+       public EntityStatusList() : base() {}
+       public EntityStatusList(EntityStatus entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ObjectTableId  = entity.ObjectTableId;
+          Code  = entity.Code;
+          InActive  = entity.InActive;
+          Name  = entity.Name;
+            ObjectTableName  = default;
+          StatusWeight  = entity.StatusWeight;
+          SearchFields  = entity.SearchFields;
+          DisplayName  = entity.DisplayName;
+          EntityStatusTypeCode  = entity.EntityStatusTypeCode;
+          StatusLocalWeight  = entity.StatusLocalWeight;
+          AllowPartial  = entity.AllowPartial;
+          IsDigitalPortal  = entity.IsDigitalPortal;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -49,6 +71,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool AllowPartial  { get; set; }
        [DataMember]
        public bool IsDigitalPortal  { get; set; }
+         #endregion Properties
    }
 
 }

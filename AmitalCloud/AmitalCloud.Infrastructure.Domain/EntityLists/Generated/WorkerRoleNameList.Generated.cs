@@ -13,12 +13,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class WorkerRoleNameList
+   public partial class WorkerRoleNameList   
    {
+       #region Constructors
+       public WorkerRoleNameList() : base() {}
+       public WorkerRoleNameList(WorkerRoleName entity) : base()
+       {
+          CreateDate  = entity.CreateDate;
+          Name  = entity.Name;
+          WaitingStatus  = entity.WaitingStatus;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public DateTime CreateDate  { get; set; }
 
@@ -27,6 +38,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Name  { get; set; }
        [DataMember]
        public int WaitingStatus  { get; set; }
+         #endregion Properties
    }
 
 }

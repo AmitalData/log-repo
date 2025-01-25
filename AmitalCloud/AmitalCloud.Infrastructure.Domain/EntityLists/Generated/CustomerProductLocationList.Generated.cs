@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerProductLocationList
+   public partial class CustomerProductLocationList   
    {
+       #region Constructors
+       public CustomerProductLocationList() : base() {}
+       public CustomerProductLocationList(CustomerProductLocation entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          CustomerId  = entity.CustomerId;
+          ProductTypeCode  = entity.ProductTypeCode;
+          CountryId  = entity.CountryId;
+          PotentialChargeableWeight  = entity.PotentialChargeableWeight;
+          CommitmentChargeableWeight  = entity.CommitmentChargeableWeight;
+          PotentialTEU  = entity.PotentialTEU;
+          CommitmentTEU  = entity.CommitmentTEU;
+          PotentialNumberOfShipments  = entity.PotentialNumberOfShipments;
+          CommitmentNumberOfShipments  = entity.CommitmentNumberOfShipments;
+          PotentialRevenue  = entity.PotentialRevenue;
+          CommitmentRevenue  = entity.CommitmentRevenue;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
 
@@ -49,6 +69,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public decimal? PotentialRevenue  { get; set; }
        [DataMember]
        public decimal? CommitmentRevenue  { get; set; }
+         #endregion Properties
    }
 
 }

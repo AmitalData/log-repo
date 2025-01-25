@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class AccountingPaymentMethodList
+   public partial class AccountingPaymentMethodList   
    {
+       #region Constructors
+       public AccountingPaymentMethodList() : base() {}
+       public AccountingPaymentMethodList(AccountingPaymentMethod entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          AddedManually  = entity.AddedManually;
+          Inactive  = entity.Inactive;
+          IsAR  = entity.IsAR;
+          IsAP  = entity.IsAP;
+          APExternalId  = entity.APExternalId;
+          ARExternalId  = entity.ARExternalId;
+          LocalName  = entity.LocalName;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string ARExternalId  { get; set; }
        [DataMember]
        public string LocalName  { get; set; }
+         #endregion Properties
    }
 
 }

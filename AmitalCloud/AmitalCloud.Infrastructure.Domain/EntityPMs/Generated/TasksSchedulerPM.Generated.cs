@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,59 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TasksSchedulerPM : BaseEntityPM   {
+   #region Constructors
+   public TasksSchedulerPM() : base() {} 
+   public TasksSchedulerPM(TasksScheduler entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDateTime = entity.CreateDateTime;
+		_createdBy = entity.CreatedBy;
+		_updateDateTime = entity.UpdateDateTime;
+		_updatedBy = entity.UpdatedBy;
+		_name = entity.Name;
+		_description = entity.Description;
+		_nextRunTime = entity.NextRunTime;
+		_lastRunStartTime = entity.LastRunStartTime;
+		_lastRunResult = entity.LastRunResult;
+		_inActive = entity.InActive;
+		_procedureCode = entity.ProcedureCode;
+		_triggerType = entity.TriggerType;
+		_satarday = entity.Satarday;
+		_sunday = entity.Sunday;
+		_monday = entity.Monday;
+		_tuesday = entity.Tuesday;
+		_wednesday = entity.Wednesday;
+		_thursday = entity.Thursday;
+		_friday = entity.Friday;
+		_monthlyDay = entity.MonthlyDay;
+		_startDateTime = entity.StartDateTime;
+		_repeatInMinutes = entity.RepeatInMinutes;
+		_isLastRunError = entity.IsLastRunError;
+		_type = entity.Type;
+		_schedulerDetailsXML = entity.SchedulerDetailsXML;
+		_schedulerDetailsData = default;
+		_nextRunTimeUTC = entity.NextRunTimeUTC;
+		_lastRunStartTimeUTC = entity.LastRunStartTimeUTC;
+		_startDateTimeUTC = entity.StartDateTimeUTC;
+		_version = entity.Version;
+		_status = entity.Status;
+		_duration = default;
+		_lastRunEndTime = entity.LastRunEndTime;
+		_lastEndStartTimeUTC = default;
+		_averageRunTime = entity.AverageRunTime;
+		_entityId = entity.EntityId;
+		_lastRunEndTimeUTC = entity.LastRunEndTimeUTC;
+		_retries = entity.Retries;
+		_recepients = default;
+		_resultType = entity.ResultType;
+		_format = entity.Format;
+		_advancedFormat = entity.AdvancedFormat;
+		_executedByServerName = entity.ExecutedByServerName;
+		documentTypeTemplateIds = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -771,4 +825,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
              set {  deletedDocumentTypeTemplateIds = value; }
 	    }
 	 }
+#endregion Properties
 }

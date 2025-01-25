@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,138 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentPackagePM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public ShipmentPackagePM() : base() {} 
+   public ShipmentPackagePM(ShipmentPackage entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_sOC = entity.SOC;
+		_shipmentId = entity.ShipmentId;
+		_originalShipmentPackageId = entity.OriginalShipmentPackageId;
+		_isDeliveryFU = entity.IsDeliveryFU;
+		_deliveryId = entity.DeliveryId;
+		_deliveryETD = entity.DeliveryETD;
+		_deliveryATD = entity.DeliveryATD;
+		_deliveryETA = entity.DeliveryETA;
+		_deliveryATA = entity.DeliveryATA;
+		_deliveryFrom = entity.DeliveryFrom;
+		_deliveryTo = entity.DeliveryTo;
+		_isEmptyContainerReturnFU = entity.IsEmptyContainerReturnFU;
+		_emptyContainerReturnId = entity.EmptyContainerReturnId;
+		_emptyContainerReturnETD = entity.EmptyContainerReturnETD;
+		_emptyContainerReturnATD = entity.EmptyContainerReturnATD;
+		_emptyContainerReturnETA = entity.EmptyContainerReturnETA;
+		_emptyContainerReturnATA = entity.EmptyContainerReturnATA;
+		_emptyContainerReturnFrom = entity.EmptyContainerReturnFrom;
+		_emptyContainerReturnTo = entity.EmptyContainerReturnTo;
+		_packageTypeId = entity.PackageTypeId;
+		_packageTypeName = default;
+		_containerNumber = entity.ContainerNumber;
+		_marksAndNumbers = entity.MarksAndNumbers;
+		_description = entity.Description;
+		_quantity = entity.Quantity;
+		_tare = entity.Tare;
+		_weight = entity.Weight;
+		_volume = entity.Volume;
+		_height = entity.Height;
+		_width = entity.Width;
+		_length = entity.Length;
+		_unNumber = entity.UnNumber;
+		_iMDGCode = entity.IMDGCode;
+		_classNumber = entity.ClassNumber;
+		_packagingGroup = entity.PackagingGroup;
+		_flashPoint = entity.FlashPoint;
+		_materialDescription = entity.MaterialDescription;
+		_temperature = entity.Temperature;
+		_ventilation = entity.Ventilation;
+		_shipperSeal = entity.ShipperSeal;
+		_carrierSeal = entity.CarrierSeal;
+		_harmonize = entity.Harmonize;
+		_isDangerous = entity.IsDangerous;
+		_volumetricWeight = entity.VolumetricWeight;
+		_commodityId = entity.CommodityId;
+		_numberOfInsidePackages = entity.NumberOfInsidePackages;
+		_numberOfInsidePackagesDetails = entity.NumberOfInsidePackagesDetails;
+		_vGM = entity.VGM;
+		_methodUsed = entity.MethodUsed;
+		_isContainer = default;
+		_packageTypeCode = default;
+		_printAs = default;
+		_containerSize = default;
+		_tEU = default;
+		_packageTypeIsAir = default;
+		_packageTypeIsOcean = default;
+		_packageTypeIsInland = default;
+		_packageTypeNote = default;
+		_packageTypeLocalName = default;
+		_packageTypeVolume = default;
+		_isPackageAddedManually = default;
+		_shipmentNumber = default;
+		_shipmentPMId = default;
+		_isAWBWizardDefault = default;
+		_dummyIdGuid = default;
+		_shipmentPM = default;
+		insideShipmentPackages = default;
+		shipmentPackageItems = default;
+		_reference1 = entity.Reference1;
+		_reference2 = entity.Reference2;
+		_reference3 = entity.Reference3;
+		_commodityNumber = entity.CommodityNumber;
+		_isMultiHarmonize = entity.IsMultiHarmonize;
+		_ceficClass = entity.CeficClass;
+		_kelmerCode = entity.KelmerCode;
+		_eMS = entity.EMS;
+		_properShippingName = entity.ProperShippingName;
+		_marinePollutant = entity.MarinePollutant;
+		_notes = entity.Notes;
+		_temperatureUnitCode = entity.TemperatureUnitCode;
+		_nonActiveContainer = entity.NonActiveContainer;
+		_onCarriageETD = entity.OnCarriageETD;
+		_onCarriageATD = entity.OnCarriageATD;
+		_onCarriageETA = entity.OnCarriageETA;
+		_onCarriageATA = entity.OnCarriageATA;
+		_reference4 = entity.Reference4;
+		_commodityName = entity.CommodityName;
+		_lastStatusCode = entity.LastStatusCode;
+		_lastStatusName = default;
+		_lastStatusDate = entity.LastStatusDate;
+		_deliveryTransportModeCode = entity.DeliveryTransportModeCode;
+		_eCRTransportModeCode = entity.ECRTransportModeCode;
+		_flashPointTemperatureUnitCode = entity.FlashPointTemperatureUnitCode;
+		_isContainerRefrigerated = default;
+		_splitIndex = default;
+		_isFromSplit = default;
+		shipmentPackageHarmonizes = default;
+		_eTD = entity.ETD;
+		_eTA = entity.ETA;
+		_routing = entity.Routing;
+		_voyageTripNumber = entity.VoyageTripNumber;
+		_hasContainerException = entity.HasContainerException;
+		_make = entity.Make;
+		_model = entity.Model;
+		_year = entity.Year;
+		_color = entity.Color;
+		_chassisNumber = entity.ChassisNumber;
+		_registrationNumber = entity.RegistrationNumber;
+		_countryId = entity.CountryId;
+		_warehouseReleaseNumber = entity.WarehouseReleaseNumber;
+		_routingIds = entity.RoutingIds;
+		_inUse = entity.InUse;
+		_horseId = entity.HorseId;
+		_horseName = default;
+		_lCLContainerTypeId = entity.LCLContainerTypeId;
+		_containerEntityId = entity.ContainerEntityId;
+		_containerStatusSourceCode = entity.ContainerStatusSourceCode;
+		_isPackageCheckedInLeg = default;
+		_changeSet = default;
+		_containerStatusName = default;
+		_containerStrippedDate = entity.ContainerStrippedDate;
+		_volumeInCBF = default;
+		_grossWeightInLB = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -2075,4 +2208,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

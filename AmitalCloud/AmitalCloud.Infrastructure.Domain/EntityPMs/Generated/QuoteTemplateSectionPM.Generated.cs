@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,29 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class QuoteTemplateSectionPM : BaseEntityPM   {
+   #region Constructors
+   public QuoteTemplateSectionPM() : base() {} 
+   public QuoteTemplateSectionPM(QuoteTemplateSection entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_name = entity.Name;
+		_description = entity.Description;
+		_isCancel = entity.IsCancel;
+		_quoteTemplateId = entity.QuoteTemplateId;
+		_sectionDocId = entity.SectionDocId;
+		_order = entity.Order;
+		_quoteTemplateSectionTypeCode = entity.QuoteTemplateSectionTypeCode;
+		_ischangeBodySection = default;
+		_isSettingTypeCodeS = default;
+		_isSettingTypeCodeP = default;
+		_templatedata = default;
+		_quoteId = default;
+		_isQuoteEdited = default;
+		_isExcluded = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -279,4 +303,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

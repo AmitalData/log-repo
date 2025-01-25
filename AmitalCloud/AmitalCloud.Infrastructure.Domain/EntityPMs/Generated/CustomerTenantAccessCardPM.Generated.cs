@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,29 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerTenantAccessCardPM : BaseEntityPM   {
+   #region Constructors
+   public CustomerTenantAccessCardPM() : base() {} 
+   public CustomerTenantAccessCardPM(CustomerTenantAccessCard entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_customerId = entity.CustomerId;
+		_customerTenantAccessId = entity.CustomerTenantAccessId;
+		_createByUserId = entity.CreateByUserId;
+		_createDate = entity.CreateDate;
+		_customerCode = default;
+		_customerName = default;
+		_lastShipmentDateInQueue = entity.LastShipmentDateInQueue;
+		_hybridStartDate = default;
+		_lastMappingDateTime = entity.LastMappingDateTime;
+		_updateDateTime = entity.UpdateDateTime;
+		_statusTypeCode = entity.StatusTypeCode;
+		_statusType = default;
+		_buildBatch = default;
+		_isExportActivated = entity.IsExportActivated;
+		_isCustomsActivated = entity.IsCustomsActivated;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -280,4 +304,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

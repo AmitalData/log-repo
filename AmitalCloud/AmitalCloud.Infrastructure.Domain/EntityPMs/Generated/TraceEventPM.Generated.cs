@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,40 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TraceEventPM : BaseEntityPM   {
+   #region Constructors
+   public TraceEventPM() : base() {} 
+   public TraceEventPM(TraceEvent entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_entityId = entity.EntityId;
+		_objectTableId = entity.ObjectTableId;
+		_deleted = entity.Deleted;
+		_externalId = entity.ExternalId;
+		_customerCareUserEmail = entity.CustomerCareUserEmail;
+		_isAddedManually = entity.IsAddedManually;
+		_partnerName = entity.PartnerName;
+		_eventTypeId = entity.EventTypeId;
+		_notes = entity.Notes;
+		_eventDateTime = entity.EventDateTime;
+		_logDateTime = entity.LogDateTime;
+		_userId = entity.UserId;
+		_location = entity.Location;
+		_entityNumber = default;
+		_eventTypeEnglishName = default;
+		_eventTypeLocalName = default;
+		_contactEnglishFirstName = default;
+		_shortView = default;
+		_isManualEntry = default;
+		_eventTypeCode = default;
+		_eventTypeCategoryCode = default;
+		_isAgentView = default;
+		_isCustomerView = default;
+		_childEntityId = entity.ChildEntityId;
+		_childObjectTableId = entity.ChildObjectTableId;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -455,4 +490,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

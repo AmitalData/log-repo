@@ -13,12 +13,39 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ARPaymentChequeReplicaList
+   public partial class ARPaymentChequeReplicaList   
    {
+       #region Constructors
+       public ARPaymentChequeReplicaList() : base() {}
+       public ARPaymentChequeReplicaList(ARPaymentChequeReplica entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          SearchFields  = entity.SearchFields;
+          PaymentId  = entity.PaymentId;
+            PaymentNumber  = default;
+          LineNumber  = entity.LineNumber;
+          ChequeNumber  = entity.ChequeNumber;
+          ValueDate  = entity.ValueDate;
+            CurrencyCode  = default;
+            CurrencyName  = default;
+          LocalAmount  = entity.LocalAmount;
+          ForeignAmount  = entity.ForeignAmount;
+          BankId  = entity.BankId;
+            BankNumber  = default;
+            BankName  = default;
+          BankBranch  = entity.BankBranch;
+          BankAccount  = entity.BankAccount;
+          StatusCode  = entity.StatusCode;
+          ExchangeRate  = entity.ExchangeRate;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -59,6 +86,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string StatusCode  { get; set; }
        [DataMember]
        public decimal? ExchangeRate  { get; set; }
+         #endregion Properties
    }
 
 }

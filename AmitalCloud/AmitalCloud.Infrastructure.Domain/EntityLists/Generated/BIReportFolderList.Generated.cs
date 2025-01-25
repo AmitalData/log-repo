@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BIReportFolderList
+   public partial class BIReportFolderList   
    {
+       #region Constructors
+       public BIReportFolderList() : base() {}
+       public BIReportFolderList(BIReportFolder entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          SearchFields  = entity.SearchFields;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          Index  = entity.Index;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+          PermissionForAll  = entity.PermissionForAll;
+          PermittedByUserId  = entity.PermittedByUserId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -49,6 +71,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool PermissionForAll  { get; set; }
        [DataMember]
        public string PermittedByUserId  { get; set; }
+         #endregion Properties
    }
 
 }

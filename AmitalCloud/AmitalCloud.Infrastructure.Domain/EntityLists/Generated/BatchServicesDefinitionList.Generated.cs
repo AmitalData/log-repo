@@ -13,12 +13,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BatchServicesDefinitionList
+   public partial class BatchServicesDefinitionList   
    {
+       #region Constructors
+       public BatchServicesDefinitionList() : base() {}
+       public BatchServicesDefinitionList(BatchServicesDefinition entity) : base()
+       {
+          Code  = entity.Code;
+            LastActivity  = default;
+            InActive  = default;
+            NumberOfThreads  = default;
+          ClassName  = entity.ClassName;
+          Parameter1  = entity.Parameter1;
+          Parameter2  = entity.Parameter2;
+            CPU  = default;
+            NumberOfDoneItems  = default;
+            DoneItemsInOneHour  = default;
+            DoneItemsInOneMinute  = default;
+            DoneItemsInFiveMinutes  = default;
+            WaitingItems  = default;
+            FailedItems  = default;
+          QueueDefinitionCode  = entity.QueueDefinitionCode;
+          UseRabbitMQ  = entity.UseRabbitMQ;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -53,6 +77,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string QueueDefinitionCode  { get; set; }
        [DataMember]
        public bool UseRabbitMQ  { get; set; }
+         #endregion Properties
    }
 
 }

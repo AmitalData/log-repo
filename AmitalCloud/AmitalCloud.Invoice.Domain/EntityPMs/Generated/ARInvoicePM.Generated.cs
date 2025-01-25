@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,207 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ARInvoicePM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public ARInvoicePM() : base() {} 
+   public ARInvoicePM(ARInvoice entity) : base()
+   {
+		_confirmationNumber = entity.ConfirmationNumber;
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_mainEntityId = entity.MainEntityId;
+		_isClosed = entity.IsClosed;
+		_amountInProfitCurrency = entity.AmountInProfitCurrency;
+		_profitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate;
+		_description = entity.Description;
+		_paymentTermExternalId = entity.PaymentTermExternalId;
+		_creditedByARInvoiceId = entity.CreditedByARInvoiceId;
+		_sATXML = entity.SATXML;
+		_profitCurrencyId = entity.ProfitCurrencyId;
+		_prepaidCollectId = entity.PrepaidCollectId;
+		_issuedByUserId = entity.IssuedByUserId;
+		_exchangeRateDate = entity.ExchangeRateDate;
+		_draftNumber = entity.DraftNumber;
+		_searchFields = entity.SearchFields;
+		_mainEntityReference = entity.MainEntityReference;
+		_amountDue = entity.AmountDue;
+		_expectedPaymentDate = entity.ExpectedPaymentDate;
+		_invoiceNumber = entity.InvoiceNumber;
+		_aRInvoiceTypeCode = entity.ARInvoiceTypeCode;
+		_aRInvoiceTypeName = default;
+		_paymentTermId = entity.PaymentTermId;
+		_statusName = default;
+		_amountDueInLocalCurrency = entity.AmountDueInLocalCurrency;
+		_amountDueInProfitCurrency = entity.AmountDueInProfitCurrency;
+		_paymentTermName = default;
+		_billToId = entity.BillToId;
+		_billToName = default;
+		_billToAddressId = entity.BillToAddressId;
+		_vatNumber = entity.VatNumber;
+		_createDate = entity.CreateDate;
+		_invoiceDate = entity.InvoiceDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_printByUserId = entity.PrintByUserId;
+		_printByUserName = default;
+		_invoiceCurrencyId = entity.InvoiceCurrencyId;
+		_isPrinted = entity.IsPrinted;
+		_updateDate = entity.UpdateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_invoiceCurrencyCode = default;
+		_localCurrencyId = entity.LocalCurrencyId;
+		_invoiceCurrencyExchangeRate = entity.InvoiceCurrencyExchangeRate;
+		_subTotalInLocalCurrency = entity.SubTotalInLocalCurrency;
+		_subTotalInInvoiceCurrency = entity.SubTotalInInvoiceCurrency;
+		_amountInLocalCurrency = entity.AmountInLocalCurrency;
+		_amountInInvoiceCurrency = entity.AmountInInvoiceCurrency;
+		_statusCode = entity.StatusCode;
+		_isAutoCredit = entity.IsAutoCredit;
+		_isCancelled = entity.IsCancelled;
+		_cancelledByARInvoiceId = entity.CancelledByARInvoiceId;
+		_internalNotes = entity.InternalNotes;
+		_printNotes = entity.PrintNotes;
+		_dueDate = entity.DueDate;
+		_printDate = entity.PrintDate;
+		_isInvoiceNumberManuallySet = entity.IsInvoiceNumberManuallySet;
+		_sent = entity.Sent;
+		_readyForTransfer = default;
+		_debitAccount = entity.DebitAccount;
+		_localCurrencyCode = default;
+		_profitCurrencyCode = default;
+		_transferError = entity.TransferError;
+		_accountingExternalCode = entity.AccountingExternalCode;
+		_houseNumber = entity.HouseNumber;
+		_masterNumber = entity.MasterNumber;
+		_transferStatusCode = entity.TransferStatusCode;
+		_branchId = entity.BranchId;
+		_customerRef = entity.CustomerRef;
+		_isConstituentInvoice = entity.IsConstituentInvoice;
+		_consolidationInvoiceId = entity.ConsolidationInvoiceId;
+		_isConsolidationInvoice = entity.IsConsolidationInvoice;
+		_transferTries = entity.TransferTries;
+		_isTransferStarted = entity.IsTransferStarted;
+		_transferStatusName = default;
+		_billToCode = default;
+		_approvedDate = entity.ApprovedDate;
+		_approvedByUserName = default;
+		_approvedByUserId = entity.ApprovedByUserId;
+		_operationalDate = entity.OperationalDate;
+		_dateForVATInterest = default;
+		_splitJournalByCurrency = entity.SplitJournalByCurrency;
+		_isExternalEntity = entity.IsExternalEntity;
+		_isGeneralInvoice = entity.IsGeneralInvoice;
+		_sATPaymentMethodCode = entity.SATPaymentMethodCode;
+		_isSecured = default;
+		_autoCreditByARInvoiceId = default;
+		_autoCreditByARInvoiceNumber = default;
+		_autoCreditedByARInvoiceId = default;
+		_autoCreditedByARInvoiceNumber = default;
+		_mainEntityStatus = default;
+		_billToType = default;
+		_billToPartnerTypeId = default;
+		_billToIsCreditLimitEnabled = default;
+		_billToCreditLimitAmount = default;
+		_billToCreditLimitOpenBalance = default;
+		_billToCreditLimitWarningPercentage = default;
+		_billToCreditLimitActualAmount = default;
+		_billToCreditLimitActualBalance = default;
+		_hasCreditLimitOverrideFeature = default;
+		_eventNote = default;
+		_reportUrl = default;
+		_consolidationInvoiceNumber = default;
+		_accountingExternalName = default;
+		_isTransferStatusSetManually = default;
+		_isBillToAllowConsolidation = default;
+		invoiceLines = default;
+		invoiceEntities = default;
+		invoicePayments = default;
+		invoiceTransfers = default;
+		constituentInvoices = default;
+		totalVATs = default;
+		_setVoided = default;
+		_setAsSent = default;
+		_setApproved = default;
+		_setReTransfer = default;
+		_setCancelDraft = default;
+		_journalId = default;
+		_journalNumber = default;
+		_transmissionError = entity.TransmissionError;
+		_relatedInvoice = entity.RelatedInvoice;
+		_metodoPagoCode = entity.MetodoPagoCode;
+		_usoCFDICode = entity.UsoCFDICode;
+		_sATTransferStatusCode = entity.SATTransferStatusCode;
+		_sATInvoiceStatusCode = entity.SATInvoiceStatusCode;
+		_isDraft = default;
+		_isMultiCurrency = entity.IsMultiCurrency;
+		_sATApprovalDate = entity.SATApprovalDate;
+		_sATAdditionalFieldsXML = entity.SATAdditionalFieldsXML;
+		_externalAccountingEntityId = entity.ExternalAccountingEntityId;
+		_salesmanUserId = entity.SalesmanUserId;
+		_salesmanUserName = default;
+		_isCustomsChargesOnly = entity.IsCustomsChargesOnly;
+		_billToAccountManagerName = default;
+		_sATTransferStatusName = default;
+		_sATInvoiceStatusName = default;
+		_intercompany = entity.Intercompany;
+		_bankAccountLiteId = entity.BankAccountLiteId;
+		_totalAmountForTaxReport = entity.TotalAmountForTaxReport;
+		_totaVatableAmountForTaxReport = entity.TotaVatableAmountForTaxReport;
+		_totalVAT = entity.TotalVAT;
+		_billToBlockNewInvoiceCreation = default;
+		_isExternalAPI = default;
+		_setReSendQBO = default;
+		_isFullAccounting = entity.IsFullAccounting;
+		_creditARInvoice = default;
+		_concurrencyGUID = entity.ConcurrencyGUID;
+		_newConcurrencyGUID = default;
+		_aRInvoiceStockId = entity.ARInvoiceStockId;
+		_isInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock;
+		_batchTaskExecutionId = default;
+		_billToLocalName = default;
+		_documentFilingId = entity.DocumentFilingId;
+		_branchName = default;
+		_billToCity = default;
+		_billToCountry = default;
+		_createdByPartner = entity.CreatedByPartner;
+		_billToGLAccountId = entity.BillToGLAccountId;
+		_regionalTaxId = entity.RegionalTaxId;
+		_regionalTaxPercentage = entity.RegionalTaxPercentage;
+		_dateForInterest = entity.DateForInterest;
+		_billToContactId = default;
+		_paidDate = entity.PaidDate;
+		_autoCreditedByInvoiceTypeCode = default;
+		_hasInterestFeature = default;
+		_isFromInterestBatchInvoice = entity.IsFromInterestBatchInvoice;
+		_partnerId = entity.PartnerId;
+		_masterEntityId = default;
+		_shipmentsNumbers = entity.ShipmentsNumbers;
+		_masterNumbers = entity.MasterNumbers;
+		_masterShipmentNumbers = entity.MasterShipmentNumbers;
+		_houseNumbers = entity.HouseNumbers;
+		_globalTaxCalculation = entity.GlobalTaxCalculation;
+		_interestReportNumber = default;
+		_interestReportId = default;
+		_paymentReferences = entity.PaymentReferences;
+		_regimenFiscalCode = entity.RegimenFiscalCode;
+		_agentReference1 = default;
+		_agentReference2 = default;
+		_periodCode = entity.PeriodCode;
+		_billToIsCustomer = default;
+		_resendToSAT = default;
+		_sATCancelReasonCode = entity.SATCancelReasonCode;
+		_paidStatus = entity.PaidStatus;
+		_totalEquation = entity.TotalEquation;
+		_totalExamptFortaxReport = entity.TotalExamptFortaxReport;
+		_documentTemplateId = entity.DocumentTemplateId;
+		_totalAmountNotForTaxReport = default;
+		_isSigned = entity.IsSigned;
+		_vatsAmountsManulAdjuested = default;
+		_isAutoCredited = default;
+		_hasDoc = default;
+		_isSignedName = default;
+		_confirmationNumberStatus = entity.ConfirmationNumberStatus;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _confirmationNumber ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3386,4 +3588,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

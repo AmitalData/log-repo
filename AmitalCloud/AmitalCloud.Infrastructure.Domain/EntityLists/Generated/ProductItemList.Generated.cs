@@ -13,12 +13,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ProductItemList
+   public partial class ProductItemList   
    {
+       #region Constructors
+       public ProductItemList() : base() {}
+       public ProductItemList(ProductItem entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CustomerId  = entity.CustomerId;
+          SKU  = entity.SKU;
+          InActive  = entity.InActive;
+          Description  = entity.Description;
+          Name  = entity.Name;
+          Brand  = entity.Brand;
+          SearchFields  = entity.SearchFields;
+          ASIN  = entity.ASIN;
+          UPC  = entity.UPC;
+          ProductValue  = entity.ProductValue;
+          ProductValueCurrencyId  = entity.ProductValueCurrencyId;
+          Quantity  = entity.Quantity;
+            ProductValueCurrencyCode  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -51,6 +74,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int? Quantity  { get; set; }
        [DataMember]
        public string ProductValueCurrencyCode  { get; set; }
+         #endregion Properties
    }
 
 }

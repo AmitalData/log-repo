@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BusinessHoursHolidayList
+   public partial class BusinessHoursHolidayList   
    {
+       #region Constructors
+       public BusinessHoursHolidayList() : base() {}
+       public BusinessHoursHolidayList(BusinessHoursHoliday entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          BusinessHourId  = entity.BusinessHourId;
+          Day  = entity.Day;
+          Month  = entity.Month;
+          Year  = entity.Year;
+          HolidayName  = entity.HolidayName;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          IsRecurring  = entity.IsRecurring;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          Inactive  = entity.Inactive;
+            BusinessHour  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -62,6 +84,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [DataMember]
        public string BusinessHour  { get; set; }
+         #endregion Properties
    }
 
 }

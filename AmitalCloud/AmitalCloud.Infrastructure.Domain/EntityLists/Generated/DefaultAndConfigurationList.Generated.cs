@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DefaultAndConfigurationList
+   public partial class DefaultAndConfigurationList   
    {
+       #region Constructors
+       public DefaultAndConfigurationList() : base() {}
+       public DefaultAndConfigurationList(DefaultAndConfiguration entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          SearchFields  = entity.SearchFields;
+          Is_Active  = entity.Is_Active;
+          StoreInCache  = entity.StoreInCache;
+          SetKey  = entity.SetKey;
+          SetValueType1  = entity.SetValueType1;
+          Value1  = entity.Value1;
+          SetValueType2  = entity.SetValueType2;
+          Value2  = entity.Value2;
+          AllowInheritance  = entity.AllowInheritance;
+          AdditionalKey  = entity.AdditionalKey;
+          SortOrder  = entity.SortOrder;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -49,6 +71,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string AdditionalKey  { get; set; }
        [DataMember]
        public int SortOrder  { get; set; }
+         #endregion Properties
    }
 
 }

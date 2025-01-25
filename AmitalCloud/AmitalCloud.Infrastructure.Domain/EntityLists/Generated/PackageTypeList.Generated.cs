@@ -13,12 +13,43 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class PackageTypeList
+   public partial class PackageTypeList   
    {
+       #region Constructors
+       public PackageTypeList() : base() {}
+       public PackageTypeList(PackageType entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          MeasurementId  = entity.MeasurementId;
+          TEU  = entity.TEU;
+          Volume  = entity.Volume;
+          ContainerSize  = entity.ContainerSize;
+            TransportModeId  = default;
+          Code  = entity.Code;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+          IsOcean  = entity.IsOcean;
+          IsAir  = entity.IsAir;
+          IsInland  = entity.IsInland;
+          AddedManually  = entity.AddedManually;
+          IsContainer  = entity.IsContainer;
+          Notes  = entity.Notes;
+          PrintAs  = entity.PrintAs;
+          InActive  = entity.InActive;
+          SearchFields  = entity.SearchFields;
+            MeasurementCode  = default;
+            MeasurementShortName  = default;
+          IsRefrigerated  = entity.IsRefrigerated;
+          IsVehicle  = entity.IsVehicle;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -67,6 +98,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsRefrigerated  { get; set; }
        [DataMember]
        public bool IsVehicle  { get; set; }
+         #endregion Properties
    }
 
 }

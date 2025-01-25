@@ -13,12 +13,62 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TasksSchedulerList
+   public partial class TasksSchedulerList   
    {
+       #region Constructors
+       public TasksSchedulerList() : base() {}
+       public TasksSchedulerList(TasksScheduler entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDateTime  = entity.CreateDateTime;
+          CreatedBy  = entity.CreatedBy;
+          UpdateDateTime  = entity.UpdateDateTime;
+          UpdatedBy  = entity.UpdatedBy;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          NextRunTime  = entity.NextRunTime;
+          LastRunStartTime  = entity.LastRunStartTime;
+          LastRunResult  = entity.LastRunResult;
+          InActive  = entity.InActive;
+          ProcedureCode  = entity.ProcedureCode;
+          TriggerType  = entity.TriggerType;
+          Satarday  = entity.Satarday;
+          Sunday  = entity.Sunday;
+          Monday  = entity.Monday;
+          Tuesday  = entity.Tuesday;
+          Wednesday  = entity.Wednesday;
+          Thursday  = entity.Thursday;
+          Friday  = entity.Friday;
+          MonthlyDay  = entity.MonthlyDay;
+          StartDateTime  = entity.StartDateTime;
+          RepeatInMinutes  = entity.RepeatInMinutes;
+          IsLastRunError  = entity.IsLastRunError;
+          Type  = entity.Type;
+          NextRunTimeUTC  = entity.NextRunTimeUTC;
+          LastRunStartTimeUTC  = entity.LastRunStartTimeUTC;
+          StartDateTimeUTC  = entity.StartDateTimeUTC;
+          Version  = entity.Version;
+          Status  = entity.Status;
+            Duration  = default;
+          LastRunEndTime  = entity.LastRunEndTime;
+            LastEndStartTimeUTC  = default;
+          AverageRunTime  = entity.AverageRunTime;
+          LastRunEndTimeUTC  = entity.LastRunEndTimeUTC;
+          Retries  = entity.Retries;
+            Recepients  = default;
+          ResultType  = entity.ResultType;
+          Format  = entity.Format;
+          AdvancedFormat  = entity.AdvancedFormat;
+          ExecutedByServerName  = entity.ExecutedByServerName;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -105,6 +155,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string AdvancedFormat  { get; set; }
        [DataMember]
        public string ExecutedByServerName  { get; set; }
+         #endregion Properties
    }
 
 }

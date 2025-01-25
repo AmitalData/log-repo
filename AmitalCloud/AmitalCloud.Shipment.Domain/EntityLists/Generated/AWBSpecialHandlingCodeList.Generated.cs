@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class AWBSpecialHandlingCodeList
+   public partial class AWBSpecialHandlingCodeList   
    {
+       #region Constructors
+       public AWBSpecialHandlingCodeList() : base() {}
+       public AWBSpecialHandlingCodeList(AWBSpecialHandlingCode entity) : base()
+       {
+          Id  = entity.Id;
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          IsIATA  = entity.IsIATA;
+          InActive  = entity.InActive;
+          AirlineId  = entity.AirlineId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -41,6 +56,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
    
        [DataMember]
        public string AirlineId  { get; set; }
+         #endregion Properties
    }
 
 }

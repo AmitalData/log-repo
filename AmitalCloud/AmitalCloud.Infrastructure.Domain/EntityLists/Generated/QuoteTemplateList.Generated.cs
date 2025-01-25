@@ -13,12 +13,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class QuoteTemplateList
+   public partial class QuoteTemplateList   
    {
+       #region Constructors
+       public QuoteTemplateList() : base() {}
+       public QuoteTemplateList(QuoteTemplate entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          HeaderDocId  = entity.HeaderDocId;
+          FooterDocId  = entity.FooterDocId;
+          QuoteTemplateSettingId  = entity.QuoteTemplateSettingId;
+          Name  = entity.Name;
+          IsTemplate  = entity.IsTemplate;
+          OriginalQuoteTemplateId  = entity.OriginalQuoteTemplateId;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          SearchFields  = entity.SearchFields;
+          TemplateTypeCode  = entity.TemplateTypeCode;
+            TemplateTypeName  = default;
+          IsDefault  = entity.IsDefault;
+            ShowLocalLanguage  = default;
+          InActive  = entity.InActive;
+            IsLastQuoteTemplateDocumentVersion  = default;
+          IsCopiedAtSignup  = entity.IsCopiedAtSignup;
+          IsEnabledForCustomers  = entity.IsEnabledForCustomers;
+            TenantName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -65,6 +95,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsEnabledForCustomers  { get; set; }
        [DataMember]
        public string TenantName  { get; set; }
+         #endregion Properties
    }
 
 }

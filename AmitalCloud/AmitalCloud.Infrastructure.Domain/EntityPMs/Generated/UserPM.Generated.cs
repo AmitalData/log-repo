@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,87 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class UserPM : BaseEntityPM   {
+   #region Constructors
+   public UserPM() : base() {} 
+   public UserPM(User entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_code = entity.Code;
+		_isBranchRestricted = entity.IsBranchRestricted;
+		_isFreelancer = entity.IsFreelancer;
+		_isProductRestricted = entity.IsProductRestricted;
+		_freelancerId = entity.FreelancerId;
+		_email = default;
+		_password = default;
+		_englishName = default;
+		_departmentId = entity.DepartmentId;
+		_branchId = entity.BranchId;
+		_inActive = default;
+		_localName = default;
+		_computedLocalName = default;
+		_departmentName = default;
+		_branchName = default;
+		_isSalesman = entity.IsSalesman;
+		_businessUnitId = entity.BusinessUnitId;
+		_createDate = entity.CreateDate;
+		_expirationDate = entity.ExpirationDate;
+		_licencedUser = entity.LicencedUser;
+		_productTypeCode = entity.ProductTypeCode;
+		_productTypeName = default;
+		_distributorCode = entity.DistributorCode;
+		_isDistributor = entity.IsDistributor;
+		_isShowContactDetailsInTheMobileApp = entity.IsShowContactDetailsInTheMobileApp;
+		_personalId = entity.PersonalId;
+		_notes = entity.Notes;
+		_searchFields = entity.SearchFields;
+		_userType = default;
+		_facebookId = default;
+		_position = default;
+		_freelancerName = default;
+		_internetAccess = default;
+		_businessPhone = default;
+		_mobile = default;
+		_fax = default;
+		_birthday = default;
+		_anniversary = default;
+		_cardId = default;
+		_signupRole = default;
+		_isHybrid = default;
+		_dontShowLocal = default;
+		_expirationDaysLeft = default;
+		_contact = default;
+		_userLastLogin = default;
+		roles = default;
+		userPermittedBranches = default;
+		userPermittedProducts = default;
+		_entityChanged = default;
+		_activeModified = default;
+		_hasPassword = default;
+		_isCustomerCare = default;
+		rolePMLists = default;
+		_isTwoFactorAuthenticationEnabled = entity.IsTwoFactorAuthenticationEnabled;
+		_showLogBoxToolTip = entity.ShowLogBoxToolTip;
+		_showInboxToolTip = entity.ShowInboxToolTip;
+		_setAngularAsDefault = entity.SetAngularAsDefault;
+		_technology = entity.Technology;
+		_documentFilingInbox = entity.DocumentFilingInbox;
+		_roleCode = default;
+		_displayGettingStarted = default;
+		_userRolesNamesList = default;
+		_userRolesNamesList_db = default;
+		_showLocalNameInLOV = entity.ShowLocalNameInLOV;
+		_userRoles = entity.UserRoles;
+		_additionalPackagesOnly = entity.AdditionalPackagesOnly;
+		_layoutDirection = entity.LayoutDirection;
+		_dontShowLocalLabels = default;
+		_partnerCode = default;
+		_signatureImageId = entity.SignatureImageId;
+		_securityLevel = entity.SecurityLevel;
+		_isHRUser = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -1270,4 +1352,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

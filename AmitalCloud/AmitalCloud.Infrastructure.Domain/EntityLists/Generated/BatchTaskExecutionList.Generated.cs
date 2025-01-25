@@ -13,12 +13,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BatchTaskExecutionList
+   public partial class BatchTaskExecutionList   
    {
+       #region Constructors
+       public BatchTaskExecutionList() : base() {}
+       public BatchTaskExecutionList(BatchTaskExecution entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          SearchFields  = entity.SearchFields;
+          ClassName  = entity.ClassName;
+          PrametersXml  = entity.PrametersXml;
+          StatusCode  = entity.StatusCode;
+          ErrorLog  = entity.ErrorLog;
+          StartDateTime  = entity.StartDateTime;
+          DoneDateTime  = entity.DoneDateTime;
+          ProgressMessage  = entity.ProgressMessage;
+          ProgressPercentage  = entity.ProgressPercentage;
+            StatusName  = default;
+            CreatedByUserName  = default;
+          Subject  = entity.Subject;
+          CallStack  = entity.CallStack;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -55,6 +80,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Subject  { get; set; }
        [DataMember]
        public string CallStack  { get; set; }
+         #endregion Properties
    }
 
 }

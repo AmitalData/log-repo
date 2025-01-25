@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,24 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class AccountingTransferLinePM : BaseEntityPM   {
+   #region Constructors
+   public AccountingTransferLinePM() : base() {} 
+   public AccountingTransferLinePM(AccountingTransferLine entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_entityId = entity.EntityId;
+		_accountingTransferHeaderId = entity.AccountingTransferHeaderId;
+		_searchFields = entity.SearchFields;
+		_entityReference = entity.EntityReference;
+		_invoiceDate = default;
+		_billToName = default;
+		_statusName = default;
+		_amountInInvoiceCurrency = default;
+		_invoiceCurrencyCode = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -199,4 +218,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

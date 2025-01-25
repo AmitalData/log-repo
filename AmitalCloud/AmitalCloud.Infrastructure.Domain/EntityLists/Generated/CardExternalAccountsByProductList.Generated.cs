@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CardExternalAccountsByProductList
+   public partial class CardExternalAccountsByProductList   
    {
+       #region Constructors
+       public CardExternalAccountsByProductList() : base() {}
+       public CardExternalAccountsByProductList(CardExternalAccountsByProduct entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          GLAccount  = entity.GLAccount;
+          CostCenter  = entity.CostCenter;
+          UpdateDate  = entity.UpdateDate;
+          CardId  = entity.CardId;
+          ProductTypeCode  = entity.ProductTypeCode;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -37,6 +53,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ProductTypeCode  { get; set; }
        [DataMember]
        public string UpdatedByUserId  { get; set; }
+         #endregion Properties
    }
 
 }

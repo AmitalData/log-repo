@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class GlobalZoneList
+   public partial class GlobalZoneList   
    {
+       #region Constructors
+       public GlobalZoneList() : base() {}
+       public GlobalZoneList(GlobalZone entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Notes  = entity.Notes;
+          Code  = entity.Code;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+          InActive  = entity.InActive;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -37,6 +53,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool InActive  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

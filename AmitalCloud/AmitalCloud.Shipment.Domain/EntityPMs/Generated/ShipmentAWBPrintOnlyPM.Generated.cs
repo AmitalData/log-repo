@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,29 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentAWBPrintOnlyPM : BaseEntityPM   {
+   #region Constructors
+   public ShipmentAWBPrintOnlyPM() : base() {} 
+   public ShipmentAWBPrintOnlyPM(ShipmentAWBPrintOnly entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_exchangeRate = entity.ExchangeRate;
+		_measurementId = entity.MeasurementId;
+		_iATACodeId = entity.IATACodeId;
+		_currencyId = entity.CurrencyId;
+		_dueTypeCode = entity.DueTypeCode;
+		_prepaidCollectId = entity.PrepaidCollectId;
+		_shipmentId = entity.ShipmentId;
+		_quantity = entity.Quantity;
+		_unitPrice = entity.UnitPrice;
+		_amount = entity.Amount;
+		_currencyCode = default;
+		_dueTypeName = default;
+		_measurementCode = default;
+		_iATACodeName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -279,4 +303,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

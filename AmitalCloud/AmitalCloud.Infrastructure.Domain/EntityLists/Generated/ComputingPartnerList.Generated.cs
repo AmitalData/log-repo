@@ -13,12 +13,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ComputingPartnerList
+   public partial class ComputingPartnerList   
    {
+       #region Constructors
+       public ComputingPartnerList() : base() {}
+       public ComputingPartnerList(ComputingPartner entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Name  = entity.Name;
+          Remarks  = entity.Remarks;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          SearchFields  = entity.SearchFields;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+          Code  = entity.Code;
+          Description  = entity.Description;
+          InActive  = entity.InActive;
+            LoggedTenantId  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -51,6 +74,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool InActive  { get; set; }
        [DataMember]
        public int LoggedTenantId  { get; set; }
+         #endregion Properties
    }
 
 }

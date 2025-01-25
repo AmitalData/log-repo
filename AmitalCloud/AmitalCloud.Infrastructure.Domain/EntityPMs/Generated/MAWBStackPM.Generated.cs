@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,24 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class MAWBStackPM : BaseEntityPM   {
+   #region Constructors
+   public MAWBStackPM() : base() {} 
+   public MAWBStackPM(MAWBStack entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_isUsed = entity.IsUsed;
+		_number = entity.Number;
+		_insertionDate = entity.InsertionDate;
+		_airlineId = entity.AirlineId;
+		_notes = entity.Notes;
+		_assignedToId = entity.AssignedToId;
+		_assignedToShipperName = default;
+		_airlineName = default;
+		_airline = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -199,4 +218,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

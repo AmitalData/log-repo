@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class MoveTypeList
+   public partial class MoveTypeList   
    {
+       #region Constructors
+       public MoveTypeList() : base() {}
+       public MoveTypeList(MoveType entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          MoveTypeEnglishName  = entity.MoveTypeEnglishName;
+          MoveTypeLocalName  = entity.MoveTypeLocalName;
+          AddedManually  = entity.AddedManually;
+          InActive  = entity.InActive;
+          TransportModeId  = entity.TransportModeId;
+          Code  = entity.Code;
+          SearchFields  = entity.SearchFields;
+            IsAir  = default;
+            IsInland  = default;
+            IsOcean  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsInland  { get; set; }
        [DataMember]
        public bool IsOcean  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class SATInterfaceSettingList
+   public partial class SATInterfaceSettingList   
    {
+       #region Constructors
+       public SATInterfaceSettingList() : base() {}
+       public SATInterfaceSettingList(SATInterfaceSetting entity) : base()
+       {
+          Tenant  = entity.Tenant;
+            CompanyId  = default;
+          SATInterfaceCode  = entity.SATInterfaceCode;
+          Token  = entity.Token;
+            SATInterfaceName  = default;
+          ActivationDate  = entity.ActivationDate;
+          MetodoPagoCode  = entity.MetodoPagoCode;
+            CustomsInterfaceCode  = default;
+          IsARInvoiceTransferEnabled  = entity.IsARInvoiceTransferEnabled;
+          IsCartaPorteTransferEnabled  = entity.IsCartaPorteTransferEnabled;
+          SATCompanyName  = entity.SATCompanyName;
+          TransferExpenseCharges  = entity.TransferExpenseCharges;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string SATCompanyName  { get; set; }
        [DataMember]
        public bool TransferExpenseCharges  { get; set; }
+         #endregion Properties
    }
 
 }

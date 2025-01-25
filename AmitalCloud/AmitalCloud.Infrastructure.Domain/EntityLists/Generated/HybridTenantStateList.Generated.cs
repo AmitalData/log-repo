@@ -13,12 +13,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class HybridTenantStateList
+   public partial class HybridTenantStateList   
    {
+       #region Constructors
+       public HybridTenantStateList() : base() {}
+       public HybridTenantStateList(HybridTenantState entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          FailedQueue  = entity.FailedQueue;
+          WaitingQueue  = entity.WaitingQueue;
+          LastUpdateDateTime  = entity.LastUpdateDateTime;
+          LastQueueDateTime  = entity.LastQueueDateTime;
+            LastUpdateDateTimeTextColor  = default;
+            WaitingQueueTextColor  = default;
+            FailedQueueTextColor  = default;
+            TenantName  = default;
+          VersionNumber  = entity.VersionNumber;
+          VersionDate  = entity.VersionDate;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -43,6 +62,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string VersionNumber  { get; set; }
        [DataMember]
        public DateTime? VersionDate  { get; set; }
+         #endregion Properties
    }
 
 }

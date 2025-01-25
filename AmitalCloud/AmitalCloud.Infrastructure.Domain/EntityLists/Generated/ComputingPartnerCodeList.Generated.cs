@@ -13,16 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ComputingPartnerCodeList
+   public partial class ComputingPartnerCodeList   
    {
+       #region Constructors
+       public ComputingPartnerCodeList() : base() {}
+       public ComputingPartnerCodeList(ComputingPartnerCode entity) : base()
+       {
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public DateTime? CreateDate  { get; set; }
        [DataMember]
        public DateTime? UpdateDate  { get; set; }
+         #endregion Properties
    }
 
 }

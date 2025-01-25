@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerAdditionalServicePM : BaseEntityPM   {
+   #region Constructors
+   public CustomerAdditionalServicePM() : base() {} 
+   public CustomerAdditionalServicePM(CustomerAdditionalService entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_potential = entity.Potential;
+		_notes = entity.Notes;
+		_customerId = entity.CustomerId;
+		_additionalServiceId = entity.AdditionalServiceId;
+		_additionalServiceName = default;
+		_additionalServiceCode = default;
+		_customerName = default;
+		_salesman = default;
+		_primaryContact = default;
+		_salesmanUserId = default;
+		_businessUnitId = default;
+		_changeSetOp = default;
+		_notesRightToLeft = entity.NotesRightToLeft;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -248,4 +270,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

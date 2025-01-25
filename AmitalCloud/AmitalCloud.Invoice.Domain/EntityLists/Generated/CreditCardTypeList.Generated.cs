@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class CreditCardTypeList
+   public partial class CreditCardTypeList   
    {
+       #region Constructors
+       public CreditCardTypeList() : base() {}
+       public CreditCardTypeList(CreditCardType entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          InActive  = entity.InActive;
+          BankAccountId  = entity.BankAccountId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public bool InActive  { get; set; }
        [DataMember]
        public string BankAccountId  { get; set; }
+         #endregion Properties
    }
 
 }

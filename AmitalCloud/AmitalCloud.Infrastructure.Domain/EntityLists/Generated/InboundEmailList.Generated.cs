@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class InboundEmailList
+   public partial class InboundEmailList   
    {
+       #region Constructors
+       public InboundEmailList() : base() {}
+       public InboundEmailList(InboundEmail entity) : base()
+       {
+          Id  = entity.Id;
+          IsRejected  = entity.IsRejected;
+          AnalyzeQueueId  = entity.AnalyzeQueueId;
+          EntityId  = entity.EntityId;
+          Uniquekey  = entity.Uniquekey;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          ObjectTableId  = entity.ObjectTableId;
+          CreatedByContactId  = entity.CreatedByContactId;
+            ObjectTableName  = default;
+          Tenant  = entity.Tenant;
+            SearchFields  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

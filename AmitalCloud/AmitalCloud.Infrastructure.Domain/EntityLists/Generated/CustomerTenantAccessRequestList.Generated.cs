@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerTenantAccessRequestList
+   public partial class CustomerTenantAccessRequestList   
    {
+       #region Constructors
+       public CustomerTenantAccessRequestList() : base() {}
+       public CustomerTenantAccessRequestList(CustomerTenantAccessRequest entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          RequestDateTime  = entity.RequestDateTime;
+          RequestStatus  = entity.RequestStatus;
+            StatusName  = default;
+          ForwarderId  = entity.ForwarderId;
+            ForwarderName  = default;
+          IsCustoms  = entity.IsCustoms;
+          IsExport  = entity.IsExport;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsCustoms  { get; set; }
        [DataMember]
        public bool IsExport  { get; set; }
+         #endregion Properties
    }
 
 }

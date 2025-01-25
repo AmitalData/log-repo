@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,19 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class FBLStockPM : BaseEntityPM   {
+   #region Constructors
+   public FBLStockPM() : base() {} 
+   public FBLStockPM(FBLStock entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_isUsed = entity.IsUsed;
+		_number = entity.Number;
+		_insertionDate = entity.InsertionDate;
+		_notes = entity.Notes;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -119,4 +133,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ConfirmationNumberStatusList
+   public partial class ConfirmationNumberStatusList   
    {
+       #region Constructors
+       public ConfirmationNumberStatusList() : base() {}
+       public ConfirmationNumberStatusList(ConfirmationNumberStatus entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          LocalName  = entity.LocalName;
+          InActive  = entity.InActive;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string LocalName  { get; set; }
        [DataMember]
        public bool InActive  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AutomationResultEmailRecipientList
+   public partial class AutomationResultEmailRecipientList   
    {
+       #region Constructors
+       public AutomationResultEmailRecipientList() : base() {}
+       public AutomationResultEmailRecipientList(AutomationResultEmailRecipient entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          AutomationsId  = entity.AutomationsId;
+          RecipientType  = entity.RecipientType;
+          RecipientValue  = entity.RecipientValue;
+          PartnerObjectFieldCode  = entity.PartnerObjectFieldCode;
+          IsNotifyBack  = entity.IsNotifyBack;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string PartnerObjectFieldCode  { get; set; }
        [DataMember]
        public bool IsNotifyBack  { get; set; }
+         #endregion Properties
    }
 
 }

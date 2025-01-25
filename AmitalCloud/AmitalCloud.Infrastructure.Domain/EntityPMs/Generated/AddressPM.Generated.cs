@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,55 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class AddressPM : BaseEntityPM   {
+   #region Constructors
+   public AddressPM() : base() {} 
+   public AddressPM(Address entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_addressTypeId = entity.AddressTypeId;
+		_externalId = entity.ExternalId;
+		_vatNumber = default;
+		_salesmanUserId = default;
+		_signature = default;
+		_cardCode = default;
+		_contactEmail = default;
+		_contactName = default;
+		_contactPosition = default;
+		_contactBusinessPhone = default;
+		_contactMobile = default;
+		_contactFax = default;
+		_cardEnglishName = default;
+		_searchFields = entity.SearchFields;
+		_name = entity.Name;
+		_description = entity.Description;
+		_city = entity.City;
+		_address1 = entity.Address1;
+		_address2 = entity.Address2;
+		_countryId = entity.CountryId;
+		_stateId = entity.StateId;
+		_zipCode = entity.ZipCode;
+		_phoneNumber = entity.PhoneNumber;
+		_faxNumber = entity.FaxNumber;
+		_aTTN = entity.ATTN;
+		_cardId = entity.CardId;
+		_isLocalLanguage = entity.IsLocalLanguage;
+		_inActive = entity.InActive;
+		_carrierId = default;
+		_countryCode = default;
+		_countryName = default;
+		_countryEnglishName = default;
+		_stateEnglishName = default;
+		_stateCode = default;
+		_isHybrid = default;
+		_cityCode = default;
+		_isCreatedWithPartner = default;
+		_hasStates = default;
+		_isStateRequired = default;
+		_branchId = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -695,4 +745,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

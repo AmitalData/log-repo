@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerAdditionalServiceList
+   public partial class CustomerAdditionalServiceList   
    {
+       #region Constructors
+       public CustomerAdditionalServiceList() : base() {}
+       public CustomerAdditionalServiceList(CustomerAdditionalService entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          Potential  = entity.Potential;
+          Notes  = entity.Notes;
+          CustomerId  = entity.CustomerId;
+          AdditionalServiceId  = entity.AdditionalServiceId;
+            AdditionalServiceName  = default;
+            AdditionalServiceCode  = default;
+            CustomerName  = default;
+            Salesman  = default;
+            PrimaryContact  = default;
+            SalesmanUserId  = default;
+            BusinessUnitId  = default;
+            ChangeSetOp  = default;
+          NotesRightToLeft  = entity.NotesRightToLeft;
+       }
+       #endregion Constructors
+       #region Properties
       
        [DataMember]
        public int Tenant  { get; set; }
@@ -63,6 +85,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [DataMember]
        public bool NotesRightToLeft  { get; set; }
+         #endregion Properties
    }
 
 }

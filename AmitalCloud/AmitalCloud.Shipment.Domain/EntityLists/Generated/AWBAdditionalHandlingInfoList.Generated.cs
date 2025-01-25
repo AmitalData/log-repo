@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class AWBAdditionalHandlingInfoList
+   public partial class AWBAdditionalHandlingInfoList   
    {
+       #region Constructors
+       public AWBAdditionalHandlingInfoList() : base() {}
+       public AWBAdditionalHandlingInfoList(AWBAdditionalHandlingInfo entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          Name  = entity.Name;
+          PrintDescription  = entity.PrintDescription;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string PrintDescription  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

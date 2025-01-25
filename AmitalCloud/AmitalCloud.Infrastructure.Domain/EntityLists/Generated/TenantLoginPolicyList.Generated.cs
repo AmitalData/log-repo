@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TenantLoginPolicyList
+   public partial class TenantLoginPolicyList   
    {
+       #region Constructors
+       public TenantLoginPolicyList() : base() {}
+       public TenantLoginPolicyList(TenantLoginPolicy entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          LoginPolicyCode  = entity.LoginPolicyCode;
+          IsEnabledForSpecificUsers  = entity.IsEnabledForSpecificUsers;
+          TwoFactorInternalIPs  = entity.TwoFactorInternalIPs;
+            InActive  = default;
+          KeepUserLoggedIn  = entity.KeepUserLoggedIn;
+          ExcludeInternalIPs  = entity.ExcludeInternalIPs;
+          AllowedIPs  = entity.AllowedIPs;
+          SessionTimeout  = entity.SessionTimeout;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string AllowedIPs  { get; set; }
        [DataMember]
        public decimal SessionTimeout  { get; set; }
+         #endregion Properties
    }
 
 }

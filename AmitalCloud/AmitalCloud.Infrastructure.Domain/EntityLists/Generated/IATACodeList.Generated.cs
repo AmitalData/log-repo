@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class IATACodeList
+   public partial class IATACodeList   
    {
+       #region Constructors
+       public IATACodeList() : base() {}
+       public IATACodeList(IATACode entity) : base()
+       {
+          Id  = entity.Id;
+          Code  = entity.Code;
+          Name  = entity.Name;
+          MeasurementCode  = entity.MeasurementCode;
+          DueTypeCode  = entity.DueTypeCode;
+          IsIATA  = entity.IsIATA;
+          InActive  = entity.InActive;
+          AirlineId  = entity.AirlineId;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -47,6 +64,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

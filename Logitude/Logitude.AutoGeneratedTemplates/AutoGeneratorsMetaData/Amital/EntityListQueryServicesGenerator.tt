@@ -30,12 +30,11 @@ foreach (string file in Directory.EnumerateFiles(outputFilePath, "*.lxml"))
 	GenerateEntityListQueryService(file,destinationFolder+"/Generated/"+fileNameWithoutExtension+"ListQueryService.Generated.cs",contextName,false);
 }
 
-foreach (string file in Directory.EnumerateFiles(outputFilePath, "*.lxml"))
-{
-
-    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-	GenerateEntityListQueryService(file,destinationFolder+"/"+fileNameWithoutExtension+"ListQueryService.cs",contextName,true);
-}
+//foreach (string file in Directory.EnumerateFiles(outputFilePath, "*.lxml"))
+//{
+//    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+//	GenerateEntityListQueryService(file,destinationFolder+"/"+fileNameWithoutExtension+"ListQueryService.cs",contextName,true);
+//}
  
 }
 #>

@@ -13,16 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DWHSettingList
+   public partial class DWHSettingList   
    {
+       #region Constructors
+       public DWHSettingList() : base() {}
+       public DWHSettingList(DWHSetting entity) : base()
+       {
+          Tenant  = entity.Tenant;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
        public int Tenant  { get; set; }
+         #endregion Properties
    }
 
 }

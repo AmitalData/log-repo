@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,90 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentPayablePM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public ShipmentPayablePM() : base() {} 
+   public ShipmentPayablePM(ShipmentPayable entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_shipmentId = entity.ShipmentId;
+		_expectedAmount = entity.ExpectedAmount;
+		_expectedAmountLocal = entity.ExpectedAmountLocal;
+		_updateByUserId = entity.UpdateByUserId;
+		_updateDate = entity.UpdateDate;
+		_valueDate = entity.ValueDate;
+		_minAmount = entity.MinAmount;
+		_maxAmount = entity.MaxAmount;
+		_expectedAmountInProfitCurrency = entity.ExpectedAmountInProfitCurrency;
+		_profitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate;
+		_shipmentPayableParentId = entity.ShipmentPayableParentId;
+		_isEditedByUser = entity.IsEditedByUser;
+		_accountedAmount = entity.AccountedAmount;
+		_accountedAmountInLocalCurrency = entity.AccountedAmountInLocalCurrency;
+		_accountedAmountInProfitCurrency = entity.AccountedAmountInProfitCurrency;
+		_openAmount = entity.OpenAmount;
+		_openAmountInLocalCurrency = entity.OpenAmountInLocalCurrency;
+		_openAmountInProfitCurrency = entity.OpenAmountInProfitCurrency;
+		_shipmentPayableAmountTypeCode = entity.ShipmentPayableAmountTypeCode;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_correctionAmount = entity.CorrectionAmount;
+		_correctionByUserId = entity.CorrectionByUserId;
+		_correctionNote = entity.CorrectionNote;
+		_correctionDate = entity.CorrectionDate;
+		_isFromQuote = entity.IsFromQuote;
+		_quoteChargeId = entity.QuoteChargeId;
+		_isChargeBySteps = entity.IsChargeBySteps;
+		_quoteCostMinPrice = default;
+		_childShipmentPayables = default;
+		_iATACodeId = entity.IATACodeId;
+		_prepaidCollectId = entity.PrepaidCollectId;
+		_aWBPrint = entity.AWBPrint;
+		_dueTypeCode = entity.DueTypeCode;
+		_shipmentPayableLineStatusCode = entity.ShipmentPayableLineStatusCode;
+		_measurementId = entity.MeasurementId;
+		_quantity = entity.Quantity;
+		_rate = entity.Rate;
+		_currencyId = entity.CurrencyId;
+		_unitPrice = entity.UnitPrice;
+		_notes = entity.Notes;
+		_chargesTypeId = entity.ChargesTypeId;
+		_vendorId = entity.VendorId;
+		_chargesTypeCode = default;
+		_chargesTypeName = default;
+		_chargesGroupCode = default;
+		_shipmentPayableLineStatusName = default;
+		_measurementCode = default;
+		_measurementShortName = default;
+		_currencyCode = default;
+		_dueTypeName = default;
+		_vendorName = default;
+		_shipmentPayableAmountTypeName = default;
+		_viewOrder = default;
+		_vatTypeId = entity.VatTypeId;
+		_changeSetOp = default;
+		_childChangeOp = default;
+		_shipmentNumber = default;
+		_isBackToBack = entity.IsBackToBack;
+		_receivableId = entity.ReceivableId;
+		_quoteCostMinAmount = entity.QuoteCostMinAmount;
+		_quoteCostMaxAmount = entity.QuoteCostMaxAmount;
+		_uOMPercentage = default;
+		_tariffId = entity.TariffId;
+		_tariffNumber = entity.TariffNumber;
+		_tariffVersion = entity.TariffVersion;
+		_payablesDisconnectedFromTariff = default;
+		_tariffLineId = entity.TariffLineId;
+		_vatAmountLocal = entity.VatAmountLocal;
+		_vatAmountProfit = entity.VatAmountProfit;
+		_createdByUserName = default;
+		_updateByUserName = default;
+		_proratedAmountInLocalCurrency = entity.ProratedAmountInLocalCurrency;
+		_proratedAmountInProfitCurrency = entity.ProratedAmountInProfitCurrency;
+		_isCustomsChargesTariff = entity.IsCustomsChargesTariff;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -1256,4 +1341,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

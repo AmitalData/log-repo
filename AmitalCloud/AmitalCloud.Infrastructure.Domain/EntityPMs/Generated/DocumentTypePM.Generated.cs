@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,71 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class DocumentTypePM : BaseEntityPM   {
+   #region Constructors
+   public DocumentTypePM() : base() {} 
+   public DocumentTypePM(DocumentType entity) : base()
+   {
+		_id = entity.Id;
+		_followUpTypeId = default;
+		_notes = entity.Notes;
+		_subject = entity.Subject;
+		_documentTypeDefaultReportTemplateId = entity.DocumentTypeDefaultReportTemplateId;
+		_documentTypeDefaultHTMLTemplateId = entity.DocumentTypeDefaultHTMLTemplateId;
+		_documentTypeDefaultEditorTool = entity.DocumentTypeDefaultEditorTool;
+		_customControl = entity.CustomControl;
+		_customerRoleId = entity.CustomerRoleId;
+		_agentRoleId = entity.AgentRoleId;
+		_sharedDocumentTypeCopyId = entity.SharedDocumentTypeCopyId;
+		_isAirDigitalSignRequired = entity.IsAirDigitalSignRequired;
+		_isOceanDigitalSignRequired = entity.IsOceanDigitalSignRequired;
+		_isInlandDigitalSignRequired = entity.IsInlandDigitalSignRequired;
+		_isReadOnly = entity.IsReadOnly;
+		_isMaster = entity.IsMaster;
+		_isDirect = entity.IsDirect;
+		_isHouse = entity.IsHouse;
+		_objectTableName = default;
+		_searchFields = entity.SearchFields;
+		_isAgentSharedInHouse = entity.IsAgentSharedInHouse;
+		_isAgentSharedInDirect = entity.IsAgentSharedInDirect;
+		_isAgentSharedInMaster = entity.IsAgentSharedInMaster;
+		_isCustomerView = entity.IsCustomerView;
+		_fileName = entity.FileName;
+		_isAgentView = entity.IsAgentView;
+		_orderBy = entity.OrderBy;
+		_isCopiedAtSignup = entity.IsCopiedAtSignup;
+		_inActive = entity.InActive;
+		_printingFieldsScreenCode = entity.PrintingFieldsScreenCode;
+		_isSystemAdditionalPrintingFields = entity.IsSystemAdditionalPrintingFields;
+		_isEnabledForCustomers = entity.IsEnabledForCustomers;
+		_countryCode = entity.CountryCode;
+		_isDocumentOneTimePrintLimited = entity.IsDocumentOneTimePrintLimited;
+		_isOcean = entity.IsOcean;
+		_isAir = entity.IsAir;
+		_name = entity.Name;
+		_code = entity.Code;
+		_documentTypeCategoryCode = entity.DocumentTypeCategoryCode;
+		_templateFormatCode = entity.TemplateFormatCode;
+		_objectTableId = entity.ObjectTableId;
+		_limitedPrintCopyId = entity.LimitedPrintCopyId;
+		_tenant = entity.Tenant;
+		_isDocOut = entity.IsDocOut;
+		_isDocIn = entity.IsDocIn;
+		_isInland = entity.IsInland;
+		_followUpTypeName = default;
+		_isHybrid = default;
+		documentTypeCustomFields = default;
+		documentTypeCopies = default;
+		documentTypeTemplates = default;
+		_documentTypeCategoryName = default;
+		_addedManually = entity.AddedManually;
+		_onSendPopulateDateFieldName = entity.OnSendPopulateDateFieldName;
+		_onUploadPopulateDateFieldName = entity.OnUploadPopulateDateFieldName;
+		_onPrintPopulateDateFieldName = entity.OnPrintPopulateDateFieldName;
+		_copyName = default;
+		_isCustomerUploadPermission = entity.IsCustomerUploadPermission;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -995,4 +1061,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

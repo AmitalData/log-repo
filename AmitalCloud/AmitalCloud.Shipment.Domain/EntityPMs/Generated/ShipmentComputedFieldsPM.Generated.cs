@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,74 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentComputedFieldsPM : BaseEntityPM   {
+   #region Constructors
+   public ShipmentComputedFieldsPM() : base() {} 
+   public ShipmentComputedFieldsPM(ShipmentComputedFields entity) : base()
+   {
+		_firstPickupATD = entity.FirstPickupATD;
+		_id = entity.Id;
+		_firstPickupATA = entity.FirstPickupATA;
+		_finalDeliveryETD = entity.FinalDeliveryETD;
+		_finalDeliveryETA = entity.FinalDeliveryETA;
+		_finalDeliveryATD = entity.FinalDeliveryATD;
+		_finalDeliveryATA = entity.FinalDeliveryATA;
+		_containersNumbers = entity.ContainersNumbers;
+		_firstPickupLocation = entity.FirstPickupLocation;
+		_tenant = entity.Tenant;
+		_operationallyClosedByUserId = entity.OperationallyClosedByUserId;
+		_numberOfDeliveries = entity.NumberOfDeliveries;
+		_lastPickupETA = entity.LastPickupETA;
+		_lastPickupETD = entity.LastPickupETD;
+		_lastPickupATA = entity.LastPickupATA;
+		_lastPickupATD = entity.LastPickupATD;
+		_deliveryToPortId = entity.DeliveryToPortId;
+		_deliveryFrom = entity.DeliveryFrom;
+		_deliveryTo = entity.DeliveryTo;
+		_pickupFrom = entity.PickupFrom;
+		_pickupTo = entity.PickupTo;
+		_operationallyClosedByUserName = entity.OperationallyClosedByUserName;
+		_isMissingDocuments = entity.IsMissingDocuments;
+		_documentsSearchFields = entity.DocumentsSearchFields;
+		_lastDocumentDateTime = entity.LastDocumentDateTime;
+		_missingDocumentsCount = entity.MissingDocumentsCount;
+		_missingDocumentsNames = entity.MissingDocumentsNames;
+		_isRequestedDocuments = entity.IsRequestedDocuments;
+		_requestedDocumentsCount = entity.RequestedDocumentsCount;
+		_numberOfHouses = entity.NumberOfHouses;
+		_isDigitalSignRequired = entity.IsDigitalSignRequired;
+		_isDepositionRequired = entity.IsDepositionRequired;
+		_commodity = entity.Commodity;
+		_createdFromDigital = entity.CreatedFromDigital;
+		_deliveryTruckerId = entity.DeliveryTruckerId;
+		_deliveryTruckerNumber = entity.DeliveryTruckerNumber;
+		_deliveryDriver = entity.DeliveryDriver;
+		_deliveryTrailerNumber = entity.DeliveryTrailerNumber;
+		_deliveryNotes = entity.DeliveryNotes;
+		_pickupTruckerId = entity.PickupTruckerId;
+		_pickupTruckerNumber = entity.PickupTruckerNumber;
+		_pickupDriver = entity.PickupDriver;
+		_pickupNotes = entity.PickupNotes;
+		_deliveryDate = entity.DeliveryDate;
+		_onHandDate = entity.OnHandDate;
+		_pODDate = entity.PODDate;
+		_bookingConfirmationSent = entity.BookingConfirmationSent;
+		_preAlertSent = entity.PreAlertSent;
+		_deliveryNoticeSent = entity.DeliveryNoticeSent;
+		_expectedArrivalNoticeSent = entity.ExpectedArrivalNoticeSent;
+		_t1Received = entity.T1Received;
+		_arrivalNoticeSent = entity.ArrivalNoticeSent;
+		_containersNumbersandTypesArray = entity.ContainersNumbersandTypesArray;
+		_accountingClosedByUserId = entity.AccountingClosedByUserId;
+		_mainCarriageETA = entity.MainCarriageETA;
+		_mainCarriageETD = entity.MainCarriageETD;
+		_mainCarriageATA = entity.MainCarriageATA;
+		_mainCarriageATD = entity.MainCarriageATD;
+		_packagesQuantityAndType = entity.PackagesQuantityAndType;
+		_transshipments = entity.Transshipments;
+		_isDocumentsNeedApprove = entity.IsDocumentsNeedApprove;
+   }
+   #endregion Constructors
+   #region Properties
    	  private DateTime? _firstPickupATD ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -999,4 +1068,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 
 
@@ -22,6 +23,26 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ARPaymentBankTranferPM : BaseEntityPM   {
+   #region Constructors
+   public ARPaymentBankTranferPM() : base() {} 
+   public ARPaymentBankTranferPM(ARPaymentBankTranfer entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_searchFields = entity.SearchFields;
+		_paymentId = entity.PaymentId;
+		_lineNumber = entity.LineNumber;
+		_paymentRef = entity.PaymentRef;
+		_valueDate = entity.ValueDate;
+		_bankAccountId = entity.BankAccountId;
+		_currencyId = entity.CurrencyId;
+		_localAmount = entity.LocalAmount;
+		_foreignAmount = entity.ForeignAmount;
+		_exchageRate = entity.ExchageRate;
+		_bankAccountNumber = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -232,4 +253,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

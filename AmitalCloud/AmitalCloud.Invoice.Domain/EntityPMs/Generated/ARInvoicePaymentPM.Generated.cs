@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,26 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ARInvoicePaymentPM : BaseEntityPM   {
+   #region Constructors
+   public ARInvoicePaymentPM() : base() {} 
+   public ARInvoicePaymentPM(ARInvoicePayment entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_localAmount = entity.LocalAmount;
+		_foreignAmount = entity.ForeignAmount;
+		_aRPaymentId = entity.ARPaymentId;
+		_aRInvoiceId = entity.ARInvoiceId;
+		_foreignCurrencyId = entity.ForeignCurrencyId;
+		_invoiceId = default;
+		_paymentNumber = default;
+		_changeSetOp = default;
+		_exchangeRate = entity.ExchangeRate;
+		_paymentAmount = entity.PaymentAmount;
+		_foreignCurrencyCode = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -231,4 +252,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

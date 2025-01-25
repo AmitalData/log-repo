@@ -13,12 +13,58 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AccountingPartnerList : CustomFieldList
+   public partial class AccountingPartnerList : CustomFieldList   
    {
+       #region Constructors
+       public AccountingPartnerList() : base() {}
+       public AccountingPartnerList(AccountingPartner entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+            Website  = default;
+            Code  = default;
+            EnglishName  = default;
+            LocalName  = default;
+            InActive  = default;
+            VatNumber  = default;
+            AccountingCard  = default;
+            PaymentTermId  = default;
+            PaymentTermEnglishName  = default;
+            Notes  = default;
+            InvoiceCurrencyId  = default;
+            VatTypeId  = default;
+            EnableConsolidationInvoices  = default;
+            CityName  = default;
+            CountryId  = default;
+            CountryCode  = default;
+            CountryName  = default;
+            SearchFields  = default;
+            SATForeignRFC  = default;
+            MetodoPagoCode  = default;
+            UsoCFDICode  = default;
+            ExternalId2  = default;
+            ReceivablesAccountingCard  = default;
+            PayablesAccountingCard  = default;
+            ExternalAccountingBusinessArea  = default;
+            PaymentMethodCode  = default;
+          PrimaryContactName  = entity.PrimaryContactName;
+          PrimaryContactEmail  = entity.PrimaryContactEmail;
+          PrimaryContactPhone  = entity.PrimaryContactPhone;
+            GLAccountId  = default;
+            GLAccountNumber  = default;
+            CollectorId  = default;
+          CreditLimit  = entity.CreditLimit;
+          InsuredCreditlimit  = entity.InsuredCreditlimit;
+            RegimenFiscalCode  = default;
+            SATReceptorName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -97,6 +143,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string RegimenFiscalCode  { get; set; }
        [DataMember]
        public string SATReceptorName  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ChargesExternalAccountsByProductPM : BaseEntityPM   {
+   #region Constructors
+   public ChargesExternalAccountsByProductPM() : base() {} 
+   public ChargesExternalAccountsByProductPM(ChargesExternalAccountsByProduct entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_payablesGLAccount = entity.PayablesGLAccount;
+		_payablesCostCenter = entity.PayablesCostCenter;
+		_receivablesGLAccount = entity.ReceivablesGLAccount;
+		_receivablesCostCenter = entity.ReceivablesCostCenter;
+		_chargesTypeId = entity.ChargesTypeId;
+		_productTypeCode = entity.ProductTypeCode;
+		_updateDate = entity.UpdateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_productTypeName = default;
+		_updatedByUserName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -215,4 +235,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

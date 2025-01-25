@@ -13,12 +13,79 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ObjectTableList
+   public partial class ObjectTableList   
    {
+       #region Constructors
+       public ObjectTableList() : base() {}
+       public ObjectTableList(ObjectTable entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          IsNewWizard  = entity.IsNewWizard;
+          NewWizardControlName  = entity.NewWizardControlName;
+          DependencyFilter1  = entity.DependencyFilter1;
+          DependencyFilter2  = entity.DependencyFilter2;
+          DependencyFilter3  = entity.DependencyFilter3;
+          HasCustomValidator  = entity.HasCustomValidator;
+          KeyPropertyPath  = entity.KeyPropertyPath;
+          AutoCompleteSearchWindow  = entity.AutoCompleteSearchWindow;
+          IsClosed  = entity.IsClosed;
+          HeaderScreenId  = entity.HeaderScreenId;
+          HasCounter  = entity.HasCounter;
+          EnableEditFromLOV  = entity.EnableEditFromLOV;
+          EnableAddFromLOV  = entity.EnableAddFromLOV;
+          IsRestrictable  = entity.IsRestrictable;
+          IsMain  = entity.IsMain;
+          DBTableName  = entity.DBTableName;
+          DescriptionTextCodeId  = entity.DescriptionTextCodeId;
+          IsSaveButtonVisible  = entity.IsSaveButtonVisible;
+          MainTipCode  = entity.MainTipCode;
+          EnableSecurity  = entity.EnableSecurity;
+          ObjectTableTypeCode  = entity.ObjectTableTypeCode;
+          IsComposition  = entity.IsComposition;
+          MaxNumberOfCustomFields  = entity.MaxNumberOfCustomFields;
+          AllowCustomFields  = entity.AllowCustomFields;
+          IsLookUp  = entity.IsLookUp;
+          CodeField  = entity.CodeField;
+          DisableSearchBox  = entity.DisableSearchBox;
+          ClientModuleName  = entity.ClientModuleName;
+          ServerModuleName  = entity.ServerModuleName;
+          NewWizardComponentPath  = entity.NewWizardComponentPath;
+          HasHelper  = entity.HasHelper;
+          HasShortTitle  = entity.HasShortTitle;
+          HasMenuButtons  = entity.HasMenuButtons;
+          HasFiltersMenu  = entity.HasFiltersMenu;
+          SplitComponentPath  = entity.SplitComponentPath;
+          SearchFields  = entity.SearchFields;
+          HasDocuments  = entity.HasDocuments;
+          AllowedForComputingPartners  = entity.AllowedForComputingPartners;
+          Name  = entity.Name;
+          DescriptionTextCodeCode  = entity.DescriptionTextCodeCode;
+            AutoCompleteBox1  = default;
+            AutoCompleteBox2  = default;
+            BaseObjectTableId  = default;
+          NameField  = entity.NameField;
+          AllowedInTicket  = entity.AllowedInTicket;
+          LovDisplayMemberPath  = entity.LovDisplayMemberPath;
+          LovDisplayMemberPathLocal  = entity.LovDisplayMemberPathLocal;
+          ParentObjectTableName  = entity.ParentObjectTableName;
+          AvailableInCustomization  = entity.AvailableInCustomization;
+          ParentObjectTableId  = entity.ParentObjectTableId;
+          IsCustom  = entity.IsCustom;
+          SupportSubEntity  = entity.SupportSubEntity;
+          ApplyGenericCustomFields  = entity.ApplyGenericCustomFields;
+          FullNameTextCodeId  = entity.FullNameTextCodeId;
+            FullNameTextCodeDefaultText  = default;
+          AvailableInDocumentTypes  = entity.AvailableInDocumentTypes;
+          DBTableShortName  = entity.DBTableShortName;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -139,6 +206,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool AvailableInDocumentTypes  { get; set; }
        [DataMember]
        public string DBTableShortName  { get; set; }
+         #endregion Properties
    }
 
 }

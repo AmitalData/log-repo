@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,31 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TarrifHeaderPM : BaseEntityPM   {
+   #region Constructors
+   public TarrifHeaderPM() : base() {} 
+   public TarrifHeaderPM(TarrifHeader entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_cardId = entity.CardId;
+		_tarrifTypeCode = entity.TarrifTypeCode;
+		_fromDate = entity.FromDate;
+		_toDate = entity.ToDate;
+		_createDate = entity.CreateDate;
+		_inActive = entity.InActive;
+		_notes = entity.Notes;
+		_transitTimeNotes = entity.TransitTimeNotes;
+		_fromLocationCode = default;
+		_toLocationCode = default;
+		_fromLocationString = default;
+		_toLocationString = default;
+		fromLocationList = default;
+		toLocationList = default;
+		tarrifCharges = default;
+		tarrifFromToes = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -375,4 +401,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
              set {  deletedTarrifFromToes = value; }
 	    }
 	 }
+#endregion Properties
 }

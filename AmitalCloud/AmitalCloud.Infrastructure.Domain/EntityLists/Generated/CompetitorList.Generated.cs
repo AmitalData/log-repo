@@ -13,12 +13,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CompetitorList
+   public partial class CompetitorList   
    {
+       #region Constructors
+       public CompetitorList() : base() {}
+       public CompetitorList(Competitor entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Name  = entity.Name;
+          Website  = entity.Website;
+          Strengths  = entity.Strengths;
+          Weaknesses  = entity.Weaknesses;
+          Opportunity  = entity.Opportunity;
+          Threat  = entity.Threat;
+          AddressId  = entity.AddressId;
+          SearchFields  = entity.SearchFields;
+          InActive  = entity.InActive;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -43,6 +62,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public bool InActive  { get; set; }
+         #endregion Properties
    }
 
 }

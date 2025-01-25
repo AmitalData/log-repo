@@ -13,12 +13,179 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerList
+   public partial class CustomerList   
    {
+       #region Constructors
+       public CustomerList() : base() {}
+       public CustomerList(Customer entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Field4  = entity.Field4;
+          Field5  = entity.Field5;
+          Field6  = entity.Field6;
+          Field7  = entity.Field7;
+          Field8  = entity.Field8;
+          Field9  = entity.Field9;
+          Field10  = entity.Field10;
+          BeforeDeactiveStatusCode  = entity.BeforeDeactiveStatusCode;
+          FreelancerId  = entity.FreelancerId;
+          LogBoxActivated  = entity.LogBoxActivated;
+            InvoiceCurrencyId  = default;
+            CityName  = default;
+          LastShipmentDate  = entity.LastShipmentDate;
+            Seniority  = default;
+          RankId  = entity.RankId;
+          StartWorkingManuallySet  = entity.StartWorkingManuallySet;
+          StartWorkingDate  = entity.StartWorkingDate;
+            RankCode  = default;
+            BillToName  = default;
+            VatTypeId  = default;
+          Field1  = entity.Field1;
+          Field2  = entity.Field2;
+          Field3  = entity.Field3;
+            SharedLogisticsInvitationStatusName  = default;
+            CargoTrackingInvitationStatusName  = default;
+            LastLoginDate  = default;
+            InvitationDate  = default;
+          IndustryId  = entity.IndustryId;
+          LeadSourceId  = entity.LeadSourceId;
+          CollectorId  = entity.CollectorId;
+          ClassifierId  = entity.ClassifierId;
+            IndustryName  = default;
+            ATTN  = default;
+            CreateDate  = default;
+          LeadDescription  = entity.LeadDescription;
+            CollectorName  = default;
+            ClassifierName  = default;
+          CustomsAgentId  = entity.CustomsAgentId;
+          ForwarderId  = entity.ForwarderId;
+          MediatorId  = entity.MediatorId;
+            LeadSourceName  = default;
+            CustomerStatusName  = default;
+          PrimaryContactName  = entity.PrimaryContactName;
+          PrimaryContactPhone  = entity.PrimaryContactPhone;
+          ReadyForActivationDate  = entity.ReadyForActivationDate;
+          IsCustomer  = entity.IsCustomer;
+          CustomerStatusCode  = entity.CustomerStatusCode;
+            CreatedByUserId  = default;
+            UpdatedByUserId  = default;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+            PrimaryContactId  = default;
+          RegionId  = entity.RegionId;
+            RegionName  = default;
+          CustomerSizeId  = entity.CustomerSizeId;
+            CountryName  = default;
+            PotentialCustomers  = default;
+            UpdateDate  = default;
+          LastCallDate  = entity.LastCallDate;
+          LastMeetingDate  = entity.LastMeetingDate;
+          LastOpportunityDate  = entity.LastOpportunityDate;
+          FirstInvoiceDate  = entity.FirstInvoiceDate;
+          FirstShipmentDate  = entity.FirstShipmentDate;
+          LastQuoteDate  = entity.LastQuoteDate;
+          LastInteractionDate  = entity.LastInteractionDate;
+            CountryId  = default;
+            EnableConsolidationInvoices  = default;
+            ProductsWatch  = default;
+            SalesmanBusinessUnitId  = default;
+          ActivityWatch  = entity.ActivityWatch;
+          PrimaryContactEmail  = entity.PrimaryContactEmail;
+            InvoiceCurrencyCode  = default;
+          KnownConsignor  = entity.KnownConsignor;
+          KCExpirationDate  = entity.KCExpirationDate;
+            Code  = default;
+            EnglishName  = default;
+            LocalName  = default;
+            InActive  = default;
+          SalesmanUserId  = entity.SalesmanUserId;
+            Website  = default;
+            BillToId  = default;
+            VatNumber  = default;
+            AccountingCard  = default;
+            PaymentTermId  = default;
+            PaymentTermEnglishName  = default;
+            AccountManagerUserEnglishName  = default;
+            SalesmanUserEnglishName  = default;
+            RankName  = default;
+            Notes  = default;
+            PartnerTypeId  = default;
+            SearchFields  = default;
+            CountryCode  = default;
+            IsActiveForMobile  = default;
+            FreelancerName  = default;
+            ForwarderName  = default;
+            CustomsAgentName  = default;
+            MediatorName  = default;
+            InvoicesDue  = default;
+            LastActivityDate  = default;
+            LastActivityTypeName  = default;
+            LastActivityByUserName  = default;
+            CustomerStatusTemplateCode  = default;
+            IsBlockedQuickSearch  = default;
+            IsBlockedBusinessUnit  = default;
+            SATForeignRFC  = default;
+            MetodoPagoCode  = default;
+            UsoCFDICode  = default;
+          ActivatedByUserId  = entity.ActivatedByUserId;
+          SetAsInactiveByUserId  = entity.SetAsInactiveByUserId;
+          ActivationRequestedByUserId  = entity.ActivationRequestedByUserId;
+          IsPrivateLabelCustomer  = entity.IsPrivateLabelCustomer;
+          BlockNewInvoiceCreation  = entity.BlockNewInvoiceCreation;
+          BlockNewShipmentCreation  = entity.BlockNewShipmentCreation;
+            ExternalId2  = default;
+            SupportNotes  = default;
+            ZipCode  = default;
+            Address1  = default;
+            Address2  = default;
+            Phone  = default;
+            CustomerSizeName  = default;
+            ReceivablesAccountingCard  = default;
+            PayablesAccountingCard  = default;
+          CompetitorFields  = entity.CompetitorFields;
+          IsCreditLimitEnabled  = entity.IsCreditLimitEnabled;
+          CreditLimitAmount  = entity.CreditLimitAmount;
+          CreditLimitOpenBalance  = entity.CreditLimitOpenBalance;
+          CreditLimitWarningPercentage  = entity.CreditLimitWarningPercentage;
+            ExternalAccountingBusinessArea  = default;
+            PaymentMethodCode  = default;
+          ActivationDate  = entity.ActivationDate;
+          InactiveDate  = entity.InactiveDate;
+          ActivationRequestDate  = entity.ActivationRequestDate;
+            ActivatedByUserName  = default;
+            SetAsInactiveByName  = default;
+            ActivationRequestedByUserName  = default;
+            SharedLogisticsInvitationStatusCode  = default;
+            CargoTrackingInvitationStatusCode  = default;
+          LastOpportunitySubject  = entity.LastOpportunitySubject;
+          LastOpportunityStatus  = entity.LastOpportunityStatus;
+            CreatedByPartner  = default;
+            StateName  = default;
+            StorageFreeDays  = default;
+            GLAccountNumber  = default;
+            IsAutonomy  = default;
+            RegimenFiscalCode  = default;
+          TeamId  = entity.TeamId;
+            TeamName  = default;
+          ExportLocalCustomerGroupId  = entity.ExportLocalCustomerGroupId;
+          ImportLocalCustomerGroupId  = entity.ImportLocalCustomerGroupId;
+            SATCustomerName  = default;
+            LastLoginDateViaPC  = default;
+            LastLoginDateViaMobile  = default;
+            CargoTrackingInvitationDate  = default;
+            CodeDataTemplate  = default;
+            CityNameDataTemplate  = default;
+            EnglishNameDataTemplate  = default;
+            StartWorkingDataTemplate  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -339,6 +506,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string EnglishNameDataTemplate  { get; set; }
        [DataMember]
        public DateTime StartWorkingDataTemplate  { get; set; }
+         #endregion Properties
    }
 
 }

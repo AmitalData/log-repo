@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class HelpResourceList
+   public partial class HelpResourceList   
    {
+       #region Constructors
+       public HelpResourceList() : base() {}
+       public HelpResourceList(HelpResource entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          Language  = entity.Language;
+          Type  = entity.Type;
+          Category  = entity.Category;
+          FileName  = entity.FileName;
+          SearchFields  = entity.SearchFields;
+          IsNew  = entity.IsNew;
+            TypeName  = default;
+            CategoryName  = default;
+          Tenant  = entity.Tenant;
+          Inactive  = entity.Inactive;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -49,6 +71,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+         #endregion Properties
    }
 
 }

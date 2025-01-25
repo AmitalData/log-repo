@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TermsofUseSignatureList
+   public partial class TermsofUseSignatureList   
    {
+       #region Constructors
+       public TermsofUseSignatureList() : base() {}
+       public TermsofUseSignatureList(TermsofUseSignature entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ContactId  = entity.ContactId;
+          SignedDatetime  = entity.SignedDatetime;
+          TermsofUseId  = entity.TermsofUseId;
+            VersionNumber  = default;
+            VersionDocumentId  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int VersionNumber  { get; set; }
        [DataMember]
        public string VersionDocumentId  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,33 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ProductItemPM : BaseEntityPM   {
+   #region Constructors
+   public ProductItemPM() : base() {} 
+   public ProductItemPM(ProductItem entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_customerId = entity.CustomerId;
+		_sKU = entity.SKU;
+		_inActive = entity.InActive;
+		_description = entity.Description;
+		hTSCodes = default;
+		_name = entity.Name;
+		_brand = entity.Brand;
+		_searchFields = entity.SearchFields;
+		_aSIN = entity.ASIN;
+		_uPC = entity.UPC;
+		_originCountryId = entity.OriginCountryId;
+		_originCountryName = default;
+		_shipperId = entity.ShipperId;
+		_shipperName = default;
+		_productValue = entity.ProductValue;
+		_productValueCurrencyId = entity.ProductValueCurrencyId;
+		_quantity = entity.Quantity;
+		_productValueCurrencyCode = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -360,4 +388,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

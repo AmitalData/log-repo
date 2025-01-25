@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class AccountingSystemsSyncStatusList
+   public partial class AccountingSystemsSyncStatusList   
    {
+       #region Constructors
+       public AccountingSystemsSyncStatusList() : base() {}
+       public AccountingSystemsSyncStatusList(AccountingSystemsSyncStatus entity) : base()
+       {
+          LastErrorDate  = entity.LastErrorDate;
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          ExternalCodesLastUpdate  = entity.ExternalCodesLastUpdate;
+          LastRequestDate  = entity.LastRequestDate;
+          LastError  = entity.LastError;
+          SyncInterval  = entity.SyncInterval;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public DateTime? LastErrorDate  { get; set; }
 
@@ -35,6 +50,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string LastError  { get; set; }
        [DataMember]
        public int? SyncInterval  { get; set; }
+         #endregion Properties
    }
 
 }

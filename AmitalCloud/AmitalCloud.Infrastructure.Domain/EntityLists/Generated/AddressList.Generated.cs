@@ -13,12 +13,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AddressList
+   public partial class AddressList   
    {
+       #region Constructors
+       public AddressList() : base() {}
+       public AddressList(Address entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          AddressTypeId  = entity.AddressTypeId;
+            VatNumber  = default;
+          SearchFields  = entity.SearchFields;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          City  = entity.City;
+          Address1  = entity.Address1;
+          Address2  = entity.Address2;
+          CountryId  = entity.CountryId;
+          StateId  = entity.StateId;
+          ZipCode  = entity.ZipCode;
+          PhoneNumber  = entity.PhoneNumber;
+          FaxNumber  = entity.FaxNumber;
+          ATTN  = entity.ATTN;
+          CardId  = entity.CardId;
+          IsLocalLanguage  = entity.IsLocalLanguage;
+          InActive  = entity.InActive;
+            CountryCode  = default;
+            CountryName  = default;
+            StateCode  = default;
+            StateName  = default;
+            CountryEC  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -69,6 +101,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string StateName  { get; set; }
        [DataMember]
        public bool CountryEC  { get; set; }
+         #endregion Properties
    }
 
 }

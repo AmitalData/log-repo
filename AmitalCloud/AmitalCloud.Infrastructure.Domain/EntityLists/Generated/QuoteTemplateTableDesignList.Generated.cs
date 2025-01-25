@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class QuoteTemplateTableDesignList
+   public partial class QuoteTemplateTableDesignList   
    {
+       #region Constructors
+       public QuoteTemplateTableDesignList() : base() {}
+       public QuoteTemplateTableDesignList(QuoteTemplateTableDesign entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          BorderTypeCode  = entity.BorderTypeCode;
+          BorderColor  = entity.BorderColor;
+          BorderThickness  = entity.BorderThickness;
+          HeaderDesignId  = entity.HeaderDesignId;
+          LinesDesignId  = entity.LinesDesignId;
+          GroupByDesignId  = entity.GroupByDesignId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -37,6 +53,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string LinesDesignId  { get; set; }
        [DataMember]
        public string GroupByDesignId  { get; set; }
+         #endregion Properties
    }
 
 }

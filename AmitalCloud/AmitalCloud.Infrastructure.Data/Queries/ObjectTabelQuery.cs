@@ -20,257 +20,17 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public ObjectTableQuery(int tenant) => repository = new ObjectTableRepository(tenant);
         public ObjectTableQuery(ObjectTableRepository objectTabelRepository) => repository = objectTabelRepository;
 
-        public IQueryable<ObjectTablePM> GetLastUpdatedTables(int tenant, DateTime sinceDate)
-        {
-            List<ObjectTablePM> currentLastUpdates = new List<ObjectTablePM>();
-            List<ObjectTablePM> zeroLastUpdates = new List<ObjectTablePM>();
-            AmitalCloudContext context = (AmitalCloudContext)AmitalCloudContext.GetContext(tenant);
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                currentLastUpdates = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
-                                      where a.Tenant == tenant && a.LastUpdateDate > sinceDate
-                                      select new ObjectTablePM()
-                                      {
-                                          LookUp1 = a.LookUp1,
-                                          LookUp2 = a.LookUp2,
-                                          AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
-                                          DependencyFilter1 = a.DependencyFilter1,
-                                          DependencyFilter2 = a.DependencyFilter2,
-                                          DependencyFilter3 = a.DependencyFilter3,
-                                          EditableFromAutoCompleteWindow = a.EditableFromAutoCompleteWindow,
-                                          HeaderScreenId = a.HeaderScreenId,
-                                          Id = a.Id,
-                                          IsClosed = a.IsClosed,
-                                          IsNewWizard = a.IsNewWizard,
-                                          NewWizardControlName = a.NewWizardControlName,
-                                          KeyPropertyPath = a.KeyPropertyPath,
-                                          LastUpdateDate = a.LastUpdateDate,
-                                          Name = a.Name,
-                                          Tenant = a.Tenant,
-                                          CacheOnClient = a.CacheOnClient,
-                                          HeaderScreenCode = a.HeaderScreenCode,
-                                          HasCounter = a.HasCounter,
-                                          EnableAddFromLOV = a.EnableAddFromLOV,
-                                          EnableEditFromLOV = a.EnableEditFromLOV,
-                                          IsMain = a.IsMain,
-                                          IsRestrictable = a.IsRestrictable,
-                                          IsAutoComplete = a.IsAutoComplete,
-                                          SortingByObjectField = a.SortingByObjectField,
-                                          HasCustomFields = a.HasCustomFields,
-                                          CustomFieldsCount = a.CustomFieldsCount,
-                                          DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                          DescriptionTextCodeCode = a.DescriptionTextCodeCode,
-                                          SearchFields = a.SearchFields,
-                                          IsSaveButtonVisible = a.IsSaveButtonVisible,
-                                          MainTipCode = a.MainTipCode,
-                                          EnableSecurity = a.EnableSecurity,
-                                          ObjectTableTypeCode = a.ObjectTableTypeCode,
-                                          IsComposition = a.IsComposition,
-                                          AllowCustomFields = a.AllowCustomFields,
-                                          MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                          DBTableName = a.DBTableName,
-                                          DBTableShortName = a.DBTableShortName,
-                                          HasDynamicHeader = a.HasDynamicHeader,
-                                          IsLookUp = a.IsLookUp,
-                                          HasDocuments = a.HasDocuments,
-                                          NewButtonTextCodeCode = a.NewButtonTextCodeCode,
-                                          HasCustomValidator = a.HasCustomValidator,
-                                          ClientModuleName = a.ClientModuleName,
-                                          ServerModuleName = a.ServerModuleName,
-                                          NewWizardComponentPath = a.NewWizardComponentPath,
-                                          HasHelper = a.HasHelper,
-                                          HasShortTitle = a.HasShortTitle,
-                                          HasMenuButtons = a.HasMenuButtons,
-                                          HasFiltersMenu = a.HasFiltersMenu,
-                                          EntityResourceLastUpdate = a.EntityResourceLastUpdate,
-                                          DownloadToExcelFeatureCode = a.DownloadToExcelFeatureCode,
-                                          SplitComponentPath = a.SplitComponentPath,
-                                          AllowedForComputingPartners = a.AllowedForComputingPartners,
-                                          CodeField = a.CodeField,
-                                          NameField = a.NameField,
-                                          DisableSearchBox = a.DisableSearchBox,
-                                          AllowedInTicket = a.AllowedInTicket,
-                                          LovDisplayMemberPath = a.LovDisplayMemberPath,
-                                          LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
-                                          IsTabsHidden = a.IsTabsHidden,
-                                          ParentObjectTableName = a.ParentObjectTableName,
-                                          AvailableInCustomization = a.AvailableInCustomization,
-                                          ParentObjectTableId = a.ParentObjectTableId,
-                                          IsCustom = a.IsCustom,
-                                          SupportSubEntity = a.SupportSubEntity,
-                                          ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                          FullNameTextCodeId = a.FullNameTextCodeId,
-                                          FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                          FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                          AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                      }).ToList();
-            }
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                zeroLastUpdates = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
-                                   where a.Tenant == 0 && a.LastUpdateDate > sinceDate
-                                   select new ObjectTablePM()
-                                   {
-                                       NewButtonTextCodeCode = a.NewButtonTextCodeCode,
-                                       LookUp1 = a.LookUp1,
-                                       LookUp2 = a.LookUp2,
-                                       AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
-                                       DependencyFilter1 = a.DependencyFilter1,
-                                       DependencyFilter2 = a.DependencyFilter2,
-                                       DependencyFilter3 = a.DependencyFilter3,
-                                       EditableFromAutoCompleteWindow = a.EditableFromAutoCompleteWindow,
-                                       HeaderScreenId = a.HeaderScreenId,
-                                       Id = a.Id,
-                                       IsClosed = a.IsClosed,
-                                       IsNewWizard = a.IsNewWizard,
-                                       NewWizardControlName = a.NewWizardControlName,
-                                       KeyPropertyPath = a.KeyPropertyPath,
-                                       LastUpdateDate = a.LastUpdateDate,
-                                       Name = a.Name,
-                                       Tenant = a.Tenant,
-                                       CacheOnClient = a.CacheOnClient,
-                                       HeaderScreenCode = a.HeaderScreenCode,
-                                       HasCounter = a.HasCounter,
-                                       EnableAddFromLOV = a.EnableAddFromLOV,
-                                       EnableEditFromLOV = a.EnableEditFromLOV,
-                                       IsMain = a.IsMain,
-                                       IsRestrictable = a.IsRestrictable,
-                                       IsAutoComplete = a.IsAutoComplete,
-                                       SortingByObjectField = a.SortingByObjectField,
-                                       HasCustomFields = a.HasCustomFields,
-                                       CustomFieldsCount = a.CustomFieldsCount,
-                                       DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                       DescriptionTextCodeCode = a.DescriptionTextCodeCode,
-                                       SearchFields = a.SearchFields,
-                                       IsSaveButtonVisible = a.IsSaveButtonVisible,
-                                       MainTipCode = a.MainTipCode,
-                                       EnableSecurity = a.EnableSecurity,
-                                       ObjectTableTypeCode = a.ObjectTableTypeCode,
-                                       IsComposition = a.IsComposition,
-                                       AllowCustomFields = a.AllowCustomFields,
-                                       MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                       DBTableName = a.DBTableName,
-                                       DBTableShortName = a.DBTableShortName,
-                                       HasDynamicHeader = a.HasDynamicHeader,
-                                       IsLookUp = a.IsLookUp,
-                                       HasDocuments = a.HasDocuments,
-                                       HasCustomValidator = a.HasCustomValidator,
-                                       ClientModuleName = a.ClientModuleName,
-                                       ServerModuleName = a.ServerModuleName,
-                                       NewWizardComponentPath = a.NewWizardComponentPath,
-                                       HasHelper = a.HasHelper,
-                                       HasShortTitle = a.HasShortTitle,
-                                       HasMenuButtons = a.HasMenuButtons,
-                                       HasFiltersMenu = a.HasFiltersMenu,
-                                       EntityResourceLastUpdate = a.EntityResourceLastUpdate,
-                                       DownloadToExcelFeatureCode = a.DownloadToExcelFeatureCode,
-                                       AllowedForComputingPartners = a.AllowedForComputingPartners,
-                                       CodeField = a.CodeField,
-                                       NameField = a.NameField,
-                                       SplitComponentPath = a.SplitComponentPath,
-                                       DisableSearchBox = a.DisableSearchBox,
-                                       AllowedInTicket = a.AllowedInTicket,
-                                       LovDisplayMemberPath = a.LovDisplayMemberPath,
-                                       LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
-                                       IsTabsHidden = a.IsTabsHidden,
-                                       ParentObjectTableName = a.ParentObjectTableName,
-                                       AvailableInCustomization = a.AvailableInCustomization,
-                                       ParentObjectTableId = a.ParentObjectTableId,
-                                       IsCustom = a.IsCustom,
-                                       SupportSubEntity = a.SupportSubEntity,
-                                       ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                       FullNameTextCodeId = a.FullNameTextCodeId,
-                                       FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                       FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                       AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                   }).ToList();
-            }
-            return currentLastUpdates.Concat(zeroLastUpdates).AsQueryable<ObjectTablePM>();
-        }
         public IQueryable<ObjectTablePM> GetObjectPMsByTenant(int tenant)
         {
             List<ObjectTablePM> currentObjectTables = new List<ObjectTablePM>();
             List<ObjectTablePM> zeroObjectTables = new List<ObjectTablePM>();
-            AmitalCloudContext context = (AmitalCloudContext)AmitalCloudContext.GetContext(tenant);
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                currentObjectTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
-                                       where a.Tenant == tenant
-                                       select new ObjectTablePM()
-                                       {
-                                           NewButtonTextCodeCode = a.NewButtonTextCodeCode,
-                                           LookUp1 = a.LookUp1,
-                                           LookUp2 = a.LookUp2,
-                                           AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
-                                           DependencyFilter1 = a.DependencyFilter1,
-                                           DependencyFilter2 = a.DependencyFilter2,
-                                           DependencyFilter3 = a.DependencyFilter3,
-                                           EditableFromAutoCompleteWindow = a.EditableFromAutoCompleteWindow,
-                                           HeaderScreenId = a.HeaderScreenId,
-                                           Id = a.Id,
-                                           IsClosed = a.IsClosed,
-                                           IsNewWizard = a.IsNewWizard,
-                                           NewWizardControlName = a.NewWizardControlName,
-                                           KeyPropertyPath = a.KeyPropertyPath,
-                                           LastUpdateDate = a.LastUpdateDate,
-                                           Name = a.Name,
-                                           Tenant = a.Tenant,
-                                           CacheOnClient = a.CacheOnClient,
-                                           HeaderScreenCode = a.HeaderScreenCode,
-                                           HasCounter = a.HasCounter,
-                                           EnableAddFromLOV = a.EnableAddFromLOV,
-                                           EnableEditFromLOV = a.EnableEditFromLOV,
-                                           IsMain = a.IsMain,
-                                           IsRestrictable = a.IsRestrictable,
-                                           IsAutoComplete = a.IsAutoComplete,
-                                           SortingByObjectField = a.SortingByObjectField,
-                                           HasCustomFields = a.HasCustomFields,
-                                           CustomFieldsCount = a.CustomFieldsCount,
-                                           DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                           DescriptionTextCodeCode = a.DescriptionTextCodeCode,
-                                           SearchFields = a.SearchFields,
-                                           IsSaveButtonVisible = a.IsSaveButtonVisible,
-                                           MainTipCode = a.MainTipCode,
-                                           EnableSecurity = a.EnableSecurity,
-                                           ObjectTableTypeCode = a.ObjectTableTypeCode,
-                                           IsComposition = a.IsComposition,
-                                           AllowCustomFields = a.AllowCustomFields,
-                                           MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                           DBTableName = a.DBTableName,
-                                           DBTableShortName = a.DBTableShortName,
-                                           HasDynamicHeader = a.HasDynamicHeader,
-                                           IsLookUp = a.IsLookUp,
-                                           HasDocuments = a.HasDocuments,
-                                           HasCustomValidator = a.HasCustomValidator,
-                                           ClientModuleName = a.ClientModuleName,
-                                           ServerModuleName = a.ServerModuleName,
-                                           NewWizardComponentPath = a.NewWizardComponentPath,
-                                           HasHelper = a.HasHelper,
-                                           HasShortTitle = a.HasShortTitle,
-                                           HasMenuButtons = a.HasMenuButtons,
-                                           HasFiltersMenu = a.HasFiltersMenu,
-                                           EntityResourceLastUpdate = a.EntityResourceLastUpdate,
-                                           DownloadToExcelFeatureCode = a.DownloadToExcelFeatureCode,
-                                           AllowedForComputingPartners = a.AllowedForComputingPartners,
-                                           CodeField = a.CodeField,
-                                           NameField = a.NameField,
-                                           SplitComponentPath = a.SplitComponentPath,
-                                           DisableSearchBox = a.DisableSearchBox,
-                                           AllowedInTicket = a.AllowedInTicket,
-                                           LovDisplayMemberPath = a.LovDisplayMemberPath,
-                                           LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
-                                           IsTabsHidden = a.IsTabsHidden,
-                                           ParentObjectTableName = a.ParentObjectTableName,
-                                           AvailableInCustomization = a.AvailableInCustomization,
-                                           ParentObjectTableId = a.ParentObjectTableId,
-                                           IsCustom = a.IsCustom,
-                                           SupportSubEntity = a.SupportSubEntity,
-                                           ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                           FullNameTextCodeId = a.FullNameTextCodeId,
-                                           FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                           FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                           AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                       }).ToList();
+                currentObjectTables = repository.GetMulti(a => a.Tenant == tenant, a => new ObjectTablePM(a)
+                {
+                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                }
+                , "HeaderScreen,DescriptionTextCode,NewButtonTextCode,FullNameTextCode").ToList();
             }
             if (tenant != 0)
             {
@@ -288,84 +48,12 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 return (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(tenantZeroObjectTablesCacheKeyName);
             }
-            AmitalCloudContext context = (AmitalCloudContext)AmitalCloudContext.GetContext(0);
-            List<ObjectTablePM> zeroObjectTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
-                                                    where a.Tenant == 0
-                                                    select new ObjectTablePM()
-                                                    {
-                                                        NewButtonTextCodeCode = a.NewButtonTextCodeCode,
-                                                        LookUp1 = a.LookUp1,
-                                                        LookUp2 = a.LookUp2,
-                                                        AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
-                                                        DependencyFilter1 = a.DependencyFilter1,
-                                                        DependencyFilter2 = a.DependencyFilter2,
-                                                        DependencyFilter3 = a.DependencyFilter3,
-                                                        EditableFromAutoCompleteWindow = a.EditableFromAutoCompleteWindow,
-                                                        HeaderScreenId = a.HeaderScreenId,
-                                                        Id = a.Id,
-                                                        IsClosed = a.IsClosed,
-                                                        IsNewWizard = a.IsNewWizard,
-                                                        NewWizardControlName = a.NewWizardControlName,
-                                                        KeyPropertyPath = a.KeyPropertyPath,
-                                                        LastUpdateDate = a.LastUpdateDate,
-                                                        Name = a.Name,
-                                                        Tenant = a.Tenant,
-                                                        CacheOnClient = a.CacheOnClient,
-                                                        HeaderScreenCode = a.HeaderScreenCode,
-                                                        HasCounter = a.HasCounter,
-                                                        EnableAddFromLOV = a.EnableAddFromLOV,
-                                                        EnableEditFromLOV = a.EnableEditFromLOV,
-                                                        IsMain = a.IsMain,
-                                                        IsRestrictable = a.IsRestrictable,
-                                                        IsAutoComplete = a.IsAutoComplete,
-                                                        SortingByObjectField = a.SortingByObjectField,
-                                                        HasCustomFields = a.HasCustomFields,
-                                                        CustomFieldsCount = a.CustomFieldsCount,
-                                                        DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                        DescriptionTextCodeCode = a.DescriptionTextCodeCode,
-                                                        SearchFields = a.SearchFields,
-                                                        IsSaveButtonVisible = a.IsSaveButtonVisible,
-                                                        MainTipCode = a.MainTipCode,
-                                                        EnableSecurity = a.EnableSecurity,
-                                                        ObjectTableTypeCode = a.ObjectTableTypeCode,
-                                                        IsComposition = a.IsComposition,
-                                                        AllowCustomFields = a.AllowCustomFields,
-                                                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                                        DBTableName = a.DBTableName,
-                                                        DBTableShortName = a.DBTableShortName,
-                                                        HasDynamicHeader = a.HasDynamicHeader,
-                                                        IsLookUp = a.IsLookUp,
-                                                        HasDocuments = a.HasDocuments,
-                                                        HasCustomValidator = a.HasCustomValidator,
-                                                        ClientModuleName = a.ClientModuleName,
-                                                        ServerModuleName = a.ServerModuleName,
-                                                        NewWizardComponentPath = a.NewWizardComponentPath,
-                                                        HasHelper = a.HasHelper,
-                                                        HasShortTitle = a.HasShortTitle,
-                                                        HasMenuButtons = a.HasMenuButtons,
-                                                        HasFiltersMenu = a.HasFiltersMenu,
-                                                        EntityResourceLastUpdate = a.EntityResourceLastUpdate,
-                                                        DownloadToExcelFeatureCode = a.DownloadToExcelFeatureCode,
-                                                        SplitComponentPath = a.SplitComponentPath,
-                                                        AllowedForComputingPartners = a.AllowedForComputingPartners,
-                                                        CodeField = a.CodeField,
-                                                        NameField = a.NameField,
-                                                        DisableSearchBox = a.DisableSearchBox,
-                                                        AllowedInTicket = a.AllowedInTicket,
-                                                        LovDisplayMemberPath = a.LovDisplayMemberPath,
-                                                        LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
-                                                        IsTabsHidden = a.IsTabsHidden,
-                                                        ParentObjectTableName = a.ParentObjectTableName,
-                                                        AvailableInCustomization = a.AvailableInCustomization,
-                                                        ParentObjectTableId = a.ParentObjectTableId,
-                                                        IsCustom = a.IsCustom,
-                                                        SupportSubEntity = a.SupportSubEntity,
-                                                        ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                        FullNameTextCodeId = a.FullNameTextCodeId,
-                                                        FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                        AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                                    }).ToList();
+            List<ObjectTablePM> zeroObjectTables = 
+                repository.GetMulti(a => a.Tenant == 0, a => new ObjectTablePM(a)
+                {
+                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                }, "HeaderScreen,DescriptionTextCode,NewButtonTextCode,FullNameTextCode").ToList();    
+
             CacheManager.CacheWrapper.Insert(tenantZeroObjectTablesCacheKeyName, zeroObjectTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
             return zeroObjectTables;
         }
@@ -389,276 +77,39 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 if (HttpContext.Current != null)
                 {
-                    if (CacheManager.CacheWrapper.Get(tenantListName) == null)
+                    currentTenantTables = (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(tenantListName);
+                    if (currentTenantTables == null)
                     {
-                        using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                        {
-                            IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
-                            currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
-                                                   where (a.Tenant == tenant && a.InActive == false)
-                                                   select new ObjectTablePM()
-                                                   {
-                                                       NewButtonTextCodeCode = a.NewButtonTextCodeCode,
-                                                       LookUp1 = a.LookUp1,
-                                                       LookUp2 = a.LookUp2,
-                                                       AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
-                                                       DependencyFilter1 = a.DependencyFilter1,
-                                                       DependencyFilter2 = a.DependencyFilter2,
-                                                       DependencyFilter3 = a.DependencyFilter3,
-                                                       EditableFromAutoCompleteWindow = a.EditableFromAutoCompleteWindow,
-                                                       HeaderScreenId = a.HeaderScreenId,
-                                                       Id = a.Id,
-                                                       IsClosed = a.IsClosed,
-                                                       IsNewWizard = a.IsNewWizard,
-                                                       NewWizardControlName = a.NewWizardControlName,
-                                                       KeyPropertyPath = a.KeyPropertyPath,
-                                                       LastUpdateDate = a.LastUpdateDate,
-                                                       Name = a.Name,
-                                                       Tenant = a.Tenant,
-                                                       CacheOnClient = a.CacheOnClient,
-                                                       HeaderScreenCode = a.HeaderScreenCode,
-                                                       HasCounter = a.HasCounter,
-                                                       EnableAddFromLOV = a.EnableAddFromLOV,
-                                                       EnableEditFromLOV = a.EnableEditFromLOV,
-                                                       IsMain = a.IsMain,
-                                                       IsRestrictable = a.IsRestrictable,
-                                                       IsAutoComplete = a.IsAutoComplete,
-                                                       SortingByObjectField = a.SortingByObjectField,
-                                                       HasCustomFields = a.HasCustomFields,
-                                                       CustomFieldsCount = a.CustomFieldsCount,
-                                                       DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                       DescriptionTextCodeCode = a.DescriptionTextCodeCode,
-                                                       SearchFields = a.SearchFields,
-                                                       IsSaveButtonVisible = a.IsSaveButtonVisible,
-                                                       MainTipCode = a.MainTipCode,
-                                                       EnableSecurity = a.EnableSecurity,
-                                                       ObjectTableTypeCode = a.ObjectTableTypeCode,
-                                                       IsComposition = a.IsComposition,
-                                                       AllowCustomFields = a.AllowCustomFields,
-                                                       MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                                       DBTableName = a.DBTableName,
-                                                       DBTableShortName = a.DBTableShortName,
-                                                       HasDynamicHeader = a.HasDynamicHeader,
-                                                       IsLookUp = a.IsLookUp,
-                                                       HasDocuments = a.HasDocuments,
-                                                       HasCustomValidator = a.HasCustomValidator,
-                                                       ClientModuleName = a.ClientModuleName,
-                                                       ServerModuleName = a.ServerModuleName,
-                                                       NewWizardComponentPath = a.NewWizardComponentPath,
-                                                       HasHelper = a.HasHelper,
-                                                       HasShortTitle = a.HasShortTitle,
-                                                       HasMenuButtons = a.HasMenuButtons,
-                                                       HasFiltersMenu = a.HasFiltersMenu,
-                                                       EntityResourceLastUpdate = a.EntityResourceLastUpdate,
-                                                       DownloadToExcelFeatureCode = a.DownloadToExcelFeatureCode,
-                                                       AllowedForComputingPartners = a.AllowedForComputingPartners,
-                                                       CodeField = a.CodeField,
-                                                       NameField = a.NameField,
-                                                       SplitComponentPath = a.SplitComponentPath,
-                                                       DisableSearchBox = a.DisableSearchBox,
-                                                       AllowedInTicket = a.AllowedInTicket,
-                                                       LovDisplayMemberPath = a.LovDisplayMemberPath,
-                                                       LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
-                                                       IsTabsHidden = a.IsTabsHidden,
-                                                       ParentObjectTableName = a.ParentObjectTableName,
-                                                       AvailableInCustomization = a.AvailableInCustomization,
-                                                       SupportSubEntity = a.SupportSubEntity,
-                                                       ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                       FullNameTextCodeId = a.FullNameTextCodeId,
-                                                       FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                       FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                       AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                                   }).ToList();
-                            scope.Complete();
-                        }
-
+                        currentTenantTables = GetCurrentTenantTables(tenant);
                         CacheManager.CacheWrapper.Insert(tenantListName, currentTenantTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    }
-                    else
-                    {
-                        currentTenantTables = (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(tenantListName);
                     }
                 }
                 else
                 {
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
-                        currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
-                                               where (a.Tenant == tenant && a.InActive == false)
-                                               select new ObjectTablePM()
-                                               {
-                                                   NewButtonTextCodeCode = a.NewButtonTextCodeCode,
-                                                   LookUp1 = a.LookUp1,
-                                                   LookUp2 = a.LookUp2,
-                                                   AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
-                                                   DependencyFilter1 = a.DependencyFilter1,
-                                                   DependencyFilter2 = a.DependencyFilter2,
-                                                   DependencyFilter3 = a.DependencyFilter3,
-                                                   EditableFromAutoCompleteWindow = a.EditableFromAutoCompleteWindow,
-                                                   HeaderScreenId = a.HeaderScreenId,
-                                                   Id = a.Id,
-                                                   IsClosed = a.IsClosed,
-                                                   IsNewWizard = a.IsNewWizard,
-                                                   NewWizardControlName = a.NewWizardControlName,
-                                                   KeyPropertyPath = a.KeyPropertyPath,
-                                                   LastUpdateDate = a.LastUpdateDate,
-                                                   Name = a.Name,
-                                                   Tenant = a.Tenant,
-                                                   CacheOnClient = a.CacheOnClient,
-                                                   HeaderScreenCode = a.HeaderScreenCode,
-                                                   HasCounter = a.HasCounter,
-                                                   EnableAddFromLOV = a.EnableAddFromLOV,
-                                                   EnableEditFromLOV = a.EnableEditFromLOV,
-                                                   IsMain = a.IsMain,
-                                                   IsRestrictable = a.IsRestrictable,
-                                                   IsAutoComplete = a.IsAutoComplete,
-                                                   SortingByObjectField = a.SortingByObjectField,
-                                                   HasCustomFields = a.HasCustomFields,
-                                                   CustomFieldsCount = a.CustomFieldsCount,
-                                                   DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                   DescriptionTextCodeCode = a.DescriptionTextCodeCode,
-                                                   SearchFields = a.SearchFields,
-                                                   IsSaveButtonVisible = a.IsSaveButtonVisible,
-                                                   MainTipCode = a.MainTipCode,
-                                                   EnableSecurity = a.EnableSecurity,
-                                                   ObjectTableTypeCode = a.ObjectTableTypeCode,
-                                                   IsComposition = a.IsComposition,
-                                                   AllowCustomFields = a.AllowCustomFields,
-                                                   MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                                   DBTableName = a.DBTableName,
-                                                   DBTableShortName = a.DBTableShortName,
-                                                   HasDynamicHeader = a.HasDynamicHeader,
-                                                   IsLookUp = a.IsLookUp,
-                                                   HasDocuments = a.HasDocuments,
-                                                   HasCustomValidator = a.HasCustomValidator,
-                                                   ClientModuleName = a.ClientModuleName,
-                                                   ServerModuleName = a.ServerModuleName,
-                                                   NewWizardComponentPath = a.NewWizardComponentPath,
-                                                   HasHelper = a.HasHelper,
-                                                   HasShortTitle = a.HasShortTitle,
-                                                   HasMenuButtons = a.HasMenuButtons,
-                                                   HasFiltersMenu = a.HasFiltersMenu,
-                                                   EntityResourceLastUpdate = a.EntityResourceLastUpdate,
-                                                   DownloadToExcelFeatureCode = a.DownloadToExcelFeatureCode,
-                                                   AllowedForComputingPartners = a.AllowedForComputingPartners,
-                                                   CodeField = a.CodeField,
-                                                   NameField = a.NameField,
-                                                   SplitComponentPath = a.SplitComponentPath,
-                                                   DisableSearchBox = a.DisableSearchBox,
-                                                   AllowedInTicket = a.AllowedInTicket,
-                                                   LovDisplayMemberPath = a.LovDisplayMemberPath,
-                                                   LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
-                                                   IsTabsHidden = a.IsTabsHidden,
-                                                   ParentObjectTableName = a.ParentObjectTableName,
-                                                   AvailableInCustomization = a.AvailableInCustomization,
-                                                   SupportSubEntity = a.SupportSubEntity,
-                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                   FullNameTextCodeId = a.FullNameTextCodeId,
-                                                   FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                   FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                   AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                               }).ToList();
-                        scope.Complete();
-                    }
+                    currentTenantTables = GetCurrentTenantTables(tenant);
                 }
             }
 
             if (HttpContext.Current != null)
             {
-                if (CacheManager.CacheWrapper.Get(listName) == null)
+                zeroTenantTables = (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(listName);
+
+                if (zeroTenantTables == null)
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                         zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                             where (a.Tenant == 0 && a.InActive == false)
-                                            select new ObjectTablePM()
+                                            select new ObjectTablePM(a)
                                             {
-                                                NewButtonTextCodeCode = a.NewButtonTextCodeCode,
-                                                LookUp1 = a.LookUp1,
-                                                LookUp2 = a.LookUp2,
-                                                AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
-                                                DependencyFilter1 = a.DependencyFilter1,
-                                                DependencyFilter2 = a.DependencyFilter2,
-                                                DependencyFilter3 = a.DependencyFilter3,
-                                                EditableFromAutoCompleteWindow = a.EditableFromAutoCompleteWindow,
-                                                HeaderScreenId = a.HeaderScreenId,
-                                                Id = a.Id,
-                                                IsClosed = a.IsClosed,
-                                                IsNewWizard = a.IsNewWizard,
-                                                NewWizardControlName = a.NewWizardControlName,
-                                                KeyPropertyPath = a.KeyPropertyPath,
-                                                LastUpdateDate = a.LastUpdateDate,
-                                                Name = a.Name,
-                                                Tenant = a.Tenant,
-                                                CacheOnClient = a.CacheOnClient,
-                                                HeaderScreenCode = a.HeaderScreenCode,
-                                                HasCounter = a.HasCounter,
-                                                EnableAddFromLOV = a.EnableAddFromLOV,
-                                                EnableEditFromLOV = a.EnableEditFromLOV,
-                                                IsMain = a.IsMain,
-                                                IsRestrictable = a.IsRestrictable,
-                                                IsAutoComplete = a.IsAutoComplete,
-                                                SortingByObjectField = a.SortingByObjectField,
-                                                HasCustomFields = a.HasCustomFields,
-                                                CustomFieldsCount = a.CustomFieldsCount,
-                                                DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                DescriptionTextCodeCode = a.DescriptionTextCodeCode,
-                                                SearchFields = a.SearchFields,
-                                                IsSaveButtonVisible = a.IsSaveButtonVisible,
-                                                MainTipCode = a.MainTipCode,
-                                                EnableSecurity = a.EnableSecurity,
-                                                ObjectTableTypeCode = a.ObjectTableTypeCode,
-                                                IsComposition = a.IsComposition,
-                                                AllowCustomFields = a.AllowCustomFields,
-                                                MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                                DBTableName = a.DBTableName,
-                                                DBTableShortName = a.DBTableShortName,
-                                                HasDynamicHeader = a.HasDynamicHeader,
-                                                IsLookUp = a.IsLookUp,
-                                                HasDocuments = a.HasDocuments,
-                                                HasCustomValidator = a.HasCustomValidator,
-                                                ClientModuleName = a.ClientModuleName,
-                                                ServerModuleName = a.ServerModuleName,
-                                                NewWizardComponentPath = a.NewWizardComponentPath,
-                                                HasHelper = a.HasHelper,
-                                                HasShortTitle = a.HasShortTitle,
-                                                HasMenuButtons = a.HasMenuButtons,
-                                                HasFiltersMenu = a.HasFiltersMenu,
-                                                EntityResourceLastUpdate = a.EntityResourceLastUpdate,
-                                                DownloadToExcelFeatureCode = a.DownloadToExcelFeatureCode,
-                                                AllowedForComputingPartners = a.AllowedForComputingPartners,
-                                                CodeField = a.CodeField,
-                                                NameField = a.NameField,
-                                                SplitComponentPath = a.SplitComponentPath,
-                                                DisableSearchBox = a.DisableSearchBox,
-                                                AllowedInTicket = a.AllowedInTicket,
-                                                LovDisplayMemberPath = a.LovDisplayMemberPath,
-                                                LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
-                                                IsTabsHidden = a.IsTabsHidden,
-                                                ParentObjectTableName = a.ParentObjectTableName,
-                                                AvailableInCustomization = a.AvailableInCustomization,
-                                                ParentObjectTableId = a.ParentObjectTableId,
-                                                IsCustom = a.IsCustom,
-                                                SupportSubEntity = a.SupportSubEntity,
-                                                ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                FullNameTextCodeId = a.FullNameTextCodeId,
-                                                FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                 FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                             }).ToList();
-
                         scope.Complete();
                     }
-
-
                     CacheManager.CacheWrapper.Insert(listName, zeroTenantTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
-                else
-                {
-                    zeroTenantTables = (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(listName);
-                }
+
             }
             else
             {
@@ -667,80 +118,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                     IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                         where (a.Tenant == 0 && a.InActive == false)
-                                        select new ObjectTablePM()
+                                        select new ObjectTablePM(a )
                                         {
-                                            NewButtonTextCodeCode = a.NewButtonTextCodeCode,
-                                            LookUp1 = a.LookUp1,
-                                            LookUp2 = a.LookUp2,
-                                            AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
-                                            DependencyFilter1 = a.DependencyFilter1,
-                                            DependencyFilter2 = a.DependencyFilter2,
-                                            DependencyFilter3 = a.DependencyFilter3,
-                                            EditableFromAutoCompleteWindow = a.EditableFromAutoCompleteWindow,
-                                            HeaderScreenId = a.HeaderScreenId,
-                                            Id = a.Id,
-                                            IsClosed = a.IsClosed,
-                                            IsNewWizard = a.IsNewWizard,
-                                            NewWizardControlName = a.NewWizardControlName,
-                                            KeyPropertyPath = a.KeyPropertyPath,
-                                            LastUpdateDate = a.LastUpdateDate,
-                                            Name = a.Name,
-                                            Tenant = a.Tenant,
-                                            CacheOnClient = a.CacheOnClient,
-                                            HeaderScreenCode = a.HeaderScreenCode,
-                                            HasCounter = a.HasCounter,
-                                            EnableAddFromLOV = a.EnableAddFromLOV,
-                                            EnableEditFromLOV = a.EnableEditFromLOV,
-                                            IsMain = a.IsMain,
-                                            IsRestrictable = a.IsRestrictable,
-                                            IsAutoComplete = a.IsAutoComplete,
-                                            SortingByObjectField = a.SortingByObjectField,
-                                            HasCustomFields = a.HasCustomFields,
-                                            CustomFieldsCount = a.CustomFieldsCount,
-                                            DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                            DescriptionTextCodeCode = a.DescriptionTextCodeCode,
-                                            SearchFields = a.SearchFields,
-                                            IsSaveButtonVisible = a.IsSaveButtonVisible,
-                                            MainTipCode = a.MainTipCode,
-                                            EnableSecurity = a.EnableSecurity,
-                                            ObjectTableTypeCode = a.ObjectTableTypeCode,
-                                            IsComposition = a.IsComposition,
-                                            AllowCustomFields = a.AllowCustomFields,
-                                            MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                            DBTableName = a.DBTableName,
-                                            DBTableShortName = a.DBTableShortName,
-                                            HasDynamicHeader = a.HasDynamicHeader,
-                                            IsLookUp = a.IsLookUp,
-                                            HasDocuments = a.HasDocuments,
-                                            HasCustomValidator = a.HasCustomValidator,
-                                            ClientModuleName = a.ClientModuleName,
-                                            ServerModuleName = a.ServerModuleName,
-                                            NewWizardComponentPath = a.NewWizardComponentPath,
-                                            HasHelper = a.HasHelper,
-                                            HasShortTitle = a.HasShortTitle,
-                                            HasMenuButtons = a.HasMenuButtons,
-                                            HasFiltersMenu = a.HasFiltersMenu,
-                                            EntityResourceLastUpdate = a.EntityResourceLastUpdate,
-                                            DownloadToExcelFeatureCode = a.DownloadToExcelFeatureCode,
-                                            AllowedForComputingPartners = a.AllowedForComputingPartners,
-                                            CodeField = a.CodeField,
-                                            NameField = a.NameField,
-                                            SplitComponentPath = a.SplitComponentPath,
-                                            DisableSearchBox = a.DisableSearchBox,
-                                            AllowedInTicket = a.AllowedInTicket,
-                                            LovDisplayMemberPath = a.LovDisplayMemberPath,
-                                            LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
-                                            IsTabsHidden = a.IsTabsHidden,
-                                            ParentObjectTableName = a.ParentObjectTableName,
-                                            AvailableInCustomization = a.AvailableInCustomization,
-                                            ParentObjectTableId = a.ParentObjectTableId,
-                                            IsCustom = a.IsCustom,
-                                            SupportSubEntity = a.SupportSubEntity,
-                                            ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                            FullNameTextCodeId = a.FullNameTextCodeId,
-                                            FullNameTextCodeCode = a.FullNameTextCodeCode,
                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                            AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                         }).ToList();
 
 
@@ -755,6 +135,23 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
             return result;
         }
+
+        private static List<ObjectTablePM> GetCurrentTenantTables(int tenant)
+        {
+            List<ObjectTablePM> currentTenantTables;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                currentTenantTables = new ObjectTableRepository(tenant).GetMulti(a => a.Tenant == tenant && a.InActive == false,
+                    a => new ObjectTablePM(a)
+                    {
+                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                    }, "FullNameTextCode").ToList();
+                scope.Complete();
+            }
+
+            return currentTenantTables;
+        }
+
         public static ObjectTablePM GetObjectTableByCode(string name, int tenant)
         {
             ObjectTablePM table = null;
@@ -848,69 +245,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public IQueryable<ObjectTableList> GetIQueryableEntityList(IQueryable<ObjectTable> iQueryable)
         {
             IQueryable<ObjectTableList> result = from a in iQueryable.Include("FullNameTextCode")
-                                                 select new ObjectTableList()
+                                                 select new ObjectTableList(a)
                                                  {
-                                                     AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
-                                                     DependencyFilter1 = a.DependencyFilter1,
-                                                     DependencyFilter2 = a.DependencyFilter2,
-                                                     DependencyFilter3 = a.DependencyFilter3,
-                                                     HeaderScreenId = a.HeaderScreenId,
-                                                     HeaderScreenCode = a.HeaderScreenCode,
-                                                     Id = a.Id,
-                                                     IsClosed = a.IsClosed,
-                                                     IsNewWizard = a.IsNewWizard,
-                                                     NewWizardControlName = a.NewWizardControlName,
-                                                     KeyPropertyPath = a.KeyPropertyPath,
-                                                     Name = a.Name,
-                                                     Tenant = a.Tenant,
-                                                     HasCounter = a.HasCounter,
-                                                     EnableAddFromLOV = a.EnableAddFromLOV,
-                                                     EnableEditFromLOV = a.EnableEditFromLOV,
-                                                     IsMain = a.IsMain,
-                                                     IsRestrictable = a.IsRestrictable,
-                                                     DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                     DescriptionTextCodeCode = a.DescriptionTextCodeCode,
-                                                     SearchFields = a.SearchFields,
-                                                     IsSaveButtonVisible = a.IsSaveButtonVisible,
-                                                     MainTipCode = a.MainTipCode,
-                                                     EnableSecurity = a.EnableSecurity,
-                                                     ObjectTableTypeCode = a.ObjectTableTypeCode,
-                                                     IsComposition = a.IsComposition,
-                                                     AllowCustomFields = a.AllowCustomFields,
-                                                     MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                                     DBTableName = a.DBTableName,
-                                                     DBTableShortName = a.DBTableShortName,
-                                                     IsLookUp = a.IsLookUp,
-                                                     HasDocuments = a.HasDocuments,
-                                                     HasCustomValidator = a.HasCustomValidator,
-                                                     ClientModuleName = a.ClientModuleName,
-                                                     ServerModuleName = a.ServerModuleName,
-                                                     NewWizardComponentPath = a.NewWizardComponentPath,
-                                                     HasHelper = a.HasHelper,
-                                                     HasShortTitle = a.HasShortTitle,
-                                                     HasMenuButtons = a.HasMenuButtons,
-                                                     HasFiltersMenu = a.HasFiltersMenu,
-                                                     SplitComponentPath = a.SplitComponentPath,
-                                                     AllowedForComputingPartners = a.AllowedForComputingPartners,
-                                                     DisableSearchBox = a.DisableSearchBox,
-                                                     AllowedInTicket = a.AllowedInTicket,
-                                                     CodeField = a.CodeField,
-                                                     NameField = a.NameField,
-                                                     LovDisplayMemberPath = a.LovDisplayMemberPath,
-                                                     LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
-                                                     IsTabsHidden = a.IsTabsHidden,
-                                                     ParentObjectTableName = a.ParentObjectTableName,
-                                                     AvailableInCustomization = a.AvailableInCustomization,
-                                                     ParentObjectTableId = a.ParentObjectTableId,
-                                                     IsCustom = a.IsCustom,
-                                                     SupportSubEntity = a.SupportSubEntity,
-                                                     ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                     LookUp1 = a.LookUp1,
-                                                     LookUp2 = a.LookUp2,
-                                                     FullNameTextCodeId = a.FullNameTextCodeId,
-                                                     FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                      FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                     AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                                  };
             return result;
         }
@@ -921,67 +258,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                                where (a.Tenant == tenant || a.Tenant == 0)
                                                && a.Id == id
                                                && a.InActive == false
-                                               select new ObjectTableList()
+                                               select new ObjectTableList(a)
                                                {
-                                                   AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
-                                                   DependencyFilter1 = a.DependencyFilter1,
-                                                   DependencyFilter2 = a.DependencyFilter2,
-                                                   DependencyFilter3 = a.DependencyFilter3,
-                                                   HeaderScreenId = a.HeaderScreenId,
-                                                   HeaderScreenCode = a.HeaderScreenCode,
-                                                   Id = a.Id,
-                                                   IsClosed = a.IsClosed,
-                                                   IsNewWizard = a.IsNewWizard,
-                                                   NewWizardControlName = a.NewWizardControlName,
-                                                   KeyPropertyPath = a.KeyPropertyPath,
-                                                   Name = a.Name,
-                                                   Tenant = a.Tenant,
-                                                   HasCounter = a.HasCounter,
-                                                   EnableAddFromLOV = a.EnableAddFromLOV,
-                                                   EnableEditFromLOV = a.EnableEditFromLOV,
-                                                   IsMain = a.IsMain,
-                                                   IsRestrictable = a.IsRestrictable,
-                                                   DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                   DescriptionTextCodeCode = a.DescriptionTextCodeCode,
-                                                   SearchFields = a.SearchFields,
-                                                   IsSaveButtonVisible = a.IsSaveButtonVisible,
-                                                   MainTipCode = a.MainTipCode,
-                                                   EnableSecurity = a.EnableSecurity,
-                                                   ObjectTableTypeCode = a.ObjectTableTypeCode,
-                                                   IsComposition = a.IsComposition,
-                                                   AllowCustomFields = a.AllowCustomFields,
-                                                   MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
-                                                   DBTableName = a.DBTableName,
-                                                   DBTableShortName = a.DBTableShortName,
-                                                   AllowedForComputingPartners = a.AllowedForComputingPartners,
-                                                   CodeField = a.CodeField,
-                                                   NameField = a.NameField,
-                                                   IsLookUp = a.IsLookUp,
-                                                   HasDocuments = a.HasDocuments,
-                                                   HasCustomValidator = a.HasCustomValidator,
-                                                   ClientModuleName = a.ClientModuleName,
-                                                   ServerModuleName = a.ServerModuleName,
-                                                   NewWizardComponentPath = a.NewWizardComponentPath,
-                                                   HasHelper = a.HasHelper,
-                                                   HasShortTitle = a.HasShortTitle,
-                                                   HasMenuButtons = a.HasMenuButtons,
-                                                   HasFiltersMenu = a.HasFiltersMenu,
-                                                   SplitComponentPath = a.SplitComponentPath,
-                                                   DisableSearchBox = a.DisableSearchBox,
-                                                   AllowedInTicket = a.AllowedInTicket,
-                                                   LovDisplayMemberPath = a.LovDisplayMemberPath,
-                                                   LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
-                                                   IsTabsHidden = a.IsTabsHidden,
-                                                   ParentObjectTableName = a.ParentObjectTableName,
-                                                   AvailableInCustomization = a.AvailableInCustomization,
-                                                   ParentObjectTableId = a.ParentObjectTableId,
-                                                   IsCustom = a.IsCustom,
-                                                   SupportSubEntity = a.SupportSubEntity,
-                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                   FullNameTextCodeId = a.FullNameTextCodeId,
-                                                   FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                   AvailableInDocumentTypes = a.AvailableInDocumentTypes,
                                                }).FirstOrDefault();
             return ObjectTableList;
         }

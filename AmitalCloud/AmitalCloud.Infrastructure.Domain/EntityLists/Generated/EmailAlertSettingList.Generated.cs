@@ -13,12 +13,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class EmailAlertSettingList
+   public partial class EmailAlertSettingList   
    {
+       #region Constructors
+       public EmailAlertSettingList() : base() {}
+       public EmailAlertSettingList(EmailAlertSetting entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          Description  = entity.Description;
+          ObjectTableId  = entity.ObjectTableId;
+          SettingLevelCode  = entity.SettingLevelCode;
+          To  = entity.To;
+          IndexOrder  = entity.IndexOrder;
+            Name  = default;
+            ParentName  = default;
+          InActive  = entity.InActive;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -43,6 +62,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ParentName  { get; set; }
        [DataMember]
        public bool InActive  { get; set; }
+         #endregion Properties
    }
 
 }

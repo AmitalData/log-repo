@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,20 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class HarmonizeCodePM : BaseEntityPM   {
+   #region Constructors
+   public HarmonizeCodePM() : base() {} 
+   public HarmonizeCodePM(HarmonizeCode entity) : base()
+   {
+		_code = entity.Code;
+		_searchFields = entity.SearchFields;
+		_description = entity.Description;
+		_chapterCode = entity.ChapterCode;
+		_chapterDescription = entity.ChapterDescription;
+		_subChapterCode = entity.SubChapterCode;
+		_subChapterDescription = entity.SubChapterDescription;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _code ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -135,4 +150,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

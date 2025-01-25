@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class AirlineMessagingRulePM : BaseEntityPM   {
+   #region Constructors
+   public AirlineMessagingRulePM() : base() {} 
+   public AirlineMessagingRulePM(AirlineMessagingRule entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createdByUserId = entity.CreatedByUserId;
+		_createDate = entity.CreateDate;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_updateDate = entity.UpdateDate;
+		_messageTypeCode = entity.MessageTypeCode;
+		_ruleFieldId = entity.RuleFieldId;
+		_isMandatoryForSending = entity.IsMandatoryForSending;
+		_maxSize = entity.MaxSize;
+		_airlineId = entity.AirlineId;
+		_inActive = entity.InActive;
+		_ruleFieldCode = entity.RuleFieldCode;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -231,4 +252,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

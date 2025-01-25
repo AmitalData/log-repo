@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,34 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerTenantAccessPM : BaseEntityPM   {
+   #region Constructors
+   public CustomerTenantAccessPM() : base() {} 
+   public CustomerTenantAccessPM(CustomerTenantAccess entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_customerTenant = entity.CustomerTenant;
+		_contactName = entity.ContactName;
+		_companyVat = entity.CompanyVat;
+		_companyName = entity.CompanyName;
+		_companyEmail = entity.CompanyEmail;
+		_contactMobile = entity.ContactMobile;
+		_contactPhone = entity.ContactPhone;
+		_requestDateTime = entity.RequestDateTime;
+		_status = entity.Status;
+		_statusName = default;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_lastUpdateDate = entity.LastUpdateDate;
+		_searchFields = entity.SearchFields;
+		_lastShipmentDate = entity.LastShipmentDate;
+		_updatedByUserName = default;
+		customerTenantAccessCards = default;
+		_stockTypeCode = entity.StockTypeCode;
+		_isPrivateLabelCustomer = entity.IsPrivateLabelCustomer;
+		_customCompanyName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -376,4 +405,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

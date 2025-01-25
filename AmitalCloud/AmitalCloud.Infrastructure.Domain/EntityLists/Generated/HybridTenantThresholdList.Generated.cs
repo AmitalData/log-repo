@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class HybridTenantThresholdList
+   public partial class HybridTenantThresholdList   
    {
+       #region Constructors
+       public HybridTenantThresholdList() : base() {}
+       public HybridTenantThresholdList(HybridTenantThreshold entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          FailedThresold  = entity.FailedThresold;
+          WaitingThresold  = entity.WaitingThresold;
+            Description  = default;
+            Language  = default;
+            InternalRemarks  = default;
+            CountryCode  = default;
+            IsEnabledForCustomers  = default;
+            IsCopiedAtSignup  = default;
+          TypeCode  = entity.TypeCode;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -43,6 +61,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [Key]
        [DataMember]
        public int TypeCode  { get; set; }
+         #endregion Properties
    }
 
 }

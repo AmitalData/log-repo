@@ -13,12 +13,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ComputingPartnerTableList
+   public partial class ComputingPartnerTableList   
    {
+       #region Constructors
+       public ComputingPartnerTableList() : base() {}
+       public ComputingPartnerTableList(ComputingPartnerTable entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          Name  = entity.Name;
+          HasPartnerList  = entity.HasPartnerList;
+          MustUsePartnerList  = entity.MustUsePartnerList;
+          TransalationRequired  = entity.TransalationRequired;
+          TenantLevelTranslationBlocked  = entity.TenantLevelTranslationBlocked;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          ObjectTableId  = entity.ObjectTableId;
+          ComputingPartnerId  = entity.ComputingPartnerId;
+            ObjectTableName  = default;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+            ComputingPartnerName  = default;
+            ChangeSetOp  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -73,6 +98,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [DataMember]
        public string ChangeSetOp  { get; set; }
+         #endregion Properties
    }
 
 }

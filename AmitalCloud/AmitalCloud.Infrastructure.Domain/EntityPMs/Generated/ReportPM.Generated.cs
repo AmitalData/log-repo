@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ReportPM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public ReportPM() : base() {} 
+   public ReportPM(Report entity) : base()
+   {
+		_reportGroupId = entity.ReportGroupId;
+		_featureId = entity.FeatureId;
+		_reportDocumentId = entity.ReportDocumentId;
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_name = entity.Name;
+		_filterControlName = entity.FilterControlName;
+		_description = entity.Description;
+		_searchFields = entity.SearchFields;
+		_code = entity.Code;
+		_inActive = entity.InActive;
+		_isSecured = default;
+		_reportBody = default;
+		_hasTemplate = default;
+		_featureCode = default;
+		_defaultTemplateId = entity.DefaultTemplateId;
+		_defaultMessageTemplateId = entity.DefaultMessageTemplateId;
+		_localName = entity.LocalName;
+		_filterHtmlComponentUrl = entity.FilterHtmlComponentUrl;
+		_featureUniqeCode = entity.FeatureUniqeCode;
+		_availableForScheduling = entity.AvailableForScheduling;
+		_disablePreview = entity.DisablePreview;
+		_defaultExcelTemplateId = entity.DefaultExcelTemplateId;
+		_isExcelReportAllowed = entity.IsExcelReportAllowed;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _reportGroupId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -408,4 +440,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class PasswordPolicyList
+   public partial class PasswordPolicyList   
    {
+       #region Constructors
+       public PasswordPolicyList() : base() {}
+       public PasswordPolicyList(PasswordPolicy entity) : base()
+       {
+          Code  = entity.Code;
+          PasswordStrength  = entity.PasswordStrength;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -29,6 +40,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

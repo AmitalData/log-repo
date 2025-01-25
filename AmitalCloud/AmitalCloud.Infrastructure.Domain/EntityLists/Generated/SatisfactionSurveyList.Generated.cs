@@ -13,12 +13,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class SatisfactionSurveyList
+   public partial class SatisfactionSurveyList   
    {
+       #region Constructors
+       public SatisfactionSurveyList() : base() {}
+       public SatisfactionSurveyList(SatisfactionSurvey entity) : base()
+       {
+          Id  = entity.Id;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          SearchFields  = entity.SearchFields;
+          Rating  = entity.Rating;
+          Comments  = entity.Comments;
+          Tenant  = entity.Tenant;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -35,6 +50,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Comments  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+         #endregion Properties
    }
 
 }

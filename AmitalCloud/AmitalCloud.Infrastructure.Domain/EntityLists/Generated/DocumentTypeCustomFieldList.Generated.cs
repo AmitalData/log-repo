@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DocumentTypeCustomFieldList
+   public partial class DocumentTypeCustomFieldList   
    {
+       #region Constructors
+       public DocumentTypeCustomFieldList() : base() {}
+       public DocumentTypeCustomFieldList(DocumentTypeCustomField entity) : base()
+       {
+          FieldCode  = entity.FieldCode;
+          Name  = entity.Name;
+          FieldDataTypeCode  = entity.FieldDataTypeCode;
+          InActive  = entity.InActive;
+          IsRequired  = entity.IsRequired;
+          MultiLine  = entity.MultiLine;
+          DefaultValue  = entity.DefaultValue;
+            FieldValue  = default;
+       }
+       #endregion Constructors
+       #region Properties
       
        [DataMember]
        public string FieldCode  { get; set; }
@@ -43,6 +59,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [DataMember]
        public string FieldValue  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentReceivableList
+   public partial class ShipmentReceivableList   
    {
+       #region Constructors
+       public ShipmentReceivableList() : base() {}
+       public ShipmentReceivableList(ShipmentReceivable entity) : base()
+       {
+          Id  = entity.Id;
+          CurrencyId  = entity.CurrencyId;
+          ChargesTypeId  = entity.ChargesTypeId;
+          VatAmountProfit  = entity.VatAmountProfit;
+          VatAmountLocal  = entity.VatAmountLocal;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public double? VatAmountProfit  { get; set; }
        [DataMember]
        public double? VatAmountLocal  { get; set; }
+         #endregion Properties
    }
 
 }

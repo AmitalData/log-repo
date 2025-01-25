@@ -13,14 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class FBLStockList
+   public partial class FBLStockList   
    {
+       #region Constructors
+       public FBLStockList() : base() {}
+       public FBLStockList(FBLStock entity) : base()
+       {
+          InsertionDate  = entity.InsertionDate;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public DateTime InsertionDate  { get; set; }
+         #endregion Properties
    }
 
 }

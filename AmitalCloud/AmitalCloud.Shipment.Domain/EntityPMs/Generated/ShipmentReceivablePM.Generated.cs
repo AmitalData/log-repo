@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 
@@ -24,6 +25,72 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentReceivablePM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public ShipmentReceivablePM() : base() {} 
+   public ShipmentReceivablePM(ShipmentReceivable entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_shipmentId = entity.ShipmentId;
+		_payableLocal = entity.PayableLocal;
+		_updateByUserId = entity.UpdateByUserId;
+		_updateDate = entity.UpdateDate;
+		_aRInvoiceLineId = entity.ARInvoiceLineId;
+		_amountInProfitCurrency = entity.AmountInProfitCurrency;
+		_profitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate;
+		_aRInvoiceId = entity.ARInvoiceId;
+		_createDate = entity.CreateDate;
+		_createdByUserId = entity.CreatedByUserId;
+		_isFromQuote = entity.IsFromQuote;
+		_isFixedPrice = entity.IsFixedPrice;
+		_quoteChargeId = entity.QuoteChargeId;
+		_isChargeBySteps = entity.IsChargeBySteps;
+		_quoteSaleMinPrice = default;
+		_notes = entity.Notes;
+		_iATACodeId = entity.IATACodeId;
+		_isExchangeRateFixed = entity.IsExchangeRateFixed;
+		_aWBPrint = entity.AWBPrint;
+		_dueTypeCode = entity.DueTypeCode;
+		_shipmentReceivableLineStatusCode = entity.ShipmentReceivableLineStatusCode;
+		_prepaidCollectId = entity.PrepaidCollectId;
+		_measurementId = entity.MeasurementId;
+		_quantity = entity.Quantity;
+		_rate = entity.Rate;
+		_currencyId = entity.CurrencyId;
+		_unitPrice = entity.UnitPrice;
+		_totalAmount = entity.TotalAmount;
+		_totalAmountLocal = entity.TotalAmountLocal;
+		_chargesTypeId = entity.ChargesTypeId;
+		_chargesTypeCode = default;
+		_chargesTypeName = default;
+		_chargesGroupCode = default;
+		_shipmentReceivableLineStatusName = default;
+		_measurementCode = default;
+		_measurementShortName = default;
+		_currencyCode = default;
+		_dueTypeName = default;
+		_viewOrder = default;
+		_vatTypeId = entity.VatTypeId;
+		_changeSetOp = default;
+		_shipmentNumber = default;
+		_shipmentReceivableParentId = entity.ShipmentReceivableParentId;
+		_childShipmentReceivables = default;
+		_isBackToBack = entity.IsBackToBack;
+		_isExpense = entity.IsExpense;
+		_quoteSaleMinAmount = entity.QuoteSaleMinAmount;
+		_quoteSaleMaxAmount = entity.QuoteSaleMaxAmount;
+		_uOMPercentage = default;
+		_childChangeOp = default;
+		_vatAmountProfit = entity.VatAmountProfit;
+		_vatAmountLocal = entity.VatAmountLocal;
+		_createdByUserName = default;
+		_updateByUserName = default;
+		_changeSet = default;
+		_payableVendorId = entity.PayableVendorId;
+		_currencyName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -970,4 +1037,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,12 +13,48 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DWObjectFieldList
+   public partial class DWObjectFieldList   
    {
+       #region Constructors
+       public DWObjectFieldList() : base() {}
+       public DWObjectFieldList(DWObjectField entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Name  = entity.Name;
+          Code  = entity.Code;
+          DWObjectTableCode  = entity.DWObjectTableCode;
+          DataTypeCode  = entity.DataTypeCode;
+          DimensionTableCode  = entity.DimensionTableCode;
+          MinLength  = entity.MinLength;
+          MaxLength  = entity.MaxLength;
+          IsRequired  = entity.IsRequired;
+          IsPrimaryKey  = entity.IsPrimaryKey;
+          IsMeasurement  = entity.IsMeasurement;
+          AggregationTypeCode  = entity.AggregationTypeCode;
+            DisplayName  = default;
+          DisplayInQueryBuilder  = entity.DisplayInQueryBuilder;
+          Category1  = entity.Category1;
+          Category2  = entity.Category2;
+            IsRequiered  = default;
+          HideTree  = entity.HideTree;
+            DimensionTableDisplayName  = default;
+          LOVAdditionalColumns  = entity.LOVAdditionalColumns;
+          IsCustom  = entity.IsCustom;
+            FullNameTextCodeCode  = default;
+          ViewFieldDisplayName  = entity.ViewFieldDisplayName;
+          DontDisplayInView  = entity.DontDisplayInView;
+          DimensionDataViewName  = entity.DimensionDataViewName;
+          IsMultipleSelection  = entity.IsMultipleSelection;
+          UseUnitSelection  = entity.UseUnitSelection;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -77,6 +113,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsMultipleSelection  { get; set; }
        [DataMember]
        public bool UseUnitSelection  { get; set; }
+         #endregion Properties
    }
 
 }

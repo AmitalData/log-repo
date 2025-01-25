@@ -570,14 +570,8 @@ if(hasTenant)
 
                         string entityName = "<#= tableName #>" + entityPM.<#= firstKey #> + entityPM.Tenant;
                         string entityPmName = "<#= pmName #>" + entityPM.<#= firstKey #> + entityPM.Tenant;
-                        if (CacheManager.CacheWrapper.Get(entityName) != null)
-                        {
-                            CacheManager.CacheWrapper.Invalidate(entityName);
-                        }
-                        if (CacheManager.CacheWrapper.Get(entityPmName) != null)
-                        {
-                            CacheManager.CacheWrapper.Invalidate(entityPmName);
-                        }
+                        CacheManager.CacheWrapper.Invalidate(entityName);
+                        CacheManager.CacheWrapper.Invalidate(entityPmName);
 <#+
 }
 

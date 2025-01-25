@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ContainerTrackingRequestList
+   public partial class ContainerTrackingRequestList   
    {
+       #region Constructors
+       public ContainerTrackingRequestList() : base() {}
+       public ContainerTrackingRequestList(ContainerTrackingRequest entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          SearchFields  = entity.SearchFields;
+          Provider  = entity.Provider;
+          ContainerNumber  = entity.ContainerNumber;
+          Master  = entity.Master;
+          RequestId  = entity.RequestId;
+          ContainerId  = entity.ContainerId;
+          ShipmentId  = entity.ShipmentId;
+          CarrierCode  = entity.CarrierCode;
+          Status  = entity.Status;
+          IsSimulate  = entity.IsSimulate;
+          ScacCode  = entity.ScacCode;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -49,6 +71,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public bool IsSimulate  { get; set; }
        [DataMember]
        public string ScacCode  { get; set; }
+         #endregion Properties
    }
 
 }

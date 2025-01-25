@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,28 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class EntityStatusPM : BaseEntityPM   {
+   #region Constructors
+   public EntityStatusPM() : base() {} 
+   public EntityStatusPM(EntityStatus entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_objectTableId = entity.ObjectTableId;
+		_code = entity.Code;
+		_inActive = entity.InActive;
+		_name = entity.Name;
+		_objectTableName = default;
+		_statusWeight = entity.StatusWeight;
+		_searchFields = entity.SearchFields;
+		_isHybrid = default;
+		_displayName = entity.DisplayName;
+		_entityStatusTypeCode = entity.EntityStatusTypeCode;
+		_statusLocalWeight = entity.StatusLocalWeight;
+		_allowPartial = entity.AllowPartial;
+		_isDigitalPortal = entity.IsDigitalPortal;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -263,4 +286,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

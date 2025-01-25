@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class RuleUpdateHistoryList
+   public partial class RuleUpdateHistoryList   
    {
+       #region Constructors
+       public RuleUpdateHistoryList() : base() {}
+       public RuleUpdateHistoryList(RuleUpdateHistory entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          RuleCode  = entity.RuleCode;
+          EventName  = entity.EventName;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -41,6 +59,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string CreatedByUserName  { get; set; }
        [DataMember]
        public string UpdatedByUserName  { get; set; }
+         #endregion Properties
    }
 
 }

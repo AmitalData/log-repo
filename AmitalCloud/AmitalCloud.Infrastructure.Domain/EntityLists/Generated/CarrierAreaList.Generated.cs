@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CarrierAreaList
+   public partial class CarrierAreaList   
    {
+       #region Constructors
+       public CarrierAreaList() : base() {}
+       public CarrierAreaList(CarrierArea entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Name  = entity.Name;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+            CreatedByUserName  = default;
+            UpdatedByUserName  = default;
+          TransportModeCode  = entity.TransportModeCode;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -41,6 +59,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string UpdatedByUserName  { get; set; }
        [DataMember]
        public string TransportModeCode  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,40 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CreditLimitSettingPM : BaseEntityPM   {
+   #region Constructors
+   public CreditLimitSettingPM() : base() {} 
+   public CreditLimitSettingPM(CreditLimitSetting entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_isCreditLimitEnabled = entity.IsCreditLimitEnabled;
+		_invoiceCreationWarning = entity.InvoiceCreationWarning;
+		_invoiceCreationBlock = entity.InvoiceCreationBlock;
+		_shipmentCreationBlock = entity.ShipmentCreationBlock;
+		_customersShipmentsBlock = entity.CustomersShipmentsBlock;
+		_agentsShipmentsBlock = entity.AgentsShipmentsBlock;
+		_shipperConsigneeShipmentBlock = entity.ShipperConsigneeShipmentBlock;
+		_customsAgentsShipmentsBlock = entity.CustomsAgentsShipmentsBlock;
+		_shippingAgentsShipmentsBlock = entity.ShippingAgentsShipmentsBlock;
+		_airlinesShipmentsBlock = entity.AirlinesShipmentsBlock;
+		_shippingLinesShipmentsBlock = entity.ShippingLinesShipmentsBlock;
+		_truckersShipmentsBlock = entity.TruckersShipmentsBlock;
+		_vendorsShipmentsBlock = entity.VendorsShipmentsBlock;
+		_warehousesShipmentsBlock = entity.WarehousesShipmentsBlock;
+		_customersInvoicesBlock = entity.CustomersInvoicesBlock;
+		_agentsInvoicesBlock = entity.AgentsInvoicesBlock;
+		_shipperConsigneeInvoiceBlock = entity.ShipperConsigneeInvoiceBlock;
+		_customsAgentsInvoicesBlock = entity.CustomsAgentsInvoicesBlock;
+		_shippingAgentsInvoicesBlock = entity.ShippingAgentsInvoicesBlock;
+		_airlinesInvoicesBlock = entity.AirlinesInvoicesBlock;
+		_shippingLinesInvoicesBlock = entity.ShippingLinesInvoicesBlock;
+		_truckersInvoicesBlock = entity.TruckersInvoicesBlock;
+		_vendorsInvoicesBlock = entity.VendorsInvoicesBlock;
+		_warehousesInvoicesBlock = entity.WarehousesInvoicesBlock;
+		_shipmentCreationWarning = entity.ShipmentCreationWarning;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -455,4 +490,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

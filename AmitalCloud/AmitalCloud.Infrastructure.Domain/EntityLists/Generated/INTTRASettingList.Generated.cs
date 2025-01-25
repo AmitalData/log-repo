@@ -13,13 +13,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class INTTRASettingList
+   public partial class INTTRASettingList   
    {
-      }
+       #region Constructors
+       public INTTRASettingList() : base() {}
+       public INTTRASettingList(INTTRASetting entity) : base()
+       {
+       }
+       #endregion Constructors
+       #region Properties
+            #endregion Properties
+   }
 
 }
 	 

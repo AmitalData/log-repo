@@ -13,12 +13,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AirlineMessagingRuleList
+   public partial class AirlineMessagingRuleList   
    {
+       #region Constructors
+       public AirlineMessagingRuleList() : base() {}
+       public AirlineMessagingRuleList(AirlineMessagingRule entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+            AirlineCode  = default;
+          MessageTypeCode  = entity.MessageTypeCode;
+          RuleFieldId  = entity.RuleFieldId;
+            RuleFieldName  = default;
+          IsMandatoryForSending  = entity.IsMandatoryForSending;
+          MaxSize  = entity.MaxSize;
+          AirlineId  = entity.AirlineId;
+          InActive  = entity.InActive;
+          RuleFieldCode  = entity.RuleFieldCode;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -43,6 +62,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool InActive  { get; set; }
        [DataMember]
        public string RuleFieldCode  { get; set; }
+         #endregion Properties
    }
 
 }

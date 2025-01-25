@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,47 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentPickUpDeliveryPM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public ShipmentPickUpDeliveryPM() : base() {} 
+   public ShipmentPickUpDeliveryPM(ShipmentPickUpDelivery entity) : base()
+   {
+		_id = entity.Id;
+		_aTD = entity.ATD;
+		_aTA = entity.ATA;
+		_eTD = entity.ETD;
+		_eTA = entity.ETA;
+		_carrierNumber = entity.CarrierNumber;
+		_notes = entity.Notes;
+		_pickUpDeliveryNumber = entity.PickUpDeliveryNumber;
+		_fromPartnerCardId = entity.FromPartnerCardId;
+		_fromPortId = entity.FromPortId;
+		_driver = entity.Driver;
+		_toPartnerCardId = entity.ToPartnerCardId;
+		_toPortId = entity.ToPortId;
+		_carrierId = entity.CarrierId;
+		_truckNumber = entity.TruckNumber;
+		_trailerNumber = entity.TrailerNumber;
+		_pickUpDeliveryTypeCode = entity.PickUpDeliveryTypeCode;
+		_pickUpDeliveryFromTypeCode = entity.PickUpDeliveryFromTypeCode;
+		_pickUpDeliveryToTypeCode = entity.PickUpDeliveryToTypeCode;
+		_fromAddressCity = entity.FromAddressCity;
+		_fromAddressZipCode = entity.FromAddressZipCode;
+		_fromAddressCountryId = entity.FromAddressCountryId;
+		_toAddressCity = entity.ToAddressCity;
+		_toAddressZipCode = entity.ToAddressZipCode;
+		_toAddressCountryId = entity.ToAddressCountryId;
+		_transportModeCode = entity.TransportModeCode;
+		_shipmentPickUpDeliveryPackages = default;
+		_parentPickUpDeliveryId = entity.ParentPickUpDeliveryId;
+		_childPickUpIndex = entity.ChildPickUpIndex;
+		_childDeliveryIndex = entity.ChildDeliveryIndex;
+		_bookingConfirmationNumber = default;
+		_standaloneShipmentId = entity.StandaloneShipmentId;
+		_standaloneShipmentNumber = entity.StandaloneShipmentNumber;
+		_changeSet = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -568,4 +610,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

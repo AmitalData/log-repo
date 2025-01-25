@@ -13,18 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class QuoteGroupSectionList
+   public partial class QuoteGroupSectionList   
    {
+       #region Constructors
+       public QuoteGroupSectionList() : base() {}
+       public QuoteGroupSectionList(QuoteGroupSection entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
        public string Code  { get; set; }
        [DataMember]
        public string Name  { get; set; }
+         #endregion Properties
    }
 
 }

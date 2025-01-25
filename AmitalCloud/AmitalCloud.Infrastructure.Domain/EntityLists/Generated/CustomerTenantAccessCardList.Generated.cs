@@ -13,12 +13,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerTenantAccessCardList
+   public partial class CustomerTenantAccessCardList   
    {
+       #region Constructors
+       public CustomerTenantAccessCardList() : base() {}
+       public CustomerTenantAccessCardList(CustomerTenantAccessCard entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          CustomerId  = entity.CustomerId;
+          CustomerTenantAccessId  = entity.CustomerTenantAccessId;
+          CreateByUserId  = entity.CreateByUserId;
+          CreateDate  = entity.CreateDate;
+            LastShipmentDate  = default;
+            CustomerCode  = default;
+            CustomerName  = default;
+          LastShipmentDateInQueue  = entity.LastShipmentDateInQueue;
+            HybridStartDate  = default;
+          LastMappingDateTime  = entity.LastMappingDateTime;
+          UpdateDateTime  = entity.UpdateDateTime;
+          StatusTypeCode  = entity.StatusTypeCode;
+            StatusType  = default;
+          IsExportActivated  = entity.IsExportActivated;
+          IsCustomsActivated  = entity.IsCustomsActivated;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
 
@@ -55,6 +79,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsExportActivated  { get; set; }
        [DataMember]
        public bool IsCustomsActivated  { get; set; }
+         #endregion Properties
    }
 
 }

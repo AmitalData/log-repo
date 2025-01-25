@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ExternalSystemsTablesCodeList
+   public partial class ExternalSystemsTablesCodeList   
    {
+       #region Constructors
+       public ExternalSystemsTablesCodeList() : base() {}
+       public ExternalSystemsTablesCodeList(ExternalSystemsTablesCode entity) : base()
+       {
+          Id  = entity.Id;
+          Code  = entity.Code;
+          Tenant  = entity.Tenant;
+          Name  = entity.Name;
+          LogitudeTable  = entity.LogitudeTable;
+          CreatedDate  = entity.CreatedDate;
+          UpdatedDate  = entity.UpdatedDate;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -37,6 +53,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public DateTime? UpdatedDate  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

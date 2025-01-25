@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,92 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class WarehousePM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public WarehousePM() : base() {} 
+   public WarehousePM(Warehouse entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_code = default;
+		_englishName = default;
+		_localName = default;
+		_computedLocalName = default;
+		_addedManually = entity.AddedManually;
+		_inActive = default;
+		_notes = default;
+		_vatNumber = default;
+		_accountingCard = default;
+		_paymentTermId = default;
+		_invoiceCurrencyId = default;
+		_vatTypeId = default;
+		_bankName = default;
+		_bankAddress = default;
+		_swift = default;
+		_accountNumber = default;
+		_iBANNumber = default;
+		_enableConsolidationInvoices = default;
+		_searchFields = default;
+		_isSecured = default;
+		_website = default;
+		_createDate = default;
+		_updateDate = default;
+		_createdByUserId = default;
+		_updatedByUserId = default;
+		_fieldsChanged = default;
+		_partnerTypeId = default;
+		_existedContactId = default;
+		_transportModeId = default;
+		_cityName = default;
+		_countryId = default;
+		_countryCode = default;
+		_countryName = default;
+		_isExternal = default;
+		_primaryContactId = default;
+		_isFirstContactToAdd = default;
+		_card = default;
+		addresses = default;
+		contacts = default;
+		cardExternalCodeByCurrencies = default;
+		_isHybrid = default;
+		_metodoPagoCode = default;
+		_usoCFDICode = default;
+		_sATForeignRFC = default;
+		_externalId2 = default;
+		_firmCode = entity.FirmCode;
+		_typeCode = entity.TypeCode;
+		_myWarehouse = entity.MyWarehouse;
+		_iRSPlace = default;
+		_iRSNumber = default;
+		_receivablesAccountingCard = default;
+		_payablesAccountingCard = default;
+		_externalAccountingBusinessArea = default;
+		_paymentMethodCode = default;
+		_primaryContactName = entity.PrimaryContactName;
+		_primaryContactEmail = entity.PrimaryContactEmail;
+		_primaryContactPhone = entity.PrimaryContactPhone;
+		_accountingVATSplit = default;
+		_chargeStorage = entity.ChargeStorage;
+		_currencyId = entity.CurrencyId;
+		_airWeightMeasurementCode = entity.AirWeightMeasurementCode;
+		_oceanWeightMeasurementCode = entity.OceanWeightMeasurementCode;
+		_inlandWeightMeasurementCode = entity.InlandWeightMeasurementCode;
+		_airWeightRoundingCode = entity.AirWeightRoundingCode;
+		_oceanWeightRoundingCode = entity.OceanWeightRoundingCode;
+		_inlandWeightRoundingCode = entity.InlandWeightRoundingCode;
+		warehouseStoragePricings = default;
+		_gLAccountNumber = default;
+		_storageFreeDays = default;
+		_address1 = default;
+		_address2 = default;
+		_billToId = default;
+		_regimenFiscalCode = default;
+		_sATReceptorName = default;
+		_gLAccountId = default;
+		_importLocalCustomerGroupId = default;
+		_exportLocalCustomerGroupId = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -1512,4 +1599,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

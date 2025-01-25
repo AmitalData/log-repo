@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ARInvoicesSignedStatusList
+   public partial class ARInvoicesSignedStatusList   
    {
+       #region Constructors
+       public ARInvoicesSignedStatusList() : base() {}
+       public ARInvoicesSignedStatusList(ARInvoicesSignedStatus entity) : base()
+       {
+          Code  = entity.Code;
+          LocalName  = entity.LocalName;
+          EnglishName  = entity.EnglishName;
+          SearchFields  = entity.SearchFields;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -29,6 +41,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string EnglishName  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+         #endregion Properties
    }
 
 }

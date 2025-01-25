@@ -13,12 +13,49 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class EventTypeList
+   public partial class EventTypeList   
    {
+       #region Constructors
+       public EventTypeList() : base() {}
+       public EventTypeList(EventType entity) : base()
+       {
+          Id  = entity.Id;
+          ShortView  = entity.ShortView;
+          AllowedInAutomation  = entity.AllowedInAutomation;
+          SearchFields  = entity.SearchFields;
+          EventTypeCategoryCode  = entity.EventTypeCategoryCode;
+          IsCustomerView  = entity.IsCustomerView;
+          IsAgentView  = entity.IsAgentView;
+          Tenant  = entity.Tenant;
+          IsSharedLogisticsEnabled  = entity.IsSharedLogisticsEnabled;
+          Code  = entity.Code;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+          ObjectTableId  = entity.ObjectTableId;
+            EntityStatusName  = default;
+          EntityStatusId  = entity.EntityStatusId;
+          IsFollowUp  = entity.IsFollowUp;
+          FollowUpEnglishName  = entity.FollowUpEnglishName;
+          FollowUpLocalName  = entity.FollowUpLocalName;
+          AddedManually  = entity.AddedManually;
+          IsManualEntry  = entity.IsManualEntry;
+          ManualActivatedFollowUp  = entity.ManualActivatedFollowUp;
+          InActive  = entity.InActive;
+            EventGroupCode  = default;
+            EventDateTime  = default;
+          CustomField  = entity.CustomField;
+            EntityStatusWeight  = default;
+          IsStatusNotModified  = entity.IsStatusNotModified;
+          EventTrigger  = entity.EventTrigger;
+          Weight  = entity.Weight;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -79,6 +116,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string EventTrigger  { get; set; }
        [DataMember]
        public int? Weight  { get; set; }
+         #endregion Properties
    }
 
 }

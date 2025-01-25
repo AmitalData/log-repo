@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,20 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class AccountingSystemsSyncStatusPM : BaseEntityPM   {
+   #region Constructors
+   public AccountingSystemsSyncStatusPM() : base() {} 
+   public AccountingSystemsSyncStatusPM(AccountingSystemsSyncStatus entity) : base()
+   {
+		_lastErrorDate = entity.LastErrorDate;
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_externalCodesLastUpdate = entity.ExternalCodesLastUpdate;
+		_lastRequestDate = entity.LastRequestDate;
+		_lastError = entity.LastError;
+		_syncInterval = entity.SyncInterval;
+   }
+   #endregion Constructors
+   #region Properties
    	  private DateTime? _lastErrorDate ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -135,4 +150,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

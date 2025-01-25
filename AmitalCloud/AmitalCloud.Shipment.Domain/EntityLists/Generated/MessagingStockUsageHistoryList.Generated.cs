@@ -13,12 +13,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class MessagingStockUsageHistoryList
+   public partial class MessagingStockUsageHistoryList   
    {
+       #region Constructors
+       public MessagingStockUsageHistoryList() : base() {}
+       public MessagingStockUsageHistoryList(MessagingStockUsageHistory entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          EntityId  = entity.EntityId;
+          EntityNumber  = entity.EntityNumber;
+          StockId  = entity.StockId;
+            ShipmentNumber  = default;
+          MessageType  = entity.MessageType;
+          MAWB  = entity.MAWB;
+          HAWB  = entity.HAWB;
+          ActionType  = entity.ActionType;
+          FirstActionDate  = entity.FirstActionDate;
+          LastActionDate  = entity.LastActionDate;
+          FirstActionByUserId  = entity.FirstActionByUserId;
+          LastActionByUserId  = entity.LastActionByUserId;
+            LastActionByUserName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -51,6 +74,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string LastActionByUserId  { get; set; }
        [DataMember]
        public string LastActionByUserName  { get; set; }
+         #endregion Properties
    }
 
 }

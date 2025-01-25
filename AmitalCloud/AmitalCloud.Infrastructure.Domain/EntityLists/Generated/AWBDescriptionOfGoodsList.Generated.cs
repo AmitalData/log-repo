@@ -13,12 +13,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AWBDescriptionOfGoodsList
+   public partial class AWBDescriptionOfGoodsList   
    {
+       #region Constructors
+       public AWBDescriptionOfGoodsList() : base() {}
+       public AWBDescriptionOfGoodsList(AWBDescriptionOfGoods entity) : base()
+       {
+          Id  = entity.Id;
+          Service  = entity.Service;
+          IsTemperatureSensitive  = entity.IsTemperatureSensitive;
+          Name  = entity.Name;
+          ShortDescriptionOfGoods  = entity.ShortDescriptionOfGoods;
+          SearchFields  = entity.SearchFields;
+          AirlineCode  = entity.AirlineCode;
+          ProductCode  = entity.ProductCode;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -44,6 +60,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [DataMember]
        public string ProductCode  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,29 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ARInvoiceTotalVATPM : BaseEntityPM   {
+   #region Constructors
+   public ARInvoiceTotalVATPM() : base() {} 
+   public ARInvoiceTotalVATPM(ARInvoiceTotalVAT entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_vatTypeId = entity.VatTypeId;
+		_invoiceCurrencyVATAmount = entity.InvoiceCurrencyVATAmount;
+		_localVATAmount = entity.LocalVATAmount;
+		_invoiceCurrencyVatableAmount = entity.InvoiceCurrencyVatableAmount;
+		_localVatableAmount = entity.LocalVatableAmount;
+		_vatPercent = entity.VatPercent;
+		_aRInvoiceId = entity.ARInvoiceId;
+		_profitCurrencyVATAmount = entity.ProfitCurrencyVATAmount;
+		_profitVatableAmount = entity.ProfitVatableAmount;
+		_externalVATCard = entity.ExternalVATCard;
+		_externalTAXItemId = entity.ExternalTAXItemId;
+		_vatTypeName = default;
+		_vatTypeCell = default;
+		_isRegionalTax = entity.IsRegionalTax;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -279,4 +303,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

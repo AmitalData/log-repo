@@ -13,12 +13,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentDigitalFieldList
+   public partial class ShipmentDigitalFieldList   
    {
+       #region Constructors
+       public ShipmentDigitalFieldList() : base() {}
+       public ShipmentDigitalFieldList(ShipmentDigitalField entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          IsCustomerArchived  = entity.IsCustomerArchived;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -27,6 +38,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public bool IsCustomerArchived  { get; set; }
+         #endregion Properties
    }
 
 }

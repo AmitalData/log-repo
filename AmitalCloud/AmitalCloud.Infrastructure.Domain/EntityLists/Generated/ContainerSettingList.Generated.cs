@@ -13,12 +13,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ContainerSettingList
+   public partial class ContainerSettingList   
    {
+       #region Constructors
+       public ContainerSettingList() : base() {}
+       public ContainerSettingList(ContainerSetting entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          EmptyReturnClosingDays  = entity.EmptyReturnClosingDays;
+          ShipmentATAClosingDays  = entity.ShipmentATAClosingDays;
+          ShipmentATADateIndicator  = entity.ShipmentATADateIndicator;
+          IsExport  = entity.IsExport;
+          IsDomestic  = entity.IsDomestic;
+          IsImport  = entity.IsImport;
+          IsDrop  = entity.IsDrop;
+          AddedManually  = entity.AddedManually;
+          ActivationDate  = entity.ActivationDate;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -43,6 +62,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool AddedManually  { get; set; }
        [DataMember]
        public DateTime? ActivationDate  { get; set; }
+         #endregion Properties
    }
 
 }

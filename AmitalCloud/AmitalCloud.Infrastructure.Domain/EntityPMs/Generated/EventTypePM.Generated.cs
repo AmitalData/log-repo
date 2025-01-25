@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,47 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class EventTypePM : BaseEntityPM   {
+   #region Constructors
+   public EventTypePM() : base() {} 
+   public EventTypePM(EventType entity) : base()
+   {
+		_id = entity.Id;
+		_shortView = entity.ShortView;
+		_customerRoleId = entity.CustomerRoleId;
+		_agentRoleId = entity.AgentRoleId;
+		_allowedInAutomation = entity.AllowedInAutomation;
+		_searchFields = entity.SearchFields;
+		_eventTypeCategoryCode = entity.EventTypeCategoryCode;
+		_isCustomerView = entity.IsCustomerView;
+		_isAgentView = entity.IsAgentView;
+		_tenant = entity.Tenant;
+		_isSharedLogisticsEnabled = entity.IsSharedLogisticsEnabled;
+		_code = entity.Code;
+		_englishName = entity.EnglishName;
+		_localName = entity.LocalName;
+		_computedLocalName = default;
+		_objectTableId = entity.ObjectTableId;
+		_entityStatusName = default;
+		_entityStatusId = entity.EntityStatusId;
+		_isFollowUp = entity.IsFollowUp;
+		_followUpEnglishName = entity.FollowUpEnglishName;
+		_followUpLocalName = entity.FollowUpLocalName;
+		_addedManually = entity.AddedManually;
+		_isManualEntry = entity.IsManualEntry;
+		_manualActivatedFollowUp = entity.ManualActivatedFollowUp;
+		_inActive = entity.InActive;
+		_eventGroupCode = default;
+		_objectTableName = default;
+		_isHybrid = default;
+		_customField = entity.CustomField;
+		_isStatusNotModified = entity.IsStatusNotModified;
+		_partnerCode = default;
+		_eventTrigger = entity.EventTrigger;
+		eventRemarks = default;
+		_weight = entity.Weight;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -584,4 +626,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

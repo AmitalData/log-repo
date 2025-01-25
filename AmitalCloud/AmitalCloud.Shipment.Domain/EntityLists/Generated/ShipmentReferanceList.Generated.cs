@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentReferanceList
+   public partial class ShipmentReferanceList   
    {
+       #region Constructors
+       public ShipmentReferanceList() : base() {}
+       public ShipmentReferanceList(ShipmentReferance entity) : base()
+       {
+          ShipmentId  = entity.ShipmentId;
+          Tenant  = entity.Tenant;
+          LineNumber  = entity.LineNumber;
+          ReferenceType  = entity.ReferenceType;
+          PartnerId  = entity.PartnerId;
+          ReferenceValue  = entity.ReferenceValue;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string PartnerId  { get; set; }
        [DataMember]
        public string ReferenceValue  { get; set; }
+         #endregion Properties
    }
 
 }

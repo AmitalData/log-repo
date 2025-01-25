@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CargoTenantMilestoneDefinitionList
+   public partial class CargoTenantMilestoneDefinitionList   
    {
+       #region Constructors
+       public CargoTenantMilestoneDefinitionList() : base() {}
+       public CargoTenantMilestoneDefinitionList(CargoTenantMilestoneDefinition entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          IsCustomerView  = entity.IsCustomerView;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -29,6 +41,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Code  { get; set; }
        [DataMember]
        public bool IsCustomerView  { get; set; }
+         #endregion Properties
    }
 
 }

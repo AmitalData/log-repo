@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class WorkerRoleNamePM : BaseEntityPM   {
+   #region Constructors
+   public WorkerRoleNamePM() : base() {} 
+   public WorkerRoleNamePM(WorkerRoleName entity) : base()
+   {
+		_createDate = entity.CreateDate;
+		_name = entity.Name;
+		_waitingStatus = entity.WaitingStatus;
+   }
+   #endregion Constructors
+   #region Properties
    	  private DateTime _createDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -71,4 +82,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class BluesnapContractPM : BaseEntityPM   {
+   #region Constructors
+   public BluesnapContractPM() : base() {} 
+   public BluesnapContractPM(BluesnapContract entity) : base()
+   {
+		_code = entity.Code;
+		_name = entity.Name;
+		_searchFields = entity.SearchFields;
+		_contractId = entity.ContractId;
+		_inActive = entity.InActive;
+		_tenant = default;
+		_id = entity.Id;
+		_bluesnapContractTypeCode = entity.BluesnapContractTypeCode;
+		_bluesnapContractTypeName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _code ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -167,4 +184,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

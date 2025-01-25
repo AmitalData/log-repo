@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class FTPDetailPM : BaseEntityPM   {
+   #region Constructors
+   public FTPDetailPM() : base() {} 
+   public FTPDetailPM(FTPDetail entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_inActive = entity.InActive;
+		_createdByUserId = entity.CreatedByUserId;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_userName = entity.UserName;
+		_password = entity.Password;
+		_host = entity.Host;
+		_folder = entity.Folder;
+		_useSFTP = entity.UseSFTP;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -215,4 +235,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

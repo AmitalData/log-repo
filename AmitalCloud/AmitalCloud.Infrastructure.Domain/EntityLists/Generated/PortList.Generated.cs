@@ -13,12 +13,44 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class PortList
+   public partial class PortList   
    {
+       #region Constructors
+       public PortList() : base() {}
+       public PortList(Port entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          EnglishName  = entity.EnglishName;
+          IsOcean  = entity.IsOcean;
+          IsAir  = entity.IsAir;
+          IsInland  = entity.IsInland;
+          AddedManually  = entity.AddedManually;
+          InActive  = entity.InActive;
+            Remark  = default;
+          CountryId  = entity.CountryId;
+          CountryCode  = entity.CountryCode;
+          CountryName  = entity.CountryName;
+            TransportModeId  = default;
+          StateId  = entity.StateId;
+          Notes  = entity.Notes;
+          SearchFields  = entity.SearchFields;
+            CountryEC  = default;
+          StateCode  = entity.StateCode;
+            InUse  = default;
+            RecentlyAdded  = default;
+          CombinedCode  = entity.CombinedCode;
+          StateName  = entity.StateName;
+            CountryIsNorthAmerica  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -69,6 +101,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string StateName  { get; set; }
        [DataMember]
        public bool CountryIsNorthAmerica  { get; set; }
+         #endregion Properties
    }
 
 }

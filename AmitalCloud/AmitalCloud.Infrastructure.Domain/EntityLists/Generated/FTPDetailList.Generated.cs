@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class FTPDetailList
+   public partial class FTPDetailList   
    {
+       #region Constructors
+       public FTPDetailList() : base() {}
+       public FTPDetailList(FTPDetail entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          InActive  = entity.InActive;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          UserName  = entity.UserName;
+          Password  = entity.Password;
+          Host  = entity.Host;
+          Folder  = entity.Folder;
+          UseSFTP  = entity.UseSFTP;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Folder  { get; set; }
        [DataMember]
        public bool UseSFTP  { get; set; }
+         #endregion Properties
    }
 
 }

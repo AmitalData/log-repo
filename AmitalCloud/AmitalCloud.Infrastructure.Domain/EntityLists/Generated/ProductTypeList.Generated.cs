@@ -13,12 +13,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ProductTypeList
+   public partial class ProductTypeList   
    {
+       #region Constructors
+       public ProductTypeList() : base() {}
+       public ProductTypeList(ProductType entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+            InActive  = default;
+          QuotationDefaultTemplateId  = entity.QuotationDefaultTemplateId;
+            DefaultTemplate  = default;
+            Id  = default;
+          RoutingRQuoteDefaultTemplateId  = entity.RoutingRQuoteDefaultTemplateId;
+            RoutingRQuoteDefaultTemplate  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -39,6 +56,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string RoutingRQuoteDefaultTemplateId  { get; set; }
        [DataMember]
        public string RoutingRQuoteDefaultTemplate  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DocumentFilingBackupBatchList
+   public partial class DocumentFilingBackupBatchList   
    {
+       #region Constructors
+       public DocumentFilingBackupBatchList() : base() {}
+       public DocumentFilingBackupBatchList(DocumentFilingBackupBatch entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDateTime  = entity.CreateDateTime;
+          DoneDate  = entity.DoneDate;
+          Status  = entity.Status;
+          BatchNumber  = entity.BatchNumber;
+          TotalFailed  = entity.TotalFailed;
+          TotalDocuments  = entity.TotalDocuments;
+          TotalSucceeded  = entity.TotalSucceeded;
+          IncludeBackedUp  = entity.IncludeBackedUp;
+          FromDateTime  = entity.FromDateTime;
+          ToDateTime  = entity.ToDateTime;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime? FromDateTime  { get; set; }
        [DataMember]
        public DateTime? ToDateTime  { get; set; }
+         #endregion Properties
    }
 
 }

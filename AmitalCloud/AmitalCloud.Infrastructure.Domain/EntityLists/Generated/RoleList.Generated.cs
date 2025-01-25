@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class RoleList
+   public partial class RoleList   
    {
+       #region Constructors
+       public RoleList() : base() {}
+       public RoleList(Role entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          SearchFields  = entity.SearchFields;
+          Code  = entity.Code;
+          Name  = entity.Name;
+          Description  = entity.Description;
+          RoleTypeCode  = entity.RoleTypeCode;
+          ParentRoleId  = entity.ParentRoleId;
+          IsCustomRole  = entity.IsCustomRole;
+          Inactive  = entity.Inactive;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -41,6 +59,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsCustomRole  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+         #endregion Properties
    }
 
 }

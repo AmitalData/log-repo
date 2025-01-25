@@ -13,12 +13,31 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ChargeTypeAccountingList
+   public partial class ChargeTypeAccountingList   
    {
+       #region Constructors
+       public ChargeTypeAccountingList() : base() {}
+       public ChargeTypeAccountingList(ChargeTypeAccounting entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          VatTypeId  = entity.VatTypeId;
+          ChargeTypeId  = entity.ChargeTypeId;
+          PayableDebitAccount  = entity.PayableDebitAccount;
+          ReceivableCreditAccount  = entity.ReceivableCreditAccount;
+            ChangeSetOp  = default;
+            VatTypeName  = default;
+            ChargeTypeName  = default;
+          PayableDebitGLAcountId  = entity.PayableDebitGLAcountId;
+          ReceivableCreditGLAccountId  = entity.ReceivableCreditGLAccountId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -53,6 +72,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [DataMember]
        public string ReceivableCreditGLAccountId  { get; set; }
+         #endregion Properties
    }
 
 }

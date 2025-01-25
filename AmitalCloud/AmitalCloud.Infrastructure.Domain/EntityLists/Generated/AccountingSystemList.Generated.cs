@@ -13,12 +13,41 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AccountingSystemList
+   public partial class AccountingSystemList   
    {
+       #region Constructors
+       public AccountingSystemList() : base() {}
+       public AccountingSystemList(AccountingSystem entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          IsExternalCodesFromTable  = entity.IsExternalCodesFromTable;
+          IsExternalCodesSyncEnabled  = entity.IsExternalCodesSyncEnabled;
+          IsSingleTaxPerInvoice  = entity.IsSingleTaxPerInvoice;
+          IsSingleCurrencyAccount  = entity.IsSingleCurrencyAccount;
+          AllowManuallyDueDate  = entity.AllowManuallyDueDate;
+          IsJournalMode  = entity.IsJournalMode;
+          IsTaxItemManaged  = entity.IsTaxItemManaged;
+          AllowMinusInvoiceLines  = entity.AllowMinusInvoiceLines;
+          ShowDownloadScreen  = entity.ShowDownloadScreen;
+          AllowARInvoicesTransfer  = entity.AllowARInvoicesTransfer;
+          AllowAPInvoicesTransfer  = entity.AllowAPInvoicesTransfer;
+          AllowPositiveAmountsInTheCreditNote  = entity.AllowPositiveAmountsInTheCreditNote;
+          InActive  = entity.InActive;
+          IsExternalCodesFromAPI  = entity.IsExternalCodesFromAPI;
+          AllowARPaymentsTransfer  = entity.AllowARPaymentsTransfer;
+          CanTransferToDropbox  = entity.CanTransferToDropbox;
+          AllowAPPaymentsTransfer  = entity.AllowAPPaymentsTransfer;
+          CanTransferToFTP  = entity.CanTransferToFTP;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -63,6 +92,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool AllowAPPaymentsTransfer  { get; set; }
        [DataMember]
        public bool CanTransferToFTP  { get; set; }
+         #endregion Properties
    }
 
 }

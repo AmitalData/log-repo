@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class DigitalTextCodePM : BaseEntityPM   {
+   #region Constructors
+   public DigitalTextCodePM() : base() {} 
+   public DigitalTextCodePM(DigitalTextCode entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_objectTableId = entity.ObjectTableId;
+		_labels = entity.Labels;
+		_objectTableName = default;
+		_profileId = entity.ProfileId;
+		_profileCode = default;
+		_languageCode = entity.LanguageCode;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -183,4 +201,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

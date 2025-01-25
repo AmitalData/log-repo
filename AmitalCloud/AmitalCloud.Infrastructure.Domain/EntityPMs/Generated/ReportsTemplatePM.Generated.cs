@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,35 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ReportsTemplatePM : BaseEntityPM   {
+   #region Constructors
+   public ReportsTemplatePM() : base() {} 
+   public ReportsTemplatePM(ReportsTemplate entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_description = entity.Description;
+		_inActive = entity.InActive;
+		_isSystem = entity.IsSystem;
+		_reportId = entity.ReportId;
+		_createdByUserId = entity.CreatedByUserId;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_currentVersion = entity.CurrentVersion;
+		_updatedByUserName = default;
+		_isDefault = default;
+		_templateData = default;
+		_templateType = entity.TemplateType;
+		_from = entity.From;
+		_replyTo = entity.ReplyTo;
+		_cC = entity.CC;
+		_subject = entity.Subject;
+		_updateByUserName = default;
+		_objectTableId = entity.ObjectTableId;
+		_entityId = entity.EntityId;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -375,4 +405,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class QuoteTemplateTextDesignPM : BaseEntityPM   {
+   #region Constructors
+   public QuoteTemplateTextDesignPM() : base() {} 
+   public QuoteTemplateTextDesignPM(QuoteTemplateTextDesign entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_fontSize = entity.FontSize;
+		_textColor = entity.TextColor;
+		_fontFamily = entity.FontFamily;
+		_backgroundColor = entity.BackgroundColor;
+		_fontWeight = entity.FontWeight;
+		_italic = entity.Italic;
+		_unDerLine = entity.UnDerLine;
+		_alignment = entity.Alignment;
+		_title = default;
+		_textValue = default;
+		_hideAlignment = default;
+		_sampleText = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -247,4 +269,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

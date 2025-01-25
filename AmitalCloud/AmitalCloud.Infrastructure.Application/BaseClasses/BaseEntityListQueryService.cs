@@ -30,8 +30,8 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(TEntityList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> AccountingInformationIdentifierObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("AccountingInformationIdentifier", tenant).ToList();
-                ObjectField objectField = (from a in AccountingInformationIdentifierObjectFields
+                List<ObjectField> ObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("AccountingInformationIdentifier", tenant).ToList();
+                ObjectField objectField = (from a in ObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
                 if (objectField != null)
@@ -143,7 +143,16 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         protected IQueryable<TEntity> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<TEntity> iQueryable) => throw new NotImplementedException();
         private IQueryable<TEntity> Query() => (from a in contextEntity select a);
         protected abstract IDbSet<TEntity> contextEntity { get; }
-        protected abstract IQueryable<TEntityList> GetIqueryableList(IQueryable<TEntity> iQueryable);
-        //protected abstract Expression<Func<TEntityList, bool>> Predicate { get; }
+        //protected abstract IQueryable<TEntityList> GetIqueryableList(IQueryable<TEntity> iQueryable);
+
+        protected virtual IQueryable<TEntityList> GetIqueryableList(IQueryable<TEntity> iQueryable)
+        {
+            return (from a in iQueryable let list = GetNewList(a) select list);
+        }
+        private TEntityList GetNewList(TEntity entity)
+        {
+            return (TEntityList)typeof(TEntityList).GetConstructor(new Type[] { typeof(TEntity) }).Invoke(entity, null);
+        }
+
     }
 }

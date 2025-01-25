@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,28 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class IncotermPM : BaseEntityPM   {
+   #region Constructors
+   public IncotermPM() : base() {} 
+   public IncotermPM(Incoterm entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_code = entity.Code;
+		_name = entity.Name;
+		_localName = entity.LocalName;
+		_computedLocalName = default;
+		_freight = entity.Freight;
+		_otherCharges = entity.OtherCharges;
+		_addedManually = entity.AddedManually;
+		_inActive = entity.InActive;
+		_notes = entity.Notes;
+		_searchFields = entity.SearchFields;
+		_isSecured = default;
+		_isHybrid = default;
+		_partnerCode = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -263,4 +286,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

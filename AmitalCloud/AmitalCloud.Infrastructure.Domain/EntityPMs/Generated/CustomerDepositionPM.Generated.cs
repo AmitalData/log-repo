@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomerDepositionPM : BaseEntityPM   {
+   #region Constructors
+   public CustomerDepositionPM() : base() {} 
+   public CustomerDepositionPM(CustomerDeposition entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_customsShipperId = entity.CustomsShipperId;
+		_depositionNumber = entity.DepositionNumber;
+		_validityStartDate = entity.ValidityStartDate;
+		_validityEndDate = entity.ValidityEndDate;
+		_createDate = entity.CreateDate;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -135,4 +150,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

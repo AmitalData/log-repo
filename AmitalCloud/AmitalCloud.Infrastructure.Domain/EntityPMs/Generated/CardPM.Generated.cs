@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -22,6 +23,137 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CardPM :  ChildEntitiesCustomFieldPM   {
+   #region Constructors
+   public CardPM() : base() {} 
+   public CardPM(Card entity) : base()
+   {
+		_id = entity.Id;
+		_bankName = entity.BankName;
+		_bankAddress = entity.BankAddress;
+		_swift = entity.Swift;
+		_accountNumber = entity.AccountNumber;
+		_iBANNumber = entity.IBANNumber;
+		_tenant = entity.Tenant;
+		_website = entity.Website;
+		_invoiceCurrencyId = entity.InvoiceCurrencyId;
+		_vatTypeId = entity.VatTypeId;
+		_imageDetailId = entity.ImageDetailId;
+		_createDate = entity.CreateDate;
+		_updateDate = entity.UpdateDate;
+		_countryCode = entity.CountryCode;
+		_salesmanUserId = entity.SalesmanUserId;
+		_iRSPlace = entity.IRSPlace;
+		_iRSNumber = entity.IRSNumber;
+		_createdByUserId = entity.CreatedByUserId;
+		_updatedByUserId = entity.UpdatedByUserId;
+		_partnerTypeName = default;
+		_sharedLogisticsInvitationStatusCode = entity.SharedLogisticsInvitationStatusCode;
+		_sharedLogisticsInvitationStatusName = default;
+		_invitationDate = entity.InvitationDate;
+		_cargoTrackingInvitationStatusCode = entity.CargoTrackingInvitationStatusCode;
+		_cargoTrackingInvitationStatusName = default;
+		_cargoTrackingInvitationDate = entity.CargoTrackingInvitationDate;
+		_lastLoginDate = entity.LastLoginDate;
+		_collectorId = entity.CollectorId;
+		_classifierId = entity.ClassifierId;
+		_primaryContactId = entity.PrimaryContactId;
+		_isCustomer = entity.IsCustomer;
+		_countryId = entity.CountryId;
+		_enableConsolidationInvoices = entity.EnableConsolidationInvoices;
+		_isActiveForMobile = entity.IsActiveForMobile;
+		_searchFields = entity.SearchFields;
+		_code = entity.Code;
+		_englishName = entity.EnglishName;
+		_localName = entity.LocalName;
+		_computedLocalName = default;
+		_vatNumber = entity.VatNumber;
+		_inActive = entity.InActive;
+		_paymentTermId = entity.PaymentTermId;
+		_partnerTypeId = entity.PartnerTypeId;
+		_accountingCard = default;
+		_notes = entity.Notes;
+		_cityName = entity.CityName;
+		_countryName = entity.CountryName;
+		_mainAddressId = default;
+		_salesmanBusinessUnitId = default;
+		_prefix = default;
+		_disconectFromContact = default;
+		_internetAccess = default;
+		_customAgent = default;
+		_shippingAgent = default;
+		_customer = default;
+		_agent = default;
+		_vendor = default;
+		_fieldsChanged = default;
+		_contactId = default;
+		addresses = default;
+		_collectorName = default;
+		_classifierName = default;
+		_iCAO = default;
+		_pickupDeliveryAddressId = default;
+		_customerStatusCode = default;
+		_accountManagerUserId = default;
+		_partnerCode = default;
+		_usoCFDICode = entity.UsoCFDICode;
+		contacts = default;
+		_gLAccountId = entity.GLAccountId;
+		_billingAddressId = default;
+		_address1 = entity.Address1;
+		_address2 = entity.Address2;
+		_isInternationalPartner = entity.IsInternationalPartner;
+		_isAutonomy = entity.IsAutonomy;
+		_sATPaymentMethodCode = entity.SATPaymentMethodCode;
+		_externalId2 = entity.ExternalId2;
+		_supportNotes = entity.SupportNotes;
+		_receivablesAccountingCard = entity.ReceivablesAccountingCard;
+		_payablesAccountingCard = entity.PayablesAccountingCard;
+		_stateName = entity.StateName;
+		_externalAccountingBusinessArea = entity.ExternalAccountingBusinessArea;
+		_calculatedLocalName = default;
+		_calculatedEnglishName = default;
+		_isDisconnectedFromGLAccount = default;
+		_createdByPartner = entity.CreatedByPartner;
+		_storageFreeDays = entity.StorageFreeDays;
+		_rankId = default;
+		_industryId = default;
+		_accountingVATSplit = entity.AccountingVATSplit;
+		_uploadingUniqueKey = entity.UploadingUniqueKey;
+		_gLAccountDisplayNumber = entity.GLAccountDisplayNumber;
+		_billToId = entity.BillToId;
+		_insruedcreditLimit = entity.InsruedcreditLimit;
+		_allowUnassignedEntry = default;
+		_regimenFiscalCode = entity.RegimenFiscalCode;
+		_teamId = default;
+		_sATCustomerName = entity.SATCustomerName;
+		_importLocalCustomerGroupId = entity.ImportLocalCustomerGroupId;
+		_exportLocalCustomerGroupId = entity.ExportLocalCustomerGroupId;
+		_startWorkingDate = default;
+		_leadDescription = default;
+		_leadSourceId = default;
+		_customerSizeId = default;
+		_isPotential = default;
+		_field1 = default;
+		_field2 = default;
+		_field3 = default;
+		_field4 = default;
+		_field5 = default;
+		_field6 = default;
+		_field7 = default;
+		_field8 = default;
+		_field9 = default;
+		_field10 = default;
+		_eORInumber = entity.EORInumber;
+		_singleInvoiceTemplateId = entity.SingleInvoiceTemplateId;
+		_customsInvoiceTemplateId = entity.CustomsInvoiceTemplateId;
+		_consolidationInvoiceTemplateId = entity.ConsolidationInvoiceTemplateId;
+		_manifestInvoiceTemplateId = entity.ManifestInvoiceTemplateId;
+		_isExcludeCard = default;
+		_isFromGlaAccountUpdate = default;
+		_emailForSendingSingArinvoice = entity.EmailForSendingSingArinvoice;
+		_sendingInterestReport = entity.SendingInterestReport;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -2038,4 +2170,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

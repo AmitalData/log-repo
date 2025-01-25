@@ -13,12 +13,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class TwoFactorAuthenticationDeviceList
+   public partial class TwoFactorAuthenticationDeviceList   
    {
+       #region Constructors
+       public TwoFactorAuthenticationDeviceList() : base() {}
+       public TwoFactorAuthenticationDeviceList(TwoFactorAuthenticationDevice entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          InActive  = entity.InActive;
+          TwoFactorkey  = entity.TwoFactorkey;
+          UserId  = entity.UserId;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          LastLoginDate  = entity.LastLoginDate;
+          CodeExpirationDate  = entity.CodeExpirationDate;
+          DeviceDescription  = entity.DeviceDescription;
+          LastLoginIP  = entity.LastLoginIP;
+          AuthenticationCode  = entity.AuthenticationCode;
+          Id  = entity.Id;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
@@ -45,6 +65,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [Key]
        [DataMember]
        public string Id  { get; set; }
+         #endregion Properties
    }
 
 }

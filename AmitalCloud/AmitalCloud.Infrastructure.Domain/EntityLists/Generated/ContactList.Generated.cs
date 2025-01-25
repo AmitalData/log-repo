@@ -13,12 +13,53 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ContactList
+   public partial class ContactList   
    {
+       #region Constructors
+       public ContactList() : base() {}
+       public ContactList(Contact entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          DisplayGettingStarted  = entity.DisplayGettingStarted;
+          ImageDetailId  = entity.ImageDetailId;
+          IndexColor  = entity.IndexColor;
+          Notes  = entity.Notes;
+          BirthdayReminder  = entity.BirthdayReminder;
+          AnniversaryReminder  = entity.AnniversaryReminder;
+          DoneDate  = entity.DoneDate;
+          BirthDayOfYear  = entity.BirthDayOfYear;
+          ContactDoneMethodCode  = entity.ContactDoneMethodCode;
+          Position  = entity.Position;
+          SearchFields  = entity.SearchFields;
+            Name  = default;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+          Email  = entity.Email;
+          Mobile  = entity.Mobile;
+          BusinessPhone  = entity.BusinessPhone;
+          Fax  = entity.Fax;
+          Birthday  = entity.Birthday;
+          Anniversary  = entity.Anniversary;
+          InActive  = entity.InActive;
+            DontShowLocal  = default;
+            HasCardContact  = default;
+            Company  = default;
+            LastLoginDate  = default;
+          CompanyName  = entity.CompanyName;
+            ContactIdCustomFilter  = default;
+          CreateDate  = entity.CreateDate;
+          UpdateDate  = entity.UpdateDate;
+          DigitalPortalLanguage  = entity.DigitalPortalLanguage;
+          ContactLastLogin  = entity.ContactLastLogin;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -87,6 +128,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string DigitalPortalLanguage  { get; set; }
        [DataMember]
        public string ContactLastLogin  { get; set; }
+         #endregion Properties
    }
 
 }

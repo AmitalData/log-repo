@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,76 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class CustomAgentPM : BaseEntityPM   {
+   #region Constructors
+   public CustomAgentPM() : base() {} 
+   public CustomAgentPM(CustomAgent entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_invoiceCurrencyId = default;
+		_vatTypeId = default;
+		_bankName = default;
+		_bankAddress = default;
+		_swift = default;
+		_accountNumber = default;
+		_iBANNumber = default;
+		_enableConsolidationInvoices = default;
+		_website = default;
+		_code = default;
+		_englishName = default;
+		_localName = default;
+		_computedLocalName = default;
+		_inActive = default;
+		_vatNumber = default;
+		_accountingCard = default;
+		_paymentTermId = default;
+		_notes = default;
+		_isSecured = default;
+		_isHybrid = default;
+		_fieldsChanged = default;
+		_partnerTypeId = default;
+		_createDate = default;
+		_updateDate = default;
+		_createdByUserId = default;
+		_updatedByUserId = default;
+		_cardPMId = default;
+		_cityName = default;
+		_countryId = default;
+		_countryCode = default;
+		_countryName = default;
+		_existedContactId = default;
+		_searchFields = default;
+		_isExternal = default;
+		_primaryContactId = default;
+		_isFirstContactToAdd = default;
+		_card = default;
+		addresses = default;
+		contacts = default;
+		cardExternalCodeByCurrencies = default;
+		_metodoPagoCode = default;
+		_usoCFDICode = default;
+		_sATForeignRFC = default;
+		_externalId2 = default;
+		_iRSPlace = default;
+		_iRSNumber = default;
+		_receivablesAccountingCard = default;
+		_payablesAccountingCard = default;
+		_externalAccountingBusinessArea = default;
+		_paymentMethodCode = default;
+		_primaryContactName = entity.PrimaryContactName;
+		_primaryContactEmail = entity.PrimaryContactEmail;
+		_primaryContactPhone = entity.PrimaryContactPhone;
+		_gLAccountId = default;
+		_accountingVATSplit = default;
+		_gLAccountNumber = default;
+		_billToId = default;
+		_regimenFiscalCode = default;
+		_sATReceptorName = default;
+		_importLocalCustomerGroupId = default;
+		_exportLocalCustomerGroupId = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -1238,4 +1309,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

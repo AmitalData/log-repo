@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 
 
@@ -22,6 +23,34 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    [CustomValidation(typeof(IInvoiceClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ARPaymentChequeReplicaPM : BaseEntityPM   {
+   #region Constructors
+   public ARPaymentChequeReplicaPM() : base() {} 
+   public ARPaymentChequeReplicaPM(ARPaymentChequeReplica entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_searchFields = entity.SearchFields;
+		_paymentId = entity.PaymentId;
+		_paymentNumber = default;
+		_lineNumber = entity.LineNumber;
+		_chequeNumber = entity.ChequeNumber;
+		_valueDate = entity.ValueDate;
+		_currencyId = entity.CurrencyId;
+		_currencyCode = default;
+		_currencyName = default;
+		_localAmount = entity.LocalAmount;
+		_foreignAmount = entity.ForeignAmount;
+		_bankId = entity.BankId;
+		_bankNumber = default;
+		_bankName = default;
+		_bankBranch = entity.BankBranch;
+		_bankAccount = entity.BankAccount;
+		_statusCode = entity.StatusCode;
+		_exchangeRate = entity.ExchangeRate;
+		_statusName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -360,4 +389,5 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

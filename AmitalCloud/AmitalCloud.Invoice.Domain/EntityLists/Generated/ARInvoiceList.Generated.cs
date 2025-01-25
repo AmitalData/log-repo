@@ -13,12 +13,175 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class ARInvoiceList
+   public partial class ARInvoiceList   
    {
+       #region Constructors
+       public ARInvoiceList() : base() {}
+       public ARInvoiceList(ARInvoice entity) : base()
+       {
+          ConfirmationNumber  = entity.ConfirmationNumber;
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          MainEntityId  = entity.MainEntityId;
+          IsClosed  = entity.IsClosed;
+          AmountInProfitCurrency  = entity.AmountInProfitCurrency;
+          ProfitCurrencyExchangeRate  = entity.ProfitCurrencyExchangeRate;
+          Description  = entity.Description;
+          PaymentTermExternalId  = entity.PaymentTermExternalId;
+          Field1  = entity.Field1;
+          Field2  = entity.Field2;
+          Field3  = entity.Field3;
+          Field4  = entity.Field4;
+          Field5  = entity.Field5;
+          Field6  = entity.Field6;
+          Field7  = entity.Field7;
+          Field8  = entity.Field8;
+          Field9  = entity.Field9;
+          Field10  = entity.Field10;
+          CreditedByARInvoiceId  = entity.CreditedByARInvoiceId;
+          ProfitCurrencyId  = entity.ProfitCurrencyId;
+          PrepaidCollectId  = entity.PrepaidCollectId;
+          IssuedByUserId  = entity.IssuedByUserId;
+          ExchangeRateDate  = entity.ExchangeRateDate;
+          DraftNumber  = entity.DraftNumber;
+          SearchFields  = entity.SearchFields;
+          MainEntityReference  = entity.MainEntityReference;
+          AmountDue  = entity.AmountDue;
+          ExpectedPaymentDate  = entity.ExpectedPaymentDate;
+          InvoiceNumber  = entity.InvoiceNumber;
+          ARInvoiceTypeCode  = entity.ARInvoiceTypeCode;
+            ARInvoiceTypeName  = default;
+          PaymentTermId  = entity.PaymentTermId;
+            StatusName  = default;
+          AmountDueInLocalCurrency  = entity.AmountDueInLocalCurrency;
+          AmountDueInProfitCurrency  = entity.AmountDueInProfitCurrency;
+            PaymentTermName  = default;
+          BillToId  = entity.BillToId;
+            BillToPartnerId  = default;
+            BillToPartnerName  = default;
+            BillToName  = default;
+          BillToAddressId  = entity.BillToAddressId;
+          VatNumber  = entity.VatNumber;
+          CreateDate  = entity.CreateDate;
+          InvoiceDate  = entity.InvoiceDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+            CreatedByUserName  = default;
+          PrintByUserId  = entity.PrintByUserId;
+            PrintByUserName  = default;
+          InvoiceCurrencyId  = entity.InvoiceCurrencyId;
+          IsPrinted  = entity.IsPrinted;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+            InvoiceCurrencyCode  = default;
+          LocalCurrencyId  = entity.LocalCurrencyId;
+          InvoiceCurrencyExchangeRate  = entity.InvoiceCurrencyExchangeRate;
+          SubTotalInLocalCurrency  = entity.SubTotalInLocalCurrency;
+          SubTotalInInvoiceCurrency  = entity.SubTotalInInvoiceCurrency;
+          AmountInLocalCurrency  = entity.AmountInLocalCurrency;
+          AmountInInvoiceCurrency  = entity.AmountInInvoiceCurrency;
+          StatusCode  = entity.StatusCode;
+          IsAutoCredit  = entity.IsAutoCredit;
+          IsCancelled  = entity.IsCancelled;
+          CancelledByARInvoiceId  = entity.CancelledByARInvoiceId;
+          InternalNotes  = entity.InternalNotes;
+          PrintNotes  = entity.PrintNotes;
+          DueDate  = entity.DueDate;
+          PrintDate  = entity.PrintDate;
+          IsInvoiceNumberManuallySet  = entity.IsInvoiceNumberManuallySet;
+          Sent  = entity.Sent;
+            ReadyForTransfer  = default;
+          DebitAccount  = entity.DebitAccount;
+            LocalCurrencyCode  = default;
+            ProfitCurrencyCode  = default;
+          TransferError  = entity.TransferError;
+          AccountingExternalCode  = entity.AccountingExternalCode;
+          HouseNumber  = entity.HouseNumber;
+          MasterNumber  = entity.MasterNumber;
+          TransferStatusCode  = entity.TransferStatusCode;
+          BranchId  = entity.BranchId;
+          CustomerRef  = entity.CustomerRef;
+          IsConstituentInvoice  = entity.IsConstituentInvoice;
+          ConsolidationInvoiceId  = entity.ConsolidationInvoiceId;
+          IsConsolidationInvoice  = entity.IsConsolidationInvoice;
+          TransferTries  = entity.TransferTries;
+          IsTransferStarted  = entity.IsTransferStarted;
+            TransferStatusName  = default;
+            BillToCode  = default;
+          ApprovedDate  = entity.ApprovedDate;
+            ApprovedByUserName  = default;
+          ApprovedByUserId  = entity.ApprovedByUserId;
+          OperationalDate  = entity.OperationalDate;
+            DateForVATInterest  = default;
+          SplitJournalByCurrency  = entity.SplitJournalByCurrency;
+          IsExternalEntity  = entity.IsExternalEntity;
+          IsGeneralInvoice  = entity.IsGeneralInvoice;
+          SATPaymentMethodCode  = entity.SATPaymentMethodCode;
+            JournalNumber  = default;
+            IssuedByUserName  = default;
+            AmountPaid  = default;
+            IsDueDateColorRed  = default;
+            IsExpectedPaymentDateColorRed  = default;
+          TransmissionError  = entity.TransmissionError;
+          RelatedInvoice  = entity.RelatedInvoice;
+          MetodoPagoCode  = entity.MetodoPagoCode;
+          UsoCFDICode  = entity.UsoCFDICode;
+          SATTransferStatusCode  = entity.SATTransferStatusCode;
+          SATInvoiceStatusCode  = entity.SATInvoiceStatusCode;
+          IsMultiCurrency  = entity.IsMultiCurrency;
+          SATApprovalDate  = entity.SATApprovalDate;
+          SalesmanUserId  = entity.SalesmanUserId;
+            SalesmanUserName  = default;
+          IsCustomsChargesOnly  = entity.IsCustomsChargesOnly;
+            IsCustomsInvoice  = default;
+            SATTransferStatusName  = default;
+            SATInvoiceStatusName  = default;
+          Intercompany  = entity.Intercompany;
+          BankAccountLiteId  = entity.BankAccountLiteId;
+          TotalAmountForTaxReport  = entity.TotalAmountForTaxReport;
+          TotaVatableAmountForTaxReport  = entity.TotaVatableAmountForTaxReport;
+          TotalVAT  = entity.TotalVAT;
+            CreditedByARInvoiceTypeCode  = default;
+          IsFullAccounting  = entity.IsFullAccounting;
+          ARInvoiceStockId  = entity.ARInvoiceStockId;
+          IsInvoiceNumberFromStock  = entity.IsInvoiceNumberFromStock;
+            BillToLocalName  = default;
+            BranchName  = default;
+            BillToCity  = default;
+            BillToCountry  = default;
+          CreatedByPartner  = entity.CreatedByPartner;
+          BillToGLAccountId  = entity.BillToGLAccountId;
+          RegionalTaxId  = entity.RegionalTaxId;
+          DateForInterest  = entity.DateForInterest;
+          PaidDate  = entity.PaidDate;
+            HasInterestFeature  = default;
+          PartnerId  = entity.PartnerId;
+            MasterEntityId  = default;
+          ShipmentsNumbers  = entity.ShipmentsNumbers;
+          MasterNumbers  = entity.MasterNumbers;
+          MasterShipmentNumbers  = entity.MasterShipmentNumbers;
+          HouseNumbers  = entity.HouseNumbers;
+          GlobalTaxCalculation  = entity.GlobalTaxCalculation;
+          PaymentReferences  = entity.PaymentReferences;
+          RegimenFiscalCode  = entity.RegimenFiscalCode;
+          PeriodCode  = entity.PeriodCode;
+          SATCancelReasonCode  = entity.SATCancelReasonCode;
+          PaidStatus  = entity.PaidStatus;
+          TotalExamptFortaxReport  = entity.TotalExamptFortaxReport;
+          DocumentTemplateId  = entity.DocumentTemplateId;
+            TotalAmountNotForTaxReport  = default;
+          IsSigned  = entity.IsSigned;
+            IsAutoCredited  = default;
+            HasDoc  = default;
+            IsSignedName  = default;
+          APIResponseToConfirmation  = entity.APIResponseToConfirmation;
+       }
+       #endregion Constructors
+       #region Properties
           [DataMember]
        public string ConfirmationNumber  { get; set; }
 
@@ -331,6 +494,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string IsSignedName  { get; set; }
        [DataMember]
        public string APIResponseToConfirmation  { get; set; }
+         #endregion Properties
    }
 
 }

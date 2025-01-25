@@ -13,12 +13,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class VesselList
+   public partial class VesselList   
    {
+       #region Constructors
+       public VesselList() : base() {}
+       public VesselList(Vessel entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+          AddedManually  = entity.AddedManually;
+          InActive  = entity.InActive;
+          Notes  = entity.Notes;
+          SearchFields  = entity.SearchFields;
+          IMOCode  = entity.IMOCode;
+          CountryId  = entity.CountryId;
+            CountryName  = default;
+            CountryCode  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -47,6 +68,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string CountryName  { get; set; }
        [DataMember]
        public string CountryCode  { get; set; }
+         #endregion Properties
    }
 
 }

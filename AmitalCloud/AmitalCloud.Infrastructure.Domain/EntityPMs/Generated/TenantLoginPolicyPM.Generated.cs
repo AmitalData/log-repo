@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TenantLoginPolicyPM : BaseEntityPM   {
+   #region Constructors
+   public TenantLoginPolicyPM() : base() {} 
+   public TenantLoginPolicyPM(TenantLoginPolicy entity) : base()
+   {
+		_tenant = entity.Tenant;
+		_loginPolicyCode = entity.LoginPolicyCode;
+		_isEnabledForSpecificUsers = entity.IsEnabledForSpecificUsers;
+		_twoFactorInternalIPs = entity.TwoFactorInternalIPs;
+		_keepUserLoggedIn = entity.KeepUserLoggedIn;
+		_excludeInternalIPs = entity.ExcludeInternalIPs;
+		_allowedIPs = entity.AllowedIPs;
+		_sessionTimeout = entity.SessionTimeout;
+   }
+   #endregion Constructors
+   #region Properties
    	  private int _tenant ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -151,4 +167,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

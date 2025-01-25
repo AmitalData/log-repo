@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,35 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class DWObjectTablePM : BaseEntityPM   {
+   #region Constructors
+   public DWObjectTablePM() : base() {} 
+   public DWObjectTablePM(DWObjectTable entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_name = entity.Name;
+		_code = entity.Code;
+		_typeCode = entity.TypeCode;
+		_isClosed = entity.IsClosed;
+		_defaultFilterBy = entity.DefaultFilterBy;
+		_dataViewName = entity.DataViewName;
+		_hasPivotColumn = entity.HasPivotColumn;
+		_pivotFieldCode = entity.PivotFieldCode;
+		_additionalFactCode = entity.AdditionalFactCode;
+		_additionalFactForeignKey = entity.AdditionalFactForeignKey;
+		_recordType = entity.RecordType;
+		_parentFactCode = entity.ParentFactCode;
+		_displayName = entity.DisplayName;
+		_indexesXml = entity.IndexesXml;
+		_objectTableName = entity.ObjectTableName;
+		_maxNumberOfCustomFields = entity.MaxNumberOfCustomFields;
+		_hasCustomFields = entity.HasCustomFields;
+		_additionalFactRelationType = entity.AdditionalFactRelationType;
+		_additionalConditions = entity.AdditionalConditions;
+		_description = entity.Description;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -375,4 +405,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

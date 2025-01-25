@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class VatTypePercentagePM : BaseEntityPM   {
+   #region Constructors
+   public VatTypePercentagePM() : base() {} 
+   public VatTypePercentagePM(VatTypePercentage entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_vatTypeId = entity.VatTypeId;
+		_percentage = entity.Percentage;
+		_fromDate = entity.FromDate;
+		_changeSetOp = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -119,4 +133,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

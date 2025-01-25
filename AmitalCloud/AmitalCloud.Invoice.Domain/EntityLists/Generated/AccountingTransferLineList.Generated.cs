@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
    [DataContract]
-   public partial class AccountingTransferLineList
+   public partial class AccountingTransferLineList   
    {
+       #region Constructors
+       public AccountingTransferLineList() : base() {}
+       public AccountingTransferLineList(AccountingTransferLine entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          EntityId  = entity.EntityId;
+          AccountingTransferHeaderId  = entity.AccountingTransferHeaderId;
+          SearchFields  = entity.SearchFields;
+          EntityReference  = entity.EntityReference;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public string EntityReference  { get; set; }
+         #endregion Properties
    }
 
 }

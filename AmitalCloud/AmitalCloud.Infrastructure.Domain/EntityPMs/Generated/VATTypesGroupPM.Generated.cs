@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class VATTypesGroupPM : BaseEntityPM   {
+   #region Constructors
+   public VATTypesGroupPM() : base() {} 
+   public VATTypesGroupPM(VATTypesGroup entity) : base()
+   {
+		_groupVATTypeId = entity.GroupVATTypeId;
+		_singleVATTypeId = entity.SingleVATTypeId;
+		_tenant = entity.Tenant;
+		_singleVATTypeName = default;
+		_singleVATTypePercentage = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _groupVATTypeId ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -104,4 +117,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Shipment.Domain.Interfaces;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,29 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ShipmentOrderPackagePM : BaseEntityPM   {
+   #region Constructors
+   public ShipmentOrderPackagePM() : base() {} 
+   public ShipmentOrderPackagePM(ShipmentOrderPackage entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_isContainer = entity.IsContainer;
+		_shipmentId = entity.ShipmentId;
+		_packageTypeId = entity.PackageTypeId;
+		_quantity = entity.Quantity;
+		_grossWeight = entity.GrossWeight;
+		_volume = entity.Volume;
+		_height = entity.Height;
+		_width = entity.Width;
+		_length = entity.Length;
+		_volumetricWeight = entity.VolumetricWeight;
+		_dimensions = default;
+		_containerTypeId = default;
+		_packageTypeName = default;
+		_containerNumber = entity.ContainerNumber;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
@@ -279,4 +303,5 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

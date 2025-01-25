@@ -13,12 +13,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DocumentTypeCopyList
+   public partial class DocumentTypeCopyList   
    {
+       #region Constructors
+       public DocumentTypeCopyList() : base() {}
+       public DocumentTypeCopyList(DocumentTypeCopy entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          Name  = entity.Name;
+          DocumentTypeId  = entity.DocumentTypeId;
+          InActive  = entity.InActive;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -33,6 +47,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string DocumentTypeId  { get; set; }
        [DataMember]
        public bool InActive  { get; set; }
+         #endregion Properties
    }
 
 }

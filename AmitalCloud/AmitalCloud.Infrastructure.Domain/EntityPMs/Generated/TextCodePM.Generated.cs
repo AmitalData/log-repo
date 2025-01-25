@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class TextCodePM : BaseEntityPM   {
+   #region Constructors
+   public TextCodePM() : base() {} 
+   public TextCodePM(TextCode entity) : base()
+   {
+		_code = entity.Code;
+		_objectTableId = entity.ObjectTableId;
+		_textCodeTypeCode = entity.TextCodeTypeCode;
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_isSpellChecked = entity.IsSpellChecked;
+		_spellCheckDate = entity.SpellCheckDate;
+		_spellCheckedByUserId = entity.SpellCheckedByUserId;
+		_inActive = entity.InActive;
+		_defaultText = entity.DefaultText;
+		_defaultTextPlural = entity.DefaultTextPlural;
+		_localDefaultText = entity.LocalDefaultText;
+		_objectTableName = default;
+		_spellCheckedByUserName = default;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _code ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -247,4 +269,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

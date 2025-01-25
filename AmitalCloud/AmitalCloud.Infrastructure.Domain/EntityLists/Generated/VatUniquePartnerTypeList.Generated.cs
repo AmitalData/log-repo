@@ -13,12 +13,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class VatUniquePartnerTypeList
+   public partial class VatUniquePartnerTypeList   
    {
+       #region Constructors
+       public VatUniquePartnerTypeList() : base() {}
+       public VatUniquePartnerTypeList(VatUniquePartnerType entity) : base()
+       {
+          Code  = entity.Code;
+          Name  = entity.Name;
+          SearchFields  = entity.SearchFields;
+          ViewOrder  = entity.ViewOrder;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -29,6 +41,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string SearchFields  { get; set; }
        [DataMember]
        public int ViewOrder  { get; set; }
+         #endregion Properties
    }
 
 }

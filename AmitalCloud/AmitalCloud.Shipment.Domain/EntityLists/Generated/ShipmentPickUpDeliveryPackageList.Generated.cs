@@ -13,12 +13,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class ShipmentPickUpDeliveryPackageList
+   public partial class ShipmentPickUpDeliveryPackageList   
    {
+       #region Constructors
+       public ShipmentPickUpDeliveryPackageList() : base() {}
+       public ShipmentPickUpDeliveryPackageList(ShipmentPickUpDeliveryPackage entity) : base()
+       {
+          Id  = entity.Id;
+          Make  = entity.Make;
+          Model  = entity.Model;
+          Year  = entity.Year;
+          Color  = entity.Color;
+          ChassisNumber  = entity.ChassisNumber;
+          RegistrationNumber  = entity.RegistrationNumber;
+          CountryId  = entity.CountryId;
+          PackageTypeId  = entity.PackageTypeId;
+          Quantity  = entity.Quantity;
+          Volume  = entity.Volume;
+          Weight  = entity.Weight;
+          Description  = entity.Description;
+          ContainerNumber  = entity.ContainerNumber;
+          Harmonize  = entity.Harmonize;
+          ShipperSeal  = entity.ShipperSeal;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -53,6 +77,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public string Harmonize  { get; set; }
        [DataMember]
        public string ShipperSeal  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BusinessProcessQueueList
+   public partial class BusinessProcessQueueList   
    {
+       #region Constructors
+       public BusinessProcessQueueList() : base() {}
+       public BusinessProcessQueueList(BusinessProcessQueue entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          UpdateDate  = entity.UpdateDate;
+          UpdatedByUserId  = entity.UpdatedByUserId;
+          SearchFields  = entity.SearchFields;
+          Name  = entity.Name;
+          LocalName  = entity.LocalName;
+          InActive  = entity.InActive;
+          BusinessRoleId  = entity.BusinessRoleId;
+            EntityName  = default;
+          ObjectTableId  = entity.ObjectTableId;
+            BusinessRoleName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -49,6 +71,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ObjectTableId  { get; set; }
        [DataMember]
        public string BusinessRoleName  { get; set; }
+         #endregion Properties
    }
 
 }

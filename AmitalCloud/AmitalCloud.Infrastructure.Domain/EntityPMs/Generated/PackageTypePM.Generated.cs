@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +22,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class PackageTypePM : BaseEntityPM   {
+   #region Constructors
+   public PackageTypePM() : base() {} 
+   public PackageTypePM(PackageType entity) : base()
+   {
+		_id = entity.Id;
+		_tenant = entity.Tenant;
+		_measurementId = entity.MeasurementId;
+		_tEU = entity.TEU;
+		_volume = entity.Volume;
+		_containerSize = entity.ContainerSize;
+		_code = entity.Code;
+		_englishName = entity.EnglishName;
+		_localName = entity.LocalName;
+		_computedLocalName = default;
+		_isOcean = entity.IsOcean;
+		_isAir = entity.IsAir;
+		_isInland = entity.IsInland;
+		_addedManually = entity.AddedManually;
+		_isContainer = entity.IsContainer;
+		_notes = entity.Notes;
+		_printAs = entity.PrintAs;
+		_inActive = entity.InActive;
+		_searchFields = entity.SearchFields;
+		_measurementCode = default;
+		_measurementShortName = default;
+		_isHybrid = default;
+		_partnerCode = default;
+		_isRefrigerated = entity.IsRefrigerated;
+		_isVehicle = entity.IsVehicle;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -423,4 +456,5 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	 }
+#endregion Properties
 }

@@ -13,13 +13,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomerOpenFilesAmountList
+   public partial class CustomerOpenFilesAmountList   
    {
-      }
+       #region Constructors
+       public CustomerOpenFilesAmountList() : base() {}
+       public CustomerOpenFilesAmountList(CustomerOpenFilesAmount entity) : base()
+       {
+       }
+       #endregion Constructors
+       #region Properties
+            #endregion Properties
+   }
 
 }
 	 

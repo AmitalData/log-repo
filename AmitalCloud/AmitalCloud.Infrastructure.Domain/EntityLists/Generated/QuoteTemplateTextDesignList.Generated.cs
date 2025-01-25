@@ -13,12 +13,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class QuoteTemplateTextDesignList
+   public partial class QuoteTemplateTextDesignList   
    {
+       #region Constructors
+       public QuoteTemplateTextDesignList() : base() {}
+       public QuoteTemplateTextDesignList(QuoteTemplateTextDesign entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          FontSize  = entity.FontSize;
+          TextColor  = entity.TextColor;
+          FontFamily  = entity.FontFamily;
+          BackgroundColor  = entity.BackgroundColor;
+          FontWeight  = entity.FontWeight;
+          Italic  = entity.Italic;
+          UnDerLine  = entity.UnDerLine;
+          Alignment  = entity.Alignment;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -41,6 +59,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool UnDerLine  { get; set; }
        [DataMember]
        public string Alignment  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DocumentFilingBackupSettingList
+   public partial class DocumentFilingBackupSettingList   
    {
+       #region Constructors
+       public DocumentFilingBackupSettingList() : base() {}
+       public DocumentFilingBackupSettingList(DocumentFilingBackupSetting entity) : base()
+       {
+          Tenant  = entity.Tenant;
+          ActivationDate  = entity.ActivationDate;
+          DeactivationDate  = entity.DeactivationDate;
+          IsActive  = entity.IsActive;
+          FTPDetailId  = entity.FTPDetailId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsActive  { get; set; }
        [DataMember]
        public string FTPDetailId  { get; set; }
+         #endregion Properties
    }
 
 }

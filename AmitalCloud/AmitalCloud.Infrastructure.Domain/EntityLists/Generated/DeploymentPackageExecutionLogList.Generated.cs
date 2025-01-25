@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class DeploymentPackageExecutionLogList
+   public partial class DeploymentPackageExecutionLogList   
    {
+       #region Constructors
+       public DeploymentPackageExecutionLogList() : base() {}
+       public DeploymentPackageExecutionLogList(DeploymentPackageExecutionLog entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CreateDate  = entity.CreateDate;
+          CreatedByUserId  = entity.CreatedByUserId;
+          ExecutedByServerName  = entity.ExecutedByServerName;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string CreatedByUserId  { get; set; }
        [DataMember]
        public string ExecutedByServerName  { get; set; }
+         #endregion Properties
    }
 
 }

@@ -13,12 +13,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
    [DataContract]
-   public partial class CustomsTransferLineList
+   public partial class CustomsTransferLineList   
    {
+       #region Constructors
+       public CustomsTransferLineList() : base() {}
+       public CustomsTransferLineList(CustomsTransferLine entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          CustomsTransferHeaderId  = entity.CustomsTransferHeaderId;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -27,6 +38,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public string CustomsTransferHeaderId  { get; set; }
+         #endregion Properties
    }
 
 }

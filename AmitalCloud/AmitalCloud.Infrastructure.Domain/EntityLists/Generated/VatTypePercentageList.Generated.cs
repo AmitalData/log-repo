@@ -13,12 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class VatTypePercentageList
+   public partial class VatTypePercentageList   
    {
+       #region Constructors
+       public VatTypePercentageList() : base() {}
+       public VatTypePercentageList(VatTypePercentage entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          VatTypeId  = entity.VatTypeId;
+          Percentage  = entity.Percentage;
+          FromDate  = entity.FromDate;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -31,6 +44,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public double? Percentage  { get; set; }
        [DataMember]
        public DateTime? FromDate  { get; set; }
+         #endregion Properties
    }
 
 }

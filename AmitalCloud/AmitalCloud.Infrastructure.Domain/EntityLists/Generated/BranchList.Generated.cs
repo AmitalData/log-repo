@@ -13,12 +13,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class BranchList
+   public partial class BranchList   
    {
+       #region Constructors
+       public BranchList() : base() {}
+       public BranchList(Branch entity) : base()
+       {
+          Id  = entity.Id;
+          Tenant  = entity.Tenant;
+          Code  = entity.Code;
+          Notes  = entity.Notes;
+          SearchFields  = entity.SearchFields;
+          EnglishName  = entity.EnglishName;
+          LocalName  = entity.LocalName;
+          InActive  = entity.InActive;
+          ExternalId  = entity.ExternalId;
+          Signature  = entity.Signature;
+          INTTRAId  = entity.INTTRAId;
+          INTTRAContactId  = entity.INTTRAContactId;
+          INTTRAAlias  = entity.INTTRAAlias;
+            CalculatedEnglishName  = default;
+            CalculatedLocalName  = default;
+       }
+       #endregion Constructors
+       #region Properties
    
        [Key]
        [DataMember]
@@ -51,6 +74,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string CalculatedEnglishName  { get; set; }
        [DataMember]
        public string CalculatedLocalName  { get; set; }
+         #endregion Properties
    }
 
 }
