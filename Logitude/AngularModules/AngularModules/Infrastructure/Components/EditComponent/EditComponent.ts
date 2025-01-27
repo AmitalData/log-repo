@@ -1759,7 +1759,7 @@ export class EditComponent implements OnDestroy {
         if (propertyName) {
            args[propertyName] = this.EntityPM;
         }
-        args.Vendor = this.EntityPM;
+        //args.Vendor = this.EntityPM;
         return new Promise((resolve, reject) => {
             partnersDomainService.CheckDuplicate(args).subscribe((response) => {
                 if (response) {
