@@ -113,6 +113,10 @@ export class ReportExecutionLogPM {
     private reportName: string;
     public get ReportName() { return this.reportName; }
     public set ReportName(newValue: string) { if (this.reportName != newValue) { this.reportName = newValue; this.MarkAsDirty("ReportName"); } }
+
+    private reportLocalName: string;
+    public get ReportLocalName() { return this.reportLocalName; }
+    public set ReportLocalName(newValue: string) { if (this.reportLocalName != newValue) { this.reportLocalName = newValue; this.MarkAsDirty("ReportLocalName"); } }
        
     private notDisplayInMenu: boolean;
     public get NotDisplayInMenu() { return this.notDisplayInMenu; }

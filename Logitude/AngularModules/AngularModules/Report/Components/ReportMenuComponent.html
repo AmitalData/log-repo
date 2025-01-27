@@ -144,7 +144,7 @@
 
                                                     <div class="TextTrimming"
                                                         style="font-weight: bold; text-align: center; padding-bottom: 3px;">
-                                                        {{relatedRep.ReportName}}
+                                                        {{LayoutDirection == 'rtl'? relatedRep.ReportLocalName :relatedRep.ReportName}}
                                                     </div>
                                                 </td>
                                                 <td [hidden]="relatedRep.StatusCode!=='D'"
