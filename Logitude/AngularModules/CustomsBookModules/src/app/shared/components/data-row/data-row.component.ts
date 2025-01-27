@@ -53,7 +53,7 @@ export class DataRowComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getCustomsBookAgreementLevelData();
+    //this.getCustomsBookAgreementLevelData(); #114817
 		this.showRulesData();
 		this.selectedSearchBy = this.searchService.selectSearchBy;
 		this.addCommentService.fullCommentsData.subscribe((data: RemarksClassificationList[]) => {
@@ -65,21 +65,22 @@ export class DataRowComponent implements OnInit {
 		// });
 	}
 
-	TariffList1: CB_TariffList;
-	TariffList2: CB_TariffList;
-	TariffListCount: number = 0;
-	TariffListData: CB_TariffList[] = [];
-	getCustomsBookAgreementLevelData() {
-		if (!this.showTaxData || !this.data.CustomsItemID || !this.data?.PH_MeasurementUnitID) return;
-		this.API_MainService.GetCustomsBookAgreementLevelData(this.data?.CustomsItemID, this.data?.PH_MeasurementUnitID).subscribe((data: any) => {
-			this.TariffListData = data.body;
-			if (!this.TariffListData) return;
-			this.TariffList1 = this.TariffListData.find(x => x.TradeAgreementName == 'מכס כללי');
-			this.TariffList2 = this.TariffListData.find(x => x.TradeAgreementName == 'מס קניה');
-			this.TariffListCount = this.TariffListData.filter(x => x.TradeAgreementName != 'מס קניה').length;
-			this.contentWidth();
-		});
-	}
+  // #114817 cancel this call on init of data row. instead, call it on click to open side window
+	// TariffList1: CB_TariffList;
+	// TariffList2: CB_TariffList;
+	// TariffListCount: number = 0;
+	// TariffListData: CB_TariffList[] = [];
+	// getCustomsBookAgreementLevelData() {
+	// 	if (!this.showTaxData || !this.data.CustomsItemID || !this.data?.PH_MeasurementUnitID) return;
+	// 	this.API_MainService.GetCustomsBookAgreementLevelData(this.data?.CustomsItemID, this.data?.PH_MeasurementUnitID).subscribe((data: any) => {
+	// 		this.TariffListData = data.body;
+	// 		if (!this.TariffListData) return;
+	// 		this.TariffList1 = this.TariffListData.find(x => x.TradeAgreementName == 'מכס כללי');
+	// 		this.TariffList2 = this.TariffListData.find(x => x.TradeAgreementName == 'מס קניה');
+	// 		this.TariffListCount = this.TariffListData.filter(x => x.TradeAgreementName != 'מס קניה').length;
+	// 		this.contentWidth();
+	// 	});
+	// }
 
 	highlight(text: string, search: string): string {
 		if (!search) {
@@ -158,7 +159,7 @@ export class DataRowComponent implements OnInit {
 	comments: RemarksClassificationList[] = [];
 	countOfComments: number;
 	showCommentsData() {
-    this.comments = this.data?.remarksClassificationList;
+		this.comments = this.data?.remarksClassificationList;
 
 		if (!this.comments) return; // TODO: add error message
 
@@ -167,8 +168,21 @@ export class DataRowComponent implements OnInit {
 		}
 		else this.isSearchItemExistRemark = false;
 
-    this.countOfComments = this.comments?.length > 0 ? this.comments.length : 0;
-  }
+		this.countOfComments = this.comments?.length > 0 ? this.comments.length : 0;
+	}
+
+
+	showRulesData() {
+		if (this.data?.rulesData?.length == 0) return;
+
+		if (this.searchItem == "") return;
+		this.data?.rulesData?.forEach((rule: RulesDetailsList) => {
+			if (rule.Rules.includes(this.searchItem)) {
+				this.isSearchItemExistRule = true;
+				return;
+			}
+		});
+	}
 
 	// showCommentsData() {
 	// 	this.API_MainService.GetAllCommentsByCustomsItemId(this.data.CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
@@ -185,33 +199,20 @@ export class DataRowComponent implements OnInit {
 	// 	});
 	// }
 
-	showRulesData() {
-		if (this.data?.rulesData?.length == 0) return;
+	//showRulesData(customsItemID: number) {
+	//  this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
+	//    const result: RulesDetailsList[] = data.body;
+	//    if (!data.body) return; // TODO: add error message
 
-		if (this.searchItem == "") return;
-		this.data?.rulesData?.forEach((rule: RulesDetailsList) => {
-			if (rule.Rules.includes(this.searchItem)) {
-				this.isSearchItemExistRule = true;
-				return;
-			}
-		});
-	}
-
-
-  //showRulesData(customsItemID: number) {
-  //  this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
-  //    const result: RulesDetailsList[] = data.body;
-  //    if (!data.body) return; // TODO: add error message
-
-  //    if (this.searchItem == "") return;
-  //    result.forEach((rule: RulesDetailsList) => {
-  //      if (rule.Rules.includes(this.searchItem)) {
-  //        this.isSearchItemExistRule = true;
-  //        return;
-  //      }
-  //    });
-  //  });
-  //}
+	//    if (this.searchItem == "") return;
+	//    result.forEach((rule: RulesDetailsList) => {
+	//      if (rule.Rules.includes(this.searchItem)) {
+	//        this.isSearchItemExistRule = true;
+	//        return;
+	//      }
+	//    });
+	//  });
+	//}
 
 	showCommentsClicked(event: MouseEvent) {
 		let selection = window.getSelection();
@@ -222,8 +223,8 @@ export class DataRowComponent implements OnInit {
 
 	showCommentsClick() {
 		this.showComments = !this.showComments;
-		this.data.remarksClassificationList = this.comments;
-		this.data.agreementsList = this.TariffListData;
+		this.data.remarksClassificationList = this.comments; 
+    // this.data.agreementsList = this.TariffListData;#114817
 		this.showCommentsOpen.emit(true);
 		this.showDetails.emit();
 	}
@@ -244,8 +245,9 @@ export class DataRowComponent implements OnInit {
 	buildSetWidth() {
 		if (this.screenWidth <= 620) this.widthSmaller = true;
 		else this.widthSmaller = false;
-		let isExistData = this.TariffListData?.length > 0 ? true : false;
-		isExistData = !isExistData && this.data?.MeasurementUnitName && this.level > 3 ? true : isExistData;   
+		// let isExistData = this.TariffListData?.length > 0 ? true : false;
+		let isExistData = !this.data?.PurchaseTax && !this.data?.MeasurementUnitName && !this.data?.CustomsRate && !this.data?.OptionalTaxAddition ? false : true;
+		isExistData = !isExistData && this.data?.MeasurementUnitName && this.level > 3 ? true : isExistData;
 		// Set width:
 		if (this.showTaxData && isExistData && this.screenWidth > 1199 && this.screenWidth < 1300) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "10%");
