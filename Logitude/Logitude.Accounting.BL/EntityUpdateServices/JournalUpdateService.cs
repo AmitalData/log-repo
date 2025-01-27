@@ -41,6 +41,7 @@ using Logitude.BL.Security;
 using System.Data.SqlClient;
 using System.Data;
 using Logitude.Customs.BL.Helpers;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -617,7 +618,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                        select a).Any();
                 if (isJournalLineDelete)
                 {
-                    CustomsStoredProcedures.UpdateJouranlLinesLineNumber(entityPM.Id, entityPM.Tenant);
+                    RunStoredProcedureClass.UpdateJouranlLinesLineNumber(entityPM.Id, entityPM.Tenant);
                 }
 
                 if (entityPM.StatusCode == "6"  //== "2") //Pending Approval  
@@ -651,6 +652,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
         }
+       
         private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
         {
             if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved)
