@@ -320,7 +320,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             SetSatStatus();
             if (entityPM.SetApproved)
             {
-                if (entityPM.ConfirmationNumberStatus == null &&! (entityPM.ConfirmationNumber!=null && entityPM.IsExternalEntity))
+                if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                 {
                     SetConfirmationNumberStatus();
                 }
@@ -792,7 +792,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
                 if (entityPM.SetApproved)
                 {
-                    if (entityPM.ConfirmationNumberStatus == null)
+                    if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                     {
                         SetConfirmationNumberStatus();
                     }
