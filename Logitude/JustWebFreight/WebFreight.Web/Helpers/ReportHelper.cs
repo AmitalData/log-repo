@@ -12,8 +12,11 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json.Linq;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.SS.Formula.Functions;
+using NPOI.XSSF.UserModel;
+using NPOI.SS.UserModel;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -27,12 +30,14 @@ using Stimulsoft.Report.Export;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Web;
 using System.Xml;
@@ -55,6 +60,7 @@ using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
 using WebFreight.Web.TaxesApprovalModel;
 using WebFreight.Web.WebServices;
+using System.Linq.Dynamic.Core;
 
 namespace WebFreight.Web.Helpers
 {
@@ -2804,7 +2810,7 @@ namespace WebFreight.Web.Helpers
         private void SaveStimulReportUsingFileStreamByFileType(ReportFliter reportFliter, StiReport report, string fileType)
         {
             try
-            {
+            {                
                 string tempFilePath = Path.Combine(Path.GetTempPath(), reportFliter.ReportKey + "." + fileType);
                 using (var fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
                 {
@@ -2813,17 +2819,19 @@ namespace WebFreight.Web.Helpers
                     else if (fileType == "xlsx") new StiExcel2007ExportService().ExportExcel(report, fileStream, new StiExcel2007ExportSettings() { UseOnePageHeaderAndFooter = true });
                 }
                 ReadFileFromStreamFileAndSaveOnStorgeByChunks(tempFilePath, reportFliter, fileType);
+                SeveJsonDataProvider(report, reportFliter);
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SaveStimulReportUsingFileStream to " + fileType + "file", null, null);
                 SaveStimulReportUsingMemoryStreamByFileType(reportFliter, report, fileType);
+                SeveJsonDataProvider(report, reportFliter);
             }
         }
 
         private void SaveStimulReportUsingMemoryStreamByFileType(ReportFliter reportFliter, StiReport report, string fileType)
         {
-            using (var stream = new MemoryStream())
+            using (MemoryStream stream = new MemoryStream())
             {
                 if (fileType == "mdc") report.SaveDocument(stream);
                 else if (fileType == "tiff") report.ExportDocument(StiExportFormat.ImageTiff, stream, new StiTiffExportSettings() { PageRange = StiPagesRange.All, ImageResolution = 200 });
@@ -2842,6 +2850,158 @@ namespace WebFreight.Web.Helpers
                     }
                 }
             }
+        }
+
+        private void SeveJsonDataProvider(StiReport report, ReportFliter reportFliter)
+        {
+            string json = JsonConvert.SerializeObject(report.BusinessObjectsStore[0].BusinessObjectValue);    
+            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            {
+                byte[] reportData = stream.ToArray();
+                BlobFileInfo fileInfo = GetNewBlobFileInfo(reportFliter.ReportKey + "@json", "json", reportFliter.tenant);                
+                fileInfo.FileSize = reportData.Length;
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                storageservice.Write(reportData, fileInfo);
+            }
+        }
+
+        private string GetJsonDataProvider(string reportKey, int tenant)
+        {
+            BlobFileInfo fileInfo = GetNewBlobFileInfo(reportKey + "@json", "json", tenant);                
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            byte[] bytes = storageservice.Read(fileInfo);
+            string json = Encoding.UTF8.GetString(bytes);
+            return json;
+        }
+
+        private string GetListFieldName(string reportCode)
+        {            
+            switch (reportCode)
+            {
+                case "RINV":
+                    return "InvoicesReportList";
+                    
+                default:
+                    throw new Exception("Report code not found");                    
+            }
+        }
+
+        public MemoryStream CreateExcelOfReport(string reportCode, string reportKey, int tenant)
+        {
+            string json = GetJsonDataProvider(reportKey, tenant);
+            string listFieldName = GetListFieldName(reportCode);
+
+
+            JObject jObject = JObject.Parse(json);
+            DataTable dataTable = JsonConvert.DeserializeObject<DataTable>(jObject[listFieldName].ToString());
+            AddSimpletoProperty(dataTable, jObject);
+
+            IWorkbook workbook = new XSSFWorkbook();
+            CreateSheet(workbook, "withEmpty", dataTable);
+            RemoveEmptyColumns(dataTable);
+            CreateSheet(workbook, "withoutEmpty", dataTable);
+
+            MemoryStream memoryStream = new MemoryStream();
+            workbook.Write(memoryStream);
+            return memoryStream;
+        }
+
+        private static void RemoveEmptyColumns(DataTable dataTable)
+        {
+            foreach (DataColumn column in dataTable.Columns.Cast<DataColumn>().ToList())
+                if (dataTable.AsEnumerable().All(row => row.IsNull(column) || string.IsNullOrWhiteSpace(row[column].ToString())))
+                    dataTable.Columns.Remove(column);
+        }
+
+        private bool IsBase64Value(string value)
+        {
+            if (string.IsNullOrEmpty(value) || (value.Length % 4) != 0 ||
+                !value.All(c => "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".Contains(c)))
+                return false;
+            
+            try
+            {
+                Convert.FromBase64String(value);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void AddSimpletoProperty(DataTable dataTable, JObject jObject)
+        {
+            List<JProperty> nonArrayProperties = jObject.Properties().Where(property => property.Value.Type != JTokenType.Array && property.Value.Type != JTokenType.Object).ToList();
+            nonArrayProperties = nonArrayProperties.Where(prop => !IsBase64Value(prop.Value.ToString())).ToList();
+
+            for (int i = 0; i < nonArrayProperties.Count; i++)
+                if (dataTable.Columns.ToDynamicList().Any(dataColumn => dataColumn.ColumnName == nonArrayProperties[i].Name))
+                    nonArrayProperties[i] = new JProperty(nonArrayProperties[i].Name + "_1", nonArrayProperties[i].Value);
+
+            nonArrayProperties.ForEach(column =>
+            {
+                Type columnType;
+                switch (column.Value.Type)
+                {
+                    case JTokenType.String:
+                        columnType = typeof(string);
+                        break;
+                    case JTokenType.Float:
+                    case JTokenType.Integer:
+                        columnType = typeof(decimal);
+                        break;
+                    case JTokenType.Date:
+                        columnType = typeof(DateTime);
+                        break;
+                    case JTokenType.Null:
+                        columnType = typeof(object);
+                        break;
+                    default:
+                        columnType = typeof(object);
+                        break;
+                }
+                dataTable.Columns.Add(column.Name, columnType);
+            });
+
+            foreach (DataRow row in dataTable.Rows)
+                nonArrayProperties.ForEach(Columns => row[Columns.Name] = Columns.Value);
+        }
+
+        private ISheet CreateSheet(IWorkbook workbook, string sheetName, DataTable dataTable)
+        {
+            ISheet sheet = workbook.CreateSheet(sheetName);
+
+            ICellStyle headerStyle = workbook.CreateCellStyle();
+            IFont headerFont = workbook.CreateFont();
+            headerFont.IsBold = true;
+            headerFont.FontHeightInPoints = 10;
+            headerFont.FontName = "Calibri";
+            headerFont.Color = IndexedColors.White.Index;
+            headerStyle.SetFont(headerFont);
+            headerStyle.FillForegroundColor = IndexedColors.Grey40Percent.Index;
+            headerStyle.FillPattern = FillPattern.SolidForeground;
+            headerStyle.Alignment = HorizontalAlignment.Center;
+
+            IRow headerRow = sheet.CreateRow(0);
+            for (int i = 0; i < dataTable.Columns.Count; i++)
+            {
+                ICell cell = headerRow.CreateCell(i);
+                cell.SetCellValue(dataTable.Columns[i].ColumnName);
+                cell.CellStyle = headerStyle;
+            }
+
+            for (int rowIndex = 0; rowIndex < dataTable.Rows.Count; rowIndex++)
+            {
+                IRow row = sheet.CreateRow(rowIndex + 1);
+                for (int colIndex = 0; colIndex < dataTable.Columns.Count; colIndex++)
+                    row.CreateCell(colIndex).SetCellValue(dataTable.Rows[rowIndex][colIndex]?.ToString() ?? string.Empty);
+            }
+
+            for (int i = 0; i < dataTable.Columns.Count; i++)
+                sheet.AutoSizeColumn(i);
+
+            return sheet;
         }
 
         private void ReadFileFromStreamFileAndSaveOnStorgeByChunks(string tempFilePath, ReportFliter reportFliter, string extension)
@@ -3299,11 +3459,7 @@ namespace WebFreight.Web.Helpers
             queueservice.Send(new Dictionary<string, string>() { { "ReportExecutionLogId", reportExecutionLog.Id }, { "Tenant", reportExecutionLog.Tenant.ToString() } }, reportExecutionLog.Tenant, null, null, null, null);
             return reportFliter;
 
-        }
-
-
-
-
+        }        
     }
 
 

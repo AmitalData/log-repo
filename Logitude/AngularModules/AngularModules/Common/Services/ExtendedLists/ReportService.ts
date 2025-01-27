@@ -151,6 +151,17 @@ export class ReportService {
         }
         );
     }
+
+    GetExcel(reportKey: string, reportName: string, tenant: string, reportCode: string): Promise<any> {
+        return this._http.get(
+            this._apiUrl + "/GetExcel",
+            { 
+                params: { reportKey, reportName, tenant, reportCode }, 
+                headers: ServiceHelper.GetHttpHeaders().headers, 
+                responseType: 'blob' 
+            }
+        ).toPromise() as Promise<any>;
+    }
 }
 
 export class CustomersDataProvider {
