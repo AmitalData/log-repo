@@ -470,5 +470,38 @@ namespace Logitude.BL.DataContracts
             }
         }
 
+        public static void UpdateJouranlLinesLineNumber(string journalId, int tenant)
+        {
+            string strConnString = GetConnection(tenant);
+
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("dbo.usp_UpdateJournalLinesSequence", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter param1 = new SqlParameter("@V_JOURANLID", SqlDbType.VarChar);
+                param1.Direction = ParameterDirection.Input;
+                param1.Value = journalId;
+                cmd.Parameters.Add(param1);
+
+                SqlParameter param3 = new SqlParameter("@V_Tenant", SqlDbType.Int);
+                param3.Direction = ParameterDirection.Input;
+                param3.Value = tenant;
+                cmd.Parameters.Add(param3);
+
+
+
+
+
+
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+
+
+        }
+
     }
 }
