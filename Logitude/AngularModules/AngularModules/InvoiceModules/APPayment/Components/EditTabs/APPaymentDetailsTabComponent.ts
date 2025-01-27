@@ -1551,7 +1551,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             result = TextCodeTranslator.Translate("APPayment.S.Details.Cheque");
         }
         else if (this.PaymentMethodCode == "BT") {
-            result = TextCodeTranslator.Translate("APPayment.S.Details.BankTransfer") + "lil";
+            result = TextCodeTranslator.Translate("APPayment.S.Details.BankTransfer") ;
         }
         else if (this.PaymentMethodCode == "CC") {
             result = TextCodeTranslator.Translate("APPayment.S.Details.CreditCard");
