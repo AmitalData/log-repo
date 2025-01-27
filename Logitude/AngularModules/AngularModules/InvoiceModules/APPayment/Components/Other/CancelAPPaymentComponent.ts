@@ -127,9 +127,9 @@ export class CancelAPPaymentComponent extends BaseComponent {
     }
 
     SetDontIncludeInDeductionReport() {
-        var AccountingCancelationDate = DateTool.GetDateFromDate(this.AccountingCancelationDate, true);
-        var RegisterDate = DateTool.GetDateFromDate(this.EntityPM.RegisterDate, true);
-        if (AccountingCancelationDate.getUTCFullYear() != RegisterDate.getUTCFullYear()) {
+        var AccountingCancelationDate = new Date(this.AccountingCancelationDate);
+        var RegisterDate = new Date(this.EntityPM.RegisterDate);
+        if (AccountingCancelationDate.getFullYear() != RegisterDate.getFullYear()) {
 
 
             this.DontIncludeInDeductionReport = true;
@@ -187,8 +187,8 @@ export class CancelAPPaymentComponent extends BaseComponent {
     }
 
     private SetEntityPMFields() {
-         var value: Date = DateTool.GetDateFromDate(this.AccountingCancelationDate, true);
-        this.EntityPM.AccountingCancelationDate = value;
+        var value = new Date(this.AccountingCancelationDate);
+        this.EntityPM.AccountingCancelationDate =  new Date(Date.UTC(value.getFullYear(), value.getMonth(), value.getDate(), 0, 0, 0, 0));
         this.EntityPM.CancelationNotes = this.CancelationNotes;
         this.EntityPM.DontIncludeInDeductionReport = this.DontIncludeInDeductionReport;
     }
