@@ -394,9 +394,10 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
-
+        this._length = 0;
         this.getOriginCriterionCodesByCooTypeCode().toPromise().then(() => {
-            if (this._length > 0 && AppTool.IsNullOrEmpty(this.EntityPM.CertificateOriginItemItems?.OriginCriterionCode)) {
+           
+           if (this._length > 0 && this.EntityPM?.CertificateOriginItemItems.some(x => AppTool.IsNullOrUndefined(x?.OriginCriterionCode) === true)) {
                 this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired"));
             }
         }).then(() => {

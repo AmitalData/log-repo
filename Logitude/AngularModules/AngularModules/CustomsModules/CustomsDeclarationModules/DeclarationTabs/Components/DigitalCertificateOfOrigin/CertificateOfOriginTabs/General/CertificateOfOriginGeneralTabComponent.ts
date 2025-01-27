@@ -1245,7 +1245,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         }
         if (this.entityPM.CooTypeCode) {
             this.entityPM.CertificateOriginItemItems.forEach(item => {
-                this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, false, item);
+                //this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, false, item);
+                item.OriginCriterionCode = null;
+                item.OriginCriterionCodeName = null;
             });
         }
         this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
