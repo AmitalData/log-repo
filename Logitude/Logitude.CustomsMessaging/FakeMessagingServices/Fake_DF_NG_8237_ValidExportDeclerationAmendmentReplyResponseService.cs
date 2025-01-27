@@ -36,10 +36,13 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             };
 
             ResponseAdditionalInformation[] AdditionalInformation = new ResponseAdditionalInformation[3];
+            AdditionalInformation[0] = new ResponseAdditionalInformation();
             AdditionalInformation[0].StatementTypeCode = new AdditionalInformationStatementTypeCodeType() { Value = "29" };
             AdditionalInformation[0].Content = new AdditionalDocumentTypeTextType() { Value = "t29" };
+            AdditionalInformation[1] = new ResponseAdditionalInformation();
             AdditionalInformation[1].StatementTypeCode = new AdditionalInformationStatementTypeCodeType() { Value = "27" };
             AdditionalInformation[1].Content = new AdditionalDocumentTypeTextType() { Value = "t27" };
+            AdditionalInformation[2] = new ResponseAdditionalInformation();
             AdditionalInformation[2].StatementTypeCode = new AdditionalInformationStatementTypeCodeType() { Value = "32" };
             AdditionalInformation[2].Content = new AdditionalDocumentTypeTextType() { Value = "1" };
             response.Response.AdditionalInformation = AdditionalInformation;
