@@ -171,8 +171,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             JournalAdditionalDataPM journalAdditionalDataPM = GetJournalAdditionalDataPM(taxReportLine);
             if (journalAdditionalDataPM != null)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Before UpdateJournalJournalAdditionalData : " + journalAdditionalDataPM);
+
                 journalAdditionalDataPM = MapJournalAdditionalDataPM(journalAdditionalDataPM, taxReportLine);
                 SaveChangesOnJournalAdditionalData(journalAdditionalDataPM);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("After UpdateJournalJournalAdditionalData : " + journalAdditionalDataPM);
 
             }
         }
