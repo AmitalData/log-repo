@@ -118,7 +118,7 @@ export class VirtualRowControllerV2 extends DataSource<any | undefined> implemen
 
     disconnect(): void {
         //this.dataStream.complete();
-        this.mySub.unsubscribe();
+        this.mySub?.unsubscribe();
         //this.fetchedPages = null;
         //this.cachedData = null;
     }
