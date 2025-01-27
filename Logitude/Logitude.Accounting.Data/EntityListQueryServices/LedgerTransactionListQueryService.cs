@@ -1017,6 +1017,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             query2 = transactionsSorter.SortQuery();
 
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
+            maxCreateDate = LedgerTransactionListQueryService.RoundUpMilliseconds(maxCreateDate);
+
             query2 = query2
                 .Where(rec => rec.CreateDate <= maxCreateDate)
                 .Take(callback.TotalRecord);
@@ -1027,6 +1029,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var mylist = query2.ToList();
             MapLedgerTransactionnList(mylist, callback.IsFromExcelGenerator);
             return mylist;
+        }
+
+        private static DateTime RoundUpMilliseconds(DateTime value)
+        {
+            if (value != null)
+            {
+                int milli = value.Millisecond;
+                if (milli > 0) value = value.AddSeconds(1).AddMilliseconds(-milli);
+            }
+            return value;
         }
 
         public void MapLedgerTransactionnList(List<LedgerTransactionList> LedgerTransactions, bool IsFromExcelGenerator)
@@ -1088,6 +1100,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             query2 = transactionsSorter.SortQuery();
 
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
+            maxCreateDate = LedgerTransactionListQueryService.RoundUpMilliseconds(maxCreateDate);
+
             query2 = query2
                 .Where(rec => rec.CreateDate <= maxCreateDate)
                 .Take(callback.TotalRecord);
@@ -1118,6 +1132,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             query2 = transactionsSorter.SortQuery();
 
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
+            maxCreateDate = LedgerTransactionListQueryService.RoundUpMilliseconds(maxCreateDate);
+
             query2 = query2
                 .Where(rec => rec.CreateDate <= maxCreateDate)
                 .Take(callback.TotalRecord);
@@ -1833,6 +1849,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private IQueryable<LedgerTransactionList> FilterMaxDate(GenericCallBack callback, IQueryable<LedgerTransactionList> resultedList)
         {
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
+
+            maxCreateDate = LedgerTransactionListQueryService.RoundUpMilliseconds(maxCreateDate);
 
             resultedList = resultedList
                 .Where(rec => rec.CreateDate <= maxCreateDate)
