@@ -1,0 +1,14 @@
+.preference-menu {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .preference-menu h3 {
+    /* margin-top: 0; */
+  }
+  
+  .preference-menu div {
+    margin-bottom: 20px;
+  }

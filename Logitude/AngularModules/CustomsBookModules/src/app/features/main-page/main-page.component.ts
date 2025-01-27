@@ -14,11 +14,12 @@ import { SessionInfo } from '../../core/Infrastructure/Utilities/SessionInfo';
 import { LoginService } from '../../core/Infrastructure/Services/LoginService';
 import { InfrastructureDomainService } from '../../core/Infrastructure/Services/InfrastructureDomainService';
 import { FeatureLocator } from '../../core/Infrastructure/Utilities/FeatureLocator';
+import { PreferenceMenuComponent } from '../../shared/components/preference-menu/preference-menu';
 
 @Component({
 	selector: 'app-main-page',
 	standalone: true,
-	imports: [PageTopComponent, MainDisplayComponent, AddCommentComponent, CommonModule, AppHeaderComponent],
+	imports: [PageTopComponent, MainDisplayComponent, AddCommentComponent, CommonModule, AppHeaderComponent, PreferenceMenuComponent],
 	templateUrl: './main-page.component.html',
 	styleUrl: './main-page.component.css',
 })

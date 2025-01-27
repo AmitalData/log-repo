@@ -3,14 +3,14 @@ import { AfterViewInit, Component, HostListener, Input, OnInit, SimpleChanges } 
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
 import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
-import { NgFor, NgForOf, NgIf, NgStyle } from '@angular/common';
+import { CommonModule, NgFor, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
 import { mockData } from '../../../../../mock_data';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { BehaviorSubject, filter } from 'rxjs';
 import { SearchBy, SearchService } from '../page-top/service/top-page.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { FilterPopupService, FiltersSearch } from '../filter-popup/service/filter-popup.service';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
@@ -24,7 +24,7 @@ import { AddCommentService } from '../add-comment/service/add-comment.service';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle, PreferenceMenuComponent],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
@@ -62,7 +62,7 @@ export class MainDisplayComponent implements OnInit {
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService,
-		private addCommentService: AddCommentService, private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService
+		private preferencesService: PreferencesService, private addCommentService: AddCommentService, private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService
 	) {
 		this.screenWidth = window.innerWidth;
 	}
@@ -77,7 +77,7 @@ export class MainDisplayComponent implements OnInit {
 			this.ListenToItemsSearched();
 		});
 	}
-
+	
 	InitData() {
 		if (SessionInfo.LoggedUserTenant == 0) this.GetAllCustomsBookMainView();
 		else this.checkIsFeaturePermessionCustomsBook(() => this.GetAllCustomsBookMainView());
@@ -698,3 +698,23 @@ export class ClassifGuidanceAttached {
 	fullClassification: string;
 	attachedCustomsItemID: number;
 }
+
+
+import { Injectable } from '@angular/core';
+import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
+
+@Injectable({
+	providedIn: 'root'
+})
+export class PreferencesService {
+	private preferences = {};
+
+	setPreference(level: number, color: string) {
+		this.preferences[level] = color;
+	}
+
+	getPreference(level: number): string {
+		return this.preferences[level]; // default color
+	}
+}
+

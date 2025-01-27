@@ -1,0 +1,7 @@
+<div class="preference-menu">
+    <h3>Select Colors for Data Rows</h3>
+    <div *ngFor="let level of levels">
+      <label>Level {{level}} Color:</label>
+      <input type="color" [(ngModel)]="preferences[level]" (change)="updatePreferences()" />
+    </div>
+  </div>

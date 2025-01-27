@@ -3,9 +3,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar as faStarBold, faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawesome/free-regular-svg-icons';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
-import { NgIf, NgClass } from '@angular/common';
+import { NgIf, NgClass, NgStyle } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { CB_CustomsItemComputedDataList, CB_TariffList, RemarksClassificationList, RulesDetailsList } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, CB_TariffList, PreferencesService, RemarksClassificationList, RulesDetailsList } from '../main-display/main-display.component';
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { SearchBy, SearchService } from '../page-top/service/top-page.service';
@@ -13,7 +13,7 @@ import { SearchBy, SearchService } from '../page-top/service/top-page.service';
 @Component({
 	selector: 'app-data-row',
 	standalone: true,
-	imports: [FontAwesomeModule, NgIf, NgClass],
+	imports: [FontAwesomeModule, NgIf, NgClass,NgStyle],
 	templateUrl: './data-row.component.html',
 	styleUrl: './data-row.component.css',
 })
@@ -48,7 +48,7 @@ export class DataRowComponent implements OnInit {
 	screenWidth: number;
 	widthSmaller: boolean = false;
 
-	constructor(private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) {
+	constructor(private preferencesService:PreferencesService, private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) {
 		this.screenWidth = window.innerWidth;
 	}
 
@@ -63,6 +63,10 @@ export class DataRowComponent implements OnInit {
 		// this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
 		// 	this.showCommentsData();
 		// });
+	}
+
+	getRowColor(level: number): string {
+		return this.preferencesService.getPreference(level);
 	}
 
   // #114817 cancel this call on init of data row. instead, call it on click to open side window
