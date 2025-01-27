@@ -5082,7 +5082,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 invoiceLine.LocalCurrencyAmount = invoiceLine.ForiegnCurrencyAmount;
             }
-            else
+            else if (!(this.isNewEntity && this.entityPM.IsExternalEntity && invoiceLine.LocalCurrencyAmount.HasValue)) // if new, external, and has a value - do not compute it
             {
                 invoiceLine.LocalCurrencyAmount = MethodHelper.Round((invoiceLine.ForiegnCurrencyAmount * invoiceLine.ForiegnExchangeRate), 2);
             }
