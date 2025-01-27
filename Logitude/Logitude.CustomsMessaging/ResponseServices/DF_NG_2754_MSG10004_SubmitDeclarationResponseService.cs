@@ -358,6 +358,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             try
             {
+                DeclarationRestoreResponseData responseData = null;
+                if (_MyDeclarationPM.DeclarationNumber == null) return responseData;
                 DeclarationRestoreRequestParams requestParamsData = new DeclarationRestoreRequestParams();
                 requestParamsData = (DeclarationRestoreRequestParams)requestParams;
                 requestParamsData.CustomsFile = _MyDeclarationPM.CustomFileNo;
@@ -368,7 +370,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 requestParamsData.ShowData = true;
 
                 DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
-                DeclarationRestoreResponseData responseData = messagingService.Send(requestParamsData);
+                responseData = messagingService.Send(requestParamsData);
                 return responseData;
             }
             catch
