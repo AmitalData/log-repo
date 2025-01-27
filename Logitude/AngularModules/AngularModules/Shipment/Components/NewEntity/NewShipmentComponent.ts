@@ -676,6 +676,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                 this.DeclarationOfficeCode = value.Code;
             }
 
+            if(!AppTool.IsNullOrEmpty(value?.LocalName)) {
+                this.DeclarationOfficeName = value.LocalName;
+            }
+
             if (!AppTool.IsNullOrEmpty(value?.TransportModeId)) {
                 this.TransportModeId = value.TransportModeId;
             }
@@ -690,6 +694,18 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.ValidateCustomShipment();
         }
     }
+
+
+    get DeclarationOfficeName() { return this.EntityPM.DeclarationOfficeName; }
+    set DeclarationOfficeName(value: string) {
+        if (this.EntityPM.DeclarationOfficeName != value) {
+            this.EntityPM.DeclarationOfficeName = value;
+        }
+    }
+
+
+
+
 
     get DepartmentId() { return this.EntityPM.DepartmentId; }
     set DepartmentId(value: string) {
