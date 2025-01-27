@@ -1,7 +1,14 @@
 <div class="preference-menu">
-    <h3>Select Colors for Data Rows</h3>
-    <div *ngFor="let level of levels">
-      <label>Level {{level}} Color:</label>
-      <input type="color" [(ngModel)]="preferences[level]" (change)="updatePreferences()" />
-    </div>
+  <h3>Select Colors for Data Rows</h3>
+  <div>
+    <label for="preferenceType">Select Type:</label>
+    <select id="preferenceType" [(ngModel)]="selectedType">
+      <option [value]="preferenceTypeBackground">Background Color</option>
+      <option [value]="preferenceTypeText">Text Color</option>
+    </select>
   </div>
+  <div *ngFor="let level of levels">
+    <label>Level {{level}} Color:</label>
+    <input type="color" [(ngModel)]="preferences[selectedType][level - 1]" (change)="updatePreferences(level)" />
+  </div>
+</div>

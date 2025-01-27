@@ -5,15 +5,16 @@ import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawes
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { NgIf, NgClass, NgStyle } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { CB_CustomsItemComputedDataList, CB_TariffList, PreferencesService, RemarksClassificationList, RulesDetailsList } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, CB_TariffList, RemarksClassificationList, RulesDetailsList } from '../main-display/main-display.component';
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { SearchBy, SearchService } from '../page-top/service/top-page.service';
+import { PreferencesService, PreferenceType } from '../preference-menu/preference-menu';
 
 @Component({
 	selector: 'app-data-row',
 	standalone: true,
-	imports: [FontAwesomeModule, NgIf, NgClass,NgStyle],
+	imports: [FontAwesomeModule, NgIf, NgClass, NgStyle],
 	templateUrl: './data-row.component.html',
 	styleUrl: './data-row.component.css',
 })
@@ -48,12 +49,12 @@ export class DataRowComponent implements OnInit {
 	screenWidth: number;
 	widthSmaller: boolean = false;
 
-	constructor(private preferencesService:PreferencesService, private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) {
+	constructor(private preferencesService: PreferencesService, private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) {
 		this.screenWidth = window.innerWidth;
 	}
 
 	ngOnInit() {
-    //this.getCustomsBookAgreementLevelData(); #114817
+		//this.getCustomsBookAgreementLevelData(); #114817
 		this.showRulesData();
 		this.selectedSearchBy = this.searchService.selectSearchBy;
 		this.addCommentService.fullCommentsData.subscribe((data: RemarksClassificationList[]) => {
@@ -65,11 +66,15 @@ export class DataRowComponent implements OnInit {
 		// });
 	}
 
-	getRowColor(level: number): string {
-		return this.preferencesService.getPreference(level);
+	getBackgroundColor(): string {
+		return this.preferencesService.getPreference(this.level, PreferenceType.Background);
 	}
 
-  // #114817 cancel this call on init of data row. instead, call it on click to open side window
+	getTextColor(): string {
+		return this.preferencesService.getPreference(this.level, PreferenceType.Text);
+	}
+
+	// #114817 cancel this call on init of data row. instead, call it on click to open side window
 	// TariffList1: CB_TariffList;
 	// TariffList2: CB_TariffList;
 	// TariffListCount: number = 0;
@@ -227,8 +232,8 @@ export class DataRowComponent implements OnInit {
 
 	showCommentsClick() {
 		this.showComments = !this.showComments;
-		this.data.remarksClassificationList = this.comments; 
-    // this.data.agreementsList = this.TariffListData;#114817
+		this.data.remarksClassificationList = this.comments;
+		// this.data.agreementsList = this.TariffListData;#114817
 		this.showCommentsOpen.emit(true);
 		this.showDetails.emit();
 	}

@@ -21,6 +21,7 @@ import { LoginService } from '../../../core/Infrastructure/Services/LoginService
 import { Router } from '@angular/router';
 import { RomanToolService } from '../../services/roman-tool.service';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
+import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -62,7 +63,7 @@ export class MainDisplayComponent implements OnInit {
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService,
-		private preferencesService: PreferencesService, private addCommentService: AddCommentService, private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService
+		private addCommentService: AddCommentService, private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService
 	) {
 		this.screenWidth = window.innerWidth;
 	}
@@ -77,7 +78,7 @@ export class MainDisplayComponent implements OnInit {
 			this.ListenToItemsSearched();
 		});
 	}
-	
+
 	InitData() {
 		if (SessionInfo.LoggedUserTenant == 0) this.GetAllCustomsBookMainView();
 		else this.checkIsFeaturePermessionCustomsBook(() => this.GetAllCustomsBookMainView());
@@ -697,24 +698,5 @@ export class ClassifGuidanceDetailsResponseData {
 export class ClassifGuidanceAttached {
 	fullClassification: string;
 	attachedCustomsItemID: number;
-}
-
-
-import { Injectable } from '@angular/core';
-import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
-
-@Injectable({
-	providedIn: 'root'
-})
-export class PreferencesService {
-	private preferences = {};
-
-	setPreference(level: number, color: string) {
-		this.preferences[level] = color;
-	}
-
-	getPreference(level: number): string {
-		return this.preferences[level]; // default color
-	}
 }
 
