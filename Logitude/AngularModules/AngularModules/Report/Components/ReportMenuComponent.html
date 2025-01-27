@@ -3,9 +3,9 @@
         background: #f7f7f7;
         position: absolute;
         /*z-index: 99;*/
-        top: 60px;
+        top: 50px;
         bottom: 8px;
-        left: 0px;
+
         width: 250px;
         border-right: 1px solid #8eabc1;
         border-left: 1px solid #8eabc1;
@@ -99,12 +99,18 @@
     }
 </style>
 
-<div class="DocumentsDropDown">
+<div class="DocumentsDropDown" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0'}:{'right': '0'} ">
+
     <table>
 
         <tr>
             <td style="vertical-align:top;">
                 <ul style="width: 100%;">
+                    <div  [ngStyle]="LayoutDirection == 'rtl' ? {'text-align': 'right'}:{'text-align': 'left'} " style="text-align: right; padding-top: 5px;padding-right: 5px;">
+                        <img [title]="isPinned ? 'Pin' : 'Unpin'" [style.width.px]="20" [style.height.px]="20"
+                            [style.cursor]="'pointer'" [style.transform]="isPinned ? 'none':LayoutDirection == 'rtl'? 'rotate(90deg)': 'rotate(-90deg)'"
+                            src="./Images/Buttons/pinned.png" (click)="togglePin()" />
+                    </div>
                     <li *ngIf="!(RelatedReport$ | async)?.length"
                         style="width: 100%; padding: 10px;  text-align: center;height: 20px;line-height: 20px; font-size: 18px; color: #1B90CB;">
                         {{'Accounting.General.O.NoReportsDisplay' | TextCodeTranslationPipe}} </li>

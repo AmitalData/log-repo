@@ -72,6 +72,8 @@ export class HomeComponent implements OnDestroy{
 
     isReportPanelVisible: boolean = false;
     currentReportId: string = "";
+    private reportPanelTimeout: any;
+    private isPinned: boolean = false;
 
 
     constructor() {
@@ -798,21 +800,48 @@ export class HomeComponent implements OnDestroy{
             this.showLockIndicator = newValue;
         }
     }
+    public HasFeatureReport:boolean= FeatureLocator.HasFeaturePermession("Report", "Module");
+
     get IsReportPanelVisible() { return this.isReportPanelVisible; }
     set IsReportPanelVisible(newValue: boolean) {
-        if (!FeatureLocator.HasFeaturePermession("Report", "Module"))
-            newValue = false;
+       
        
         this.isReportPanelVisible = newValue;
         
-        if (newValue) 
+        if (newValue) {
             this.CurrentReportId = "";
+            this.StartReportPanelTimeout()
+
+        }
+        else{
+            this.isPinned = false;
+            clearTimeout(this.reportPanelTimeout);
+
+        }
     }
     get CurrentReportId() { return this.currentReportId; }
     set CurrentReportId(newValue: string) {
         
         if (this.currentReportId != newValue) {
             this.currentReportId = newValue;
+        }
+    }
+    TogglePinReportPanel(event: any) {
+       
+        if (event==true) {
+            this.isPinned = true;
+            clearTimeout(this.reportPanelTimeout);
+        } else {
+            this.isPinned = false;
+            this.StartReportPanelTimeout();
+        }
+    }
+
+    StartReportPanelTimeout() {
+        if (!this.isPinned) {
+            this.reportPanelTimeout = setTimeout(() => {
+                this.IsReportPanelVisible = false;
+            }, 10000); //10 Seconds
         }
     }
     notificationExtendedListService: NotificationExtendedListService = new NotificationExtendedListService();

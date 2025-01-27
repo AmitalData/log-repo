@@ -161,7 +161,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         DoneDate = a.DoneDate,
                         ReportFilterXML = a.ReportFilterXML,
                         ReportId = a.ReportId,
-                        ReportName = a.Report != null ? a.Report.Name : null,
+                        ReportName = a.Report != null ? a.Report.LocalName!=null?a.Report.Name:a.Report.Name : null,
                         ReportTemplateId = a.ReportTemplateId,
                         RetryNumber = a.RetryNumber,
                         StartDate = a.StartDate,
