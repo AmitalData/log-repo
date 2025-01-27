@@ -476,7 +476,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
                 DeclarationPM declartionPM = null;
                 DocumentTypeCustomsDataPM documentTypeCustomsDataPM = null;
-                if (_DocumentsFilingPM.ExternalEntityName == "EFIFILEM")
+                if (_DocumentsFilingPM.ExternalEntityName == "EFIFILEM" || _DocumentsFilingPM.ExternalEntityName == "MFIFILEM")
                 {
                     var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(_DocumentsFilingPM.Tenant);
                     declartionPM = declarationQueryService.GetDeclarationByExportFile(_DocumentsFilingPM.Tenant, _DocumentsFilingPM.ExternalEntityReference);
