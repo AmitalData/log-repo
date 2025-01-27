@@ -82,6 +82,9 @@ using WebFreight.Web.Helpers;
             InterestReportDP.CalculatedPostponedChequesCommision = InteerstReportPM.CalculatedPostponedChequesCommision;
             InterestReportDP.AllotmentCommession = InteerstReportPM.CalCreditAllotmentCommission;
             InterestReportDP.AllotmentCalculation = SetAllotmentCalculationEquation(InterestReportDP, InteerstReportPM);
+            InterestReportDP.PostponedChequesCommission = !string.IsNullOrEmpty(InteerstReportPM.GLAccountId) ? GetPostponedChequesCommission(InteerstReportPM.GLAccountId, InteerstReportPM.Tenant) : null;
+            InterestReportDP.CountPostponedCheques = CalcCountPostponedCheques(InterestReportDP.CalculatedPostponedChequesCommision , InterestReportDP.PostponedChequesCommission);
+            InterestReportDP.TotalAmountWithPostponedCheques = InteerstReportPM?.TotalAmount + InteerstReportPM?.CalculatedPostponedChequesCommision;
 
             return InterestReportDP;
         }
@@ -100,6 +103,26 @@ using WebFreight.Web.Helpers;
                 return string.Concat(InteerstReportPM.GLAccountInterestCreditLimit, " * ", '(', InteerstReportPM.CreditAllotmentPercentage, " / 100)");
             }
             return null;
+        }
+
+
+        private static decimal? GetPostponedChequesCommission(string glaccountId, int tenant)
+        {
+            GLAccountQueryService glAccountQuery = new GLAccountQueryService(tenant);
+            GLAccountPM gLAccount = glAccountQuery.GetSingle(glaccountId, false, false);
+            return gLAccount?.PostponedChequesCommission;
+        }
+        private static int CalcCountPostponedCheques(decimal? sum, decimal? postponedChequesCommission)
+        {
+            if (postponedChequesCommission != null &&
+                sum != null && postponedChequesCommission != 0)
+            {
+                return  (int)(sum / postponedChequesCommission);
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }
