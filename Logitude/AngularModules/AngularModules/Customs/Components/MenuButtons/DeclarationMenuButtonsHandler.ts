@@ -1829,6 +1829,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 logWindow.Title = ("המכלות קיימות")
                 logWindow.WindowArgs = args;
                 logWindow.IsShowCloseButton = true;
+                logWindow.HideFooterSaveButton = true;
+                logWindow.ShowFooterButtons = true;
+                logWindow.CancelFooterButtonLabel = "סגור";
                 logWindow.FooterButtonsClicked.subscribe(($event: any) => {
                     logWindow.Close($event);
                 });

@@ -50,6 +50,7 @@ export class LogitudeWindow {
     public ShowFooterButtons: boolean = false;
     public SubmitFooterButtonLabel: string | null = null;
     public CancelFooterButtonLabel: string | null = null;
+    public HideFooterSaveButton: boolean = false;
 
     @Output() WindowClosed: EventEmitter<any> = new EventEmitter();
     @Output() ComponentLoaded: EventEmitter<any> = new EventEmitter();
@@ -299,6 +300,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public IsViewMode: boolean = false;
     public ShowFooterButtons: boolean = false;
     public SubmitFooterButtonLabel: string | null = null;
+    public HideFooterSaveButton: boolean = false;
     public CancelFooterButtonLabel: string | null = null;
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChild(ChildDirective) Child: ChildDirective;
@@ -351,6 +353,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
         this.IsViewMode = logWindow.IsViewMode;
         this.ShowFooterButtons = logWindow.ShowFooterButtons;
+        this.HideFooterSaveButton = logWindow.HideFooterSaveButton;
         this.SubmitFooterButtonLabel = logWindow.SubmitFooterButtonLabel;
         this.CancelFooterButtonLabel = logWindow.CancelFooterButtonLabel;
         this.SetWindowSize();
@@ -392,6 +395,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
         this.IsViewMode = logWindow.IsViewMode;
         this.ShowFooterButtons = logWindow.ShowFooterButtons;
+        this.HideFooterSaveButton = logWindow.HideFooterSaveButton;
         this.SubmitFooterButtonLabel = logWindow.SubmitFooterButtonLabel;
         this.CancelFooterButtonLabel = logWindow.CancelFooterButtonLabel;
         this.SetWindowSize();
