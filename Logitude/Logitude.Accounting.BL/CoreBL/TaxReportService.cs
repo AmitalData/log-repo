@@ -518,6 +518,8 @@ namespace Logitude.Accounting.BL.CoreBL
             //inputs
             ledgerTransactons = ledgerTransactionRepository.GetLedgerTransactionsForTaxReport(taxReport.TaxReportMonth, tenant);
 
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Create TaxReport with ledgerTransactons : " + ledgerTransactons);
+
             List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
             List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
             journalsTransactions = ledgerTransactionRepository.GetLedgerTransactionsByJournalIds(JournalIds, tenant);
