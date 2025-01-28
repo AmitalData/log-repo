@@ -11,6 +11,7 @@ using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Data.EntityMapping;
+using System.Data.Entity;
 
 
 namespace Logitude.Customs.Data.Repsitories
@@ -79,8 +80,8 @@ namespace Logitude.Customs.Data.Repsitories
         public List<Containerization> GetContainerizationsByIds(string ids, int tenant)
         {
             
-            return  (from a in context.Containerizations
-                         where a.Tenant == tenant && ids.Contains((a.Id))
+            return  (from a in context.Containerizations.Include("ContainerizationStatusCode").Include("ContainerizationHataraStatus")
+                     where a.Tenant == tenant && ids.Contains((a.Id))
                          select a).ToList();
                
         }
