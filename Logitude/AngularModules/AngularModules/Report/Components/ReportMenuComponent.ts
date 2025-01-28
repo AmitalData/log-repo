@@ -36,7 +36,7 @@ export class ReportMenuComponent implements OnDestroy {
     isReportPanelVisible: boolean = false;
 
     currentReportId: string = "";
-    private isPinned: boolean = false;
+    public isPinned: boolean = false;
     public LayoutDirection: string = 'ltr';
 
     constructor() {
