@@ -214,9 +214,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             else return true;
         }
-        public string CheckIfVatNumberExists(string partnerTypeId, string vatNumber, int tenant)
+        public string CheckIfVatNumberExists(string partnerTypeId, string vatNumber, string code, int tenant)
         {
-           return entityRepository.CheckIfVatNumberExists(partnerTypeId, vatNumber, tenant);
+           return entityRepository.CheckIfVatNumberExists(partnerTypeId, vatNumber, code, tenant);
         }
         public void RunStoredProcedures()
         {

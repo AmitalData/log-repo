@@ -1969,8 +1969,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             [ShippingAgentPM, 'ShippingAgent'],
             [CustomAgentPM, 'CustomAgent'],
             [CustomerPM, 'Customer'],
-            [ContactPM, 'Contact'],
-            [AddressPM, 'Address'],
             [AccountingPartnerPM, 'AccountingPartner'],
             [TruckerPM, 'Trucker'],
             [ShippingLinePM, 'ShippingLine'],

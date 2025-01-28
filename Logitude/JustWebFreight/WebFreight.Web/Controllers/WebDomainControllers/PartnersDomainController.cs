@@ -1032,14 +1032,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    string VatNumber="" ;
+                    string VatNumber = "" ;
+                    string Code =" " ;
                     switch (args.PartnerTypeId)
                     {
                         case "AG":
                             {
                                 if (args.Agent != null)
                                 {
-                                    VatNumber= args.Agent.VatNumber;
+                                    VatNumber = args.Agent.VatNumber;
+                                    Code = args.Agent?.Code;
                                 }
 
                                 break;
@@ -1051,6 +1053,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (args.Customer != null)
                                 {
                                    VatNumber = args.Customer.VatNumber;
+                                    Code = args.Customer?.Code;
                                 }
 
                                 break;
@@ -1061,6 +1064,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (args.CustomAgent != null)
                                 {
                                     VatNumber = args.CustomAgent.VatNumber;
+                                    Code = args.CustomAgent?.Code;
                                 }
 
                                 break;
@@ -1071,6 +1075,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (args.ShippingAgent != null)
                                 {
                                     VatNumber = args.ShippingAgent.VatNumber;
+                                    Code = args.ShippingAgent?.Code;
                                 }
 
                                 break;
@@ -1081,6 +1086,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (args.Vendor != null)
                                 {
                                     VatNumber = args.Vendor.VatNumber;
+                                    Code = args.Vendor?.Code;
                                 }
 
                                 break;
@@ -1091,6 +1097,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (args.Warehouse != null)
                                 {
                                     VatNumber = args.Warehouse.VatNumber;
+                                    Code = args.Warehouse?.Code;
                                 }
 
                                 break;
@@ -1101,6 +1108,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (args.Airline != null)
                                 {
                                     VatNumber = args.Airline.VatNumber;
+                                    Code = args.Airline?.Code;
                                 }
 
                                 break;
@@ -1111,6 +1119,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (args.ShippingLine != null)
                                 {
                                     VatNumber = args.ShippingLine.VatNumber;
+                                    Code = args.ShippingLine?.Code;
                                 }
 
                                 break;
@@ -1121,6 +1130,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (args.Trucker != null)
                                 {
                                     VatNumber = args.Trucker.VatNumber;
+                                    Code = args.Trucker?.Code;
                                 }
 
                                 break;
@@ -1131,6 +1141,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (args.AccountingPartner != null)
                                 {
                                     VatNumber = args.AccountingPartner.VatNumber;
+                                    Code = args.AccountingPartner?.Code;
                                 }
 
                                 break;
@@ -1138,7 +1149,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                     ICommonDataContext objectContext= CommonDataContext.GetContext(tenant);
                     CardService entityQuery = new CardService(objectContext,tenant);
-                   var code= entityQuery.CheckIfVatNumberExists(args.PartnerTypeId,VatNumber, tenant);
+                   var code= entityQuery.CheckIfVatNumberExists(args.PartnerTypeId, VatNumber, Code, tenant);
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, code);
                 }
