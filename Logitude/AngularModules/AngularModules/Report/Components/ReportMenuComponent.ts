@@ -1,4 +1,4 @@
-import { OnDestroy } from "@angular/core";
+import { EventEmitter, OnDestroy, Output } from "@angular/core";
 import { Component } from "@angular/core";
 import { ReportExecutionLogPM } from "Common/EntityPMs/ReportExecutionLogPM";
 import { ReportPM } from "Common/EntityPMs/ReportPM";
@@ -15,6 +15,7 @@ import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { ReportsTemplateListExtendedService } from "Common/Services/ExtendedLists/ReportsTemplateListExtendedService";
 import { ReportsPreviewComponent } from "./ReportsPreviewComponent";
 import { parseString } from 'xml2js';
+import { ObjectsLocator } from "Infrastructure/Locators/ObjectsLocator";
 
 
 @Component({
@@ -25,7 +26,7 @@ import { parseString } from 'xml2js';
 
 export class ReportMenuComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
-
+    @Output() PinnedChanged = new EventEmitter<boolean>();
 
     public RelatedReport: ReportExecutionLogPM[];
     SelectedReport: ReportExecutionLogPM;
@@ -35,32 +36,38 @@ export class ReportMenuComponent implements OnDestroy {
     isReportPanelVisible: boolean = false;
 
     currentReportId: string = "";
+    private isPinned: boolean = false;
+    public LayoutDirection: string = 'ltr';
 
     constructor() {
+        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
         this.LoadReports()
 
     }
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
-    }
+       
 
-    //REPORTS
+    }
+       
+
+    
     _reportService: ReportService = new ReportService();
     private subscription: Subscription | null = null;
     
     get CurrentReportId() { return this.currentReportId; }
     set CurrentReportId(newValue: string) {
-        
+        if(!AppTool.IsNullOrEmpty(newValue)){
+            this.LoadReports();
+        }
         if (this.currentReportId != newValue) {
             this.currentReportId = newValue;
         }
     }
     get IsReportPanelVisible() { return this.isReportPanelVisible; }
     set IsReportPanelVisible(newValue: boolean) {
-        if(newValue){
-            this.LoadReports();
-        }
+        
         if (this.isReportPanelVisible != newValue) {
             this.isReportPanelVisible = newValue;
         }
@@ -83,6 +90,10 @@ export class ReportMenuComponent implements OnDestroy {
 
             }
         });
+    }
+    togglePin() {
+        this.isPinned = !this.isPinned;
+        this.PinnedChanged.emit(this.isPinned);
     }
     StartCheckingStatus() {
         this.subscription = interval(5000)
@@ -153,10 +164,12 @@ export class ReportMenuComponent implements OnDestroy {
     }
     private PageChild_PRREP: any = null;
     ReportsPreviewComponent:ReportsPreviewComponent
+    
     LoadReportsPreviewComponent(relatedRep: ReportExecutionLogPM, report: ReportPM) {
         this.CurrentSession.StartBusyIndicator("Preview...");
-        SessionLocator.DynamicLoader.Load('./Report/Components/ReportsPreviewComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Report/Components/ReportsPreviewComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
             .then((cmpRef: any) => {
+             
                 cmpRef.instance.ComponentRef = cmpRef;
                 this.PageChild_PRREP = cmpRef.instance;
                 this.SetReportDetails(relatedRep, report);
@@ -261,6 +274,9 @@ export class ReportMenuComponent implements OnDestroy {
                 return 0;
         }
     }
+
+
+  
 }
 
 
