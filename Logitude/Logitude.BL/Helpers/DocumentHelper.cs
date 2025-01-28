@@ -492,7 +492,7 @@ namespace Logitude.BL.Helpers
                     subject = accountingSettings?.InterestInvoiceNotes;
                 }
                 
-                 string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, subject += " " + arinvocie.InvoiceNumber, null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null);
+                 string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, subject += " " + arinvocie.InvoiceNumber, null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null,loggedUserEmail);
                  if (!string.IsNullOrEmpty(documentId))
                 {
                     arinvocie.IsSigned = "3";
