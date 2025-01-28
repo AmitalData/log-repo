@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Procedure
-  DBType="Main" Name="usp_AccountingStreaming" Schema="dbo" Module="Accounting">
+  DBType="Main" Name="usp_UpdateJournalLinesSequence" Schema="dbo" Module="Accounting">
   >
   <SqlScript>
     <![CDATA[
-    CREATE PROCEDURE [dbo].[usp_UpdateJournalLinesSequence]
+    create or alter PROCEDURE [dbo].[usp_UpdateJournalLinesSequence]
 @V_JOURANLID varchar(max) = NULL,
   
 @V_TENANT float(53) = NULL
