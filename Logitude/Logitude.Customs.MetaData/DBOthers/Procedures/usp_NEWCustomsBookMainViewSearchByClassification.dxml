@@ -1,7 +1,7 @@
 ﻿<Procedure DBType="Main" Name="usp_NEWCustomsBookMainViewSearchByClassification" Schema="dbo" Module="Customs">
   <SqlScript>
 	  <![CDATA[
-CREATE OR ALTER   PROCEDURE [dbo].[usp_NEWCustomsBookMainViewSearchByClassification]
+CREATE OR ALTER  PROCEDURE [dbo].[usp_NEWCustomsBookMainViewSearchByClassification]
 @CustomsBookType VARCHAR(2),
 @FullClassification VARCHAR(13),
 @Tenant INT = 0
@@ -20,10 +20,10 @@ SET @FullClassification = REPLACE(@FullClassification, '/', '');
 -- Adjust @FullClassification by removing trailing zeros
 SET @AdjustedClassification = RTRIM(@FullClassification);
 -- Find the position of the first non-zero digit from the right
-IF PATINDEX('%[1-9]%', REVERSE(@AdjustedClassification)) > 0
-BEGIN
-SET @AdjustedClassification = LEFT(@AdjustedClassification, LEN(@AdjustedClassification) - PATINDEX('%[1-9]%', REVERSE(@AdjustedClassification)) + 1);
-END;
+--IF PATINDEX('%[1-9]%', REVERSE(@AdjustedClassification)) > 0
+--BEGIN
+--SET @AdjustedClassification = LEFT(@AdjustedClassification, LEN(@AdjustedClassification) - PATINDEX('%[1-9]%', REVERSE(@AdjustedClassification)) + 1);
+--END;
 -- ---- without to remove zeros if needed -----------
 --SET @AdjustedClassification = @FullClassification;
 -- Recursive CTE to find ancestors
