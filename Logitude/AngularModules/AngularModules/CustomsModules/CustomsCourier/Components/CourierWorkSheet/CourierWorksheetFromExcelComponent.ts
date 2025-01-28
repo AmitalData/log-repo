@@ -347,11 +347,13 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     SendRecoverDeclaration(courierDeclarationStatusCode: string){
+        this.currentSession.StartBusyIndicatorLoading();
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
             myMessageWindow.Show("חסרים שדות חובה ברמת הטיסה");
+            this.currentSession.StopBusyIndicator();
             return;
         }
         if(this._InCorrectDECToBatchSend == 0 && courierDeclarationStatusCode == "X"){
@@ -359,6 +361,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            this.currentSession.StopBusyIndicator();
             return;
         }
 

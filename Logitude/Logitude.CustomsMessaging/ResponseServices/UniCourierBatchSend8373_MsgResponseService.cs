@@ -142,12 +142,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeclarationId = itemPM.DeclarationId,
                 Tenant = itemPM.Tenant,
                 LoggingEntityId = itemPM.DeclarationId,
-                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
                 LoggingUserId = AuthenticationUtil.ResolveUserId(itemPM.Tenant),
-                RequestName = "Retrieve Import Declaration " + itemPM.DeclarationNumber,
-                ResponseName = "Retrieve Import Declaration " + itemPM.DeclarationNumber,
+                ResponseName = "9079",
                 RequestVIA = SendRequestVIA.WebServiceBatch,
                 InterfaceTypeCode = "8373",
+                AppicationId = itemPM.DeclarationId,
+                LoggingEnabled = true,
+                LoggingEntityReference = "I",
+                IsAngularClient = true,
             };
             if (isEffectiveFlight)
             {
