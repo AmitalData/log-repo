@@ -38,6 +38,10 @@ using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.Accounting.BL.CoreBL.InterestTrans;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit;
 using Logitude.BL.Security;
+using System.Data.SqlClient;
+using System.Data;
+using Logitude.Customs.BL.Helpers;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -609,7 +613,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             try
             {
-
+              var isJournalLineDelete = (from a in entityPM.JournalLines
+                                       where a.ChangeSetOp == ChangeSetOperation.Delete
+                                       select a).Any();
+                if (isJournalLineDelete)
+                {
+                    RunStoredProcedureClass.UpdateJouranlLinesLineNumber(entityPM.Id, entityPM.Tenant);
+                }
 
                 if (entityPM.StatusCode == "6"  //== "2") //Pending Approval  
                     && string.IsNullOrWhiteSpace(entityPM.QueueId))
@@ -642,6 +652,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
         }
+       
         private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
         {
             if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved)
@@ -650,7 +661,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CreateJournalAdditionalDataForARInvoiceJournal(journal);
             }
         }
-
+        
         private void CreateJournalAdditionalDataForARInvoiceJournal(JournalPM journal)
         {
             if (journal.AccountingEntityCode == JournalAccountingEntities.ARInvoice && (String.IsNullOrEmpty(journal.ExternalSystem) || journal.ExternalSystem != "AMITAL"))
@@ -740,6 +751,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
+      
 
 
 
@@ -836,6 +848,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //repo.GetByJournalId(_JornalPmSource.Id, _JornalPmSource.Tenant);
             return true;
         }
+
+
+
 
     }
 
