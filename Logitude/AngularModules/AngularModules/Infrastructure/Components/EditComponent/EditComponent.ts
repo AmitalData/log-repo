@@ -1741,8 +1741,6 @@ export class EditComponent implements OnDestroy {
             [ShippingAgentPM, 'ShippingAgent'],
             [CustomAgentPM, 'CustomAgent'],
             [CustomerPM, 'Customer'],
-            [ContactPM, 'Contact'],
-            [AddressPM, 'Address'],
             [AccountingPartnerPM, 'AccountingPartner'],
             [TruckerPM, 'Trucker'],
             [ShippingLinePM, 'ShippingLine'],
