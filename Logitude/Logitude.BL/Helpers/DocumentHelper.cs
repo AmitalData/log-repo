@@ -857,6 +857,7 @@ namespace Logitude.BL.Helpers
 
         public bool CheckPDFInvoiceInStorage(string documentOutId, int tenant, FullAccountingSettingPM accountingSettings)
         {
+
             bool rv = false;
 
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
