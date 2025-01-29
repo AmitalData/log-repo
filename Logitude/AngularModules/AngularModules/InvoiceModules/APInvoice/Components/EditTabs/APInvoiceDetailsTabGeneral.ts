@@ -277,9 +277,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.UIProperties.SetRequired("VATNumber", this.ObjectTableName, isRequired);
     }
 
-    public RateIsEnabled: boolean = false;
+
+    public RateIsEnabled: boolean = true;
     SetUIProperties_ExchangeRate() {
-        var isEnabled: boolean = false;
+        var isEnabled: boolean = true;
 
         if (this.IsScreenEnabled) {
             if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
