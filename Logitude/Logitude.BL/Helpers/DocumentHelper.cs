@@ -405,6 +405,7 @@ namespace Logitude.BL.Helpers
         }
         public void SendSignInterestInvoices(string[] selectedList ,int tenant)
         {
+
             ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             ARInvoiceRepository repository = new ARInvoiceRepository();
             DocumentRepository documentRepository = new DocumentRepository(commoncontext);
