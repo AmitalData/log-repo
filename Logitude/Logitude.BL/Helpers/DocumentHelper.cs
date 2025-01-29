@@ -424,6 +424,10 @@ namespace Logitude.BL.Helpers
 
 
         private void HSMSignatureSucceeded(ARInvoice invocie, ARInvoiceRepository repository,string contactEmail,Document document,string  DocumentFilingId ,FullAccountingSettingPM accountingSettings)
+            bool rv = false;
+             
+
+            try
         {
 
             invocie.IsSigned = "1";
