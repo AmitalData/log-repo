@@ -413,22 +413,76 @@ namespace Logitude.BL.Helpers
             }
         }
 
-        private void HSMSignatureFailed(ARInvoice invocie,HSMException ex, ARInvoiceRepository repository)
+
+        public bool CheckPDFInvoiceInStorage_Inner(ARInvoice invocie, int tenant, ARInvoiceRepository repository, string contactEmail, FullAccountingSettingPM accountingSettings)
         {
-           invocie.IsSigned = "2";//FALID
+            bool rv = false;
+
+
+            try
+            {
+
+                ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+
+                DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+                DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
+                DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+                DocumentOutCopyQuery DocumentOutCopyQuery = new DocumentOutCopyQuery(tenant);
+
+
+                TenantRepository tenantRepository = new TenantRepository(tenant);
+                DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invocie.Id, tenant).FirstOrDefault();
+                DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings.Id, tenant, "999G");
+                Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
+                ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+                var vatNumber = tenantRepository.GetSingleByTenant(tenant).VatNumber;
+
+                if (document != null)
+                {
+                    Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = document.Id,
+                        FolderName = document.Folder,
+                        Extension = document.Extension,
+                        Tenant = tenant,
+                        FileSize = document.FileSize,
+                    };
+
+                    Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                    byte[] filedata = storageservice.Read(fileInfo);
+                    rv = (filedata != null);
+                    return rv;
+                }
+                else
+                {
+                    throw new ArgumentNullException("There is no document");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                APInvoiceHelper.AddCommunicationLog("F", invocie, ex.Message, "ARInvoice", invocie.Id, "Check PDF Invoice In Storage Failed", tenant);
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "CheckPDFInvoiceInStorage", "", null);
+                return false;
+
+            }
+        }
+
+        private void HSMSignatureFailed(ARInvoice invocie, HSMException ex, ARInvoiceRepository repository)
+        {
+            invocie.IsSigned = "2";//FALID
             repository.Update(invocie);
             repository.SubmitChanges();
-             this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה"+ ex);
-            this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex, invocie.Tenant, invocie.Id);
+            this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה" + ex);
+            this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " + ex, invocie.Tenant, invocie.Id);
         }
 
 
         private void HSMSignatureSucceeded(ARInvoice invocie, ARInvoiceRepository repository,string contactEmail,Document document,string  DocumentFilingId ,FullAccountingSettingPM accountingSettings)
-            bool rv = false;
-             
+        { 
 
-            try
-        {
 
             invocie.IsSigned = "1";
             repository.Update(invocie);
