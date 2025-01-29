@@ -248,18 +248,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var fullAccountingSettings = settingQueryService.GetSingleFullAccountingSetting(tenant);
 
             // Reconciled / in progress Ledger Transaction Lines linked to this TaxReport
-           var reconciledLTLines = (from line in context.TaxReportLines
-                                                   join ledger in context.LedgerTransactions on line.JournalId equals ledger.JournalId
-                                                   where line.OutputOrInput == TaxReportLineOutType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == fullAccountingSettings.VATOutputGLAccountId
-                                                        //  && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-                                                            && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-                                                         select ledger).Union(
-                                            from line in context.TaxReportLines
-                                            join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
-                                            where line.OutputOrInput == TaxReportLineInputType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == fullAccountingSettings.VATInputsGLAccountId
-                                                //   && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-                                                     && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-                                            select ledger);
+            var reconciledLTLines = (from line in context.TaxReportLines
+                                     join ledger in context.LedgerTransactions on line.JournalId equals ledger.JournalId
+                                     where line.OutputOrInput == TaxReportLineOutType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == fullAccountingSettings.VATOutputGLAccountId
+                                              //  && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                              && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                     select ledger).Union(
+                                             from line in context.TaxReportLines
+                                             join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
+                                             where line.OutputOrInput == TaxReportLineInputType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == fullAccountingSettings.VATInputsGLAccountId
+                                                      //   && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                                      && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                             select ledger);
 
             // Reconciliation Lines of the reconciledLTLines
             var ourRecoLines = (from ledger in reconciledLTLines
