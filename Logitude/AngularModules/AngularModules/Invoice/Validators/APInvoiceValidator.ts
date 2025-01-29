@@ -43,9 +43,9 @@ export class APInvoiceValidator {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ConfirmationNumber) && (this.EntityPM.ConfirmationNumber.length < 9 || this.EntityPM.ConfirmationNumber.length > 30)) {
             this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.ConfirmationNumberLength"));
         }
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && entityPM.VendorCountry === "ISRAEL") {
             if (AppTool.IsNullOrEmpty(entityPM.VATNumber)) {
-                this.Errors.push(this.message.replace("%FieldName", "Vat Number"));
+                this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VATNumber")));
             }
         }
 
