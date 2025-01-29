@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                                 CustomsItemID = reader["CustomsItemID"] != DBNull.Value ? (int)reader["CustomsItemID"] : 0,
                                 ID = reader["ID"] != DBNull.Value ? (int)reader["ID"] : 0,
                                 RequirementValidOrigin = reader["RequirementValidOrigin"] != DBNull.Value ? (string)reader["RequirementValidOrigin"] : null,
-                                FromEpisodeDetail = reader["Fullclassification"] != DBNull.Value ? (string)reader["Fullclassification"] : null,
+                                FromEpisodeDetail = reader["Fullclassification"] != DBNull.Value ? (string)reader["Fullclassification"] : null, 
                                 RequirementGoodsDescription = reader["RequirementGoodsDescription"] != DBNull.Value ? (string)reader["RequirementGoodsDescription"] : null,
                                 Authority = reader["Authority"] != DBNull.Value ? (string)reader["Authority"] : null,
                                 ConfirmationType = reader["ConfirmationType"] != DBNull.Value ? (string)reader["ConfirmationType"] : null,
