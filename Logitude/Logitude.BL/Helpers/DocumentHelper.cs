@@ -387,6 +387,7 @@ namespace Logitude.BL.Helpers
         public bool CheckPDFInvoiceInStorage_Inner(ARInvoice invocie, int tenant, ARInvoiceRepository repository, string contactEmail, FullAccountingSettingPM accountingSettings)
         {
             bool rv = false;
+             
 
             try
             {
