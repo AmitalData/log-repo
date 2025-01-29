@@ -240,20 +240,24 @@ namespace Simplog.Server.Infrastructure
         }
         private void InitLog()
         {
-            base.Database.Log = delegate (string s)
+#if DEBUG
+            if (System.Diagnostics.Debugger.IsAttached) // Double-check that a debugger is active
             {
-                if (s == Environment.NewLine)
+                base.Database.Log = delegate (string s)
                 {
-                    return;
-                }
-                if (s.Contains("SELECT") || s.Contains("connection"))
-                {
-                    Debug.WriteLine(base.GetType().Name + " ***** " + base.Database.Connection.ConnectionString);
+                    if (s == Environment.NewLine)
+                    {
+                        return;
+                    }
+                    if (s.Contains("SELECT") || s.Contains("connection"))
+                    {
+                        Debug.WriteLine(base.GetType().Name + " ***** " + base.Database.Connection.ConnectionString);
+                    }
+                    Debug.WriteLine(s);
+                };
+            }
+#endif
 
-                }
-                //StackTrace st = new StackTrace(true);
-                Debug.WriteLine(s);
-            };
             //this.Database.Log += EnqueueLog;
             if (LogitudeSettings.DatabaseManagementSystem != "oracle")
             {
