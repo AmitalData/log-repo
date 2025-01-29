@@ -878,6 +878,37 @@ namespace Logitude.BL.Helpers
 
         }
 
+
+        public bool CheckPDFInvoiceInStorage(string documentOutId, int tenant, FullAccountingSettingPM accountingSettings)
+        {
+
+            bool rv = false;
+
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+            ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
+
+
+            var documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
+            ARInvoice invocie = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
+
+            if (invocie != null)
+            {
+                string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie.BillToId, tenant);
+                if (!string.IsNullOrEmpty(contactEmail))
+                {
+                    this.CreatePdfDoc(documentsFiling, invocie.Id, invocie.Tenant, "ARInvoice", true);
+                    if (this.isInterestReport && invocie.ARInvoiceTypeCode == "IT")
+                    {
+                        this.CreateDocumentInterestReport(invocie.Tenant, invocie.Id);
+                    }
+                   rv = this.CheckPDFInvoiceInStorage_Inner(invocie, invocie.Tenant, repository, contactEmail, accountingSettings);
+                }
+
+            }
+            return rv;
+
+        }
+
         private string IsSignatureHtmlPresentByBillToId(string Billto, int tenant)
         {
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
