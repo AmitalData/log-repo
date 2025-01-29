@@ -918,13 +918,14 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             oneLine.StatusCode = "6"; // Ready for transmit 
                         }
+
                         if (voidedLineNumbers.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
                             oneLine.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
                         }
 
                     }
-
+                }
                 else // no duplicates
                 {
                     foreach (var linePM in taxReportLines)
