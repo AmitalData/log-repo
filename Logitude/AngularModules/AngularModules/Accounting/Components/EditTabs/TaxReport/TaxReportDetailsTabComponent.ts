@@ -392,7 +392,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         //this.AllCount = lines.length;
 
         var lines = this.ReportLines.Collection;
-        this.errorsCount = lines.filter((d) => d.TaxReportLinePM.StatusCode != "6" && d.TaxReportLinePM.TransmitStatusCode == "1").length;
+        this.errorsCount = lines.filter((d) => d.TaxReportLinePM.StatusCode != "6" && (d.TaxReportLinePM.TransmitStatusCode == "1" && d.TaxReportLinePM.TransmitStatusCode == "4")).length;
         this.ShowErrorMsg = this.errorsCount > 0;
 
     }

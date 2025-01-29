@@ -462,6 +462,11 @@
       EnglishName="&quot;Without Transmit&quot;"
       LocalName="&quot;ללא סטטוס העברה&quot;"
       SearchFields="&quot;0,ללא סטטוס העברה,Without Transmit&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      EnglishName="&quot;Transmit even if Duplicate&quot;"
+      LocalName="&quot;לשדר למרות כפילות&quot;"
+      SearchFields="&quot;4,לשדר למרות כפילות,Transmit even if Duplicate&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

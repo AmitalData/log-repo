@@ -866,8 +866,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-                //    List<TaxReportLinePM> removeDupLines = new List<TaxReportLinePM>();
-
 
                 if (duplicates != null && duplicates.Count > 0)
                 {
@@ -904,36 +902,29 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                     }
 
-                    //       List<TaxReportLinePM> duplicateLines = new List<TaxReportLinePM>();
 
                     foreach (var oneLine in taxReportLines)
                     {
-                        if (all_dup_line_nos.Contains(oneLine.Line))
+                        if (all_dup_line_nos.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
-                            //  oneLine.ChangeSetOp = ChangeSetOperation.Update;
                             oneLine.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
-                            //   duplicateLines.Add(oneLine);
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
-                            //   oneLine.ChangeSetOp = ChangeSetOperation.Update;
-                            oneLine.StatusCode = "6";
-                            //    removeDupLines.Add(oneLine);
+                            oneLine.StatusCode = "6"; // Ready for transmit 
                         }
-                        if (voidedLineNumbers.Contains(oneLine.Line))
+
+                        else if (oneLine.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                        {
+                            oneLine.StatusCode = "6"; // Ready for transmit 
+                        }
+                        if (voidedLineNumbers.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
                             oneLine.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
                         }
+
                     }
 
-                    //   if (duplicateLines.Count > 0 || removeDupLines.Count > 0)
-                    //   {
-                    //  accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
-                    //  taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
-                    //  if (duplicateLines.Count > 0) taxReportLineUpdateService.UpdateMulti(duplicateLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                    //  if (removeDupLines.Count > 0) taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                    //   }
-                }
                 else // no duplicates
                 {
                     foreach (var linePM in taxReportLines)
@@ -941,15 +932,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
                             linePM.StatusCode = "6";
-                            //     removeDupLines.Add(linePM);
+                        }
+                        else if (linePM.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                        {
+                            linePM.StatusCode = "6"; // Ready for transmit 
                         }
                     }
-                    //      if (removeDupLines.Count > 0)
-                    //      {
-                    // accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
-                    // taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
-                    // taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                    //      }
 
                 }
 
@@ -1404,7 +1392,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     TaxReportLineListQueryService trLineQS = new TaxReportLineListQueryService(MyContext);
                     IQueryable<TaxReportLineList> linesIQ = trLineQS.GetReportLines(taxReport.Id, tenant);
-                    List<TaxReportLineList> lines = linesIQ.Where(a => a.TransmitStatusCode == "1").OrderBy(d => d.Line).ToList();
+                    List<TaxReportLineList> lines = linesIQ.Where(a => a.TransmitStatusCode == "1" || a.TransmitStatusCode == "4").OrderBy(d => d.Line).ToList();
 
                     foreach (TaxReportLineList lineList in lines)
                     {
@@ -1555,24 +1543,25 @@ namespace Logitude.Accounting.BL.CoreBL
                 var vatTypePrecentage = vatTypePM.VatTypePercentages.OrderByDescending(v => v.FromDate).First(v => v.FromDate <= maxDateInTaxMonth);
                 var precentage = vatTypePrecentage.Percentage.Value / 100;
                 // OUTPUT
-                taxReportPM.OutputTaxAmount = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
+                taxReportPM.OutputTaxAmount = outputLines.Where(d => (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate) &&
                                                                      d.VatAmount != 0).Sum(d => d.VatAmount);
                 var taxableOutputAmount = Math.Round(taxReportPM.OutputTaxAmount.Value / (decimal)precentage);
                 taxReportPM.TaxableOutputAmount = taxableOutputAmount;
 
+
                 taxReportPM.OutputTaxAmountRound = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
                                                                      d.VatAmountRound != 0).Sum(d => d.VatAmountRound);
-                taxReportPM.ExemptTaxableOutput = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Sum(d => d.TotalInvoiceAmount - d.VatableInvoiceAmount);
-                taxReportPM.OutputLinesCount = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Count();
+                taxReportPM.ExemptTaxableOutput = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate).Sum(d => d.TotalInvoiceAmount - d.VatableInvoiceAmount);
+                taxReportPM.OutputLinesCount = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate).Count();
 
                 // INPUTS
-                taxReportPM.InputsTaxAmountRound = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit
+                taxReportPM.InputsTaxAmountRound = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate
                                                                          ).Sum(d => d.VatAmountRound);
-                taxReportPM.OtherInputsTaxAmount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
+                taxReportPM.OtherInputsTaxAmount = inputLines.Where(d => (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate) &&
                                                                          d.IsEquipment == false).Sum(d => d.VatAmount);
-                taxReportPM.EquipmentInputsTaxAmount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
+                taxReportPM.EquipmentInputsTaxAmount = inputLines.Where(d => (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate) &&
                                                                              d.IsEquipment == true).Sum(d => d.VatAmount);
-                taxReportPM.InputLinesCount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Count();
+                taxReportPM.InputLinesCount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate).Count();
 
                 taxReportPM.AmountForPayRefund = taxReportPM.OutputTaxAmount - (taxReportPM.OtherInputsTaxAmount + taxReportPM.EquipmentInputsTaxAmount);
                 if (taxReportPM.AmountForPayRefund == null) taxReportPM.AmountForPayRefund = 0;
