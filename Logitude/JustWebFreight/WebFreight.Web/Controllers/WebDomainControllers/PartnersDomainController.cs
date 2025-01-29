@@ -1147,11 +1147,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 break;
                             }
                     }
-                    ICommonDataContext objectContext= CommonDataContext.GetContext(tenant);
-                    CardService entityQuery = new CardService(objectContext,tenant);
-                   var code= entityQuery.CheckIfVatNumberExists(args.PartnerTypeId, VatNumber, Code, tenant);
+                    string response = null;
+                    if (!string.IsNullOrEmpty(VatNumber))
+                    {
+                        ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+                        CardService entityQuery = new CardService(objectContext, tenant);
+                        response = entityQuery.CheckIfVatNumberExists(args.PartnerTypeId, VatNumber, Code, tenant);
+                    }
+                      
                     scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, code);
+                    return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
             }
 
