@@ -133,6 +133,10 @@ namespace WebFreight.Web.Helpers.ExcelReport
                     {
                         return typeof(AutomationTestReportDataProvider);
                     }
+                case "NAGER":
+                    {
+                        return typeof(NewAccountingAgingDataProvider);
+                    }
                 default:
                     return null;
             }
