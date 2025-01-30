@@ -243,9 +243,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<TaxReportReconciledLines> GetTaxReportReconciledLines(string taxReportId, int tenant)
         {
-            //var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
-            //             .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
-            //var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
             FullAccountingSettingQueryService settingQueryService = new FullAccountingSettingQueryService(tenant);
             var fullAccountingSettings = settingQueryService.GetSingleFullAccountingSetting(tenant);
 
@@ -253,7 +250,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var reconciledLTLines = (from line in context.TaxReportLines
                                      join ledger in context.LedgerTransactions on line.JournalId equals ledger.JournalId
                                      where line.OutputOrInput == TaxReportLineOutType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == fullAccountingSettings.VATOutputGLAccountId
-                                              //  && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
                                               && (line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || line.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
                                      select ledger).Union(
                                              from line in context.TaxReportLines
