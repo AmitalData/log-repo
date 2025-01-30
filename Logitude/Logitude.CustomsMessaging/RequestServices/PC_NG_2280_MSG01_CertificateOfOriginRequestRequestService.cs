@@ -190,8 +190,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					    {
 					    	ItemSerial = Convert.ToInt32(item1.ItemSerial),
 							ItemSerialSpecified = true,
-							ItemId = item1.ItemId,
-					    	OriginCriterion = item1.OriginCriterionCodeName,
+							// ItemId = item1.ItemId,
+							OriginCriterion = item1.OriginCriterionCodeName,
 					    	MarksAndNumbers = item1.MarksAndNumbers,
 					    	PackageQuantity = Convert.ToInt32(item1.PackageQuantity),
 							PackageQuantitySpecified = true,
@@ -202,6 +202,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					    	MeasureType = item1.MeasureType,
 					    
 					    };
+
+						if (!string.IsNullOrEmpty(item1.ItemId)) CertificateOfOriginRequestItemDetail.ItemId = item1.ItemId;
+						else CertificateOfOriginRequestItemDetail.ItemId = "";
+
 						CertificateOfOriginRequestItemDetailList.Add(CertificateOfOriginRequestItemDetail);
 					}
 					
@@ -255,7 +259,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					{
 						ItemSerial = Convert.ToInt32(item1.ItemSerial),
 						ItemSerialSpecified = true,
-						ItemId = item1.ItemId,
+						// ItemId = item1.ItemId,
 						OriginCriterion = item1.OriginCriterionCodeName,
 						MarksAndNumbers = item1.MarksAndNumbers,
 						PackageQuantity = Convert.ToInt32(item1.PackageQuantity),
@@ -268,7 +272,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 					};
 
-					CertificateOfOriginRequestItemDetailList.Add(CertificateOfOriginRequestItemDetail);
+                    if (!string.IsNullOrEmpty(item1.ItemId)) CertificateOfOriginRequestItemDetail.ItemId = item1.ItemId;
+                    else CertificateOfOriginRequestItemDetail.ItemId = "";
+
+                    CertificateOfOriginRequestItemDetailList.Add(CertificateOfOriginRequestItemDetail);
 				}
 			}
 			CertificateOfOriginInvoiceDetail.CertificateOfOriginRequestItemDetail = CertificateOfOriginRequestItemDetailList.ToArray();
