@@ -1860,14 +1860,14 @@ namespace WebFreight.Web.MetaDataUpdate
             }
 
         }
-        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false)
+        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false, int tenant=0)
         {
             try
             {
-                ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(0);
-                ObjectTableQuery objectTabelQuery = new ObjectTableQuery(0);
-                ObjectTableRepository objectTabelRepository = new ObjectTableRepository(0);
-                TextCodeQuery textCodeQuery = new TextCodeQuery(0);
+                ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(tenant);
+                ObjectTableQuery objectTabelQuery = new ObjectTableQuery(tenant);
+                ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+                TextCodeQuery textCodeQuery = new TextCodeQuery(tenant);
                 List<ObjectTable> ObjectTableList = null;
                 if (includeCustoms)
                 {

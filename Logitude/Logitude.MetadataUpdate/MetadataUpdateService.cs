@@ -4,6 +4,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -20,18 +21,54 @@ namespace Logitude.MetadataUpdate
 {
     public class MetadataUpdateService
     {
+
+        private Dictionary<int, string> _globalDBs = new Dictionary<int, string>();
         public void RunModulesUpdate(string moduleName)
         {
             try
             {
                 Console.WriteLine("Initializing Settings ...");
                 InitializeSettings();
-                TenantsUpdateClass.UpdateDataForTenant(0, moduleName);
-                Console.WriteLine("Updating all modules finished successfully");
-                Console.WriteLine("Building Object table zip files ...");
-                bool buildCustomsZipFiles = false;
-                TenantsUpdateClass.BuildObjectTablesZipFilesData(false, buildCustomsZipFiles);
-                Console.WriteLine("Building zip files finished successfully ...");
+                Dictionary<int, string> processedDBConnections = new Dictionary<int, string>();
+                foreach (var db in _globalDBs)
+                {
+                    int tenantId = db.Key;
+                    string globalDbId = db.Value;
+
+                    if (processedDBConnections.ContainsKey(tenantId))
+                    {
+                        continue;
+                    }
+
+                    var dbConnection = GlobalDbHelper.GetGlobalDB(tenantId);
+                    if(dbConnection == null)
+                    {
+                        Console.WriteLine($"DB {globalDbId} not found for tenant {tenantId}");
+                        continue;
+                    }
+                    if(dbConnection.IsActive == false)
+                    {
+                        Console.WriteLine($"DB {globalDbId} is not active for tenant {tenantId}");
+                        continue;
+                    }
+                    if (processedDBConnections.ContainsValue(dbConnection.DBConnection))
+                    {
+                        continue;
+                    }
+                    Console.WriteLine($"Updating module '{moduleName}' for Tenant {tenantId}, DB Connection: {dbConnection}");
+                    TenantsUpdateClass.UpdateDataForTenant(tenantId, moduleName);
+
+                    // 🔹 Call `BuildObjectTablesZipFilesData` for this unique DB connection
+                    Console.WriteLine($"Building Object table zip files for DB Connection: {dbConnection} ...");
+                    bool buildCustomsZipFiles = false;
+                    TenantsUpdateClass.BuildObjectTablesZipFilesData(false, buildCustomsZipFiles, tenantId);
+                    Console.WriteLine($"Building zip files finished for DB Connection: {dbConnection} ...");
+
+                    // 🔹 Store tenantId and DBConnection to avoid re-processing
+                    processedDBConnections.Add(tenantId, dbConnection.DBConnection);
+                }
+                Console.WriteLine("Updating all modules and building zip files finished successfully");
+
             }
             catch (Exception e)
             {
@@ -90,12 +127,12 @@ namespace Logitude.MetadataUpdate
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
             InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
-            Dictionary<int, string> globalDBs = new Dictionary<int, string>();
             List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
             foreach (var item in globalTenants)
             {
-                globalDBs.Add(item.Id, item.GlobalDBId);
+                _globalDBs.Add(item.Id, item.GlobalDBId);
             }
+
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache, globalDBs);
         }
 
