@@ -6143,7 +6143,7 @@
     QuerySection="&quot;LedgerTransaction&quot;"
     SystemLevel="true"
     IsAddNewEntity="false"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">

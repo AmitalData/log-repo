@@ -24,7 +24,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "cc39b1c8a714e9442beebda4ee218ae4";
+		public const string HashString = "35c2033e697f02c47397614c62be1302";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5304,7 +5304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode LedgerTransactionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.Q.LedgerTransactions", DefaultText = @"Ledger Transactions",LocalDefaultText = "תנועות", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature LedgerTransactionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LedgerTransaction.Q.LedgerTransactions", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransactionFeatures.LedgerTransactions", NameTextCodeDefaultText = "LedgerTransactions", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,LedgerTransactionObjectTable, addedFeatures, addedTextCodes);
+			   Feature LedgerTransactionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LedgerTransaction.Q.LedgerTransactions", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransactionFeatures.LedgerTransactions", NameTextCodeDefaultText = "LedgerTransactions", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LedgerTransactionObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    

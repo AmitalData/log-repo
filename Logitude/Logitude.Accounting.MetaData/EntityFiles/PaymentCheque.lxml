@@ -3826,7 +3826,7 @@
     QuerySection="&quot;PaymentCheque&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     QueryGroupName="&quot;PaymentCheque Query Group&quot;"

@@ -291,7 +291,7 @@ namespace Logitude.CustomsMessaging.Dca
                 sw.Restart();
 
 
-                var restoreWaitingImportService = new Restore9100.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA);
+                var restoreWaitingImportService = new Restore9100.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA, _AllDcaPreFixByEnvironment);
                 restoreWaitingImportService.RestoreWaitingImportSaveInDB();
 
                 sb.AppendLine($"RestoreWaitingImportSaveInDB({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
