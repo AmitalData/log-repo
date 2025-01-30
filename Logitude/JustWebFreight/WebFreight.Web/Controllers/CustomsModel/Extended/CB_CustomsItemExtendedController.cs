@@ -46,7 +46,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(0);
 
                 CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
-                List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainView(filters.CustomsBookType, filters.Tenant);
+                List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainView(filters.CustomsBookType, filters.Tenant, filters.IsDiscountCodes);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -72,7 +72,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainViewSearchByClassification(filters.CustomsBookType,
-                    filters.SearchFields, filters.Tenant);
+                    filters.SearchFields, filters.Tenant, filters.IsDiscountCodes);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -97,7 +97,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainViewSearchByText(filters.SearchFields,
-                    filters.CustomsBookType, filters.CustomsItemHierarchic, filters.Reamarks, filters.Rules, filters.Tenant);
+                    filters.CustomsBookType, filters.CustomsItemHierarchic, filters.Reamarks, filters.Rules, filters.Tenant, filters.IsDiscountCodes);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -370,6 +370,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         public string CustomsItemHierarchic { get; set; } = null;
         public bool Reamarks { get; set; } = false;
         public bool Rules { get; set; } = false;
+        public bool IsDiscountCodes { get; set; } = false;
 
     }
 }
