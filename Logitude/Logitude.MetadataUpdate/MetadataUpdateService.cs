@@ -133,7 +133,7 @@ namespace Logitude.MetadataUpdate
                 _globalDBs.Add(item.Id, item.GlobalDBId);
             }
 
-            CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache, globalDBs);
+            CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache, _globalDBs);
         }
 
         private string GetConnectionString()
