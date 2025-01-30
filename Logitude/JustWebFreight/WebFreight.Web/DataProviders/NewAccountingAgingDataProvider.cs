@@ -34,7 +34,6 @@ namespace WebFreight.Web.DataProviders
 
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
-        public string AccountName { get; set; }
         public string AccountDisplayNumber { get; set; }
         public string AccountPhone { get; set; }
         public string AccountCurrencyCode { get; set; }
@@ -87,6 +86,12 @@ namespace WebFreight.Web.DataProviders
         public string AccountContactName { get; set; }
         public string AccountContactEmail { get; set; }
         public string AccountContactPhone { get; set; }
+        public string CollectorId { get; set; }
+        public string SalesmanId { get; set; }
+        public string CurrencyId { get; set; }
+
+
+
 
     }
 

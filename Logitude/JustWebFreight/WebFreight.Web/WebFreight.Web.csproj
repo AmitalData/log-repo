@@ -6815,6 +6815,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AccountingDepositReportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\NewAgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ARinvoiceSequencesService.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\MonthlyBalancesLinesLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ControlForInvoiceLinesLoader.cs" />

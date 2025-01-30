@@ -1221,7 +1221,7 @@ namespace WebFreight.Web.Helpers
                     }
                 case "NAGER":
                     {
-                        dataProvider = logitudeReportsWebService.LoadAccountingAgingDataProvider(filters, reportFliter.tenant);
+                        dataProvider = logitudeReportsWebService.LoadAccountingNewAgingDataProvider(filters, reportFliter.tenant);
                         break;
                     }
                 case "OSBC":
