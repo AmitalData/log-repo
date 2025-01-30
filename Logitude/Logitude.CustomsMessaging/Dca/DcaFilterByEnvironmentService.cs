@@ -91,7 +91,7 @@ namespace Logitude.CustomsMessaging.Dca
                     break;
                 case DcaFilterByEnvironment.Export:
                     sbLocal.Append(";FilterBy:Contains(_EX_)");
-                    outgoingMessage = outgoingMessage.Where(r => r.Filename.Contains("_EX_") || PrefixExportEnvironment.Any(prefix => r.Filename.Contains(prefix))).ToList();
+                    outgoingMessage = outgoingMessage.Where(r => r.Filename.Contains("_EX_") || PrefixExportEnvironment.Any(prefix => r.Filename.ToUpper().Contains(prefix.ToUpper()))).ToList();
 
                     break;
                 case DcaFilterByEnvironment.Import:
