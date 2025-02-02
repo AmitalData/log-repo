@@ -36,6 +36,7 @@ import {SharedDocumentComponent} from './Components/SharedDocument/SharedDocumen
 import { DocumentsFilingGeneralTabComponent } from './Components/DocumentsFiling/DocumentsFilingGeneralTabComponent';
 import { DocumentDefultAttachmentsComponent } from './Components/DocumentComponent/DocumentDefultAttachmentsComponent';
 import { DocumentDefaultExternalAttachmentsComponent } from './Components/DocumentComponent/DocumentDefaultExternalAttachmentsComponent';
+import { NewDocumentsMetadataTypeComponent } from './Components/DocumentsMetadataType/NewDocumentsMetadataTypeComponent';
 
 
 
@@ -82,8 +83,8 @@ export const Components =
         SharedDocumentComponent,
         DocumentsFilingGeneralTabComponent,
         DocumentDefultAttachmentsComponent,
-        DocumentDefaultExternalAttachmentsComponent
-
+        DocumentDefaultExternalAttachmentsComponent,
+        NewDocumentsMetadataTypeComponent,
     ];
 
 export class ModuleDeclarations {
@@ -129,11 +130,7 @@ export class ModuleDeclarations {
             case "DocumentsFilingGeneralTabComponent": { myResult = DocumentsFilingGeneralTabComponent; break; }
             case "DocumentDefultAttachmentsComponent": { myResult = DocumentDefultAttachmentsComponent; break; }
             case "DocumentDefaultExternalAttachmentsComponent": { myResult = DocumentDefaultExternalAttachmentsComponent; break; }
-                 
-                
-
-
-
+            case "NewDocumentsMetadataTypeComponent": { myResult = NewDocumentsMetadataTypeComponent; break; }                 
         }
 
         return myResult;

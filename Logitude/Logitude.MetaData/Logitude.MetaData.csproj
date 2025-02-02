@@ -343,6 +343,7 @@
     <None Include="DBTables\ShipmentsModel\ShipmentReferance.dxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocumentsMetaDataType.lxml" />
     <None Include="EntityFiles\CommonDataModel\FreelancerGroupType.lxml" />
     <None Include="EntityFiles\CommonDataModel\Responsibility.lxml" />
     <None Include="EntityFiles\CommonDataModel\TruckerSetting.lxml" />

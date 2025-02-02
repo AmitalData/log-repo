@@ -19,44 +19,44 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Code"
+    Name="CODE"
     Type="varchar"
     Size="7">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="EnglishName"
+    Name="ENGLISHNAME"
     Type="varchar"
     Size="60">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
-    Name="LocalName"
+    Name="LOCALNAME"
     Type="nvarchar"
     Size="60">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="InActive"
+    Name="INACTIVE"
     Type="bit">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="CustomsMetaDataCode"
-    Type="nvarchar"
-    Size="6">
+    Name="FORMAT"
+    Type="varchar"
+    Size="20">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="Format"
-    Type="varchar"
+    Name="CUSTOMSMETADATACODE"
+    Type="nvarchar"
     Size="20">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
 </Table>

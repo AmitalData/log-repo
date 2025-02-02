@@ -9,8 +9,9 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 })
 export class DragDropFileInputComponent implements OnChanges {
   @Output() base64FileSelected = new EventEmitter<string>();
-  @Output() FilesSelected = new EventEmitter<FileList | File>();
+  @Output() filesSelected = new EventEmitter<FileList | File>();
   @Output() fileCleared = new EventEmitter<void>();
+  @Output() fileRotate = new EventEmitter<number>();
   @Input() width: number = 300;
   @Input() height: number = 410;
   @Input() input: Blob | File | string | null | FileList = null;
@@ -99,7 +100,7 @@ export class DragDropFileInputComponent implements OnChanges {
     
     if (!(file instanceof File) || !this.isFileExtensionAllowed(file)) return;
     
-    this.FilesSelected.emit(file as FileList | File);
+    this.filesSelected.emit(file as FileList | File);
     this.file = file;
     this.handleBlob(this.file, true);
   }
@@ -186,10 +187,12 @@ export class DragDropFileInputComponent implements OnChanges {
 
   rotateClockwise(): void {
     this.rotation += 90;
+    this.fileRotate.emit(this.rotation);
   }
-
+  
   rotateCounterClockwise(): void {
     this.rotation -= 90;
+    this.fileRotate.emit(this.rotation);
   }
 
   clearFile(): void {
