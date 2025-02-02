@@ -1457,16 +1457,16 @@ class JournalLineModel extends BaseComponent {
         this.SetForeignAmountEnabilityForSingleCurrencyAccount();
     }
     SetCurrencyForSingleAccount(account:GLAccountPM,actionCode1:string ,actionCode2:string) {
-        if (!account.IsMultiCurrency) {
-            if (this.ActionCode == actionCode1 || this.ActionCode == actionCode2) {
+        if (this.ActionCode == actionCode1 || this.ActionCode == actionCode2) {
+            if (!account.IsMultiCurrency) {
                 this.CurrencyId = account.CurrencyId;
                 this.CurrencyCode = account.CurrencyCode;
+                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+
+            } else {
+                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+
             }
-            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
-
-        } else {
-            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
-
         }
     }
     SetForeignAmountEnabilityForSingleCurrencyAccount() {
