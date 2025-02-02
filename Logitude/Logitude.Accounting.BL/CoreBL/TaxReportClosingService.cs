@@ -558,7 +558,8 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<TaxReportLine> GetTaxReportLines(string taxReportLineType)
         {
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-            return taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == taxReportLineType && d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).ToList();
+            return taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == taxReportLineType 
+            && (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)).ToList();
         }
 
         private List<LedgerTransaction> GetLedgerTransactionsForOutputTaxReportLines(List<TaxReportLine> taxReportLines)
