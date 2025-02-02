@@ -293,9 +293,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     checkDeclarationStatusBeforeSend() {
         const warningStatuses: string[] = ["8", "20", "36", "37"];
         if (this.EntityPM.RequestReasonCode == "1" && warningStatuses.includes(this.DecalarationData?.DeclarationStatusTypeCode)){
-            const msg = '** שם לב המטען יצא מהארץ יש לשקול האם נדרשת "הוספת תעודה בדיעבד " במקום "הוספת תעודה חדשה" **';
-            this.ValidationErrors.push(msg);
-            // this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.AttentionStatusCert"));
+            this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.AttentionStatusCert"));
         }
     }
 
