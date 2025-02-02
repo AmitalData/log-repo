@@ -52,7 +52,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreatedInTwoMonthsLogic, 
 	         OutputTaxAmountRound, 
 	         InputsTaxAmountRound, 
-	         ReconciliationsNumbers,
+	         ReconciliationsNumbers, 
+	         IsEdited,
 	      }
 
 
@@ -100,7 +101,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ClosingJournalNumber, 
 	         ClosingJournalId, 
 	         RecalculateData, 
-	         CanRecalculate,
+	         CanRecalculate, 
+	         IsEdited,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -257,6 +259,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciliationsNumbers))
             {
 				entityPOCO.ReconciliationsNumbers = entityPM.ReconciliationsNumbers;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsEdited))
+            {
+				entityPOCO.IsEdited = entityPM.IsEdited;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -420,6 +427,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ReconciliationsNumbers = entityPOCO.ReconciliationsNumbers;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsEdited))
+            {
+					entityPM.IsEdited = entityPOCO.IsEdited;
+            }
+
 		}
 
 		public void PMToOldPM(TaxReportPM entityPM, TaxReportPM oldEntityPM)
@@ -574,6 +586,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciliationsNumbers))
             {
                 oldEntityPM.ReconciliationsNumbers = entityPM.ReconciliationsNumbers;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsEdited))
+            {
+                oldEntityPM.IsEdited = entityPM.IsEdited;
             }
 			
 		}
