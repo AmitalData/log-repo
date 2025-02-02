@@ -1,0 +1,11 @@
+<Script DBType="Main" Module="Accounting" AOT="false" TargetTableName="GLAccounts" Env="local,test,cloud">
+	<Sql Version="1">
+		<![CDATA[
+			CREATE NONCLUSTERED INDEX [PIX_GLAccounts_ChartOfAccountsTypeCode] ON [dbo].[GLAccounts]
+			(
+				[ChartOfAccountsTypeCode] ASC
+			)
+			INCLUDE ( 	[Tenant]) WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF) ON [PRIMARY]
+    ]]>       
+  </Sql>
+</Script>
