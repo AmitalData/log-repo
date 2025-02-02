@@ -290,6 +290,15 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         }
     }
 
+    checkDeclarationStatusBeforeSend() {
+        const warningStatuses: string[] = ["8", "20", "36", "37"];
+        if (this.EntityPM.RequestReasonCode == "1" && warningStatuses.includes(this.DecalarationData?.DeclarationStatusTypeCode)){
+            const msg = '** שם לב המטען יצא מהארץ יש לשקול האם נדרשת "הוספת תעודה בדיעבד " במקום "הוספת תעודה חדשה" **';
+            this.ValidationErrors.push(msg);
+            // this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.AttentionStatusCert"));
+        }
+    }
+
     SaveAndSendClick(customSendOptionsArgs: any = null) {
         if ((!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) && ((this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14"))) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
@@ -370,7 +379,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     ValidationErrors = [];
     GeneralValidationErrors = [];
     MoreDataValidationErrors = [];
-    
+
     originCriterionListService: OriginCriterionListService = new OriginCriterionListService();
     private _length;
 
@@ -390,18 +399,19 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
 
     async SendButtonClicked(customSendOptionsArgs: any) {
-        
         this.ValidationErrors = [];
         this.GeneralValidationErrors = [];
         this.MoreDataValidationErrors = [];
         this._length = 0;
+        this.checkDeclarationStatusBeforeSend();
+
         this.getOriginCriterionCodesByCooTypeCode().toPromise().then(() => {
-           
-           if (this._length > 0 && this.EntityPM?.CertificateOriginItemItems.some(x => AppTool.IsNullOrUndefined(x?.OriginCriterionCode) === true)) {
+
+            if (this._length > 0 && this.EntityPM?.CertificateOriginItemItems.some(x => AppTool.IsNullOrUndefined(x?.OriginCriterionCode) === true)) {
                 this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.OriginCriterionCodeRequired"));
             }
         }).then(() => {
- 
+
             if (AppTool.IsNullOrEmpty(this.DecalarationData.DeclarationNumber)) {
                 this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotDeclaration"));
             }
@@ -410,17 +420,17 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 this.checkRequestReasonCode();
                 if (this.SelectedTabCode == "GENERAL") {
                     this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
-    
+
                     this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors);
                 }
                 else if (this.SelectedTabCode == "MOREDATA") {
                     this.GeneralValidationErrors = this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
                     this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
-    
+
                     this.ValidationErrors = this.ValidationErrors.concat(this.GeneralValidationErrors)
                         .concat(this.MoreDataValidationErrors);
                 }
-    
+
                 // check duplicates items: 
                 if (this.ValidationErrors.length > 0) {
                     this.ValidationErrors = Array.from(new Set(this.ValidationErrors));
@@ -437,7 +447,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             }
         }
         );
-        
+
 
         // var generalScreen = "כללי";
         // var moreDataScreen = "נוספים";
