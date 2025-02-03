@@ -109,6 +109,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         #endregion
 
+        DeclarationPM declarationPMBeforeDelete;
         public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept = false, bool isCopy = false, bool? isDCA = false)
         {
             error = "";
@@ -317,8 +318,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
 
                     declarationPM = myQueryService.GetSingle(idOrg, true, false);
-
-
+                    declarationPMBeforeDelete = declarationPM;
                     //if(isUpdateAfterAccept)
                     //{
 
@@ -1321,7 +1321,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (governmentAgencyGoodsItem.DMExtensions.OptionalTama != null) supplierInvoiceItemPM.OptionalTamaPercentage = governmentAgencyGoodsItem.DMExtensions.OptionalTama.Value;
 
 
-                        if (isFromImporter)
+                        if (isFromImporter || !_isUpdateAfterAccept) //OPEN NEW AMENDMENT BY USER  OR OPEN BY CUSTOMS
                         {
                             SupplierInvoiceItemVehicleQueryService supplierInvoiceItemVehicleQueryService = new SupplierInvoiceItemVehicleQueryService(context);
 
@@ -1355,9 +1355,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                         }
-                        else
+                        else // ACCEPT BY CUSTOMS - GET FROM CUREENT DECLARATION BEFORE DELETE SUPPLIERINVOICES
                         {
-                            supplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehicles(governmentAgencyGoodsItem, declaration, declarationId, tenant);
+                            //supplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehicles(governmentAgencyGoodsItem, declaration, declarationId, tenant);
+                            var supplierInvoice = declarationPMBeforeDelete.SupplierInvoices.FirstOrDefault(si => si.SupplierInvoiceItems.Any(sii => sii.DeclarationId == supplierInvoiceItemPM.DeclarationId && sii.ClassificationCode == supplierInvoiceItemPM.ClassificationCode));
+                            supplierInvoiceItemPM.SupplierInvoiceItemVehicles = supplierInvoice?.SupplierInvoiceItems.FirstOrDefault(sii => sii.DeclarationId == supplierInvoiceItemPM.DeclarationId && sii.ClassificationCode == supplierInvoiceItemPM.ClassificationCode)?.SupplierInvoiceItemVehicles;
+
+                            // update suplierInvoiceItemVehicleadds table also by the supplierInvoiceItemPM.SupplierInvoiceItemVehicles:
+                            //supplierInvoiceItemVehicle.SupplierInvoiceItemVehicleAdds = GetSupplierInvoiceItemVehicleAdds(vehicle, supplierInvoiceItemVehiclePM, supplierInvoiceItemPM, supplierInvoiceItemVehiclePMList);
+
+
                         }
                     }
                     supplierInvoiceItemPM.SalesTaxExemptionTypeCode = GetValueCodeType(governmentAgencyGoodsItem.DMExtensions.SalesTaxExemptionType);
