@@ -146,7 +146,6 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
             return "0";
         }
-
     }
 
     //public class CacheWrapper:ICacheWrapper
