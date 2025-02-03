@@ -40,8 +40,6 @@ using System.ComponentModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
-using Microsoft.VisualBasic;
-using System.Web;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
