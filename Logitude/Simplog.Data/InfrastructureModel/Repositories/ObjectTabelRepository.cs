@@ -230,16 +230,17 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             throw new NotImplementedException();
         }
 
-        public static string GetObjectTableByName(string objectTableName)
+        public static string GetObjectTableByName(string objectTableName,int contextTenant=0)
         {
             if (String.IsNullOrWhiteSpace(objectTableName)) return "";//not must 
-            var objectTableRepository = new ObjectTableRepository(0); // ObjectTabelRepository tenant must be zero !!
+            var objectTableRepository = new ObjectTableRepository(contextTenant); // ObjectTabelRepository tenant must be zero !!
             var objectTable = objectTableRepository.GetObjectTableByName(objectTableName,// "Customs.PhysicalCheck", 
                 0, true);
             if(objectTable!=null)
             return objectTable.Id;
             return null;
         }
+      
 
         public static ObjectTable GetSingleObjectTableById(string id, int tenant)
         {

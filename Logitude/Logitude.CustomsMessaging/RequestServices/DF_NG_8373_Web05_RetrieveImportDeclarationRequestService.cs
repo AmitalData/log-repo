@@ -26,7 +26,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             };
 
             this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration",requestParams.Tenant);
             this.MyRequestSheetParam.EntityId1 = requestParams.DeclarationId;
             this.MyRequestSheetParam.CustomFileNo = requestParams.CustomsFile;
             this.MyRequestSheetParam.RequestDescription = "שאילתא לשחזור נתוני הצהרה";
