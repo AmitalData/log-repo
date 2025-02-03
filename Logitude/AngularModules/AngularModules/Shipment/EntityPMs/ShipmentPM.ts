@@ -5628,9 +5628,9 @@ export class ShipmentPM {
     public set LockerName(newValue: string) { if (this.lockerName != newValue) { this.lockerName = newValue; this.MarkAsDirty("LockerName"); } }
        
 	 
-    private LockerCity: string;
-    public get LockerCity() { return this.LockerCity; }
-    public set LockerCity(newValue: Date) { if (this.LockerCity != newValue) { this.LockerCity = newValue; this.MarkAsDirty("LockerCity"); } }
+    private lockerCity: string;
+    public get LockerCity() { return this.lockerCity; }
+    public set LockerCity(newValue: string) { if (this.lockerCity != newValue) { this.lockerCity = newValue; this.MarkAsDirty("LockerCity"); } }
        
     public OldEntityPM: ShipmentPM;
 
