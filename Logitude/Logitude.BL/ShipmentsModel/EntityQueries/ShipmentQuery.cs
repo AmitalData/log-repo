@@ -2724,6 +2724,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.PickupPlace = shipment.PickupPlace;
             shipmentPM.SealNo = shipment.SealNo;
             shipmentPM.HSCode = shipment.HSCode;
+            shipmentPM.LockerAddress = shipment.LockerAddress;
+            shipmentPM.LockerName = shipment.LockerName;
+            shipmentPM.LockerCity = shipment.LockerCity;
+            shipmentPM.LockerCode = shipment.LockerCode;
+
             //ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             //returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
@@ -5379,6 +5384,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         PickupPlace = s.PickupPlace,
                                                         SealNo = s.SealNo,
                                                         HSCode = s.HSCode,
+                                                        LockerAddress=s.LockerAddress,
+                                                        LockerName = s.LockerName,
+                                                        LockerCity = s.LockerCity,
+                                                        LockerCode = s.LockerCode,
                                                     };
 
             List<ShipmentPM> securedShipmentPMs = new List<ShipmentPM>();
@@ -12916,6 +12925,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          PickupPlace = s.PickupPlace,
                                                          SealNo = s.SealNo,
                                                          HSCode = s.HSCode,
+                                                         LockerAddress = s.LockerAddress,
+                                                         LockerName = s.LockerName,
+                                                         LockerCity = s.LockerCity,
+                                                         LockerCode = s.LockerCode,
+
                                                      };
 
             return shipmentsList;
@@ -15768,6 +15782,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          PickupPlace = s.PickupPlace,
                                                          SealNo = s.SealNo,
                                                          HSCode = s.HSCode,
+                                                         LockerAddress = s.LockerAddress,
+                                                         LockerName = s.LockerName,
+                                                         LockerCity = s.LockerCity,
+                                                         LockerCode = s.LockerCode,
+
                                                      };
 
             return shipmentsList;

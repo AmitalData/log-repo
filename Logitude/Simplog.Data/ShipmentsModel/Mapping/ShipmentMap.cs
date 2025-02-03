@@ -320,6 +320,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WarehouseLeg2Remarks).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.WarehouseLeg2TerminalCode).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.WarehouseLeg2Reference).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.LockerAddress).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.LockerName).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.LockerCode).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.LockerCity).HasMaxLength(1000).IsUnicode(false);
+
             if (dbms == "oracle")
             {
                 this.Property(t => t.LastSharedEventNotes).HasMaxLength(2000).IsUnicode(true);
@@ -829,7 +834,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PODReceivedDate).HasColumnName("PODReceivedDate");
             this.Property(t => t.IsShipmentOrder).HasColumnName("IsShipmentOrder");
             this.Property(t => t.QuoteFreightExpirationDate).HasColumnName("QuoteFreightExpirationDate");
-            
+            this.Property(t => t.LockerCity).HasColumnName("LockerCity");
+            this.Property(t => t.LockerCode).HasColumnName("LockerCode");
+            this.Property(t => t.LockerName).HasColumnName("LockerName");
+            this.Property(t => t.LockerAddress).HasColumnName("LockerAddress");
+
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
