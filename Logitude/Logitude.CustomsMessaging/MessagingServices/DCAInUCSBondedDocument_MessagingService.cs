@@ -672,6 +672,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     });
                     customsDocumentPM.IsSendToQueue = true;
                     myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+                    customsDocumentPM.IsCustomSendTime = true;
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({DocumentsFilingPMId})");
 
