@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Simplog.Server.Infrastructure.Helpers
 {
@@ -68,6 +69,21 @@ namespace Simplog.Server.Infrastructure.Helpers
             int tenant = string.IsNullOrEmpty(tenantValue) ? 0 : Convert.ToInt32(tenantValue);
             return tenant;
         }
+
+        public static int GetCurrentTenant()
+        {
+            var tenant = -1;
+            if (HttpContext.Current != null && HttpContext.Current.Items.Contains("Tenant"))
+            {
+                tenant = Convert.ToInt32(HttpContext.Current.Items["Tenant"]);
+            }
+            else
+            {
+                tenant = GetTenantDBFromConfig();
+            }
+            return tenant;
+        }
+
         //private const string _CustomsDeploymentStage = "CustomsDeploymentStage";
         //public enum CustomsDeploymentStage
         //{

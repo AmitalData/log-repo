@@ -233,7 +233,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public static string GetObjectTableByName(string objectTableName)
         {
             if (String.IsNullOrWhiteSpace(objectTableName)) return "";//not must 
-            var objectTableRepository = new ObjectTableRepository(0); // ObjectTabelRepository tenant must be zero !!
+            int tenant = SettingUtil.GetCurrentTenant();
+            var objectTableRepository = new ObjectTableRepository(tenant); // ObjectTabelRepository tenant must be zero !!
             var objectTable = objectTableRepository.GetObjectTableByName(objectTableName,// "Customs.PhysicalCheck", 
                 0, true);
             if(objectTable!=null)

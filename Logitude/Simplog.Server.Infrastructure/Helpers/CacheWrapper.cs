@@ -138,14 +138,7 @@ namespace Simplog.Server.Infrastructure.Helpers
         {
             if (tenant == -1)
             {
-
-                if (HttpContext.Current != null && HttpContext.Current.Items.Contains("Tenant"))
-                {
-                    tenant = Convert.ToInt32(HttpContext.Current.Items["Tenant"]);
-                }
-                else {
-                    tenant = SettingUtil.GetTenantDBFromConfig();
-                }
+               SettingUtil.GetCurrentTenant();
             }
             if (GlobalDBs.ContainsKey(tenant))
             {
