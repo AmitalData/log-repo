@@ -5513,6 +5513,26 @@ export class ShipmentPM {
     public set Weight4(newValue: number) { if (this.weight4 != newValue) { this.weight4 = newValue; this.MarkAsDirty("Weight4"); } }
 
 
+    private lockerCode: string;
+    public get LockerCode() { return this.lockerCode; }
+    public set LockerCode(newValue: string) { if (this.lockerCode != newValue) { this.lockerCode = newValue; this.MarkAsDirty("LockerCode"); } }
+       
+	 
+    private lockerAddress: string;
+    public get LockerAddress() { return this.lockerAddress; }
+    public set LockerAddress(newValue: string) { if (this.lockerAddress != newValue) { this.lockerAddress = newValue; this.MarkAsDirty("LockerAddress"); } }
+       
+	 
+    private lockerName: string;
+    public get LockerName() { return this.lockerName; }
+    public set LockerName(newValue: string) { if (this.lockerName != newValue) { this.lockerName = newValue; this.MarkAsDirty("LockerName"); } }
+       
+	 
+    private LockerCity: string;
+    public get LockerCity() { return this.LockerCity; }
+    public set LockerCity(newValue: Date) { if (this.LockerCity != newValue) { this.LockerCity = newValue; this.MarkAsDirty("LockerCity"); } }
+       
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
