@@ -277,32 +277,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 return;
             }
-
             var interfaceCode = this.MainInterfaceCode;//may raise NotImplementedException
-            var interfaceTypeQueryService = new InterfaceManagementQueryService(SettingUtil.GetCurrentTenant());
+            int tenant = SettingUtil.GetCurrentTenant();
+            var interfaceTypeQueryService = new InterfaceManagementQueryService(tenant);
             _MainMessageDefinition = interfaceTypeQueryService.GetSingle(interfaceCode, false, true);
         }
 
-        private string GetDB(int tenant)
-        {
-            if (tenant == -1)
-            {
-
-                if (HttpContext.Current != null && HttpContext.Current.Items.Contains("Tenant"))
-                {
-                    tenant = Convert.ToInt32(HttpContext.Current.Items["Tenant"]);
-                }
-                else
-                {
-                    tenant = SettingUtil.GetTenantDBFromConfig();
-                }
-            }
-            if (GlobalDBs.ContainsKey(tenant))
-            {
-                return GlobalDBs[tenant];
-            }
-            return "0";
-        }
+        
 
 
         private void DoPreCallWSCompleteTrans(TRequestParams requestParams, TCustomsRequest customsRequest)

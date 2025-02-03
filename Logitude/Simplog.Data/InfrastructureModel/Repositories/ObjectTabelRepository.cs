@@ -241,7 +241,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return objectTable.Id;
             return null;
         }
-      
 
         public static ObjectTable GetSingleObjectTableById(string id, int tenant)
         {
