@@ -142,6 +142,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         private static GlobalDB GetByGlobalTenant(int tenant)
         {
+            tenant = SettingUtil.GetCurrentTenant();
             GlobalDB db;
             IGlobalContext context = GlobalContext.GetContext();
 
@@ -217,9 +218,11 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         private static GlobalDB GetGlobalDbFromEnviroment()
         {
+            var tenant = SettingUtil.GetCurrentTenant();
+
             return new GlobalDB()
             {
-                Id = "0",
+                Id = tenant.ToString(),
                 DBConnection = ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString,
                 IsUpgrading = false,
                 IsActive = true,
