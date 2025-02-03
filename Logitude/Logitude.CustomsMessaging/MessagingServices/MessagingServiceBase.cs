@@ -40,6 +40,8 @@ using System.ComponentModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Microsoft.VisualBasic;
+using System.Web;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -191,7 +193,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             
             Stopwatch totalStopwatch = null;
 
-            InitDef(requestParams.Tenant);
+            InitDef();
             this.RequestParams = requestParams;
             if (customsRequestCalc == null)
             {
@@ -269,7 +271,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
         }
 
-        private void InitDef(int tenant=0)
+        private void InitDef()
         {
             if (_MainMessageDefinition != null)
             {
@@ -277,11 +279,30 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
             var interfaceCode = this.MainInterfaceCode;//may raise NotImplementedException
-            var interfaceTypeQueryService = new InterfaceManagementQueryService(tenant);
+            var interfaceTypeQueryService = new InterfaceManagementQueryService(SettingUtil.GetCurrentTenant());
             _MainMessageDefinition = interfaceTypeQueryService.GetSingle(interfaceCode, false, true);
         }
 
+        private string GetDB(int tenant)
+        {
+            if (tenant == -1)
+            {
 
+                if (HttpContext.Current != null && HttpContext.Current.Items.Contains("Tenant"))
+                {
+                    tenant = Convert.ToInt32(HttpContext.Current.Items["Tenant"]);
+                }
+                else
+                {
+                    tenant = SettingUtil.GetTenantDBFromConfig();
+                }
+            }
+            if (GlobalDBs.ContainsKey(tenant))
+            {
+                return GlobalDBs[tenant];
+            }
+            return "0";
+        }
 
 
         private void DoPreCallWSCompleteTrans(TRequestParams requestParams, TCustomsRequest customsRequest)
