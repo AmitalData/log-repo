@@ -3281,6 +3281,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsEdited&quot;"
     ListPropertyPath="&quot;IsEdited&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3725,6 +3726,12 @@
       Code="&quot;TaxReport.O.DefaultDifferencesGLAccountIdIsNull&quot;"
       DefaultText="&quot;AccountingSettings - DefaultDifferencesGLAccountId is null&quot;"
       LocalDefaultText="&quot;הגדרות הנהלת חשבונות - לא מוזן ערך בכרטיס ברירת מחדל להפרשים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.ReportIsEdited&quot;"
+      DefaultText="&quot;Report in editing - needs to be rebuilt&quot;"
+      LocalDefaultText="&quot;דוח בעריכה - יש לבצע בניה מחדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -35,6 +35,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
             List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(taxReportPM, parameterArgs.Tenant,parameterArgs.RecalculateData);
             TaxReportService.CalculateReportTotals(taxReportPM, lines);
+            taxReportPM.IsEdited = false;
             taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
             taxReportUpdateService.Update(taxReportPM, true);
         }
