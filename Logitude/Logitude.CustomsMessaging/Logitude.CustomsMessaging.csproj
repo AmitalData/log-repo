@@ -529,6 +529,7 @@
     <Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\LG_NG_8410_LogisticActionRequestMessageResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchApproveAllPending_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend8373_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendAC_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniExportDeclarationBatchPayment2755E_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniExportDeclarationBatchSend2751_MsgResponseService.cs" />
