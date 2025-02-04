@@ -42,7 +42,7 @@
             <div class="GeneratedGridContainer" style="width: 100% ;height:100%;">
                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ContainerizationDeclarationList">
                     <log-column [header]="'Customs.Containerization.O.CreateDateDec' | TextCodeTranslationPipe"
-                        [width]="'80'" [Alignment]="'right'" [binding]="'ContainerizationDate'">
+                        [width]="'120'" [Alignment]="'right'" [binding]="'ContainerizationDate'">
                         <ng-template let-item>
                             <div (click)="rowClicked(item)">
                                 <log-cell-template #logcelltemplate>
@@ -54,7 +54,7 @@
                         </ng-template>
                     </log-column>
                     <log-column [header]="'Customs.Containerization.F.CargoTypeCode' | TextCodeTranslationPipe"
-                        [width]="'80'" [Alignment]="'right'" [binding]="'CargoTypeCode'">
+                        [width]="'100'" [Alignment]="'right'" [binding]="'CargoTypeCode'">
                         <ng-template let-item>
                             <div (click)="rowClicked(item)">
                                 <log-cell-template #logcelltemplate>
@@ -181,7 +181,7 @@
                         </ng-template>
                     </log-column>
                     <log-column [header]="'Customs.Containerization.F.HataraStatusName' | TextCodeTranslationPipe"
-                        [width]="'120'" [Alignment]="'right'" [binding]="'HataraStatusName'">
+                        [width]="'100'" [Alignment]="'right'" [binding]="'HataraStatusName'">
                         <ng-template let-item>
                             <div (click)="rowClicked(item)">
                                 <log-cell-template #logcelltemplate>
