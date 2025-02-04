@@ -387,8 +387,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8323",//פרטי הנחיות סיווג
 "8319",//כללים - ספר סיווג
 "UCB8373",
-
-                };
+            };
 
             //var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
             //if (settingPm.IsConnectedToUniFreight && 

@@ -6903,6 +6903,24 @@
       LocalDefaultText="&quot;BS64:Itep15fXlteV16gg15TXpteU16jXlCAtINeU15vXnCI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CourierMaster.O.RecoverDecX&quot;"
+      DefaultText="&quot;Recover Declaration&quot;"
+      LocalDefaultText="&quot;שחזר הצהרה שגויים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CourierMaster.O.SelectedRecoverDec&quot;"
+      DefaultText="&quot;Recover Declaration&quot;"
+      LocalDefaultText="&quot;שחזור הצהרה מסומנים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CourierMaster.O.RecoverAllDe&quot;"
+      DefaultText="&quot;Recover Declaration&quot;"
+      LocalDefaultText="&quot;שחזור הצהרה - הכל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
