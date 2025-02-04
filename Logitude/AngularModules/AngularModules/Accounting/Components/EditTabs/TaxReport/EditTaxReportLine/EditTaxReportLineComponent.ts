@@ -19,6 +19,7 @@ import { TaxReportPMService } from '../../../../Services/StandardPMs/TaxReportPM
 import { TaxReportLinePMService } from '../../../../Services/StandardPMs/TaxReportLinePMService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { DateTimePipe } from '../../../../../Controls/Pipes/DateTimePipe';
+import { TaxReportExtendedPMService } from 'Accounting/Services/ExtendedPMs/TaxReportExtendedPMService';
 
 
 
@@ -248,21 +249,12 @@ export class EditTaxReportLineComponent extends BaseComponent {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 // this.CurrentSession.CloseCurrentWindowEmit("ok");
-                this._TaxReportPMService.update(this.TaxReportPM).subscribe((myResult: any) => {
+                var taxReportExtendedPMService = new TaxReportExtendedPMService();
+                this.TaxReportPM.IsEdited = true;
+                taxReportExtendedPMService.PutTaxReportIsEdited(this.TaxReportPM).subscribe((myResult: any) => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
-                        // this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe((myResult:any) => {
-
-                        //     var mm: ServiceResponse = myResult;
-                        //     if (!mm.HasError) {
-                        //         this.CurrentSession.CloseCurrentWindowEmit("ok");
-                        //     }
-                        //     else {
-                        //         this.ValidationErrorsList = mm.ErrorsArray;
-                        //         this.CurrentSession.StopBusyIndicator();
-                        //     }
-                        // });
                         this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
                     else {

@@ -217,6 +217,23 @@ export class TaxReportExtendedPMService {
             catchError(ServiceHelper.HandleServiceError));
     }
 
+    PutTaxReportIsEdited(taxReportPM: TaxReportPM) {
+        var mappedEntity: TaxReportPM = this.MapJsonToEntityPM(taxReportPM, false);
+        return this.httpClient.put(this._apiUrl + "/PutTaxReportIsEdited", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+
+		
+	}
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxReportPM = null) {
 
 
