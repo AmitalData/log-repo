@@ -6615,7 +6615,7 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.CourierMaster.O.RecoverAllDe&quot;"
+      Code="&quot;Customs.CourierMaster.O.RecoverAllDec&quot;"
       DefaultText="&quot;Recover Declaration&quot;"
       LocalDefaultText="&quot;שחזור הצהרה - הכל&quot;"
       TextCodeTypeCode="&quot;O&quot;"
