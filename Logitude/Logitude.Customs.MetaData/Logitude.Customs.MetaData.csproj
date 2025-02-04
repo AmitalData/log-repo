@@ -102,6 +102,7 @@
     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataV2OLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelData.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
     <None Include="DBOthers\Procedures\usp_CustomsBookRulesDetailsOLD.dxml" />
