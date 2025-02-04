@@ -92,7 +92,7 @@
 	padding: 0;
 }
 .centeredContent .headerFlex .togglediscountCodes ul li {
-	width: calc(246px / 3);
+	width: 100%;
 	transition: all 0.2s ease-in-out;
 	display: flex;
 	text-align: center;
