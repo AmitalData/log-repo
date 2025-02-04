@@ -377,7 +377,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     TotalCredit: any;
     TotalDebit: any;
     IsMultiWithReconcileMethodCodeEqualOne: boolean = false;
-    TotalLocalDifference: Number = null;
+    TotalLocalDifference: number = null;
 
     SetWindowArgs(winArgs) {
         this._SelectedLines = winArgs.SelectedLines;
