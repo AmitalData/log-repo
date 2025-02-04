@@ -16,6 +16,7 @@ using Logitude.Customs.Data.EntityLists;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.Repsitories;
 using Devart.Data.Linq;
+using System.Security.Cryptography;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -586,6 +587,66 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             // return the count of storage sites for the courier ID / declaration IDs
             return response.Count;
         }
+
+        public IQueryable<DeclarationCourierStatusList> GetDeclarationStatusesByFromExcel(int tenant, string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Enumerable.Empty<DeclarationCourierStatusList>().AsQueryable();
+            }
+
+            var courierHawbFromExcelRepository = new CourierHawbFromExcelRepository(this.context);
+
+            var query = from dec in courierHawbFromExcelRepository.GetAllByUser(tenant, userId)
+                        join rDec in context.Declarations on dec.DeclarationId equals rDec.Id
+                        join dcs in context.DeclarationCourierStatuses on dec.DeclarationId equals dcs.DeclarationId
+                        where dcs.Tenant == tenant 
+                        && !string.IsNullOrEmpty(rDec.DeclarationNumber)
+                        select new DeclarationCourierStatusList
+                        {
+                            CourierDeclarationStatusCode = dcs.CourierDeclarationStatusCode,
+                            DeclarationId = dcs.DeclarationId,
+                        };
+
+            return query;
+        }
+        public IQueryable<DeclarationCourierStatusList> GetDeclarationStatusesByCourierMaster(int tenant, string courierMasterId)
+        {
+            var query = (from dcs in context.DeclarationCourierStatuses
+                        join cd in context.CourierDeclarations on dcs.DeclarationId equals cd.DeclarationId
+                        join cm in context.CourierMasters on cd.CourierMasterId equals cm.Id
+                        join dec in context.Declarations on dcs.DeclarationId equals dec.Id
+                        where dcs.Tenant == tenant
+                              && cm.Id == courierMasterId
+                              && !string.IsNullOrEmpty(dec.DeclarationNumber)
+
+                        select new DeclarationCourierStatusList
+                        {
+                            CourierDeclarationStatusCode = dcs.CourierDeclarationStatusCode,
+                            DeclarationId = dcs.DeclarationId,
+                        });
+            return query;
+        }
+
+        public IQueryable<DeclarationCourierStatusList> GetDeclarationsByIds(List<string> declarationIds, int tenant)
+        {
+            var query = (from dcs in context.DeclarationCourierStatuses
+                         join dec in context.Declarations on dcs.DeclarationId equals dec.Id
+                         where dcs.Tenant == tenant
+                         && declarationIds.Contains(dcs.DeclarationId)
+                         && !string.IsNullOrEmpty(dec.DeclarationNumber)
+                         select new DeclarationCourierStatusList
+                         {
+                             DeclarationId = dcs.DeclarationId,
+                             CourierDeclarationStatusCode = dcs.CourierDeclarationStatusCode,
+                             DeclarationNumber = dec.DeclarationNumber,
+                             CustomFileNo = dec.CustomFileNo,
+                             Tenant = tenant,
+                         });
+            return query;
+        }
+
+
     }
 
     public class GetStorageSiteByIdResult
