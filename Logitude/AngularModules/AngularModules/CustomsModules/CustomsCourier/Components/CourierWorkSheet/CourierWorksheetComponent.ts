@@ -42,7 +42,6 @@ import { List } from 'Infrastructure/DataContracts/Dashboard/List';
 import { isDebuggerStatement } from 'typescript';
 import { CourierPendingReasonExtendedListService } from 'Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
 import { DeclarationCourierStatusExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
-import { GatepassRequestComponent } from '../GatepassRequest/GatepassRequestComponent';
 import { SendRecoverDecRequestParams } from 'Customs/DataContract/RequestParams/SendRecoverDecRequestParams';
 
 
@@ -2336,8 +2335,19 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             return;
         }
 
-        GatepassRequestComponent.showWindow(this.entityPM);
-    }
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.CourierMasterPM = this.entityPM;
+
+        logitudeWindow.Width = 620;
+        logitudeWindow.Height = 400;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "גייטפס העברות";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            //this.RefreshData();
+        });    }
 
     SendALLTerminal() {
         var currRequestParams = new SendALLCorrectRequestParams();
