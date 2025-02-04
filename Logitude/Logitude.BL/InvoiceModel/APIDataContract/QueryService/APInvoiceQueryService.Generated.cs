@@ -23,8 +23,9 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel;
+using Logitude.BL.CommonDataModel.APIDataContract;
 
- namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
+namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 { 
    public partial class APInvoiceQueryService
    {
@@ -722,8 +723,9 @@ using Simplog.Data.InvoiceModel;
 						//} 
 
 						
-					} 
+					}
 
+					bool differentCurrencies = false;
 					if(MyEntity.InvoiceLines != null && MyEntity.InvoiceLines.Count > 0)
 					{
 						APInvoiceLineQueryService APInvoiceLineService11 = new APInvoiceLineQueryService(Tenant);
@@ -735,6 +737,11 @@ using Simplog.Data.InvoiceModel;
 					 
 						}  
 
+						List<string> currencies = MyEntity.InvoiceLines.Select(line => line.ForiegnCurrency.Code).Distinct().ToList();
+						if (currencies != null && currencies.Count > 1)
+						{ 
+							differentCurrencies = true;
+						}
 						
 					}
 
@@ -768,11 +775,20 @@ using Simplog.Data.InvoiceModel;
 					{							
 						temp.VendorGLAccountId = MyEntity.VendorGLAccount;
 
-										}  
+										}
 
-					 
+					if (!String.IsNullOrEmpty(MyEntity.VendorGLAccount) && differentCurrencies) 
+					{
+						GLAccountQueryService gLAccountListQuery = new GLAccountQueryService(Tenant);
+						bool isMulti = gLAccountListQuery.IsMulti(MyEntity.VendorGLAccount, tenant);
+						if (!isMulti) 
+						{ 
+							throw new ApplicationException("Vendor GLAccount Id " + MyEntity.VendorGLAccount + " is not multi-currency"); 
+						}
+					}
 
-					if(MyEntity.TotalVATs != null && MyEntity.TotalVATs.Count > 0)
+
+                    if (MyEntity.TotalVATs != null && MyEntity.TotalVATs.Count > 0)
 					{
 						APInvoiceTotalVATQueryService APInvoiceTotalVATService11 = new APInvoiceTotalVATQueryService(Tenant);
 						  
