@@ -1360,9 +1360,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //supplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehicles(governmentAgencyGoodsItem, declaration, declarationId, tenant);
                             var supplierInvoice = declarationPMBeforeDelete.SupplierInvoices.FirstOrDefault(si => si.SupplierInvoiceItems.Any(sii => sii.SequenceNumeric == supplierInvoiceItemPM.SequenceNumeric));
                             supplierInvoiceItemPM.SupplierInvoiceItemVehicles = supplierInvoice?.SupplierInvoiceItems.FirstOrDefault(sii => sii.SequenceNumeric == supplierInvoiceItemPM.SequenceNumeric)?.SupplierInvoiceItemVehicles;
-
                             
-                            // change it to foreach:supplierInvoiceItemPM.SupplierInvoiceItemVehicles instead of firstordefault
                             foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
                             {
                                 if(supplierInvoiceItemVehicle != null)
