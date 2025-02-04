@@ -138,7 +138,7 @@ namespace Simplog.Server.Infrastructure.Helpers
         {
             if (tenant == -1)
             {
-               SettingUtil.GetCurrentTenant();
+               tenant=SettingUtil.GetCurrentTenant();
             }
             if (GlobalDBs.ContainsKey(tenant))
             {
