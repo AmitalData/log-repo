@@ -1358,12 +1358,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else // ACCEPT BY CUSTOMS - GET FROM CUREENT DECLARATION BEFORE DELETE SUPPLIERINVOICES
                         {
                             //supplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehicles(governmentAgencyGoodsItem, declaration, declarationId, tenant);
-                            var supplierInvoice = declarationPMBeforeDelete.SupplierInvoices.FirstOrDefault(si => si.SupplierInvoiceItems.Any(sii => sii.DeclarationId == supplierInvoiceItemPM.DeclarationId && sii.ClassificationCode == supplierInvoiceItemPM.ClassificationCode));
-                            supplierInvoiceItemPM.SupplierInvoiceItemVehicles = supplierInvoice?.SupplierInvoiceItems.FirstOrDefault(sii => sii.DeclarationId == supplierInvoiceItemPM.DeclarationId && sii.ClassificationCode == supplierInvoiceItemPM.ClassificationCode)?.SupplierInvoiceItemVehicles;
+                            var supplierInvoice = declarationPMBeforeDelete.SupplierInvoices.FirstOrDefault(si => si.SupplierInvoiceItems.Any(sii => sii.SequenceNumeric == supplierInvoiceItemPM.SequenceNumeric));
+                            supplierInvoiceItemPM.SupplierInvoiceItemVehicles = supplierInvoice?.SupplierInvoiceItems.FirstOrDefault(sii => sii.SequenceNumeric == supplierInvoiceItemPM.SequenceNumeric)?.SupplierInvoiceItemVehicles;
 
-                            // update suplierInvoiceItemVehicleadds table also by the supplierInvoiceItemPM.SupplierInvoiceItemVehicles:
-                            //supplierInvoiceItemVehicle.SupplierInvoiceItemVehicleAdds = GetSupplierInvoiceItemVehicleAdds(vehicle, supplierInvoiceItemVehiclePM, supplierInvoiceItemPM, supplierInvoiceItemVehiclePMList);
-
+                            
+                            // change it to foreach:supplierInvoiceItemPM.SupplierInvoiceItemVehicles instead of firstordefault
+                            foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
+                            {
+                                if(supplierInvoiceItemVehicle != null)
+                                    supplierInvoiceItemVehicle.SupplierInvoiceItemVehicleAdds = GetSupplierInvoiceItemVehicleAdds(supplierInvoiceItemVehicle, supplierInvoiceItemPM, supplierInvoiceItemPM.SupplierInvoiceItemVehicles);
+                            }
 
                         }
                     }
@@ -1408,6 +1412,50 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return supplierInvoiceItemPMs;
         }
 
+        private List<SupplierInvoiceItemVehicleAddPM> GetSupplierInvoiceItemVehicleAdds(SupplierInvoiceItemVehiclePM supplierInvoiceItemVehiclePM, SupplierInvoiceItemPM supplierInvoiceItemPM, List<SupplierInvoiceItemVehiclePM> supplierInvoiceItemVehiclePMList = null)
+        {
+            var supplierInvoiceItemVehicleAddPM = supplierInvoiceItemVehiclePM.SupplierInvoiceItemVehicleAdds.FirstOrDefault(si => si.DeclarationId == supplierInvoiceItemVehiclePM.DeclarationId && si.InvoiceItemLineNumber == supplierInvoiceItemVehiclePM.InvoiceItemLineNumber && si.LineNumber == supplierInvoiceItemVehiclePM.LineNumber);
+            if (supplierInvoiceItemVehicleAddPM == null)
+            {
+                return null;
+                throw new System.Exception(
+                   "unable to find the supplierInvoiceItemVehicleAddPM from Declaration Id " + supplierInvoiceItemVehiclePM.DeclarationId + " and Supplier Invoice Item Line " + supplierInvoiceItemVehiclePM.InvoiceItemLineNumber + " and Supplier Invoice Item Vehicle Line " + supplierInvoiceItemVehiclePM.LineNumber);
+            }
+            supplierInvoiceItemVehicleAddPM.ChangeSetOp = ChangeSetOperation.Update;
+            var supplierInvoiceItemVehicleAddPMList = new List<SupplierInvoiceItemVehicleAddPM>();
+
+            decimal? allDeduction = 0;
+            decimal? chassisDeduction = 0;
+
+            if (supplierInvoiceItemVehiclePMList != null && supplierInvoiceItemVehiclePMList.Count() > 0)
+            {
+                foreach (var vehicleMod in supplierInvoiceItemVehiclePMList)
+                {
+                    foreach (var Deduction in vehicleMod.SupplierInvoiceItemVehicleMods)
+                    {
+                        if ((!string.IsNullOrWhiteSpace(vehicleMod.RichbitFileNumber) && vehicleMod.RichbitFileNumber == supplierInvoiceItemVehiclePM.RichbitFileNumber) || (!string.IsNullOrWhiteSpace(vehicleMod.VehicleChassisNumber) && vehicleMod.VehicleChassisNumber == supplierInvoiceItemVehiclePM.VehicleChassisNumber))
+                        {
+                            chassisDeduction += Deduction.DeductAmount;
+                        }
+
+                        allDeduction += Deduction.DeductAmount;
+
+                    }
+                }
+            }
+
+            supplierInvoiceItemVehicleAddPM.ChassisPurchaseTax = ((allDeduction + purchase) / supplierInvoiceItemPM.ItemPrice) * supplierInvoiceItemVehicleAddPM.VehicleValue - chassisDeduction;
+            supplierInvoiceItemVehicleAddPM.ChassisTax = (generalTax / supplierInvoiceItemPM.ItemPrice) * supplierInvoiceItemVehicleAddPM.VehicleValue;
+            supplierInvoiceItemVehicleAddPM.ChassisVat = (vat / supplierInvoiceItemPM.ItemPrice) * supplierInvoiceItemVehicleAddPM.VehicleValue;
+
+            totGeneralTaxCalc += supplierInvoiceItemVehicleAddPM.ChassisTax;
+            totPurchaseCalc += supplierInvoiceItemVehicleAddPM.ChassisPurchaseTax;
+            totVatCalc += supplierInvoiceItemVehicleAddPM.ChassisVat;
+
+            supplierInvoiceItemVehicleAddPMList.Add(supplierInvoiceItemVehicleAddPM);
+
+            return supplierInvoiceItemVehicleAddPMList;
+        }
 
 
         private List<SupplierInvoiceItemsModPM> GetSupplierInvoiceItemsMods(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem, Declaration declaration, string declarationId, int tenant)
