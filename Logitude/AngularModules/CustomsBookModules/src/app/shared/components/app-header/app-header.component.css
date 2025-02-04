@@ -217,6 +217,13 @@ i[role='img'][aria-hidden='true'] {
 	}
 }
 
+@media (max-width: 1011px) {
+	.togglediscountCodes{
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
 @media (min-width: 1011px) {
 	.page-top-box {
 		display: flex;
