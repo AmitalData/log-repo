@@ -19,6 +19,7 @@ import {FullAccountingSettingList} from '../../EntityLists/FullAccountingSetting
 import {GLAccountPMService} from '../../Services/StandardPMs/GLAccountPMService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import { RatesTableExtendedListService } from 'Infrastructure/Services/ExtendedLists/RatesTableExtendedListService';
 
 @Component({
 
@@ -138,6 +139,22 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
 
     //#region Properties
+    rate: number = null;
+    get Rate() { return this.rate; }
+    set Rate(value: number) {    
+        if (this.rate != value) {
+            this.rate = value != null ? value : null;
+    
+            if (this.rate && this.rate != 0) {
+                this.TotalLocalDifference = this.TotalDifference * Number(this.rate);
+            } else { 
+                this.TotalLocalDifference = null;
+            }
+        }
+    }
+ 
+
+    
     reference1: string="";
     get Reference1() { return this.reference1; }
     set Reference1(value: string) {
@@ -293,6 +310,20 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
                 //this.AccountingDate = null;
                 this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
             }
+            if(this.IsMultiWithReconcileMethodCodeEqualOne){
+                var ratesTableExtendedListService = new RatesTableExtendedListService();
+                ratesTableExtendedListService.getExchageRateByValueAndDate(this.defaultCurrencyId, this._SelectedLines.Collection[0].CurrencyId, this._AccountingDate).subscribe((myResponse: ServiceResponse) => {
+                    if (myResponse != null && !myResponse.HasError && myResponse.Result != undefined && myResponse.Result != null) {
+                        var rate = myResponse.Result;
+                        this.Rate = rate.Rate;
+                        
+                    }
+                    else
+                        this.Rate = null;
+                }); 
+            }
+           
+
         }
 
 
@@ -345,12 +376,16 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     TotalDifference: any;
     TotalCredit: any;
     TotalDebit: any;
+    IsMultiWithReconcileMethodCodeEqualOne: boolean = false;
+    TotalLocalDifference: Number = null;
+
     SetWindowArgs(winArgs) {
         this._SelectedLines = winArgs.SelectedLines;
         this._GLAccountPMId = winArgs.GLAccountPMId;
         this.TotalDifference = winArgs.TotalDifference;
         this.TotalCredit = winArgs.TotalCredit;
         this.TotalDebit = winArgs.TotalDebit;
+        this.IsMultiWithReconcileMethodCodeEqualOne = winArgs.IsMultiWithReconcileMethodCodeEqualOne && this._SelectedLines.Collection[0].CurrencyId != this.defaultCurrencyId;
     }
     FillErrors(isSplitJournal: boolean) {
 

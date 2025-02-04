@@ -912,11 +912,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         //     return;
         // }
 
-        if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
-            if (this.IsMultiWithReconcileMethodCodeEqualOne) {
-                errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
-            }
-        }
+        //if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
+            // if (this.IsMultiWithReconcileMethodCodeEqualOne) {
+            //     errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
+            // }
+        //}
 
         var ledgerTransactionsPMs = this.GetLedgerTransactionsPMs();
         this.CurrentSession.StartBusyIndicatorSaving();
@@ -1158,7 +1158,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                             "GLAccountPMId": this.GLAccountPM.Id,
                             TotalDifference: this.TotalDifference,
                             TotalCredit: this.TotalCredit,
-                            TotalDebit: this.TotalDebit
+                            TotalDebit: this.TotalDebit,
+                            IsMultiWithReconcileMethodCodeEqualOne : this.IsMultiWithReconcileMethodCodeEqualOne
                         };
                         logitudeWindow.Show('./Accounting/Components/Others/JournalReconcileComponent');
                         logitudeWindow.WindowClosed.subscribe(($event: any) => {
