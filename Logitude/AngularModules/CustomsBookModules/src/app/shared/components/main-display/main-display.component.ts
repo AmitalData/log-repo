@@ -75,6 +75,7 @@ export class MainDisplayComponent implements OnInit {
 			this.searchState = searchState[data];
 			this.InitData();
 			this.ListenToItemsSearched();
+			this.getByIsDiscountCodes();
 		});
 	}
 
@@ -111,7 +112,14 @@ export class MainDisplayComponent implements OnInit {
 			});
 		});
 	}
+	getByIsDiscountCodes(){
+		this.headerService.IsDiscountCodes.subscribe((value) => {
+			this.IsDiscountCodes = value;
+			this.InitData();
+		});
+	}
 
+	IsDiscountCodes: boolean = false;
 	GetAllCustomsBookMainView() {
 		this.isLoadingMode.next(true);
 		let filters: Filters = {
@@ -119,6 +127,10 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
+
+		if(this.IsDiscountCodes)
+			filters.IsDiscountCodes = this.IsDiscountCodes;
+
 		this.getRulesData();
 		this.getCommentsData(SessionInfo.LoggedUserTenant);
 
@@ -360,6 +372,8 @@ export class MainDisplayComponent implements OnInit {
 			PageSize: 0,
 			Tenant: SessionInfo.LoggedUserTenant
 		};
+		if(this.IsDiscountCodes)
+			filters.IsDiscountCodes = this.IsDiscountCodes;
 
 		this.selectSearchBy = this.searchService.selectSearchBy;
 

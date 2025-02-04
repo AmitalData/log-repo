@@ -29,14 +29,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
     public class CB_CustomsItemExtendedController : ApiController
     {
 
-        public HttpResponseMessage GetCustomsBookMainView(string customsBookType, int Tenant)
+        public HttpResponseMessage GetCustomsBookMainView(string customsBookType, int Tenant, bool IsDiscountCodes = false)
         {
             try
             {
                 Filters filters = new Filters();
                 filters.CustomsBookType = customsBookType;
                 filters.Tenant = Tenant;
-               
+                filters.IsDiscountCodes = IsDiscountCodes;
+
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 if (token == null)
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
