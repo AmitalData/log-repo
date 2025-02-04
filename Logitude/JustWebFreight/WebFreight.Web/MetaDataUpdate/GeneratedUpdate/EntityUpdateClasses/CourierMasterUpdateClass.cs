@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "7e2dd4a21e8a0408ae30ad25d2cecb56";
+		public const string HashString = "c30a9f703f343be55f7a74cc047259b8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5518,7 +5518,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CourierMasterTextCode_CustomsCourierMasterOSelectedRecoverDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.SelectedRecoverDec", DefaultText = "Recover Declaration",LocalDefaultText = @"שחזור הצהרה מסומנים", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CourierMasterTextCode_CustomsCourierMasterORecoverAllDe = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.RecoverAllDe", DefaultText = "Recover Declaration",LocalDefaultText = @"שחזור הצהרה - הכל", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CourierMasterTextCode_CustomsCourierMasterORecoverAllDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.RecoverAllDec", DefaultText = "Recover Declaration",LocalDefaultText = @"שחזור הצהרה - הכל", ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
