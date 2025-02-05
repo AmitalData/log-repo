@@ -193,11 +193,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;EnglishName&quot;"
     DefaultText="&quot;English Name&quot;"
-    FullLocalDefaultTextBack_up="&quot;שם אנגלית&quot;"
     FullLocalDefaultText="&quot;BS64:Itep150g15DXoNeS15zXmdeqIg==&quot;"
     ListFieldLable="&quot;EnglishNameListLable&quot;"
     ListLableDefaultText="&quot;English Name&quot;"
-    ListLocalDefaultTextBack_up="&quot;שם אנגלית&quot;"
     ListLocalDefaultText="&quot;BS64:Itep150g15DXoNeS15zXmdeqIg==&quot;"
     IsNullable="true"
     IsForeignKey="false"
@@ -346,11 +344,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;LocalName&quot;"
     DefaultText="&quot;Local Name&quot;"
-    FullLocalDefaultTextBack_up="&quot;שם מקומי&quot;"
     FullLocalDefaultText="&quot;BS64:Itep150g157Xp9eV157XmSI=&quot;"
     ListFieldLable="&quot;LocalNameListLable&quot;"
     ListLableDefaultText="&quot;Local Name&quot;"
-    ListLocalDefaultTextBack_up="&quot;שם מקומי&quot;"
     ListLocalDefaultText="&quot;BS64:Itep150g157Xp9eV157XmSI=&quot;"
     IsNullable="false"
     IsForeignKey="false"
@@ -425,11 +421,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Inactive&quot;"
     DefaultText="&quot;Inactive &quot;"
-    FullLocalDefaultTextBack_up="&quot;לא פּעיל&quot;"
     FullLocalDefaultText="&quot;BS64:Itec15Ag16TWvNei15nXnCI=&quot;"
     ListFieldLable="&quot;InactiveListLable&quot;"
     ListLableDefaultText="&quot;Inactive&quot;"
-    ListLocalDefaultTextBack_up="&quot;לא פּעיל&quot;"
     ListLocalDefaultText="&quot;BS64:Itec15Ag16TWvNei15nXnCI=&quot;"
     IsNullable="false"
     IsForeignKey="false"
@@ -459,7 +453,6 @@
   <Query
     Code="&quot;Responsibility&quot;"
     TextCode="&quot;Responsibilities&quot;"
-    LocalTextCodeBack_up="&quot;אחריות&quot;"
     LocalTextCode="&quot;BS64:IteQ15fXqNeZ15XXqiI=&quot;"
     QueryGroupCode="&quot;COGR&quot;"
     IndexOrder="0"
@@ -549,11 +542,11 @@
       LocalName="&quot;חברה ללא חיוב&quot;"
       EnglishName="&quot;Company without charge&quot;" />
     <Record
-      Code="&quot;3&quot;"
-      SearchFields="&quot;3,לקוח&quot;"
+      Code="&quot;1&quot;"
+      SearchFields="&quot;1,חברה +חיוב&quot;"
       Inactive="false"
-      LocalName="&quot;לקוח&quot;"
-      EnglishName="&quot;Customer&quot;" />
+      LocalName="&quot;חברה +חיוב&quot;"
+      EnglishName="&quot;Company&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />
