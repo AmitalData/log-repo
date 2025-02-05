@@ -85,7 +85,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             }
             AddAcitivityLog(entityPM, "N");
-                       
+
+            FillSearchFields(entityPM);
+
+
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             entityPM.CreatedByUserId = loggedUser?.Id;
 
@@ -473,16 +476,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
             var tenant = entityPM.Tenant;
-            List<CardList> cardLists = null;
+
             if (entityPM.DisplayNumber != entityPOCO.DisplayNumber)
             {
-               cardLists = GetCardsByGLAccountId(entityPM.Id, tenant);
+                List<CardList> cardLists = GetCardsByGLAccountId(entityPM.Id, tenant);
                 foreach (CardList card in cardLists)
                 {
                     UpdateCardDisplayNumber(tenant, card.Id, entityPM.DisplayNumber, entityPM.Id, true);
                 }
             }
-            FillSearchFields(entityPM, cardLists);
             if (!entityPM.IsControlAccount.GetValueOrDefault())
             {
                 this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
@@ -774,7 +776,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             AddAcitivityLog(entityPM, "U");
 
             FillForeignFields(entityPM);
-           
+            FillSearchFields(entityPM);
             AddEventForGlAccountFollowUpData(entityPM);
             HandleGLAccountFollowUpData(entityPM);
 
@@ -969,16 +971,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return comParams;
         }
 
-        private void FillSearchFields(GLAccountPM entityPM, List<CardList> cardLists)
+        private void FillSearchFields(GLAccountPM entityPM)
         {
-            if (cardLists == null)
-            {
-                cardLists = GetCardsByGLAccountId(entityPM.Id, entityPM.Tenant);
-            }
-
-            string vatNumbers = string.Join(",", cardLists.Where(card => !string.IsNullOrEmpty(card?.VatNumber)).Select(card => card.VatNumber));
-
-            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName + "," + vatNumbers;
+            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName;
         }
 
         private void FillForeignFields(GLAccountPM entityPM)
