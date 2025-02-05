@@ -58,6 +58,7 @@ namespace Logitude.Customs.Data.Repsitories
                                 IsPersonalImportIncluded = reader["IsPersonalImportIncluded"] != DBNull.Value ? (bool)reader["IsPersonalImportIncluded"] : false,
                                 IsCarnetIncluded = reader["IsCarnetIncluded"] != DBNull.Value ? (bool)reader["IsCarnetIncluded"] : false,
                                 IsVoluntaryOrImporterOfTrust = reader["IsVoluntaryOrImporterOfTrust"] != DBNull.Value ? (bool)reader["IsVoluntaryOrImporterOfTrust"] : false,
+                                TrNumber = reader["TrNumber"] != DBNull.Value ? (int?)reader["TrNumber"] : null,
 
                                 // TODO: add the rest of the fields after the requirements are clear:
                                 // FromEpisodeDetail = reader["FromEpisodeDetail"] != DBNull.Value ? (string)reader["FromEpisodeDetail"] : null,

@@ -18,8 +18,8 @@ export class GenericTableComponent implements OnInit {
 
   }
 
-  checkLink(link: string, value: string) {
-    return link ? link + value : value;
+  checkLink(link: string, value: string): string {
+    return link != "" && value != "" ? link + value : "";
   }
 
   onButtonClick(event: Event, row: any, key: string): void {
@@ -39,5 +39,9 @@ export interface TableColumn {
   dataType: 'string' | 'number' | 'date' | "img" | "boolean" | "link" | 'button';
   visible: boolean;
   width?: string;
-  isLink?: string;
+  link?: Link;
+}
+interface Link {
+  url: string;
+  key?: string;
 }

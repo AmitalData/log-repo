@@ -55,6 +55,8 @@ export class MainDisplayComponent implements OnInit {
 	private _filters;
 	data: CB_CustomsItemComputedDataList[] = [];
 	fullData: CB_CustomsItemComputedDataList[] = [];
+	originalDataByIsDiscountCodes: CB_CustomsItemComputedDataList[] = [];
+
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
 	cbTariffList: CB_TariffList[];
@@ -75,6 +77,7 @@ export class MainDisplayComponent implements OnInit {
 			this.searchState = searchState[data];
 			this.InitData();
 			this.ListenToItemsSearched();
+			this.getByIsDiscountCodes();
 		});
 	}
 
@@ -101,6 +104,7 @@ export class MainDisplayComponent implements OnInit {
 				if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
 					this.data = [];
 					this.fullData = [];
+					this.originalDataByIsDiscountCodes = [];
 					this.isLoadingMode.next(false);
 					this.isFeaturePermessionCB.next(true);
 				}
@@ -111,7 +115,15 @@ export class MainDisplayComponent implements OnInit {
 			});
 		});
 	}
+	getByIsDiscountCodes() {
+		this.headerService.IsDiscountCodes.subscribe((value) => {
+			this.IsDiscountCodes = value;
+			if (!this.searchService.GetSearchText()) this.InitData();
+			else this.getSearchDataByFilter(this.filterPopupService.getFilters());
+		});
+	}
 
+	IsDiscountCodes: boolean = false;
 	GetAllCustomsBookMainView() {
 		this.isLoadingMode.next(true);
 		let filters: Filters = {
@@ -119,6 +131,10 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
+
+		if (this.IsDiscountCodes)
+			filters.IsDiscountCodes = this.IsDiscountCodes;
+
 		this.getRulesData();
 		this.getCommentsData(SessionInfo.LoggedUserTenant);
 
@@ -127,8 +143,12 @@ export class MainDisplayComponent implements OnInit {
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
 			this.handleClearResults();
-			this.fullData = this.orderedData(result);
-			this.data = this.fullData;
+			
+			
+			this.data = this.orderedData(result);
+			if (this.IsDiscountCodes) this.originalDataByIsDiscountCodes = this.data;
+			else this.fullData = this.data;
+
 			this.searchMode = TableTopState.ViewAll;
 			this.isLoadingMode.next(false);
 			this.isFeaturePermessionCB.next(false);
@@ -360,6 +380,8 @@ export class MainDisplayComponent implements OnInit {
 			PageSize: 0,
 			Tenant: SessionInfo.LoggedUserTenant
 		};
+		if (this.IsDiscountCodes)
+			filters.IsDiscountCodes = this.IsDiscountCodes;
 
 		this.selectSearchBy = this.searchService.selectSearchBy;
 
@@ -435,8 +457,9 @@ export class MainDisplayComponent implements OnInit {
 		this.searchValue = "";
 		this.countSearchResult = 0;
 		this.filterPopupService.toggleFilterPopup(false);
-		this.data = this.fullData;
-		this.toggleVisibility(false, this.data)
+		// this.data = this.fullData;
+		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;	 
+		this.toggleVisibility(false, this.data);
 	}
 
 	public orderedDataForSearch = (data) => {
