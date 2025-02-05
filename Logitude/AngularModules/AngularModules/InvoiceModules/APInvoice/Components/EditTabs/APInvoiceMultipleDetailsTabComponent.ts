@@ -44,7 +44,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public ItemsSource: MultipleShipmentLine[] = [];
     public LocalCurrencyId: string;
     public LocalCurrencyCode: string;
-    public IsEditExchangeRateVisible: boolean = false;
+    public IsEditExchangeRateVisible: boolean = true;
     public isRTL: boolean = false;
     public apiQueryFilters: ApiQueryFilters = null;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -150,7 +150,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     SetUIProperties_VatNumber() {
         var isFieldRequired = false;
 
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && this.EntityPM.VendorCountry === "ISRAEL") {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
                 isFieldRequired = true;
                 isFieldRequired = true;

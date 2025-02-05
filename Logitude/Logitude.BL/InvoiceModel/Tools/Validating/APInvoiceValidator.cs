@@ -57,7 +57,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             AccountingSetting accountingSetting = (from d in commonContext.AccountingSettings where d.Id == entityPM.Tenant select d).FirstOrDefault();
             if (accountingSetting != null)
             {
-                if (accountingSetting.IsVatNumberMandatoryInAP)
+                if (accountingSetting.IsVatNumberMandatoryInAP && entityPM.VendorCountry == "ISRAEL")
                 {
                     if (string.IsNullOrEmpty(entityPM.VATNumber))
                     {
