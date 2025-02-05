@@ -2,7 +2,7 @@
   <SqlScript>
     <![CDATA[
 
-	CREATE OR ALTER   PROCEDURE [dbo].[usp_NewCustomsBookMainViewSearchByText]
+CREATE OR ALTER   PROCEDURE [dbo].[usp_NewCustomsBookMainViewSearchByText]
 @SearchFields VARCHAR(40),
 @CustomsBookType VARCHAR(2),
 @CustomsItemHierarchic VARCHAR(20),
@@ -35,10 +35,9 @@ BEGIN
 	    FROM [dbo].[NewCustomsBookMainView] m
 	    WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
 	        AND m.GoodsDescription LIKE '%' + @SearchFields + '%'
-	        AND m.ItemHierarchicLocationID != '1'
 			AND(
 				(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
-				(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+				(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3') AND m.ItemHierarchicLocationID != '1')
 			)
 	    UNION ALL--כללים
 	    SELECT m.CustomsItemId,
@@ -1052,7 +1051,7 @@ WITH BaseCTE AS (
 	ORDER BY Fullclassification;
 END--new
 END
-      
+   
     ]]>
   </SqlScript>
 
