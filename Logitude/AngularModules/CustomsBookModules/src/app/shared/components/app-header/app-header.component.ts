@@ -18,7 +18,7 @@ export class AppHeaderComponent {
 	selected: string = 'יבוא';
 	@Output() searchClick = new EventEmitter<string | number>();
 	discountCodes: string = 'קודי הנחה';
-	IsDiscountCodes:boolean = false;
+	IsDiscountCodes: boolean = false;
 
 	constructor(private headerService: HeaderService, private searchService: SearchService) { }
 
@@ -30,7 +30,11 @@ export class AppHeaderComponent {
 		this.selected = state;
 		this.headerService.setSearchState(state);
 		this.searchService.SetSearchText("");
-	};
+		if (state == 'אוטונומיה') {
+			this.IsDiscountCodes = false;
+			this.headerService.setIsDiscountCodes(this.IsDiscountCodes);
+		};
+	}
 
 	SearchByText(searchBy: any) {
 		this.searchClick.emit(searchBy);
