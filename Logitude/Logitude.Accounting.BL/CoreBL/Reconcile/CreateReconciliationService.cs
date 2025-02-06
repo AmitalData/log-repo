@@ -21,6 +21,9 @@ using Newtonsoft.Json;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Accounting.Data.EntityLists;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -83,12 +86,19 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 using (TransactionScope scope = TransactionFactory.GetNewReadUncommittedTransaction())
                 {
+                    var ledgerTransactionInProgress = CheckIfAnotherReconciliationInProgress(reconciliationPM);
+                    if (ledgerTransactionInProgress)
+                    {
+                        throw new ApplicationException("יש התאמות בתהליך");
+
+                    }
                     var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
                     if (ledgerTransactionReconciled)
                     {
                     throw new ApplicationException("GLAccounts.O.MarkedByAnother");
 
                     }
+                   
                 }
             }
 
@@ -302,7 +312,17 @@ namespace Logitude.Accounting.BL.CoreBL
             LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(reconciliationPM.Tenant);
             return transactionQueryService.CheckAnyLedgerTransactionReconciledByIdList(transactionsIds, reconciliationPM.Tenant);
         }
-        
+        private bool CheckIfAnotherReconciliationInProgress(ReconciliationPM entityPm)
+        {
+            ICommonDataContext context = CommonDataContext.GetContext(entityPm.Tenant);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+            CommunicationLog commLog = communicationLogRep.GetCommunicationLogByEntityIdAndSubject(entityPm.AccountId, "Create internal Reconciliation", entityPm.Tenant);
+            if (commLog != null && commLog.CommunicationStatusTypeCode == "W")
+            {
+                return true;
+            }
+            return false;
+        }
         private List<ReconciliationPM> SplitReconciliationByGroup(ReconciliationPM originalRecoPM)
         {
             List<ReconciliationPM> recoPMs = new List<ReconciliationPM>();
