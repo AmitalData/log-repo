@@ -1343,13 +1343,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     supplierInvoiceItemVehicle.ChangeSetOp = ChangeSetOperation.Insert;
                                 }
 
-
+                                if (isFromImporter) {
                                 supplierInvoiceItemPM.CatalogNumber = invoiceItem.CatalogNumber;
                                 supplierInvoiceItemPM.ItemCode = invoiceItem.ItemCode;
                                 supplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
                                 supplierInvoiceItemPM.ItemAdditionalStatus = invoiceItem.ItemAdditionalStatus;
                                 supplierInvoiceItemPM.CertificatesStatusCode = invoiceItem.CertificatesStatusCode;
-
+                                }
                             }
 
 
@@ -1361,12 +1361,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var supplierInvoice = declarationPMBeforeDelete.SupplierInvoices.FirstOrDefault(si => si.SupplierInvoiceItems.Any(sii => sii.SequenceNumeric == supplierInvoiceItemPM.SequenceNumeric));
                             supplierInvoiceItemPM.SupplierInvoiceItemVehicles = supplierInvoice?.SupplierInvoiceItems.FirstOrDefault(sii => sii.SequenceNumeric == supplierInvoiceItemPM.SequenceNumeric)?.SupplierInvoiceItemVehicles;
                             
-                            foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
-                            {
-                                if(supplierInvoiceItemVehicle != null)
-                                    supplierInvoiceItemVehicle.SupplierInvoiceItemVehicleAdds = GetSupplierInvoiceItemVehicleAdds(supplierInvoiceItemVehicle, supplierInvoiceItemPM, supplierInvoiceItemPM.SupplierInvoiceItemVehicles);
-                            }
+                         
 
+                        }
+                        foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
+                        {
+                            if (supplierInvoiceItemVehicle != null)
+                                supplierInvoiceItemVehicle.SupplierInvoiceItemVehicleAdds = GetSupplierInvoiceItemVehicleAdds(supplierInvoiceItemVehicle, supplierInvoiceItemPM, supplierInvoiceItemPM.SupplierInvoiceItemVehicles);
                         }
                     }
                     supplierInvoiceItemPM.SalesTaxExemptionTypeCode = GetValueCodeType(governmentAgencyGoodsItem.DMExtensions.SalesTaxExemptionType);
