@@ -27,6 +27,11 @@ export class FilterPopupComponent {
 		this.service._showFilterPopup.subscribe((value) => {
 			this.openPopup = value;
 		});
+
+		this.service.isClearFilter.subscribe((value) => {
+			if(value) this.clearFilter();
+		});
+		
 		this.getByIsDiscountCodes();
 	}
 
