@@ -102,7 +102,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
                         }
 
-                        else
+                        else if (!entityPM.IsExternalEntity)
                         {
                             //double? d1 = entityPM.InvoiceMultipleShipments.Sum(s => s.SubTotalInInvoiceCurrency);
                             //double? d2 = entityPM.InvoiceMultipleShipments.Sum(s => s.TotalVATAmount);
@@ -133,7 +133,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
                 }
 
-                else if (entityPM.InvoiceExpectedAmount != entityPM.AmountInInvoiceCurrency)
+                else if (!entityPM.IsExternalEntity && entityPM.InvoiceExpectedAmount != entityPM.AmountInInvoiceCurrency)
                 {
                     string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceAmountNotMatched", entityPM.Tenant);
                     throw new ApplicationException(msg);
@@ -508,37 +508,40 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                     }
 
-                    double? lineForiegnAmount = MethodHelper.Round(item.ForiegnCurrencyAmount, 2);
-                    //double? lineForiegnAmount_Computed = MethodHelper.Round(item.Quantity * item.UnitPrice, 2);
-                    //if (lineForiegnAmount != lineForiegnAmount_Computed)
-                    //{
-                    //    throw new ApplicationException("Wrong Line Foriegn Amount");
-                    //}
-
-
-                    double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
-                    double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
-                    if (lineLocalAmount != lineLocalAmount_Computed)
+                    if (!entityPM.IsExternalEntity)
                     {
-                        throw new ApplicationException("Wrong Line Local Amount");
-                    }
+                        double? lineForiegnAmount = MethodHelper.Round(item.ForiegnCurrencyAmount, 2);
+                        //double? lineForiegnAmount_Computed = MethodHelper.Round(item.Quantity * item.UnitPrice, 2);
+                        //if (lineForiegnAmount != lineForiegnAmount_Computed)
+                        //{
+                        //    throw new ApplicationException("Wrong Line Foriegn Amount");
+                        //}
 
-                    double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
-                    double? exchangeRate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
-                    double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
-                    if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
-                    {
-                        if (lineInvoiceAmount != lineForiegnAmount)
+
+                        double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
+                        double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
+                        if (lineLocalAmount != lineLocalAmount_Computed)
                         {
-                            throw new ApplicationException("Wrong Line Invoice Amount");
+                            throw new ApplicationException("Wrong Line Local Amount");
                         }
-                    }
 
-                    else
-                    {
-                        if (lineInvoiceAmount != lineInvoiceAmount_Computed)
+                        double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
+                        double? exchangeRate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
+                        double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
+                        if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
                         {
-                            throw new ApplicationException("Wrong Line Invoice Amount");
+                            if (lineInvoiceAmount != lineForiegnAmount)
+                            {
+                                throw new ApplicationException("Wrong Line Invoice Amount");
+                            }
+                        }
+
+                        else
+                        {
+                            if (lineInvoiceAmount != lineInvoiceAmount_Computed)
+                            {
+                                throw new ApplicationException("Wrong Line Invoice Amount");
+                            }
                         }
                     }
                 }
@@ -554,12 +557,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     subTotal_Local = MethodHelper.Round(lines.Sum(s => s.LocalCurrencyAmount), 2);
                 }
 
-                if (entityPM.SubTotalInInvoiceCurrency != subTotal)
+                if (!entityPM.IsExternalEntity && entityPM.SubTotalInInvoiceCurrency != subTotal)
                 {
                     throw new ApplicationException("Wrong Sub Total Amount");
                 }
 
-                if (entityPM.SubTotalInLocalCurrency != subTotal_Local)
+                if (!entityPM.IsExternalEntity && entityPM.SubTotalInLocalCurrency != subTotal_Local)
                 {
                     throw new ApplicationException("Wrong Sub Total Local Amount");
                 }
@@ -767,12 +770,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                 }
 
-                if (entityPM.AmountInInvoiceCurrency != Amount)
+                if (!entityPM.IsExternalEntity && entityPM.AmountInInvoiceCurrency != Amount)
                 {
                     throw new ApplicationException("Wrong Invoice Total Amount");
                 }
 
-                if (entityPM.AmountInLocalCurrency != Amount_Local)
+                if (!entityPM.IsExternalEntity && entityPM.AmountInLocalCurrency != Amount_Local)
                 {
                     throw new ApplicationException("Wrong Invoice Total Local Amount");
                 }

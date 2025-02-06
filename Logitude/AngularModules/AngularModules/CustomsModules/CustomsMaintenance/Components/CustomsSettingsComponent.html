@@ -587,7 +587,7 @@
                         <td style="padding:2px;">
                         </td>
 
-                        <td style="padding:2px;" width="250px">
+                        <td style="padding-top:7px;" width="250px">
                             <table>
                                 <tr>
                                     <td stye=" width: 70px">
@@ -613,7 +613,7 @@
                         </td>
 
                         <!--UnfConnectionString-->
-                        <td style="padding:2px;" width="250px">
+                        <td style=" padding-top:7px;" width="250px">
                             <table>
                                 <tr>
                                     <td stye=" width: 70px">
@@ -657,11 +657,20 @@
                         <td style="padding:2px;">
                             <LogLabel [ObjectFieldName]="'UServerServiceAddress'"
                                       [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
+                                      [DataContext]="DataContext"
+                                      
+                                      >
 
                             </LogLabel>
                         </td>
-                        <!--UServerServiceAddress-->
+                        <!--ForbiddenSigns-->
+                        <td style="padding:2px;">
+                            <LogLabel [ObjectFieldName]="'ForbiddenSigns'"
+                                      [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext"
+                                      [Text]="'תווים אסורים בשימוש'">
+                            </LogLabel>
+                        </td>
                         <td style="padding:2px;">
                         </td>
                     </tr>
@@ -690,6 +699,18 @@
                                         [Text]="UServerServiceAddress"
                                         [IsMultiline]="true"></LogTextBox>
                         </td>
+                        <!--ForbiddenSigns-->
+                        <td style="padding:2px;">
+                            <LogTextBox #ForbiddenSignsTextBox
+                                    [ObjectFieldName]="'ForbiddenSigns'"
+                                    [InputType]="'nText'"
+                                    [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [HideColumns]="true"
+                                    [IsMultiline]="true"
+                                    [Text]="ForbiddenSigns">
+                                </LogTextBox>
+                        </td>
 
                         <!---->
                         <td style="padding:2px;">
@@ -703,7 +724,7 @@
 
         <!--split Zones-->
         <tr class="FormFieldRow" >
-            <td colspan="4"  style="border: 1px solid rgb(59, 179, 226);  ">
+            <td colspan="4"  style="border: 1px solid rgba(59, 179, 226, 0);  ">
                 <table>
                     <!--<tr><td colspan="3" >המסרים למכס מושבתים</td><td></td></tr>-->
                     <tr>
@@ -763,7 +784,7 @@
 
             <!-- HSM -->
             <tr class="FormFieldRow" >
-                <td colspan="4"  style="border: 1px solid rgb(59, 179, 226);  ">
+                <td colspan="4"  style="border: 1px solid rgba(59, 179, 226, 0);  ">
                     <table>
                         <tr>
                             <td class="tbl1Label" style="width: 90px; " >
@@ -824,7 +845,7 @@
 
               <!-- OCR -->
               <tr class="FormFieldRow" >
-                <td colspan="4"  style="border: 1px solid rgb(59, 179, 226);  ">
+                <td colspan="4"  style="border: 1px solid rgba(59, 179, 226, 0);  ">
                     <table>
                         <tr>
                             <td class="tbl1Label" style="width: 90px; ">

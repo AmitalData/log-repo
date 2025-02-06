@@ -20,6 +20,7 @@ using System.Data.SqlClient;
 using Simplog.Data.Helpers;
 using System.Data;
 using Simplog.Data.CommonDataModel;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -171,6 +172,40 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 scope.Complete();
             }
         }
+
+
+
+        public void RecheckOpenReconcilationDrafts(List<LedgerTransactionPM> OpenRecilationDrafts)
+        {
+            int tenant;
+            if (OpenRecilationDrafts != null && OpenRecilationDrafts.Count > 0)
+            {
+                tenant = OpenRecilationDrafts.First().Tenant;
+                var transIdList = OpenRecilationDrafts.Select(r => r.Id).ToList();
+                LedgerTransactionQueryService qs = new LedgerTransactionQueryService((MainContext as IAccountingContext));
+                List<string> isReconciledReferences = new List<string>();
+                var listPM = qs.GetLedgerTransactionPMsByIdList(transIdList, tenant);
+                bool isValid = true;
+                foreach (var pm in listPM)
+                {
+                    var draft = OpenRecilationDrafts.First(r => r.Id == pm.Id);
+                    if (pm.IsReconciled || pm.OpenAmount != draft.OpenAmount)
+                    {
+                        isValid = false;
+                        isReconciledReferences.Add(pm.Reference1);
+                    }
+                }
+                if (!isValid)
+                {
+                    var showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                    var msg = TranslateTextsClass.Translate("LedgerTransaction.O.ReconciledInDraft", tenant, showLocals);
+                    throw new ApplicationException(msg + Environment.NewLine + string.Join(Environment.NewLine, isReconciledReferences));
+                }
+            }
+        }
+
+
+
         internal void UpdateBankAccount(LedgerTransactionPM entityPM)
         {
             BankAccountQueryService qs = new BankAccountQueryService((MainContext as IAccountingContext));

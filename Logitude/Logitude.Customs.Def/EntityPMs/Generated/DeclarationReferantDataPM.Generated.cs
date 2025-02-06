@@ -1170,6 +1170,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string vesselName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VesselName  
+	   {
+	    
+	     get
+		{
+		   return vesselName;
+		 }
+		 set
+		 {
+		   if(vesselName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VesselName",OldValue=vesselName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vesselName=value;
+		   }
+			
+		 }
+	   }
+	  private string vessel ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Vessel  
+	   {
+	    
+	     get
+		{
+		   return vessel;
+		 }
+		 set
+		 {
+		   if(vessel != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Vessel",OldValue=vessel,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vessel=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

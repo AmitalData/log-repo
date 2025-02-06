@@ -73,10 +73,15 @@ export class MainPageComponent {
 
 		if (filters.CustomsItemHierarchic === '') {
 			filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
-			filters.Reamarks = true;
-			filters.Rules = true;
+			filters.Reamarks = false;
+			filters.Rules = false;
+			// filters.Reamarks = true;
+			// filters.Rules = true;
 		}
 
+		if (filters.CustomsItemHierarchic == "6" || filters.CustomsItemHierarchic == "7" || filters.CustomsItemHierarchic == "6,7") {
+			filters.CustomsItemHierarchic = null;
+		}
 		// add prevent another search while loading
 		if (this.isLoadingMode.getValue()) {
 			return;

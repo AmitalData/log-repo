@@ -65,6 +65,9 @@ using JWT.Algorithms;
 using JWT.Exceptions;
 using System.Runtime.Remoting.Contexts;
 using Stimulsoft.Base.Gauge.GaugeGeoms;
+using WebFreight.Web.Helpers.CheckHealthHelper;
+using Logitude.Customs.BL.BL;
+using System.Threading.Tasks;
 namespace WebFreight.Web
 {
 #if DEBUG
@@ -3374,29 +3377,33 @@ namespace WebFreight.Web
 
         [HttpGet]
         [ActionName("CheckHealth")]
-        public HttpResponseMessage CheckHealth()
+        public async Task<HttpResponseMessage> CheckHealth()
         {
             Stopwatch stopwatch = new Stopwatch();
             try
             {
-                                
-
-
                 stopwatch.Start();
-                IWebFreightContext context = WebFreightContext.GetContext(0);
-                context.ObjectTables.FirstOrDefault();
+                CheckHealthService checkHealthService = new CheckHealthService();
+                checkHealthService.CheckHealth();
 
                 stopwatch.Stop();
-
                 long elapsedTime = stopwatch.ElapsedMilliseconds;
-
                 string time = elapsedTime.ToString();
+                var cpuPercentage = await checkHealthService.GetCpuPercentageAsync();
+                if (cpuPercentage > 80)
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, $"Machine is not healthy \n Time of query {time}"); 
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, $"Machine is  healthy \n Time of query {time}");
 
-                return Request.CreateResponse(HttpStatusCode.OK, time);
+                 
+                }
             }
             catch (Exception ex)
             {
-                stopwatch.Stop(); 
+                stopwatch.Stop();
 
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, ex.Message);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

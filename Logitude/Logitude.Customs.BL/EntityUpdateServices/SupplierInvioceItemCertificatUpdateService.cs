@@ -776,7 +776,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 else if (cert.AttachmentTypeCode == "1" || cert.AttachmentTypeCode == "2")
                 {
-                    if (string.IsNullOrEmpty(cert.CertificateNumber) || string.IsNullOrEmpty(cert.ReqConfirmationTypeCode) || string.IsNullOrEmpty(cert.ResConfirmationTypeCode) || !string.IsNullOrEmpty(cert.CertificateExemptionTypeCode))
+                    if (string.IsNullOrWhiteSpace(cert.CertificateNumber) || string.IsNullOrWhiteSpace(cert.ReqConfirmationTypeCode) || string.IsNullOrWhiteSpace(cert.ResConfirmationTypeCode) || !string.IsNullOrWhiteSpace(cert.CertificateExemptionTypeCode))
                     {
                         statusCode = "2";
                     }
@@ -787,7 +787,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 else if (cert.AttachmentTypeCode == "4")
                 {
-                    if (string.IsNullOrEmpty(cert.CertificateExemptionTypeCode) || string.IsNullOrEmpty(cert.ReqConfirmationTypeCode) || !string.IsNullOrEmpty(cert.CertificateNumber) || !string.IsNullOrEmpty(cert.ResConfirmationTypeCode))
+                    if (string.IsNullOrWhiteSpace(cert.CertificateExemptionTypeCode) || string.IsNullOrWhiteSpace(cert.ReqConfirmationTypeCode) || !string.IsNullOrWhiteSpace(cert.CertificateNumber) || !string.IsNullOrWhiteSpace(cert.ResConfirmationTypeCode))
                     {
                         statusCode = "2";
                     }

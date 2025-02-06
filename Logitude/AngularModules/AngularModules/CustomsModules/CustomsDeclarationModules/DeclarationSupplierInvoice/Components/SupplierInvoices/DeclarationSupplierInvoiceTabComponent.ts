@@ -974,7 +974,7 @@ export class DeclarationSupplierInvoiceTabComponent
             FileExtension = temp[temp.length - 1];
             //this.FileName = file.name.replace("." + FileExtension, "");
             this.File = file;
-            if (FileExtension != 'csv') {
+            if (FileExtension.toLowerCase() != 'csv') {
                 this.ShowMessage('חובה קובץ CSV');
                 return;
             }

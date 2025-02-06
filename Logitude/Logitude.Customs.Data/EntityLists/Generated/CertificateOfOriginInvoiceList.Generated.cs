@@ -36,6 +36,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string DescriptionOfInvoice  { get; set; }
        [DataMember]
        public bool IsInvoicesForPrint  { get; set; }
+       [DataMember]
+       public bool IsInvoiceConnected  { get; set; }
    }
 
 }

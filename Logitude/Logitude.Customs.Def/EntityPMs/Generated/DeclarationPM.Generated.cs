@@ -6183,6 +6183,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cooStatusName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CooStatusName  
+	   {
+	    
+	     get
+		{
+		   return cooStatusName;
+		 }
+		 set
+		 {
+		   if(cooStatusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CooStatusName",OldValue=cooStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cooStatusName=value;
+		   }
+			
+		 }
+	   }
+	  private string cooStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CooStatusCode  
+	   {
+	    
+	     get
+		{
+		   return cooStatusCode;
+		 }
+		 set
+		 {
+		   if(cooStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CooStatusCode",OldValue=cooStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cooStatusCode=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

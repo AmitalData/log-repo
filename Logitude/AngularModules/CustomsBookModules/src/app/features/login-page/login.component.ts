@@ -132,7 +132,7 @@ export class LoginComponent implements OnInit {
         if (userData.MustChangePassword) {
             //Must Change Password
             //this.errorMessage = "Must Change Password";
-            this.router.navigate(["customs-book/changepassword"], { queryParams: { email: this.Email } });
+            this.router.navigate(["changepassword"], { queryParams: { email: this.Email } });
         } else if (userData.PasswordExpirationDateMessage) {
             //Password Expired
             this.errorMessage = "Password Expired";
@@ -265,10 +265,9 @@ export class LoginComponent implements OnInit {
     public ForgotPasswordClicked() {
         //this.Tenant = this.route.snapshot.queryParams?.tenant;
         if (this.Tenant)
-
-            this.router.navigate(["customs-book/resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
+            this.router.navigate(["resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
         else
-            this.router.navigate(["customs-book/resetpassword"]);
+            this.router.navigate(["resetpassword"]);
     }
 
 }

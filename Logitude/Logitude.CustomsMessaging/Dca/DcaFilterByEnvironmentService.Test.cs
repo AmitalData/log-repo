@@ -22,8 +22,9 @@ SendMN_MSG2791_ExportDeliveryAnswerMessage_Out.IL941079089.IL513251751.2022-11-0
 SendMN_MSG2791_ExportDeliveryAnswerMessage_Out.IL941079089.IL513251751.2022-11-06_10-53-47-258.146233.Pre.xml";
             var res=myData.Split( new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
             var OutgoingMessage=res.Select(r => new NG_9101_MSG_OutgoingMessageResponseOutgoingMessage() { Filename = r }).ToList();
-            var dcaUtil = new DcaFilterByEnvironmentService();
-            var resFilterByEnvironmentOutGoing = dcaUtil.FilterByEnvironmentOutGoing(Tenant, OutgoingMessage);
+			List<string> PrefixExportEnvironment = new List<string>();
+			var dcaUtil = new DcaFilterByEnvironmentService();
+            var resFilterByEnvironmentOutGoing = dcaUtil.FilterByEnvironmentOutGoing(Tenant, OutgoingMessage, PrefixExportEnvironment);
             var outgoingMessageFilterByEnvironment = resFilterByEnvironmentOutGoing.OutgoingMessage;
 
             var DCAFileModelList = res.Select(r => new Customs.BL.Utils.DCAFileModel() { SelectedFileDownload = r }).ToList();

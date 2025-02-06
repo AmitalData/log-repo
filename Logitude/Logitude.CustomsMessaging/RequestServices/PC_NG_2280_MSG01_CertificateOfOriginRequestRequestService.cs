@@ -168,7 +168,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 		public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail[] GetCertificateOfOriginRequestInvoiceDetail(List<CertificateOfOriginInvoicePM> CertificateOfOriginInvoices, List<CertificateOfOriginItemPM> CertificateOfOriginItems)
         {
             var CertificateOfOriginInvoicesDetails = new List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail>();
-			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoicesForPrint == true);
+			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoiceConnected == true);
 			foreach (var item in CertificateOfOriginInvoices)
 			{
 				var CertificateOfOriginInvoiceDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail()
@@ -190,8 +190,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					    {
 					    	ItemSerial = Convert.ToInt32(item1.ItemSerial),
 							ItemSerialSpecified = true,
-							ItemId = item1.ItemId,
-					    	OriginCriterion = item1.OriginCriterionCodeName,
+                            ItemId = !string.IsNullOrEmpty(item1.ItemId) ? item1.ItemId : "",
+                            OriginCriterion = item1.OriginCriterionCodeName,
 					    	MarksAndNumbers = item1.MarksAndNumbers,
 					    	PackageQuantity = Convert.ToInt32(item1.PackageQuantity),
 							PackageQuantitySpecified = true,
@@ -202,6 +202,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					    	MeasureType = item1.MeasureType,
 					    
 					    };
+
 						CertificateOfOriginRequestItemDetailList.Add(CertificateOfOriginRequestItemDetail);
 					}
 					
@@ -220,7 +221,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			var CertificateOfOriginInvoicesDetails = new List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail>();
 			var CertificateOfOriginInvoiceDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail();
 
-			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoicesForPrint == true);
+			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoiceConnected == true);
 			foreach (var item in CertificateOfOriginInvoices)
 			{
 				if (CertificateOfOriginInvoices.First() == item)
@@ -255,7 +256,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					{
 						ItemSerial = Convert.ToInt32(item1.ItemSerial),
 						ItemSerialSpecified = true,
-						ItemId = item1.ItemId,
+						ItemId = !string.IsNullOrEmpty(item1.ItemId) ? item1.ItemId : "",
 						OriginCriterion = item1.OriginCriterionCodeName,
 						MarksAndNumbers = item1.MarksAndNumbers,
 						PackageQuantity = Convert.ToInt32(item1.PackageQuantity),
@@ -268,7 +269,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 					};
 
-					CertificateOfOriginRequestItemDetailList.Add(CertificateOfOriginRequestItemDetail);
+                    CertificateOfOriginRequestItemDetailList.Add(CertificateOfOriginRequestItemDetail);
 				}
 			}
 			CertificateOfOriginInvoiceDetail.CertificateOfOriginRequestItemDetail = CertificateOfOriginRequestItemDetailList.ToArray();

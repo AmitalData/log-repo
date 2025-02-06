@@ -62,7 +62,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             SetReferenceFields(entityPM);
             SetTaxReportLineStatusCodeAndLineTypeCode(entityPM);
             Validate(entityPM);
-            UpdateStatusByTransmitStatusCode(entityPM,entityPOCO);
+            UpdateStatusByTransmitStatusCode(entityPM, entityPOCO);
 
             entityPM.LastUpdateDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             // TASK 43057
@@ -88,12 +88,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 entityPM.UpdatedByUserId = GetLoggedContact(entityPM.Tenant).Id;
-                if(entityPM.OutputOrInput == TaxReportLineInputType)
+                if (entityPM.OutputOrInput == TaxReportLineInputType)
                 {
                     UpdateAPInvoiceIfIsEquipmentChanged(entityPM, entityPOCO);
                 }
             }
-                
+
             CheckSmallCashAPinvoiceFromThePreviousMonth(entityPM);
 
             base.OnUpdating(entityPM, entityPOCO);
@@ -131,7 +131,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private static void SubmitAPInvoiceChanges(int tenant, APInvoicePM invoice)
         {
             IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
-            APInvoiceService aRInvoiceService = new APInvoiceService(MyContext,tenant);
+            APInvoiceService aRInvoiceService = new APInvoiceService(MyContext, tenant);
             aRInvoiceService.Update(invoice);
         }
         private static void RecalculateReportTotals(TaxReportLinePM taxReportLinePM)
@@ -171,8 +171,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             JournalAdditionalDataPM journalAdditionalDataPM = GetJournalAdditionalDataPM(taxReportLine);
             if (journalAdditionalDataPM != null)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Before UpdateJournalJournalAdditionalData : " + journalAdditionalDataPM);
+
                 journalAdditionalDataPM = MapJournalAdditionalDataPM(journalAdditionalDataPM, taxReportLine);
                 SaveChangesOnJournalAdditionalData(journalAdditionalDataPM);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("After UpdateJournalJournalAdditionalData : " + journalAdditionalDataPM);
 
             }
         }
@@ -210,13 +213,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            
+
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
-        private  void SetTaxReportLineStatusCodeAndLineTypeCode(TaxReportLinePM entityPM)
+        private void SetTaxReportLineStatusCodeAndLineTypeCode(TaxReportLinePM entityPM)
         {
-       
+
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             FullAccountingSetting setting = GetTenantFullAccountingSetting(entityPM.Tenant);
             string vatNumber = tenantQuery.GetTenantVatNumber(entityPM.Tenant);
@@ -290,7 +293,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         }
 
                     }
-                    
+
                 }
 
                 if (entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0)
@@ -335,12 +338,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                     else
                     {
-                        if(entityPM.VatNumber == "000000000")
+                        if (entityPM.VatNumber == "000000000")
                         {
                             if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = entityPM.LineTypeCode == LineType_SmallCashbookAPInvoice ? "6" : "2";
                             return;
                         }
-                       
+
                         else
                         {
                             var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
@@ -387,7 +390,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(entityPM);
 
             }
-            
+
             if (entityPM.StatusCode != "2" && entityPM.StatusCode != "1" && entityPM.StatusCode != "7")// these statuses are stronger than 11 
             {
                 string[] validStatuses = { "T", "S" };
@@ -395,13 +398,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //var _FullAccountingSetting = FullAccountingSettingQueryService.Get(entityPM.Tenant);
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-           
+
                     ConfirmationNumberDefaultQuery confirmationNumberDefaultQuery = new ConfirmationNumberDefaultQuery(entityPM.Tenant);
                     IQueryable<ConfirmationNumberDefaultList> iQueryableEntityList = confirmationNumberDefaultQuery.GetIQueryableEntityListByTenant(entityPM.Tenant);
                     ConfirmationNumberDefaultList confirmationNumberDefaultList = iQueryableEntityList.Where(a => a.FromDate <= entityPM.ReferenceDate).FirstOrDefault();
-                     if (validStatuses.Contains(entityPM.LineTypeCode) && entityPM.VatAmount > confirmationNumberDefaultList?.AmountForConfirmationNumber && string.IsNullOrEmpty(entityPM.ConfirmationNumber))
+                    if (validStatuses.Contains(entityPM.LineTypeCode) && entityPM.VatAmount > confirmationNumberDefaultList?.AmountForConfirmationNumber && string.IsNullOrEmpty(entityPM.ConfirmationNumber))
                     {
                         entityPM.StatusCode = "11";
+                        JournalPM journal = GetJournalPM(entityPM);
+                        ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(entityPM.Tenant);
+                        var ARInvoice = arInvoiceQuery.GetSinglePM(journal?.AccountingEntityId, entityPM.Tenant);
+                        if (ARInvoice?.ConfirmationNumberStatus == "6")
+                            entityPM.TransmitStatusCode = "3";
+                    }
+                    if (validStatuses.Contains(entityPM.LineTypeCode) && entityPM.VatAmount > confirmationNumberDefaultList?.AmountForConfirmationNumber && !string.IsNullOrEmpty(entityPM.ConfirmationNumber))
+                    {
+                        JournalPM journal = GetJournalPM(entityPM);
+                        ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(entityPM.Tenant);
+                        var ARInvoice = arInvoiceQuery.GetSinglePM(journal?.AccountingEntityId, entityPM.Tenant);
+                        if (ARInvoice?.ConfirmationNumberStatus == "6")
+                            entityPM.TransmitStatusCode = "1";
                     }
                     scope.Complete();
                 }
@@ -409,7 +425,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
-  
+
         private void CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(TaxReportLinePM entityPM)
         {
             if (entityPM.LineTypeCode == LineTypeCode_RegularTransactions ||
@@ -440,19 +456,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.StatusCode = TaxReportLineStatusValues.SmallCashAPinvoiceFromThePreviousMonth;
             }
         }
-        private void UpdateStatusByTransmitStatusCode(TaxReportLinePM taxReportLinePM, TaxReportLine taxReportLine )
+        private void UpdateStatusByTransmitStatusCode(TaxReportLinePM taxReportLinePM, TaxReportLine taxReportLine)
         {
-            if(taxReportLinePM.ChangeSetOp == ChangeSetOperation.Update)
+            if (taxReportLinePM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                    if(taxReportLinePM.TransmitStatusCode != "0" && taxReportLinePM.StatusCode =="7")
-                    {
-                        taxReportLinePM.StatusCode = "6";
-                    }
-                
+                if (taxReportLinePM.TransmitStatusCode != "0" && taxReportLinePM.StatusCode == "7")
+                {
+                    taxReportLinePM.StatusCode = "6";
+                }
+
             }
         }
         private bool AreAllDigits(string s) => s.All(char.IsDigit);
-        private bool AreAllDigitsZero(string s) => s.All(c=>c=='0');
+        private bool AreAllDigitsZero(string s) => s.All(c => c == '0');
         private void CheckIfInvoiceNumberIsNotValid(TaxReportLinePM entityPM)
         {
             if (string.IsNullOrEmpty(entityPM.Reference))
@@ -485,9 +501,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private string ModifyVatNumberToValidLength(string vatnumber)
         {
             string vatNumber = null;
-            if (vatnumber != null ) {
-                vatNumber= vatnumber.Trim();
-                if(vatNumber.Length > 9)
+            if (vatnumber != null)
+            {
+                vatNumber = vatnumber.Trim();
+                if (vatNumber.Length > 9)
                 {
                     vatNumber = vatNumber.Substring(1, 9);
                 }
@@ -496,36 +513,36 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             return vatNumber;
         }
-       
+
         protected override void Validate(TaxReportLinePM entityPM)
         {
-            
-           
+
+
             base.Validate(entityPM);
         }
-    
+
         private static void SetReferenceFields(TaxReportLinePM taxreportLine)
         {
             if (taxreportLine.Reference == null) SetTaxReportLineReferenceGroup(ReferenceGroupDefaultValue, taxreportLine);
             else
             {
-                taxreportLine.Reference = RemoveSpecialChars(taxreportLine.Reference);                
+                taxreportLine.Reference = RemoveSpecialChars(taxreportLine.Reference);
                 bool containsLetters = CheckIfReferenceContainsLetters(taxreportLine.Reference);
                 if (containsLetters)
-                {                   
+                {
                     SetReferenceGroupForReferencesWithPrefex(taxreportLine);
-                   
+
                 }
                 else SetTaxReportLineReferenceGroup(ReferenceGroupDefaultValue, taxreportLine);
-                TrimMoreThan9Chars(taxreportLine);               
-            }                    
+                TrimMoreThan9Chars(taxreportLine);
+            }
         }
         private static bool CheckIfReferenceContainsLetters(string reference)
         {
             Regex alphabet = new Regex("([A-Za-z])");
-          return alphabet.IsMatch(reference);
+            return alphabet.IsMatch(reference);
         }
-        private static  void SetTaxReportLineReferenceGroup(string ReferenceGroup, TaxReportLinePM taxreportLine)
+        private static void SetTaxReportLineReferenceGroup(string ReferenceGroup, TaxReportLinePM taxreportLine)
         {
             taxreportLine.ReferecneGroup = ReferenceGroup;
         }
@@ -549,7 +566,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
         private static bool CheckIfReferenceHasPrefex(string reference, string referenceChar)
-        {           
+        {
             MatchCollection prefix = Regex.Matches(referenceChar, @"^[a-zA-Z]*$");
             return prefix.Count != 0 ? true : false;
         }
@@ -563,11 +580,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             return reference;
         }
-       private static void  TrimMoreThan9Chars(TaxReportLinePM taxreportLine)
+        private static void TrimMoreThan9Chars(TaxReportLinePM taxreportLine)
         {
             if (taxreportLine.Reference.Length > 9)
             {
-                taxreportLine.Reference= taxreportLine.Reference.Substring(taxreportLine.Reference.Length - 9);
+                taxreportLine.Reference = taxreportLine.Reference.Substring(taxreportLine.Reference.Length - 9);
             }
         }
 

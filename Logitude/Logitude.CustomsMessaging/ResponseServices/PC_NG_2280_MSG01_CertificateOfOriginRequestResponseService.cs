@@ -351,7 +351,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			var supplierInvoices = supplierInvoiceQueryService.GetSupplierInvoicesForDeclaration(declarationId, tenant, true);
 
 			var IsUpdated = false;
-			var InvoiceItems = certificateOfOriginPM.CertificateOriginInvoiceItems.FindAll(x => x.IsInvoicesForPrint == true);
+			var InvoiceItems = certificateOfOriginPM.CertificateOriginInvoiceItems.FindAll(x => x.IsInvoiceConnected == true);
 			foreach (var supplierInvoice in supplierInvoices)
 			{
 				if (InvoiceItems.Any(x => x.InvoicesIdUry == supplierInvoice.SequenceNumeric))

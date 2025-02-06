@@ -1355,13 +1355,25 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataManager.GetData();
                         break;
                     }
-                case "ECCR":
+                 case "ECCR":
                     {
                         CustomsCollateralLoader myDataManager = new CustomsCollateralLoader(filters, reportFliter.tenant);
                         dataProvider = myDataManager.GetData();
                         break;
                     }
-                    #endregion
+                 case "COO":
+                    {
+                        CertificateOfOriginLoader myDataManager = new CertificateOfOriginLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+                case "COOC":
+                    {
+                        CertificateOfOriginCountLoader myDataManager = new CertificateOfOriginCountLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+                     #endregion
             }
             return dataProvider;
         }
@@ -1369,14 +1381,10 @@ namespace WebFreight.Web.Helpers
         public Dictionary<string, dynamic> myProperties;
         public List<ISlvLeaf> mylist ;
 
-        public List<ISlvLeaf> BuildDataProviderJson(string code)
+        public string GetDataProviderName(string code)
         {
-            LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
-            XmlSerializer serializer = new XmlSerializer(typeof(string));
-            MemoryStream memstream = new MemoryStream();
-            string dataProviderName = "";
-            string dataProvider = null;
-             dataprovider=null;
+            string dataProviderName = string.Empty;
+
             switch (code)
             {
                 #region
@@ -1873,6 +1881,16 @@ namespace WebFreight.Web.Helpers
                     #endregion
             }
 
+            return dataProviderName;
+        }
+
+        public List<ISlvLeaf> BuildDataProviderJson(string code)
+        {
+            LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
+            XmlSerializer serializer = new XmlSerializer(typeof(string));
+            MemoryStream memstream = new MemoryStream();
+            string dataProviderName = GetDataProviderName(code);
+
             mylist = new List<ISlvLeaf>();
             mylist = GetPropertyNames(dataProviderName, mylist);
 
@@ -1885,6 +1903,7 @@ namespace WebFreight.Web.Helpers
             public  string content { get; set; } // Example: "<span>Child</span>"
             public bool expanded { get; set; }
             public  List<ISlvLeaf> children { get; set; }
+            public Type type { get; set; }
         }
         public List<ISlvLeaf> GetPropertyNames(string dataProviderName, List<ISlvLeaf> mylist)
         {
@@ -1917,7 +1936,8 @@ namespace WebFreight.Web.Helpers
                         {
                             content = property.Name,
                             expanded = false,
-                            children = new List<ISlvLeaf>()
+                            children = new List<ISlvLeaf>(),
+                            type = property.PropertyType
                         };
                         mylist.Add(iSlvLeaf);
                         
@@ -2680,7 +2700,7 @@ namespace WebFreight.Web.Helpers
                         //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "EXDE", Name = "ExportDeclarationDataProvider", BusinessObjectValue = reportDataProvider };
 
-                            break;
+                             break;
                         }
                 case "ECCR":
                     {
@@ -2690,9 +2710,27 @@ namespace WebFreight.Web.Helpers
                         //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ECCR", Name = "CustomsCollateralDataProvider", BusinessObjectValue = reportDataProvider };
-
-                            break;
+                             break;
                         }
+
+                case "COO":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(CertificateOfOriginDataProvider));
+                        CertificateOfOriginDataProvider reportDataProvider = (CertificateOfOriginDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "COO", Name = "CertificateOfOriginDataProvider", BusinessObjectValue = reportDataProvider };
+                        break;
+                    }
+
+                case "COOC":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(CertificateOfOriginCountDataProvider));
+                        CertificateOfOriginCountDataProvider reportDataProvider = (CertificateOfOriginCountDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "COOC", Name = "CertificateOfOriginCountDataProvider", BusinessObjectValue = reportDataProvider };
+ 
+                        break;
+                    }
             }
             return stimulReportDataProviderDetails;
         }

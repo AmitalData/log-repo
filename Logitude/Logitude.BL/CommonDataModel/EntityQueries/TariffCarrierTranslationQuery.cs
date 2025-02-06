@@ -43,8 +43,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                      CarrierId = a.CarrierId,
                      PortCode = a.Port == null ? "" : a.Port.Code,
                      PortName = a.Port == null ? "" : a.Port.EnglishName,
-                     CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
-                     UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                     CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                     UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
                      SearchFields = a.SearchFields,
                  }).FirstOrDefault();
 
@@ -69,8 +69,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                      CarrierId = a.CarrierId,
                      PortCode = a.Port == null ? "" : a.Port.Code,
                      PortName = a.Port == null ? "" : a.Port.EnglishName,
-                     CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
-                     UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                     CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                     UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
                      SearchFields = a.SearchFields,
                  }).ToList();
 

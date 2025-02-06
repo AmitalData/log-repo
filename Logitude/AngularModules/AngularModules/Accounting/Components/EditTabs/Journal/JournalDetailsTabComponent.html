@@ -443,21 +443,24 @@
             </td>-->
 
             <td style="height: 100%;padding-bottom: 88px;">
-              <div class="CellContent" style="bottom: 75px;">
-                  <logitude-edit-grid GridWidth="100%"
+              <div class="CellContent" style="bottom: 75px;"  >
+                  <logitude-edit-grid 
+                                     GridWidth="100%"
                                       GridHeight="100%"
                                       [ItemSource]="JournalLines"
                                       [UseVirtuallization]="true"
                                       [IsReadOnly]="journalDisabled"
                                       (RowEnded)="OnRowEnded($event)"
-                                      (Ondblclick)="OnFocus()">
+                                      (Ondblclick)="OnFocus()"
+                                    
+                                     >
 
                       <!-- Line -->
                       <log-column [header]="'JournalLine.F.Line' | TextCodeTranslationPipe" [width]="'40'" [Alignment]="isRTL ? 'right' : 'left'">
                           <ng-template let-item>
                               <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate [NextMoveWithEnter]="true">
                                   <div class="TextTrimming" text-start>
-                                      <span>{{item.Line}}</span>
+                                    <span>{{JournalLines?.Collection.indexOf(item) + 1}}</span>
                                   </div>
                               </log-cell-template>
                           </ng-template>

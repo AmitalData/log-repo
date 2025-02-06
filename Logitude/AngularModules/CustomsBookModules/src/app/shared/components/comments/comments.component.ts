@@ -39,7 +39,15 @@ export class CommentsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
-      this.allComments = data;
+     this.allComments = data;
+     this.showComments = this.allComments.length > 0 ? true : false;
+     this.expandedArea = !this.showComments;
+
+     this.showMenuOpen = false; // initialize the menu to be closed
+    });
+
+    this.addCommentService.fullCommentsData.subscribe((data: RemarksClassificationList[]) => {
+      this.allComments = data?.filter(x => x.CustomsItemsID == this.currentItem?.CustomsItemID);
       this.showComments = this.allComments.length > 0 ? true : false;
       this.expandedArea = !this.showComments;
 

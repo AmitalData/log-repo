@@ -70,8 +70,9 @@ namespace Logitude.CustomsMessaging.Dca
 
         internal FilterByEnvironmentOutGoingResult FilterByEnvironmentOutGoing(
             int tenant,
-            List<NG_9101_MSG_OutgoingMessageResponseOutgoingMessage> outgoingMessage
-            )
+            List<NG_9101_MSG_OutgoingMessageResponseOutgoingMessage> outgoingMessage, List<string> PrefixExportEnvironment
+
+			)
         {
             var sbLocal = new StringBuilder();
             outgoingMessage = outgoingMessage ?? new List<NG_9101_MSG_OutgoingMessageResponseOutgoingMessage>();
@@ -90,7 +91,7 @@ namespace Logitude.CustomsMessaging.Dca
                     break;
                 case DcaFilterByEnvironment.Export:
                     sbLocal.Append(";FilterBy:Contains(_EX_)");
-                    outgoingMessage = outgoingMessage.Where(r => r.Filename.Contains("_EX_")).ToList();
+                    outgoingMessage = outgoingMessage.Where(r => r.Filename.Contains("_EX_") || PrefixExportEnvironment.Any(prefix => r.Filename.ToUpper().Contains(prefix.ToUpper()))).ToList();
 
                     break;
                 case DcaFilterByEnvironment.Import:

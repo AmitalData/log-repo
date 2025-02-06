@@ -45,7 +45,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סטטוס הקצאה&quot;"
   DefaultText="&quot;Confirmation Number Status&quot;"
-  Code="&quot;cd93&quot;"
+  Code="&quot;56cc&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;LocalName&quot;"
@@ -140,6 +140,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -216,6 +217,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -289,6 +291,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -365,6 +368,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -441,6 +445,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -506,6 +511,12 @@
       Code="&quot;5&quot;"
       Name="&quot;Confirmation number failed&quot;"
       LocalName="&quot;כשלון בקבלת הקצאה&quot;" />
+    <Record
+      Code="&quot;6&quot;"
+      LocalName="&quot;חשבונית מעוכבת&quot;"
+      Name="&quot;Delayed invoice&quot;"
+      SearchFields="&quot;&quot;"
+      InActive="false" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

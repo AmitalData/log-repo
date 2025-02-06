@@ -541,7 +541,7 @@ namespace WebFreight.Web.WebServices
 
 
                     UpdateDocument(commonContext, document);
-                    OpenKPIDocumentUploderQueue(extDocPM, commonContext);
+                    //OpenKPIDocumentUploderQueue(extDocPM, commonContext);
                     //else // In Azure
                     //{
                     //string filename = document.Id + "." + document.Extension;

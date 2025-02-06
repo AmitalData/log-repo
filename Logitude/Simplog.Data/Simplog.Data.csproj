@@ -270,6 +270,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsBookMainView.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CooStatusView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\RequestSheetInQueueMesView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DecTaxesByTaxTypeCodeView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DecCourierStatusesView.cs" />
@@ -313,6 +314,8 @@
     <Compile Include="Helpers\DocumentOutCopyArgs.cs" />
     <Compile Include="Helpers\FieldValueValidator.cs" />
     <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfiguration.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfigurationKey.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\EventRemark.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\CustomChildObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
@@ -752,6 +755,8 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\RuleUpdateHistory.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerProcedure.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationKeyMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\EventRemarkMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\CustomChildObjectMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ChildEntitiesCustomFieldMap.cs" />
@@ -778,6 +783,8 @@
     <Compile Include="InfrastructureModel\Mapping\RuleUpdateHistoryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SchedulerProcedureMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationKeyRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\EventRemarkRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\CustomChildObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ChildEntitiesCustomFieldRepository.cs" />

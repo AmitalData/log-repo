@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { GenericTableComponent, TableData } from '../generic-table/generic-table.component';
-import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, ItemData, MainEntity } from '../main-display/main-display.component';
+import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, MainEntity } from '../main-display/main-display.component';
 import { API_MainService, Filters } from '../../../core/API_MainService';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgStyle } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
@@ -13,13 +13,11 @@ import { ClasisificationGuidanceComponent } from "../clasisification-guidance/cl
 @Component({
   selector: 'app-accordion',
   standalone: true,
-  imports: [FontAwesomeModule, GenericTableComponent, ClasisificationGuidanceComponent, CommonModule, NgFor, NgForOf],
+  imports: [FontAwesomeModule, GenericTableComponent, ClasisificationGuidanceComponent, CommonModule, NgFor, NgForOf, NgStyle],
   templateUrl: './accordion.component.html',
   styleUrl: './accordion.component.css',
 })
 export class AccordionComponent implements OnInit {
-  // add input type customs:
-  // @Input() itemData: BehaviorSubject<ItemData> = new BehaviorSubject<ItemData>(null);
   @Input() currentItem: BehaviorSubject<CB_CustomsItemComputedDataList> = new BehaviorSubject<CB_CustomsItemComputedDataList>(null);
   itemData: CB_CustomsItemComputedDataList;
   isShowTableClassificationGuidance: boolean = false;
@@ -28,6 +26,8 @@ export class AccordionComponent implements OnInit {
   tableData1: TableData;
   tableData2: TableData;
   tableData3: TableData;
+  tableData3A: TableData;
+  tableData3B: TableData;
   tableData4: TableData;
   MainEntity: MainEntity = new MainEntity([], [], [], []);
 
@@ -38,6 +38,7 @@ export class AccordionComponent implements OnInit {
   faChevronDown = faChevronDown;
   noExistMessageClasisificationGuidance = "לא התקבלו הנחיות סיווג";
   isLoadingClasisificationGuidance = false;
+  resetClassificationGuidanceData: boolean = true;
 
   constructor(private API_MainService: API_MainService) {
     this.MainEntity = new MainEntity([], [], [], []);
@@ -45,12 +46,13 @@ export class AccordionComponent implements OnInit {
 
   ngOnInit() {
     this.InitData();
-
     this.listenToChanges();
   }
 
   listenToChanges() {
     this.currentItem.subscribe((data: CB_CustomsItemComputedDataList) => {
+      this.itemData = data;
+
       // init expandedAreas:
       this.expandedArea1 = false;
       this.expandedArea2 = false;
@@ -59,7 +61,7 @@ export class AccordionComponent implements OnInit {
       this.customsItemId = data?.CustomsItemID;
       if (this.customsItemId) {
         this.resetData();
-        this.buildAgreementsList(data?.agreementsList);
+        this.buildAgreementsList(data?.CustomsItemID, data?.PH_MeasurementUnitID);
         this.buildRegularityRequirementList();
         this.buildClasisificationGuidance();
       }
@@ -93,7 +95,7 @@ export class AccordionComponent implements OnInit {
     this.tableData3 = {
       columns: [
         { key: 'RequirementValidOrigin', displayName: 'המקור החוקי לדרישה', dataType: 'string', visible: true, width: '120px' },
-        { key: '', displayName: 'נובע מפרק/ פרט', dataType: 'string', visible: false },
+        { key: 'FromEpisodeDetail', displayName: 'נובע מפרק/ פרט', dataType: 'string', visible: true },
         { key: 'RequirementGoodsDescription', displayName: 'תיאור טובין בדרישה/תיאור הזהרות', dataType: 'string', visible: true },
         { key: 'Authority', displayName: 'גורם מאשר (הפניה לאיש קשר)', dataType: 'string', visible: true },
         { key: 'ConfirmationType', displayName: 'סוג אישור', dataType: 'string', visible: true },
@@ -107,6 +109,16 @@ export class AccordionComponent implements OnInit {
       ],
       data: []
     };
+    // tableData3 is contain full data of tableData3A and tableData3B:
+    this.tableData3A = {
+      columns: this.tableData3.columns,
+      data: []
+    };
+    this.tableData3B = {
+      columns: this.tableData3.columns,
+      data: []
+    };
+
     this.tableData4 = {
       columns: [
         { key: 'classificationGuidanceNumber', displayName: 'מספר הנחיה', dataType: 'button', visible: true },
@@ -124,7 +136,10 @@ export class AccordionComponent implements OnInit {
     this.tableData1.data = [];
     this.tableData2.data = [];
     this.tableData3.data = [];
+    this.tableData3A.data = [];
+    this.tableData3B.data = [];
     this.tableData4.data = [];
+    this.ClassificationGuidanceId.next("");
   }
 
   handleButtonClick(data: { event: Event, row: any, key: string }): void {
@@ -137,11 +152,21 @@ export class AccordionComponent implements OnInit {
   }
 
   // שיעורי מס
-  buildAgreementsList(agreementsList: CB_TariffList[]) {
-    if (agreementsList?.length == 0) return;
-    this.MainEntity.CB_TariffList = agreementsList;
-    this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
-    this.tableData2.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName == 'מס קניה');
+  buildAgreementsList(customsItemID: number, measurementUnitID: number) {
+    if (!customsItemID || !measurementUnitID) return;
+
+    this.API_MainService.GetCustomsBookAgreementLevelData(customsItemID, measurementUnitID).subscribe(
+      (data: any) => {
+        const agreementsList: CB_TariffList[] = data.body;
+        if (agreementsList?.length == 0) return;
+        this.MainEntity.CB_TariffList = agreementsList;
+        this.tableData1.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName != 'מס קניה');
+        this.tableData2.data = this.MainEntity.CB_TariffList.filter(x => x.TradeAgreementName == 'מס קניה');
+      },
+      (error) => {
+        console.log(error.message);
+      }
+    );
   }
 
   // דרישות חוקיות
@@ -152,6 +177,8 @@ export class AccordionComponent implements OnInit {
         if (!result) return;
         this.MainEntity.CB_RequirementComputedDataList = result;
         this.tableData3.data = this.MainEntity.CB_RequirementComputedDataList;
+        this.tableData3A.data = this.tableData3.data?.filter(item => !item.RequirementValidOrigin.includes("אישי"));
+        this.tableData3B.data = this.tableData3.data?.filter(item => item.RequirementValidOrigin.includes("אישי"));
       },
       (error) => {
         console.log(error.message);

@@ -72,7 +72,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
-        this.GetVatTypePercentegeListByDates();
+        //this.GetVatTypePercentegeListByDates();
         this.InitializeVendorLov();
         this.InitLOVFilters();
 
@@ -498,6 +498,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
             this.invoiceDate = value;
             this.EntityPM.InvoiceDate = value;
             this.ComputeAPInvoiceDueDate();
+            this.GetVatTypePercentegeListByDates();
         }
     }
 

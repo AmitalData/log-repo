@@ -79,13 +79,16 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             RecoCallback recoCallBack = new RecoCallback();
-            using (TransactionScope scope = TransactionFactory.GetNewReadUncommittedTransaction())
+            if (!reconciliationPM.CreatedByReconciliationStageB)
             {
-                var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
-                if (ledgerTransactionReconciled) 
+                using (TransactionScope scope = TransactionFactory.GetNewReadUncommittedTransaction())
                 {
+                    var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
+                    if (ledgerTransactionReconciled)
+                    {
                     throw new ApplicationException("GLAccounts.O.MarkedByAnother");
 
+                    }
                 }
             }
 
@@ -114,12 +117,13 @@ namespace Logitude.Accounting.BL.CoreBL
                 recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = paymentReconciliations.Count };
 
             }
-
-            var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
+            if (!reconciliationPM.CreatedByReconciliationStageB)
+            {
+                var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
                 var repoLedger = new LedgerTransactionRepository(accountingContext as IAccountingContext);
                 repoLedger.ResetDraftOpenReconciliation(reconciliationPM.AccountId, reconciliationPM.Tenant);
-
-                return recoCallBack;
+            }
+            return recoCallBack;
             //}
         }
 
@@ -152,6 +156,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private RecoCallback SplitAndSubmitReconciliationByGroupNumber(ReconciliationPM reconciliationPM)
         {
             bool updateGLAccountAgingDataUsingWR = FeatureToggleHelper.HasFeatureToggle("UAD", reconciliationPM.Tenant);
+            if (reconciliationPM.CreatedByReconciliationStageB) updateGLAccountAgingDataUsingWR = false;
             var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
             RecoCallback recoCallBack;
             ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), reconciliationPM.Tenant);

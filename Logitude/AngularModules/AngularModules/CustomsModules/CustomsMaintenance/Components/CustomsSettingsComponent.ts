@@ -120,9 +120,10 @@ export class CustomsSettingsComponent
                     }
                 });
 
+                //this.RefreshBtnClick()
+          
 
-            //this.RefreshBtnClick()
-        });
+            });
 
     }
     
@@ -222,8 +223,6 @@ export class CustomsSettingsComponent
 
 
 
-
-
     get IIGServiceAddress() { return this.entityPM != null ? this.entityPM.IIGServiceAddress : null; }
     set IIGServiceAddress(value) { this.entityPM.IIGServiceAddress = value; }
 
@@ -264,7 +263,9 @@ export class CustomsSettingsComponent
 
     get LastNumOfMessagesDCAWS() { return this.entityPM != null ? this.entityPM.LastNumOfMessagesDCAWS : null; }
     set LastNumOfMessagesDCAWS(value) { this.entityPM.LastNumOfMessagesDCAWS = value; }
-
+    
+    get ForbiddenSigns() { return this.entityPM != null ? this.entityPM.ForbiddenSigns : "" };
+    set ForbiddenSigns(value) { this.entityPM.ForbiddenSigns = value?.replace(/ /g, '').trimLeft() || ""};
 
     _LastRunningDCAWS: Date;
     get LastRunningDCAWS() {
@@ -298,15 +299,13 @@ export class CustomsSettingsComponent
     get HSMCompanyId() { return this.entityPM != null ? this.entityPM.HSMCompanyId : null; }
     set HSMCompanyId(value) { this.entityPM.HSMCompanyId = value; }
 
-
-
-
     
     get HSMToken() { return this.entityPM != null ? this.entityPM.HSMToken : null; }
     set HSMToken(value) { this.entityPM.HSMToken = value; }
 
     get OcrToken() { return this.entityPM != null ? this.entityPM.OcrToken : null; }
     set OcrToken(value) { this.entityPM.OcrToken = value; }
+
 
     //#endregion
     ClearCache(){
@@ -356,7 +355,7 @@ export class CustomsSettingsComponent
         var windowArgs: EntityArgs = new EntityArgs();
         windowArgs.ObjectTableName =this.ObjectTableName;
         windowArgs.EntityPM = this.entityPM;
-      
+    
         var logWindow = new LogitudeWindow();
         logWindow.Width = 950;
         logWindow.Height = 600;

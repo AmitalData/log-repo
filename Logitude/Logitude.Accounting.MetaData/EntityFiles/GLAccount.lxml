@@ -18303,6 +18303,7 @@
     <TextCode
       Code="&quot;AccountingPeriods.O.therearejournalsdidnottranslated&quot;"
       DefaultText="&quot;Can’t close this month. there are journals that did not translated into transactions for this month&quot;"
+      LocalDefaultText="&quot;לא ניתן לסגור את החודש, ישנן פקודות יומן ללא תנועות&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -18657,6 +18658,12 @@
       Code="&quot;Reconciliations.O.AmountMustBSmaller2OpenAmount&quot;"
       DefaultText="&quot;The amount must be smaller or equal to open amount&quot;"
       LocalDefaultText="&quot;הסכום חייב להיות קטן או שווה לסכום הפתוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.O.ZeroNotAllowed&quot;"
+      DefaultText="&quot;Zero amount is not allowed; instead delete the line from the reconciliation&quot;"
+      LocalDefaultText="&quot;לא ניתן להזין אפס, במקום זה יש למחוק את השורה מההתאמה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

@@ -55,7 +55,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StandAlone, 
 	         OcrToken, 
 	         MaxItemsSendInteractive, 
-	         MaxSISendInteractive,
+	         MaxSISendInteractive, 
+	         ForbiddenSigns,
 	      }
 
 
@@ -98,7 +99,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StandAlone, 
 	         OcrToken, 
 	         MaxItemsSendInteractive, 
-	         MaxSISendInteractive,
+	         MaxSISendInteractive, 
+	         ForbiddenSigns,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -270,6 +272,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
             {
 				entityPOCO.MaxSISendInteractive = entityPM.MaxSISendInteractive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
+            {
+				entityPOCO.ForbiddenSigns = entityPM.ForbiddenSigns;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -448,6 +455,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.MaxSISendInteractive = entityPOCO.MaxSISendInteractive;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForbiddenSigns))
+            {
+					entityPM.ForbiddenSigns = entityPOCO.ForbiddenSigns;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -619,6 +631,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.MaxSISendInteractive = entityPM.MaxSISendInteractive;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
+            {
+                oldEntityPM.ForbiddenSigns = entityPM.ForbiddenSigns;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CustomsSettingPM entityPM)
@@ -631,6 +648,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ForbiddenSigns)) //T4 find type == nText 
+            {
+                entityPM.ForbiddenSigns = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ForbiddenSigns));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

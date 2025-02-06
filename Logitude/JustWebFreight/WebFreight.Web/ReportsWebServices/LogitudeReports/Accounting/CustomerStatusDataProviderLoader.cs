@@ -244,9 +244,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 TotalOpenShipments = customerPeriods.First().TotalOpenShipments ?? 0,
                 ExternalTransactionsTotal = ExternalTransactions.Where(d => d.AccountId == customerPeriods.First().AccountId).Sum(d => d.LocalAmountCredit),
 
-                AccountingBalance = GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
+                AccountingBalance = customerPeriods.First().BalanceInLocalCurrency ??  0, //GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
                 TotalForeign = customerPeriods.Sum(d => d.Total),
-                TotalLocal = GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
+                TotalLocal = customerPeriods.First().BalanceInLocalCurrency ?? 0, //GetBalanceSummationForSplittedAccounts(customerPeriods) ?? 0,
                 Periods = GetStatusPeriods(customerPeriods),
 
                 AccountSalesmanName = customerPeriods.First().AccountSalesmanName,

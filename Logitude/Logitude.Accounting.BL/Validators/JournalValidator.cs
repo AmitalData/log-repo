@@ -312,6 +312,8 @@ namespace Logitude.Accounting.BL.Validators
           JournalPM myJournalPM,
           System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
         {
+            if (myJournalPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Cancelled)
+                return ValidationResult.Success;
             decimal creditTotal = 0;
             decimal debitTotal = 0;
 
@@ -510,10 +512,11 @@ namespace Logitude.Accounting.BL.Validators
 
 
                     seq++;
-                    if (currJournalLinePM.Line != seq && myJournalPM.StatusCode != statusCode_JournalCancelled)
-                    {
-                        errorsList.AddNew(JournalValidator.M_LineSequence + seq.ToString() + " !=" + currJournalLinePM.Line.ToString());
-                    }
+                    //Canceled by Task 110526
+                    //if (currJournalLinePM.Line != seq && myJournalPM.StatusCode != statusCode_JournalCancelled)
+                    //{
+                    //    errorsList.AddNew(JournalValidator.M_LineSequence + seq.ToString() + " !=" + currJournalLinePM.Line.ToString());
+                    //}
                     //if (item.ForeignAmount == 0)
                     if (currJournalLinePM.ForeignAmount
                         //.GetValueOrDefault()

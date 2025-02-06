@@ -1957,7 +1957,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this._ListComponentArgs.SuppressOnRowSelectedField = true;
         }
 
-        if (this.SelectedQuery.Code == "LedgerTransactions") {
+        if (this.ObjectTableName == "LedgerTransaction") {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -2093,6 +2093,11 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                             case "Questionnaire": {
                                 windowTitle = $event.rowData.Name;
+                                break;
+                            }
+
+                            case "DefaultAndConfiguration": {
+                                logWindow.Height = 400;
                                 break;
                             }
 

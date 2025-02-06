@@ -16,8 +16,9 @@
 				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)">
 				{{ data.CIH_GoodsDescription }}
 			</span>
-			<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search')"
-				class="item_details">
+			<!--#114817-->
+			<!--<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'); else getMeasurementUnitName"
+				class	="item_details">
 				<a> {{TariffListCount }} </a>
 				<a> {{ TariffList1?.CustomsRate }} </a>
 				<a> {{ TariffList1?.MeasurementUnitName }} </a>
@@ -25,13 +26,20 @@
 				<a *ngIf="TariffList2?.OptionalTaxAddition"> {{
 					TariffList2?.OptionalTaxAddition }} </a>
 				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
+			</div>-->
+			<div *ngIf="!isShowDetailsOpen && !(!data?.PurchaseTax && !data?.MeasurementUnitName && !data?.CustomsRate && !data?.OptionalTaxAddition)"
+				class="item_details">
+				<a>{{ data?.PurchaseTax ?? '-' }}</a>
+				<a>{{ data?.MeasurementUnitName ?? '-' }}</a>
+				<a>{{ data?.CustomsRate ?? '-' }}</a>
+				<a>{{ data?.OptionalTaxAddition ?? '-' }}</a>
 			</div>
 		</a>
 	</div>
 	<div></div>
 	<div class="mainTable_itemActions" *ngIf="!this.showDetailsOpen.getValue() && !widthSmaller">
 		<ul>
-			<li>
+			<li *ngIf="this.data?.rulesData?.length > 0">
 				<div class="mainTable_itemDocument" (click)="showRulesClick()" (click)="showCommentsClick()">
 					<a class="icon">
 						<i role="img"
@@ -48,9 +56,10 @@
 				</div>
 			</li> -->
 			<li *ngIf="countOfComments > 0; else newComment">
-				<div class="mainTable_itemComment" (click)="showCommentsClick()" >
+				<div class="mainTable_itemComment" (click)="showCommentsClick()">
 					<a class="icon" aria-expanded="true">
-						<i role="img" [ngClass]="isSelected || isSearchItemExistRemark? 'icon-comment_full' : 'icon-comment'"></i>
+						<i role="img"
+							[ngClass]="isSelected || isSearchItemExistRemark? 'icon-comment_full' : 'icon-comment'"></i>
 						<!-- <i role="img" [ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i> -->
 					</a>
 					<span class="countOfComments">{{ countOfComments }}</span>

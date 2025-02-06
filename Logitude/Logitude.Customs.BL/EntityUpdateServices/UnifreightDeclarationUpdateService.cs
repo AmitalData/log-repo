@@ -113,7 +113,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             DateTime stopLogAt = DateTime.MinValue;
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["TOTALINVOICELINESNO.LogUntilDateyyyyMMdd"];
             var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
-
+            if(setting != null && setting.StandAlone)
+            {
+                return;
+            }
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
             {
                 stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,

@@ -73,6 +73,27 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                    };
         }
 
+
+        public VatTypePercentagePM GetVatTypePercentagesForVatTypeDate(int tenant, string vatTypeId, DateTime date)
+        {
+            VatTypePercentagePM rv = new VatTypePercentagePM();
+
+            VatTypePercentage resultItem = this.repository.GetVatTypePercentageByDate(vatTypeId, tenant, date);
+            if (resultItem != null)
+            {
+                rv= new VatTypePercentagePM()
+                {
+                    Id = resultItem.Id,
+                    Tenant = resultItem.Tenant,
+                    VatTypeId = resultItem.VatTypeId,
+                    FromDate = resultItem.FromDate,
+                    Percentage = resultItem.Percentage
+                };
+            }
+
+            return rv;
+        }
+
         public List<VatTypePercentagePM> GetVatTypePercentagePMByDate(int tenant, DateTime? date)
         {
             List<VatTypePercentagePM> myResult = new List<VatTypePercentagePM>();

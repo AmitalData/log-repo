@@ -278,10 +278,12 @@
     <Compile Include="Helpers\ClosedTable\Update1998NDMessageActionCode.cs" />
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
+    <Compile Include="Helpers\ForbiddenSigns.cs" />
     <Compile Include="MessagingServices\DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB8373_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBAC_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2755E_MsgMessagingService.cs" />
@@ -527,6 +529,7 @@
     <Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\LG_NG_8410_LogisticActionRequestMessageResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchApproveAllPending_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend8373_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendAC_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniExportDeclarationBatchPayment2755E_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniExportDeclarationBatchSend2751_MsgResponseService.cs" />

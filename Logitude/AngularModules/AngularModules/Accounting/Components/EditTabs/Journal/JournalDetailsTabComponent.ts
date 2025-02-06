@@ -151,8 +151,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         // redraw
         this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
             if (isSuccess) {
-                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-
+                
                 this.FillGrid();
                 this.SetUIProperties();
 
@@ -665,7 +664,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     DetectChanges() {
         this.CD.detectChanges();
     }
-
+   
     RemoveLine(line: any) {
         if (this.journalDisabled) return;
 
@@ -679,12 +678,12 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 //var ItemsSource = [];
 
                 // Recalculate line numbers
-                for (var i = 0; i < this.JournalLines.Collection.length; i++) {
-                    var oldItem = this.JournalLines.Collection[i];
-                    var updatedItem = this.JournalLines.Collection[i];
-                    updatedItem.Line = i + 1;
-                    this.JournalLines.Update(oldItem, updatedItem);
-                }
+                // for (var i = 0; i < this.JournalLines.Collection.length; i++) {
+                //     var oldItem = this.JournalLines.Collection[i];
+                //     var updatedItem = this.JournalLines.Collection[i];
+                //     updatedItem.Line = i + 1;
+                //     this.JournalLines.Update(oldItem, updatedItem);
+                // }
                 //this.JournalLines.Collection.forEach((item) => {
                 //    ItemsSource.push(item);
                 //});
@@ -1161,10 +1160,12 @@ class JournalLineModel extends BaseComponent {
                     if (this.LocalAmount) {
                         this.isRateCoverted = true;
                         this.ForeignAmount = (this.LocalAmount / this.currencyRate);
+                        this.ForeignAmount = Number(this.ForeignAmount.toFixed(2));
                     }
                     else if (this.ForeignAmount) {
                         this.isRateCoverted = true;
                         this.LocalAmount = (this.ForeignAmount * this.currencyRate);
+                        this.LocalAmount = Number(this.LocalAmount.toFixed(2));
                     }
                 }
             }
@@ -1229,9 +1230,11 @@ class JournalLineModel extends BaseComponent {
     }
     CalculateForeignAmount() {
         this.ForeignAmount = (this.LocalAmount / this.currencyRate);
+        this.ForeignAmount = Number(this.ForeignAmount.toFixed(2));
     }
     CalculateLocalAmount() {
         this.LocalAmount = (this.ForeignAmount * this.currencyRate);
+        this.LocalAmount = Number(this.LocalAmount.toFixed(2));
     }
     isRateCoverted: boolean = false;
     isRateManualy: boolean = false;
@@ -1454,16 +1457,16 @@ class JournalLineModel extends BaseComponent {
         this.SetForeignAmountEnabilityForSingleCurrencyAccount();
     }
     SetCurrencyForSingleAccount(account:GLAccountPM,actionCode1:string ,actionCode2:string) {
-        if (!account.IsMultiCurrency) {
-            if (this.ActionCode == actionCode1 || this.ActionCode == actionCode2) {
+        if (this.ActionCode == actionCode1 || this.ActionCode == actionCode2) {
+            if (!account.IsMultiCurrency) {
                 this.CurrencyId = account.CurrencyId;
                 this.CurrencyCode = account.CurrencyCode;
+                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+
+            } else {
+                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+
             }
-            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
-
-        } else {
-            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
-
         }
     }
     SetForeignAmountEnabilityForSingleCurrencyAccount() {

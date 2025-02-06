@@ -26,7 +26,6 @@ import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLis
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
-
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
@@ -95,9 +94,13 @@ export class LineModel extends BaseComponent {
         if (this.LedgerTransactionPM.AmountToReconcile != value) {
             this.LedgerTransactionPM.AmountToReconcile = value;
 
-            //if (this.parent.IsEntityValid) {
-
-            if (this.OpenAmount < 0) { // debit
+            if (value == 0 && (this.OpenAmount < 0 || this.OpenAmount > 0))
+            {
+                this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.ZeroNotAllowed"));
+                this.parent.IsEntityValid = false;
+                this.isLineValid = false;
+            }
+            else if (this.OpenAmount < 0) { // debit
                 if (value < this.OpenAmount || value > 0) {
                     this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
                     this.parent.IsEntityValid = false;
@@ -122,7 +125,7 @@ export class LineModel extends BaseComponent {
             }
 
             //WI26522
-            if (this.parent.IsEntityValid) {
+            if (this.isLineValid && this.parent.IsEntityValid) {
                 if (Math.abs(value) > Math.abs(this.OpenAmount)) {
                     this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
                     this.parent.IsEntityValid = false;
@@ -913,38 +916,50 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
             }
         }
-        this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
 
-            //Adjust
-            if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
+        var ledgerTransactionsPMs = this.GetLedgerTransactionsPMs();
+        this.CurrentSession.StartBusyIndicatorSaving();
+        this._ReconciliationExtendedPMService.RecheckDraftReconciliationTransactions(ledgerTransactionsPMs).subscribe((serviceResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!serviceResponse.HasError) {
+                this.ValidationErrorsList = errors;
+                if (this.ValidationErrorsList.length == 0) {
+        
+                    //Adjust
+                    if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
 
 
                 if (auto) {
                     this.ValidationErrorsList.push("TotalDifference");
                     return
                 }
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Width = 390;
-                confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                    if (confirmWindow.Yes) {
-                        this.AdjustWithNewJournalScreen();
-                    } else if (confirmWindow.No) {
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.Width = 390;
+                            confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
+                                if (confirmWindow.Yes) {
+                                    this.AdjustWithNewJournalScreen();
+                                } else if (confirmWindow.No) {
+                                }
+                            });
+                        //}
+                        return;
                     }
-                });
-                //}
-                return;
 
+                    //
+        
+                    this.CurrentSession.StartBusyIndicatorSaving();
+                    var entity = this.CreateReconciliation();
+                    this.SubmitChanges(entity);
+        
+                }
+        
             }
+            else{
+                this.ShowDraftTransactionsFaiorMessage(serviceResponse.ErrorsArray[0]);
+            }
+        });
 
-            //
-
-            this.CurrentSession.StartBusyIndicatorSaving();
-            var entity = this.CreateReconciliation();
-            this.SubmitChanges(entity);
-
-        }
 
 
     }
@@ -1073,6 +1088,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     private ShowNoTransactionsSelectedValidationMessage() {
         const noTransactionsSelectedMSG = TextCodeTranslator.Translate("Accounting.General.O.NotransactionsSelected");
         this.ValidationErrorsList = [noTransactionsSelectedMSG];
+    }
+
+    private ShowDraftTransactionsFaiorMessage(error) {
+        var msg = new MessageWindow();
+        msg.IsMessageMultiLine = true;
+        msg.ShowErrorIcon = true;
+        msg.RTL = this.isRTL;
+        msg.Width = 400;
+        msg.Show(error);
     }
 
     private SubmitDraftLedgerTransactions() {
@@ -1642,6 +1666,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     CalculateTotals() {
         this.TotalCredit = 0;
         this.TotalDebit = 0;
+        this.TotalDifference = 0;
+
+        this.TotalCurrCredit = 0;
+        this.TotalCurrDebit = 0;
+        this.TotalCurrDifference = 0;
+
+        this.OriginalDifference = 0;
+        
         for (let line of this.SelectedLines.Collection) {
             let rate: number = +line.ledgerTransaction.ExchangeRate;;
             let lineCurrAmountToReconcile: number = 0;  // if GLAccountPM.CurrencyId != TenantPM.CurrencyId  => lineCurrAmountToReconcile is in GLAccountPM.CurrencyId 

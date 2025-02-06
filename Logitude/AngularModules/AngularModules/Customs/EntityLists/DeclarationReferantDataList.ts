@@ -96,6 +96,8 @@ export class DeclarationReferantDataList {
 	CustomerId: string;
 	IsCloseOrOpenFromUser: boolean;
 	ListCounter: number;
+	VesselName: string;
+	Vessel: string;
 	
 }
  

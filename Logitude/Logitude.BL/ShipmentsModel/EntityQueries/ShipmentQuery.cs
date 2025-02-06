@@ -12809,7 +12809,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          LocalCustomsTransmissionsStatusError = s.LocalCustomsTransmissionsStatusError,
                                                          LocalCustomsTransmissionsStatusDate = s.LocalCustomsTransmissionsStatusDate,
                                                          LocalCustomsSentByUserId = s.LocalCustomsSentByUserId,
-                                                         LocalCustomsSentByUserName = s.LocalCustomsSentByUser != null ? s.LocalCustomsSentByUser.Contact != null ? s.LocalCustomsSentByUser.Contact.EnglishName : "" : "",
+                                                         LocalCustomsSentByUserName = s.LocalCustomsSentByUser != null ? s.LocalCustomsSentByUser.Contact != null ? s.LocalCustomsSentByUser.Contact.EnglishName : null : null,
                                                          ISFDate = s.ISFDate,
                                                          ISFNumber = s.ISFNumber,
                                                          ITDate = s.ITDate,

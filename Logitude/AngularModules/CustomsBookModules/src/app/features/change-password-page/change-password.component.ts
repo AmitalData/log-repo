@@ -243,10 +243,9 @@ export class ChangePasswordComponent implements OnInit {
             if (res) {
                 //this.Tenant = this.route.snapshot.queryParams?.tenant;
                 if(this.Tenant)
-
-                    this.router.navigate(["customs-book/login"]);//,{ queryParams: {tenant: this.Tenant}}
+                    this.router.navigate(["/login"]);//,{ queryParams: {tenant: this.Tenant}}
                 else
-                    this.router.navigate(["customs-book/login"]);
+                    this.router.navigate(["/login"]);
             }
             else {
                 this.ErrorMessage = "Changing password failed!"

@@ -65,19 +65,19 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     while (retry)
                     {
                         retry = false;
-                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
-                        {
+                  //      using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                  //      {
 
                             try
                             {
                                 reconciliationStageCBatch.RunReconciliationStageC(args, timeoutinmin - 1, ref retry);
-                                scope.Complete();
+                  //              scope.Complete();
                             }
                             catch (Exception e)
                             {
                                 throw;
                             }
-                        }
+                  //      }
                     }
                     string responseText = reconciliationStageCBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationStageCBatch.StatusCode();
@@ -191,19 +191,19 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         while (retry)
                         {
                             retry = false;
-                            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
-                            {
+                            //using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                            //{
 
                                 try
                                 {
                                     reconciliationStageCBatch.RunReconciliationStageC(args, timeoutinmin - 1, ref retry);
-                                    scope.Complete();
+                                   // scope.Complete();
                                 }
                                 catch (Exception e)
                                 {
                                     throw;
                                 }
-                            }
+                            //}
                         }
                         string responseText = reconciliationStageCBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationStageCBatch.StatusCode();

@@ -1380,6 +1380,12 @@ namespace AmitalCustomsWindowsService.Tester
 
         }
 
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            var DownloadDcaMessageSheetWR = new DownloadDcaMessageSheetWR();
+            DownloadDcaMessageSheetWR.WorkOnce();
+        }
+
         //private void _CBInterfaceID_SelectedIndexChanged(object sender, EventArgs e)
         //{
 

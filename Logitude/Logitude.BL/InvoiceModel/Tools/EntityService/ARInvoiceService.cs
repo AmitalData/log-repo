@@ -320,7 +320,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             SetSatStatus();
             if (entityPM.SetApproved)
             {
-                if (entityPM.ConfirmationNumberStatus == null &&! (entityPM.ConfirmationNumber!=null && entityPM.IsExternalEntity))
+                if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                 {
                     SetConfirmationNumberStatus();
                 }
@@ -499,8 +499,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             try
             {
                 ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);
-                var loggedUserEmail = contactQuery.GetContactEmailById(entityPM.CreatedByUserId, entityPM.Tenant);
-                ApiResponse apiResponse = ExportServerService.CreateConfirmationNumber(entityPM.Tenant, loggedUserEmail, CreateBodyFromARInvoice());
+                var contactList = contactQuery.GetContactListsById(entityPM.CreatedByUserId, entityPM.Tenant);
+                ApiResponse apiResponse = ExportServerService.CreateConfirmationNumber(entityPM.Tenant, contactList?.Email, CreateBodyFromARInvoice(loggedContactName));
 
                 if (apiResponse != null && apiResponse.Res?.StatusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -509,6 +509,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         entityPM.ConfirmationNumberStatus = "2";
                         entityPM.ConfirmationNumber = res.confirmationNumber;
+                    }
+                    else if (res != null && res.status == 460)
+                    {
+                        entityPM.ConfirmationNumberStatus = "6";
                     }
                     else
                     {
@@ -543,11 +547,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             }
         }
-        private string CreateBodyFromARInvoice()
+        private string CreateBodyFromARInvoice(string englishName)
         {
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(entityPM.Tenant);
             Tenant myTenant = TenantRepository.GetSingleTenant(tenant, true);
-
+            var InActiveV2 = FeatureToggleHelper.HasFeatureToggle("AV2", entityPM.Tenant);
             int ConsolidationVAT;
             int.TryParse(fullAccountingSettingRepository.GetSingleFullAccountingSetting(entityPM.Tenant).ConsolidationVAT, out ConsolidationVAT);
             ConfirmationNumberAPI confirmationNumberAPI = new ConfirmationNumberAPI()
@@ -561,14 +565,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Customer_Name = entityPM.BillToLocalName,
                 Invoice_Date = entityPM.InvoiceDate?.ToString("yyyy-MM-dd"),
                 Invoice_Issuance_Date = entityPM.CreateDate?.ToString("yyyy-MM-dd"),
-                Accounting_Software_Number = 99999999,
+                Accounting_Software_Number = InActiveV2 ? 99999999 : int.Parse(myTenant.VatNumber ?? "0"),
                 Client_Software_Key = "99999",
                 Amount_Before_Discount = (decimal)entityPM.InvoiceLines.Where(d => d.VatPercentage != 0 && d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount),
                 Discount = 0,
                 Payment_Amount = (decimal)entityPM.InvoiceLines.Where(d => d.VatPercentage != 0 && d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount),
                 VAT_Amount = totalVat,
                 Payment_Amount_Including_VAT = (decimal)entityPM.AmountInLocalCurrency,
-
+                User_Name = InActiveV2 ? null: englishName,
             };
 
             return JsonConvert.SerializeObject(confirmationNumberAPI,
@@ -788,7 +792,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
                 if (entityPM.SetApproved)
                 {
-                    if (entityPM.ConfirmationNumberStatus == null)
+                    if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                     {
                         SetConfirmationNumberStatus();
                     }
@@ -5219,6 +5223,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             public decimal VAT_Amount { get; set; }
             public decimal? Payment_Amount_Including_VAT { get; set; }
             public string Invoice_Note { get; set; }
+
+            public string User_Name { get; set; }
 
             [JsonIgnore]
             public int Action { get; set; }

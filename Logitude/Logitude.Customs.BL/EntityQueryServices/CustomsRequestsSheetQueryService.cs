@@ -208,6 +208,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8317",//הנחיות סיווג
 "8323",//פרטי הנחיות סיווג
 "8319",//כללים - ספר סיווג
+"UCB8373",
 
 
             };
@@ -385,8 +386,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8317",//הנחיות סיווג
 "8323",//פרטי הנחיות סיווג
 "8319",//כללים - ספר סיווג
-
-                };
+"UCB8373",
+            };
 
             //var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
             //if (settingPm.IsConnectedToUniFreight && 
@@ -555,7 +556,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8317",//הנחיות סיווג
 "8323",//פרטי הנחיות סיווג
 "8319",//כללים - ספר סיווג
-
+"UCB8373",
 };
 
 
@@ -573,7 +574,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pmList;
         }
 
-
+        public List<CustomsRequestsSheetPM> GetByInterfaceTypeCodeLastTime(int time, string interfaceTypeCode)
+        {
+           return
+              this.repository.GetAll(Tenant)
+              .Where(x=>x.InterfaceTypeCode== interfaceTypeCode && x.RequestCreateDate >= DateTime.Now.AddMinutes(time*-1)).Select(x=> new CustomsRequestsSheetPM { CorrelationId = x.CorrelationId}).ToList();
+        }
 
         public List<CustomsRequestsSheetPM> GetRequestByInterfaceTypeCode(
             int Tenant,

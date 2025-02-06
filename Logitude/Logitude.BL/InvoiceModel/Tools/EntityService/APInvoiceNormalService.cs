@@ -148,14 +148,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     List<APInvoiceLinePM> lines = new List<APInvoiceLinePM>();
                     if (initializer.IsNewEntity)
                     {
-                        lines = entityPM.InvoiceLines.ToList();
+                        lines = entityPM.InvoiceLines?.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete)?.ToList();
                     }
                     else
                     {
                         lines = invoiceLinesChangeSet?.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
                     }
                     this.BuildUnexpectedPayables(lines);
-                    this.GetShipmentsData(entityPM.InvoiceLines);
+                    this.GetShipmentsData(entityPM.InvoiceLines?.Where(a=>a.ChangeSetOp!=ChangeSetOperation.Delete)?.ToList());
                 }
 
                 this.UpdateInvoiceEntities();
@@ -206,7 +206,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         List<APInvoiceLinePM> UnexpectedPayablesInvoiceLines_ForAPI = new List<APInvoiceLinePM>();
         private void GeneratePayablesFromInvoiceLines_FromAPI()
         {
-            List<APInvoiceLinePM> invoiceLines = entityPM.InvoiceLines.ToList();
+            List<APInvoiceLinePM> invoiceLines = entityPM.InvoiceLines?.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete)?.ToList();
             Shipment shipment = shipmentRepository.GetSingleShipment(entityPM.MainEntityId, tenant);
             List<ShipmentPayable> payables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(shipment.Id, tenant).ToList();
 
@@ -739,7 +739,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     if (initializer.IsNewEntity)
                     {
-                        lines = entityPM.InvoiceLines.ToList();
+                        lines = entityPM.InvoiceLines?.Where(a=>a.ChangeSetOp!=ChangeSetOperation.Delete)?.ToList();
                     }
 
                     else
@@ -884,7 +884,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (initializer.IsNewEntity)
                 {
-                    lines = entityPM.InvoiceLines.ToList();
+                    lines = entityPM.InvoiceLines?.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete)?.ToList();
                 }
 
                 else
@@ -1038,7 +1038,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 List<APInvoiceLinePM> myLines = new List<APInvoiceLinePM>();
                 if (initializer.IsNewEntity)
                 {
-                    myLines = entityPM.InvoiceLines.ToList();
+                    myLines = entityPM.InvoiceLines?.Where(a=>a.ChangeSetOp!=ChangeSetOperation.Delete)?.ToList();
                 }
 
                 else
@@ -1327,7 +1327,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (lines != null && lines.Where(d => d.EntityPayableId == null).Any())
                 {
-                    foreach (APInvoiceLinePM invoicelinePM in entityPM.InvoiceLines.Where(d => d.EntityPayableId == null))
+                    foreach (APInvoiceLinePM invoicelinePM in entityPM.InvoiceLines.Where(d => d.EntityPayableId == null && d.ChangeSetOp!=ChangeSetOperation.Delete))
                     {
                         ShipmentPayable payable = new ShipmentPayable()
                         {
@@ -1537,11 +1537,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else if (invoice.StatusCode != "AD")
             {
-                if (entityPM.InvoiceLines.Where(d => d.ObjectTableId == null).Any())
+                if (entityPM.InvoiceLines.Where(d => d.ObjectTableId == null && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
                 {
                     List<ObjectTable> tables = new ObjectTableRepository(entityPM.Tenant).context.ObjectTables.Where(d => (d.Tenant == 0 || d.Tenant == entityPM.Tenant) && (d.Name == "Shipment" || d.Name == "Master")).ToList();
 
-                    foreach (APInvoiceLinePM item in entityPM.InvoiceLines.Where(d => d.ObjectTableId == null))
+                    foreach (APInvoiceLinePM item in entityPM.InvoiceLines.Where(d => d.ObjectTableId == null && d.ChangeSetOp!=ChangeSetOperation.Delete))
                     {
                         string shipmentLevelCode = shipmentRepository.GetShipmentLevelCode(item.EntityId);
 
@@ -1563,7 +1563,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void CreateInvoiceEntities()
         {
             var entityIdAndObjectTables
-                = (from a in entityPM.InvoiceLines
+                = (from a in entityPM.InvoiceLines?.Where(a=>a.ChangeSetOp!=ChangeSetOperation.Delete)
                    group a by new { a.EntityId, a.ObjectTableId, a.EntityReference } into gr
                    select new
                    {
@@ -1595,7 +1595,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (initializer.IsNewEntity)
             {
                 int lineNumber = 0;
-                foreach (APInvoiceLinePM item in entityPM.InvoiceLines)
+                foreach (APInvoiceLinePM item in entityPM.InvoiceLines?.Where(a=>a.ChangeSetOp!=ChangeSetOperation.Delete))
                 {
                     lineNumber += 1;
                     item.LineNumber = lineNumber;
@@ -1989,7 +1989,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             List<APInvoiceLinePM> myLines = new List<APInvoiceLinePM>();
             if (initializer.IsNewEntity)
             {
-                myLines = entityPM.InvoiceLines.ToList();
+                myLines = entityPM.InvoiceLines?.Where(a=>a.ChangeSetOp!=ChangeSetOperation.Delete)?.ToList();
             }
 
             else
@@ -2159,7 +2159,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
 
-                    List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
+                    List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines?.Where(a=>a.ChangeSetOp!=ChangeSetOperation.Delete)
                                                         select new JournalLinePM()
                                                         {
                                                             Tenant = tenant,
@@ -2291,7 +2291,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (invoice.InvoiceLines.Count == 1)
             {
-                APInvoiceLinePM invoiceLine = invoice.InvoiceLines.First();
+                APInvoiceLinePM invoiceLine = invoice.InvoiceLines?.Where(a=>a.ChangeSetOp!=ChangeSetOperation.Delete)?.First();
                 return invoiceLine.ChargeTypeGLAccountId;
 
             }

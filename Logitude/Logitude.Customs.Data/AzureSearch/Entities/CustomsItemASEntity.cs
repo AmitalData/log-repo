@@ -37,6 +37,8 @@ namespace Logitude.Customs.Data.AzureSearch.Entities
 
         [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
         public string CI_CustomsItemCategoryIDNum { get; set; }
+
+        [SimpleField(IsFilterable = true, IsSortable = true, IsFacetable = true)]
         public string ItemHierarchicLocationID { get; set; }
         public string CIH_Title { get; set; }
 

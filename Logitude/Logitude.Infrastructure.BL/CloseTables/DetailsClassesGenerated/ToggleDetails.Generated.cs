@@ -1022,7 +1022,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "LCB,Login Customs Book", 
                 Description = "Customs Book Login For Normal Users", 
 			});
-			
+            all.Add(new ToggleDetails()
+            {
+                Code = "AV2",
+                Name = "Israel Invoices Do Not Activate V2",
+                SearchFields = "AV2,Israel Invoices Do Not Activate V2",
+                Description = "חשבוניות ישראל לא להפעיל V2 ",
+            });
+
             return all;
        }
 
