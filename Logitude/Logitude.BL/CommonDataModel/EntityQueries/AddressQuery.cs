@@ -507,38 +507,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             IQueryable<AddressPM> addresses = from a in repository.context.Addresses.Include("Country").Include("State")
                                               where a.Tenant == tenant
-                                              select new AddressPM()
-                                              {
-                                                  Address1 = a.Address1,
-                                                  Address2 = a.Address2,
-                                                  AddressTypeId = a.AddressTypeId,
-                                                  ATTN = a.ATTN,
-                                                  CardId = a.CardId,
-                                                  City = a.City,
-                                                  CountryId = a.CountryId,
-                                                  Description = a.Description,
-                                                  FaxNumber = a.FaxNumber,
-                                                  Id = a.Id,
-                                                  Name = a.Name,
-                                                  PhoneNumber = a.PhoneNumber,
-                                                  StateId = a.StateId,
-                                                  Tenant = a.Tenant,
-                                                  ZipCode = a.ZipCode,
-                                                  InActive = a.InActive,
-                                                  IsLocalLanguage = a.IsLocalLanguage,
-                                                  SearchFields = a.SearchFields,
-                                                  CountryCode = a.Country != null ? a.Country.Code : null,
-                                                  CountryEnglishName = a.Country != null ? a.Country.EnglishName : null,
-                                                  CountryName = a.Country != null ? (a.IsLocalLanguage ? a.Country.LocalName : a.Country.EnglishName) : null,
-                                                  StateCode = a.State != null ? a.State.Code : null,
-                                                  StateEnglishName = a.State != null ? a.State.EnglishName : null,
-                                                  HasStates = a.Country == null ? false : a.Country.HasStates,
-                                                  IsStateRequired = a.Country == null ? false : a.Country.IsStateRequired,
-                                                  CityId = a.CityId,
-                                                  TransportationInstructions = a.TransportationInstructions,
-                                                  TruckerId = a.TruckerId,
-                                                  Responsibility = a.Responsibility,
-                                              };
+                                              select new AddressPM(a);
             return addresses;
         }
 

@@ -1,5 +1,6 @@
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Helpers;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -30,15 +31,17 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public static GlobalDB GetGlobalDBByTenant(int tenant) => ConfigurationManager.AppSettings.Get("ENVIROMENT") == "azure app service" ? GetGlobalDbFromEnviroment() : GetByGlobalTenant(tenant);
         private static GlobalDB GetByGlobalTenant(int tenant)
         {
+            tenant = SettingUtil.GetCurrentTenant();
             IGlobalContext context = GlobalContext.GetContext();
             GlobalTenant globaltenant = new Repository<GlobalTenant>(context).GetAll(0, true).Where(a => a.Id == tenant).FirstOrDefault();
             return new Repository<GlobalDB>(context).GetAll(0, true).Where(a => a.Id == globaltenant.GlobalDBId).FirstOrDefault();
         }
         private static GlobalDB GetGlobalDbFromEnviroment()
         {
+
             return new GlobalDB()
             {
-                Id = "0",
+                Id = SettingUtil.GetCurrentTenant().ToString(),
                 DBConnection = ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString,
                 IsUpgrading = false,
                 IsActive = true,
