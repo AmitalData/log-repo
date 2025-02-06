@@ -1,10 +1,33 @@
 ﻿using AmitalCloud.Infrastructure.Data;
+using System;
+using System.Configuration;
 using System.Linq;
+using System.Web;
 
 namespace AmitalCloud.Infrastructure.Domain.Helpers
 {
     public class SettingUtil
     {
+        public static int GetCurrentTenant()
+        {
+            var tenant = -1;
+            if (HttpContext.Current != null && HttpContext.Current.Items.Contains("Tenant"))
+            {
+                tenant = Convert.ToInt32(HttpContext.Current.Items["Tenant"]);
+            }
+            else
+            {
+                tenant = GetTenantDBFromConfig();
+            }
+            return tenant;
+        }
+
+        public static int GetTenantDBFromConfig()
+        {
+            string tenantValue = ConfigurationManager.AppSettings["TenantDB"];
+            int tenant = string.IsNullOrEmpty(tenantValue) ? 0 : Convert.ToInt32(tenantValue);
+            return tenant;
+        }
         public class Emails
         {
             public const string FromNoReply = "no-reply@amital.co.il";
