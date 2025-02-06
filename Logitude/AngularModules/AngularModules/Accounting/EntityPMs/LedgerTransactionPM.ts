@@ -399,6 +399,11 @@ export class LedgerTransactionPM {
     public set AmountInNIS(newValue: number) { if (this.amountInNIS != newValue) { this.amountInNIS = newValue; this.MarkAsDirty("AmountInNIS"); } }
        
 	 
+    private bankName: string;
+    public get BankName() { return this.bankName; }
+    public set BankName(newValue: string) { if (this.bankName != newValue) { this.bankName = newValue; this.MarkAsDirty("BankName"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

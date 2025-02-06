@@ -139,6 +139,11 @@
             <!--{{ CalculatOriginalCurruncy() }} -->
         </div>
     </div>
+    <!-- BankName -->
+    <div class="TextTrimming" *ngIf="fieldName == 'BankName'"
+        style="color:#000000; text-align: right; padding: 0px 2px;direction: ltr;">
+        {{rowData['BankName']}}
+    </div>
     <!-- ForeignAmountCredit -->
     <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmountCredit'"
         style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
@@ -153,8 +158,8 @@
     </div>
 
     <!-- OppositeAccount -->
-                                                                        <!-- title = toolTip -->
-    <div [style.text-align]="isRTL ? 'right' : 'left'" [title]="rowData['OppositeAccountDisplayNumber']" 
+    <!-- title = toolTip -->
+    <div [style.text-align]="isRTL ? 'right' : 'left'" [title]="rowData['OppositeAccountDisplayNumber']"
         class="TextTrimming" *ngIf="fieldName == 'OppositeAccountLocalName'">
         <a (click)="OpenGLAccount('OppositeAccountId')">{{ rowData['OppositeAccountLocalName'] }}</a>
 
@@ -166,7 +171,7 @@
     </div>
 
 
-    
+
     <!-- **** -->
     <!-- Reconcile Window -->
     <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px 7px;">
