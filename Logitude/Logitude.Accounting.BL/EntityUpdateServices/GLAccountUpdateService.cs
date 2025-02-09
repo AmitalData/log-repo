@@ -2369,7 +2369,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode && entityPM.IsMultiCurrency == false)
+                if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode)
                 {
                     //check glaccount transactions
                     LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(accountingContext);
