@@ -175,8 +175,13 @@ namespace Logitude.Accounting.Data.EntityLists
        public string TaxReportNumber  { get; set; }
        [DataMember]
        public decimal AmountInNIS  { get; set; }
+
        [DataMember]
        public bool IsExternalEntity  { get; set; }
+
+       [DataMember]
+       public string BankName  { get; set; }
+
    }
 
 }
