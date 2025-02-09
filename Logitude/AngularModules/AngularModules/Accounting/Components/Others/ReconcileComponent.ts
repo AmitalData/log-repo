@@ -159,7 +159,6 @@ export class LineModel extends BaseComponent {
                 else {
                     this.LedgerTransactionPM.AmountToReconcile = this.OpenAmount;
                 }
-                this.LedgerTransactionPM.AmountToReconcile = Number(this.LedgerTransactionPM.AmountToReconcile.toFixed(2));
             }
             else {
                 this.LedgerTransactionPM.AmountToReconcile = 0;
@@ -475,7 +474,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.EntityPM = new LedgerTransactionPM();
         this.EntityPM.Tenant = this.TenantPM.Id;
         this.CurrencyId = this.EntityPM.CurrencyId;
-        this.CurrentSession.entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => { ; });
+        this.CurrentSession.entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => { 
+            this.CurrentSession.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { ; });
+         });
+       
+
     }
 
     public InitFilters() {
@@ -912,17 +915,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         //     return;
         // }
 
-        //if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
-            // if (this.IsMultiWithReconcileMethodCodeEqualOne) {
-            //     errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
-            // }
-        //}
+        if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
+            if (this.IsMultiWithReconcileMethodCodeEqualOne) {
+                errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
+            }
+        }
 
         var ledgerTransactionsPMs = this.GetLedgerTransactionsPMs();
         this.CurrentSession.StartBusyIndicatorSaving();
-        this._ReconciliationExtendedPMService.RecheckDraftReconciliationTransactions(ledgerTransactionsPMs).subscribe((serviceResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
-            if (!serviceResponse.HasError) {
+           
                 this.ValidationErrorsList = errors;
                 if (this.ValidationErrorsList.length == 0) {
         
@@ -934,15 +936,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                     this.ValidationErrorsList.push("TotalDifference");
                     return
                 }
-                            var confirmWindow = new ConfirmWindow();
-                            confirmWindow.Width = 390;
-                            confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
-                            confirmWindow.WindowClosed.subscribe((event: any) => {
-                                if (confirmWindow.Yes) {
-                                    this.AdjustWithNewJournalScreen();
-                                } else if (confirmWindow.No) {
-                                }
-                            });
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 390;
+                confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.AdjustWithNewJournalScreen();
+                    } else if (confirmWindow.No) {
+                    }
+                    });
                         //}
                         return;
                     }
@@ -955,11 +957,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         
                 }
         
-            }
-            else{
-                this.ShowDraftTransactionsFaiorMessage(serviceResponse.ErrorsArray[0]);
-            }
-        });
+           
+           
+        
 
 
 
@@ -1106,11 +1106,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.CurrentSession.StartBusyIndicatorSaving();
         this._ReconciliationExtendedPMService.UpdateDraftReconciliationTransactions(ledgerTransactionsPMs).subscribe((serviceResponse: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
-            if (!serviceResponse.HasError) {
-                this.ShowDraftTransactionsSuccessMessage();
-            } else {
-                this.ShowDraftTransactionsFaiorMessage(serviceResponse.ErrorsArray[0]);
-            }
+            this.ShowDraftTransactionsSuccessMessage();
         });
     }
 
@@ -1158,8 +1154,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                             "GLAccountPMId": this.GLAccountPM.Id,
                             TotalDifference: this.TotalDifference,
                             TotalCredit: this.TotalCredit,
-                            TotalDebit: this.TotalDebit,
-                            IsMultiWithReconcileMethodCodeEqualOne : this.IsMultiWithReconcileMethodCodeEqualOne
+                            TotalDebit: this.TotalDebit
                         };
                         logitudeWindow.Show('./Accounting/Components/Others/JournalReconcileComponent');
                         logitudeWindow.WindowClosed.subscribe(($event: any) => {
@@ -1524,7 +1519,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.autoReconil = false;
             this.ReconcilButton(true);
             const index = this.ValidationErrorsList.findIndex(c => c === "TotalDifference");
-            this.yelloMessage = this.ValidationErrorsList.length > 0 ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother") +" - "+ TextCodeTranslator.Translate("Reconciliations.O.ReviewAndCompleteReconcile.") :TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother") +" - "+TextCodeTranslator.Translate("Reconciliations.O.ReconciledForOpenTransactions");
+            var tetx=TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ")
+            this.yelloMessage = this.ValidationErrorsList.length > 0 ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ").split(",")[0] + " -" + TextCodeTranslator.Translate("Reconciliations.O.ReviewAndCompleteReconcile.") :TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ").split(",")[0] + " -"+TextCodeTranslator.Translate("Reconciliations.O.ReconciledForOpenTransactions");
             if (index !== -1) {
                 this.ValidationErrorsList.splice(index, 1);
             }
@@ -1882,9 +1878,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
                 else {
                     if (this.IsReconcileButtonClicked) this.IsReconcileButtonClicked = false;
-                    if (mm.ErrorsArray.length > 0 && mm.ErrorsArray.find(e => e === "GLAccounts.O.MarkedByAnother")) {
+
+
+                    if (mm.ErrorsArray.length > 0 && mm.ErrorsArray.some(e => e.includes("GLAccounts.O.MarkedByAnother"))) {
                         this.ValidationErrorsList = mm.ErrorsArray.map(error =>
-                            error === "GLAccounts.O.MarkedByAnother" ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother") : error
+                            error === "GLAccounts.O.MarkedByAnother" ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ") : error
                         );
                         this.ReloadScreen()
                         this.autoReconil = true
