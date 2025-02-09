@@ -44,7 +44,7 @@ namespace CustomsWorkerRole.Utils
                 InOut = "O",
                 Status = "W",
                 LoggingUserId = LoggedContactResolver.GetLoggedContact(tenant)?.Id,
-                LoggingObjectTableId = ObjectTableQuery.GetObjectTableByCode(tableName, 0)?.Id,
+                LoggingObjectTableId = ObjectTableQuery.GetObjectTableByCode(tableName, tenant)?.Id,
                 LoggingEntityId = null,
                 Subject = subject,
                 FolderName = storageFolder,
