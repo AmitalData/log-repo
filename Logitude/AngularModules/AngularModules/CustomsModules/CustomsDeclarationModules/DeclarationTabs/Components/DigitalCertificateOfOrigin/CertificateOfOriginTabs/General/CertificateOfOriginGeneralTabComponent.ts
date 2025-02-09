@@ -123,6 +123,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                             this.currentCard = myResponse.Result;
                             currentDeclaration.SupplierInvoices = result;
                             this.currentDeclaration.SupplierInvoices = result;
+                            debugger;
                             this.InitNewCertificate(EntityPM);
                             this.getCooReasonsByCooStatusFromCooConnction();
                             this.isReady = true;
@@ -206,8 +207,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     selectedValueDestinationCountry: string = this.fieldNameDestinationCountry;
 
     InitNewCertificate(EntityPM: CertificateOfOriginPM) {
-        this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.EnglishName) ? this.currentCard.EnglishName : "";
-        this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
+        this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard?.EnglishName) ? this.currentCard?.EnglishName : "";
+        this.entityPM.ExporterAddress = `${this.currentCard?.Address1 ? this.currentCard?.Address1 + " ," : ""}${this.currentCard?.Address2 ? this.currentCard?.Address2 : ""}`;
         this.InitializeRelatedDeclarationData();
         this.InitilizeNewCertificateWithSupplierInvoices(EntityPM);
         this.InitilizeNewCertificateWithConsignments(EntityPM);
