@@ -794,6 +794,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
             else {
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                this.UploadButtonIsEnabled = true;
             }
         });
     }
@@ -843,6 +844,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
             else {
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                this.UploadButtonIsEnabled = true;
             }
         });
     }

@@ -502,7 +502,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         }
                         else
                         {
-                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Unsupported file format");
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Unsupported file format")));
                         }
 
                         var sheet = workbook.GetSheetAt(0); // Assuming the first sheet
