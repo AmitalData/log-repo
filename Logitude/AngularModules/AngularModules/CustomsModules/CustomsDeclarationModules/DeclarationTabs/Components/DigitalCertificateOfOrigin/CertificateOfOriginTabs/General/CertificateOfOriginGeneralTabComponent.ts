@@ -123,7 +123,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                             this.currentCard = myResponse.Result;
                             currentDeclaration.SupplierInvoices = result;
                             this.currentDeclaration.SupplierInvoices = result;
-                            debugger;
                             this.InitNewCertificate(EntityPM);
                             this.getCooReasonsByCooStatusFromCooConnction();
                             this.isReady = true;
