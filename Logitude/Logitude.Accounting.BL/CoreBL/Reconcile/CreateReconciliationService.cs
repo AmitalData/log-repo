@@ -89,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     var ledgerTransactionInProgress = CheckIfAnotherReconciliationInProgress(reconciliationPM);
                     if (ledgerTransactionInProgress)
                     {
-                        throw new ApplicationException("יש התאמות בתהליך");
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.LedgerTransactionInProgress", 0, LoggedContactResolver.GetLoggedContactShowLocal(reconciliationPM.Tenant)));
 
                     }
                     var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
