@@ -140,7 +140,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void UpdateAvailableForSchedulingForAllTenants(ReportPM entityPM)
         {
-            var reportsWithSameCode = entityRepository.GetReportsByCode(entityPM.Code,entityPM.AvailableForScheduling);
+            var reportsWithSameCode = entityRepository.GetReportsToUpdateAvailableForScheduling(entityPM.Code,entityPM.AvailableForScheduling);
             foreach (var report in reportsWithSameCode)
             {
                 report.AvailableForScheduling = entityPM.AvailableForScheduling;
