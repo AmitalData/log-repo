@@ -144,5 +144,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where record.Tenant != 0
                     select record);
         }
+
+        public IQueryable<Report> GetReportsByCode(string code)
+        {
+            return (from record in context.Reports
+                    where record.Code ==code
+                    select record);
+        }
     }
 }
