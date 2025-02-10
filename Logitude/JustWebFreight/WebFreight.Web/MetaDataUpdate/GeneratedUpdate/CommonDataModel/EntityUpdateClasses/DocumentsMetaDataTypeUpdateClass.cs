@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentsMetaDataTypeUpdateClass
    {  		
-		public const string HashString = "9779a186c9610774307543d3604fbb77";
+		public const string HashString = "8627999f3b4bd3884c96ff28e37ed99c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -50,7 +50,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  true,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
@@ -69,7 +69,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Simplog.Infrastructure.Views.Documents.DocumentsMetadataType.NewDocumentsMetadataTypeComponent",
 			      				    DefaultText =  "Documents MetaData Type",
-			      				    Code =  "9710",
+			      				    Code =  "ac15",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -106,7 +106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -114,6 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Id",
 					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -168,7 +169,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -176,6 +177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Tenant",
 					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -217,7 +219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CODE",
+					 						FieldName =  "Code",
 					  						ObjectTableName =  "DocumentsMetaDataType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -237,8 +239,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CODE",
-					  						ListPropertyPath =  "CODE",
+					  						PMPropertyPath =  "Code",
+					  						ListPropertyPath =  "Code",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -255,10 +258,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CODE",
+					  						FullFieldLable =  "Code",
 					  						DefaultText =  "CODE",
 					  						FullLocalDefaultText =  "קוד",
-					  						ListFieldLable =  "CODEListLable",
+					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  "CODE",
 					  						ListLocalDefaultText =  "קוד",
 					  						IsForeignKey =  false,
@@ -282,7 +285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ENGLISHNAME",
+					 						FieldName =  "EnglishName",
 					  						ObjectTableName =  "DocumentsMetaDataType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -302,8 +305,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ENGLISHNAME",
-					  						ListPropertyPath =  "ENGLISHNAME",
+					  						PMPropertyPath =  "EnglishName",
+					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -320,9 +324,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ENGLISHNAME",
+					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "ENGLISH NAME",
-					  						ListFieldLable =  "ENGLISHNAMEListLable",
+					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "ENGLISH NAME",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -345,7 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "LOCALNAME",
+					 						FieldName =  "LocalName",
 					  						ObjectTableName =  "DocumentsMetaDataType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -365,8 +369,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "LOCALNAME",
-					  						ListPropertyPath =  "LOCALNAME",
+					  						PMPropertyPath =  "LocalName",
+					  						ListPropertyPath =  "LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -383,10 +388,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "LOCALNAME",
+					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "LOCAL NAME",
 					  						FullLocalDefaultText =  "שם",
-					  						ListFieldLable =  "LOCALNAMEListLable",
+					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "LOCAL NAME",
 					  						ListLocalDefaultText =  "שם",
 					  						IsForeignKey =  false,
@@ -410,7 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "INACTIVE",
+					 						FieldName =  "Inactive",
 					  						ObjectTableName =  "DocumentsMetaDataType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -430,8 +435,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "INACTIVE",
-					  						ListPropertyPath =  "INACTIVE",
+					  						PMPropertyPath =  "Inactive",
+					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -448,10 +454,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "INACTIVE",
+					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "INACTIVE",
 					  						FullLocalDefaultText =  "פעיל",
-					  						ListFieldLable =  "INACTIVEListLable",
+					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "INACTIVE",
 					  						ListLocalDefaultText =  "פעיל",
 					  						IsForeignKey =  false,
@@ -475,7 +481,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "FORMAT",
+					 						FieldName =  "Format",
 					  						ObjectTableName =  "DocumentsMetaDataType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -495,8 +501,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "FORMAT",
-					  						ListPropertyPath =  "FORMAT",
+					  						PMPropertyPath =  "Format",
+					  						ListPropertyPath =  "Format",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -513,10 +520,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "FORMAT",
+					  						FullFieldLable =  "Format",
 					  						DefaultText =  "FORMAT",
 					  						FullLocalDefaultText =  "פורמט",
-					  						ListFieldLable =  "FORMATListLable",
+					  						ListFieldLable =  "FormatListLable",
 					  						ListLableDefaultText =  "FORMAT",
 					  						ListLocalDefaultText =  "פורמט",
 					  						IsForeignKey =  false,
@@ -540,7 +547,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CUSTOMSMETADATACODE",
+					 						FieldName =  "CustomsMetadataCode",
 					  						ObjectTableName =  "DocumentsMetaDataType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -560,8 +567,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CUSTOMSMETADATACODE",
-					  						ListPropertyPath =  "CUSTOMSMETADATACODE",
+					  						PMPropertyPath =  "CustomsMetadataCode",
+					  						ListPropertyPath =  "CustomsMetadataCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -578,9 +586,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CUSTOMSMETADATACODE",
+					  						FullFieldLable =  "CustomsMetadataCode",
 					  						DefaultText =  "CUSTOMS METADATA CODE",
-					  						ListFieldLable =  "CUSTOMSMETADATACODEListLable",
+					  						ListFieldLable =  "CustomsMetadataCodeListLable",
 					  						ListLableDefaultText =  "CUSTOMS METADATA CODE",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -602,16 +610,87 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup DocumentsMetaDataTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ac15", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup DocumentsMetaDataTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ab22", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable DocumentsMetaDataTypeObjectTable = objectTables.ContainsKey("DocumentsMetaDataType") ? objectTables["DocumentsMetaDataType"] : null;
+            if (DocumentsMetaDataTypeObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                DocumentsMetaDataTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "DocumentsMetaDataType" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode DocumentsMetaDataTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsMetaDataType.Q.AllMetaData", DefaultText = @"All MetaData",LocalDefaultText = "כל המטאדטא", ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature DocumentsMetaDataTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsMetaDataType.Q.AllMetaData", ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsMetaDataTypeFeatures.AllMetaData", NameTextCodeDefaultText = "AllMetaData", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,DocumentsMetaDataTypeObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AllMetaDataQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentsMetaDataTypeTextCode_0.Id, NameTextCodeCode = DocumentsMetaDataTypeTextCode_0.Code, ObjectTableName = "DocumentsMetaDataType", Code = "AllMetaData",  QueryGroupCode = "ac15", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, QuerySection = "DocumentsMetaDataType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DocumentsMetaDataTypeFeature_0.Id,FeatureUniqeCode= DocumentsMetaDataTypeFeature_0.FeatureUniqeCode, DefaultSortName = "CODE", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllMetaDataQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMetaDataQuery.Id,QueryCode = AllMetaDataQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DocumentsMetaDataType.CODE" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllMetaDataQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMetaDataQuery.Id,QueryCode = AllMetaDataQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DocumentsMetaDataType.ENGLISHNAME" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllMetaDataQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMetaDataQuery.Id,QueryCode = AllMetaDataQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DocumentsMetaDataType.LOCALNAME" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllMetaDataQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMetaDataQuery.Id,QueryCode = AllMetaDataQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DocumentsMetaDataType.INACTIVE" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllMetaDataQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMetaDataQuery.Id,QueryCode = AllMetaDataQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DocumentsMetaDataType.FORMAT" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllMetaDataQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMetaDataQuery.Id,QueryCode = AllMetaDataQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "DocumentsMetaDataType.CUSTOMSMETADATACODE" , ColumnWidth = 100 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable DocumentsMetaDataTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentsMetaDataType" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> DocumentsMetaDataTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "DocumentsMetaDataType").ToList();
+		       
+	      
+
+	         Screen DocumentsMetaDataTypeDocumentsMetaDataTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DocumentsMetaDataType.HeaderScreen", Name = "DocumentsMetaDataTypeHeaderScreen", ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    DocumentsMetaDataTypeObjectTable.HeaderScreenId = DocumentsMetaDataTypeDocumentsMetaDataTypeHeaderScreenScreen0.Id;
+		    DocumentsMetaDataTypeObjectTable.HeaderScreenCode = DocumentsMetaDataTypeDocumentsMetaDataTypeHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable DocumentsMetaDataTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentsMetaDataType" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode DocumentsMetaDataTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsMetaDataType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DocumentsMetaDataTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsMetaDataType.Tab.General", ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsMetaDataTypeFeatures.MDGC", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DocumentsMetaDataTypeObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MDGC",HtmlComponentName = "",HtmlComponentUrl = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentsMetadataType/NewDocumentsMetadataTypeComponent", FeatureId = DocumentsMetaDataTypeGeneralFeature_TH0.Id,FeatureUniqeCode = DocumentsMetaDataTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureDocuments/Components/DocumentsMetadataType/NewDocumentsMetadataTypeComponent", ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, TabNameTextCodeId = DocumentsMetaDataTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = DocumentsMetaDataTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

@@ -61,6 +61,38 @@
   padding: 5px;
   z-index: 1;
   justify-content: center;
+
+  .page-index {
+    direction: ltr;
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    padding-right: 4px;
+    border-radius: 5px;
+  }
+
+  .page-input {
+    width: 44px;
+    text-align: center;
+    margin: 0 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #007bff;
+    color: white;
+    outline: none;
+    -moz-appearance: textfield;
+  }
+
+  .page-input::-webkit-outer-spin-button,
+  .page-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 :host:hover .controls {

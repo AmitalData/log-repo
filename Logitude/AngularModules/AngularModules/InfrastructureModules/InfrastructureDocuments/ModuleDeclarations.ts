@@ -37,6 +37,9 @@ import { DocumentsFilingGeneralTabComponent } from './Components/DocumentsFiling
 import { DocumentDefultAttachmentsComponent } from './Components/DocumentComponent/DocumentDefultAttachmentsComponent';
 import { DocumentDefaultExternalAttachmentsComponent } from './Components/DocumentComponent/DocumentDefaultExternalAttachmentsComponent';
 import { NewDocumentsMetadataTypeComponent } from './Components/DocumentsMetadataType/NewDocumentsMetadataTypeComponent';
+import { DocumentTypeMetadataComponent } from './Components/DocumentType/Tab/DocumentTypeMetadataComponent';
+import { AddOrEditDocumentTypeMetadataComponent } from './Components/DocumentType/Tab/AddOrEditDocumentTypeMetadataComponent';
+import { NewDocumentTypeMetaDataComponent } from './Components/DocumentTypeMetaData/NewDocumentTypeMetaDataComponent';
 
 
 
@@ -85,6 +88,9 @@ export const Components =
         DocumentDefultAttachmentsComponent,
         DocumentDefaultExternalAttachmentsComponent,
         NewDocumentsMetadataTypeComponent,
+        DocumentTypeMetadataComponent,
+        AddOrEditDocumentTypeMetadataComponent,
+        NewDocumentTypeMetaDataComponent,
     ];
 
 export class ModuleDeclarations {
@@ -131,6 +137,9 @@ export class ModuleDeclarations {
             case "DocumentDefultAttachmentsComponent": { myResult = DocumentDefultAttachmentsComponent; break; }
             case "DocumentDefaultExternalAttachmentsComponent": { myResult = DocumentDefaultExternalAttachmentsComponent; break; }
             case "NewDocumentsMetadataTypeComponent": { myResult = NewDocumentsMetadataTypeComponent; break; }                 
+            case "DocumentTypeMetadataComponent": { myResult = DocumentTypeMetadataComponent; break; }
+            case "AddOrEditDocumentTypeMetadataComponent": { myResult = AddOrEditDocumentTypeMetadataComponent; break; }
+            case "NewDocumentTypeMetaDataComponent": { myResult = NewDocumentTypeMetaDataComponent; break; }
         }
 
         return myResult;

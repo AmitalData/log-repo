@@ -37,8 +37,8 @@ export class DocumentsFilingComponent {
     dataReady: boolean = false;
     tableDataInit: boolean = false;
     errors: string[] = [];
-    inputFileWidth: number = 400;
-    inputFileHeight: number = 560;
+    inputFileWidth: number = 580;
+    inputFileHeight: number = 700;
     inSavingProcess: boolean = false;
     directionCodes: { name: string, id: string }[] = [
         { name: 'In', id: 'I' },
@@ -48,7 +48,8 @@ export class DocumentsFilingComponent {
     selectedSession = SessionLocator.SelectedSession;
     dataInitProcess: boolean = false;
     finishInitialCdr: boolean = false;
-    ObjectTablesFilter: ApiQueryFilters = this.getObjectTablesFilter();
+    objectTablesFilter: ApiQueryFilters = this.getObjectTablesFilter();
+    documentTypeFilter: ApiQueryFilters = this.getDocumentTypeFilter();
 
     getObjectTablesFilter() {
         const filter = new ApiQueryFilters();
@@ -56,16 +57,20 @@ export class DocumentsFilingComponent {
         filter.addAdditionalFilter("Name", tables.join(','), null, null, "InListExact", false, false, false, "string", false, true);
         return filter;
     }
+    
+    getDocumentTypeFilter() {
+        const filter = new ApiQueryFilters();        
+        filter.addAdditionalFilter("IsDocIn", true, null, null, "Equals", false, false, false, "boolean", false);
+        return filter;
+    }
 
     constructor(entityArgs: EntityArgs, private cdr: ChangeDetectorRef) {
         this.isEditComponent = !!SessionLocator.SelectedSession.CurrentEditComponent;
         this.listner();
 
-        if (this.isEditComponent) {
-            this.inputFileHeight = 700;
-            this.inputFileWidth = 580;
-        } else {
-            (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).logWindow.Height = 700;
+        if (!this.isEditComponent) {
+            (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).logWindow.Height = 840;
+            (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).logWindow.Width = 1090;
             (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).SetWindowSize();
         }
 
@@ -201,7 +206,7 @@ export class DocumentsFilingComponent {
             value.Mandatory = item.Mandatory;
             value.DocumentsMetaDataTypeEnglishName = item.DocumentsMetaDataTypeEnglishName;
             value.DocumentsMetaDataTypeFormat = item.DocumentsMetaDataTypeFormat;
-            this.documentTypeMetaDataList.find(a => a.DocumentsMetaDataTypeId == item.DocumentsMetaDataTypeId).DocumentsFilingMetaDataValuePM = value;
+            (<any>this.documentTypeMetaDataList.find(a => a.DocumentsMetaDataTypeId == item.DocumentsMetaDataTypeId)).DocumentsFilingMetaDataValuePM = value;
         });
 
         this.cdr.detectChanges();

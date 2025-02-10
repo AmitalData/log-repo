@@ -23,7 +23,6 @@ import { AddEditCustomsBanksComponent } from './Components/AddEditCustomsBanksCo
 import { AddEditExportRequiredFieldsComponent } from './Components/RequiredFields/AddEditExportRequiredFieldsComponent';
 import { OcrDefaultsSettingsComponent } from 'Common/Components/Maintenance/OcrDefaultsSettingsComponent';
 import { ShaamSettingsComponent } from './Components/ShaamSettings/ShaamSettingsComponent';
-import { DocumentTypeMetadataComponent } from './Components/DocumentTypeMetadataComponent';
 //import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
 
 
@@ -52,7 +51,6 @@ export const Components =
         //CustomsPartnerFtpEditComponent,
         DeclarationRemarksComponent,
         ShaamSettingsComponent,
-        DocumentTypeMetadataComponent,
     ];
 
 export class ModuleDeclarations {
@@ -87,7 +85,6 @@ export class ModuleDeclarations {
             //case "CustomsPartnerFtpEditComponent": { myResult = CustomsPartnerFtpEditComponent; break; }
             case "DeclarationRemarksComponent": { myResult = DeclarationRemarksComponent; break; }
             case "ShaamSettingsComponent": { myResult = ShaamSettingsComponent; break; }
-            case "DocumentTypeMetadataComponent": { myResult = DocumentTypeMetadataComponent; break; }
 
 
 

@@ -4898,6 +4898,19 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
+    TabName="&quot;Metadata&quot;"
+    TabLocalName="&quot;מטאדטא&quot;"
+    ObjectTableName="&quot;DocumentType&quot;"
+    Code="&quot;DTMD&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeMetadataControl&quot;"
+    TextCode="&quot;DocumentType.TH.Metadata&quot;"
+    IsPackagable="false"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeMetadataComponent&quot;"
+    HtmlComponentName="&quot;DocumentTypeMetadataComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
     TabName="&quot;Custom Fields&quot;"
     ObjectTableName="&quot;DocumentType&quot;"
     Code="&quot;DTCF&quot;"
@@ -4966,19 +4979,6 @@
     IndexOrder="5"
     HtmlComponentURL="&quot;./CustomsModules/CustomsMaintenance/Components/DocumentTypeCustomsDataComponent&quot;"
     HtmlComponentName="&quot;DocumentTypeCustomsDataComponent&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
-    TabName="&quot;Metadata&quot;"
-    TabLocalName="&quot;מטאדטא&quot;"
-    ObjectTableName="&quot;DocumentType&quot;"
-    Code="&quot;DTMD&quot;"
-    ControlPath="&quot;Logitude.Customs.Views.Tabs.DocumentTypeMetadataControl&quot;"
-    TextCode="&quot;DocumentType.TH.Metadata&quot;"
-    IsPackagable="false"
-    IndexOrder="0"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsMaintenance/Components/DocumentTypeMetadataComponent&quot;"
-    HtmlComponentName="&quot;DocumentTypeMetadataComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>

@@ -30,6 +30,8 @@ export class DragDropFileInputComponent implements OnChanges {
   fileName: string = '';
   zoom: number = 1.0;
   rotation: number = 0;
+  currentPage: number = 1;
+  totalPages: number = 1;
 
   constructor(private sanitizer: DomSanitizer) { }
 
@@ -204,5 +206,22 @@ export class DragDropFileInputComponent implements OnChanges {
     this.zoom = 1.0;
     this.rotation = 0;
     this.fileCleared.emit();
+  }
+  
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  onPdfLoaded(pdf: any): void {
+    this.currentPage = 1;
+    this.totalPages = pdf.numPages;
   }
 }

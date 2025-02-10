@@ -241,21 +241,21 @@ namespace Simplog.Server.Infrastructure
         private void InitLog()
         {
 #if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached) // Double-check that a debugger is active
-            {
-                base.Database.Log = delegate (string s)
-                {
-                    if (s == Environment.NewLine)
-                    {
-                        return;
-                    }
-                    if (s.Contains("SELECT") || s.Contains("connection"))
-                    {
-                        Debug.WriteLine(base.GetType().Name + " ***** " + base.Database.Connection.ConnectionString);
-                    }
-                    Debug.WriteLine(s);
-                };
-            }
+            //if (System.Diagnostics.Debugger.IsAttached) // Double-check that a debugger is active
+            //{
+            //    base.Database.Log = delegate (string s)
+            //    {
+            //        if (s == Environment.NewLine)
+            //        {
+            //            return;
+            //        }
+            //        if (s.Contains("SELECT") || s.Contains("connection"))
+            //        {
+            //            Debug.WriteLine(base.GetType().Name + " ***** " + base.Database.Connection.ConnectionString);
+            //        }
+            //        Debug.WriteLine(s);
+            //    };
+            //}
 #endif
 
             //this.Database.Log += EnqueueLog;

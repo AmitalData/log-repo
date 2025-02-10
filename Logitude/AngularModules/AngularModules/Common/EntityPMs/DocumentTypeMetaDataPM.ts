@@ -10,11 +10,16 @@
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {DocumentsFilingMetaDataValuePM} from '../../Common/EntityPMs/DocumentsFilingMetaDataValuePM';
+import { EventEmitter, Output } from '@angular/core';
+import { PropertyChangedArgs } from 'Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 
 export class DocumentTypeMetaDataPM {
+    @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
+    public UIProperties: UIProperties;
+    public OldEntityPM: DocumentTypeMetaDataPM;
+    public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
 
-      public UIProperties: UIProperties;
 	  constructor() {
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
@@ -52,25 +57,17 @@ export class DocumentTypeMetaDataPM {
     public get DocumentsMetaDataTypeFormat() { return this.documentsMetaDataTypeFormat; }
     public set DocumentsMetaDataTypeFormat(newValue: string) { this.documentsMetaDataTypeFormat = newValue; this.MarkAsDirty("DocumentsMetaDataTypeFormat"); }
     
-
     private mandatory: boolean;
     public get Mandatory() { return this.mandatory; }
     public set Mandatory(newValue: boolean) { this.mandatory = newValue; this.MarkAsDirty("Mandatory"); }
-
-    private documentsFilingMetaDataValuePM: DocumentsFilingMetaDataValuePM;
-    public get DocumentsFilingMetaDataValuePM() { return this.documentsFilingMetaDataValuePM; }
-    public set DocumentsFilingMetaDataValuePM(newValue: DocumentsFilingMetaDataValuePM) { this.documentsFilingMetaDataValuePM = newValue; this.MarkAsDirty("DocumentsFilingMetaDataValuePM"); }
-
-    public OldEntityPM: DocumentTypeMetaDataPM;
 		
-    public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
         this.IsDirty = true;
 		  	
-        //if (propertyName != null) {
-        //    ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AccountingSetting");
+        if (propertyName != null) {
+           ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DocumentTypeMetaData");
            
-        //}
+        }
     }
     private MyClone: DocumentTypeMetaDataPM;
 
@@ -82,4 +79,4 @@ export class DocumentTypeMetaDataPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -1065,6 +1065,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentsMetaDataTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ResponsibilityViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\TruckerSettingViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\DocumentTypeMetaDataController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\DocumentsMetaDataTypeController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TruckerSettingController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NUnicloudViewsController.Generated.cs" />
@@ -4056,6 +4057,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeCategoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeCopyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeCustomFieldUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeMetaDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeTemplateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DueTypeUpdateClass.cs" />

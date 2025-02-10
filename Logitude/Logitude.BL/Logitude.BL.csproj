@@ -804,6 +804,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerTeamService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerStatusQueueService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\DocumentTypeMetaDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TruckerSettingService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\FreelancerGroupTypeService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />

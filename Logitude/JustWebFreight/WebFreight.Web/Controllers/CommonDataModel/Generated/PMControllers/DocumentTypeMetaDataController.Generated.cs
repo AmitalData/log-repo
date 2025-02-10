@@ -45,7 +45,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 { 
 
     
-    public partial class DocumentsMetaDataTypesController : ApiController
+    public partial class DocumentTypeMetaDatasController : ApiController
     {
 	  
        
@@ -57,12 +57,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                DocumentsMetaDataTypeQuery documentsMetaDataTypeQuery = new DocumentsMetaDataTypeQuery(authToken.Tenant);
-                DocumentsMetaDataTypePM documentsMetaDataTypePM = documentsMetaDataTypeQuery.GetSinglePM(id, authToken.Tenant);
+                DocumentTypeMetaDataQuery documentTypeMetaDataQuery = new DocumentTypeMetaDataQuery(authToken.Tenant);
+                DocumentTypeMetaDataPM documentTypeMetaDataPM = documentTypeMetaDataQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, documentsMetaDataTypePM);
+                return Request.CreateResponse(HttpStatusCode.OK, documentTypeMetaDataPM);
 			 
 			}
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
          
 		
 
-        public HttpResponseMessage Post(DocumentsMetaDataTypePM entityPM)
+        public HttpResponseMessage Post(DocumentTypeMetaDataPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -89,11 +89,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
-                        DocumentsMetaDataTypeService service = new DocumentsMetaDataTypeService(MyContext, entityPM.Tenant);
+                        DocumentTypeMetaDataService service = new DocumentTypeMetaDataService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DocumentsMetaDataType", 0, true);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DocumentTypeMetaData", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -121,7 +121,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage Put(DocumentsMetaDataTypePM entityPM)
+        public HttpResponseMessage Put(DocumentTypeMetaDataPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -134,18 +134,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        string entityName = "DocumentsMetaDataType" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "DocumentsMetaDataTypePM" + entityPM.Id + entityPM.Tenant;
+                        string entityName = "DocumentTypeMetaData" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "DocumentTypeMetaDataPM" + entityPM.Id + entityPM.Tenant;
                         CacheManager.CacheWrapper.Invalidate(entityName);
                         CacheManager.CacheWrapper.Invalidate(entityPmName);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
-                        DocumentsMetaDataTypeService service = new DocumentsMetaDataTypeService(MyContext, entityPM.Tenant);
+                        DocumentTypeMetaDataService service = new DocumentTypeMetaDataService(MyContext, entityPM.Tenant);
  
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DocumentsMetaDataType", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DocumentTypeMetaData", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);

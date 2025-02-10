@@ -5,14 +5,14 @@
                 <label>{{'Customs.CustomsDocument.F.DocumentTypeCode' | TextCodeTranslationPipe}}</label>
                 <LogLov class="data-value" [ObjectFieldName]="'DocumentTypeId'" [ObjectTableName]="ObjectTableName"
                     [DataContext]="documentsFilingPM" [LookUpTableName]="'DocumentType'" [HideColumns]="true"
-                    (ValueChanged)="documentTypeChanged(false)">
+                    (ValueChanged)="documentTypeChanged(false)" [QueryFilterItems]="documentTypeFilter">
                 </LogLov>
             </div>
             <div class="data-row">
                 <label>{{'Customs.DeficitFileFilterQuery.F.EntityTypeName' | TextCodeTranslationPipe}}</label>
                 <LogLov class="data-value" [ObjectFieldName]="'ObjectTableId'" [ObjectTableName]="ObjectTableName"
                     [DataContext]="documentsFilingPM" [LookUpTableName]="'ObjectTable'" [HideColumns]="true"
-                    [QueryFilterItems]="ObjectTablesFilter" [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
+                    [QueryFilterItems]="objectTablesFilter" [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
                 </LogLov>
             </div>
             <div class="data-row">
