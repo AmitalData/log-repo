@@ -261,15 +261,18 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                         const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
                         const result = this.parseXml(xmlData(XMLOfConsignmentsDetailsToCertificateOfOriginOut));
 
-                        if (AppTool.IsNullOrEmpty(result) || AppTool.IsNullOrEmpty(result?.certificateOfOriginItems) || result?.certificateOfOriginItems == 0) {
-                            this.initCertificateOriginItemItems(EntityPM);
-                        }
-                        else {
+                        if(!AppTool.IsNullOrEmpty(result)){
                             this.entityPM.ExporterName = result.ExporterName;
                             this.entityPM.ExporterAddress = result.ExporterAddress;
                             this.entityPM.ConsigneeName = result.ConsigneeName;
                             this.entityPM.ConsigneeAddress = result.ConsigneeAddress;
-                            
+                            alert("in");
+                        }
+                        if (AppTool.IsNullOrEmpty(result) || AppTool.IsNullOrEmpty(result?.certificateOfOriginItems) || result?.certificateOfOriginItems == 0) {
+                            this.initCertificateOriginItemItems(EntityPM);
+                            alert("null or empty");  
+                        }
+                        else {
                             this.initCertificateOriginItemsFromUnifreight(result, EntityPM);
                         }
                     }
