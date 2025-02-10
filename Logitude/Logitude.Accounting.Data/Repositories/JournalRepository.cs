@@ -511,7 +511,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
-                            where a.StatusCode != "0" && a.StatusCode != "5" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
+                            where a.StatusCode != "0" && a.StatusCode != "5" && a.StatusCode != "3" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
                             select a);
 
             return journals;
@@ -521,7 +521,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
-                            where a.StatusCode != "0" && a.StatusCode != "5" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
+                            where a.StatusCode != "0" && a.StatusCode != "5" && a.StatusCode != "3" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
                                     && a.AccountingEntityCode == entityCode
                             select a);
 
