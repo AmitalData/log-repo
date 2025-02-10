@@ -48,7 +48,7 @@ namespace WebFreight.Web.Helpers
         {
            
             PropertyDescriptor[] entityProperties = GetEntitySystemProperties<T>();
-            string strConnString = TenantServerConfigration.GetDbConnection(16);
+            string strConnString = TenantServerConfigration.GetDbConnection(0);
             StringBuilder sqlStringBuilder = new StringBuilder();
             string insertCommand = "insert into " + BuildInsertCommandColumnsString(tableName, entityProperties) +" values";
             sqlStringBuilder.AppendLine(insertCommand);

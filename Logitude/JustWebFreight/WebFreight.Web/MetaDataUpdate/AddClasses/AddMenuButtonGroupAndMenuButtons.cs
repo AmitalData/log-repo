@@ -14,7 +14,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
         public static MenuButtonGroup AddMenuButtonGroup(MenuButtonGroupDetails menuButtonGroupDetails, MenuButtonGroupRepository menuButtonGroupRepository, Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, int contextTenant = 0)
         {
 
-            ObjectTableRepository Repo = new ObjectTableRepository(16);
+            ObjectTableRepository Repo = new ObjectTableRepository(contextTenant);
             var table = Repo.GetSingleObjectTable(menuButtonGroupDetails.ObjectTableId, menuButtonGroupDetails.Tenant, false);
             string NewKey = "";
             if (ObjectTablesKeys.Keys.Keys.Contains(table.Name))
@@ -62,7 +62,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static MenuButton AddMenuButton(MenuButtonDetails menuButtonDetails, MenuButtonRepository menuButtonRepository, Dictionary<string, MenuButton> tenantMenuButtons, TextCodeRepository textCodeRepository, Dictionary<string, TextCode> textCodes,int contextTenant=0)
         {
-            ObjectTableRepository Repo = new ObjectTableRepository(16);
+            ObjectTableRepository Repo = new ObjectTableRepository(contextTenant);
             var table = Repo.GetSingleObjectTable(menuButtonDetails.ObjectTableId, menuButtonDetails.Tenant, false);
             string NewKey = "";
             if (ObjectTablesKeys.Keys.Keys.Contains(table.Name))
