@@ -506,7 +506,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public List<string> GetShipmentIdsByTenant(int tenant, int skip, int take, DateTime minStartDate)
         {
             List<string> shipments = (from a in context.Shipments
-                                      where a.Tenant == tenant && a.AutomaticLastUpdateDate >= minStartDate
+                                      where a.Tenant == tenant && a.AutomaticLastUpdateDate >= minStartDate && a.IsCancelled == false && a.IsOperationalClosed == false 
                                       select a.Id).OrderBy(d => d).Skip(skip).Take(take).ToList();
             return shipments;
         }
