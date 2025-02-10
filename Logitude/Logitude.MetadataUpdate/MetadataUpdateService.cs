@@ -11,6 +11,9 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Common;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,63 +26,107 @@ namespace Logitude.MetadataUpdate
     {
 
         private Dictionary<int, string> _globalDBs = new Dictionary<int, string>();
-        public void RunModulesUpdate(string moduleName)
+
+        public void RunModulesUpdate(string moduleName, int? tenantId = null)
         {
             try
             {
                 Console.WriteLine("Initializing Settings ...");
                 InitializeSettings();
                 Dictionary<int, string> processedDBConnections = new Dictionary<int, string>();
+                bool multiDB = false;
+                string firstDifferentDB = null;
+
                 foreach (var db in _globalDBs)
                 {
-                    int tenantId = db.Key;
+                    var dbConnection = GlobalDbHelper.GetGlobalDB(db.Key);
+                    if (dbConnection == null || !dbConnection.IsActive)
+                    {
+                        continue;
+                    }
+
+                    if (firstDifferentDB == null)
+                    {
+                        firstDifferentDB = dbConnection.DBConnection;
+                    }
+                    else if (firstDifferentDB != dbConnection.DBConnection)
+                    {
+                        multiDB = true;
+                        break;
+                    }
+                }
+
+                foreach (var db in _globalDBs)
+                {
+                    int currentTenantId = db.Key;
                     string globalDbId = db.Value;
 
-                    if (processedDBConnections.ContainsKey(tenantId))
+                    if (tenantId.HasValue && currentTenantId != tenantId.Value)
                     {
                         continue;
                     }
 
-                    var dbConnection = GlobalDbHelper.GetGlobalDB(tenantId);
-                    if(dbConnection == null)
+                    if (processedDBConnections.ContainsKey(currentTenantId))
                     {
-                        Console.WriteLine($"DB {globalDbId} not found for tenant {tenantId}");
                         continue;
                     }
-                    if(dbConnection.IsActive == false)
+
+                    var dbConnection = GlobalDbHelper.GetGlobalDB(currentTenantId);
+                    if (dbConnection == null)
                     {
-                        Console.WriteLine($"DB {globalDbId} is not active for tenant {tenantId}");
+                        Console.WriteLine($"DB {globalDbId} not found for tenant {currentTenantId}");
+                        continue;
+                    }
+                    if (!dbConnection.IsActive)
+                    {
+                        Console.WriteLine($"DB {globalDbId} is not active for tenant {currentTenantId}");
                         continue;
                     }
                     if (processedDBConnections.ContainsValue(dbConnection.DBConnection))
                     {
                         continue;
                     }
-                    Console.WriteLine($"Updating module '{moduleName}' for Tenant {tenantId}, DB Connection: {dbConnection}");
-                    TenantsUpdateClass.UpdateDataForTenant(tenantId, moduleName);
 
-                    // 🔹 Call `BuildObjectTablesZipFilesData` for this unique DB connection
+                    var moduleToIncule = GetIncludeModules(GetConnection(dbConnection));
+                    if (moduleToIncule.Modules.Contains("customs") && !moduleToIncule.Modules.Contains("shipment"))
+                    {
+                        Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection.DBConnection}");
+                        TenantsUpdateClass.UpdateDataForTenant(currentTenantId, "Customs", false, multiDB);
+                    }
+                    if (moduleToIncule.Modules.Contains("shipment") && moduleToIncule.Modules.Contains("customs"))
+                    {
+                        Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection.DBConnection}");
+                        TenantsUpdateClass.UpdateDataForTenant(currentTenantId, moduleName, false, multiDB);
+                    }
+                    if (moduleToIncule.Modules.Contains("shipment") && !moduleToIncule.Modules.Contains("customs"))
+                    {
+                        Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection.DBConnection}");
+                        TenantsUpdateClass.UpdateDataForTenant(currentTenantId, "UpdateTenantZeroNew", false, multiDB);
+                    }
+
+
                     Console.WriteLine($"Building Object table zip files for DB Connection: {dbConnection} ...");
                     bool buildCustomsZipFiles = false;
-                    TenantsUpdateClass.BuildObjectTablesZipFilesData(false, buildCustomsZipFiles, tenantId);
+                    if(moduleToIncule.Modules.Contains("customs"))
+                    {
+                        buildCustomsZipFiles = true;
+                    }
+                    TenantsUpdateClass.BuildObjectTablesZipFilesData(false, buildCustomsZipFiles, currentTenantId);
                     Console.WriteLine($"Building zip files finished for DB Connection: {dbConnection} ...");
 
-                    // 🔹 Store tenantId and DBConnection to avoid re-processing
-                    processedDBConnections.Add(tenantId, dbConnection.DBConnection);
+                    processedDBConnections.Add(currentTenantId, dbConnection.DBConnection);
                 }
-                Console.WriteLine("Updating all modules and building zip files finished successfully");
 
+                Console.WriteLine("Updating all modules and building zip files finished successfully");
             }
             catch (Exception e)
             {
                 Console.WriteLine("Error: " + e.Message);
                 Console.WriteLine("Error: " + e.StackTrace);
-
                 Console.WriteLine(e.InnerException?.Message);
                 Console.WriteLine("Inner Exception Stack Trace:");
                 Console.WriteLine(e.InnerException?.StackTrace);
                 Environment.Exit(1);
-
             }
         }
 
@@ -89,7 +136,7 @@ namespace Logitude.MetadataUpdate
             LogitudeSettings.DatabaseManagementSystem = dbms;
             Console.WriteLine("Connected to " + dbms);
             Console.WriteLine(GetConnectionString());
-            
+
             SettingRepository settingRepository = new SettingRepository();
             Setting setting = settingRepository.GetSingleSetting("1");
             LogitudeSettings.Id = setting.Id;
@@ -118,14 +165,14 @@ namespace Logitude.MetadataUpdate
             LogitudeSettings.ABMProductId = setting.ABMProductId;
             LogitudeSettings.AzureFolderName = setting.AzureFolderName;
             if (LogitudeSettings.IsCostomsDeploy)
-            { 
+            {
                 LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;// this project no need but in FilingManager is must 
                 LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
             }
 
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
-            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
+            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
             List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
             foreach (var item in globalTenants)
@@ -149,5 +196,62 @@ namespace Logitude.MetadataUpdate
             }
             return dbConnectionInfo;
         }
+
+        private IncludedModulesClass GetIncludeModules(string connectionString)
+        {
+            string queryString = "SELECT * FROM [dbo].[DBMigrationSettings]";
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+
+            IncludedModulesClass includedModules = null;
+
+            try
+            {
+                connection.Open();
+                reader = command.ExecuteReader();
+
+                reader.Read();
+
+                if (reader.HasRows)
+                {
+                    includedModules = new IncludedModulesClass
+                    {
+                        Include = reader["Mode"].ToString().ToLower() == "include",
+                        Modules = reader["ModulesList"].ToString().ToLower().Split(',').ToList()
+                    };
+                }
+
+                reader.Close();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+            }
+
+            return includedModules;
+        }
+
+        public string GetConnection(GlobalDB currentDb)
+        {
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            return connection.ConnectionString;
+        }
+        public class IncludedModulesClass
+        {
+            public bool Include { get; set; }
+
+            public List<string> Modules { get; set; }
+        }
     }
 }
+
+

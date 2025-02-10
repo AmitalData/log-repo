@@ -142,7 +142,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         private static GlobalDB GetByGlobalTenant(int tenant)
         {
-            tenant = SettingUtil.GetCurrentTenant();
+            tenant = SettingUtil.GetCurrentTenant(tenant);
             GlobalDB db;
             IGlobalContext context = GlobalContext.GetContext();
 

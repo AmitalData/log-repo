@@ -40,8 +40,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-   Code="&quot;2e01&quot;"
-   Name="&quot;General&quot;"
+  Code="&quot;b0fc&quot;"
+  Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
   ServerModuleName="&quot;Generals&quot;"
@@ -5551,27 +5551,6 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Accounting.General.O.VendorWithCustomerGLAccount&quot;"
-      DefaultText="&quot;The selected operational card is connected to a client-type account and therefore will not be included in the tax withholding report&quot;"
-      LocalDefaultTextBack_up="&quot;הכרטיס התפעולי שנבחר מחובר לחשבון מסוג לקוח ולכן לא ייכלל בדוח ניכוי מס במקור&quot;"
-      LocalDefaultText="&quot;BS64:IteU15vXqNeY15nXoSDXlNeq16TXoteV15zXmSDXqdeg15HXl9eoINee15fXldeR16gg15zXl9ep15HXldefINee16HXldeSINec16fXldeXINeV15zXm9efINec15Ag15nXmdeb15zXnCDXkdeT15XXlyDXoNeZ15vXldeZINee16Eg15HXnten15XXqCI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.General.O.VendorWithCustomerGLAccount&quot;"
-      DefaultText="&quot;The selected operational card is connected to a client-type account and therefore will not be included in the tax withholding report&quot;"
-      LocalDefaultTextBack_up="&quot;הכרטיס התפעולי שנבחר מחובר לחשבון מסוג לקוח ולכן לא ייכלל בדוח ניכוי מס במקור&quot;"
-      LocalDefaultText="&quot;BS64:IteU15vXqNeY15nXoSDXlNeq16TXoteV15zXmSDXqdeg15HXl9eoINee15fXldeR16gg15zXl9ep15HXldefINee16HXldeSINec16fXldeXINeV15zXm9efINec15Ag15nXmdeb15zXnCDXkdeT15XXlyDXoNeZ15vXldeZINee16Eg15HXnten15XXqCI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;Accounting.General.O.VendorWithCustomerGLAccount&quot;"
-      DefaultText="&quot;The selected operational card is connected to a client-type account and therefore will not be included in the tax withholding report&quot;"
-      LocalDefaultTextBack_up="&quot;הכרטיס התפעולי שנבחר מחובר לחשבון מסוג לקוח ולכן לא ייכלל בדוח ניכוי מס במקור&quot;"
-      LocalDefaultText="&quot;BS64:IteU15vXqNeY15nXoSDXlNeq16TXoteV15zXmSDXqdeg15HXl9eoINee15fXldeR16gg15zXl9ep15HXldefINee16HXldeSINec16fXldeXINeV15zXm9efINec15Ag15nXmdeb15zXnCDXkdeT15XXlyDXoNeZ15vXldeZINee16Eg15HXnten15XXqCI=&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;Accounting.General.O.Cheques&quot;"
       DefaultText="&quot;Cheques&quot;"
       LocalDefaultTextBack_up="&quot;שקים&quot;"
@@ -5757,13 +5736,6 @@
       LocalDefaultTextBack_up="&quot;לא ניתן להוסיף שיק עם מספר זהה לשיק שככבר הוקלד&quot;"
       LocalDefaultText="&quot;BS64:Itec15Ag16DXmdeq158g15zXlNeV16HXmdejINep15nXpyDXotedINee16HXpNeoINeW15TXlCDXnNep15nXpyDXqdeb15vXkdeoINeU15XXp9ec15Mi&quot;"
       TextCodeTypeCode="&quot;M&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;General.MH.QuotesOP&quot;"
-      DefaultText="&quot;Quotes (OP)&quot;"
-      LocalDefaultTextBack_up="&quot; הצעות מחיר (OP)&quot;"
-      LocalDefaultText="&quot;BS64:IiDXlNem16LXldeqINee15fXmdeoIChPUCki&quot;"
-      TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.MH.QuotesOP&quot;"
@@ -6634,24 +6606,6 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;General.MC.TokenManagement&quot;"
-      DefaultText="&quot;Token Management&quot;"
-      LocalDefaultText="&quot;&quot;"
-      TextCodeTypeCode="&quot;MC&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;General.MC.Logs&quot;"
-      DefaultText="&quot;Logs&quot;"
-      LocalDefaultText="&quot;&quot;"
-      TextCodeTypeCode="&quot;MC&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;General.MC.ShaamTokenManagement&quot;"
-      DefaultText="&quot;SHAAM Token Management&quot;"
-      LocalDefaultText="&quot;&quot;"
-      TextCodeTypeCode="&quot;MC&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;General.O.Mine&quot;"
       DefaultText="&quot;Mine&quot;"
       LocalDefaultTextBack_up="&quot;שלי&quot;"
@@ -6703,7 +6657,8 @@
     <TextCode
       Code="&quot;Accounting.O.AlreadyRedeemed&quot;"
       DefaultText="&quot;A check has already been cashed and adjusted by bank reconciliation. Should I mark it as &amp;quot;check returned from bank&quot;"
-      LocalDefaultText="&quot;צ'ק כבר נפרע והותאם בהתאמת בנק. האם לסמן בתור &quot;צ'ק חזר מהבנק&quot;?&quot;"
+      LocalDefaultTextBack_up="&quot;צ'ק כבר נפרע והותאם בהתאמת בנק. האם לסמן בתור &quot;צ'ק חזר מהבנק&quot;?&quot;"
+      LocalDefaultText="&quot;BS64:ItemJ9enINeb15HXqCDXoNek16jXoiDXldeU15XXqteQ150g15HXlNeq15DXnteqINeR16DXpy4g15TXkNedINec16HXntefINeR16rXldeoICLXpifXpyDXl9eW16gg157XlNeR16DXpyI/Ig==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6730,29 +6685,33 @@
     <TextCode
       Code="&quot;General.MH.Cards&quot;"
       DefaultText="&quot;Cards&quot;"
-      LocalDefaultText="&quot;כרטיסים&quot;"
+      LocalDefaultTextBack_up="&quot;כרטיסים&quot;"
+      LocalDefaultText="&quot;BS64:Iteb16jXmNeZ16HXmdedIg==&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;Accounting.General.O.NoReportsDisplay&quot;"
       DefaultText="&quot;No reports to display&quot;"
-      LocalDefaultText="&quot;אין דוחות להצגה&quot;"
+      LocalDefaultTextBack_up="&quot;אין דוחות להצגה&quot;"
+      LocalDefaultText="&quot;BS64:IteQ15nXnyDXk9eV15fXldeqINec15TXpteS15Qi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.O.DollarRateUpdated&quot;"
       DefaultText="&quot;The dollar exchange rate was last updated on&quot;"
-      LocalDefaultText="&quot;שער מטבע הדולר עודכן לאחרונה בתאריך &quot;"
+      LocalDefaultTextBack_up="&quot;שער מטבע הדולר עודכן לאחרונה בתאריך &quot;"
+      LocalDefaultText="&quot;BS64:Itep16LXqCDXnteY15HXoiDXlNeT15XXnNeoINei15XXk9eb158g15zXkNeX16jXldeg15Qg15HXqteQ16jXmdeaICI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;General.O.NewReport&quot;"
-      DefaultText="&quot;דוח חדש&quot;"
-      LocalDefaultText="&quot;דוח חדש&quot;"
+      DefaultTextBack_up="&quot;דוח חדש&quot;"
+      DefaultText="&quot;BS64:IteT15XXlyDXl9eT16ki&quot;"
+      LocalDefaultTextBack_up="&quot;דוח חדש&quot;"
+      LocalDefaultText="&quot;BS64:IteT15XXlyDXl9eT16ki&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-   </AdditionalTextCodes>
-
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;DASHBOARD&quot;"

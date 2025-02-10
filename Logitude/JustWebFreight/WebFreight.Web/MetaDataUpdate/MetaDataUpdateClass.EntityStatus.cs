@@ -14,9 +14,9 @@ namespace WebFreight.Web.MetaDataUpdate
 {
     public partial class MetaDataUpdateClass
     {
-        public void LoadEntityStatus()
+        public void LoadEntityStatus(int tenant=0)
         {
-            ObjectContext = WebFreightContext.GetContext(0);
+            ObjectContext = WebFreightContext.GetContext(tenant);
             EntityStatusRepository = new EntityStatusRepository(ObjectContext);
 
             ObjectTablePM shipmentObject = ObjectTableQuery.GetObjectTableByCode("Shipment", 0);

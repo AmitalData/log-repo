@@ -23,10 +23,10 @@ namespace WebFreight.Web.MetaDataUpdate
         private ObjectFieldQuery objectFieldsQuery;
         private ObjectTableQuery objectTabelQuery;
 
-        public void LoadUpdateTenantZero(IWebFreightContext context, bool updateMetadatafields = true)
+        public void LoadUpdateTenantZero(IWebFreightContext context, bool updateMetadatafields = true,int tenant=0)
         {
             isUpdate = true;
-            LoadObjectsTenantZero(context, updateMetadatafields);
+            LoadObjectsTenantZero(context, updateMetadatafields,tenant);
         }
 
         public void CreateJustOT(IWebFreightContext context)
@@ -137,7 +137,7 @@ namespace WebFreight.Web.MetaDataUpdate
         //#region LoadObjectsTenantZero()
         bool isUpdate = false;
         Dictionary<string, TextCode> textCodes = null;
-        public void LoadObjectsTenantZero(IWebFreightContext context, bool updateMetadatafields = true)
+        public void LoadObjectsTenantZero(IWebFreightContext context, bool updateMetadatafields = true,int tenant=0)
         {
             InitializeService(context);
 
@@ -177,230 +177,8 @@ namespace WebFreight.Web.MetaDataUpdate
             CreateAllTablesTips(tips, textCodes);
 
             if (updateMetadatafields)
-            {
-                // Models
-                //CreateShipmentModelObjectFields(objectFields, textCodes);
-                //CreateQuoteModelObjectFields(objectFields, textCodes);
-                //CreateInvoiceModelObjectFields(objectFields, textCodes);
-
-                //CreateFollowUpFields(objectFields, textCodes);
-                //CreateVatTypeFields(objectFields, textCodes);
-                //CreateVatTypePercentageFields(objectFields, textCodes);
-                //CreateCardFields(objectFields, textCodes);
-                //CreateCarrierFields(objectFields, textCodes);
-                //CreateCustomerFields(objectFields, textCodes);
-                //CreateAgentFields(objectFields, textCodes);
-                //CreateCustomAgentFields(objectFields, textCodes);
-                //CreateShippingAgentFields(objectFields, textCodes);
-                //CreateAirlineFields(objectFields, textCodes);
-                //CreateShippingLineFields(objectFields, textCodes);
-                //CreateTruckerFields(objectFields, textCodes);
-                //CreateVendorFields(objectFields, textCodes);
-                //CreateAddressFields(objectFields, textCodes);
-                //CreateContactFields(objectFields, textCodes);
-                //CreateBranchFields(objectFields, textCodes);
-                //CreateChargeTypeFields(objectFields, textCodes);
-                //CreateChargeTypeAccountingFields(objectFields, textCodes);
-                //CreateCountryFields(objectFields, textCodes);
-                //CreateCurrencyFields(objectFields, textCodes);
-                //CreateDepartmentFields(objectFields, textCodes);
-                //CreateExternalDocumentFields();
-                //CreateInternalDocumentFields();
-                //CreateGlobalZoneFields(objectFields, textCodes);
-                //CreateIncotermFields(objectFields, textCodes);
-                //CreatePaymentTermsFields(objectFields, textCodes);
-                //CreatePortFields(objectFields, textCodes);
-                //CreateStatesFields(objectFields, textCodes);
-                //CreateCityFields(objectFields, textCodes);
-                //CreateUserFields(objectFields, textCodes);
-                //CreateVesselFields(objectFields, textCodes);
-                //CreateWareHouseFields(objectFields, textCodes);
-                //CreateTraceEventFields(objectFields, textCodes);
-                //CreateEventTypeFields(objectFields, textCodes);
-                //CreateDocumentTypeFields(objectFields, textCodes);
-                //CreateDocumentsFilingsFields(objectFields, textCodes);
-                //CreatePackageTypeFields(objectFields, textCodes);
-                //CreateWeightUnitFields(objectFields, textCodes);
-                //CreateRateClassFields(objectFields, textCodes);
-                //CreateDimensionsUnitFields(objectFields, textCodes);
-                //CreateAccountingSystemFields(objectFields, textCodes);
-                //CreateAccountSettingFields(objectFields, textCodes);
-                //CreateAWBChargesCodeFields(objectFields, textCodes);
-                //CreateAWBSpecialHandlingCodeFields(objectFields, textCodes);
-                //CreateVolumeUnitFields(objectFields, textCodes);
-                //CreateMesaurmentFields(objectFields, textCodes);
-                //CreateDueTypeFields(objectFields, textCodes);
-                //CreatePrepaidCollectFields(objectFields, textCodes);
-                //CreateContainerTypeFields(objectFields, textCodes);
-                //CreateFollowUpTypeFields(objectFields, textCodes);
-                //CreateRatesTableFields(objectFields, textCodes);
-                //CreateTransportModeFields(objectFields, textCodes);
-                //CreateObjectTableFields(objectFields, textCodes);
-                //CreateEntityStatusFields(objectFields, textCodes);
-                //CreatePartnerTypeFields(objectFields, textCodes);
-                //CreateChargeGroupFields(objectFields, textCodes);
-                //CreateIATACodesFields(objectFields, textCodes);
-                //CreateTemplateFormatFields(objectFields, textCodes);
-                //CreateDocumentTypeTemplateFields(objectFields, textCodes);
-                //CreateDocumentTypeCustomFields(objectFields, textCodes);
-                //CreateDirectionFields(objectFields, textCodes);
-                //CreateSystemDataFields(objectFields, textCodes);
-                //CreateSharedLogisticsFields(objectFields, textCodes);
-                //CreateTenantFields(objectFields, textCodes);
-                //CreateDescriptionOfGoodsFields(objectFields, textCodes);
-                //CreateCounterDefinitionFields(objectFields, textCodes);
-                //CreateTarrifTypesFields(objectFields, textCodes);
-                //CreateTarrifFromToTypesFields(objectFields, textCodes);
-                //CreateTarrifChargesFields(objectFields, textCodes);
-                ////CreateTarrifFromTosFields(objectFields, textCodes);
-                //CreateTarrifHeadersFields(objectFields, textCodes);
-                //CreateTarrifStepsFields(objectFields, textCodes);
-                ////CreateTextCodeFields(objectFields, textCodes);
-                //CreateMAWBStackFields(objectFields, textCodes);
-                //CreateRestrictionFields(objectFields, textCodes);
-                //CreateRoleFields(objectFields, textCodes);
-                //CreateAccountFields(objectFields, textCodes);
-                //CreateAccountTypesFields(objectFields, textCodes);
-                //CreateRankFields(objectFields, textCodes);
-                //CreateCommunicationLogsFields(objectFields, textCodes);
-                //CreateCommunicationLogTypesFields(objectFields, textCodes);
-                //CreateWarehouseTypesFields(objectFields, textCodes);
-                //CreateCommunicationStatusTypesFields(objectFields, textCodes);
-                //CreatePasswordPoliciesFields(objectFields, textCodes);
-                //CreatePackageFields(objectFields, textCodes);
-                //CreateTenantManagementFields(objectFields, textCodes);
-                //CreateRecurringPeriodFields(objectFields, textCodes);
-                //CreatePaymentChannelFields(objectFields, textCodes);
-                //CreateEventTypeCategoryFields(objectFields, textCodes);
-               // LoadCreateTestFields(objectFields, textCodes);
-                //CreateTermsofUseSignaturesFields(objectFields, textCodes);
-                //CreateAnalyzeQueueFields(objectFields, textCodes);
-                //CreateCreditCardTypeFields(objectFields, textCodes);
-                //CreateErrorLogFields(objectFields, textCodes);
-                //CreateSharedLogisticsInvitationStatusFields(objectFields, textCodes);
-                //CreateAccountingTransferHeaderFields(objectFields, textCodes);
-                //CreateAccountingTransferLineFields(objectFields, textCodes);
-                //CreateAccountingTransferTypeFields(objectFields, textCodes);
-                //CreateMoveTypeFields(objectFields, textCodes);
-                //CreateReportFields(objectFields, textCodes);
-                //CreateCommodityFields(objectFields, textCodes);
-                //CreateLeadSourceFields(objectFields, textCodes);
-                //CreateIndustryFields(objectFields, textCodes);
-                //CreateProductTypeFields(objectFields, textCodes);
-                //CreateProductPeriodFields(objectFields, textCodes);
-                //CreateCustomerProductFields(objectFields, textCodes);
-                //CreateCustomerProductActualDataFields(objectFields, textCodes);
-                //CreateCustomerProductLocationFields(objectFields, textCodes);
-                //CreateCustomerProductLocationActualDataFields(objectFields, textCodes);
-                //CreateCompetitorsFields(objectFields, textCodes);
-                //CreateCustomerAdditionalServiceFields(objectFields, textCodes);
-                //CreateContactDoneMethodFields(objectFields, textCodes);
-                //CreateAdditionalServiceFields(objectFields, textCodes);
-                //CreateLogitudeLeadFields(objectFields, textCodes);
-                //CreateBorderTypeFields(objectFields, textCodes);
-                //CreateExternalSystemsTablesCodeFields(objectFields, textCodes);
-                //CreateVatUniqueTypeFields(objectFields, textCodes);
-                //CreateVatMandatoryTypeFields(objectFields, textCodes);
-                //CreateVatFormatTypeFields(objectFields, textCodes);
-                //CreateCustomerSalesNoteFields(objectFields, textCodes);
-                //CreateAccountingSystemsSettingFields(objectFields, textCodes);
-                //CreateAccountingSystemsSyncStatusFields(objectFields, textCodes);
-                //CreateCustomerStatusFields(objectFields, textCodes);
-                //CreateBusinessUnitFields(objectFields, textCodes);
-                //CreateFeatureAccessLevelFields(objectFields, textCodes);
-                //CreateSpecialServicesTypeFields(objectFields, textCodes);
-                //CreateRegionFields(objectFields, textCodes);
-                //CreatePaymentCurrencyFields(objectFields, textCodes);
-                //CreateCustomerSizeFields(objectFields, textCodes);
-                //CreateDistributorFields(objectFields, textCodes);
-                //CreateAccountingInformationIdentifierFields(objectFields, textCodes);
-                //CreateComputingPartnerFields(objectFields, textCodes);
-                //CreateComputingPartnerCodeFields(objectFields, textCodes);
-                //CreateComputingPartnerTableFields(objectFields, textCodes);
-                //CreateComputingPartnerTranslationFields(objectFields, textCodes);
-                //CreateBluesnapContractFields(objectFields, textCodes);
-                //CreateAWBMessagesCCSTypeFields(objectFields, textCodes);
-                //CreateDocumentFolderFields(objectFields, textCodes);
-                //CreateManifestStatusFields(objectFields, textCodes);
-                //CreateCustomsTransmissionsStatusFields(objectFields, textCodes);
-                //CreateInboundEmailFields(objectFields, textCodes);
-                //CreateInboundEmailLineFields(objectFields, textCodes);
-                //CreateDocumentTypeCategoryFields(objectFields, textCodes);
-                //CreateCustomerTenantAccessFields(objectFields, textCodes);
-                //CreateCustomerTenantAccessStatusType(objectFields, textCodes);
-                //CreateCustomerTenantAccessCardFields(objectFields, textCodes);
-                //CreateCustomerTenantAccessRequestFields(objectFields, textCodes);
-                //CreateHybridPartnerFields(objectFields, textCodes);
-                //CreateBusinessHourFields(objectFields, textCodes);
-                //CreateBusinessHoursHolidayFields(objectFields, textCodes);
-                //CreateAPILogsFields(objectFields, textCodes);
-                //CreatePaymentMethodFields(objectFields, textCodes);
-                //CreateAPILogsDataFields(objectFields, textCodes);
-                //CreateBatchServicesLogFields(objectFields, textCodes);
-                //CreateTenantTypeFields(objectFields, textCodes);
-                //CreateQueueMessageMoreDetailsFields(objectFields, textCodes);
-                //CreateCustomerTenantAccessCardBatchFields(objectFields, textCodes);
-                //CreateParticipantFields(objectFields, textCodes);
-                //CreateApiCredintials(objectFields, textCodes);
-                //CreateAirlineStatisticsFields(objectFields, textCodes);
-                //CreateAWBDescriptionOfGoodsFields(objectFields, textCodes);
-                //CreateTransmissionLogFields(objectFields, textCodes);
-                ////CreateFeaturePackageTypeFields(objectFields, textCodes);
-                //CreateTenantManagementLicenseFields(objectFields, textCodes);
-                //CreatePackageConnectedPackageFields(objectFields, textCodes);
-                //CreateUserLicenseFields(objectFields, textCodes);
-                //CreateTenantAddOnFields(objectFields, textCodes);
-                //CreateAirlineMessagingRuleFields(objectFields, textCodes);
-                //CreateAuomationFields(objectFields, textCodes);
-                //CreatePaymentTermDateTypeFields(objectFields, textCodes);
-                //CreateCustomerFieldsUpdateSettingFields(objectFields, textCodes);
-                //CreateTenantManagmentPrivateLabelsFields(objectFields, textCodes);
-                //CreateCreditLimitSettingFields(objectFields, textCodes);
-                //CreateAgentSharedManifestFields(objectFields, textCodes);
-                //CreateCustomerAccountManagerByProductFields(objectFields, textCodes);
-                //CreateCardExternalAccountsByProductFields(objectFields, textCodes);
-                //CreateCustomsInterfaceFields(objectFields, textCodes);
-                //CreateCustomsInterfaceSettingFields(objectFields, textCodes);
-                //CreateFTPDetailFields(objectFields, textCodes);
-                //CreateSATInterfaceFields(objectFields, textCodes);
-                //CreateSATInterfaceSettingFields(objectFields, textCodes);
-                //CreateFBLStockFields(objectFields, textCodes);
-                //CreateSATPaymentMethodFields(objectFields, textCodes);
-                ////CreateCardExternalCodeByCurrencyFields(objectFields, textCodes);
-                //CreateLoginPolicyFields(objectFields, textCodes);
-                //CreateTenantLoginPolicy(objectFields, textCodes);
-                //TwoFactorAuthenticationDeviceFields(objectFields, textCodes);
-                //CreateMetodoPagoFields(objectFields, textCodes);
-                //CreateBatchServicesDefinitionsFields(objectFields, textCodes);
-                ////CreateAgentSharedDocumentFields(objectFields, textCodes);
-                ////CreateChargesExternalAccountsByProductFields(objectFields, textCodes);
-                //CreateRegistryDateTypeFields(objectFields, textCodes);
-                //CreateUsoCFDIFields(objectFields, textCodes);
-                //CreateReportsTemplateFields(objectFields, textCodes);
-                //CreateReportsTemplatesVersionFields(objectFields, textCodes);
-                //CreateObjectFieldFields(objectFields, textCodes);
-                //CreateFilingInboxFields(objectFields, textCodes);
-                //CreateFilingInboxAttachmentFields(objectFields, textCodes);
-                //CreateFilingInboxAttachmentLogFields(objectFields, textCodes);
-                //CreateTasksSchedulerObjectFields(objectFields, textCodes);
-                ////CreateINTTRASettingFields(objectFields, textCodes);
-                ////CreateINTTRASettingModeFields(objectFields, textCodes);
-                ////CreateINTTRABranchRegisteredCarrierFields(objectFields, textCodes);
-                ////CreateTemperatureUnitFields(objectFields, textCodes);
-                ////CreateINTTRADocumentTypeFields(objectFields, textCodes);
-
-                //CreateDocumentFilingBackupBatchFields(objectFields, textCodes);
-                //CreateDocumentFilingBackupSettingFields(objectFields, textCodes);
-                ////CreateDWHSettingFields(objectFields, textCodes);
-
-                //CreateDWObjectTableFields(objectFields, textCodes);
-                //CreateDWObjectFieldFields(objectFields, textCodes);
-
-                //if (!isUpdate)
-                //{
-                LoadRolesAndFeatures(0);
-                CreateMenuButtonsForTenant(0);
-                //}          
+            {               
+                CreateMenuButtonsForTenant(tenant);         
             }
 
         

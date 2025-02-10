@@ -13,6 +13,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
     public class ObjectTableRepository:IRepository<ObjectTable>, Simplog.Data.InfrastructureModel.Repositories.IObjectTableRepository
     {
          IWebFreightContext webFreightContext;
+        public static  int tenantId = 0;
+
 
         public ObjectTableRepository(IWebFreightContext context)
         {
@@ -27,6 +29,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public ObjectTableRepository(int tenant)
         {
             webFreightContext = WebFreightContext.GetContext(tenant);
+            tenantId = tenant;
         }
 
         public bool IsObjectTableMaster(string objectTableId)

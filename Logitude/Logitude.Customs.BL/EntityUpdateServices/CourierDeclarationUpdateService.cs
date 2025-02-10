@@ -75,8 +75,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 var tableName = "CourierDeclarations";
                 if(!CustomsSettingQueryService.GetSettingByTenant(Tenant).IsConnectedToUniFreight)
-                    tableName ="Customs." + tableName;
-                SqlBulkInsert.BulkInsert(tableName, addedCourierDeclarations);
+                    tableName ="Customs." + tableName; 
+                //todo check what tenant to send
+                SqlBulkInsert.BulkInsert(tableName, addedCourierDeclarations, 0);
             }
             /*
             if (dbms == "oracle")

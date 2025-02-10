@@ -608,7 +608,7 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new FaultInspectionTypeMap());
 	
             modelBuilder.Configurations.Add(new FclLclCodeMap());
-		
+	
             modelBuilder.Configurations.Add(new FreightPaymentMethodMap());
 	
             modelBuilder.Configurations.Add(new FuelTypeMap());
