@@ -25,7 +25,6 @@ export class DataRowComponent implements OnInit {
 	@Input() data: CB_CustomsItemComputedDataList;
 	@Input() isSelected?: boolean = true;
 
-	@Input() showTaxData: boolean = false;
 	@Input() showDetailsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	@Input() state = 'search';
 	@Input() searchItem?: string = '';
@@ -244,27 +243,27 @@ export class DataRowComponent implements OnInit {
 
 	buildSetWidth() {
 		if (this.screenWidth <= 620) this.widthSmaller = true;
-		else this.widthSmaller = false;
-		// let isExistData = this.TariffListData?.length > 0 ? true : false;
+    else this.widthSmaller = false;
+    //#115478 delete using showTaxData input
 		let isExistData = !this.data?.PurchaseTax && !this.data?.MeasurementUnitName && !this.data?.CustomsRate && !this.data?.OptionalTaxAddition ? false : true;
 		isExistData = !isExistData && this.data?.MeasurementUnitName && this.level > 3 ? true : isExistData;
 		// Set width:
-		if (this.showTaxData && isExistData && this.screenWidth > 1199 && this.screenWidth < 1300) {
+		if (isExistData && this.screenWidth > 1199 && this.screenWidth < 1300) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "10%");
 		}
-		else if (this.showTaxData && isExistData && this.screenWidth >= 1301 && this.screenWidth < 1350) {
+		else if (isExistData && this.screenWidth >= 1301 && this.screenWidth < 1350) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "16%");
 		}
-		else if (this.showTaxData && isExistData && this.screenWidth >= 1351 && this.screenWidth < 1700) {
+		else if (isExistData && this.screenWidth >= 1351 && this.screenWidth < 1700) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "25%");
 		}
-		else if (this.showTaxData && isExistData && this.screenWidth >= 1701 && this.screenWidth < 1900) {
+		else if (isExistData && this.screenWidth >= 1701 && this.screenWidth < 1900) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "40%");
 		}
-		else if (this.showTaxData && isExistData && this.screenWidth >= 1901 && this.screenWidth < 2250) {
+		else if (isExistData && this.screenWidth >= 1901 && this.screenWidth < 2250) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "45%");
 		}
-		else if (this.showTaxData && isExistData && this.screenWidth >= 2250) {
+		else if (isExistData && this.screenWidth >= 2250) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "50%");
 		}
 		else if (this.screenWidth <= 550) {
