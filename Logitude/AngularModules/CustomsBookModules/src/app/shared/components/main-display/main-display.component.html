@@ -17,146 +17,127 @@
 					</div>
 				</ng-template>
 				<ng-container *ngIf="!isLoading">
-
 					<ul *ngFor="let item of data" class="wtree">
-						<app-data-row id="{{item.CustomsItemID}}" [fullClassificationLengthCharToDisplay]="" [showTaxData]="false"
-							[level]="1"
-							[showDetailsOpen]="showDetailsOpen" [data]="item"
-							[isSelected]="showDetails && selectedItemId == item.CustomsItemID"
-							[searchItem]="searchValue" (showCommentSidebar)="showAddComment = !showAddComment"
-							(showChildern)="showChildern($event, item)" class="app-data-row"
-							(showDetails)="showDetailsClick(item.CustomsItemID, item)"
-							(showCommentsOpen)="showCommentsOpen($event)" (showRulesOpen)="showRulesOpen($event)">
+						<app-data-row id="{{item.CustomsItemID}}" [fullClassificationLengthCharToDisplay]="" [level]="1"
+													[showDetailsOpen]="showDetailsOpen" [data]="item"
+													[isSelected]="showDetails && selectedItemId == item.CustomsItemID"
+													[searchItem]="searchValue" (showCommentSidebar)="showAddComment = !showAddComment"
+													(showChildern)="showChildern($event, item)" class="app-data-row"
+													(showDetails)="showDetailsClick(item.CustomsItemID, item)"
+													(showCommentsOpen)="showCommentsOpen($event)" (showRulesOpen)="showRulesOpen($event)">
 						</app-data-row>
 						<ul class="wtree" [@inOutAnimation]>
 							<ng-container *ngIf="item.IsShowChildren">
 								<ng-container *ngFor="let key2 of Object.keys(item.children)">
 									<li [@inOutAnimation]>
-										<app-data-row id="{{item.children[key2].CustomsItemID}}" [fullClassificationLengthCharToDisplay]="IsDiscountCodes ? null : 2" [showTaxData]="false"
-											[level]="2"
-											[showDetailsOpen]="showDetailsOpen" [data]="item?.children[key2]"
-											[searchItem]="searchValue"
-											[isSelected]="showDetails && selectedItemId == item?.children[key2]?.CustomsItemID"
-											(showCommentSidebar)="showAddComment = !showAddComment" class="app-data-row"
-											(showChildern)="showChildern($event, item.children[key2])"
-											(showDetails)="showDetailsClick(item.children[key2]?.CustomsItemID , item.children[key2])"
-											(showCommentsOpen)="showCommentsOpen($event)"
-											(showRulesOpen)="showRulesOpen($event)">
+										<app-data-row id="{{item.children[key2].CustomsItemID}}"
+																	[fullClassificationLengthCharToDisplay]="IsDiscountCodes ? null : 2"
+																	[level]="2" [showDetailsOpen]="showDetailsOpen"
+																	[data]="item?.children[key2]" [searchItem]="searchValue"
+																	[isSelected]="showDetails && selectedItemId == item?.children[key2]?.CustomsItemID"
+																	(showCommentSidebar)="showAddComment = !showAddComment" class="app-data-row"
+																	(showChildern)="showChildern($event, item.children[key2])"
+																	(showDetails)="showDetailsClick(item.children[key2]?.CustomsItemID , item.children[key2])"
+																	(showCommentsOpen)="showCommentsOpen($event)"
+																	(showRulesOpen)="showRulesOpen($event)">
 										</app-data-row>
 										<ng-container *ngIf="item.children[key2]?.IsShowChildren">
 											<ul [@inOutAnimation]>
 												<li [@inOutAnimation] class="mainTable_itemChkAll"
-													*ngIf="item.children[key2]?.children.length > 0">
-													<label><input class="mainTable_itemChkAllCheckBox" type="checkbox"
-															[(ngModel)]="item.children[key2].checked"
-															(change)="onToggleAll($event , item.children[key2])">
+														*ngIf="item.children[key2]?.children.length > 0">
+													<label>
+														<input class="mainTable_itemChkAllCheckBox" type="checkbox"
+																	 [(ngModel)]="item.children[key2].checked"
+																	 (change)="onToggleAll($event , item.children[key2])">
 														<span>פתח הכל</span>
 													</label>
 												</li>
-
-												<ng-container
-													*ngFor="let key3 of Object.keys(item.children[key2].children)">
+												<ng-container *ngFor="let key3 of Object.keys(item.children[key2].children)">
 													<li [@inOutAnimation]>
-														<app-data-row id="{{item.children[key2].children[key3].CustomsItemID}}"[fullClassificationLengthCharToDisplay]="IsDiscountCodes ? null : 4"
-															[level]="3"
-															[showTaxData]="true" [showDetailsOpen]="showDetailsOpen"
-															[data]="item?.children[key2]?.children[key3]"
-															[searchItem]="searchValue"
-															[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.CustomsItemID"
-															(showCommentSidebar)="showAddComment = !showAddComment"
-															class="app-data-row"
-															(showChildern)="showChildern($event, item.children[key2].children[key3])"
-															(showDetails)="showDetailsClick(item.children[key2].children[key3]?.CustomsItemID , item.children[key2].children[key3])"
-															(showCommentsOpen)="showCommentsOpen($event)"
-															(showRulesOpen)="showRulesOpen($event)">
+														<app-data-row id="{{item.children[key2].children[key3].CustomsItemID}}"
+																					[fullClassificationLengthCharToDisplay]="IsDiscountCodes ? null : 4"
+																					[level]="3" [showDetailsOpen]="showDetailsOpen"
+																					[data]="item?.children[key2]?.children[key3]"
+																					[searchItem]="searchValue"
+																					[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.CustomsItemID"
+																					(showCommentSidebar)="showAddComment = !showAddComment"
+																					class="app-data-row"
+																					(showChildern)="showChildern($event, item.children[key2].children[key3])"
+																					(showDetails)="showDetailsClick(item.children[key2].children[key3]?.CustomsItemID , item.children[key2].children[key3])"
+																					(showCommentsOpen)="showCommentsOpen($event)"
+																					(showRulesOpen)="showRulesOpen($event)">
 														</app-data-row>
-														<ng-container
-															*ngIf="item.children[key2].children[key3]?.IsShowChildren">
-
+														<ng-container *ngIf="item.children[key2].children[key3]?.IsShowChildren">
 															<ul [@inOutAnimation]>
-																<ng-container
-																	*ngFor="let key4 of Object.keys(item.children[key2].children[key3].children)">
+																<ng-container *ngFor="let key4 of Object.keys(item.children[key2].children[key3].children)">
 																	<li [@inOutAnimation]>
 																		<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4].CustomsItemID}}"
-																			[level]="4" 
-																			[fullClassificationLengthCharToDisplay]=""
-																			[showTaxData]="true"
-																			[showDetailsOpen]="showDetailsOpen"
-																			[data]="item?.children[key2]?.children[key3]?.children[key4]"
-																			[searchItem]="searchValue"
-																			[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.CustomsItemID"
-																			(showCommentSidebar)="showAddComment = !showAddComment"
-																			class="app-data-row"
-																			(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4])"
-																			(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4]?.CustomsItemID, item.children[key2].children[key3].children[key4])"
-																			(showCommentsOpen)="showCommentsOpen($event)"
-																			(showRulesOpen)="showRulesOpen($event)">
+																									[level]="4"
+																									[fullClassificationLengthCharToDisplay]=""
+																									[showDetailsOpen]="showDetailsOpen"
+																									[data]="item?.children[key2]?.children[key3]?.children[key4]"
+																									[searchItem]="searchValue"
+																									[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.CustomsItemID"
+																									(showCommentSidebar)="showAddComment = !showAddComment"
+																									class="app-data-row"
+																									(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4])"
+																									(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4]?.CustomsItemID, item.children[key2].children[key3].children[key4])"
+																									(showCommentsOpen)="showCommentsOpen($event)"
+																									(showRulesOpen)="showRulesOpen($event)">
 																		</app-data-row>
-																		<ng-container
-																			*ngIf="item.children[key2].children[key3].children[key4]?.IsShowChildren">
+																		<ng-container *ngIf="item.children[key2].children[key3].children[key4]?.IsShowChildren">
 																			<ul [@inOutAnimation]>
-																				<ng-container
-																					*ngFor="let key5 of Object.keys(item.children[key2].children[key3].children[key4].children)">
+																				<ng-container *ngFor="let key5 of Object.keys(item.children[key2].children[key3].children[key4].children)">
 																					<li [@inOutAnimation]>
 																						<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID}}"
-																							[level]="5"
-																							[fullClassificationLengthCharToDisplay]=""
-																							[showTaxData]="true"
-																							[showDetailsOpen]="showDetailsOpen"
-																							[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]"
-																							[searchItem]="searchValue"
-																							[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID"
-																							(showCommentSidebar)="showAddComment = !showAddComment"
-																							class="app-data-row"
-																							(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4].children[key5])"
-																							(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5])"
-																							(showCommentsOpen)="showCommentsOpen($event)"
-																							(showRulesOpen)="showRulesOpen($event)">
+																													[level]="5"
+																													[fullClassificationLengthCharToDisplay]=""
+																													[showDetailsOpen]="showDetailsOpen"
+																													[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]"
+																													[searchItem]="searchValue"
+																													[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID"
+																													(showCommentSidebar)="showAddComment = !showAddComment"
+																													class="app-data-row"
+																													(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4].children[key5])"
+																													(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5])"
+																													(showCommentsOpen)="showCommentsOpen($event)"
+																													(showRulesOpen)="showRulesOpen($event)">
 																						</app-data-row>
-																						<ng-container
-																							*ngIf="item.children[key2].children[key3].children[key4].children[key5]?.IsShowChildren">
+																						<ng-container *ngIf="item.children[key2].children[key3].children[key4].children[key5]?.IsShowChildren">
 																							<ul [@inOutAnimation]>
-																								<ng-container
-																									*ngFor="let key6 of Object.keys(item.children[key2].children[key3].children[key4].children[key5].children)">
-																									<li
-																										[@inOutAnimation]>
-																										<app-data-row  id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6].CustomsItemID}}"
-																											[level]="6"
-																											[fullClassificationLengthCharToDisplay]=""
-																											[showTaxData]="true"
-																											[showDetailsOpen]="showDetailsOpen"
-																											[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]"
-																											[searchItem]="searchValue"
-																											[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].children[key6].CustomsItemID"
-																											(showCommentSidebar)="showAddComment = !showAddComment"
-																											class="app-data-row"
-																											(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4].children[key5].children[key6])"
-																											(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5].children[key6]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5].children[key6])"
-																											(showCommentsOpen)="showCommentsOpen($event)"
-																											(showRulesOpen)="showRulesOpen($event)">
+																								<ng-container *ngFor="let key6 of Object.keys(item.children[key2].children[key3].children[key4].children[key5].children)">
+																									<li [@inOutAnimation]>
+																										<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6].CustomsItemID}}"
+																																	[level]="6"
+																																	[fullClassificationLengthCharToDisplay]=""
+																																	[showDetailsOpen]="showDetailsOpen"
+																																	[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]"
+																																	[searchItem]="searchValue"
+																																	[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].children[key6].CustomsItemID"
+																																	(showCommentSidebar)="showAddComment = !showAddComment"
+																																	class="app-data-row"
+																																	(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4].children[key5].children[key6])"
+																																	(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5].children[key6]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5].children[key6])"
+																																	(showCommentsOpen)="showCommentsOpen($event)"
+																																	(showRulesOpen)="showRulesOpen($event)">
 																										</app-data-row>
-																										<ng-container
-																											*ngIf="item.children[key2].children[key3].children[key4].children[key5].children[key6]?.IsShowChildren">
-																											<ul
-																												[@inOutAnimation]>
-																												<ng-container
-																													*ngFor="let key7 of Object.keys(item.children[key2].children[key3].children[key4].children[key5].children[key6].children)">
-																													<li
-																														[@inOutAnimation]>
-																														<app-data-row  id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]?.children[key7].CustomsItemID}}"
-																															[level]="7"
-																															[fullClassificationLengthCharToDisplay]=""
-																															[showTaxData]="true"
-																															[showDetailsOpen]="showDetailsOpen"
-																															[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]?.children[key7]"
-																															[searchItem]="searchValue"
-																															[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].children[key6].children[key7].CustomsItemID"
-																															(showCommentSidebar)="showAddComment = !showAddComment"
-																															class="app-data-row"
-																															(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4].children[key5].children[key6].children[key7])"
-																															(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5].children[key6].children[key7]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5].children[key6].children[key7])"
-																															(showCommentsOpen)="showCommentsOpen($event)"
-																															(showRulesOpen)="showRulesOpen($event)">
+																										<ng-container *ngIf="item.children[key2].children[key3].children[key4].children[key5].children[key6]?.IsShowChildren">
+																											<ul [@inOutAnimation]>
+																												<ng-container *ngFor="let key7 of Object.keys(item.children[key2].children[key3].children[key4].children[key5].children[key6].children)">
+																													<li [@inOutAnimation]>
+																														<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]?.children[key7].CustomsItemID}}"
+																																					[level]="7"
+																																					[fullClassificationLengthCharToDisplay]=""
+																																					[showDetailsOpen]="showDetailsOpen"
+																																					[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]?.children[key7]"
+																																					[searchItem]="searchValue"
+																																					[isSelected]="showDetails && selectedItemId == item?.children[key2]?.children[key3]?.children[key4]?.children[key5].children[key6].children[key7].CustomsItemID"
+																																					(showCommentSidebar)="showAddComment = !showAddComment"
+																																					class="app-data-row"
+																																					(showChildern)="showChildern($event, item.children[key2].children[key3].children[key4].children[key5].children[key6].children[key7])"
+																																					(showDetails)="showDetailsClick(item.children[key2].children[key3].children[key4].children[key5].children[key6].children[key7]?.CustomsItemID, item.children[key2].children[key3].children[key4].children[key5].children[key6].children[key7])"
+																																					(showCommentsOpen)="showCommentsOpen($event)"
+																																					(showRulesOpen)="showRulesOpen($event)">
 																														</app-data-row>
 																													</li>
 																												</ng-container>
