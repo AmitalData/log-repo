@@ -44,7 +44,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm.Id = IdCounter.GetNumber("Report", tenant).ToString();
             this.Poco = new Report();
             this.Poco.Id = this.entityPm.Id;
-
+            if ( entityPM.Tenant == 0)
+            {
+                UpdateAvailableForSchedulingForAllTenants(entityPM);
+            }
             ReportValidating.Validate(entityPM, this.ObjectContext, this.isNewEntity);
             ReportTracing.Trace(entityPM, Poco, isNewEntity);
             ReportMapping.MapEntity(entityPM, Poco, isNewEntity);
@@ -58,6 +61,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleReport(entityPM.Id, entityPm.Tenant);
             
+            if (entityPM.AvailableForScheduling !=Poco.AvailableForScheduling && entityPM.Tenant==0)
+            {
+                UpdateAvailableForSchedulingForAllTenants(entityPM);
+              
+            }
             ReportValidating.Validate(entityPM, this.ObjectContext, this.isNewEntity);
             ReportTracing.Trace(entityPM, Poco, isNewEntity);
             ReportMapping.MapEntity(entityPM, Poco, isNewEntity);
@@ -128,6 +136,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             return document.Id;
+        }
+
+        public void UpdateAvailableForSchedulingForAllTenants(ReportPM entityPM)
+        {
+            var reportsWithSameCode = entityRepository.GetReportsByCode(entityPM.Code,entityPM.AvailableForScheduling);
+            foreach (var report in reportsWithSameCode)
+            {
+                report.AvailableForScheduling = entityPM.AvailableForScheduling;
+                entityRepository.Update(report);
+            }
         }
     }
 }
