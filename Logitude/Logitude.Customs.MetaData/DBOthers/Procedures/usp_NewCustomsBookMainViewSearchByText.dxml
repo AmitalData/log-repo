@@ -385,7 +385,7 @@ BEGIN
 	    WHERE Tenant = @Tenant
 	) AS remark ON DistinctResults.CustomsItemId = remark.CustomsItemsID
 	GROUP BY CustomsItemId,IsLeaf,Rules
-	ORDER BY ItemHierarchicLocationID;
+	ORDER BY Fullclassification;
 END--new
 IF @CustomsItemHierarchic is null AND @Remarks = 1 AND @Rules = 0 -- סינון של הערות בלבד
 BEGIN
