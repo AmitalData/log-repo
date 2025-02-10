@@ -135,7 +135,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -211,7 +210,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -288,7 +286,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="true"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -364,7 +361,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -440,7 +436,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -516,7 +511,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -592,7 +586,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -668,7 +661,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -745,7 +737,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="true"
     IsSpellCheckedFullFieldLable="false"
@@ -822,7 +813,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="true"
     IsSpellCheckedFullFieldLable="false"
@@ -899,7 +889,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="true"
     IsSpellCheckedFullFieldLable="false"
@@ -976,7 +965,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="true"
     IsSpellCheckedFullFieldLable="false"
@@ -1053,7 +1041,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="true"
     IsSpellCheckedFullFieldLable="false"
@@ -1130,7 +1117,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="true"
     IsSpellCheckedFullFieldLable="false"
@@ -1207,7 +1193,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="true"
     IsSpellCheckedFullFieldLable="false"
@@ -1284,7 +1269,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="true"
     IsSpellCheckedFullFieldLable="false"
@@ -1361,7 +1345,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="true"
     IsSpellCheckedFullFieldLable="false"
@@ -1438,7 +1421,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="true"
     IsSpellCheckedFullFieldLable="false"
@@ -1516,7 +1498,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1592,7 +1573,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1670,7 +1650,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1748,7 +1727,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1830,7 +1808,6 @@
     AutomationEmailRecipient="true"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IssuedByUserId&quot;"
@@ -1907,7 +1884,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -1983,7 +1959,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2062,7 +2037,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ExchangeRateDate&quot;"
@@ -2142,7 +2116,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;DraftNumber&quot;"
@@ -2220,7 +2193,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="true"
@@ -2304,7 +2276,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -2383,7 +2354,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;MainEntityReference&quot;"
@@ -2464,7 +2434,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;AmountDue&quot;"
@@ -2545,7 +2514,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;ExpectedPaymentDate&quot;"
@@ -2622,7 +2590,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;UnpaidInvoices&quot;"
@@ -2703,7 +2670,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;InvoiceNumber&quot;"
@@ -2787,7 +2753,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ARInvoiceTypeCode&quot;"
@@ -2867,7 +2832,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ARInvoiceTypeName&quot;"
@@ -2949,7 +2913,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;PaymentTermId&quot;"
@@ -3030,7 +2993,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;StatusName&quot;"
@@ -3111,7 +3073,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;AmountDueInLocalCurrency&quot;"
@@ -3192,7 +3153,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;AmountDueInProfitCurrency&quot;"
@@ -3272,7 +3232,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;PaymentTermName&quot;"
@@ -3354,7 +3313,6 @@
     AutomationEmailRecipient="true"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="true"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;BillToId&quot;"
@@ -3435,7 +3393,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;BillToPartnerId&quot;"
@@ -3516,7 +3473,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;BillToPartnerName&quot;"
@@ -3597,7 +3553,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;BillToName&quot;"
@@ -3679,7 +3634,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;BillToAddressId&quot;"
@@ -3759,7 +3713,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;VatNumber&quot;"
@@ -3840,7 +3793,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;CreateDate&quot;"
@@ -3921,7 +3873,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;InvoiceDate&quot;"
@@ -4004,7 +3955,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;CreatedByUserId&quot;"
@@ -4084,7 +4034,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;CreatedByUserName&quot;"
@@ -4168,7 +4117,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;PrintByUserId&quot;"
@@ -4248,7 +4196,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;PrintByUserName&quot;"
@@ -4330,7 +4277,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;InvoiceCurrencyId&quot;"
@@ -4412,7 +4358,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;IsPrinted&quot;"
@@ -4494,7 +4439,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;UpdateDate&quot;"
@@ -4578,7 +4522,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;UpdatedByUserId&quot;"
@@ -4658,7 +4601,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;InvoiceCurrencyCode&quot;"
@@ -4739,7 +4681,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;LocalCurrencyId&quot;"
@@ -4819,7 +4760,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;InvoiceCurrencyExchangeRate&quot;"
@@ -4899,7 +4839,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SubTotalInLocalCurrency&quot;"
@@ -4979,7 +4918,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SubTotalInInvoiceCurrency&quot;"
@@ -5060,7 +4998,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;AmountInLocalCurrency&quot;"
@@ -5141,7 +5078,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;AmountInInvoiceCurrency&quot;"
@@ -5224,7 +5160,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;StatusCode&quot;"
@@ -5303,7 +5238,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ARInvoiceStatusName&quot;"
@@ -5383,7 +5317,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IsAutoCredit&quot;"
@@ -5463,7 +5396,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IsCancelled&quot;"
@@ -5544,7 +5476,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;CancelledByARInvoiceId&quot;"
@@ -5625,7 +5556,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;InternalNotes&quot;"
@@ -5706,7 +5636,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;PrintNotes&quot;"
@@ -5787,7 +5716,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;DueDate&quot;"
@@ -5867,7 +5795,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;PrintDate&quot;"
@@ -5949,7 +5876,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="true"
@@ -6030,7 +5956,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;Sent&quot;"
@@ -6111,7 +6036,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;ReadyForTransfer&quot;"
@@ -6192,7 +6116,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;DebitAccount&quot;"
@@ -6271,7 +6194,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;LocalCurrencyCode&quot;"
@@ -6350,7 +6272,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ProfitCurrencyCode&quot;"
@@ -6432,7 +6353,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;TransferError&quot;"
@@ -6509,7 +6429,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;NotReadyInvoices&quot;"
@@ -6590,7 +6509,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;AccountingExternalCode&quot;"
@@ -6671,7 +6589,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;HouseNumber&quot;"
@@ -6752,7 +6669,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;MasterNumber&quot;"
@@ -6835,7 +6751,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;TransferStatusCode&quot;"
@@ -6912,7 +6827,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;MarkedAsBlockedForTransfer&quot;"
@@ -6996,7 +6910,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;BranchId&quot;"
@@ -7073,7 +6986,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ErrorInTransferInvoices&quot;"
@@ -7154,7 +7066,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;CustomerRef&quot;"
@@ -7238,7 +7149,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -7318,7 +7228,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ConsolidationInvoiceId&quot;"
@@ -7399,7 +7308,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IsConsolidationInvoice&quot;"
@@ -7476,7 +7384,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;OpenConstituentInvoices&quot;"
@@ -7557,7 +7464,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;TransferTries&quot;"
@@ -7638,7 +7544,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IsTransferStarted&quot;"
@@ -7718,7 +7623,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;TransferStatusName&quot;"
@@ -7799,7 +7703,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;BillToCode&quot;"
@@ -7880,7 +7783,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ApprovedDate&quot;"
@@ -7960,7 +7862,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ApprovedByUserName&quot;"
@@ -8043,7 +7944,6 @@
     AutomationEmailRecipient="true"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ApprovedByUserId&quot;"
@@ -8124,7 +8024,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;OperationalDate&quot;"
@@ -8205,7 +8104,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;DateForVATInterest&quot;"
@@ -8285,7 +8183,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SplitJournalByCurrency&quot;"
@@ -8366,7 +8263,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IsExternalEntity&quot;"
@@ -8446,7 +8342,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IsGeneralInvoice&quot;"
@@ -8523,7 +8418,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;DraftGeneralInvoices&quot;"
@@ -8600,7 +8494,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;ApprovalGeneralInvoices&quot;"
@@ -8680,7 +8573,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -8763,7 +8655,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -8839,7 +8730,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -8915,7 +8805,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -8991,7 +8880,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9067,7 +8955,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9143,7 +9030,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9219,7 +9105,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9295,7 +9180,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9371,7 +9255,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9447,7 +9330,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9523,7 +9405,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9599,7 +9480,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9675,7 +9555,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9751,7 +9630,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9827,7 +9705,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9903,7 +9780,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9979,7 +9855,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10055,7 +9930,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10131,7 +10005,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10207,7 +10080,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10283,7 +10155,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10359,7 +10230,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10439,7 +10309,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10519,7 +10388,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10599,7 +10467,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10679,7 +10546,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10759,7 +10625,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10839,7 +10704,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10915,7 +10779,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -10991,7 +10854,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -11067,7 +10929,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -11143,7 +11004,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -11219,7 +11079,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -11298,7 +11157,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;JournalId&quot;"
@@ -11378,7 +11236,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;JournalNumber&quot;"
@@ -11458,7 +11315,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IssuedByUserName&quot;"
@@ -11539,7 +11395,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;AmountPaid&quot;"
@@ -11616,7 +11471,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -11692,7 +11546,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -11773,7 +11626,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;TransmissionError&quot;"
@@ -11854,7 +11706,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;RelatedInvoice&quot;"
@@ -11940,7 +11791,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -12024,7 +11874,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -12107,7 +11956,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SATTransferStatusCode&quot;"
@@ -12191,7 +12039,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SATInvoiceStatusCode&quot;"
@@ -12268,7 +12115,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -12347,7 +12193,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IsMultiCurrency&quot;"
@@ -12424,7 +12269,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -12500,7 +12344,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -12576,7 +12419,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -12658,7 +12500,6 @@
     AutomationEmailRecipient="true"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SalesmanUserId&quot;"
@@ -12739,7 +12580,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SalesmanUserName&quot;"
@@ -12820,7 +12660,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IsCustomsChargesOnly&quot;"
@@ -12901,7 +12740,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;IsCustomsInvoice&quot;"
@@ -12979,7 +12817,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;BillToAccountManagerName&quot;"
@@ -13060,7 +12897,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     HelpTextCode="&quot;SATTransferStatusName&quot;"
@@ -13141,7 +12977,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SATInvoiceStatusName&quot;"
@@ -13221,7 +13056,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Intercompany&quot;"
@@ -13304,7 +13138,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;BankAccountLiteId&quot;"
@@ -13382,7 +13215,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;TotalAmountForTaxReport&quot;"
@@ -13460,7 +13292,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;TotaVatableAmountForTaxReport&quot;"
@@ -13538,7 +13369,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;TotalVAT&quot;"
@@ -13615,7 +13445,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -13691,7 +13520,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -13767,7 +13595,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -13843,7 +13670,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -13919,7 +13745,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -13990,7 +13815,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14064,7 +13888,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14138,7 +13961,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14213,7 +14035,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14287,7 +14108,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14358,7 +14178,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14376,7 +14195,7 @@
     ObjectTableName="&quot;ARInvoice&quot;"
     FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="200"
+    MaxLength="100"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -14385,10 +14204,11 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="200"
-    DisplayInList="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
+    Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -14402,8 +14222,9 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ARInvoice&quot;"
     IsRestrictable="false"
-    DisplayInEntityVariables="false"
+    DisplayInEntityVariables="true"
     AllowedInCustomerFieldsSettings="false"
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
@@ -14412,10 +14233,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;BillToLocalName&quot;"
     DefaultText="&quot;Local Name&quot;"
-    FullLocalDefaultText="&quot;חשבון (שם מקומי)&quot;"
+    FullLocalDefaultText="&quot;שם לקוח מקומי&quot;"
     ListFieldLable="&quot;BillToLocalNameListLable&quot;"
     ListLableDefaultText="&quot;BillToLocalName&quot;"
-    ListLocalDefaultText="&quot;חשבון (שם מקומי)&quot;"
+    ListLocalDefaultText="&quot;שם לקוח מקומי&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -14433,7 +14254,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14504,7 +14324,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14581,7 +14400,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14654,7 +14472,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14730,7 +14547,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14806,7 +14622,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14883,7 +14698,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -14958,7 +14772,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15038,7 +14851,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15112,7 +14924,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15187,7 +14998,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15258,7 +15068,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15330,7 +15139,6 @@
     AutomationEmailRecipient="true"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15406,7 +15214,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15481,7 +15288,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15556,7 +15362,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15627,7 +15432,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15705,7 +15509,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15782,7 +15585,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="true"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15858,7 +15660,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -15934,7 +15735,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16010,7 +15810,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16086,7 +15885,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16165,7 +15963,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16237,7 +16034,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16308,7 +16104,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16384,7 +16179,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16464,7 +16258,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16540,7 +16333,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16616,7 +16408,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16692,7 +16483,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16768,7 +16558,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16844,7 +16633,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16920,7 +16708,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -16991,7 +16778,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17067,7 +16853,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17138,7 +16923,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17217,7 +17001,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17296,7 +17079,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17375,7 +17157,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17454,7 +17235,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17525,7 +17305,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17602,7 +17381,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17679,7 +17457,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17755,7 +17532,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17831,7 +17607,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17910,7 +17685,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -17986,7 +17760,6 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -18062,7 +17835,87 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;7e3a49de-e46b-4bc1-8d1f-d74676e5b8ca&quot;"
+    FieldName="&quot;DisplayNumber&quot;"
+    OldNames="DisplayNumber"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;ARInvoice&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="50"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="50"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    IsListFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;DisplayNumber&quot;"
+    ListPropertyPath="&quot;DisplayNumber&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    MultiTableName="&quot;&quot;"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ARInvoice&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="true"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;DisplayNumber&quot;"
+    DefaultText="&quot;Display Number&quot;"
+    FullLocalDefaultText="&quot;מספר תצוגה&quot;"
+    ListFieldLable="&quot;DisplayNumberListLable&quot;"
+    ListLableDefaultText="&quot;Display Number&quot;"
+    ListLocalDefaultText="&quot;מספר תצוגה&quot;"
+    HelpTextCode="&quot;DisplayNumber&quot;"
+    HelpTextDefaultText="&quot;Display Number&quot;"
+    IsNullable="false"
+    IsForeignKey="true"
+    ForeignEntity="&quot;GLAccount&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;DisplayNumber&quot;"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="false"
+    IsFixedLength="false"
+    EnableAutoFill="true"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -18098,66 +17951,71 @@
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsSigned&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsSignedName&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Draft General Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft General Invoices&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18199,66 +18057,71 @@
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsSigned&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsSignedName&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Approval General Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Approval General Invoices&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18300,96 +18163,101 @@
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsSigned&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsSignedName&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;IsExternalEntity&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;TotalAmountNotForTaxReport&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;TotalVAT&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;TotalAmountForTaxReport&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;TotaVatableAmountForTaxReport&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;TotalExamptFortaxReport&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="15"
+        IndexOrder="16"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="16"
+        IndexOrder="17"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="17"
+        IndexOrder="18"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="18"
+        IndexOrder="19"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All Invoices&quot;"
-        IndexOrder="19"
+        IndexOrder="20"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18423,66 +18291,71 @@
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsSigned&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsSignedName&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All General Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;All General Invoices&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18526,61 +18399,66 @@
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsSigned&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsSignedName&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Draft Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;DraftNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Draft Invoices&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18624,66 +18502,71 @@
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsSigned&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsSignedName&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Unpaid Invoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ExpectedPaymentDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Unpaid Invoices&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;InternalNotes&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18727,31 +18610,36 @@
       <QueryColumn
         QueryCode="&quot;Not Ready Invoices&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Not Ready Invoices&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Not Ready Invoices&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;Not Ready Invoices&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Not Ready Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Not Ready Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ReadyForTransfer&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;Not Ready Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;TransferError&quot;"
         ColumnWidth="500" />
     </QueryColumns>
@@ -18795,21 +18683,26 @@
       <QueryColumn
         QueryCode="&quot;Marked as blocked for transfer&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Marked as blocked for transfer&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Marked as blocked for transfer&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="200" />
       <QueryColumn
         QueryCode="&quot;Marked as blocked for transfer&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Marked as blocked for transfer&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -18853,31 +18746,36 @@
       <QueryColumn
         QueryCode="&quot;Error In Transfer Invoices&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Error In Transfer Invoices&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Error In Transfer Invoices&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="190" />
       <QueryColumn
         QueryCode="&quot;Error In Transfer Invoices&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Error In Transfer Invoices&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;Error In Transfer Invoices&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ReadyForTransfer&quot;"
         ColumnWidth="50" />
       <QueryColumn
         QueryCode="&quot;Error In Transfer Invoices&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;TransferError&quot;"
         ColumnWidth="500" />
     </QueryColumns>
@@ -18919,66 +18817,71 @@
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsSigned&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsSignedName&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenConstituent&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenConstituent&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -19020,66 +18923,71 @@
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsSigned&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsSignedName&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;Invoices Failed to Open in SAT&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -19116,66 +19024,71 @@
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsSigned&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsSignedName&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OpenInvoices&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;ExpectedPaymentDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;OpenInvoices&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;InternalNotes&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -19212,71 +19125,76 @@
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;IsSigned&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsSignedName&quot;"
+        ObjectFieldName="&quot;IsSigned&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;ErrorInTransfer&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;IsPrinted&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;Sent&quot;"
         ColumnWidth="30" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;InvoiceNumber&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="10"
+        IndexOrder="11"
         ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="11"
+        IndexOrder="12"
         ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="12"
+        IndexOrder="13"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="13"
+        IndexOrder="14"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
         QueryCode="&quot;ErrorInTransfer&quot;"
-        IndexOrder="14"
+        IndexOrder="15"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
     </QueryColumns>
@@ -19322,46 +19240,51 @@
       <QueryColumn
         QueryCode="&quot;SATVoidedNotTransferred&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATVoidedNotTransferred&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;BillToName&quot;"
+        ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATVoidedNotTransferred&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;StatusName&quot;"
+        ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATVoidedNotTransferred&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;DueDate&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATVoidedNotTransferred&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
+        ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATVoidedNotTransferred&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
+        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATVoidedNotTransferred&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;AmountDue&quot;"
+        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATVoidedNotTransferred&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;CreateDate&quot;"
+        ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATVoidedNotTransferred&quot;"
         IndexOrder="9"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATVoidedNotTransferred&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -19407,46 +19330,51 @@
       <QueryColumn
         QueryCode="&quot;SATInvoicesWaitingCancellation&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;CreateDate&quot;"
+        ObjectFieldName="&quot;BillToLocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATInvoicesWaitingCancellation&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATInvoicesWaitingCancellation&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATInvoicesWaitingCancellation&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;BillToName&quot;"
+        ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATInvoicesWaitingCancellation&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;StatusName&quot;"
+        ObjectFieldName="&quot;BillToName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATInvoicesWaitingCancellation&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;DueDate&quot;"
+        ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATInvoicesWaitingCancellation&quot;"
         IndexOrder="7"
-        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
+        ObjectFieldName="&quot;DueDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATInvoicesWaitingCancellation&quot;"
         IndexOrder="8"
-        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
+        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;SATInvoicesWaitingCancellation&quot;"
         IndexOrder="9"
+        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;SATInvoicesWaitingCancellation&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;AmountDue&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -20867,6 +20795,21 @@
         IsMulti="false"
         FieldsDataType="&quot;nText&quot;"
         IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;BillToLocalName&quot;"
+        FieldName="&quot;BillToLocalName&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="false"
         IsSpecialField="false"
         IsCustomType="false"
         IsAttribute="false"
