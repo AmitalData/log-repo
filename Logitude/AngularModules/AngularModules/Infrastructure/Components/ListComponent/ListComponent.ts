@@ -3632,7 +3632,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
 
             if (this.ObjectTableName == "TaxDeductionReport") {
-                str = TextCodeTranslator.Translate("Accounting.O.NewReport");
+                str = TextCodeTranslator.Translate("General.O.NewReport");
             }
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
                 str = this.NewButtonLable;
