@@ -32,7 +32,7 @@
 							<ng-container *ngIf="item.IsShowChildren">
 								<ng-container *ngFor="let key2 of Object.keys(item.children)">
 									<li [@inOutAnimation]>
-										<app-data-row id="{{item.children[key2].CustomsItemID}}" [fullClassificationLengthCharToDisplay]="2" [showTaxData]="false"
+										<app-data-row id="{{item.children[key2].CustomsItemID}}" [fullClassificationLengthCharToDisplay]="IsDiscountCodes ? null : 2" [showTaxData]="false"
 											[level]="2"
 											[showDetailsOpen]="showDetailsOpen" [data]="item?.children[key2]"
 											[searchItem]="searchValue"
@@ -57,7 +57,7 @@
 												<ng-container
 													*ngFor="let key3 of Object.keys(item.children[key2].children)">
 													<li [@inOutAnimation]>
-														<app-data-row id="{{item.children[key2].children[key3].CustomsItemID}}"[fullClassificationLengthCharToDisplay]="4"
+														<app-data-row id="{{item.children[key2].children[key3].CustomsItemID}}"[fullClassificationLengthCharToDisplay]="IsDiscountCodes ? null : 4"
 															[level]="3"
 															[showTaxData]="true" [showDetailsOpen]="showDetailsOpen"
 															[data]="item?.children[key2]?.children[key3]"
