@@ -105,7 +105,7 @@ export class MiscPageComponent implements AfterViewInit {
 
                     displayTitle = TextCodeTranslator.Translate("Accounting.General.O.Misc");
                     tableName = "TaxDeductionReport";
-                    NewButtonLabel = TextCodeTranslator.Translate("Accounting.General.O.NewReport");
+                    NewButtonLabel = TextCodeTranslator.Translate("General.O.NewReport");
                     break;
 
                 }
