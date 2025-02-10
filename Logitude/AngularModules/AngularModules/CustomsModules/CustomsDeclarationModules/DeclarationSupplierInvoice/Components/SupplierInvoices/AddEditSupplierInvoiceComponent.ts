@@ -1466,7 +1466,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseCheckInsuranseReturnIsNeededAmount(
                 this.declarationPM.CustomFileNo, this.declarationPM.Id + this.EntityPM.InvoiceCounterKey.toString()
-                , "AddEditSupplierInvoiceComponent", "OPEN"
+                , "AddEditSupplierInvoiceComponent", "OPEN",this.EntityPM.IncotermCode
             );
         });
     }

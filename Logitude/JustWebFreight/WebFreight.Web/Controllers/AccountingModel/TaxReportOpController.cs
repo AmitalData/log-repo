@@ -641,11 +641,10 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 TaxReportQueryService reportService = new TaxReportQueryService(accountingContext);
                 var reconciledLines = reportService.GetTaxReportReconciledLines(taxReportId, tenant);
 
-                if (reconciledLines != null && reconciledLines.Count() > 0)
+                if (reconciledLines != null && reconciledLines.Count > 0)
                 {
-                    string linesNumbersCS = string.Join(",", reconciledLines.Select(d => d.Line));
 
-                    return Request.CreateResponse(HttpStatusCode.OK, new ServiceResponse { Result = linesNumbersCS });
+                    return Request.CreateResponse(HttpStatusCode.OK, new ServiceResponse { Result = reconciledLines });
                 }
 
 

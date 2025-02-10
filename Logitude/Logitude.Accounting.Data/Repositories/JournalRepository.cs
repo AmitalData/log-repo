@@ -529,7 +529,7 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public bool CheckIfThereNonTranslatedJournalsByMonth(int year, int month, int tenant)
+        public List<string> CheckIfThereNonTranslatedJournalsByMonth(int year, int month, int tenant)
         {
             string DraftStatus = "0";
             string CancelledStatus = "5";
@@ -540,7 +540,7 @@ namespace Logitude.Accounting.Data.Repositories
                         && record.AccountingDate.Month == month
                         && record.QueueId == null
                         && record.StatusCode != DraftStatus && record.StatusCode != CancelledStatus
-                    select record).Any();
+                    select record.JournalNumber).ToList();
         }
 
 

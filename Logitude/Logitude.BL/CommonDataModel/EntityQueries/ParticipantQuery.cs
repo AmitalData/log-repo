@@ -81,6 +81,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      PrimaryContactId = a.Card.PrimaryContactId,
                                      Code=a.Card.Code,
                                      PartnerTypeId=a.Card.PartnerTypeId,
+                                     GLAccountId=a.Card.GLAccountId,
                                  },
 
                              }).FirstOrDefault();

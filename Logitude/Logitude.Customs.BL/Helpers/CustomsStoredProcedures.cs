@@ -1,6 +1,7 @@
 ﻿using Devart.Data.Oracle;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Diagnostics.PerformanceData;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -984,7 +986,7 @@ AS */
 
 
         }
-
+        
         public static string GetConnection(int tenant)
         {
             GlobalDB currentDb;

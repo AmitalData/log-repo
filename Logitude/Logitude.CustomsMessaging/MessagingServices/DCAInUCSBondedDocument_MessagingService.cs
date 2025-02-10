@@ -476,7 +476,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
                 DeclarationPM declartionPM = null;
                 DocumentTypeCustomsDataPM documentTypeCustomsDataPM = null;
-                if (_DocumentsFilingPM.ExternalEntityName == "EFIFILEM")
+                if (_DocumentsFilingPM.ExternalEntityName == "EFIFILEM" || _DocumentsFilingPM.ExternalEntityName == "MFIFILEM")
                 {
                     var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(_DocumentsFilingPM.Tenant);
                     declartionPM = declarationQueryService.GetDeclarationByExportFile(_DocumentsFilingPM.Tenant, _DocumentsFilingPM.ExternalEntityReference);
@@ -506,18 +506,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             if (customDocumentTypePM.CustomsDocumentUpload == "U" || customDocumentTypePM.CustomsDocumentUpload == "C")
 
                             {
+                                if (!(customDocumentTypePM.CustomsDocumentUpload == "U" && customDocumentTypePM.PointerLevel == "C" && declartionPM.Direction == "E" && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending))
+                                {
+                                    LogitudeSettings.HandleLogMe("   if (customDocumentTypePM.CustomsDocumentUpload == U || customDocumentTypePM.CustomsDocumentUpload == C)  " + customDocumentTypePM?.CustomsDocumentUpload, false, "SendBondedCustomDocument", stopLogAt);
 
-                                LogitudeSettings.HandleLogMe("   if (customDocumentTypePM.CustomsDocumentUpload == U || customDocumentTypePM.CustomsDocumentUpload == C)  " + customDocumentTypePM?.CustomsDocumentUpload, false, "SendBondedCustomDocument", stopLogAt);
-
-                                AutoSending = true;
-
+                                    AutoSending = true;
+                                }
                             }
                         }
                     }
                 }
                 if (declartionPM != null)
                 {
-                    List<string> EntityCodes = new List<string> { "380", "325", "IL_1003", "IL_506", "IL_1050", "419" };
+                    List<string> EntityCodes = new List<string> { "380", "325", "IL_1003", "IL_506", "IL_1050" };
 
                     if (declartionPM.Direction == "E" && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending && EntityCodes.Contains(documentTypeCustomsDataPM?.CustomsDoucumentTypeCode))
                     {

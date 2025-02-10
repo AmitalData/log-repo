@@ -184,6 +184,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return customsDocumentListPMs;
         }
 
+        public bool checkIfExistTicketsForAllSupplierInvoice(DeclarationPM declarationPM)
+        {
+            CustomsDocumentPointerQueryService customsDocumentPointerQuery = new CustomsDocumentPointerQueryService(context);
+            List<CustomsDocumentPointerPM> pointers = customsDocumentPointerQuery.GetCustomsDocumentPointersByParentIdAndSentCustoms(declarationPM.Id, declarationPM.Tenant);
+
+            SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(context);
+            var invoices = supplierInvoiceQueryService.GetSupplierInvoicesForDeclaration(declarationPM.Id, declarationPM.Tenant, false);
+      
+
+            foreach (var item in invoices)
+            {
+                if (pointers.Count(x => x.Child1EntityId == item.SequenceNumeric.ToString()) < 1) return false;
+            }
+
+
+            return true;
+        }
+
         public List<CustomsDocumentPM> GetCustomsDocumentPMListWithoutRequestedDoc(GetTicketsParams parameters, int tenant)
         {
             ICustomContext context = MainContext as CustomContext;

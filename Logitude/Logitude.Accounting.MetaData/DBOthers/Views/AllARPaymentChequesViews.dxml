@@ -34,13 +34,10 @@ on l.journalid= j.id  --and l.Tenant = j.Tenant
 inner join GLAccounts g
  on l.OppositeAccountId = g.Id --  and l.Tenant = g.Tenant
 
- inner join ChartOfAccounts c
- on g.ChartOfAccountsId = c.Id -- and g.Tenant = c.Tenant
-
 
 where
  j.ExternalSystem is not null and l.DueDate > getdate()
-and l.LocalAmountCredit != 0 AND c.TypeCode = '5'; 
+and l.LocalAmountCredit != 0 AND g.ChartOfAccountsTypeCode = '5'; 
     ]]>
 	</SqlScript>
 	<OracleScript>

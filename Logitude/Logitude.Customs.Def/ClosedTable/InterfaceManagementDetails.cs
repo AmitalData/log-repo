@@ -3496,8 +3496,23 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
             });
-            //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
-            var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCB8373",
+                InOut = InOutEnum.I.ToString(),
+                Description = "שחזור הצהרה בלדר",
+                DcaPrefixName = "UnifreightCourier_UCB8373_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+                InterfaceType = "B",
+            });
+                //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
+                var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;
             if (LogitudeSettings.IsCostomsDeploy)
             {

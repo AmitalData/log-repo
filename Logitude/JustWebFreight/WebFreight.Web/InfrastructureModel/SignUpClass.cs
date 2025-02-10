@@ -607,11 +607,15 @@ namespace WebFreight.Web.InfrastructureModel
 
                 AddAutomationFromTenantZero(tenant, tenantZeroDocumentTypes);
 
-                if (setting.WorkEnvironment != "customs") { 
+                    if (setting.WorkEnvironment != "customs") { 
                 //Task
                 AddTaskPriorities(tenant, taskPriorityRepository, tenantZeroTaskPriorities);
                 AddTaskStatuses(tenant, taskStatusRepository, tenantZeroTaskStatuses);
-            }
+                }
+                else
+                {
+                    AddDefaultCustomsSettings(tenant);
+                }
                 new TruckerSignUpService(signUpInfo, tenant).CopyFromTenantZero();
                 #endregion
                 scop.Complete();
@@ -3255,6 +3259,18 @@ namespace WebFreight.Web.InfrastructureModel
         }
         #endregion 
 
+        private static void AddDefaultCustomsSettings(int theTenant)
+        {
+            CustomsSettingRepository customsSettingRepository = new CustomsSettingRepository(theTenant);
+            CustomsSetting customsSetting = new CustomsSetting()
+            {
+                Id = theTenant.ToString(),
+                Tenant = theTenant,
+                CompanyType="C",
+            };
+            customsSettingRepository.Add(customsSetting);
+            customsSettingRepository.SubmitChanges();
+        }
         private static void AddDefaultFullAccountingSettings(int theTenant, FullAccountingSettingRepository theFullAccountingSettingsRepository)
         {
             FullAccountingSetting settings = new FullAccountingSetting()
