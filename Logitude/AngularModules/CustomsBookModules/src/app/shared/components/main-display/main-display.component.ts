@@ -74,11 +74,16 @@ export class MainDisplayComponent implements OnInit {
 	ngOnInit() {
 		this.headerService.searchState$.subscribe((data) => {
 			if (!searchState[data]) return;
-			this.searchState = searchState[data];
-			this.InitData();
-			this.ListenToItemsSearched();
-			this.getByIsDiscountCodes();
+			
+			if(this.searchState != searchState[data]){
+				this.searchState = searchState[data];
+				this.InitData();
+			}
+			
+			// this.InitData();
 		});
+		this.ListenToItemsSearched();
+		this.getByIsDiscountCodes();
 	}
 
 	InitData() {
@@ -118,8 +123,8 @@ export class MainDisplayComponent implements OnInit {
 	getByIsDiscountCodes() {
 		this.headerService.IsDiscountCodes.subscribe((value) => {
 			this.IsDiscountCodes = value;
-			if (!this.searchService.GetSearchText()) this.InitData();
-			else this.getSearchDataByFilter(this.filterPopupService.getFilters());
+			if (this.searchService.GetSearchText()) this.getSearchDataByFilter(this.filterPopupService.getFilters());
+			else this.InitData();
 		});
 	}
 
@@ -132,22 +137,25 @@ export class MainDisplayComponent implements OnInit {
 			SearchFields: ''
 		};
 
-		if (this.IsDiscountCodes)
-			filters.IsDiscountCodes = this.IsDiscountCodes;
+		filters.IsDiscountCodes = this.headerService.IsDiscountCodes?.getValue();
 
 		this.getRulesData();
 		this.getCommentsData(SessionInfo.LoggedUserTenant);
+
+		
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
 			this.handleClearResults();
-			
-			
+
+
 			this.data = this.orderedData(result);
-			if (this.IsDiscountCodes) this.originalDataByIsDiscountCodes = this.data;
-			else this.fullData = this.data;
+			if (this.data.length > 0) {
+				if (this.IsDiscountCodes) this.originalDataByIsDiscountCodes = this.data;
+				else this.fullData = this.data;
+			}
 
 			this.searchMode = TableTopState.ViewAll;
 			this.isLoadingMode.next(false);
@@ -186,7 +194,6 @@ export class MainDisplayComponent implements OnInit {
 		this.searchService.searchText$.subscribe((searchText) => {
 			if (searchText === "") this.handleClearResults();
 		});
-
 
 		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
@@ -458,7 +465,7 @@ export class MainDisplayComponent implements OnInit {
 		this.countSearchResult = 0;
 		this.filterPopupService.toggleFilterPopup(false);
 		// this.data = this.fullData;
-		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;	 
+		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;
 		this.toggleVisibility(false, this.data);
 	}
 
