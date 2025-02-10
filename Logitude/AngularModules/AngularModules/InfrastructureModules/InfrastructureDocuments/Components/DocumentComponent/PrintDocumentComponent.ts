@@ -53,7 +53,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public Items: DocumentCopiesViewModel[];
     HtmlEditEditor: string;
     public documentCopieViewModelSelected: DocumentCopiesViewModel;
-    public Signed: boolean = false;
     public DocumentTypeCustomFieldLists: DocumentTypeCustomFieldPM[];
     public Title: string;
     BuildButtonIsEnabled: boolean = true;
@@ -89,7 +88,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     public IsAccountingActivated = false;
     private statusCode: String;
     private ApprovedDate: Date;
-    public DisableSendOriginalCopy: boolean = false;
+    public SignatureFaild: boolean = false;
+    public NoSignature: boolean = false;
+    public SignatureSuccess: boolean = false;
+
     public SelectedAsDefaultBtnVisible: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
     private documentsExecutionLogListExtendedService: DocumentsExecutionLogListExtendedService;
@@ -111,7 +113,6 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         var IsFromInterestBatchInvoice = false;
 
-        this.Signed = this.EntityPM?.IsSigned != null && this.EntityPM?.IsSigned != 2 ? true : false;
         if (this.EntityPM.IsFromInterestBatchInvoice) {
             IsFromInterestBatchInvoice = true;
         }
@@ -703,13 +704,9 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     }
                 }
             }
-            debugger
-            if (this.ObjectTableName == "ARInvoice" && this.EntityPM?.IsSigned)
+            
+            if (this.ObjectTableName == "ARInvoice" && (this.SignatureFaild ||this.SignatureSuccess))
                 this.Items = this.Items.filter(x => x.IsOriginal == true)
-            else if (this.ObjectTableName == "ARInvoice" && !this.EntityPM?.IsSigned && this.Items.find(x => x.IsOriginal && x.IsPrintButtonEnabled))
-                this.Items = this.Items.filter(x => x.IsOriginal == true)
-            else if (this.ObjectTableName == "ARInvoice" && !this.EntityPM?.IsSigned && !this.Items.find(x => x.IsOriginal && x.IsPrintButtonEnabled))
-                this.Items = this.Items.filter(x => x.IsOriginal == false)
             this.Items = this.Items.sort(d => d.IndexOrder);
         }
     }
@@ -1434,8 +1431,12 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             }
 
             this.ViewPage(item.CurrentDocumentOutCopy.DocoumentTypeCopyName, copyId);
-
-            if (item.CurrentDocumentOutCopy.DocumentTypeCopyId == item.CurrentDocumentType.LimitedPrintCopyId && item.CurrentDocumentType.IsDocumentOneTimePrintLimited) {
+            if(this.ObjectTableName == "ARInvoice" && this.NoSignature && item.IsOriginal){
+                item.IsPrintButtonEnabled = false;
+                var loggedContactName = SessionLocator.LoggedUserPM.EnglishName;
+                item.PrintedByMessage = "This document is already printed by " + loggedContactName;
+            }
+            else if (item.CurrentDocumentOutCopy.DocumentTypeCopyId == item.CurrentDocumentType.LimitedPrintCopyId && item.CurrentDocumentType.IsDocumentOneTimePrintLimited) {
 
                 if (this.IsAccountingActivated && this.statusCode != "DR") {
                     item.IsPrintButtonEnabled = false;
@@ -1524,10 +1525,15 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         }
 
-        if ((this.ObjectTableName == "ARInvoice" || item.ChildObjectTableName == "ARInvoice") && SessionLocator.AccountingSettingPM.BlockSendInvoiceOriginalCopy) {
-            this.DisableSendOriginalCopy = true;
+        if ((this.ObjectTableName == "ARInvoice" || item.ChildObjectTableName == "ARInvoice") && (this.EntityPM.IsSigned==2)) {
+            this.SignatureFaild = true;
         }
-
+        else if ((this.ObjectTableName == "ARInvoice" || item.ChildObjectTableName == "ARInvoice") && (this.EntityPM.IsSigned==0||this.EntityPM.isSigned==null)) {  
+            this.NoSignature = true;
+        }
+        else if ((this.ObjectTableName == "ARInvoice" || item.ChildObjectTableName == "ARInvoice") ) {
+            this.SignatureSuccess = true;
+        }
         if (this.ObjectTableName == "Quote" && item.DocumentTypeCode == "QUOTE") {
 
             this.IsQuotationDocument = true;
@@ -1696,5 +1702,19 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
 
+    }
+
+    RetrySignature(item:any) {
+        this.CurrentSession.StartBusyIndicator("Retrying signature...");
+        this._documentOutPMService.PutRetrySignature(item?.CurrentDocumentOut?.Id,item?.CurrentDocumentOutCopy?.Tenant).subscribe((res: any) => {
+           
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+             }
+            this.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.StopBusyIndicator();
+
+        })
     }
 }

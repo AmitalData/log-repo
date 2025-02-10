@@ -320,16 +320,32 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
         DocumentHelper documentHelper = new DocumentHelper();
-           
-      
 
-     
 
-    
+        public HttpResponseMessage PutRetrySignature(string documentId, int tenant)
+        {
+            try           
+            {
+                
+                Authentication(tenant);
+                DocumentHelper documentHelper = new DocumentHelper();
+                documentHelper.RetrySignature(documentId, tenant);
+                              
 
-       
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
-        
+
+
+
+
+
+
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
