@@ -41,7 +41,7 @@ WHERE
 AND CustomsItemEntityStatusIDNum = '2'
 AND StartDate <= GETDATE()
 AND EndDate >= GETDATE()
-AND REPLACE(Fullclassification, '/', '') LIKE @AdjustedClassification + '%'
+AND REPLACE(REPLACE(Fullclassification, '/', ''), '-', '') LIKE @AdjustedClassification + '%'
 AND CI_CustomsBookTypeIDNum = @CustomsBookType
 UNION ALL
 SELECT
@@ -115,7 +115,7 @@ SELECT Id, CustomsItemsID
 FROM customs.RemarksClassifications
 WHERE Tenant = @Tenant
 ) AS r ON ra.CustomsItemId = r.CustomsItemsID
-ORDER BY ItemHierarchicLocationID, FullClassification;
+ORDER BY FullClassification;
 DROP TABLE #TempAncestors;
 END
 
