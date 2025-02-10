@@ -145,10 +145,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select record);
         }
 
-        public IQueryable<Report> GetReportsByCode(string code,bool availableForScheduling)
+        public IQueryable<Report> GetReportsToUpdateAvailableForScheduling (string code,bool availableForScheduling)
         {
             return (from record in context.Reports
-                    where record.Code ==code && record.Tenant ==0 && record.AvailableForScheduling!= availableForScheduling
+                    where record.Code ==code && record.Tenant !=0 && record.AvailableForScheduling!= availableForScheduling
                     select record);
         }
     }
