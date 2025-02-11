@@ -138,14 +138,27 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         }
 
     }
+
+    public IsSchedulerReport: boolean = false;
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
             });
         }
     }
-    
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+         
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             switch (queryFilterItem.FieldName) {
@@ -187,8 +200,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
     
         }
     }
-   
-    RunReport() {
+    ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
         // this.REFFromDate.setHours(0,0,0,);
         // this.REFToDate.setHours(0,0,0,);
@@ -212,14 +224,20 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
             }
         }
 
-        if (this.ValidationErrorsList.length == 0) {
+        return this.ValidationErrorsList.length == 0;
+    }
+
+    RunReport() {
+       
+
+        if (this.ValidateSelectedFilters()) {
 
            this.BuildReport();
 
         }
     }
 
-    InitilaizeFilter(){
+    GetQueryFilterItems(){
         this.queryFilterItems = new Array<QueryFilterItem>();
         this.queryFilterItems.push(this.GetNewQueryFilterItem("Type",this.TypeFilter));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("ObjectTableId",this.ObjectTableId));
@@ -231,11 +249,11 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         this.queryFilterItems.push(this.GetNewQueryFilterItem("ExternalReconciliationNumber",this.ExternalReconciliationNumber,"int"));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("IncludesTransferGlaccount",this.IncludesTransferGlaccount));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("CrossYearReconcile",this.IsShowCrossYear));
-
+        return this.queryFilterItems;
     }
 
     BuildReport(){
-        this.InitilaizeFilter();
+        this.GetQueryFilterItems();
 
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;

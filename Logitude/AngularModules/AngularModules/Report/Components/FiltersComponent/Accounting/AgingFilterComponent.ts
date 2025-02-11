@@ -243,7 +243,17 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         }
         return true;
     }
-
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+        if (this.isReady) {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        }
+    }
     //private chartOfAccount: string;
     //public get ChartOfAccount() { return this.chartOfAccount; }
     //public set ChartOfAccount(value: string) {
@@ -364,8 +374,9 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             this.toBalance = value;
         }
     }
-   
+    public IsSchedulerReport: boolean = false;
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
@@ -457,75 +468,37 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         }
     }
     //#endregion
+    ValidateSelectedFilters() {
+        this.errors = [];
+        if (!this.AgingForDate) { this.errors.push("Aging for date field is requierd"); }
+
+        if (!this.NumberOfMonths) { this.errors.push("Number of months field is requierd"); }
+       
+        var isDateValid = this.ValidateDate();
+        if (!isDateValid)
+            this.errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
+        return this.errors.length == 0;
+
+    }
      private errors: string[];
     RunButtonClicked()
     {
         this.SetUIProperties();
 
-         this.errors = [];
-        var categoryValue = null;
-        var categoryIndex = null;
+       
         this.ValidationErrorsList = [];
 
-        //#region requierd fields
-        if (!this.AgingForDate) { this.errors.push("Aging for date field is requierd"); }
-        //if (!this.Customer) { errors.push("Customer field is requierd"); }
-        if (!this.NumberOfMonths) { this.errors.push("Number of months field is requierd"); }
-        //#endregion
-
-        //#region Date validation
-        var isDateValid = this.ValidateDate();
-        if (!isDateValid)
-            this.errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
+       
         //#endregion
         this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
 
 
-        if (this.errors.length == 0) {
-
-
-            // Selecting category
-            if (this.SelectedCategory) {
-                categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
-
-                if (categoryIndex)
-                    categoryValue = this.DataContext[categoryIndex]; // select the value from the context
-            }
-
-            var myFilterItems: QueryFilterItem[] = [];
-            myFilterItems.push(new QueryFilterItem("AgingForDate", this.AgingForDate, "Date"));
-            myFilterItems.push(new QueryFilterItem("GLAccountType", this.AccountTypeCode));
-            myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
-            myFilterItems.push(new QueryFilterItem("NumberOfMonths", this.NumberOfMonths, "Number"));
-            myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
-
-            myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
-
-            myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
-            myFilterItems.push(new QueryFilterItem("AgingMethod", this.SelectedAgingMethod.Name));
-
-            myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
-            myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
-            myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
-            myFilterItems.push(new QueryFilterItem("CurrencyOriginalLocalValue", this.currencyFilterSelectedValue));
-
-            myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
-            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
-
-            if (this.balanceFilterSelectedValue == "filter_DebtBetween") {
-                myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.fromBalance, "decimal"));
-                myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.toBalance, "decimal"));
-            }
-
-            myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
-            myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccountsId_Dummy));
-
-
+        if (this.ValidateSelectedFilters()) {
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
-            myReportFliter.QueryFilterItemLists = myFilterItems;
+            myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
 
             this.RunReportEvent.emit(myReportFliter);
 
@@ -533,7 +506,48 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             this.ValidationErrorsList = this.errors;
         }
     }
-   
+    GetQueryFilterItems(){
+        var categoryValue = null;
+        var categoryIndex = null;
+
+        // Selecting category
+        if (this.SelectedCategory) {
+            categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
+
+            if (categoryIndex)
+                categoryValue = this.DataContext[categoryIndex]; // select the value from the context
+        }
+
+        var myFilterItems: QueryFilterItem[] = [];
+        myFilterItems.push(new QueryFilterItem("AgingForDate", this.AgingForDate, "Date"));
+        myFilterItems.push(new QueryFilterItem("GLAccountType", this.AccountTypeCode));
+        myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
+        myFilterItems.push(new QueryFilterItem("NumberOfMonths", this.NumberOfMonths, "Number"));
+        myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
+
+        myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
+
+        myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
+        myFilterItems.push(new QueryFilterItem("AgingMethod", this.SelectedAgingMethod.Name));
+
+        myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
+        myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
+        myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
+        myFilterItems.push(new QueryFilterItem("CurrencyOriginalLocalValue", this.currencyFilterSelectedValue));
+
+        myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
+        myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
+
+        if (this.balanceFilterSelectedValue == "filter_DebtBetween") {
+            myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.fromBalance, "decimal"));
+            myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.toBalance, "decimal"));
+        }
+
+        myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
+        myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccountsId_Dummy));
+
+        return myFilterItems;
+    }
     private CheckGLAccountChartOfAccountSecurityLevel() {
         if (this.Customer) {
             return this.CheckSecurityLevel(this.securityLevel);

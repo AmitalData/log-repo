@@ -107,8 +107,9 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
         return (new Date(aDate.getFullYear(), aDate.getMonth() , 0)).getDate();
     }
 
-    
+    public IsSchedulerReport: boolean = false;
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true,CustomerId:string,IncludeOperationalyClosed:boolean,DateType:string) {
+        this.IsSchedulerReport = isSchedulerReport;
         this.shipmentTypeRadio = DateType;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
@@ -116,7 +117,17 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
             });
         }
     }
-
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+         
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             switch (queryFilterItem.FieldName) {
@@ -139,9 +150,9 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
     
         }
     }
-    RunReport(isloading: boolean) {
-
+    ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
+
         if (this.ToDate == null) {
             this.ValidationErrorsList.push("To Date is required");
 
@@ -152,48 +163,21 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
 
         }
 
-        if (this.ValidationErrorsList.length == 0) {
-            this.queryFilterItems = new Array<QueryFilterItem>();
+        return this.ValidationErrorsList.length == 0;
+    } 
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "FromDate";
-            this.queryFilterItem.FieldValue = this.FromDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "GreaterThanOrEqual";
-            this.queryFilterItems.push(this.queryFilterItem);
+    RunReport(isloading: boolean) {
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ToDate";
-            this.queryFilterItem.FieldValue = this.ToDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "LessThanOrEqual";
-            this.queryFilterItems.push(this.queryFilterItem);
+      
 
-            if (this.CustomerId) {
-                this.queryFilterItem = new QueryFilterItem();
-                this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = "BillToId";
-                this.queryFilterItem.FieldValue = this.CustomerId;
-                this.queryFilterItem.Operator = "Equals";
-                this.queryFilterItems.push(this.queryFilterItem);
-            }
-
-            if (this.PartnerId) {
-                this.queryFilterItem = new QueryFilterItem();
-                this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = "PartnerId";
-                this.queryFilterItem.FieldValue = this.PartnerId;
-                this.queryFilterItem.Operator = "Equals";
-                this.queryFilterItems.push(this.queryFilterItem);
-            }
+        if (this.ValidateSelectedFilters()) {
+           
 
 
 
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             if (this.SelectedCurrency == this.LocalCurrencyCode)
                 this.reportFliter.CurrentCurrencyCodeType = this.LocalCurrencyCode + ",local";
@@ -215,7 +199,44 @@ export class InvoicesByPartnerFilterComponent extends BaseComponent   {
         }
 
     }
+    GetQueryFilterItems(){
+        this.queryFilterItems = new Array<QueryFilterItem>();
 
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "FromDate";
+        this.queryFilterItem.FieldValue = this.FromDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "GreaterThanOrEqual";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "ToDate";
+        this.queryFilterItem.FieldValue = this.ToDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "LessThanOrEqual";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        if (this.CustomerId) {
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "BillToId";
+            this.queryFilterItem.FieldValue = this.CustomerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+        }
+
+        if (this.PartnerId) {
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "PartnerId";
+            this.queryFilterItem.FieldValue = this.PartnerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+        }
+        return this.queryFilterItems;
+    }
     SetDate(year: number, month: number, day: number) {
         var date = new Date();
         date.setUTCFullYear(year);

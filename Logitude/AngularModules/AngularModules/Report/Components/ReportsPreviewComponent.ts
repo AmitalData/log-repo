@@ -120,7 +120,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     IsPartnersChanged(SelectedTab) {
-        return this.ReportFilterConmponent.IsPartnersChanged(SelectedTab);
+        return  this.ReportFilterConmponent.IsPartnersChanged ? this.ReportFilterConmponent.IsPartnersChanged(SelectedTab) : false;
     }
 
     GetReportTemplateId() {
@@ -198,12 +198,14 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     ValidateSelectedFilters() {
-        return this.ReportFilterConmponent.ValidateSelectedFilters();
+        return this.ReportFilterConmponent.ValidateSelectedFilters?this.ReportFilterConmponent.ValidateSelectedFilters():true;
     }
 
     PrepareContactList() {
         this.CleanPartnersObslist();
-        this.ReportFilterConmponent.PrepareContactList();
+        if (this.ReportFilterConmponent.PrepareContactList) {
+            this.ReportFilterConmponent.PrepareContactList();
+        }
     }
 
     LoadReportFilterComponent() {

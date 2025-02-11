@@ -33,7 +33,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     public showLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
-    public RunReportTitle: string;
+    public RunReportTitle: string = 'Run Report';
     CardExtendedPMService: CardExtendedPMService = new CardExtendedPMService();
     constructor() {
         super();

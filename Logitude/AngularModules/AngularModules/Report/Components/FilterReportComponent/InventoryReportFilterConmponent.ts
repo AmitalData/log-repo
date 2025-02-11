@@ -128,14 +128,26 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
 
         return queryFilterItems;
     }
+    public IsSchedulerReport: boolean = false;
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
             });
         }
     }
-
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+         
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         this.FillDaysinWarehouseFilterItemSource();
         if (queryFilterItem) {
@@ -159,12 +171,17 @@ export class InventoryReportFilterConmponent extends BaseComponent implements On
 
     }
 
+    ValidateSelectedFilters() {
 
-    RunReport(isloading: boolean) {
+        this.ValidationErrorsList = [];
         if (this.IsDaysInWarehouseRequired && isNullOrUndefined(this.DaysInWarehouse)) {
             this.ValidationErrorsList.push("Days In Warehouse Field Required");
         }
-        if (this.ValidationErrorsList.length > 0) {
+        return this.ValidationErrorsList.length == 0;
+    }
+    RunReport(isloading: boolean) {
+       
+        if (!this.ValidateSelectedFilters()) {
             return;
         }
 

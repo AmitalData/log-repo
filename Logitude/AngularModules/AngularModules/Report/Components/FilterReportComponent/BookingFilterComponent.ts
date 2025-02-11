@@ -12,6 +12,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {ReportsDomainService} from '../../Services/ReportsDomainService';
 import {CodeNameClass} from './CodeNameClass';
 import {EAWBFilterComponent} from '../../../Report/Components/FilterReportComponent/EAWBFilterComponent';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     
@@ -79,15 +80,25 @@ export class BookingFilterComponent extends BaseComponent   {
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
-   
+     public IsSchedulerReport : boolean = false;
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
             });
         }
     }
-
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             switch (queryFilterItem.FieldName) {
@@ -113,7 +124,30 @@ export class BookingFilterComponent extends BaseComponent   {
     
         }
     }
+
+    ValidateSelectedFilters() {
+        return true;
+    }
     RunReport(isloading: boolean) {
+       
+        this.reportFliter = new ReportFliter();
+        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+        this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+        this.reportFliter.NumberOfPage = 1;
+        this.reportFliter.ProcessType = "GenerateReport";
+        this.reportFliter.IncludeOperationalyClosed = false;
+
+        this.ReportsPreview.CleanPartnersObslist();
+        if (!AppTool.IsNullOrEmpty(this.SelectedItemComboBox)) {
+            this.ReportsPreview.AddPartner("Customer", this.SelectedItemComboBox.Code);
+        }
+
+        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
+    }
+    GetQueryFilterItems(){
         this.queryFilterItems = new Array<QueryFilterItem>();
 
         if (this.FromDate != null) {
@@ -160,25 +194,8 @@ export class BookingFilterComponent extends BaseComponent   {
             this.queryFilterItem.Operator = "CustomerId";
             this.queryFilterItems.push(this.queryFilterItem);
         }
-        
-        this.reportFliter = new ReportFliter();
-        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
-        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-        this.reportFliter.NumberOfPage = 1;
-        this.reportFliter.ProcessType = "GenerateReport";
-        this.reportFliter.IncludeOperationalyClosed = false;
-
-        this.ReportsPreview.CleanPartnersObslist();
-        if (!AppTool.IsNullOrEmpty(this.SelectedItemComboBox)) {
-            this.ReportsPreview.AddPartner("Customer", this.SelectedItemComboBox.Code);
-        }
-
-        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
+        return this.queryFilterItems;
     }
-
     SetDate(year: number, month: number, day: number) {
         var date = new Date();
         date.setUTCFullYear(year);
