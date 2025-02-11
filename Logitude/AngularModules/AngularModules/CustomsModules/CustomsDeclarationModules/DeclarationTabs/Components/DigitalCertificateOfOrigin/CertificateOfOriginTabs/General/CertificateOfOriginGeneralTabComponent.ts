@@ -206,6 +206,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     selectedValueDestinationCountry: string = this.fieldNameDestinationCountry;
 
     InitNewCertificate(EntityPM: CertificateOfOriginPM) {
+        alert("InitNewCertificate");
         this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard?.EnglishName) ? this.currentCard?.EnglishName : "";
         this.entityPM.ExporterAddress = `${this.currentCard?.Address1 ? this.currentCard?.Address1 + " ," : ""}${this.currentCard?.Address2 ? this.currentCard?.Address2 : ""}`;
         this.InitializeRelatedDeclarationData();
@@ -270,10 +271,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                         }
                         if (AppTool.IsNullOrEmpty(result) || AppTool.IsNullOrEmpty(result?.certificateOfOriginItems) || result?.certificateOfOriginItems == 0) {
                             this.initCertificateOriginItemItems(EntityPM);
-                            alert("null or empty");  
                         }
                         else {
                             this.initCertificateOriginItemsFromUnifreight(result, EntityPM);
+                            alert("initCertificateOriginItemsFromUnifreight");
                         }
                     }
                 }
@@ -362,6 +363,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 this.entityPM.CertificateOriginItemItems.push(mappedConsignments);
             }
         });
+        this.ExporterName = result.ExporterName;
+        this.ExporterAddress = result.ExporterAddress;
+        this.ConsigneeName = result.ConsigneeName;
+        this.ConsigneeAddress = result.ConsigneeAddress;
     }
 
     parseXml(xmlString: string): any {
@@ -378,6 +383,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         const ExporterAddress = customsFile.getElementsByTagName('ExporterAddress')[0]?.textContent || '';
         const ConsigneeName = customsFile.getElementsByTagName('ConsigneeName')[0]?.textContent || '';
         const ConsigneeAddress = customsFile.getElementsByTagName('ConsigneeAddress')[0]?.textContent || '';
+        alert("ConsigneeAddress-" + ConsigneeAddress);
+        
 
         const items = customsFile.getElementsByTagName('CertificateOfOriginItem');
         const certificateOfOriginItems: any[] = [];
@@ -1405,6 +1412,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     public set ConsigneeAddress(newValue: string) {
         this.entityPM.ConsigneeAddress = newValue;
+        alert("newValue: " + newValue);
         this.entityPM.IsDirty = true;
     }
 
