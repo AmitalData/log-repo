@@ -377,12 +377,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         const ConsigneeName = customsFile.getElementsByTagName('ConsigneeName')[0]?.textContent || '';
         const ConsigneeAddress = customsFile.getElementsByTagName('ConsigneeAddress')[0]?.textContent || '';
         
-        this.entityPM.ExporterName = ExporterName;
-        this.entityPM.ExporterAddress = ExporterAddress;
-        this.entityPM.ConsigneeName = ConsigneeName;
-        this.entityPM.ConsigneeAddress = ConsigneeAddress;
-    
-
         const items = customsFile.getElementsByTagName('CertificateOfOriginItem');
         const certificateOfOriginItems: any[] = [];
 
