@@ -261,12 +261,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                         const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
                         const result = this.parseXml(xmlData(XMLOfConsignmentsDetailsToCertificateOfOriginOut));
 
-                        if(!AppTool.IsNullOrEmpty(result)){
-                            this.entityPM.ExporterName = result.ExporterName;
-                            this.entityPM.ExporterAddress = result.ExporterAddress;
-                            this.entityPM.ConsigneeName = result.ConsigneeName;
-                            this.entityPM.ConsigneeAddress = result.ConsigneeAddress;
-                        }
+                        EntityPM.ExporterName = result?.ExporterName || this.entityPM.ExporterName;
+                        EntityPM.ExporterAddress = result?.ExporterAddress || this.entityPM.ExporterAddress;
+                        EntityPM.ConsigneeName = result?.ConsigneeName || this.entityPM.ConsigneeName;
+                        EntityPM.ConsigneeAddress = result?.ConsigneeAddress || this.entityPM.ConsigneeAddress;
+                        this.entityPM = EntityPM;
+                    
                         if (AppTool.IsNullOrEmpty(result) || AppTool.IsNullOrEmpty(result?.certificateOfOriginItems) || result?.certificateOfOriginItems == 0) {
                             this.initCertificateOriginItemItems(EntityPM);
                         }
