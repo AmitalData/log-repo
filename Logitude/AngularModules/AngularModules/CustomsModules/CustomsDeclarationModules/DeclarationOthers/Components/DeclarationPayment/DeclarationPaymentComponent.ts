@@ -3095,12 +3095,11 @@ export class PaymentMethodModel extends BaseComponent {
                                                         }
                                                     }
                                                     else {
-                                                        if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
                                                             if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
                                                                 this.InternalBankId = this.parent.GetCreditInternalBankId;
                                                             }
                                                             this.SendCreditToGetBank();
-                                                        }
+                                                       
                                                         this.BanksList = this.agentBanks;
                                                         if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
                                                             //   GetCustomBankDefaultForCard();
