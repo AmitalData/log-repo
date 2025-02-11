@@ -9,6 +9,7 @@ import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {ParticipantList} from '../../EntityLists/ParticipantList';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {CodeNameClass} from './CodeNameClass';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 
 @Component({

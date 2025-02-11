@@ -9,6 +9,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ReportsDomainService} from '../../Services/ReportsDomainService';
 import {CodeNameClass} from './CodeNameClass';
 import {DateTool} from '../../../Infrastructure/Tools';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     
     selector: 'MonthlyConversionFilterComponent',

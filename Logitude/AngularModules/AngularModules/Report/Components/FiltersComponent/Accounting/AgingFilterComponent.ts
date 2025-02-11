@@ -477,6 +477,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         var isDateValid = this.ValidateDate();
         if (!isDateValid)
             this.errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
+        this.ValidationErrorsList = this.errors;
+
         return this.errors.length == 0;
 
     }

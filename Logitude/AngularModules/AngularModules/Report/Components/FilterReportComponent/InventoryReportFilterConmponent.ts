@@ -13,6 +13,7 @@ import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 import {CodeNameClass} from './CodeNameClass';
 import {AppTool} from '../../../Infrastructure/Tools';
 import { isNullOrUndefined } from 'util';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     
     selector: 'InventoryReportFilterConmponent',

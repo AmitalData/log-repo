@@ -7,6 +7,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {AppTool} from '../../../Infrastructure/Tools';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     
     selector: 'StatisticsByCustomerFilterComponent',

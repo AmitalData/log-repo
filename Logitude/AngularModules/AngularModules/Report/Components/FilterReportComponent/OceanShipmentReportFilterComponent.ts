@@ -6,6 +6,7 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {Component}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     

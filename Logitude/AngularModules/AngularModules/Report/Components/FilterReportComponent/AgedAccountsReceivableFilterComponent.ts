@@ -130,9 +130,7 @@ public selectedCurrency: string = this.LocalCurrencyCode;
     }
 
     ValidateSelectedFilters() {
-        this.ValidationErrorsList = [];
-
-         return this.ValidationErrorsList.length == 0;
+         return true;
     }
     
     RunReport(isloading: boolean) {

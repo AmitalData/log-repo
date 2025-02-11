@@ -115,12 +115,17 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     GetReportFilterMainCustomerFieldName() {
-        const mainCustomerName = this.ReportFilterConmponent.GetMainCustomerFieldName();
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.GetMainCustomerFieldName === 'function') { 
+        const mainCustomerName = this.ReportFilterConmponent.GetMainCustomerFieldName()
         return mainCustomerName;
+        }
+        return null
     }
 
     IsPartnersChanged(SelectedTab) {
-        return  this.ReportFilterConmponent.IsPartnersChanged ? this.ReportFilterConmponent.IsPartnersChanged(SelectedTab) : false;
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.IsPartnersChanged === 'function') 
+        return this.ReportFilterConmponent.IsPartnersChanged(SelectedTab);
+       return false;
     }
 
     GetReportTemplateId() {
@@ -198,14 +203,16 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     ValidateSelectedFilters() {
-        return this.ReportFilterConmponent.ValidateSelectedFilters?this.ReportFilterConmponent.ValidateSelectedFilters():true;
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.ValidateSelectedFilters === 'function') {
+            return this.ReportFilterConmponent.ValidateSelectedFilters();
+        }
+        return true;
     }
 
     PrepareContactList() {
         this.CleanPartnersObslist();
-        if (this.ReportFilterConmponent.PrepareContactList) {
-            this.ReportFilterConmponent.PrepareContactList();
-        }
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.PrepareContactList === 'function') 
+          this.ReportFilterConmponent.PrepareContactList();
     }
 
     LoadReportFilterComponent() {

@@ -6,6 +6,7 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({    
     selector: 'ProfitByShipmentFilterConmponent',
