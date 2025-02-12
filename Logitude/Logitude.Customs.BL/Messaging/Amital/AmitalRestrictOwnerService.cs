@@ -76,10 +76,16 @@ namespace Logitude.Customs.BL.Messaging.Amital
             CustomsSetting custSettings = custSettingsRepo.GetSettingByTenant(tenant);
             if (custSettings != null && !custSettings.IsConnectedToUniFreight)
             {
+                var userRepo = new UserRepository(tenant);
+                var unfUser = userRepo.GetSingleUserByCode(UnifreightUserId, tenant,false);
+                if(unfUser == null)
+                {
+                    return myAmitalRestrictOwnerModel;
+                }
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 UserFreelancerGroupRepository userFreelancerGroupRepository = new UserFreelancerGroupRepository(commonContext);
                 UserFreelancerGroupQuery userFreelancerGroupQuery = new UserFreelancerGroupQuery(userFreelancerGroupRepository);
-                var groups = userFreelancerGroupQuery.GetUserFreelancerGroupsByUserId(UnifreightUserId, tenant).ToList();
+                var groups = userFreelancerGroupQuery.GetUserFreelancerGroupsByUserId(unfUser.Id, tenant).ToList();
                 DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
                 if(groups.Count == 0)
                 {
