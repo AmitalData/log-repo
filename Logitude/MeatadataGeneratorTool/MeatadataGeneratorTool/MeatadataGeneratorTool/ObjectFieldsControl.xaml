@@ -1090,6 +1090,19 @@
                                  Text="{Binding ModelName,
                                                 Mode=TwoWay}" />
 
+                        <TextBlock Grid.Row="26"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontWeight="{Binding IsPMFontWeight}"
+                                   Text="Object Data Mapping:" />
+                        <TextBox  Grid.Row="26"
+                                  Grid.Column="1"
+                                  Height="22"
+                                  Margin="2"
+                                  VerticalAlignment="Center"
+                                  IsEnabled="{Binding IsPMFieldEnabled}"
+                                  Text="{Binding ObjectFieldDataMapping,
+                            Mode=TwoWay}" />
 
                     </Grid>
 

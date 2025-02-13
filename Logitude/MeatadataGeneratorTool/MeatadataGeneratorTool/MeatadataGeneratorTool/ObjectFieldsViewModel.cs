@@ -980,6 +980,32 @@ namespace MeatadataGeneratorTool
             }
             set { }
         }
+        public string IsPMFontWeight
+        {
+            get
+            {
+                string result = "Normal";
+                if (isPMField)
+                {
+                    result = "Bold";
+                }
+                return result;
+            }
+            set { }
+        }
+        public bool IsPMFieldEnabled
+        {
+            get
+            {
+                bool result = false;
+                if (IsPMField)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            set { }
+        }
 
         bool isDBField;
         public bool IsDBField
@@ -992,7 +1018,7 @@ namespace MeatadataGeneratorTool
         public bool IsPMField
         {
             get { return isPMField; }
-            set { isPMField = value; FirePropertyChanged("IsPMField"); }
+            set { isPMField = value; FirePropertyChanged("IsPMField"); FirePropertyChanged("IsPMFieldEnabled"); FirePropertyChanged("IsPMFontWeight"); }
         }
 
         private bool enableAutoFill;
@@ -1552,12 +1578,22 @@ namespace MeatadataGeneratorTool
         public bool IsSpellCheckedHelpLocalDefaultText { get;  set; }
         public bool IsSpellCheckedShortLocalDefaultText { get;  set; }
         public bool IsSpellCheckedListLocalDefaultText { get; internal set; }
- 
+
+        string objectFieldDataMapping;
+       
         string modelName;
         public string ModelName
         {
             get { return modelName; }
             set { modelName = value; FirePropertyChanged("ModelName"); }
+        }
+        public string ObjectFieldDataMapping
+        {
+            get { return objectFieldDataMapping; }
+            set
+            {
+                objectFieldDataMapping = value; FirePropertyChanged("ObjectFieldDataMapping");
+            }
         }
 
         //public Window AdvanceSettingsWindow = new Window();

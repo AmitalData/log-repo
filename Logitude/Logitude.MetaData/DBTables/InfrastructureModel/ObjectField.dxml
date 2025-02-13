@@ -669,6 +669,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ObjectFieldDataMapping"
+    Type="varchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="FullNameTextCodeId"
     ReferencedTable="TextCodes"
