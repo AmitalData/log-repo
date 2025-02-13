@@ -2180,7 +2180,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             else {
                 if (!this.isConnectToUnifreight) {
 
-                    if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
+                    if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) { this.Send2755(params); return;}
 
                     this.CheckCustomFileCreditFromUnifreight(params);   
                 }
