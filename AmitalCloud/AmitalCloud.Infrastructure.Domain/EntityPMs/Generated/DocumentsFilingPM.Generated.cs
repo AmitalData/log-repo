@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -27,32 +28,40 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public DocumentsFilingPM(DocumentsFiling entity) : base()
    {
 		_id = entity.Id;
-		_documentId = entity.DocumentId;
-		_entityId = entity.EntityId;
+		_documentout = entity.DocumentOut !=null ? new DocumentOutPM(entity.DocumentOut) : null;
+			_documentId = entity.DocumentId;
+		_document = entity.Document !=null ? new DocumentPM(entity.Document) : null;
+			_entityId = entity.EntityId;
 		_childEntityId = entity.ChildEntityId;
 		_childEntityReference = entity.ChildEntityReference;
 		_childObjectTableId = entity.ChildObjectTableId;
-		_notes = entity.Notes;
+		_childobjecttable = entity.ChildObjectTable !=null ? new ObjectTablePM(entity.ChildObjectTable) : null;
+			_notes = entity.Notes;
 		_createDate = entity.CreateDate;
 		_hasCopies = entity.HasCopies;
 		_received = entity.Received;
 		_updateDate = entity.UpdateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_receivedByUserId = entity.ReceivedByUserId;
-		_receivedDate = entity.ReceivedDate;
+		_receivedbyuser = entity.ReceivedByUser !=null ? new UserPM(entity.ReceivedByUser) : null;
+			_receivedDate = entity.ReceivedDate;
 		_statusCode = entity.StatusCode;
-		_entityReference = entity.EntityReference;
+		_documentstatus = entity.DocumentStatus !=null ? new DocumentStatusPM(entity.DocumentStatus) : null;
+			_entityReference = entity.EntityReference;
 		_externalEntityName = entity.ExternalEntityName;
 		_externalEntityReference = entity.ExternalEntityReference;
 		_folderId = entity.FolderId;
 		_isDeleted = entity.IsDeleted;
 		_deletedByUserId = entity.DeletedByUserId;
-		_deleteDateTime = entity.DeleteDateTime;
+		_deletedbyuser = entity.DeletedByUser !=null ? new UserPM(entity.DeletedByUser) : null;
+			_deleteDateTime = entity.DeleteDateTime;
 		_isDigitallySigned = entity.IsDigitallySigned;
 		_signersList = entity.SignersList;
 		_branchId = entity.BranchId;
-		_departmentId = entity.DepartmentId;
-		_isSharedWithForwarder = entity.IsSharedWithForwarder;
+		_branch = entity.Branch !=null ? new BranchPM(entity.Branch) : null;
+			_departmentId = entity.DepartmentId;
+		_department = entity.Department !=null ? new DepartmentPM(entity.Department) : null;
+			_isSharedWithForwarder = entity.IsSharedWithForwarder;
 		_isSharedWithCustomer = entity.IsSharedWithCustomer;
 		_forwarderDocumentId = entity.ForwarderDocumentId;
 		_customerDocumentId = entity.CustomerDocumentId;
@@ -61,52 +70,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_code = entity.Code;
 		_documentTypeId = entity.DocumentTypeId;
-		_documentTypeName = default;
-		_directionCode = entity.DirectionCode;
+		_documenttype = entity.DocumentType !=null ? new DocumentTypePM(entity.DocumentType) : null;
+			_directionCode = entity.DirectionCode;
 		_objectTableId = entity.ObjectTableId;
-		_objectTableName = default;
 		_createdByUserId = entity.CreatedByUserId;
-		_createdByUserName = default;
 		_ownerId = entity.OwnerId;
-		_ownerName = default;
-		_description = entity.Description;
+		_owner = entity.Owner !=null ? new UserPM(entity.Owner) : null;
+			_description = entity.Description;
 		_searchFields = entity.SearchFields;
-		_noAddToTasksQueue = default;
-		_followUpId = default;
-		_fileExtension = default;
-		_hasFile = default;
-		_followUpCount = default;
-		_documentTypeCode = default;
-		_doucmentTypeTemplateFormatCode = default;
-		_hasFollowUp = default;
-		_fileSize = default;
-		_fileName = default;
-		_name = default;
-		_isAgentView = default;
-		_isCustomerView = default;
-		_customsDocumentTypeName = default;
-		_customsDocumentTypeCode = default;
-		_isMetaDataReady = default;
-		_isHybrid = default;
-		_folder = default;
-		_fileData = default;
 		_entityNumber = entity.EntityNumber;
-		_isAttachment = default;
-		_createdByUserCode = default;
-		_updatedByUserCode = default;
-		_ownerUserCode = default;
-		_receivedByUserCode = default;
-		_childEntityName = default;
-		documentsFilingMetaDataValues = default;
-		_customsDocumentStatusCode = default;
-		_externalAttachmentId = default;
-		_documentCategoryCode = default;
-		_documentCategoryName = default;
-		_dontAddToQueue = default;
-		_createDateWords = default;
 		_isSharedIn = entity.IsSharedIn;
 		_isSharedOut = entity.IsSharedOut;
-		_isUpdateSharedDocument = default;
 		_lastShareDate = entity.LastShareDate;
 		_backedupExternally = entity.BackedupExternally;
 		_signRequestByUserEmail = entity.SignRequestByUserEmail;
@@ -116,29 +90,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isDigitalSignRequired = entity.IsDigitalSignRequired;
 		_lastVersion = entity.LastVersion;
 		_isRequested = entity.IsRequested;
-		_isFromUnifreightPodMobile = default;
-		_calculatedFileName = default;
-		_receivedByUserName = default;
-		_isAttachSelect = default;
-		_divSelectBackground = default;
-		_blockIdsList = default;
-		_buffer = default;
-		_bufferNumber = default;
-		_sentSize = default;
-		_fullFileName = default;
-		_dontDeleteRealFile = default;
-		_isCustomReference = default;
-		_customReference = default;
-		_ocrStatusCode = default;
-		_ocrScore = default;
-		_ocrReference = default;
-		_ocrNotConnect = default;
 		_isTransferdToQBO = entity.IsTransferdToQBO;
-		_isAgentSharedInMaster = default;
-		_isAgentSharedInDirect = default;
-		_isAgentSharedInHouse = default;
 		_receivedByByContactId = entity.ReceivedByByContactId;
-		_receivedByPartner = entity.ReceivedByPartner;
+		_receivedbybycontact = entity.ReceivedByByContact !=null ? new ContactPM(entity.ReceivedByByContact) : null;
+			_receivedByPartner = entity.ReceivedByPartner;
 		_billToId = entity.BillToId;
    }
    #endregion Constructors
@@ -160,6 +115,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentOutPM _documentout;
+		[Include]
+        [DataMember]
+        public virtual DocumentOutPM DocumentOut 
+		{ 
+		get { return _documentout; } 
+		set { _documentout = value; }
+		}
 	  private string _documentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -176,6 +139,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentPM _document;
+		[Include]
+        [DataMember]
+        public virtual DocumentPM Document 
+		{ 
+		get { return _document; } 
+		set { _document = value; }
+		}
 	  private string _entityId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -240,6 +211,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTablePM _childobjecttable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM ChildObjectTable 
+		{ 
+		get { return _childobjecttable; } 
+		set { _childobjecttable = value; }
+		}
 	  private string _notes ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -352,6 +331,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _receivedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM ReceivedByUser 
+		{ 
+		get { return _receivedbyuser; } 
+		set { _receivedbyuser = value; }
+		}
 	  private DateTime? _receivedDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -384,6 +371,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentStatusPM _documentstatus;
+		[Include]
+        [DataMember]
+        public virtual DocumentStatusPM DocumentStatus 
+		{ 
+		get { return _documentstatus; } 
+		set { _documentstatus = value; }
+		}
 	  private string _entityReference ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -480,6 +475,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _deletedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM DeletedByUser 
+		{ 
+		get { return _deletedbyuser; } 
+		set { _deletedbyuser = value; }
+		}
 	  private DateTime? _deleteDateTime ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -544,6 +547,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BranchPM _branch;
+		[Include]
+        [DataMember]
+        public virtual BranchPM Branch 
+		{ 
+		get { return _branch; } 
+		set { _branch = value; }
+		}
 	  private string _departmentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -560,6 +571,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DepartmentPM _department;
+		[Include]
+        [DataMember]
+        public virtual DepartmentPM Department 
+		{ 
+		get { return _department; } 
+		set { _department = value; }
+		}
 	  private bool _isSharedWithForwarder ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -704,22 +723,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _documentTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DocumentTypeName  
-	   {
-	     get { return _documentTypeName; }
-		 set
-		 {
-		   if(_documentTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentTypeName",OldValue=_documentTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _documentTypeName=value;
-		   }
-		 }
-	   }
+		private DocumentTypePM _documenttype;
+		[Include]
+        [DataMember]
+        public virtual DocumentTypePM DocumentType 
+		{ 
+		get { return _documenttype; } 
+		set { _documenttype = value; }
+		}
 	  private string _directionCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -752,22 +763,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
-		   }
-		 }
-	   }
 	  private string _createdByUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -781,22 +776,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserId",OldValue=_createdByUserId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _createdByUserId=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
 		   }
 		 }
 	   }
@@ -816,22 +795,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _ownerName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OwnerName  
-	   {
-	     get { return _ownerName; }
-		 set
-		 {
-		   if(_ownerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerName",OldValue=_ownerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _ownerName=value;
-		   }
-		 }
-	   }
+		private UserPM _owner;
+		[Include]
+        [DataMember]
+        public virtual UserPM Owner 
+		{ 
+		get { return _owner; } 
+		set { _owner = value; }
+		}
 	  private string _description ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -864,310 +835,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _noAddToTasksQueue ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool NoAddToTasksQueue  
-	   {
-	     get { return _noAddToTasksQueue; }
-		 set
-		 {
-		   if(_noAddToTasksQueue != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NoAddToTasksQueue",OldValue=_noAddToTasksQueue,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _noAddToTasksQueue=value;
-		   }
-		 }
-	   }
-	  private string _followUpId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FollowUpId  
-	   {
-	     get { return _followUpId; }
-		 set
-		 {
-		   if(_followUpId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FollowUpId",OldValue=_followUpId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _followUpId=value;
-		   }
-		 }
-	   }
-	  private string _fileExtension ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FileExtension  
-	   {
-	     get { return _fileExtension; }
-		 set
-		 {
-		   if(_fileExtension != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileExtension",OldValue=_fileExtension,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fileExtension=value;
-		   }
-		 }
-	   }
-	  private bool _hasFile ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool HasFile  
-	   {
-	     get { return _hasFile; }
-		 set
-		 {
-		   if(_hasFile != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HasFile",OldValue=_hasFile,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _hasFile=value;
-		   }
-		 }
-	   }
-	  private int _followUpCount ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int FollowUpCount  
-	   {
-	     get { return _followUpCount; }
-		 set
-		 {
-		   if(_followUpCount != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FollowUpCount",OldValue=_followUpCount,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _followUpCount=value;
-		   }
-		 }
-	   }
-	  private string _documentTypeCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DocumentTypeCode  
-	   {
-	     get { return _documentTypeCode; }
-		 set
-		 {
-		   if(_documentTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentTypeCode",OldValue=_documentTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _documentTypeCode=value;
-		   }
-		 }
-	   }
-	  private string _doucmentTypeTemplateFormatCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DoucmentTypeTemplateFormatCode  
-	   {
-	     get { return _doucmentTypeTemplateFormatCode; }
-		 set
-		 {
-		   if(_doucmentTypeTemplateFormatCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DoucmentTypeTemplateFormatCode",OldValue=_doucmentTypeTemplateFormatCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _doucmentTypeTemplateFormatCode=value;
-		   }
-		 }
-	   }
-	  private bool _hasFollowUp ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool HasFollowUp  
-	   {
-	     get { return _hasFollowUp; }
-		 set
-		 {
-		   if(_hasFollowUp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HasFollowUp",OldValue=_hasFollowUp,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _hasFollowUp=value;
-		   }
-		 }
-	   }
-	  private double _fileSize ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double FileSize  
-	   {
-	     get { return _fileSize; }
-		 set
-		 {
-		   if(_fileSize != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileSize",OldValue=_fileSize,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _fileSize=value;
-		   }
-		 }
-	   }
-	  private string _fileName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FileName  
-	   {
-	     get { return _fileName; }
-		 set
-		 {
-		   if(_fileName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileName",OldValue=_fileName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fileName=value;
-		   }
-		 }
-	   }
-	  private string _name ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Name  
-	   {
-	     get { return _name; }
-		 set
-		 {
-		   if(_name != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Name",OldValue=_name,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _name=value;
-		   }
-		 }
-	   }
-	  private bool _isAgentView ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAgentView  
-	   {
-	     get { return _isAgentView; }
-		 set
-		 {
-		   if(_isAgentView != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAgentView",OldValue=_isAgentView,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isAgentView=value;
-		   }
-		 }
-	   }
-	  private bool _isCustomerView ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsCustomerView  
-	   {
-	     get { return _isCustomerView; }
-		 set
-		 {
-		   if(_isCustomerView != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomerView",OldValue=_isCustomerView,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isCustomerView=value;
-		   }
-		 }
-	   }
-	  private string _customsDocumentTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomsDocumentTypeName  
-	   {
-	     get { return _customsDocumentTypeName; }
-		 set
-		 {
-		   if(_customsDocumentTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsDocumentTypeName",OldValue=_customsDocumentTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customsDocumentTypeName=value;
-		   }
-		 }
-	   }
-	  private string _customsDocumentTypeCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomsDocumentTypeCode  
-	   {
-	     get { return _customsDocumentTypeCode; }
-		 set
-		 {
-		   if(_customsDocumentTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsDocumentTypeCode",OldValue=_customsDocumentTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customsDocumentTypeCode=value;
-		   }
-		 }
-	   }
-	  private bool _isMetaDataReady ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsMetaDataReady  
-	   {
-	     get { return _isMetaDataReady; }
-		 set
-		 {
-		   if(_isMetaDataReady != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMetaDataReady",OldValue=_isMetaDataReady,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isMetaDataReady=value;
-		   }
-		 }
-	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
-		   }
-		 }
-	   }
-	  private string _folder ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Folder  
-	   {
-	     get { return _folder; }
-		 set
-		 {
-		   if(_folder != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Folder",OldValue=_folder,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _folder=value;
-		   }
-		 }
-	   }
-	  private string _fileData ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FileData  
-	   {
-	     get { return _fileData; }
-		 set
-		 {
-		   if(_fileData != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileData",OldValue=_fileData,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fileData=value;
-		   }
-		 }
-	   }
 	  private string _entityNumber ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1181,102 +848,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityNumber",OldValue=_entityNumber,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _entityNumber=value;
-		   }
-		 }
-	   }
-	  private bool _isAttachment ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAttachment  
-	   {
-	     get { return _isAttachment; }
-		 set
-		 {
-		   if(_isAttachment != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAttachment",OldValue=_isAttachment,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isAttachment=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserCode  
-	   {
-	     get { return _createdByUserCode; }
-		 set
-		 {
-		   if(_createdByUserCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserCode",OldValue=_createdByUserCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserCode=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserCode  
-	   {
-	     get { return _updatedByUserCode; }
-		 set
-		 {
-		   if(_updatedByUserCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserCode",OldValue=_updatedByUserCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserCode=value;
-		   }
-		 }
-	   }
-	  private string _ownerUserCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OwnerUserCode  
-	   {
-	     get { return _ownerUserCode; }
-		 set
-		 {
-		   if(_ownerUserCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerUserCode",OldValue=_ownerUserCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _ownerUserCode=value;
-		   }
-		 }
-	   }
-	  private string _receivedByUserCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ReceivedByUserCode  
-	   {
-	     get { return _receivedByUserCode; }
-		 set
-		 {
-		   if(_receivedByUserCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReceivedByUserCode",OldValue=_receivedByUserCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _receivedByUserCode=value;
-		   }
-		 }
-	   }
-	  private string _childEntityName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChildEntityName  
-	   {
-	     get { return _childEntityName; }
-		 set
-		 {
-		   if(_childEntityName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChildEntityName",OldValue=_childEntityName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _childEntityName=value;
 		   }
 		 }
 	   }
@@ -1313,102 +884,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedDocumentsFilingMetaDataValues = value; }
 	    }
-	  private string _customsDocumentStatusCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomsDocumentStatusCode  
-	   {
-	     get { return _customsDocumentStatusCode; }
-		 set
-		 {
-		   if(_customsDocumentStatusCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsDocumentStatusCode",OldValue=_customsDocumentStatusCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customsDocumentStatusCode=value;
-		   }
-		 }
-	   }
-	  private string _externalAttachmentId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalAttachmentId  
-	   {
-	     get { return _externalAttachmentId; }
-		 set
-		 {
-		   if(_externalAttachmentId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalAttachmentId",OldValue=_externalAttachmentId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalAttachmentId=value;
-		   }
-		 }
-	   }
-	  private string _documentCategoryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DocumentCategoryCode  
-	   {
-	     get { return _documentCategoryCode; }
-		 set
-		 {
-		   if(_documentCategoryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentCategoryCode",OldValue=_documentCategoryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _documentCategoryCode=value;
-		   }
-		 }
-	   }
-	  private string _documentCategoryName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DocumentCategoryName  
-	   {
-	     get { return _documentCategoryName; }
-		 set
-		 {
-		   if(_documentCategoryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentCategoryName",OldValue=_documentCategoryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _documentCategoryName=value;
-		   }
-		 }
-	   }
-	  private bool _dontAddToQueue ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool DontAddToQueue  
-	   {
-	     get { return _dontAddToQueue; }
-		 set
-		 {
-		   if(_dontAddToQueue != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DontAddToQueue",OldValue=_dontAddToQueue,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _dontAddToQueue=value;
-		   }
-		 }
-	   }
-	  private string _createDateWords ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreateDateWords  
-	   {
-	     get { return _createDateWords; }
-		 set
-		 {
-		   if(_createDateWords != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDateWords",OldValue=_createDateWords,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createDateWords=value;
-		   }
-		 }
-	   }
 	  private bool _isSharedIn ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1438,22 +913,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSharedOut",OldValue=_isSharedOut,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isSharedOut=value;
-		   }
-		 }
-	   }
-	  private bool _isUpdateSharedDocument ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsUpdateSharedDocument  
-	   {
-	     get { return _isUpdateSharedDocument; }
-		 set
-		 {
-		   if(_isUpdateSharedDocument != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUpdateSharedDocument",OldValue=_isUpdateSharedDocument,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isUpdateSharedDocument=value;
 		   }
 		 }
 	   }
@@ -1601,278 +1060,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isFromUnifreightPodMobile ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsFromUnifreightPodMobile  
-	   {
-	     get { return _isFromUnifreightPodMobile; }
-		 set
-		 {
-		   if(_isFromUnifreightPodMobile != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromUnifreightPodMobile",OldValue=_isFromUnifreightPodMobile,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isFromUnifreightPodMobile=value;
-		   }
-		 }
-	   }
-	  private string _calculatedFileName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CalculatedFileName  
-	   {
-	     get { return _calculatedFileName; }
-		 set
-		 {
-		   if(_calculatedFileName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedFileName",OldValue=_calculatedFileName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _calculatedFileName=value;
-		   }
-		 }
-	   }
-	  private string _receivedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ReceivedByUserName  
-	   {
-	     get { return _receivedByUserName; }
-		 set
-		 {
-		   if(_receivedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReceivedByUserName",OldValue=_receivedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _receivedByUserName=value;
-		   }
-		 }
-	   }
-	  private bool _isAttachSelect ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAttachSelect  
-	   {
-	     get { return _isAttachSelect; }
-		 set
-		 {
-		   if(_isAttachSelect != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAttachSelect",OldValue=_isAttachSelect,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isAttachSelect=value;
-		   }
-		 }
-	   }
-	  private string _divSelectBackground ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DivSelectBackground  
-	   {
-	     get { return _divSelectBackground; }
-		 set
-		 {
-		   if(_divSelectBackground != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DivSelectBackground",OldValue=_divSelectBackground,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _divSelectBackground=value;
-		   }
-		 }
-	   }
-	  private string _blockIdsList ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BlockIdsList  
-	   {
-	     get { return _blockIdsList; }
-		 set
-		 {
-		   if(_blockIdsList != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BlockIdsList",OldValue=_blockIdsList,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _blockIdsList=value;
-		   }
-		 }
-	   }
-	  private string _buffer ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string buffer  
-	   {
-	     get { return _buffer; }
-		 set
-		 {
-		   if(_buffer != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="buffer",OldValue=_buffer,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _buffer=value;
-		   }
-		 }
-	   }
-	  private int _bufferNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int BufferNumber  
-	   {
-	     get { return _bufferNumber; }
-		 set
-		 {
-		   if(_bufferNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BufferNumber",OldValue=_bufferNumber,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _bufferNumber=value;
-		   }
-		 }
-	   }
-	  private string _sentSize ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SentSize  
-	   {
-	     get { return _sentSize; }
-		 set
-		 {
-		   if(_sentSize != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SentSize",OldValue=_sentSize,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _sentSize=value;
-		   }
-		 }
-	   }
-	  private string _fullFileName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FullFileName  
-	   {
-	     get { return _fullFileName; }
-		 set
-		 {
-		   if(_fullFileName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullFileName",OldValue=_fullFileName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fullFileName=value;
-		   }
-		 }
-	   }
-	  private bool _dontDeleteRealFile ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool DontDeleteRealFile  
-	   {
-	     get { return _dontDeleteRealFile; }
-		 set
-		 {
-		   if(_dontDeleteRealFile != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DontDeleteRealFile",OldValue=_dontDeleteRealFile,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _dontDeleteRealFile=value;
-		   }
-		 }
-	   }
-	  private bool _isCustomReference ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsCustomReference  
-	   {
-	     get { return _isCustomReference; }
-		 set
-		 {
-		   if(_isCustomReference != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomReference",OldValue=_isCustomReference,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isCustomReference=value;
-		   }
-		 }
-	   }
-	  private string _customReference ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomReference  
-	   {
-	     get { return _customReference; }
-		 set
-		 {
-		   if(_customReference != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomReference",OldValue=_customReference,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customReference=value;
-		   }
-		 }
-	   }
-	  private string _ocrStatusCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OcrStatusCode  
-	   {
-	     get { return _ocrStatusCode; }
-		 set
-		 {
-		   if(_ocrStatusCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrStatusCode",OldValue=_ocrStatusCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _ocrStatusCode=value;
-		   }
-		 }
-	   }
-	  private decimal _ocrScore ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal OcrScore  
-	   {
-	     get { return _ocrScore; }
-		 set
-		 {
-		   if(_ocrScore != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrScore",OldValue=_ocrScore,NewValue=value,PropertyType="decimal"};
-		    NotifyPropertyChanged(values);
-		   _ocrScore=value;
-		   }
-		 }
-	   }
-	  private string _ocrReference ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OcrReference  
-	   {
-	     get { return _ocrReference; }
-		 set
-		 {
-		   if(_ocrReference != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrReference",OldValue=_ocrReference,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _ocrReference=value;
-		   }
-		 }
-	   }
-	  private bool _ocrNotConnect ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool OcrNotConnect  
-	   {
-	     get { return _ocrNotConnect; }
-		 set
-		 {
-		   if(_ocrNotConnect != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrNotConnect",OldValue=_ocrNotConnect,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _ocrNotConnect=value;
-		   }
-		 }
-	   }
 	  private bool? _isTransferdToQBO ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1886,54 +1073,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsTransferdToQBO",OldValue=_isTransferdToQBO,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
 		   _isTransferdToQBO=value;
-		   }
-		 }
-	   }
-	  private bool _isAgentSharedInMaster ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAgentSharedInMaster  
-	   {
-	     get { return _isAgentSharedInMaster; }
-		 set
-		 {
-		   if(_isAgentSharedInMaster != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAgentSharedInMaster",OldValue=_isAgentSharedInMaster,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isAgentSharedInMaster=value;
-		   }
-		 }
-	   }
-	  private bool _isAgentSharedInDirect ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAgentSharedInDirect  
-	   {
-	     get { return _isAgentSharedInDirect; }
-		 set
-		 {
-		   if(_isAgentSharedInDirect != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAgentSharedInDirect",OldValue=_isAgentSharedInDirect,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isAgentSharedInDirect=value;
-		   }
-		 }
-	   }
-	  private bool _isAgentSharedInHouse ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAgentSharedInHouse  
-	   {
-	     get { return _isAgentSharedInHouse; }
-		 set
-		 {
-		   if(_isAgentSharedInHouse != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAgentSharedInHouse",OldValue=_isAgentSharedInHouse,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isAgentSharedInHouse=value;
 		   }
 		 }
 	   }
@@ -1953,6 +1092,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ContactPM _receivedbybycontact;
+		[Include]
+        [DataMember]
+        public virtual ContactPM ReceivedByByContact 
+		{ 
+		get { return _receivedbybycontact; } 
+		set { _receivedbybycontact = value; }
+		}
 	  private string _receivedByPartner ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

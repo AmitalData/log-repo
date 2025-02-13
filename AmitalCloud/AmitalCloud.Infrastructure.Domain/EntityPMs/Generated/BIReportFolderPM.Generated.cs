@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -36,12 +37,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_name = entity.Name;
 		_description = entity.Description;
 		_index = entity.Index;
-		_createdByUserName = default;
-		_updatedByUserName = default;
 		_permissionForAll = entity.PermissionForAll;
 		_permittedByUserId = entity.PermittedByUserId;
-		permittedBIFolders = default;
-   }
+		_permittedbyuser = entity.PermittedByUser !=null ? new UserPM(entity.PermittedByUser) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -205,38 +204,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
-		   }
-		 }
-	   }
 	  private bool _permissionForAll ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -269,6 +236,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _permittedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM PermittedByUser 
+		{ 
+		get { return _permittedbyuser; } 
+		set { _permittedbyuser = value; }
+		}
 	   private List<BIFoldersPermissionPM> permittedBIFolders;
 	    
        [Composition]

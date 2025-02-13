@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -30,8 +31,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_updateDate = entity.UpdateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
-		_objectTableId = entity.ObjectTableId;
-		_entityId = entity.EntityId;
+		_updatedbyuser = entity.UpdatedByUser !=null ? new UserPM(entity.UpdatedByUser) : null;
+			_objectTableId = entity.ObjectTableId;
+		_objecttable = entity.ObjectTable !=null ? new ObjectTablePM(entity.ObjectTable) : null;
+			_entityId = entity.EntityId;
 		_changesJson = entity.ChangesJson;
    }
    #endregion Constructors
@@ -101,6 +104,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _updatedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM UpdatedByUser 
+		{ 
+		get { return _updatedbyuser; } 
+		set { _updatedbyuser = value; }
+		}
 	  private string _objectTableId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -117,6 +128,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTablePM _objecttable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM ObjectTable 
+		{ 
+		get { return _objecttable; } 
+		set { _objecttable = value; }
+		}
 	  private string _entityId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -134,10 +153,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	  private string _changesJson ;
-        public DateTime CreateDate;
-        public string CreatedByUserId;
-
-        [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
        public string ChangesJson  
 	   {

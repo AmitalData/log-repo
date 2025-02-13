@@ -6,6 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_createDate = entity.CreateDate;
 		_searchFields = entity.SearchFields;
 		_containerTrackingRequestId = entity.ContainerTrackingRequestId;
-		_communicationLogId = entity.CommunicationLogId;
+		_containertrackingrequest = entity.ContainerTrackingRequest !=null ? new ContainerTrackingRequestPM(entity.ContainerTrackingRequest) : null;
+			_communicationLogId = entity.CommunicationLogId;
    }
    #endregion Constructors
    #region Properties
@@ -116,6 +118,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ContainerTrackingRequestPM _containertrackingrequest;
+		[Include]
+        [DataMember]
+        public virtual ContainerTrackingRequestPM ContainerTrackingRequest 
+		{ 
+		get { return _containertrackingrequest; } 
+		set { _containertrackingrequest = value; }
+		}
 	  private string _communicationLogId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

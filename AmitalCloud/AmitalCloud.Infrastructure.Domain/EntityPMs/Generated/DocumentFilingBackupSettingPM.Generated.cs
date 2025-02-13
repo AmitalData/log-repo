@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_deactivationDate = entity.DeactivationDate;
 		_isActive = entity.IsActive;
 		_fTPDetailId = entity.FTPDetailId;
-   }
+		_id = entity.Id !=null ? new FTPDetailPM(entity.Id) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private int _tenant ;
@@ -115,6 +117,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FTPDetailPM _id;
+		[Include]
+        [DataMember]
+        public virtual FTPDetailPM Id 
+		{ 
+		get { return _id; } 
+		set { _id = value; }
+		}
 	 }
 #endregion Properties
 }

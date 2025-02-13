@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -30,9 +31,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
 		_featurePackageTypeCode = entity.FeaturePackageTypeCode;
-		_inActive = entity.InActive;
-		_featurePackageTypeName = default;
-		connectedPackages = default;
+		_featurepackagetype = entity.FeaturePackageType !=null ? new FeaturePackageTypePM(entity.FeaturePackageType) : null;
+			_inActive = entity.InActive;
    }
    #endregion Constructors
    #region Properties
@@ -101,6 +101,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FeaturePackageTypePM _featurepackagetype;
+		[Include]
+        [DataMember]
+        public virtual FeaturePackageTypePM FeaturePackageType 
+		{ 
+		get { return _featurepackagetype; } 
+		set { _featurepackagetype = value; }
+		}
 	  private bool _inActive ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -114,22 +122,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=_inActive,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _inActive=value;
-		   }
-		 }
-	   }
-	  private string _featurePackageTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FeaturePackageTypeName  
-	   {
-	     get { return _featurePackageTypeName; }
-		 set
-		 {
-		   if(_featurePackageTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FeaturePackageTypeName",OldValue=_featurePackageTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _featurePackageTypeName=value;
 		   }
 		 }
 	   }

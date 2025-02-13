@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -28,10 +29,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_id = entity.Id;
 		_packageCode = entity.PackageCode;
-		_connectedPackageCode = entity.ConnectedPackageCode;
-		_connectedPackageName = default;
-		_changeSetOp = default;
-   }
+		_package = entity.Package !=null ? new PackagePM(entity.Package) : null;
+			_connectedPackageCode = entity.ConnectedPackageCode;
+		_connectedpackage = entity.ConnectedPackage !=null ? new PackagePM(entity.ConnectedPackage) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -67,6 +68,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PackagePM _package;
+		[Include]
+        [DataMember]
+        public virtual PackagePM Package 
+		{ 
+		get { return _package; } 
+		set { _package = value; }
+		}
 	  private string _connectedPackageCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -83,38 +92,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _connectedPackageName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ConnectedPackageName  
-	   {
-	     get { return _connectedPackageName; }
-		 set
-		 {
-		   if(_connectedPackageName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConnectedPackageName",OldValue=_connectedPackageName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _connectedPackageName=value;
-		   }
-		 }
-	   }
-	  private string _changeSetOp ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSetOp  
-	   {
-	     get { return _changeSetOp; }
-		 set
-		 {
-		   if(_changeSetOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSetOp",OldValue=_changeSetOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSetOp=value;
-		   }
-		 }
-	   }
+		private PackagePM _connectedpackage;
+		[Include]
+        [DataMember]
+        public virtual PackagePM ConnectedPackage 
+		{ 
+		get { return _connectedpackage; } 
+		set { _connectedpackage = value; }
+		}
 	 }
 #endregion Properties
 }

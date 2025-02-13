@@ -143,10 +143,11 @@ namespace AmitalCloud.Infrastructure.APITools.Services
                     string com_short = entityPM.Id.Substring(0, 8);
                     Poco.SecurityId = com_short + com_md5; // Length = 40
                 }
-                if (tenantPM.IsDocumentsArchive == true)
-                {
-                    HandleComputedFields(entityPM, OldIsSigned, WasRequested);
-                }
+                //TODO: Check if this is needed
+                //if (tenantPM.IsDocumentsArchive == true)
+                //{
+                //    HandleComputedFields(entityPM, OldIsSigned, WasRequested);
+                //}
                 unitOfWork.Save();
                 unitOfWork.Commit();
             }
@@ -1169,10 +1170,10 @@ namespace AmitalCloud.Infrastructure.APITools.Services
         {
             DocumentType documentType = documentTypeRepository.GetSingle(new DocumentTypeKeys<string> { Id = entityPM.DocumentTypeId });
             Document document = null;
-            if (!string.IsNullOrEmpty(entityPM.FileExtension))
-            {
-                entityPM.FileExtension = entityPM.FileExtension.ToLower();
-            }
+            //if (!string.IsNullOrEmpty(entityPM.FileExtension))
+            //{
+            //    entityPM.FileExtension = entityPM.FileExtension.ToLower();
+            //}
 
             if (isnew)
             {
@@ -1185,7 +1186,7 @@ namespace AmitalCloud.Infrastructure.APITools.Services
 
                 };
 
-                document.Extension = entityPM.FileExtension;
+                document.Extension = entityPM.Document.Extension;
 
                 if (entityPM.IsHybrid && !entityPM.IsAttachment && !string.IsNullOrEmpty(entityPM.Description))
                 {
@@ -1193,7 +1194,7 @@ namespace AmitalCloud.Infrastructure.APITools.Services
                 }
                 else
                 {
-                    document.FileName = !string.IsNullOrEmpty(entityPM.FileName) ? entityPM.FileName : documentType != null ? documentType.Name : "";
+                    document.FileName = !string.IsNullOrEmpty(entityPM.Document.FileName) ? entityPM.Document.FileName : documentType != null ? documentType.Name : "";
                 }
 
                 // document.CalculatedFileName = new DocumentTypeCalculateFileNameService(entityPM).Calculate();
@@ -1237,7 +1238,7 @@ namespace AmitalCloud.Infrastructure.APITools.Services
                     document = documentRepository.GetSingleDocument(tenant, entityPM.DocumentId);
                 }
 
-                if (entityPM.IsDeleted && !entityPM.DontDeleteRealFile)
+                if (entityPM.IsDeleted ) //&& !entityPM.DontDeleteRealFile)
                 {
                     if (document != null)
                     {
@@ -1277,7 +1278,7 @@ namespace AmitalCloud.Infrastructure.APITools.Services
 
                         };
 
-                        document.Extension = entityPM.FileExtension;
+                        document.Extension = entityPM.Document.Extension;
 
                         if (entityPM.IsHybrid && !entityPM.IsAttachment && !string.IsNullOrEmpty(entityPM.Description))
                         {
@@ -1285,7 +1286,7 @@ namespace AmitalCloud.Infrastructure.APITools.Services
                         }
                         else
                         {
-                            document.FileName = !string.IsNullOrEmpty(entityPM.FileName) ? entityPM.FileName : documentType.Name;
+                            document.FileName = !string.IsNullOrEmpty(entityPM.Document.FileName) ? entityPM.Document.FileName : documentType.Name;
                         }
 
                         if (fileData != null)
@@ -1305,21 +1306,21 @@ namespace AmitalCloud.Infrastructure.APITools.Services
                     else if (fileData != null) /// !!! if (document == null) 
                     {
                         document.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        document.Extension = entityPM.FileExtension;
+                        document.Extension = entityPM.Document.Extension;
                         document.FileSize = (fileData != null ? Convert.ToInt32(fileData.Length) : 0);
                         document.Tenant = Convert.ToInt32(entityPM.Tenant);
                         document.HasFile = true;
                         document.Folder = "docsin";
-                        document.FileName = entityPM.FileName;
+                        document.FileName = entityPM.Document.FileName;
                         document.IsEncrypted = true;
                         documentRepository.Update(document);
                     }
                     else if (fileData == null)
                     {
-                        if (string.IsNullOrEmpty(entityPM.FileExtension))
+                        if (string.IsNullOrEmpty(entityPM.Document.Extension))
                         {
                             document.HasFile = false;
-                            document.Extension = entityPM.FileExtension;
+                            document.Extension = entityPM.Document.Extension;
                             documentRepository.Update(document);
                         }
 

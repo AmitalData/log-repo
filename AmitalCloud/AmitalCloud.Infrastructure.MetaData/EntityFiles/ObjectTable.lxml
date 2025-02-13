@@ -1190,7 +1190,7 @@
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="&quot;Screen&quot;"
-    DontBuildRelationOnDB="true"
+    DontBuildRelationOnDB="false"
     NavigationPropertyName="&quot;HeaderScreen&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"

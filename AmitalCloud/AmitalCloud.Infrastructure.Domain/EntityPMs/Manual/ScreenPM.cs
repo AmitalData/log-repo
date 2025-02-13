@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 
@@ -6,6 +7,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 {
     public class ScreenPM
     {
+        private Screen headerScreen;
+
+        public ScreenPM(Screen headerScreen)
+        {
+            this.headerScreen = headerScreen;
+        }
+
         [Key]
         public string Id { get; set; }
 

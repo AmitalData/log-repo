@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -36,7 +37,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_localName = entity.LocalName;
 		_inActive = entity.InActive;
 		_searchFields = entity.SearchFields;
-		_partnerCode = default;
    }
    #endregion Constructors
    #region Properties
@@ -198,22 +198,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private string _partnerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerCode  
-	   {
-	     get { return _partnerCode; }
-		 set
-		 {
-		   if(_partnerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerCode=value;
 		   }
 		 }
 	   }

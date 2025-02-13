@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.ServiceModel.DomainServices.Server;
@@ -31,7 +32,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_productTypeCode = entity.ProductTypeCode;
 		_accountManagerId = entity.AccountManagerId;
 		_customerId = entity.CustomerId;
-		_accountManagerName = default;
    }
    #endregion Constructors
    #region Properties
@@ -98,22 +98,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerId",OldValue=_customerId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _customerId=value;
-		   }
-		 }
-	   }
-	  private string _accountManagerName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AccountManagerName  
-	   {
-	     get { return _accountManagerName; }
-		 set
-		 {
-		   if(_accountManagerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountManagerName",OldValue=_accountManagerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _accountManagerName=value;
 		   }
 		 }
 	   }

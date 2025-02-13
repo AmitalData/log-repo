@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -33,11 +34,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_objectTableId = entity.ObjectTableId;
 		_defaultSettings = entity.DefaultSettings;
 		_profileId = entity.ProfileId;
-		_profileName = default;
-		_objectTableName = default;
-		_profileCode = default;
-		_parentObjectTableId = entity.ParentObjectTableId;
-   }
+		_digitalprofile = entity.DigitalProfile !=null ? new DigitalProfilePM(entity.DigitalProfile) : null;
+			_parentObjectTableId = entity.ParentObjectTableId;
+		_parentobjecttable = entity.ParentObjectTable !=null ? new ObjectTablePM(entity.ParentObjectTable) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -153,54 +153,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _profileName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProfileName  
-	   {
-	     get { return _profileName; }
-		 set
-		 {
-		   if(_profileName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfileName",OldValue=_profileName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _profileName=value;
-		   }
-		 }
-	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
-		   }
-		 }
-	   }
-	  private string _profileCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProfileCode  
-	   {
-	     get { return _profileCode; }
-		 set
-		 {
-		   if(_profileCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfileCode",OldValue=_profileCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _profileCode=value;
-		   }
-		 }
-	   }
+		private DigitalProfilePM _digitalprofile;
+		[Include]
+        [DataMember]
+        public virtual DigitalProfilePM DigitalProfile 
+		{ 
+		get { return _digitalprofile; } 
+		set { _digitalprofile = value; }
+		}
 	  private string _parentObjectTableId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -217,6 +177,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTablePM _parentobjecttable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM ParentObjectTable 
+		{ 
+		get { return _parentobjecttable; } 
+		set { _parentobjecttable = value; }
+		}
 	 }
 #endregion Properties
 }

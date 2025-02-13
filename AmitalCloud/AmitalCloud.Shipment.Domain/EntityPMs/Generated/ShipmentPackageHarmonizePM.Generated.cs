@@ -6,6 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_packageId = entity.PackageId;
 		_harmonize = entity.Harmonize;
 		_insidePackageId = entity.InsidePackageId;
-   }
+		_insidepackage = entity.InsidePackage !=null ? new InsideShipmentPackagePM(entity.InsidePackage) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -115,6 +117,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private InsideShipmentPackagePM _insidepackage;
+		[Include]
+        [DataMember]
+        public virtual InsideShipmentPackagePM InsidePackage 
+		{ 
+		get { return _insidepackage; } 
+		set { _insidepackage = value; }
+		}
 	 }
 #endregion Properties
 }

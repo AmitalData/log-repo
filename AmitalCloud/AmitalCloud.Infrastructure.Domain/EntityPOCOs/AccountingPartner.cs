@@ -27,6 +27,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public virtual Card Card { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+		public virtual ICollection<Address> Addresses { get; set; }
+		public virtual ICollection<Contact> Contacts { get; set; }
         [Column("PrimaryContactName")]
 	    public string PrimaryContactName { get; set; }
         [Column("PrimaryContactEmail")]

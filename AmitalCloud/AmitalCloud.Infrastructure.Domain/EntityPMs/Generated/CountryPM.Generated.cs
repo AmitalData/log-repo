@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,9 +30,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_localName = entity.LocalName;
-		_computedLocalName = default;
 		_globalZoneId = entity.GlobalZoneId;
-		_addedManually = entity.AddedManually;
+		_globalzone = entity.GlobalZone !=null ? new GlobalZonePM(entity.GlobalZone) : null;
+			_addedManually = entity.AddedManually;
 		_inActive = entity.InActive;
 		_eC = entity.EC;
 		_notes = entity.Notes;
@@ -41,11 +42,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_searchFields = entity.SearchFields;
 		_code = entity.Code;
 		_englishName = entity.EnglishName;
-		_isSecured = default;
-		_isHybrid = default;
 		_isNorthAmerica = entity.IsNorthAmerica;
 		_isGreaterChina = entity.IsGreaterChina;
-		_partnerCode = default;
    }
    #endregion Constructors
    #region Properties
@@ -98,22 +96,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _computedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputedLocalName  
-	   {
-	     get { return _computedLocalName; }
-		 set
-		 {
-		   if(_computedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computedLocalName=value;
-		   }
-		 }
-	   }
 	  private string _globalZoneId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -130,6 +112,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private GlobalZonePM _globalzone;
+		[Include]
+        [DataMember]
+        public virtual GlobalZonePM GlobalZone 
+		{ 
+		get { return _globalzone; } 
+		set { _globalzone = value; }
+		}
 	  private bool _addedManually ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -290,38 +280,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
-		   }
-		 }
-	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
-		   }
-		 }
-	   }
 	  private bool _isNorthAmerica ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -351,22 +309,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsGreaterChina",OldValue=_isGreaterChina,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isGreaterChina=value;
-		   }
-		 }
-	   }
-	  private string _partnerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerCode  
-	   {
-	     get { return _partnerCode; }
-		 set
-		 {
-		   if(_partnerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerCode=value;
 		   }
 		 }
 	   }

@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,10 +30,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_teamMemberId = entity.TeamMemberId;
-		_addedByUserId = entity.AddedByUserId;
+		_lbpteammember = entity.LBPTeamMember !=null ? new LBPTeamMemberPM(entity.LBPTeamMember) : null;
+			_addedByUserId = entity.AddedByUserId;
 		_addDate = entity.AddDate;
 		_businessRoleId = entity.BusinessRoleId;
-		_roleName = default;
    }
    #endregion Constructors
    #region Properties
@@ -85,6 +86,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private LBPTeamMemberPM _lbpteammember;
+		[Include]
+        [DataMember]
+        public virtual LBPTeamMemberPM LBPTeamMember 
+		{ 
+		get { return _lbpteammember; } 
+		set { _lbpteammember = value; }
+		}
 	  private string _addedByUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -130,22 +139,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BusinessRoleId",OldValue=_businessRoleId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _businessRoleId=value;
-		   }
-		 }
-	   }
-	  private string _roleName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RoleName  
-	   {
-	     get { return _roleName; }
-		 set
-		 {
-		   if(_roleName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RoleName",OldValue=_roleName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _roleName=value;
 		   }
 		 }
 	   }

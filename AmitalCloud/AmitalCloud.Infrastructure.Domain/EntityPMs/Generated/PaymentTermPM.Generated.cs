@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,7 +32,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_externalId = entity.ExternalId;
 		_englishName = entity.EnglishName;
 		_localName = entity.LocalName;
-		_computedLocalName = default;
 		_description = entity.Description;
 		_localDescription = entity.LocalDescription;
 		_days = entity.Days;
@@ -40,14 +40,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_displayInLOV = entity.DisplayInLOV;
 		_isManuallySet = entity.IsManuallySet;
 		_searchFields = entity.SearchFields;
-		_isSecured = default;
-		_externalIdExternalId = default;
 		_endOfMonth = entity.EndOfMonth;
 		_fromDateTypeCode = entity.FromDateTypeCode;
-		_calculatedLocalName = default;
-		_calculatedEnglishName = default;
-		_code = entity.Code;
-		_partnerCode = default;
+		_fromdatetype = entity.FromDateType !=null ? new PaymentTermDateTypePM(entity.FromDateType) : null;
+			_code = entity.Code;
 		_numberOfMonths = entity.NumberOfMonths;
    }
    #endregion Constructors
@@ -130,22 +126,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=_localName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _localName=value;
-		   }
-		 }
-	   }
-	  private string _computedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputedLocalName  
-	   {
-	     get { return _computedLocalName; }
-		 set
-		 {
-		   if(_computedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computedLocalName=value;
 		   }
 		 }
 	   }
@@ -277,38 +257,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
-		   }
-		 }
-	   }
-	  private string _externalIdExternalId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalIdExternalId  
-	   {
-	     get { return _externalIdExternalId; }
-		 set
-		 {
-		   if(_externalIdExternalId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalIdExternalId",OldValue=_externalIdExternalId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalIdExternalId=value;
-		   }
-		 }
-	   }
 	  private bool _endOfMonth ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -341,38 +289,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _calculatedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CalculatedLocalName  
-	   {
-	     get { return _calculatedLocalName; }
-		 set
-		 {
-		   if(_calculatedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedLocalName",OldValue=_calculatedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _calculatedLocalName=value;
-		   }
-		 }
-	   }
-	  private string _calculatedEnglishName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CalculatedEnglishName  
-	   {
-	     get { return _calculatedEnglishName; }
-		 set
-		 {
-		   if(_calculatedEnglishName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedEnglishName",OldValue=_calculatedEnglishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _calculatedEnglishName=value;
-		   }
-		 }
-	   }
+		private PaymentTermDateTypePM _fromdatetype;
+		[Include]
+        [DataMember]
+        public virtual PaymentTermDateTypePM FromDateType 
+		{ 
+		get { return _fromdatetype; } 
+		set { _fromdatetype = value; }
+		}
 	  private string _code ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -386,22 +310,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=_code,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _code=value;
-		   }
-		 }
-	   }
-	  private string _partnerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerCode  
-	   {
-	     get { return _partnerCode; }
-		 set
-		 {
-		   if(_partnerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerCode=value;
 		   }
 		 }
 	   }

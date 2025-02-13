@@ -6,6 +6,7 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 
 
@@ -31,15 +33,17 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_searchFields = entity.SearchFields;
 		_paymentId = entity.PaymentId;
-		_lineNumber = entity.LineNumber;
+		_payment = entity.Payment !=null ? new ARPaymentPM(entity.Payment) : null;
+			_lineNumber = entity.LineNumber;
 		_paymentRef = entity.PaymentRef;
 		_valueDate = entity.ValueDate;
 		_bankAccountId = entity.BankAccountId;
-		_currencyId = entity.CurrencyId;
-		_localAmount = entity.LocalAmount;
+		//_bankaccount = entity.BankAccount !=null ? new BankAccountPM(entity.BankAccount) : null;
+			_currencyId = entity.CurrencyId;
+		_currency = entity.Currency !=null ? new CurrencyPM(entity.Currency) : null;
+			_localAmount = entity.LocalAmount;
 		_foreignAmount = entity.ForeignAmount;
 		_exchageRate = entity.ExchageRate;
-		_bankAccountNumber = default;
    }
    #endregion Constructors
    #region Properties
@@ -108,6 +112,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ARPaymentPM _payment;
+		[Include]
+        [DataMember]
+        public virtual ARPaymentPM Payment 
+		{ 
+		get { return _payment; } 
+		set { _payment = value; }
+		}
 	  private int _lineNumber ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -172,6 +184,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BankAccountPM _bankaccount;
+		[Include]
+        [DataMember]
+        public virtual BankAccountPM BankAccount 
+		{ 
+		get { return _bankaccount; } 
+		set { _bankaccount = value; }
+		}
 	  private string _currencyId ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -188,6 +208,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _currency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM Currency 
+		{ 
+		get { return _currency; } 
+		set { _currency = value; }
+		}
 	  private decimal _localAmount ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -233,22 +261,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExchageRate",OldValue=_exchageRate,NewValue=value,PropertyType="decimal"};
 		    NotifyPropertyChanged(values);
 		   _exchageRate=value;
-		   }
-		 }
-	   }
-	  private string _bankAccountNumber ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BankAccountNumber  
-	   {
-	     get { return _bankAccountNumber; }
-		 set
-		 {
-		   if(_bankAccountNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankAccountNumber",OldValue=_bankAccountNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _bankAccountNumber=value;
 		   }
 		 }
 	   }

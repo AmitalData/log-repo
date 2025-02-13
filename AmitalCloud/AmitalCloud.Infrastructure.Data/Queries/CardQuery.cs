@@ -68,28 +68,29 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             }
             return entity;
         }
-        private CardPM GetNewPM(string myMainAddressId, string myBillingAddressId, string myPickupDeliveryAddressId, Card a )=> new CardPM(a)
+        private CardPM GetNewPM(string myMainAddressId, string myBillingAddressId, string myPickupDeliveryAddressId, Card a )
+            => new CardPM(a)
             {
-                PartnerTypeName = a.PartnerType == null ? null : a.PartnerType.Name,
-                MainAddressId = myMainAddressId,
-                BillingAddressId = myBillingAddressId,
-                PickupDeliveryAddressId = myPickupDeliveryAddressId,
-                ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
-                CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
+                //PartnerTypeName = a.PartnerType == null ? null : a.PartnerType.Name,
+                //MainAddressId = myMainAddressId,
+                //BillingAddressId = myBillingAddressId,
+                //PickupDeliveryAddressId = myPickupDeliveryAddressId,
+                //ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                //ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
+                //CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
                 EnableConsolidationInvoices = a.EnableConsolidationInvoices,
-                SalesmanUserId = a.Customer == null ? null : a.Customer.SalesmanUserId,
-                AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
-                TeamId = a.Customer == null ? null : a.Customer.TeamId,
-                SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
-                CustomerStatusCode = a.Customer != null ? (a.Customer.CustomerStatus != null ? a.Customer.CustomerStatus.Code : null) : null,
-                RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
-                IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
-                LeadSourceId = a.Customer != null ? (a.Customer.LeadSource != null ? a.Customer.LeadSource.Id : null) : null,
-                LeadDescription = a.Customer != null ? a.Customer.LeadDescription : null,
-                StartWorkingDate = a.Customer != null ? a.Customer.StartWorkingDate : null,
-                ICAO = a.Airline ? .ICAO ,
-                CustomerSizeId = a.Customer != null ? (a.Customer.CustomerSize != null ? a.Customer.CustomerSize.Id : null) : null,
+                SalesmanUserId = a.Customer != null ? a.Customer.SalesmanUserId : null,
+                //AccountManagerUserId = a.Customer == null ? null : a.Customer.AccountManagerUserId,
+                //TeamId = a.Customer == null ? null : a.Customer.TeamId,
+                //SalesmanBusinessUnitId = a.Customer == null ? null : (a.Customer.SalesmanUser == null ? null : a.Customer.SalesmanUser.BusinessUnitId),
+                //CustomerStatusCode = a.Customer != null ? (a.Customer.CustomerStatus != null ? a.Customer.CustomerStatus.Code : null) : null,
+                //RankId = a.Customer != null ? (a.Customer.Rank != null ? a.Customer.Rank.Id : null) : null,
+                //IndustryId = a.Customer != null ? (a.Customer.Industry != null ? a.Customer.Industry.Id : null) : null,
+                //LeadSourceId = a.Customer != null ? (a.Customer.LeadSource != null ? a.Customer.LeadSource.Id : null) : null,
+                //LeadDescription = a.Customer != null ? a.Customer.LeadDescription : null,
+                //StartWorkingDate = a.Customer != null ? a.Customer.StartWorkingDate : null,
+                //ICAO = a.Airline ? .ICAO ,
+                //CustomerSizeId = a.Customer != null ? (a.Customer.CustomerSize != null ? a.Customer.CustomerSize.Id : null) : null,
             };
         private CardPM Set(CardPM card, int tenant)
         {

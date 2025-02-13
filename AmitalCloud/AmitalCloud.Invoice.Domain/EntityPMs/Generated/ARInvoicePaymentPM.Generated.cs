@@ -6,6 +6,7 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,14 +32,11 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_localAmount = entity.LocalAmount;
 		_foreignAmount = entity.ForeignAmount;
 		_aRPaymentId = entity.ARPaymentId;
-		_aRInvoiceId = entity.ARInvoiceId;
+		_arpayment = entity.ARPayment !=null ? new ARPaymentPM(entity.ARPayment) : null;
+			_aRInvoiceId = entity.ARInvoiceId;
 		_foreignCurrencyId = entity.ForeignCurrencyId;
-		_invoiceId = default;
-		_paymentNumber = default;
-		_changeSetOp = default;
 		_exchangeRate = entity.ExchangeRate;
 		_paymentAmount = entity.PaymentAmount;
-		_foreignCurrencyCode = default;
    }
    #endregion Constructors
    #region Properties
@@ -123,6 +121,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ARPaymentPM _arpayment;
+		[Include]
+        [DataMember]
+        public virtual ARPaymentPM ARPayment 
+		{ 
+		get { return _arpayment; } 
+		set { _arpayment = value; }
+		}
 	  private string _aRInvoiceId ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -155,54 +161,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _invoiceId ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InvoiceId  
-	   {
-	     get { return _invoiceId; }
-		 set
-		 {
-		   if(_invoiceId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceId",OldValue=_invoiceId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _invoiceId=value;
-		   }
-		 }
-	   }
-	  private string _paymentNumber ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PaymentNumber  
-	   {
-	     get { return _paymentNumber; }
-		 set
-		 {
-		   if(_paymentNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentNumber",OldValue=_paymentNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _paymentNumber=value;
-		   }
-		 }
-	   }
-	  private string _changeSetOp ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSetOp  
-	   {
-	     get { return _changeSetOp; }
-		 set
-		 {
-		   if(_changeSetOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSetOp",OldValue=_changeSetOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSetOp=value;
-		   }
-		 }
-	   }
 	  private double? _exchangeRate ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -232,22 +190,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentAmount",OldValue=_paymentAmount,NewValue=value,PropertyType="double?"};
 		    NotifyPropertyChanged(values);
 		   _paymentAmount=value;
-		   }
-		 }
-	   }
-	  private string _foreignCurrencyCode ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ForeignCurrencyCode  
-	   {
-	     get { return _foreignCurrencyCode; }
-		 set
-		 {
-		   if(_foreignCurrencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForeignCurrencyCode",OldValue=_foreignCurrencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _foreignCurrencyCode=value;
 		   }
 		 }
 	   }

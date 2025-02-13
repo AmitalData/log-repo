@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -35,7 +36,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_englishName = entity.EnglishName;
 		_localName = entity.LocalName;
-		_computedLocalName = default;
 		_isOcean = entity.IsOcean;
 		_isAir = entity.IsAir;
 		_isInland = entity.IsInland;
@@ -45,10 +45,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_printAs = entity.PrintAs;
 		_inActive = entity.InActive;
 		_searchFields = entity.SearchFields;
-		_measurementCode = default;
-		_measurementShortName = default;
-		_isHybrid = default;
-		_partnerCode = default;
 		_isRefrigerated = entity.IsRefrigerated;
 		_isVehicle = entity.IsVehicle;
    }
@@ -199,22 +195,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _computedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputedLocalName  
-	   {
-	     get { return _computedLocalName; }
-		 set
-		 {
-		   if(_computedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computedLocalName=value;
-		   }
-		 }
-	   }
 	  private bool _isOcean ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -356,70 +336,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private string _measurementCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MeasurementCode  
-	   {
-	     get { return _measurementCode; }
-		 set
-		 {
-		   if(_measurementCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasurementCode",OldValue=_measurementCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _measurementCode=value;
-		   }
-		 }
-	   }
-	  private string _measurementShortName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MeasurementShortName  
-	   {
-	     get { return _measurementShortName; }
-		 set
-		 {
-		   if(_measurementShortName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasurementShortName",OldValue=_measurementShortName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _measurementShortName=value;
-		   }
-		 }
-	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
-		   }
-		 }
-	   }
-	  private string _partnerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerCode  
-	   {
-	     get { return _partnerCode; }
-		 set
-		 {
-		   if(_partnerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerCode=value;
 		   }
 		 }
 	   }

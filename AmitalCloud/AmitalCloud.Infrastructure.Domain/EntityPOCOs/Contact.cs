@@ -102,11 +102,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public virtual DigitalPortalLanguage DigitalPortalLanguageCode { get; set; }
         [Column("ContactForAccounting")]
 	    public bool? ContactForAccounting { get; set; }
-        [ForeignKey("ContactLastLoginCode")]
-        [Column("ContactLastLogin")]
-	    public string ContactLastLogin { get; set; }
-	      
-        public virtual ContactLastLogin ContactLastLoginCode { get; set; }
     }
 }
 	 

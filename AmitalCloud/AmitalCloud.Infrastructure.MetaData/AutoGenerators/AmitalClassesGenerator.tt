@@ -70,7 +70,7 @@ GenerateAllMappingClasss("../EntityFiles/GlobalModel","../../AmitalCloud.Infrast
 GenerateAllUpdateServices("../EntityFiles","../../AmitalCloud.Infrastructure.Application/EntityUpdateServices","AmitalCloudContext",namespaces);
 GenerateAllQueryServices("../EntityFiles","../../AmitalCloud.Infrastructure.Application/EntityQueryServices","AmitalCloudContext",namespaces);
 GenerateAllQueryServices("../EntityFiles/GlobalModel","../../AmitalCloud.Infrastructure.Application/EntityQueryServices","GlobalContext",namespaces);
-//GenerateAllListQueryServices("../EntityFiles","../../AmitalCloud.Infrastructure.Application/EntityListQueryServices","ShipmentContext",namespaces);
+GenerateAllListQueryServices("../EntityFiles","../../AmitalCloud.Infrastructure.Application/EntityListQueryServices","AmitalCloudContext",namespaces);
 //GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../AmitalCloud.Infrastructure.Application/CloseTables");
 //GenerateAllDomainServices("../EntityFiles","../../AmitalCloud.Infrastructure.Application/Model","ShipmentContext","AmitalCloud.Shipment","ShipmentDomainService");
 

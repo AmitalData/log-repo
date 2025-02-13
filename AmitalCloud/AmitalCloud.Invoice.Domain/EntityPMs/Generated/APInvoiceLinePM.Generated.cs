@@ -6,6 +6,7 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 
 
@@ -31,46 +33,31 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_entityPayableId = entity.EntityPayableId;
 		_refundAmount = entity.RefundAmount;
 		_aPInvoiceId = entity.APInvoiceId;
-		_lineNumber = entity.LineNumber;
+		_apinvoice = entity.APInvoice !=null ? new APInvoicePM(entity.APInvoice) : null;
+			_lineNumber = entity.LineNumber;
 		_invoiceCurrencyAmount = entity.InvoiceCurrencyAmount;
 		_localCurrencyAmount = entity.LocalCurrencyAmount;
 		_profitCurrencyAmount = entity.ProfitCurrencyAmount;
 		_notes = entity.Notes;
 		_chargesTypeId = entity.ChargesTypeId;
-		_chargesTypeName = default;
-		_vatTypeId = entity.VatTypeId;
-		_vatTypeName = default;
-		_vatPercentage = entity.VatPercentage;
+		_chargestype = entity.ChargesType !=null ? new ChargesTypePM(entity.ChargesType) : null;
+			_vatTypeId = entity.VatTypeId;
+		_vattype = entity.VatType !=null ? new VatTypePM(entity.VatType) : null;
+			_vatPercentage = entity.VatPercentage;
 		_foriegnCurrencyId = entity.ForiegnCurrencyId;
-		_foriegnExchangeRate = entity.ForiegnExchangeRate;
+		_currency = entity.Currency !=null ? new CurrencyPM(entity.Currency) : null;
+			_foriegnExchangeRate = entity.ForiegnExchangeRate;
 		_foriegnCurrencyAmount = entity.ForiegnCurrencyAmount;
 		_description = entity.Description;
 		_localDescription = entity.LocalDescription;
-		_externalVATCard = default;
 		_debitAccount = entity.DebitAccount;
-		_vendorId = default;
-		_openAmount = default;
-		_chargesTypeCode = default;
-		_objectTableId = default;
-		_entityReference = default;
-		_vendorName = default;
-		_otherInvoicesAmounts = default;
-		_expectedAmount = default;
-		_correctionAmount = default;
-		_correctionNote = default;
-		_correctionByUserId = default;
-		_correctionDate = default;
-		_amountTypeCode = default;
-		_foriegnCurrencyCode = default;
-		_externalTAXItemId = default;
 		_chargeTypeGLAccountId = entity.ChargeTypeGLAccountId;
 		_authorizedSignatory = entity.AuthorizedSignatory;
-		_vatIsMultiPercentage = default;
 		_prepaidCollectId = entity.PrepaidCollectId;
-		_vatRecognizedPercentage = default;
-		_containerTypeId = entity.ContainerTypeId;
-		_quantity = entity.Quantity;
-		_localAmountWithVatRecognized = default;
+		_prepaidcollect = entity.PrepaidCollect !=null ? new PrepaidCollectPM(entity.PrepaidCollect) : null;
+			_containerTypeId = entity.ContainerTypeId;
+		_containertype = entity.ContainerType !=null ? new PackageTypePM(entity.ContainerType) : null;
+			_quantity = entity.Quantity;
    }
    #endregion Constructors
    #region Properties
@@ -155,6 +142,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private APInvoicePM _apinvoice;
+		[Include]
+        [DataMember]
+        public virtual APInvoicePM APInvoice 
+		{ 
+		get { return _apinvoice; } 
+		set { _apinvoice = value; }
+		}
 	  private int _lineNumber ;
 	         [Key]
 	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
@@ -252,22 +247,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _chargesTypeName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargesTypeName  
-	   {
-	     get { return _chargesTypeName; }
-		 set
-		 {
-		   if(_chargesTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeName",OldValue=_chargesTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _chargesTypeName=value;
-		   }
-		 }
-	   }
+		private ChargesTypePM _chargestype;
+		[Include]
+        [DataMember]
+        public virtual ChargesTypePM ChargesType 
+		{ 
+		get { return _chargestype; } 
+		set { _chargestype = value; }
+		}
 	  private string _vatTypeId ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -284,22 +271,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _vatTypeName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VatTypeName  
-	   {
-	     get { return _vatTypeName; }
-		 set
-		 {
-		   if(_vatTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatTypeName",OldValue=_vatTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vatTypeName=value;
-		   }
-		 }
-	   }
+		private VatTypePM _vattype;
+		[Include]
+        [DataMember]
+        public virtual VatTypePM VatType 
+		{ 
+		get { return _vattype; } 
+		set { _vattype = value; }
+		}
 	  private double? _vatPercentage ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -332,6 +311,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _currency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM Currency 
+		{ 
+		get { return _currency; } 
+		set { _currency = value; }
+		}
 	  private double? _foriegnExchangeRate ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -396,22 +383,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _externalVATCard ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalVATCard  
-	   {
-	     get { return _externalVATCard; }
-		 set
-		 {
-		   if(_externalVATCard != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalVATCard",OldValue=_externalVATCard,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalVATCard=value;
-		   }
-		 }
-	   }
 	  private string _debitAccount ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -425,246 +396,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DebitAccount",OldValue=_debitAccount,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _debitAccount=value;
-		   }
-		 }
-	   }
-	  private string _vendorId ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VendorId  
-	   {
-	     get { return _vendorId; }
-		 set
-		 {
-		   if(_vendorId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorId",OldValue=_vendorId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vendorId=value;
-		   }
-		 }
-	   }
-	  private double _openAmount ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double OpenAmount  
-	   {
-	     get { return _openAmount; }
-		 set
-		 {
-		   if(_openAmount != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OpenAmount",OldValue=_openAmount,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _openAmount=value;
-		   }
-		 }
-	   }
-	  private string _chargesTypeCode ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargesTypeCode  
-	   {
-	     get { return _chargesTypeCode; }
-		 set
-		 {
-		   if(_chargesTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeCode",OldValue=_chargesTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _chargesTypeCode=value;
-		   }
-		 }
-	   }
-	  private string _objectTableId ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableId  
-	   {
-	     get { return _objectTableId; }
-		 set
-		 {
-		   if(_objectTableId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableId",OldValue=_objectTableId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableId=value;
-		   }
-		 }
-	   }
-	  private string _entityReference ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EntityReference  
-	   {
-	     get { return _entityReference; }
-		 set
-		 {
-		   if(_entityReference != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityReference",OldValue=_entityReference,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _entityReference=value;
-		   }
-		 }
-	   }
-	  private string _vendorName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VendorName  
-	   {
-	     get { return _vendorName; }
-		 set
-		 {
-		   if(_vendorName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorName",OldValue=_vendorName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vendorName=value;
-		   }
-		 }
-	   }
-	  private double _otherInvoicesAmounts ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double OtherInvoicesAmounts  
-	   {
-	     get { return _otherInvoicesAmounts; }
-		 set
-		 {
-		   if(_otherInvoicesAmounts != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OtherInvoicesAmounts",OldValue=_otherInvoicesAmounts,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _otherInvoicesAmounts=value;
-		   }
-		 }
-	   }
-	  private double _expectedAmount ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double ExpectedAmount  
-	   {
-	     get { return _expectedAmount; }
-		 set
-		 {
-		   if(_expectedAmount != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExpectedAmount",OldValue=_expectedAmount,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _expectedAmount=value;
-		   }
-		 }
-	   }
-	  private double _correctionAmount ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double CorrectionAmount  
-	   {
-	     get { return _correctionAmount; }
-		 set
-		 {
-		   if(_correctionAmount != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CorrectionAmount",OldValue=_correctionAmount,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _correctionAmount=value;
-		   }
-		 }
-	   }
-	  private string _correctionNote ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CorrectionNote  
-	   {
-	     get { return _correctionNote; }
-		 set
-		 {
-		   if(_correctionNote != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CorrectionNote",OldValue=_correctionNote,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _correctionNote=value;
-		   }
-		 }
-	   }
-	  private string _correctionByUserId ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CorrectionByUserId  
-	   {
-	     get { return _correctionByUserId; }
-		 set
-		 {
-		   if(_correctionByUserId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CorrectionByUserId",OldValue=_correctionByUserId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _correctionByUserId=value;
-		   }
-		 }
-	   }
-	  private DateTime _correctionDate ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime CorrectionDate  
-	   {
-	     get { return _correctionDate; }
-		 set
-		 {
-		   if(_correctionDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CorrectionDate",OldValue=_correctionDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _correctionDate=value;
-		   }
-		 }
-	   }
-	  private string _amountTypeCode ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AmountTypeCode  
-	   {
-	     get { return _amountTypeCode; }
-		 set
-		 {
-		   if(_amountTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmountTypeCode",OldValue=_amountTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _amountTypeCode=value;
-		   }
-		 }
-	   }
-	  private string _foriegnCurrencyCode ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ForiegnCurrencyCode  
-	   {
-	     get { return _foriegnCurrencyCode; }
-		 set
-		 {
-		   if(_foriegnCurrencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForiegnCurrencyCode",OldValue=_foriegnCurrencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _foriegnCurrencyCode=value;
-		   }
-		 }
-	   }
-	  private string _externalTAXItemId ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalTAXItemId  
-	   {
-	     get { return _externalTAXItemId; }
-		 set
-		 {
-		   if(_externalTAXItemId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalTAXItemId",OldValue=_externalTAXItemId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalTAXItemId=value;
 		   }
 		 }
 	   }
@@ -700,22 +431,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _vatIsMultiPercentage ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool VatIsMultiPercentage  
-	   {
-	     get { return _vatIsMultiPercentage; }
-		 set
-		 {
-		   if(_vatIsMultiPercentage != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatIsMultiPercentage",OldValue=_vatIsMultiPercentage,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _vatIsMultiPercentage=value;
-		   }
-		 }
-	   }
 	  private string _prepaidCollectId ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -732,22 +447,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private double? _vatRecognizedPercentage ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double? VatRecognizedPercentage  
-	   {
-	     get { return _vatRecognizedPercentage; }
-		 set
-		 {
-		   if(_vatRecognizedPercentage != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatRecognizedPercentage",OldValue=_vatRecognizedPercentage,NewValue=value,PropertyType="double?"};
-		    NotifyPropertyChanged(values);
-		   _vatRecognizedPercentage=value;
-		   }
-		 }
-	   }
+		private PrepaidCollectPM _prepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM PrepaidCollect 
+		{ 
+		get { return _prepaidcollect; } 
+		set { _prepaidcollect = value; }
+		}
 	  private string _containerTypeId ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -764,6 +471,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PackageTypePM _containertype;
+		[Include]
+        [DataMember]
+        public virtual PackageTypePM ContainerType 
+		{ 
+		get { return _containertype; } 
+		set { _containertype = value; }
+		}
 	  private int? _quantity ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -777,22 +492,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Quantity",OldValue=_quantity,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _quantity=value;
-		   }
-		 }
-	   }
-	  private double _localAmountWithVatRecognized ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double LocalAmountWithVatRecognized  
-	   {
-	     get { return _localAmountWithVatRecognized; }
-		 set
-		 {
-		   if(_localAmountWithVatRecognized != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalAmountWithVatRecognized",OldValue=_localAmountWithVatRecognized,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _localAmountWithVatRecognized=value;
 		   }
 		 }
 	   }

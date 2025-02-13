@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,11 +32,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_searchFields = entity.SearchFields;
 		_contractId = entity.ContractId;
 		_inActive = entity.InActive;
-		_tenant = default;
 		_id = entity.Id;
 		_bluesnapContractTypeCode = entity.BluesnapContractTypeCode;
-		_bluesnapContractTypeName = default;
-   }
+		_bluesnapcontracttype = entity.BluesnapContractType !=null ? new BluesnapContractTypePM(entity.BluesnapContractType) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _code ;
@@ -118,22 +118,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private int _tenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public override int Tenant  
-	   {
-	     get { return _tenant; }
-		 set
-		 {
-		   if(_tenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _tenant=value;
-		   }
-		 }
-	   }
 	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -167,22 +151,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _bluesnapContractTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BluesnapContractTypeName  
-	   {
-	     get { return _bluesnapContractTypeName; }
-		 set
-		 {
-		   if(_bluesnapContractTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BluesnapContractTypeName",OldValue=_bluesnapContractTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _bluesnapContractTypeName=value;
-		   }
-		 }
-	   }
+		private BluesnapContractTypePM _bluesnapcontracttype;
+		[Include]
+        [DataMember]
+        public virtual BluesnapContractTypePM BluesnapContractType 
+		{ 
+		get { return _bluesnapcontracttype; } 
+		set { _bluesnapcontracttype = value; }
+		}
 	 }
 #endregion Properties
 }

@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -55,9 +56,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isUpdatedinAirlineTenant = entity.IsUpdatedinAirlineTenant;
 		_userEmail = entity.UserEmail;
 		_searchFields = entity.SearchFields;
-		_fWBNotifyContacts = default;
-		_fHLNotifyContacts = default;
-		_fFRNotifyContacts = default;
    }
    #endregion Constructors
    #region Properties
@@ -523,54 +521,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private string _fWBNotifyContacts ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FWBNotifyContacts  
-	   {
-	     get { return _fWBNotifyContacts; }
-		 set
-		 {
-		   if(_fWBNotifyContacts != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FWBNotifyContacts",OldValue=_fWBNotifyContacts,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fWBNotifyContacts=value;
-		   }
-		 }
-	   }
-	  private string _fHLNotifyContacts ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FHLNotifyContacts  
-	   {
-	     get { return _fHLNotifyContacts; }
-		 set
-		 {
-		   if(_fHLNotifyContacts != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FHLNotifyContacts",OldValue=_fHLNotifyContacts,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fHLNotifyContacts=value;
-		   }
-		 }
-	   }
-	  private string _fFRNotifyContacts ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FFRNotifyContacts  
-	   {
-	     get { return _fFRNotifyContacts; }
-		 set
-		 {
-		   if(_fFRNotifyContacts != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FFRNotifyContacts",OldValue=_fFRNotifyContacts,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fFRNotifyContacts=value;
 		   }
 		 }
 	   }

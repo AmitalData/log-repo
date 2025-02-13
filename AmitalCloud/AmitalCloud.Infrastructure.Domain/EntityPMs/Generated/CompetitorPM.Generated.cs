@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -35,19 +36,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_opportunity = entity.Opportunity;
 		_threat = entity.Threat;
 		_addressId = entity.AddressId;
-		_searchFields = entity.SearchFields;
-		_address1 = default;
-		_address2 = default;
-		_zipCode = default;
-		_city = default;
-		_countryId = default;
-		_stateId = default;
-		_phoneNumber = default;
-		_faxNumber = default;
+		_address = entity.Address !=null ? new AddressPM(entity.Address) : null;
+			_searchFields = entity.SearchFields;
 		_inActive = entity.InActive;
-		_stateName = default;
-		_countryCode = default;
-		_countryName = default;
    }
    #endregion Constructors
    #region Properties
@@ -196,6 +187,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AddressPM _address;
+		[Include]
+        [DataMember]
+        public virtual AddressPM Address 
+		{ 
+		get { return _address; } 
+		set { _address = value; }
+		}
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -212,134 +211,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _address1 ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Address1  
-	   {
-	     get { return _address1; }
-		 set
-		 {
-		   if(_address1 != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Address1",OldValue=_address1,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _address1=value;
-		   }
-		 }
-	   }
-	  private string _address2 ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Address2  
-	   {
-	     get { return _address2; }
-		 set
-		 {
-		   if(_address2 != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Address2",OldValue=_address2,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _address2=value;
-		   }
-		 }
-	   }
-	  private string _zipCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ZipCode  
-	   {
-	     get { return _zipCode; }
-		 set
-		 {
-		   if(_zipCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ZipCode",OldValue=_zipCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _zipCode=value;
-		   }
-		 }
-	   }
-	  private string _city ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string City  
-	   {
-	     get { return _city; }
-		 set
-		 {
-		   if(_city != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="City",OldValue=_city,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _city=value;
-		   }
-		 }
-	   }
-	  private string _countryId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryId  
-	   {
-	     get { return _countryId; }
-		 set
-		 {
-		   if(_countryId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryId",OldValue=_countryId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryId=value;
-		   }
-		 }
-	   }
-	  private string _stateId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StateId  
-	   {
-	     get { return _stateId; }
-		 set
-		 {
-		   if(_stateId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StateId",OldValue=_stateId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _stateId=value;
-		   }
-		 }
-	   }
-	  private string _phoneNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PhoneNumber  
-	   {
-	     get { return _phoneNumber; }
-		 set
-		 {
-		   if(_phoneNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhoneNumber",OldValue=_phoneNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _phoneNumber=value;
-		   }
-		 }
-	   }
-	  private string _faxNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FaxNumber  
-	   {
-	     get { return _faxNumber; }
-		 set
-		 {
-		   if(_faxNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FaxNumber",OldValue=_faxNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _faxNumber=value;
-		   }
-		 }
-	   }
 	  private bool _inActive ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -353,54 +224,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=_inActive,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _inActive=value;
-		   }
-		 }
-	   }
-	  private string _stateName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StateName  
-	   {
-	     get { return _stateName; }
-		 set
-		 {
-		   if(_stateName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StateName",OldValue=_stateName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _stateName=value;
-		   }
-		 }
-	   }
-	  private string _countryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryCode  
-	   {
-	     get { return _countryCode; }
-		 set
-		 {
-		   if(_countryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryCode",OldValue=_countryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryCode=value;
-		   }
-		 }
-	   }
-	  private string _countryName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryName  
-	   {
-	     get { return _countryName; }
-		 set
-		 {
-		   if(_countryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryName",OldValue=_countryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryName=value;
 		   }
 		 }
 	   }

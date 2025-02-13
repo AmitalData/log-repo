@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -30,7 +31,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_diagnosticLog = entity.DiagnosticLog;
 		_exceptionsMessage = entity.ExceptionsMessage;
 		_id = entity.Id;
-		_requestData = entity.RequestData;
+		_apilogs = entity.APILogs !=null ? new APILogsPM(entity.APILogs) : null;
+			_requestData = entity.RequestData;
 		_responseData = entity.ResponseData;
    }
    #endregion Constructors
@@ -100,6 +102,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private APILogsPM _apilogs;
+		[Include]
+        [DataMember]
+        public virtual APILogsPM APILogs 
+		{ 
+		get { return _apilogs; } 
+		set { _apilogs = value; }
+		}
 	  private string _requestData ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

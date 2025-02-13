@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -33,7 +34,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_rating = entity.Rating;
 		_comments = entity.Comments;
 		_tenant = entity.Tenant;
-		_hash = default;
 		_isSync = entity.IsSync;
 		_lockedBy = entity.LockedBy;
 		_syncDate = entity.SyncDate;
@@ -150,22 +150,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _tenant=value;
-		   }
-		 }
-	   }
-	  private string _hash ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Hash  
-	   {
-	     get { return _hash; }
-		 set
-		 {
-		   if(_hash != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Hash",OldValue=_hash,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _hash=value;
 		   }
 		 }
 	   }

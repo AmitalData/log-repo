@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -36,10 +37,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenantNumber = entity.TenantNumber;
 		_inactive = entity.Inactive;
 		_toggleCode = entity.ToggleCode;
-		_toggleName = default;
-		_createdByUser = default;
-		_toggleDescription = default;
-		_isMultiTenant = entity.IsMultiTenant;
+		_toggle = entity.Toggle !=null ? new TogglePM(entity.Toggle) : null;
+			_isMultiTenant = entity.IsMultiTenant;
 		_fromTenantNumber = entity.FromTenantNumber;
 		_toTenantNumber = entity.ToTenantNumber;
    }
@@ -206,54 +205,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _toggleName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ToggleName  
-	   {
-	     get { return _toggleName; }
-		 set
-		 {
-		   if(_toggleName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToggleName",OldValue=_toggleName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _toggleName=value;
-		   }
-		 }
-	   }
-	  private string _createdByUser ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUser  
-	   {
-	     get { return _createdByUser; }
-		 set
-		 {
-		   if(_createdByUser != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUser",OldValue=_createdByUser,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUser=value;
-		   }
-		 }
-	   }
-	  private string _toggleDescription ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ToggleDescription  
-	   {
-	     get { return _toggleDescription; }
-		 set
-		 {
-		   if(_toggleDescription != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToggleDescription",OldValue=_toggleDescription,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _toggleDescription=value;
-		   }
-		 }
-	   }
+		private TogglePM _toggle;
+		[Include]
+        [DataMember]
+        public virtual TogglePM Toggle 
+		{ 
+		get { return _toggle; } 
+		set { _toggle = value; }
+		}
 	  private bool _isMultiTenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

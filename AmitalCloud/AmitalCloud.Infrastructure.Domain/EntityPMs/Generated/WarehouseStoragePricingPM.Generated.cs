@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,7 +30,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_warehouseId = entity.WarehouseId;
-		_stepFrom = entity.StepFrom;
+		_warehouse = entity.Warehouse !=null ? new CardPM(entity.Warehouse) : null;
+			_stepFrom = entity.StepFrom;
 		_stepTo = entity.StepTo;
 		_days = entity.Days;
 		_salePrice = entity.SalePrice;
@@ -86,6 +88,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _warehouse;
+		[Include]
+        [DataMember]
+        public virtual CardPM Warehouse 
+		{ 
+		get { return _warehouse; } 
+		set { _warehouse = value; }
+		}
 	  private int _stepFrom ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

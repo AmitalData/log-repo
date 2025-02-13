@@ -38,7 +38,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 		protected override IEntityKeyFields<POCO.CardSearch,int> GetKeys(CardSearchPM entityPM) => new CardSearchKeys<int>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(CardSearchPM entityPM)
 		{
-			entityPM.Id =Convert.ToInt32( IdCounter.GetNumber("CardSearch", entityPM.Tenant)); 
+			entityPM.Id = Convert.ToInt32(IdCounter.GetNumber("CardSearch", entityPM.Tenant)); 
 		}
 		protected override void FillDefaultValuesOnUpdate(CardSearchPM entityPM)
         {       

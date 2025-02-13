@@ -188,18 +188,39 @@ namespace <#= namespacestring #>
    <#+
  	foreach(var field in entity["field"])  //get all classes
 	 {
-	 if( field.HasDataBaseField.GetType() == typeof(string))
-        {
-          if(field.HasDataBaseField == "false")
-             {
-                continue;
-             }
-         }
 	 string type = GetDataType(field);
 		if(type != "List")
         {
+			if( field.HasDataBaseField.GetType() == typeof(string))
+			{
+				if(field.HasDataBaseField == "false")
+				 {
+					continue;
+				 }
+			 }
 	      WriteProperty(field);
         }
+		else
+		{
+
+		if( field.IsComposition.GetType() == typeof(string))  
+		{ 
+			if(field.IsComposition == "true")
+			{
+				continue;
+			}
+		}
+
+		if( field.IsMulti.GetType() == typeof(string))  
+		{ 
+			if(field.IsMulti == "false")
+			{
+				continue;
+			}
+		}
+
+			WriteCollectionProperty(field);
+		}
 	 }
 
 	 #>
@@ -208,11 +229,18 @@ namespace <#= namespacestring #>
 	 <#+
     
 	}
-
 #>
-
-
 <#+
+private void WriteCollectionProperty(dynamic field)
+{
+	dynamic fieldName = GetPropertyName(field.FieldName);
+	string type = GetDataType(field,true);
+	string multiTableName = GetPropertyName(field.MultiTableName);
+#>
+		public virtual ICollection<<#= multiTableName #>> <#= fieldName #> { get; set; }
+<#+  
+
+}
 
 public void WriteProperty(dynamic field)
 {

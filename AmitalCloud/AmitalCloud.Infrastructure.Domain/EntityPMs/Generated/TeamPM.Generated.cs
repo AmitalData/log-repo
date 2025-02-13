@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -37,10 +38,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_localName = entity.LocalName;
 		_inActive = entity.InActive;
 		_managerUserId = entity.ManagerUserId;
-		_managerUserName = default;
-		_notify = entity.Notify;
+		_manageruser = entity.ManagerUser !=null ? new UserPM(entity.ManagerUser) : null;
+			_notify = entity.Notify;
 		_notes = entity.Notes;
-		memberLines = default;
    }
    #endregion Constructors
    #region Properties
@@ -221,22 +221,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _managerUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ManagerUserName  
-	   {
-	     get { return _managerUserName; }
-		 set
-		 {
-		   if(_managerUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ManagerUserName",OldValue=_managerUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _managerUserName=value;
-		   }
-		 }
-	   }
+		private UserPM _manageruser;
+		[Include]
+        [DataMember]
+        public virtual UserPM ManagerUser 
+		{ 
+		get { return _manageruser; } 
+		set { _manageruser = value; }
+		}
 	  private string _notify ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,14 +32,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_notes = entity.Notes;
 		_customerId = entity.CustomerId;
 		_additionalServiceId = entity.AdditionalServiceId;
-		_additionalServiceName = default;
-		_additionalServiceCode = default;
-		_customerName = default;
-		_salesman = default;
-		_primaryContact = default;
-		_salesmanUserId = default;
-		_businessUnitId = default;
-		_changeSetOp = default;
 		_notesRightToLeft = entity.NotesRightToLeft;
    }
    #endregion Constructors
@@ -122,134 +115,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AdditionalServiceId",OldValue=_additionalServiceId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _additionalServiceId=value;
-		   }
-		 }
-	   }
-	  private string _additionalServiceName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AdditionalServiceName  
-	   {
-	     get { return _additionalServiceName; }
-		 set
-		 {
-		   if(_additionalServiceName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AdditionalServiceName",OldValue=_additionalServiceName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _additionalServiceName=value;
-		   }
-		 }
-	   }
-	  private string _additionalServiceCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AdditionalServiceCode  
-	   {
-	     get { return _additionalServiceCode; }
-		 set
-		 {
-		   if(_additionalServiceCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AdditionalServiceCode",OldValue=_additionalServiceCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _additionalServiceCode=value;
-		   }
-		 }
-	   }
-	  private string _customerName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerName  
-	   {
-	     get { return _customerName; }
-		 set
-		 {
-		   if(_customerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=_customerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerName=value;
-		   }
-		 }
-	   }
-	  private string _salesman ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Salesman  
-	   {
-	     get { return _salesman; }
-		 set
-		 {
-		   if(_salesman != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Salesman",OldValue=_salesman,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _salesman=value;
-		   }
-		 }
-	   }
-	  private string _primaryContact ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PrimaryContact  
-	   {
-	     get { return _primaryContact; }
-		 set
-		 {
-		   if(_primaryContact != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrimaryContact",OldValue=_primaryContact,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _primaryContact=value;
-		   }
-		 }
-	   }
-	  private string _salesmanUserId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SalesmanUserId  
-	   {
-	     get { return _salesmanUserId; }
-		 set
-		 {
-		   if(_salesmanUserId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SalesmanUserId",OldValue=_salesmanUserId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _salesmanUserId=value;
-		   }
-		 }
-	   }
-	  private string _businessUnitId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BusinessUnitId  
-	   {
-	     get { return _businessUnitId; }
-		 set
-		 {
-		   if(_businessUnitId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BusinessUnitId",OldValue=_businessUnitId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _businessUnitId=value;
-		   }
-		 }
-	   }
-	  private string _changeSetOp ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSetOp  
-	   {
-	     get { return _changeSetOp; }
-		 set
-		 {
-		   if(_changeSetOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSetOp",OldValue=_changeSetOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSetOp=value;
 		   }
 		 }
 	   }

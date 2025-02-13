@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -36,10 +37,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_updatedByUserId = entity.UpdatedByUserId;
 		_objectTableId = entity.ObjectTableId;
 		_computingPartnerId = entity.ComputingPartnerId;
-		_objectTableName = default;
-		_createdByUserName = default;
-		_updatedByUserName = default;
-		_computingPartnerName = default;
 		_searchFields = entity.SearchFields;
    }
    #endregion Constructors
@@ -202,70 +199,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputingPartnerId",OldValue=_computingPartnerId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _computingPartnerId=value;
-		   }
-		 }
-	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
-		   }
-		 }
-	   }
-	  private string _computingPartnerName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputingPartnerName  
-	   {
-	     get { return _computingPartnerName; }
-		 set
-		 {
-		   if(_computingPartnerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputingPartnerName",OldValue=_computingPartnerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computingPartnerName=value;
 		   }
 		 }
 	   }

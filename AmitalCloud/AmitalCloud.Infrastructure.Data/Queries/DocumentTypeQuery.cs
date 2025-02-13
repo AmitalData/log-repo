@@ -109,14 +109,14 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         private List<DocumentTypeCopyPM> MarkIsOriginalDocumentCopy(DocumentTypePM documentTypePM)
         {
             List<DocumentTypeCopyPM> documentTypeCopies = documentTypePM.DocumentTypeCopies;
-            for (int i = 0; i < documentTypeCopies.Count(); i++)
-            {
-                if (documentTypeCopies[i].Code == documentTypePM.Code)
-                {
-                    documentTypeCopies[i].IsOriginal = true;
-                    break;
-                }
-            }
+            //for (int i = 0; i < documentTypeCopies.Count(); i++)
+            //{
+            //    if (documentTypeCopies[i].Code == documentTypePM.Code)
+            //    {
+            //        documentTypeCopies[i].IsOriginal = true;
+            //        break;
+            //    }
+            //}
 
             return documentTypeCopies;
         }
@@ -133,8 +133,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
             return new DocumentTypePM(a)
             {
-                ObjectTableName = a.ObjectTable != null ? a.ObjectTable.Name : null,
-                DocumentTypeCategoryName = a.DocumentTypeCategory != null ? a.DocumentTypeCategory.Name : null,
+                //ObjectTableName = a.ObjectTable != null ? a.ObjectTable.Name : null,
+                //DocumentTypeCategoryName = a.DocumentTypeCategory != null ? a.DocumentTypeCategory.Name : null,
             };
         }
         private IQueryable<DocumentTypeList> FilterDocumentTypeListByTransportModeIdAndShipmentLevelCode(string transportModeId, string shipmentLevelCode, IQueryable<DocumentTypeList> documentTypes)

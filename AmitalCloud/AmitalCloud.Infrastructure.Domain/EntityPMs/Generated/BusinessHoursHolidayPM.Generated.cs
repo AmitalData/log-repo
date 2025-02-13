@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,7 +30,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_businessHourId = entity.BusinessHourId;
-		_day = entity.Day;
+		_businesshour = entity.BusinessHour !=null ? new BusinessHourPM(entity.BusinessHour) : null;
+			_day = entity.Day;
 		_month = entity.Month;
 		_year = entity.Year;
 		_holidayName = entity.HolidayName;
@@ -39,7 +41,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_createdByUserId = entity.CreatedByUserId;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_inactive = entity.Inactive;
-		_businessHour = default;
    }
    #endregion Constructors
    #region Properties
@@ -92,6 +93,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BusinessHourPM _businesshour;
+		[Include]
+        [DataMember]
+        public virtual BusinessHourPM BusinessHour 
+		{ 
+		get { return _businesshour; } 
+		set { _businesshour = value; }
+		}
 	  private int _day ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -249,22 +258,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Inactive",OldValue=_inactive,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _inactive=value;
-		   }
-		 }
-	   }
-	  private string _businessHour ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BusinessHour  
-	   {
-	     get { return _businessHour; }
-		 set
-		 {
-		   if(_businessHour != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BusinessHour",OldValue=_businessHour,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _businessHour=value;
 		   }
 		 }
 	   }

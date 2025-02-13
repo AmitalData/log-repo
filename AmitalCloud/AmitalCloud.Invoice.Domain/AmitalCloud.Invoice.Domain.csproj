@@ -216,10 +216,14 @@
     <Compile Include="EntityPMs\Manual\APTransferLinePM.cs" />
     <Compile Include="EntityPMs\Manual\ARInvoiceChargePM.cs" />
     <Compile Include="EntityPMs\Manual\ARInvoiceEntityPM.cs" />
+    <Compile Include="EntityPMs\Manual\ARInvoiceLineActionPM.cs" />
     <Compile Include="EntityPMs\Manual\ARInvoiceTransferHistoryPM.cs" />
+    <Compile Include="EntityPMs\Manual\ARPaymentChequeStatusPM.cs" />
     <Compile Include="EntityPMs\Manual\ARPaymentChequeStatusReplicaPM.cs" />
     <Compile Include="EntityPMs\Manual\ARPaymentInvoicePM.cs" />
     <Compile Include="EntityPMs\Manual\ARPaymentLinePM.cs" />
+    <Compile Include="EntityPMs\Manual\BankAccountPM.cs" />
+    <Compile Include="EntityPMs\Manual\BankCodePM.cs" />
     <Compile Include="EntityPMs\Manual\ConstituentPM.cs" />
     <Compile Include="EntityPMs\Manual\ExternalSystemsMissingTranslationPM.cs" />
     <Compile Include="EntityPMs\Manual\ExternalSystemsSyncStatusPM.cs" />
@@ -266,6 +270,7 @@
     <Compile Include="EntityPMs\Generated\SATInvoiceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SATPaymentMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SATTransferStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Manual\LedgerTransactionPM.Generated.cs" />
     <Compile Include="EntityPMs\Manual\QuickbooksSyncRequestTicketPM.cs" />
     <Compile Include="EntityPOCOs\AccountingPaymentMethod.cs" />
     <Compile Include="EntityPOCOs\AccountingSystemsSetting.cs" />
@@ -306,6 +311,9 @@
     <Compile Include="EntityPOCOs\ExternalSystemsTablesCode.cs" />
     <Compile Include="EntityPOCOs\Manual\APInvoiceEntity.cs" />
     <Compile Include="EntityPOCOs\Manual\ARInvoiceLineAction.cs" />
+    <Compile Include="EntityPOCOs\Manual\ARPaymentChequeStatus.cs" />
+    <Compile Include="EntityPOCOs\Manual\BankAccount.cs" />
+    <Compile Include="EntityPOCOs\Manual\BankCode.cs" />
     <Compile Include="EntityPOCOs\QBOGlobalTaxCalculation.cs" />
     <Compile Include="EntityPOCOs\SATInterface.cs" />
     <Compile Include="EntityPOCOs\SATInterfaceSetting.cs" />

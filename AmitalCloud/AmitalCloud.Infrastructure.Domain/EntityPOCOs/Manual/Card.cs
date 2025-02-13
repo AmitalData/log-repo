@@ -14,7 +14,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public virtual ShippingLine ShippingLine { get; set; }
         public virtual CustomAgent CustomAgent { get; set; }
         public virtual ShippingAgent ShippingAgent { get; set; }
-        public virtual Customer Customer { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Agent Agent { get; set; }
         public virtual Vendor Vendor { get; set; }

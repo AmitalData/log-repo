@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -34,7 +35,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_localName = entity.LocalName;
 		_viewOrder = entity.ViewOrder;
 		_quoteGroupSectionID = entity.QuoteGroupSectionID;
-   }
+		_quotegroupsection = entity.QuoteGroupSection !=null ? new QuoteGroupSectionPM(entity.QuoteGroupSection) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _searchFields ;
@@ -166,6 +168,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteGroupSectionPM _quotegroupsection;
+		[Include]
+        [DataMember]
+        public virtual QuoteGroupSectionPM QuoteGroupSection 
+		{ 
+		get { return _quotegroupsection; } 
+		set { _quotegroupsection = value; }
+		}
 	 }
 #endregion Properties
 }

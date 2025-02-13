@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,18 +30,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_tarrifHeaderId = entity.TarrifHeaderId;
-		_currencyId = entity.CurrencyId;
-		_chargesTypeId = entity.ChargesTypeId;
-		_measurementId = entity.MeasurementId;
+		_tarrifheader = entity.TarrifHeader !=null ? new TarrifHeaderPM(entity.TarrifHeader) : null;
+			_currencyId = entity.CurrencyId;
+		_currency = entity.Currency !=null ? new CurrencyPM(entity.Currency) : null;
+			_chargesTypeId = entity.ChargesTypeId;
+		_chargestype = entity.ChargesType !=null ? new ChargesTypePM(entity.ChargesType) : null;
+			_measurementId = entity.MeasurementId;
 		_minPrice = entity.MinPrice;
 		_maxPrice = entity.MaxPrice;
 		_unitPrice = entity.UnitPrice;
-		_chargesTypeCode = default;
-		_chargesTypeName = default;
-		_chargesTypeString = default;
-		_currencyCode = default;
-		_measurementCode = default;
-		_changeOp = default;
    }
    #endregion Constructors
    #region Properties
@@ -93,6 +91,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TarrifHeaderPM _tarrifheader;
+		[Include]
+        [DataMember]
+        public virtual TarrifHeaderPM TarrifHeader 
+		{ 
+		get { return _tarrifheader; } 
+		set { _tarrifheader = value; }
+		}
 	  private string _currencyId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -109,6 +115,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _currency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM Currency 
+		{ 
+		get { return _currency; } 
+		set { _currency = value; }
+		}
 	  private string _chargesTypeId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -125,6 +139,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ChargesTypePM _chargestype;
+		[Include]
+        [DataMember]
+        public virtual ChargesTypePM ChargesType 
+		{ 
+		get { return _chargestype; } 
+		set { _chargestype = value; }
+		}
 	  private string _measurementId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -186,102 +208,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UnitPrice",OldValue=_unitPrice,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   _unitPrice=value;
-		   }
-		 }
-	   }
-	  private string _chargesTypeCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargesTypeCode  
-	   {
-	     get { return _chargesTypeCode; }
-		 set
-		 {
-		   if(_chargesTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeCode",OldValue=_chargesTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _chargesTypeCode=value;
-		   }
-		 }
-	   }
-	  private string _chargesTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargesTypeName  
-	   {
-	     get { return _chargesTypeName; }
-		 set
-		 {
-		   if(_chargesTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeName",OldValue=_chargesTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _chargesTypeName=value;
-		   }
-		 }
-	   }
-	  private string _chargesTypeString ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargesTypeString  
-	   {
-	     get { return _chargesTypeString; }
-		 set
-		 {
-		   if(_chargesTypeString != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeString",OldValue=_chargesTypeString,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _chargesTypeString=value;
-		   }
-		 }
-	   }
-	  private string _currencyCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CurrencyCode  
-	   {
-	     get { return _currencyCode; }
-		 set
-		 {
-		   if(_currencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=_currencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _currencyCode=value;
-		   }
-		 }
-	   }
-	  private string _measurementCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MeasurementCode  
-	   {
-	     get { return _measurementCode; }
-		 set
-		 {
-		   if(_measurementCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasurementCode",OldValue=_measurementCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _measurementCode=value;
-		   }
-		 }
-	   }
-	  private string _changeOp ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string changeOp  
-	   {
-	     get { return _changeOp; }
-		 set
-		 {
-		   if(_changeOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="changeOp",OldValue=_changeOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeOp=value;
 		   }
 		 }
 	   }

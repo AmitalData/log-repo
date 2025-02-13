@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -30,7 +31,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_userId = entity.UserId;
 		_packageCode = entity.PackageCode;
-		_email = default;
    }
    #endregion Constructors
    #region Properties
@@ -96,22 +96,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageCode",OldValue=_packageCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _packageCode=value;
-		   }
-		 }
-	   }
-	  private string _email ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Email  
-	   {
-	     get { return _email; }
-		 set
-		 {
-		   if(_email != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Email",OldValue=_email,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _email=value;
 		   }
 		 }
 	   }

@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_accountTypeCode = entity.AccountTypeCode;
-		_externalAccountingCard = entity.ExternalAccountingCard;
+		_accounttype = entity.AccountType !=null ? new AccountTypePM(entity.AccountType) : null;
+			_externalAccountingCard = entity.ExternalAccountingCard;
 		_inActive = entity.InActive;
 		_addedManually = entity.AddedManually;
 		_searchFields = entity.SearchFields;
@@ -119,6 +121,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AccountTypePM _accounttype;
+		[Include]
+        [DataMember]
+        public virtual AccountTypePM AccountType 
+		{ 
+		get { return _accounttype; } 
+		set { _accounttype = value; }
+		}
 	  private string _externalAccountingCard ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
@@ -7,7 +9,7 @@ using System.ServiceModel.DomainServices.Server;
 namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 {
     [DataContract]
-    public class CardContactPM
+    public class CardContactPM : BaseEntityPM
     {
         public CardContactPM()
         {
@@ -15,6 +17,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
             this.CardContactAdditionalServices = new List<CardContactAdditionalServicePM>();
         }   
 
+        public CardContactPM(CardContact entity)
+        {
+            this.Id = entity.Id;
+            this.ContactId = entity.ContactId;
+            this.CardId = entity.CardId;
+            this.Tenant = entity.Tenant;
+            this.InternetAccess = entity.InternetAccess;
+            this.LastLoginDate = entity.LastLoginDate;
+            this.IsHybrid = default;
+            this.IsAirExport = entity.IsAirExport;
+            this.IsAirImport = entity.IsAirImport;
+            this.IsOceanExport = entity.IsOceanExport;
+            this.IsOceanImport = entity.IsOceanImport;
+            this.IsInlandExport = entity.IsInlandExport;
+            this.IsInlandImport = entity.IsInlandImport;
+            this.IsAll = entity.IsAll;
+            this.IsCustomsImport = entity.IsCustomsImport;
+            this.IsInlandDomestic = entity.IsInlandDomestic;
+            this.CardContactProducts =  new List<CardContactProductPM>();
+            this.CardContactAdditionalServices = new List<CardContactAdditionalServicePM>();
+        }
 
         [Key]
         [DataMember]

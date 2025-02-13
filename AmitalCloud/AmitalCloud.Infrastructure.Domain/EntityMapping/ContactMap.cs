@@ -91,8 +91,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.DigitalPortalLanguage).HasColumnName("DigitalPortalLanguage").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.ContactForAccounting).HasColumnName("ContactForAccounting");
-
-            this.Property(t => t.ContactLastLogin).HasColumnName("ContactLastLogin").HasMaxLength(10).IsUnicode(false);
         }
     }
 }

@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,11 +30,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_outSettingsId = entity.OutSettingsId;
-		_inSettingsId = entity.InSettingsId;
-		_iNTTRASettingModeCode = entity.INTTRASettingModeCode;
-		_outSettingsHost = default;
-		_inSettingsHost = default;
-		_iNTTRAId = entity.INTTRAId;
+		_outftpdetail = entity.OutFTPDetail !=null ? new FTPDetailPM(entity.OutFTPDetail) : null;
+			_inSettingsId = entity.InSettingsId;
+		_inftpdetail = entity.InFTPDetail !=null ? new FTPDetailPM(entity.InFTPDetail) : null;
+			_iNTTRASettingModeCode = entity.INTTRASettingModeCode;
+		_inttrasettingmode = entity.INTTRASettingMode !=null ? new INTTRASettingModePM(entity.INTTRASettingMode) : null;
+			_iNTTRAId = entity.INTTRAId;
 		_iNTTRAAlias = entity.INTTRAAlias;
    }
    #endregion Constructors
@@ -87,6 +89,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FTPDetailPM _outftpdetail;
+		[Include]
+        [DataMember]
+        public virtual FTPDetailPM OutFTPDetail 
+		{ 
+		get { return _outftpdetail; } 
+		set { _outftpdetail = value; }
+		}
 	  private string _inSettingsId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -103,6 +113,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FTPDetailPM _inftpdetail;
+		[Include]
+        [DataMember]
+        public virtual FTPDetailPM InFTPDetail 
+		{ 
+		get { return _inftpdetail; } 
+		set { _inftpdetail = value; }
+		}
 	  private string _iNTTRASettingModeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -119,38 +137,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _outSettingsHost ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OutSettingsHost  
-	   {
-	     get { return _outSettingsHost; }
-		 set
-		 {
-		   if(_outSettingsHost != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OutSettingsHost",OldValue=_outSettingsHost,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _outSettingsHost=value;
-		   }
-		 }
-	   }
-	  private string _inSettingsHost ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InSettingsHost  
-	   {
-	     get { return _inSettingsHost; }
-		 set
-		 {
-		   if(_inSettingsHost != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InSettingsHost",OldValue=_inSettingsHost,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _inSettingsHost=value;
-		   }
-		 }
-	   }
+		private INTTRASettingModePM _inttrasettingmode;
+		[Include]
+        [DataMember]
+        public virtual INTTRASettingModePM INTTRASettingMode 
+		{ 
+		get { return _inttrasettingmode; } 
+		set { _inttrasettingmode = value; }
+		}
 	  private string _iNTTRAId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

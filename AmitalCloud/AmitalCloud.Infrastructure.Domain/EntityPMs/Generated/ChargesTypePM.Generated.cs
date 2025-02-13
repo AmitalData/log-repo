@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.ServiceModel.DomainServices.Server;
@@ -30,30 +31,31 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_receivableAccountId = entity.ReceivableAccountId;
-		_payableAccountId = entity.PayableAccountId;
-		_accountingVATSplit = entity.AccountingVATSplit;
+		_receivableaccount = entity.ReceivableAccount !=null ? new AccountPM(entity.ReceivableAccount) : null;
+			_payableAccountId = entity.PayableAccountId;
+		_payableaccount = entity.PayableAccount !=null ? new AccountPM(entity.PayableAccount) : null;
+			_accountingVATSplit = entity.AccountingVATSplit;
 		_payableDebitAccount = entity.PayableDebitAccount;
 		_receivableCreditAccount = entity.ReceivableCreditAccount;
 		_receivablesChargesTypeExternalCode = entity.ReceivablesChargesTypeExternalCode;
 		_payablesChargesTypeExternalCode = entity.PayablesChargesTypeExternalCode;
-		_payableDebitAccountExternalId = default;
-		_receivableCreditAccountExternalId = default;
-		_chargesTypeExternalCodeExternalId = default;
 		_iATACodeId = entity.IATACodeId;
-		_viewOrder = entity.ViewOrder;
+		_iatacode = entity.IATACode !=null ? new IATACodePM(entity.IATACode) : null;
+			_viewOrder = entity.ViewOrder;
 		_searchFields = entity.SearchFields;
 		_code = entity.Code;
 		_englishName = entity.EnglishName;
 		_localName = entity.LocalName;
-		_computedLocalName = default;
 		_containerMeasurementId = entity.ContainerMeasurementId;
-		_measurementId = entity.MeasurementId;
-		_measurementCode = default;
-		_measurementShortName = default;
-		_vatTypeId = entity.VatTypeId;
-		_chargesGroupCode = entity.ChargesGroupCode;
+		_containermeasurement = entity.ContainerMeasurement !=null ? new MeasurementPM(entity.ContainerMeasurement) : null;
+			_measurementId = entity.MeasurementId;
+		_measurement = entity.Measurement !=null ? new MeasurementPM(entity.Measurement) : null;
+			_vatTypeId = entity.VatTypeId;
+		_vattype = entity.VatType !=null ? new VatTypePM(entity.VatType) : null;
+			_chargesGroupCode = entity.ChargesGroupCode;
 		_dueTypeCode = entity.DueTypeCode;
-		_description = entity.Description;
+		_duetype = entity.DueType !=null ? new DueTypePM(entity.DueType) : null;
+			_description = entity.Description;
 		_addedManually = entity.AddedManually;
 		_inActive = entity.InActive;
 		_isReceivable = entity.IsReceivable;
@@ -65,28 +67,24 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isAutoDisplayInQuote = entity.IsAutoDisplayInQuote;
 		_isAutoDisplayInConsolidation = entity.IsAutoDisplayInConsolidation;
 		_aWBPrintDescription = entity.AWBPrintDescription;
-		_isSecured = default;
-		_containerMeasurementCode = default;
-		chargeTypeAccountings = default;
-		_vatTypeName = default;
 		_sATExternalId = entity.SATExternalId;
 		_payableDebitGLAcountId = entity.PayableDebitGLAcountId;
 		_receivableCreditGLAccountId = entity.ReceivableCreditGLAccountId;
 		_chargesGroupId = entity.ChargesGroupId;
-		_isBackToBack = entity.IsBackToBack;
+		_chargesgroup = entity.ChargesGroup !=null ? new ChargesGroupPM(entity.ChargesGroup) : null;
+			_isBackToBack = entity.IsBackToBack;
 		_isAutoDisplayInCustoms = entity.IsAutoDisplayInCustoms;
 		_isCustoms = entity.IsCustoms;
 		_isExpense = entity.IsExpense;
-		_partnerCode = default;
 		_isExport = entity.IsExport;
 		_isImport = entity.IsImport;
 		_isDomestic = entity.IsDomestic;
 		_isDrop = entity.IsDrop;
 		_receivablesDefaultCurrencyId = entity.ReceivablesDefaultCurrencyId;
-		_payablesDefaultCurrencyId = entity.PayablesDefaultCurrencyId;
-		_receivableCreditGLAcountNumber = default;
-		_recCreditGLAcountLocalName = entity.RecCreditGLAcountLocalName;
-		_payableDebitGLAcountNumber = default;
+		_receivablesdefaultcurrency = entity.ReceivablesDefaultCurrency !=null ? new CurrencyPM(entity.ReceivablesDefaultCurrency) : null;
+			_payablesDefaultCurrencyId = entity.PayablesDefaultCurrencyId;
+		_payablesdefaultcurrency = entity.PayablesDefaultCurrency !=null ? new CurrencyPM(entity.PayablesDefaultCurrency) : null;
+			_recCreditGLAcountLocalName = entity.RecCreditGLAcountLocalName;
 		_payDebitGLAcountLocalName = entity.PayDebitGLAcountLocalName;
 		_applyRegionalTax = entity.ApplyRegionalTax;
 		_hasPickup = entity.HasPickup;
@@ -98,7 +96,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isActiveInDrop = entity.IsActiveInDrop;
 		_quoteChargesGroupCode = entity.QuoteChargesGroupCode;
 		_quoteChargesGroupId = entity.QuoteChargesGroupId;
-		_quoteGroupSectionID = entity.QuoteGroupSectionID;
+		_quotechargesgroup = entity.QuoteChargesGroup !=null ? new QuoteChargesGroupPM(entity.QuoteChargesGroup) : null;
+			_quoteGroupSectionID = entity.QuoteGroupSectionID;
    }
    #endregion Constructors
    #region Properties
@@ -151,6 +150,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AccountPM _receivableaccount;
+		[Include]
+        [DataMember]
+        public virtual AccountPM ReceivableAccount 
+		{ 
+		get { return _receivableaccount; } 
+		set { _receivableaccount = value; }
+		}
 	  private string _payableAccountId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -167,6 +174,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AccountPM _payableaccount;
+		[Include]
+        [DataMember]
+        public virtual AccountPM PayableAccount 
+		{ 
+		get { return _payableaccount; } 
+		set { _payableaccount = value; }
+		}
 	  private bool _accountingVATSplit ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -247,54 +262,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _payableDebitAccountExternalId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PayableDebitAccountExternalId  
-	   {
-	     get { return _payableDebitAccountExternalId; }
-		 set
-		 {
-		   if(_payableDebitAccountExternalId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PayableDebitAccountExternalId",OldValue=_payableDebitAccountExternalId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _payableDebitAccountExternalId=value;
-		   }
-		 }
-	   }
-	  private string _receivableCreditAccountExternalId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ReceivableCreditAccountExternalId  
-	   {
-	     get { return _receivableCreditAccountExternalId; }
-		 set
-		 {
-		   if(_receivableCreditAccountExternalId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReceivableCreditAccountExternalId",OldValue=_receivableCreditAccountExternalId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _receivableCreditAccountExternalId=value;
-		   }
-		 }
-	   }
-	  private string _chargesTypeExternalCodeExternalId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargesTypeExternalCodeExternalId  
-	   {
-	     get { return _chargesTypeExternalCodeExternalId; }
-		 set
-		 {
-		   if(_chargesTypeExternalCodeExternalId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeExternalCodeExternalId",OldValue=_chargesTypeExternalCodeExternalId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _chargesTypeExternalCodeExternalId=value;
-		   }
-		 }
-	   }
 	  private string _iATACodeId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -311,6 +278,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private IATACodePM _iatacode;
+		[Include]
+        [DataMember]
+        public virtual IATACodePM IATACode 
+		{ 
+		get { return _iatacode; } 
+		set { _iatacode = value; }
+		}
 	  private int _viewOrder ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -391,22 +366,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _computedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputedLocalName  
-	   {
-	     get { return _computedLocalName; }
-		 set
-		 {
-		   if(_computedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computedLocalName=value;
-		   }
-		 }
-	   }
 	  private string _containerMeasurementId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -423,6 +382,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private MeasurementPM _containermeasurement;
+		[Include]
+        [DataMember]
+        public virtual MeasurementPM ContainerMeasurement 
+		{ 
+		get { return _containermeasurement; } 
+		set { _containermeasurement = value; }
+		}
 	  private string _measurementId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -439,38 +406,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _measurementCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MeasurementCode  
-	   {
-	     get { return _measurementCode; }
-		 set
-		 {
-		   if(_measurementCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasurementCode",OldValue=_measurementCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _measurementCode=value;
-		   }
-		 }
-	   }
-	  private string _measurementShortName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MeasurementShortName  
-	   {
-	     get { return _measurementShortName; }
-		 set
-		 {
-		   if(_measurementShortName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasurementShortName",OldValue=_measurementShortName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _measurementShortName=value;
-		   }
-		 }
-	   }
+		private MeasurementPM _measurement;
+		[Include]
+        [DataMember]
+        public virtual MeasurementPM Measurement 
+		{ 
+		get { return _measurement; } 
+		set { _measurement = value; }
+		}
 	  private string _vatTypeId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -487,6 +430,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VatTypePM _vattype;
+		[Include]
+        [DataMember]
+        public virtual VatTypePM VatType 
+		{ 
+		get { return _vattype; } 
+		set { _vattype = value; }
+		}
 	  private string _chargesGroupCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -519,6 +470,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DueTypePM _duetype;
+		[Include]
+        [DataMember]
+        public virtual DueTypePM DueType 
+		{ 
+		get { return _duetype; } 
+		set { _duetype = value; }
+		}
 	  private string _description ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -711,38 +670,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
-		   }
-		 }
-	   }
-	  private string _containerMeasurementCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContainerMeasurementCode  
-	   {
-	     get { return _containerMeasurementCode; }
-		 set
-		 {
-		   if(_containerMeasurementCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerMeasurementCode",OldValue=_containerMeasurementCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _containerMeasurementCode=value;
-		   }
-		 }
-	   }
 	   private List<ChargeTypeAccountingPM> chargeTypeAccountings;
 	    
        [Composition]
@@ -776,22 +703,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedChargeTypeAccountings = value; }
 	    }
-	  private string _vatTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VatTypeName  
-	   {
-	     get { return _vatTypeName; }
-		 set
-		 {
-		   if(_vatTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatTypeName",OldValue=_vatTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vatTypeName=value;
-		   }
-		 }
-	   }
 	  private string _sATExternalId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -856,6 +767,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ChargesGroupPM _chargesgroup;
+		[Include]
+        [DataMember]
+        public virtual ChargesGroupPM ChargesGroup 
+		{ 
+		get { return _chargesgroup; } 
+		set { _chargesgroup = value; }
+		}
 	  private bool _isBackToBack ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -917,22 +836,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExpense",OldValue=_isExpense,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isExpense=value;
-		   }
-		 }
-	   }
-	  private string _partnerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerCode  
-	   {
-	     get { return _partnerCode; }
-		 set
-		 {
-		   if(_partnerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerCode=value;
 		   }
 		 }
 	   }
@@ -1016,6 +919,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _receivablesdefaultcurrency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM ReceivablesDefaultCurrency 
+		{ 
+		get { return _receivablesdefaultcurrency; } 
+		set { _receivablesdefaultcurrency = value; }
+		}
 	  private string _payablesDefaultCurrencyId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1032,22 +943,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _receivableCreditGLAcountNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ReceivableCreditGLAcountNumber  
-	   {
-	     get { return _receivableCreditGLAcountNumber; }
-		 set
-		 {
-		   if(_receivableCreditGLAcountNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReceivableCreditGLAcountNumber",OldValue=_receivableCreditGLAcountNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _receivableCreditGLAcountNumber=value;
-		   }
-		 }
-	   }
+		private CurrencyPM _payablesdefaultcurrency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM PayablesDefaultCurrency 
+		{ 
+		get { return _payablesdefaultcurrency; } 
+		set { _payablesdefaultcurrency = value; }
+		}
 	  private string _recCreditGLAcountLocalName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1061,22 +964,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecCreditGLAcountLocalName",OldValue=_recCreditGLAcountLocalName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _recCreditGLAcountLocalName=value;
-		   }
-		 }
-	   }
-	  private string _payableDebitGLAcountNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PayableDebitGLAcountNumber  
-	   {
-	     get { return _payableDebitGLAcountNumber; }
-		 set
-		 {
-		   if(_payableDebitGLAcountNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PayableDebitGLAcountNumber",OldValue=_payableDebitGLAcountNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _payableDebitGLAcountNumber=value;
 		   }
 		 }
 	   }
@@ -1256,6 +1143,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteChargesGroupPM _quotechargesgroup;
+		[Include]
+        [DataMember]
+        public virtual QuoteChargesGroupPM QuoteChargesGroup 
+		{ 
+		get { return _quotechargesgroup; } 
+		set { _quotechargesgroup = value; }
+		}
 	  private string _quoteGroupSectionID ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

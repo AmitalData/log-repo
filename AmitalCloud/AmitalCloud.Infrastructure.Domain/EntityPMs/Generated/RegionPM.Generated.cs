@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -32,7 +33,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_localName = entity.LocalName;
 		_searchFields = entity.SearchFields;
 		_inActive = entity.InActive;
-		_isSecured = default;
    }
    #endregion Constructors
    #region Properties
@@ -130,22 +130,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=_inActive,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _inActive=value;
-		   }
-		 }
-	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
 		   }
 		 }
 	   }

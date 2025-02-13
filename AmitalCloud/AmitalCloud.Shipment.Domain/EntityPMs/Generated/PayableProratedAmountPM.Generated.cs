@@ -6,6 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,8 +32,10 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_shipmentId = entity.ShipmentId;
 		_invoiceId = entity.InvoiceId;
-		_payableId = entity.PayableId;
-		_proratedAmountInLocalCurrency = entity.ProratedAmountInLocalCurrency;
+		_apinvoice = entity.APInvoice !=null ? new APInvoicePM(entity.APInvoice) : null;
+			_payableId = entity.PayableId;
+		_shipmentpayable = entity.ShipmentPayable !=null ? new ShipmentPayablePM(entity.ShipmentPayable) : null;
+			_proratedAmountInLocalCurrency = entity.ProratedAmountInLocalCurrency;
 		_proratedAmountInProfitCurrency = entity.ProratedAmountInProfitCurrency;
    }
    #endregion Constructors
@@ -102,6 +105,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private APInvoicePM _apinvoice;
+		[Include]
+        [DataMember]
+        public virtual APInvoicePM APInvoice 
+		{ 
+		get { return _apinvoice; } 
+		set { _apinvoice = value; }
+		}
 	  private string _payableId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -118,6 +129,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPayablePM _shipmentpayable;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPayablePM ShipmentPayable 
+		{ 
+		get { return _shipmentpayable; } 
+		set { _shipmentpayable = value; }
+		}
 	  private double _proratedAmountInLocalCurrency ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

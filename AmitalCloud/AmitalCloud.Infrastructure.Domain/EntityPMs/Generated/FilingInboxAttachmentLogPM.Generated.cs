@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,8 +30,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_documentsFilingId = entity.DocumentsFilingId;
-		_filingInboxAttachmentId = entity.FilingInboxAttachmentId;
-   }
+		_documentsfiling = entity.DocumentsFiling !=null ? new DocumentsFilingPM(entity.DocumentsFiling) : null;
+			_filingInboxAttachmentId = entity.FilingInboxAttachmentId;
+		_filinginboxattachment = entity.FilingInboxAttachment !=null ? new FilingInboxAttachmentPM(entity.FilingInboxAttachment) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -82,6 +85,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentsFilingPM _documentsfiling;
+		[Include]
+        [DataMember]
+        public virtual DocumentsFilingPM DocumentsFiling 
+		{ 
+		get { return _documentsfiling; } 
+		set { _documentsfiling = value; }
+		}
 	  private string _filingInboxAttachmentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -98,6 +109,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FilingInboxAttachmentPM _filinginboxattachment;
+		[Include]
+        [DataMember]
+        public virtual FilingInboxAttachmentPM FilingInboxAttachment 
+		{ 
+		get { return _filinginboxattachment; } 
+		set { _filinginboxattachment = value; }
+		}
 	 }
 #endregion Properties
 }

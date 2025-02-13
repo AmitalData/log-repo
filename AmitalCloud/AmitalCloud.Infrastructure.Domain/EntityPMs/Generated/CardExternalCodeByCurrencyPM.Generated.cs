@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -30,13 +31,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_cardId = entity.CardId;
 		_currencyId = entity.CurrencyId;
-		_externalRecievableTableId = entity.ExternalRecievableTableId;
+		_currency = entity.Currency !=null ? new CurrencyPM(entity.Currency) : null;
+			_externalRecievableTableId = entity.ExternalRecievableTableId;
 		_externalPayableTableId = entity.ExternalPayableTableId;
-		_currencyCode = default;
-		_externalTableName = default;
-		_externalTableCode = default;
-		_cardName = default;
-		_currencyName = default;
    }
    #endregion Constructors
    #region Properties
@@ -105,6 +102,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _currency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM Currency 
+		{ 
+		get { return _currency; } 
+		set { _currency = value; }
+		}
 	  private string _externalRecievableTableId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -134,86 +139,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalPayableTableId",OldValue=_externalPayableTableId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _externalPayableTableId=value;
-		   }
-		 }
-	   }
-	  private string _currencyCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CurrencyCode  
-	   {
-	     get { return _currencyCode; }
-		 set
-		 {
-		   if(_currencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=_currencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _currencyCode=value;
-		   }
-		 }
-	   }
-	  private string _externalTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalTableName  
-	   {
-	     get { return _externalTableName; }
-		 set
-		 {
-		   if(_externalTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalTableName",OldValue=_externalTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalTableName=value;
-		   }
-		 }
-	   }
-	  private string _externalTableCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalTableCode  
-	   {
-	     get { return _externalTableCode; }
-		 set
-		 {
-		   if(_externalTableCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalTableCode",OldValue=_externalTableCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalTableCode=value;
-		   }
-		 }
-	   }
-	  private string _cardName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CardName  
-	   {
-	     get { return _cardName; }
-		 set
-		 {
-		   if(_cardName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardName",OldValue=_cardName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _cardName=value;
-		   }
-		 }
-	   }
-	  private string _currencyName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CurrencyName  
-	   {
-	     get { return _currencyName; }
-		 set
-		 {
-		   if(_currencyName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyName",OldValue=_currencyName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _currencyName=value;
 		   }
 		 }
 	   }

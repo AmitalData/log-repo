@@ -6,6 +6,7 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 
 
@@ -30,10 +32,11 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_aPInvoiceId = entity.APInvoiceId;
 		_aPPaymentId = entity.APPaymentId;
-		_foreignCurrencyId = entity.ForeignCurrencyId;
-		_foreignAmount = entity.ForeignAmount;
+		_appayment = entity.APPayment !=null ? new APPaymentPM(entity.APPayment) : null;
+			_foreignCurrencyId = entity.ForeignCurrencyId;
+		_foreigncurrency = entity.ForeignCurrency !=null ? new CurrencyPM(entity.ForeignCurrency) : null;
+			_foreignAmount = entity.ForeignAmount;
 		_localAmount = entity.LocalAmount;
-		_paymentNumber = default;
 		_exchangeRate = entity.ExchangeRate;
 		_paymentAmount = entity.PaymentAmount;
    }
@@ -104,6 +107,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private APPaymentPM _appayment;
+		[Include]
+        [DataMember]
+        public virtual APPaymentPM APPayment 
+		{ 
+		get { return _appayment; } 
+		set { _appayment = value; }
+		}
 	  private string _foreignCurrencyId ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -120,6 +131,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _foreigncurrency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM ForeignCurrency 
+		{ 
+		get { return _foreigncurrency; } 
+		set { _foreigncurrency = value; }
+		}
 	  private double? _foreignAmount ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -149,22 +168,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalAmount",OldValue=_localAmount,NewValue=value,PropertyType="double?"};
 		    NotifyPropertyChanged(values);
 		   _localAmount=value;
-		   }
-		 }
-	   }
-	  private string _paymentNumber ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PaymentNumber  
-	   {
-	     get { return _paymentNumber; }
-		 set
-		 {
-		   if(_paymentNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentNumber",OldValue=_paymentNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _paymentNumber=value;
 		   }
 		 }
 	   }

@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -32,11 +33,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_updateDate = entity.UpdateDate;
 		_objectTableId = entity.ObjectTableId;
 		_labels = entity.Labels;
-		_objectTableName = default;
 		_profileId = entity.ProfileId;
-		_profileCode = default;
 		_languageCode = entity.LanguageCode;
-   }
+		_digitalportallanguage = entity.DigitalPortalLanguage !=null ? new DigitalPortalLanguagePM(entity.DigitalPortalLanguage) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -136,22 +136,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
-		   }
-		 }
-	   }
 	  private string _profileId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -165,22 +149,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfileId",OldValue=_profileId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _profileId=value;
-		   }
-		 }
-	   }
-	  private string _profileCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProfileCode  
-	   {
-	     get { return _profileCode; }
-		 set
-		 {
-		   if(_profileCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfileCode",OldValue=_profileCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _profileCode=value;
 		   }
 		 }
 	   }
@@ -200,6 +168,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DigitalPortalLanguagePM _digitalportallanguage;
+		[Include]
+        [DataMember]
+        public virtual DigitalPortalLanguagePM DigitalPortalLanguage 
+		{ 
+		get { return _digitalportallanguage; } 
+		set { _digitalportallanguage = value; }
+		}
 	 }
 #endregion Properties
 }
