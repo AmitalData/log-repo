@@ -239,7 +239,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
                             if (this.IsSchedulerReport) {
                                 //this.CurrentSession.ResizeCurrentWindow(1050);
                             }
-                            //SessionLocator.HomeComponent.IsReportPanelVisible = true;
 
                             this.GenerateReport(s, false);
                         }
@@ -533,9 +532,15 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
 
             if (!myResponse.HasError) {
-                
+                var messageWindow = new MessageWindow();
+                messageWindow.ShowSuccessIcon = true;
+
+                messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
                 SessionLocator.HomeComponent.IsReportPanelVisible = true;
                 SessionLocator.HomeComponent.CurrentReportId = myResponse.Result.ReportKey;
+                SessionLocator.HomeComponent.isPinned = true;
+
+                this.BackButtonClicked()
                 this.ReportFliter = myResponse.Result;
                 this.StopBusyIndicator();
                 

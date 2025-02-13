@@ -1,11 +1,11 @@
-import { EventEmitter, OnDestroy, Output } from "@angular/core";
+import { EventEmitter, HostListener, OnDestroy, Output } from "@angular/core";
 import { Component } from "@angular/core";
 import { ReportExecutionLogPM } from "Common/EntityPMs/ReportExecutionLogPM";
 import { ReportPM } from "Common/EntityPMs/ReportPM";
 import { ReportService } from "Common/Services/ExtendedLists/ReportService";
 import { ReportExecutionLogPMService } from "Common/Services/StandardPMs/ReportExecutionLogPMService";
 import { ReportPMService } from "Common/Services/StandardPMs/ReportPMService";
-import { AppTool } from "Infrastructure/Tools";
+import { AppTool, DateTool } from "Infrastructure/Tools";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { BehaviorSubject, interval, Subscription } from "rxjs";
 import { takeWhile } from "rxjs/operators";
@@ -16,6 +16,9 @@ import { ReportsTemplateListExtendedService } from "Common/Services/ExtendedList
 import { ReportsPreviewComponent } from "./ReportsPreviewComponent";
 import { parseString } from 'xml2js';
 import { ObjectsLocator } from "Infrastructure/Locators/ObjectsLocator";
+import { ReportList } from "Report/EntityLists/ReportList";
+import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
+import { HomeComponent } from "Infrastructure/Components/HomeComponent/HomeComponent";
 
 
 @Component({
@@ -27,10 +30,12 @@ import { ObjectsLocator } from "Infrastructure/Locators/ObjectsLocator";
 export class ReportMenuComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     @Output() PinnedChanged = new EventEmitter<boolean>();
+    @Output() NumberDoneReports = new EventEmitter<number>();
+    private numberDoneReports = 0;
 
-    public RelatedReport: ReportExecutionLogPM[];
-    SelectedReport: ReportExecutionLogPM;
-    private relatedReportSubject = new BehaviorSubject<ReportExecutionLogPM[]>([]);
+    public RelatedReport: ReportFilterItem[];
+    SelectedReport: ReportFilterItem;
+    private relatedReportSubject = new BehaviorSubject<ReportFilterItem[]>([]);
     RelatedReport$ = this.relatedReportSubject.asObservable();
     showExceptionMessage = false
     isReportPanelVisible: boolean = false;
@@ -39,11 +44,32 @@ export class ReportMenuComponent implements OnDestroy {
     public isPinned: boolean = false;
     public LayoutDirection: string = 'ltr';
 
-    constructor() {
+    constructor(private reportService: ReportService) {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
-        this.LoadReports()
-
+        
+        this.reportService.relatedReportSubject.subscribe(reportList => {
+            var updatedReportList: ReportFilterItem[] = reportList.map(report => {
+               // const filterValues: ReportFliter = this.ConvertXmlToObject(report.ReportFilterXML);
+                return {
+                    reportExecutionLogPM: report,
+                    filters:null
+                    //  filterValues.QueryFilterItemLists
+                    //     .filter((filter: QueryFilterItem) => filter.FieldValue !== null && filter.FieldValue !== undefined && filter.FieldValue !== '')
+                    //     .map((filter: QueryFilterItem) => {
+                    //         let fieldValue = filter.FieldValue;
+                    //         if (filter.FieldDataType === 'Date' && fieldValue) {
+                    //             fieldValue = DateTool.GetDateFormats(fieldValue).DateString.replace(/\//g, '-');
+                    //         }
+                    //         return `${filter.FieldName} :${fieldValue}`;
+                    //     })
+                    //     .join(', ')
+                    //     .toString()
+                };
+            });
+            this.relatedReportSubject.next(updatedReportList);
+        });
+        
     }
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -58,9 +84,7 @@ export class ReportMenuComponent implements OnDestroy {
     
     get CurrentReportId() { return this.currentReportId; }
     set CurrentReportId(newValue: string) {
-        if(!AppTool.IsNullOrEmpty(newValue)){
-            this.LoadReports();
-        }
+        
         if (this.currentReportId != newValue) {
             this.currentReportId = newValue;
         }
@@ -74,66 +98,34 @@ export class ReportMenuComponent implements OnDestroy {
         if (newValue) 
             this.CurrentReportId = "";
     }
-    public LoadReports() {
-        this._reportService = new ReportService();
-        this._reportService.GetReportByTenantAndUserToMenu(SessionLocator.LoggedUserPM?.Id).subscribe((response: ServiceResponse) => {
-
-
-            if (!AppTool.IsNullOrEmpty(response)) {
-
-                this.RelatedReport = [];
-                var relatedDocs: ReportExecutionLogPM[];
-                relatedDocs = response.Result;
-                this.RelatedReport = relatedDocs?.sort((a, b) => new Date(b.CreateDate).getTime() - new Date(a.CreateDate).getTime());
-                this.relatedReportSubject.next(relatedDocs);
-                this.StartCheckingStatus();
-
-            }
-        });
-    }
+   
     togglePin() {
         this.isPinned = !this.isPinned;
         this.PinnedChanged.emit(this.isPinned);
     }
-    StartCheckingStatus() {
-        this.subscription = interval(5000)
-            .pipe(takeWhile(() => SessionLocator.HomeComponent.IsReportPanelVisible))
-            .subscribe(() => this.CheckStatus());
-    }
-    public CheckStatus() {
-
-        const reportIds = this.RelatedReport?.filter(report => report.StatusCode === 'P' || report.StatusCode === 'W')?.map(report => report.Id).join(',');
-        this._reportService.CheckReportsStatus(reportIds).subscribe(statusResponse => {
-            if (statusResponse && !statusResponse.HasError) {
-                statusResponse?.Result?.forEach((status: any) => {
-                    const reportIndex = this.RelatedReport.findIndex(r => r.Id === status.Id);
-                    if (reportIndex !== -1) {
-                        this.RelatedReport[reportIndex] = status;
-                    }
-                });
-                this.relatedReportSubject.next(this.RelatedReport);
-            }
-        });
-
-    }
-    DeleteReport(relatedRep: ReportExecutionLogPM) {
+    
+    DeleteReport(relatedRep: ReportFilterItem) {
         this.CurrentSession.StartBusyIndicator("Deleting....");
 
-        this.RelatedReport = this.RelatedReport.filter(report => report.Id !== relatedRep?.Id);
-        this.relatedReportSubject.next(this.RelatedReport);
-        this._reportService.DeleteFromMenu(relatedRep.Id).subscribe((res: any) => {
+      
+        this._reportService.DeleteFromMenu(relatedRep.reportExecutionLogPM.Id).subscribe((res: any) => {
+            if (!res.HasError) {
+                this.reportService.LoadReports();
+                SessionLocator.HomeComponent.IsReportPanelVisible = true;
 
+            }    
             this.CurrentSession.StopBusyIndicator();
         });
     }
     ReportExecutionLogPMService: ReportExecutionLogPMService = new ReportExecutionLogPMService();
 
-    CancelReport(relatedRep: ReportExecutionLogPM) {
+    CancelReport(relatedRep: ReportFilterItem) {
 
         this.CurrentSession.StartBusyIndicator("Canceling...");
-        this.ReportExecutionLogPMService.Cancel(relatedRep.Id).subscribe((res: any) => {
+        this.ReportExecutionLogPMService.Cancel(relatedRep.reportExecutionLogPM.Id).subscribe((res: any) => {
             if (!res.HasError) {
-                this.LoadReports();
+                this.reportService.LoadReports();
+                SessionLocator.HomeComponent.IsReportPanelVisible = true;
             }
             this.CurrentSession.StopBusyIndicator();
         });
@@ -141,16 +133,16 @@ export class ReportMenuComponent implements OnDestroy {
     reportPMService: ReportPMService = new ReportPMService();
     reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
     ReportTemplates = null;
-    ViewReport(relatedRep: ReportExecutionLogPM) {
+    ViewReport(relatedRep: ReportFilterItem) {
 
-        this.reportPMService.get(relatedRep.ReportId).subscribe((response: ServiceResponse) => {
+        this.reportPMService.get(relatedRep.reportExecutionLogPM.ReportId).subscribe((response: ServiceResponse) => {
             if (response.Result) {
                 if (!response.HasError) {
-                    this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(relatedRep.ReportId).subscribe((myResponse: ServiceResponse) => {
+                    this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(relatedRep.reportExecutionLogPM.ReportId).subscribe((myResponse: ServiceResponse) => {
                         if (myResponse.HasError) return;
 
                         this.ReportTemplates = myResponse.Result;
-                        this.LoadReportsPreviewComponent(relatedRep, response.Result);
+                        this.LoadReportsPreviewComponent(relatedRep.reportExecutionLogPM, response.Result);
 
                         this.CurrentSession.StopBusyIndicator();
                     });
@@ -260,23 +252,11 @@ export class ReportMenuComponent implements OnDestroy {
         return resultObject;
     }
 
+}
 
-    getPercentage(statusCode: string): number {
-        switch (statusCode) {
-            case 'P':
-            case 'F':
-                return 50;
-            case 'D':
-                return 100;
-            case 'W':
-                return 0;
-            default:
-                return 0;
-        }
-    }
-
-
-  
+export class ReportFilterItem {
+    reportExecutionLogPM: ReportExecutionLogPM;
+    filters:string;
 }
 
 
