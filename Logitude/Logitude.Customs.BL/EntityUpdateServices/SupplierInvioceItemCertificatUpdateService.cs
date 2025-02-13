@@ -90,13 +90,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (resConfirmationTypeCode != null)
             {
-                resConfirmationTypeCode = "'" + resConfirmationTypeCode + "'";
+                resConfirmationTypeCode = resConfirmationTypeCode == "" ? null : "'" + resConfirmationTypeCode + "'";
 
             }
 
             if (reqConfirmationTypeCode != null)
             {
-                reqConfirmationTypeCode = "'" + reqConfirmationTypeCode + "'";
+                reqConfirmationTypeCode = reqConfirmationTypeCode == "" ? null : "'" + reqConfirmationTypeCode + "'";
             }
 
             string updateCmd;
