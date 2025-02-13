@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,7 +30,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_automationsId = entity.AutomationsId;
-		_recipientType = entity.RecipientType;
+		_automation = entity.Automation !=null ? new AutomationPM(entity.Automation) : null;
+			_recipientType = entity.RecipientType;
 		_recipientValue = entity.RecipientValue;
 		_partnerObjectFieldCode = entity.PartnerObjectFieldCode;
 		_isNotifyBack = entity.IsNotifyBack;
@@ -85,6 +87,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AutomationPM _automation;
+		[Include]
+        [DataMember]
+        public virtual AutomationPM Automation 
+		{ 
+		get { return _automation; } 
+		set { _automation = value; }
+		}
 	  private string _recipientType ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -76,7 +76,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         IsExternal, 
 	         PrimaryContactId, 
 	         IsFirstContactToAdd, 
-	         Card, 
 	         SATForeignRFC, 
 	         MetodoPagoCode, 
 	         UsoCFDICode, 

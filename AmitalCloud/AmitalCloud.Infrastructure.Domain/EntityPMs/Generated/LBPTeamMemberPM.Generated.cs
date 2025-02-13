@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,12 +30,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_memberUserId = entity.MemberUserId;
-		_teamId = entity.TeamId;
-		_addDate = entity.AddDate;
+		_memberuser = entity.MemberUser !=null ? new UserPM(entity.MemberUser) : null;
+			_teamId = entity.TeamId;
+		_team = entity.Team !=null ? new TeamPM(entity.Team) : null;
+			_addDate = entity.AddDate;
 		_addedByUserId = entity.AddedByUserId;
 		_memberTeamId = entity.MemberTeamId;
-		businessRolesList = default;
-   }
+		_memberteam = entity.MemberTeam !=null ? new TeamPM(entity.MemberTeam) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -86,6 +89,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _memberuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM MemberUser 
+		{ 
+		get { return _memberuser; } 
+		set { _memberuser = value; }
+		}
 	  private string _teamId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -102,6 +113,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TeamPM _team;
+		[Include]
+        [DataMember]
+        public virtual TeamPM Team 
+		{ 
+		get { return _team; } 
+		set { _team = value; }
+		}
 	  private DateTime _addDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -150,6 +169,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TeamPM _memberteam;
+		[Include]
+        [DataMember]
+        public virtual TeamPM MemberTeam 
+		{ 
+		get { return _memberteam; } 
+		set { _memberteam = value; }
+		}
 	   private List<TeamMemberBusinessRolePM> businessRolesList;
 	    
        [Composition]

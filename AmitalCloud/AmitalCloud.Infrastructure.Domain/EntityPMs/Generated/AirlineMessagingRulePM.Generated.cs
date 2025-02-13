@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,15 +30,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_createdByUserId = entity.CreatedByUserId;
-		_createDate = entity.CreateDate;
+		_createdbyuser = entity.CreatedByUser !=null ? new UserPM(entity.CreatedByUser) : null;
+			_createDate = entity.CreateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
-		_updateDate = entity.UpdateDate;
+		_updatedbyuser = entity.UpdatedByUser !=null ? new UserPM(entity.UpdatedByUser) : null;
+			_updateDate = entity.UpdateDate;
 		_messageTypeCode = entity.MessageTypeCode;
 		_ruleFieldId = entity.RuleFieldId;
-		_isMandatoryForSending = entity.IsMandatoryForSending;
+		_rulefield = entity.RuleField !=null ? new ObjectFieldPM(entity.RuleField) : null;
+			_isMandatoryForSending = entity.IsMandatoryForSending;
 		_maxSize = entity.MaxSize;
 		_airlineId = entity.AirlineId;
-		_inActive = entity.InActive;
+		_airline = entity.Airline !=null ? new CardPM(entity.Airline) : null;
+			_inActive = entity.InActive;
 		_ruleFieldCode = entity.RuleFieldCode;
    }
    #endregion Constructors
@@ -91,6 +96,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _createdbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM CreatedByUser 
+		{ 
+		get { return _createdbyuser; } 
+		set { _createdbyuser = value; }
+		}
 	  private DateTime? _createDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -123,6 +136,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _updatedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM UpdatedByUser 
+		{ 
+		get { return _updatedbyuser; } 
+		set { _updatedbyuser = value; }
+		}
 	  private DateTime? _updateDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -171,6 +192,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectFieldPM _rulefield;
+		[Include]
+        [DataMember]
+        public virtual ObjectFieldPM RuleField 
+		{ 
+		get { return _rulefield; } 
+		set { _rulefield = value; }
+		}
 	  private bool _isMandatoryForSending ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -219,6 +248,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _airline;
+		[Include]
+        [DataMember]
+        public virtual CardPM Airline 
+		{ 
+		get { return _airline; } 
+		set { _airline = value; }
+		}
 	  private bool _inActive ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -30,8 +31,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_cardContactId = entity.CardContactId;
 		_productTypeCode = entity.ProductTypeCode;
-		_productTypeName = default;
-   }
+		_producttype = entity.ProductType !=null ? new ProductTypePM(entity.ProductType) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -99,22 +100,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _productTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProductTypeName  
-	   {
-	     get { return _productTypeName; }
-		 set
-		 {
-		   if(_productTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProductTypeName",OldValue=_productTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _productTypeName=value;
-		   }
-		 }
-	   }
+		private ProductTypePM _producttype;
+		[Include]
+        [DataMember]
+        public virtual ProductTypePM ProductType 
+		{ 
+		get { return _producttype; } 
+		set { _producttype = value; }
+		}
 	 }
 #endregion Properties
 }

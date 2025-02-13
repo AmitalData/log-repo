@@ -10,6 +10,7 @@ namespace AmitalCloud.Infrastructure.Domain.BaseClasses
     {
         protected BaseEntityPM()
         {
+            AdditionalProperties = new Dictionary<string, object>();
         }
         [DataMember]
         public ChangeSetOperation ChangeSetOp { get; set; }
@@ -43,5 +44,6 @@ namespace AmitalCloud.Infrastructure.Domain.BaseClasses
             values.Id = Guid.NewGuid().ToString();
             ChangedProperties.Add(values);
         }
+        public Dictionary<string, object> AdditionalProperties { get; set; }
     }
 }

@@ -217,6 +217,8 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
 	    public string ShipmentReceivableStatusCode { get; set; }
 	      
         public virtual ShipmentReceivableStatus ShipmentReceivableStatus { get; set; }
+		public virtual ICollection<ShipmentReceivable> ShipmentReceivables { get; set; }
+		public virtual ICollection<ShipmentPayable> ShipmentPayables { get; set; }
         [ForeignKey("EntityStatus")]
         [Column("StatusId")]
 	    public string StatusId { get; set; }
@@ -907,6 +909,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
 	    public string ExceptionResolvedDescription { get; set; }
         [Column("ForwarderShipmentNumber")]
 	    public string ForwarderShipmentNumber { get; set; }
+		public virtual ICollection<DocumentsFiling> MissingDocuments { get; set; }
         [ForeignKey("OtherParticipantId1")]
         [Column("OtherParticipantIdCode1")]
 	    public string OtherParticipantIdCode1 { get; set; }
@@ -937,8 +940,12 @@ namespace AmitalCloud.Shipment.Domain.EntityPOCOs
 	    public bool IsNewARInvoiceBlocked { get; set; }
         [Column("MasterShipmentDataId")]
 	    public string MasterShipmentDataId { get; set; }
+		public virtual ICollection<ShipmentPackage> AirPackages { get; set; }
+		public virtual ICollection<ShipmentPackage> OceanOrInlandPackages { get; set; }
+		public virtual ICollection<ShipmentPackage> Containers { get; set; }
         [Column("ManifestLastSharingDate")]
 	    public DateTime? ManifestLastSharingDate { get; set; }
+		//public virtual ICollection<CustomField> CustomFields { get; set; }
         [Column("ForwardingPartnerId")]
 	    public string ForwardingPartnerId { get; set; }
         [ForeignKey("LocalCustomsSentByUser")]

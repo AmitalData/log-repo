@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -32,20 +33,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_sKU = entity.SKU;
 		_inActive = entity.InActive;
 		_description = entity.Description;
-		hTSCodes = default;
 		_name = entity.Name;
 		_brand = entity.Brand;
 		_searchFields = entity.SearchFields;
 		_aSIN = entity.ASIN;
 		_uPC = entity.UPC;
 		_originCountryId = entity.OriginCountryId;
-		_originCountryName = default;
-		_shipperId = entity.ShipperId;
-		_shipperName = default;
-		_productValue = entity.ProductValue;
+		_origincountry = entity.OriginCountry !=null ? new CountryPM(entity.OriginCountry) : null;
+			_shipperId = entity.ShipperId;
+		_shipper = entity.Shipper !=null ? new CardPM(entity.Shipper) : null;
+			_productValue = entity.ProductValue;
 		_productValueCurrencyId = entity.ProductValueCurrencyId;
-		_quantity = entity.Quantity;
-		_productValueCurrencyCode = default;
+		_productvaluecurrency = entity.ProductValueCurrency !=null ? new CurrencyPM(entity.ProductValueCurrency) : null;
+			_quantity = entity.Quantity;
    }
    #endregion Constructors
    #region Properties
@@ -275,22 +275,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _originCountryName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OriginCountryName  
-	   {
-	     get { return _originCountryName; }
-		 set
-		 {
-		   if(_originCountryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginCountryName",OldValue=_originCountryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _originCountryName=value;
-		   }
-		 }
-	   }
+		private CountryPM _origincountry;
+		[Include]
+        [DataMember]
+        public virtual CountryPM OriginCountry 
+		{ 
+		get { return _origincountry; } 
+		set { _origincountry = value; }
+		}
 	  private string _shipperId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -307,22 +299,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _shipperName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipperName  
-	   {
-	     get { return _shipperName; }
-		 set
-		 {
-		   if(_shipperName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperName",OldValue=_shipperName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipperName=value;
-		   }
-		 }
-	   }
+		private CardPM _shipper;
+		[Include]
+        [DataMember]
+        public virtual CardPM Shipper 
+		{ 
+		get { return _shipper; } 
+		set { _shipper = value; }
+		}
 	  private double? _productValue ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -355,6 +339,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _productvaluecurrency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM ProductValueCurrency 
+		{ 
+		get { return _productvaluecurrency; } 
+		set { _productvaluecurrency = value; }
+		}
 	  private int? _quantity ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -368,22 +360,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Quantity",OldValue=_quantity,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _quantity=value;
-		   }
-		 }
-	   }
-	  private string _productValueCurrencyCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProductValueCurrencyCode  
-	   {
-	     get { return _productValueCurrencyCode; }
-		 set
-		 {
-		   if(_productValueCurrencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProductValueCurrencyCode",OldValue=_productValueCurrencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _productValueCurrencyCode=value;
 		   }
 		 }
 	   }

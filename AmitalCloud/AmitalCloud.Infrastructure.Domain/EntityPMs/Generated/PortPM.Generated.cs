@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -41,7 +42,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_englishName = entity.EnglishName;
 		_localName = entity.LocalName;
-		_computedLocalName = default;
 		_isOcean = entity.IsOcean;
 		_isAir = entity.IsAir;
 		_isInland = entity.IsInland;
@@ -55,18 +55,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_stateId = entity.StateId;
 		_notes = entity.Notes;
 		_searchFields = entity.SearchFields;
-		_isSecured = default;
-		_isHybrid = default;
-		_countryEC = default;
 		_stateCode = entity.StateCode;
 		_combinedCode = entity.CombinedCode;
-		_partnerCode = default;
 		_stateName = entity.StateName;
-		_countryIsNorthAmerica = default;
-		_countryIsGreaterChinese = default;
 		_portTimeZoneCode = entity.PortTimeZoneCode;
-		_portGroupId = entity.PortGroupId;
-   }
+		_porttimezone = entity.PortTimeZone !=null ? new PortTimeZonePM(entity.PortTimeZone) : null;
+			_portGroupId = entity.PortGroupId;
+		_portgroup = entity.PortGroup !=null ? new PortGroupPM(entity.PortGroup) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -310,22 +306,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _computedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputedLocalName  
-	   {
-	     get { return _computedLocalName; }
-		 set
-		 {
-		   if(_computedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computedLocalName=value;
-		   }
-		 }
-	   }
 	  private bool _isOcean ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -534,54 +514,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
-		   }
-		 }
-	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
-		   }
-		 }
-	   }
-	  private bool _countryEC ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool CountryEC  
-	   {
-	     get { return _countryEC; }
-		 set
-		 {
-		   if(_countryEC != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryEC",OldValue=_countryEC,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _countryEC=value;
-		   }
-		 }
-	   }
 	  private string _stateCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -614,22 +546,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _partnerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerCode  
-	   {
-	     get { return _partnerCode; }
-		 set
-		 {
-		   if(_partnerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerCode=value;
-		   }
-		 }
-	   }
 	  private string _stateName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -643,38 +559,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StateName",OldValue=_stateName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _stateName=value;
-		   }
-		 }
-	   }
-	  private bool _countryIsNorthAmerica ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool CountryIsNorthAmerica  
-	   {
-	     get { return _countryIsNorthAmerica; }
-		 set
-		 {
-		   if(_countryIsNorthAmerica != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryIsNorthAmerica",OldValue=_countryIsNorthAmerica,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _countryIsNorthAmerica=value;
-		   }
-		 }
-	   }
-	  private bool _countryIsGreaterChinese ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool CountryIsGreaterChinese  
-	   {
-	     get { return _countryIsGreaterChinese; }
-		 set
-		 {
-		   if(_countryIsGreaterChinese != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryIsGreaterChinese",OldValue=_countryIsGreaterChinese,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _countryIsGreaterChinese=value;
 		   }
 		 }
 	   }
@@ -694,6 +578,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortTimeZonePM _porttimezone;
+		[Include]
+        [DataMember]
+        public virtual PortTimeZonePM PortTimeZone 
+		{ 
+		get { return _porttimezone; } 
+		set { _porttimezone = value; }
+		}
 	  private string _portGroupId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -710,6 +602,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortGroupPM _portgroup;
+		[Include]
+        [DataMember]
+        public virtual PortGroupPM PortGroup 
+		{ 
+		get { return _portgroup; } 
+		set { _portgroup = value; }
+		}
 	 }
 #endregion Properties
 }

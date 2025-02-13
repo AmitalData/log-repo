@@ -6,6 +6,7 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,15 +30,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_aRInvoiceStockId = entity.ARInvoiceStockId;
-		_aRInvoiceId = entity.ARInvoiceId;
+		_arinvoicestock = entity.ARInvoiceStock !=null ? new ARInvoiceStockPM(entity.ARInvoiceStock) : null;
+			_aRInvoiceId = entity.ARInvoiceId;
 		_number = entity.Number;
 		_createDate = entity.CreateDate;
 		_updateDate = entity.UpdateDate;
 		_createdByUserId = entity.CreatedByUserId;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_isUsed = entity.IsUsed;
-		_createdByUserName = default;
-		_updatedByUserName = default;
 		_shipmentNumber = entity.ShipmentNumber;
    }
    #endregion Constructors
@@ -91,6 +91,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ARInvoiceStockPM _arinvoicestock;
+		[Include]
+        [DataMember]
+        public virtual ARInvoiceStockPM ARInvoiceStock 
+		{ 
+		get { return _arinvoicestock; } 
+		set { _arinvoicestock = value; }
+		}
 	  private string _aRInvoiceId ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -200,38 +208,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUsed",OldValue=_isUsed,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isUsed=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
 		   }
 		 }
 	   }

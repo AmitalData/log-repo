@@ -24,39 +24,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
         //        public FeatureQuery(IRepository<IAmitalCloudContext,Feature, string> repository) => this.repository = repository;
         public FeaturePM GetSingleFeaturePM(string id) => (from a in repository.GetMulti(a => a.Id == id)
-                                                           select new FeaturePM()
-                                                           {
-                                                               Code = a.Code,
-                                                               Id = a.Id,
-                                                               NameTextCodeId = a.NameTextCodeId,
-                                                               ObjectTableId = a.ObjectTableId,
-                                                               Tenant = a.Tenant,
-                                                               NameTextCodeCode = a.NameTextCodeCode,
-                                                               Packagable = a.Packagable,
-                                                               FeatureTypeCode = a.FeatureTypeCode,
-                                                               IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
-                                                               IsOld = a.IsOld,
-                                                               IsCoreFeature = a.IsCoreFeature,
-                                                               ToggleCode = a.ToggleCode,
-                                                               FeatureUniqeCode = a.FeatureUniqeCode
-                                                           }).FirstOrDefault();
+                                                           select new FeaturePM(a)).FirstOrDefault();
         public List<FeaturePM> GetFeaturePMsByTenant(int tenant) => (from a in repository.GetMulti(a => a.Tenant == tenant)
-                                                                     select new FeaturePM()
-                                                                     {
-                                                                         Code = a.Code,
-                                                                         Id = a.Id,
-                                                                         NameTextCodeId = a.NameTextCodeId,
-                                                                         ObjectTableId = a.ObjectTableId,
-                                                                         Tenant = a.Tenant,
-                                                                         NameTextCodeCode = a.NameTextCodeCode,
-                                                                         Packagable = a.Packagable,
-                                                                         FeatureTypeCode = a.FeatureTypeCode,
-                                                                         IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
-                                                                         IsOld = a.IsOld,
-                                                                         IsCoreFeature = a.IsCoreFeature,
-                                                                         ToggleCode = a.ToggleCode,
-                                                                         FeatureUniqeCode = a.FeatureUniqeCode
-                                                                     }).ToList();
+                                                                     select new FeaturePM(a)).ToList();
         public List<FeatureList> GetNewFeaturesList(int tenant) => (from a in context.Features.Include("NameTextCode").Include("ObjectTable").Include("FeatureType")
                                                                     where a.Tenant == tenant && a.IsOld == false
                                                                     select new FeatureList()
@@ -84,26 +54,12 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 Role myRole = (from d in context.Roles where d.Id == myRoleId select d).FirstOrDefault();
                 List<FeaturePM> allFeatures = (from a in context.Features.Include("NameTextCode").Include("ObjectTable")
                                                where (a.Tenant == tenant || a.Tenant == 0)
-                                               select new FeaturePM()
+                                               select new FeaturePM(a)
                                                {
-                                                   Id = a.Id,
-                                                   Code = a.Code,
-                                                   Tenant = a.Tenant,
-                                                   NameTextCodeId = a.NameTextCodeId,
-                                                   ObjectTableId = a.ObjectTableId,
-                                                   NameTextCodeCode = a.NameTextCodeCode,
-                                                   FeatureTypeCode = a.FeatureTypeCode,
-                                                   Packagable = a.Packagable,
-                                                   IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
-                                                   IsOld = a.IsOld,
-                                                   IsCoreFeature = a.IsCoreFeature,
                                                    RoleId = myRoleId,
                                                    RoleTenant = myRole.Tenant,
                                                    ParentRoleId = myRole.ParentRoleId,
                                                    IsCustomRole = myRole.IsCustomRole,
-                                                   ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
-                                                   ToggleCode = a.ToggleCode,
-                                                   FeatureUniqeCode = a.FeatureUniqeCode
                                                }).ToList();
                 List<RoleFeature> allRoleFeatures = GetallRoleFeatures(myRole, allFeatures);
                 if (tenant == 0)
@@ -218,22 +174,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                                    select a).ToList();
             List<FeaturePM> features = (from a in context.Features.Include("NameTextCode")
                                         where (a.Tenant == tenant || a.Tenant == 0)
-                                        select new FeaturePM()
-                                        {
-                                            Code = a.Code,
-                                            Id = a.Id,
-                                            NameTextCodeId = a.NameTextCodeId,
-                                            ObjectTableId = a.ObjectTableId,
-                                            Tenant = a.Tenant,
-                                            NameTextCodeCode = a.NameTextCodeCode,
-                                            FeatureTypeCode = a.FeatureTypeCode,
-                                            Packagable = a.Packagable,
-                                            IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
-                                            IsOld = a.IsOld,
-                                            IsCoreFeature = a.IsCoreFeature,
-                                            ToggleCode = a.ToggleCode,
-                                            FeatureUniqeCode = a.FeatureUniqeCode
-                                        }).ToList();
+                                        select new FeaturePM(a)).ToList();
 
             List<FeaturePM> ffffff = features.Where(d => d.ObjectTableId == "1-1301").ToList();
             foreach (PackageFeature item in packageFeature)
@@ -319,10 +260,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 List<string> allRolesIds = contactTenantRoles.Select(s => s.RoleId).ToList();
 
                 Repository<Role> myRoleRepository = new Repository<Role>(context);
-                RoleQuery myRoleQuery = new RoleQuery(myRoleRepository, tenant);
-                List<RolePM> allCustomRoles = myRoleQuery.GetCustomRolesByIds(allRolesIds);
-
-                foreach (RolePM item in allCustomRoles)
+                //RoleQuery myRoleQuery = new RoleQuery(myRoleRepository, tenant);
+                List<RolePM> allCustomRoles = new Repository<Role>(context).GetMulti(a => allRolesIds.Contains(a.Id),a => new RolePM(a)).ToList();
+                 foreach (RolePM item in allCustomRoles)
                 {
                     if (allRolesIds.Contains(item.ParentRoleId))
                     {
@@ -368,22 +308,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 #region allFeatures
                 allFeatures = (from a in context.Features.Include("NameTextCode")
                                where (a.Tenant == 0 || a.Tenant == tenant)
-                               select new FeaturePM()
-                               {
-                                   Id = a.Id,
-                                   Code = a.Code,
-                                   Tenant = a.Tenant,
-                                   NameTextCodeId = a.NameTextCodeId,
-                                   NameTextCodeCode = a.NameTextCodeCode,
-                                   ObjectTableId = a.ObjectTableId,
-                                   Packagable = a.Packagable,
-                                   FeatureTypeCode = a.FeatureTypeCode,
-                                   IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
-                                   IsOld = a.IsOld,
-                                   IsCoreFeature = a.IsCoreFeature,
-                                   ToggleCode = a.ToggleCode,
-                                   FeatureUniqeCode = a.FeatureUniqeCode
-                               }).ToList();
+                               select new FeaturePM(a)).ToList();
                 #endregion
 
                 #region allRoleFeatures
@@ -511,22 +436,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 #region allFeatures
                 IQueryable<FeaturePM> allFeatures = (from a in context.Features.Include("NameTextCode")
                                                      where (a.Tenant == 0 || a.Tenant == tenant)
-                                                     select new FeaturePM()
-                                                     {
-                                                         Id = a.Id,
-                                                         Code = a.Code,
-                                                         Tenant = a.Tenant,
-                                                         NameTextCodeId = a.NameTextCodeId,
-                                                         NameTextCodeCode = a.NameTextCodeCode,
-                                                         ObjectTableId = a.ObjectTableId,
-                                                         Packagable = a.Packagable,
-                                                         FeatureTypeCode = a.FeatureTypeCode,
-                                                         IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
-                                                         IsOld = a.IsOld,
-                                                         IsCoreFeature = a.IsCoreFeature,
-                                                         ToggleCode = a.ToggleCode,
-                                                         FeatureUniqeCode = a.FeatureUniqeCode
-                                                     });
+                                                     select new FeaturePM(a));
                 #endregion
 
                 #region allRoleFeatures
@@ -795,22 +705,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
             return (from a in context.Features.Include("NameTextCode")
                     where a.Code == code && a.ObjectTableId == objectTableId
-                    select new FeaturePM()
-                    {
-                        Code = a.Code,
-                        Id = a.Id,
-                        NameTextCodeId = a.NameTextCodeId,
-                        ObjectTableId = a.ObjectTableId,
-                        Tenant = a.Tenant,
-                        NameTextCodeCode = a.NameTextCodeCode,
-                        Packagable = a.Packagable,
-                        FeatureTypeCode = a.FeatureTypeCode,
-                        IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
-                        IsOld = a.IsOld,
-                        IsCoreFeature = a.IsCoreFeature,
-                        ToggleCode = a.ToggleCode,
-                        FeatureUniqeCode = a.FeatureUniqeCode
-                    }).FirstOrDefault();
+                    select new FeaturePM(a)).FirstOrDefault();
         }
     }
 

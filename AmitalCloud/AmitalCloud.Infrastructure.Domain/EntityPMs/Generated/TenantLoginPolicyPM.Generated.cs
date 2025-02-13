@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -28,7 +29,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_tenant = entity.Tenant;
 		_loginPolicyCode = entity.LoginPolicyCode;
-		_isEnabledForSpecificUsers = entity.IsEnabledForSpecificUsers;
+		_loginpolicy = entity.LoginPolicy !=null ? new LoginPolicyPM(entity.LoginPolicy) : null;
+			_isEnabledForSpecificUsers = entity.IsEnabledForSpecificUsers;
 		_twoFactorInternalIPs = entity.TwoFactorInternalIPs;
 		_keepUserLoggedIn = entity.KeepUserLoggedIn;
 		_excludeInternalIPs = entity.ExcludeInternalIPs;
@@ -70,6 +72,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private LoginPolicyPM _loginpolicy;
+		[Include]
+        [DataMember]
+        public virtual LoginPolicyPM LoginPolicy 
+		{ 
+		get { return _loginpolicy; } 
+		set { _loginpolicy = value; }
+		}
 	  private bool _isEnabledForSpecificUsers ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -37,7 +38,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_objectTableId = entity.ObjectTableId;
 		_retryNumber = entity.RetryNumber;
 		_startDate = entity.StartDate;
-		_multiEntityUpdateData = default;
 		_updatedEntitiesNumber = entity.UpdatedEntitiesNumber;
    }
    #endregion Constructors
@@ -216,22 +216,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartDate",OldValue=_startDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _startDate=value;
-		   }
-		 }
-	   }
-	  private string _multiEntityUpdateData ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MultiEntityUpdateData  
-	   {
-	     get { return _multiEntityUpdateData; }
-		 set
-		 {
-		   if(_multiEntityUpdateData != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MultiEntityUpdateData",OldValue=_multiEntityUpdateData,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _multiEntityUpdateData=value;
 		   }
 		 }
 	   }

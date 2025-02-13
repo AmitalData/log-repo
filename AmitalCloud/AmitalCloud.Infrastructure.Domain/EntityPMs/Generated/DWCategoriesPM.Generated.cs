@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -28,7 +29,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_code = entity.Code;
 		_name = entity.Name;
-		_searchFields = default;
 		_index = entity.Index;
    }
    #endregion Constructors
@@ -63,22 +63,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Name",OldValue=_name,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _name=value;
-		   }
-		 }
-	   }
-	  private string _searchFields ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SearchFields  
-	   {
-	     get { return _searchFields; }
-		 set
-		 {
-		   if(_searchFields != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _searchFields=value;
 		   }
 		 }
 	   }

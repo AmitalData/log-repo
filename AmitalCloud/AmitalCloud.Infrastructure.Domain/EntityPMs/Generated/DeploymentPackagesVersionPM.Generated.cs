@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -33,13 +34,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_updateDate = entity.UpdateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_deploymentPackageID = entity.DeploymentPackageID;
-		_isExported = entity.IsExported;
+		_deploymentpackage = entity.DeploymentPackage !=null ? new DeploymentPackagePM(entity.DeploymentPackage) : null;
+			_isExported = entity.IsExported;
 		_documentId = entity.DocumentId;
 		_versionNumber = entity.VersionNumber;
 		_versionName = entity.VersionName;
-		_createdByUserName = default;
-		_updatedByUserName = default;
-		_deploymentPackageName = default;
    }
    #endregion Constructors
    #region Properties
@@ -156,6 +155,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DeploymentPackagePM _deploymentpackage;
+		[Include]
+        [DataMember]
+        public virtual DeploymentPackagePM DeploymentPackage 
+		{ 
+		get { return _deploymentpackage; } 
+		set { _deploymentpackage = value; }
+		}
 	  private bool _isExported ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -217,54 +224,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VersionName",OldValue=_versionName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _versionName=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
-		   }
-		 }
-	   }
-	  private string _deploymentPackageName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DeploymentPackageName  
-	   {
-	     get { return _deploymentPackageName; }
-		 set
-		 {
-		   if(_deploymentPackageName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeploymentPackageName",OldValue=_deploymentPackageName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _deploymentPackageName=value;
 		   }
 		 }
 	   }

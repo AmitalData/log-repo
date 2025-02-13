@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -37,11 +38,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_localName = entity.LocalName;
 		_inActive = entity.InActive;
 		_businessRoleId = entity.BusinessRoleId;
-		_notes = entity.Notes;
-		_entityName = default;
+		_businessrole = entity.BusinessRole !=null ? new BusinessRolePM(entity.BusinessRole) : null;
+			_notes = entity.Notes;
 		_objectTableId = entity.ObjectTableId;
-		_businessRoleName = default;
-   }
+		_objecttable = entity.ObjectTable !=null ? new ObjectTablePM(entity.ObjectTable) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -221,6 +222,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BusinessRolePM _businessrole;
+		[Include]
+        [DataMember]
+        public virtual BusinessRolePM BusinessRole 
+		{ 
+		get { return _businessrole; } 
+		set { _businessrole = value; }
+		}
 	  private string _notes ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -234,22 +243,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Notes",OldValue=_notes,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _notes=value;
-		   }
-		 }
-	   }
-	  private string _entityName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EntityName  
-	   {
-	     get { return _entityName; }
-		 set
-		 {
-		   if(_entityName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityName",OldValue=_entityName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _entityName=value;
 		   }
 		 }
 	   }
@@ -269,22 +262,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _businessRoleName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BusinessRoleName  
-	   {
-	     get { return _businessRoleName; }
-		 set
-		 {
-		   if(_businessRoleName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BusinessRoleName",OldValue=_businessRoleName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _businessRoleName=value;
-		   }
-		 }
-	   }
+		private ObjectTablePM _objecttable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM ObjectTable 
+		{ 
+		get { return _objecttable; } 
+		set { _objecttable = value; }
+		}
 	 }
 #endregion Properties
 }

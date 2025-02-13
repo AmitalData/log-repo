@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -36,10 +37,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_italic = entity.Italic;
 		_unDerLine = entity.UnDerLine;
 		_alignment = entity.Alignment;
-		_title = default;
-		_textValue = default;
-		_hideAlignment = default;
-		_sampleText = default;
    }
    #endregion Constructors
    #region Properties
@@ -201,70 +198,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Alignment",OldValue=_alignment,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _alignment=value;
-		   }
-		 }
-	   }
-	  private string _title ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Title  
-	   {
-	     get { return _title; }
-		 set
-		 {
-		   if(_title != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Title",OldValue=_title,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _title=value;
-		   }
-		 }
-	   }
-	  private string _textValue ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TextValue  
-	   {
-	     get { return _textValue; }
-		 set
-		 {
-		   if(_textValue != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TextValue",OldValue=_textValue,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _textValue=value;
-		   }
-		 }
-	   }
-	  private string _hideAlignment ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string HideAlignment  
-	   {
-	     get { return _hideAlignment; }
-		 set
-		 {
-		   if(_hideAlignment != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HideAlignment",OldValue=_hideAlignment,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _hideAlignment=value;
-		   }
-		 }
-	   }
-	  private string _sampleText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SampleText  
-	   {
-	     get { return _sampleText; }
-		 set
-		 {
-		   if(_sampleText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SampleText",OldValue=_sampleText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _sampleText=value;
 		   }
 		 }
 	   }

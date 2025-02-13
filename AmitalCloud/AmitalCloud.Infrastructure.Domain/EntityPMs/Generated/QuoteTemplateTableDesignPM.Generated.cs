@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,12 +30,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_borderTypeCode = entity.BorderTypeCode;
-		_borderColor = entity.BorderColor;
+		_bordertype = entity.BorderType !=null ? new BorderTypePM(entity.BorderType) : null;
+			_borderColor = entity.BorderColor;
 		_borderThickness = entity.BorderThickness;
 		_headerDesignId = entity.HeaderDesignId;
-		_linesDesignId = entity.LinesDesignId;
-		_groupByDesignId = entity.GroupByDesignId;
-   }
+		_headerdesign = entity.HeaderDesign !=null ? new QuoteTemplateTextDesignPM(entity.HeaderDesign) : null;
+			_linesDesignId = entity.LinesDesignId;
+		_linesdesign = entity.LinesDesign !=null ? new QuoteTemplateTextDesignPM(entity.LinesDesign) : null;
+			_groupByDesignId = entity.GroupByDesignId;
+		_groupdesign = entity.GroupDesign !=null ? new QuoteTemplateTextDesignPM(entity.GroupDesign) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -86,6 +91,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BorderTypePM _bordertype;
+		[Include]
+        [DataMember]
+        public virtual BorderTypePM BorderType 
+		{ 
+		get { return _bordertype; } 
+		set { _bordertype = value; }
+		}
 	  private string _borderColor ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -134,6 +147,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _headerdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM HeaderDesign 
+		{ 
+		get { return _headerdesign; } 
+		set { _headerdesign = value; }
+		}
 	  private string _linesDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -150,6 +171,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _linesdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM LinesDesign 
+		{ 
+		get { return _linesdesign; } 
+		set { _linesdesign = value; }
+		}
 	  private string _groupByDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -166,6 +195,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _groupdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM GroupDesign 
+		{ 
+		get { return _groupdesign; } 
+		set { _groupdesign = value; }
+		}
 	 }
 #endregion Properties
 }

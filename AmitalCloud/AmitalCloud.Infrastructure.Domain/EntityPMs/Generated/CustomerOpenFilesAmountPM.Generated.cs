@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,7 +30,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_customerId = entity.CustomerId;
 		_totalOpenFilesAmount = entity.TotalOpenFilesAmount;
 		_tenant = entity.Tenant;
-		_customerCode = default;
    }
    #endregion Constructors
    #region Properties
@@ -79,22 +79,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _tenant=value;
-		   }
-		 }
-	   }
-	  private string _customerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerCode  
-	   {
-	     get { return _customerCode; }
-		 set
-		 {
-		   if(_customerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerCode",OldValue=_customerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerCode=value;
 		   }
 		 }
 	   }

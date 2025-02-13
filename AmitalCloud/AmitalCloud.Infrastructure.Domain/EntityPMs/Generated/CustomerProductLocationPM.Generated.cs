@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -30,7 +31,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_customerId = entity.CustomerId;
 		_productTypeCode = entity.ProductTypeCode;
 		_countryId = entity.CountryId;
-		_potentialChargeableWeight = entity.PotentialChargeableWeight;
+		_country = entity.Country !=null ? new CountryPM(entity.Country) : null;
+			_potentialChargeableWeight = entity.PotentialChargeableWeight;
 		_commitmentChargeableWeight = entity.CommitmentChargeableWeight;
 		_potentialTEU = entity.PotentialTEU;
 		_commitmentTEU = entity.CommitmentTEU;
@@ -38,8 +40,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_commitmentNumberOfShipments = entity.CommitmentNumberOfShipments;
 		_potentialRevenue = entity.PotentialRevenue;
 		_commitmentRevenue = entity.CommitmentRevenue;
-		_countryCode = default;
-		_countryName = default;
    }
    #endregion Constructors
    #region Properties
@@ -110,6 +110,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CountryPM _country;
+		[Include]
+        [DataMember]
+        public virtual CountryPM Country 
+		{ 
+		get { return _country; } 
+		set { _country = value; }
+		}
 	  private decimal? _potentialChargeableWeight ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -235,38 +243,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommitmentRevenue",OldValue=_commitmentRevenue,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   _commitmentRevenue=value;
-		   }
-		 }
-	   }
-	  private string _countryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryCode  
-	   {
-	     get { return _countryCode; }
-		 set
-		 {
-		   if(_countryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryCode",OldValue=_countryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryCode=value;
-		   }
-		 }
-	   }
-	  private string _countryName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryName  
-	   {
-	     get { return _countryName; }
-		 set
-		 {
-		   if(_countryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryName",OldValue=_countryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryName=value;
 		   }
 		 }
 	   }

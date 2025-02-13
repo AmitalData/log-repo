@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -28,9 +29,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
-		_objectFieldName = default;
 		_objectFieldId = entity.ObjectFieldId;
-		_updateDirection = entity.UpdateDirection;
+		_objectfield = entity.ObjectField !=null ? new ObjectFieldPM(entity.ObjectField) : null;
+			_updateDirection = entity.UpdateDirection;
 		_objectFieldCode = entity.ObjectFieldCode;
 		_searchFields = entity.SearchFields;
    }
@@ -69,22 +70,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _objectFieldName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectFieldName  
-	   {
-	     get { return _objectFieldName; }
-		 set
-		 {
-		   if(_objectFieldName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldName",OldValue=_objectFieldName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectFieldName=value;
-		   }
-		 }
-	   }
 	  private string _objectFieldId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -101,6 +86,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectFieldPM _objectfield;
+		[Include]
+        [DataMember]
+        public virtual ObjectFieldPM ObjectField 
+		{ 
+		get { return _objectfield; } 
+		set { _objectfield = value; }
+		}
 	  private string _updateDirection ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

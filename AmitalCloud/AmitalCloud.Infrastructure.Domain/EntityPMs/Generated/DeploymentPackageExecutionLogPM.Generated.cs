@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_createDate = entity.CreateDate;
 		_createdByUserId = entity.CreatedByUserId;
 		_statusCode = entity.StatusCode;
-		_exceptionMessage = entity.ExceptionMessage;
+		_code = entity.Code !=null ? new CommunicationStatusTypePM(entity.Code) : null;
+			_exceptionMessage = entity.ExceptionMessage;
 		_requestXML = entity.RequestXML;
 		_subject = entity.Subject;
 		_logs = entity.Logs;
@@ -123,6 +125,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CommunicationStatusTypePM _code;
+		[Include]
+        [DataMember]
+        public virtual CommunicationStatusTypePM Code 
+		{ 
+		get { return _code; } 
+		set { _code = value; }
+		}
 	  private string _exceptionMessage ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

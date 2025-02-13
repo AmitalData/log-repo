@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.UserId });
 	 
-            this.Property(t => t.UserName).HasColumnName("UserName").HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.UserName).HasColumnName("UserName").HasMaxLength(200).IsUnicode(false);
 
             this.Property(t => t.Date).HasColumnName("Date");
 

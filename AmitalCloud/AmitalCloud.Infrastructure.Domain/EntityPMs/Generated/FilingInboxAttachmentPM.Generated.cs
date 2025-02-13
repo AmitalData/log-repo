@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_fileName = entity.FileName;
 		_documentId = entity.DocumentId;
 		_filingInboxId = entity.FilingInboxId;
-		attachLogs = default;
+		_filinginbox = entity.FilingInbox !=null ? new FilingInboxPM(entity.FilingInbox) : null;
+			attachLogs = entity.AttachLogs != null ? entity.AttachLogs.Select(a=>new FilingInboxAttachmentLogPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -116,6 +118,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FilingInboxPM _filinginbox;
+		[Include]
+        [DataMember]
+        public virtual FilingInboxPM FilingInbox 
+		{ 
+		get { return _filinginbox; } 
+		set { _filinginbox = value; }
+		}
 	   private List<FilingInboxAttachmentLogPM> attachLogs;
 	 
 		     

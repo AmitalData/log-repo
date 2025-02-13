@@ -6,6 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -38,9 +39,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_width = entity.Width;
 		_length = entity.Length;
 		_volumetricWeight = entity.VolumetricWeight;
-		_dimensions = default;
-		_containerTypeId = default;
-		_packageTypeName = default;
 		_containerNumber = entity.ContainerNumber;
    }
    #endregion Constructors
@@ -235,54 +233,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VolumetricWeight",OldValue=_volumetricWeight,NewValue=value,PropertyType="double?"};
 		    NotifyPropertyChanged(values);
 		   _volumetricWeight=value;
-		   }
-		 }
-	   }
-	  private double _dimensions ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double Dimensions  
-	   {
-	     get { return _dimensions; }
-		 set
-		 {
-		   if(_dimensions != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Dimensions",OldValue=_dimensions,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _dimensions=value;
-		   }
-		 }
-	   }
-	  private string _containerTypeId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContainerTypeId  
-	   {
-	     get { return _containerTypeId; }
-		 set
-		 {
-		   if(_containerTypeId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerTypeId",OldValue=_containerTypeId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _containerTypeId=value;
-		   }
-		 }
-	   }
-	  private string _packageTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeName  
-	   {
-	     get { return _packageTypeName; }
-		 set
-		 {
-		   if(_packageTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeName",OldValue=_packageTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeName=value;
 		   }
 		 }
 	   }

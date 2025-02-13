@@ -6,6 +6,7 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -37,7 +38,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_swiftCode = entity.SwiftCode;
 		_bankCode = entity.BankCode;
 		_branchAddress = entity.BranchAddress;
-		_currencyCode = default;
 		_currencyId = entity.CurrencyId;
 		_createDate = entity.CreateDate;
 		_updateDate = entity.UpdateDate;
@@ -220,22 +220,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BranchAddress",OldValue=_branchAddress,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _branchAddress=value;
-		   }
-		 }
-	   }
-	  private string _currencyCode ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CurrencyCode  
-	   {
-	     get { return _currencyCode; }
-		 set
-		 {
-		   if(_currencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=_currencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _currencyCode=value;
 		   }
 		 }
 	   }

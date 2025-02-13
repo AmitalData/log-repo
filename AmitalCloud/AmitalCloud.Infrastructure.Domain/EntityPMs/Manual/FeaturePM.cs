@@ -1,9 +1,34 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.ComponentModel.DataAnnotations;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 {
-    public class FeaturePM
+    public class FeaturePM : BaseEntityPM
     {
+        private Feature feature;
+
+        public FeaturePM(Feature feature) : base()
+        {
+            this.feature = feature;
+            Id = feature.Id;
+            Code = feature.Code;
+            Tenant = feature.Tenant;
+            NameTextCodeId = feature.NameTextCodeId;
+            ObjectTableId = feature.ObjectTableId;
+            NameTextCodeCode = feature.NameTextCodeCode;
+            FeatureTypeCode = feature.FeatureTypeCode;
+            Packagable = feature.Packagable;
+            IsBusinessUnitEnabled = feature.IsBusinessUnitEnabled;
+            IsOld = feature.IsOld;
+            IsCoreFeature = feature.IsCoreFeature;
+            ObjectTableName = feature.ObjectTable == null ? "" : feature.ObjectTable.Name;
+            ToggleCode = feature.ToggleCode;
+            FeatureUniqeCode = feature.FeatureUniqeCode;
+
+
+        }
+
         [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }

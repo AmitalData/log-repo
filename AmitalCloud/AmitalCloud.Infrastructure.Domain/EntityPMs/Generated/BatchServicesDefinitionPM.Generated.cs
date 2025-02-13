@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -27,19 +28,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public BatchServicesDefinitionPM(BatchServicesDefinition entity) : base()
    {
 		_code = entity.Code;
-		_lastActivity = default;
-		_inActive = default;
-		_numberOfThreads = default;
 		_className = entity.ClassName;
 		_parameter1 = entity.Parameter1;
 		_parameter2 = entity.Parameter2;
-		_cPU = default;
-		_numberOfDoneItems = default;
-		_doneItemsInOneHour = default;
-		_doneItemsInOneMinute = default;
-		_doneItemsInFiveMinutes = default;
-		_waitingItems = default;
-		_failedItems = default;
 		_queueDefinitionCode = entity.QueueDefinitionCode;
 		_useRabbitMQ = entity.UseRabbitMQ;
    }
@@ -59,54 +50,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=_code,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _code=value;
-		   }
-		 }
-	   }
-	  private DateTime _lastActivity ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime LastActivity  
-	   {
-	     get { return _lastActivity; }
-		 set
-		 {
-		   if(_lastActivity != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastActivity",OldValue=_lastActivity,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _lastActivity=value;
-		   }
-		 }
-	   }
-	  private bool _inActive ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool InActive  
-	   {
-	     get { return _inActive; }
-		 set
-		 {
-		   if(_inActive != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=_inActive,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _inActive=value;
-		   }
-		 }
-	   }
-	  private int _numberOfThreads ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int NumberOfThreads  
-	   {
-	     get { return _numberOfThreads; }
-		 set
-		 {
-		   if(_numberOfThreads != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfThreads",OldValue=_numberOfThreads,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _numberOfThreads=value;
 		   }
 		 }
 	   }
@@ -155,118 +98,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Parameter2",OldValue=_parameter2,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _parameter2=value;
-		   }
-		 }
-	   }
-	  private decimal _cPU ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal CPU  
-	   {
-	     get { return _cPU; }
-		 set
-		 {
-		   if(_cPU != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CPU",OldValue=_cPU,NewValue=value,PropertyType="decimal"};
-		    NotifyPropertyChanged(values);
-		   _cPU=value;
-		   }
-		 }
-	   }
-	  private int _numberOfDoneItems ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int NumberOfDoneItems  
-	   {
-	     get { return _numberOfDoneItems; }
-		 set
-		 {
-		   if(_numberOfDoneItems != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfDoneItems",OldValue=_numberOfDoneItems,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _numberOfDoneItems=value;
-		   }
-		 }
-	   }
-	  private int _doneItemsInOneHour ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int DoneItemsInOneHour  
-	   {
-	     get { return _doneItemsInOneHour; }
-		 set
-		 {
-		   if(_doneItemsInOneHour != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DoneItemsInOneHour",OldValue=_doneItemsInOneHour,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _doneItemsInOneHour=value;
-		   }
-		 }
-	   }
-	  private int _doneItemsInOneMinute ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int DoneItemsInOneMinute  
-	   {
-	     get { return _doneItemsInOneMinute; }
-		 set
-		 {
-		   if(_doneItemsInOneMinute != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DoneItemsInOneMinute",OldValue=_doneItemsInOneMinute,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _doneItemsInOneMinute=value;
-		   }
-		 }
-	   }
-	  private int _doneItemsInFiveMinutes ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int DoneItemsInFiveMinutes  
-	   {
-	     get { return _doneItemsInFiveMinutes; }
-		 set
-		 {
-		   if(_doneItemsInFiveMinutes != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DoneItemsInFiveMinutes",OldValue=_doneItemsInFiveMinutes,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _doneItemsInFiveMinutes=value;
-		   }
-		 }
-	   }
-	  private int _waitingItems ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int WaitingItems  
-	   {
-	     get { return _waitingItems; }
-		 set
-		 {
-		   if(_waitingItems != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WaitingItems",OldValue=_waitingItems,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _waitingItems=value;
-		   }
-		 }
-	   }
-	  private int _failedItems ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int FailedItems  
-	   {
-	     get { return _failedItems; }
-		 set
-		 {
-		   if(_failedItems != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FailedItems",OldValue=_failedItems,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _failedItems=value;
 		   }
 		 }
 	   }

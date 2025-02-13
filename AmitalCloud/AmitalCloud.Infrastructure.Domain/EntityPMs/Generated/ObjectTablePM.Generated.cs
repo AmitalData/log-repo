@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -40,7 +41,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_autoCompleteSearchWindow = entity.AutoCompleteSearchWindow;
 		_isClosed = entity.IsClosed;
 		_headerScreenId = entity.HeaderScreenId;
-		_cacheOnClient = entity.CacheOnClient;
+		_headerscreen = entity.HeaderScreen !=null ? new ScreenPM(entity.HeaderScreen) : null;
+			_cacheOnClient = entity.CacheOnClient;
 		_editableFromAutoCompleteWindow = entity.EditableFromAutoCompleteWindow;
 		_lastUpdateDate = entity.LastUpdateDate;
 		_hasCounter = entity.HasCounter;
@@ -54,11 +56,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_customFieldsCount = entity.CustomFieldsCount;
 		_hasCustomFields = entity.HasCustomFields;
 		_descriptionTextCodeId = entity.DescriptionTextCodeId;
-		_isSaveButtonVisible = entity.IsSaveButtonVisible;
+		_descriptiontextcode = entity.DescriptionTextCode !=null ? new TextCodePM(entity.DescriptionTextCode) : null;
+			_isSaveButtonVisible = entity.IsSaveButtonVisible;
 		_mainTipCode = entity.MainTipCode;
-		_enableSecurity = entity.EnableSecurity;
+		_maintip = entity.MainTip !=null ? new TipPM(entity.MainTip) : null;
+			_enableSecurity = entity.EnableSecurity;
 		_objectTableTypeCode = entity.ObjectTableTypeCode;
-		_isComposition = entity.IsComposition;
+		_objecttabletype = entity.ObjectTableType !=null ? new ObjectTableTypePM(entity.ObjectTableType) : null;
+			_isComposition = entity.IsComposition;
 		_maxNumberOfCustomFields = entity.MaxNumberOfCustomFields;
 		_allowCustomFields = entity.AllowCustomFields;
 		_hasDynamicHeader = entity.HasDynamicHeader;
@@ -94,8 +99,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_supportSubEntity = entity.SupportSubEntity;
 		_applyGenericCustomFields = entity.ApplyGenericCustomFields;
 		_fullNameTextCodeId = entity.FullNameTextCodeId;
-		_fullNameTextCodeCode = entity.FullNameTextCodeCode;
-		_fullNameTextCodeDefaultText = default;
+		_fullnametextcode = entity.FullNameTextCode !=null ? new TextCodePM(entity.FullNameTextCode) : null;
+			_fullNameTextCodeCode = entity.FullNameTextCodeCode;
 		_availableInDocumentTypes = entity.AvailableInDocumentTypes;
 		_dBTableShortName = entity.DBTableShortName;
    }
@@ -326,6 +331,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ScreenPM _headerscreen;
+		[Include]
+        [DataMember]
+        public virtual ScreenPM HeaderScreen 
+		{ 
+		get { return _headerscreen; } 
+		set { _headerscreen = value; }
+		}
 	  private bool _cacheOnClient ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -550,6 +563,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TextCodePM _descriptiontextcode;
+		[Include]
+        [DataMember]
+        public virtual TextCodePM DescriptionTextCode 
+		{ 
+		get { return _descriptiontextcode; } 
+		set { _descriptiontextcode = value; }
+		}
 	  private bool _isSaveButtonVisible ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -582,6 +603,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TipPM _maintip;
+		[Include]
+        [DataMember]
+        public virtual TipPM MainTip 
+		{ 
+		get { return _maintip; } 
+		set { _maintip = value; }
+		}
 	  private bool _enableSecurity ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -614,6 +643,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTableTypePM _objecttabletype;
+		[Include]
+        [DataMember]
+        public virtual ObjectTableTypePM ObjectTableType 
+		{ 
+		get { return _objecttabletype; } 
+		set { _objecttabletype = value; }
+		}
 	  private bool _isComposition ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1190,6 +1227,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TextCodePM _fullnametextcode;
+		[Include]
+        [DataMember]
+        public virtual TextCodePM FullNameTextCode 
+		{ 
+		get { return _fullnametextcode; } 
+		set { _fullnametextcode = value; }
+		}
 	  private string _fullNameTextCodeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1203,22 +1248,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeCode",OldValue=_fullNameTextCodeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _fullNameTextCodeCode=value;
-		   }
-		 }
-	   }
-	  private string _fullNameTextCodeDefaultText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FullNameTextCodeDefaultText  
-	   {
-	     get { return _fullNameTextCodeDefaultText; }
-		 set
-		 {
-		   if(_fullNameTextCodeDefaultText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeDefaultText",OldValue=_fullNameTextCodeDefaultText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fullNameTextCodeDefaultText=value;
 		   }
 		 }
 	   }

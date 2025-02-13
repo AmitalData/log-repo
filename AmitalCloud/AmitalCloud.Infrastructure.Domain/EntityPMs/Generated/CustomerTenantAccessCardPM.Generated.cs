@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -28,19 +29,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_tenant = entity.Tenant;
 		_customerId = entity.CustomerId;
-		_customerTenantAccessId = entity.CustomerTenantAccessId;
-		_createByUserId = entity.CreateByUserId;
-		_createDate = entity.CreateDate;
-		_customerCode = default;
-		_customerName = default;
+		_customer = entity.Customer !=null ? new CustomerPM(entity.Customer) : null;
+			_customerTenantAccessId = entity.CustomerTenantAccessId;
+		_customertenantaccess = entity.CustomerTenantAccess !=null ? new CustomerTenantAccessPM(entity.CustomerTenantAccess) : null;
+			_createByUserId = entity.CreateByUserId;
+		_createbyuser = entity.CreateByUser !=null ? new UserPM(entity.CreateByUser) : null;
+			_createDate = entity.CreateDate;
 		_lastShipmentDateInQueue = entity.LastShipmentDateInQueue;
-		_hybridStartDate = default;
 		_lastMappingDateTime = entity.LastMappingDateTime;
 		_updateDateTime = entity.UpdateDateTime;
 		_statusTypeCode = entity.StatusTypeCode;
-		_statusType = default;
-		_buildBatch = default;
-		_isExportActivated = entity.IsExportActivated;
+		_statustype = entity.StatusType !=null ? new CustomerTenantAccessStatusTypePM(entity.StatusType) : null;
+			_isExportActivated = entity.IsExportActivated;
 		_isCustomsActivated = entity.IsCustomsActivated;
    }
    #endregion Constructors
@@ -78,6 +78,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CustomerPM _customer;
+		[Include]
+        [DataMember]
+        public virtual CustomerPM Customer 
+		{ 
+		get { return _customer; } 
+		set { _customer = value; }
+		}
 	  private string _customerTenantAccessId ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -95,6 +103,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CustomerTenantAccessPM _customertenantaccess;
+		[Include]
+        [DataMember]
+        public virtual CustomerTenantAccessPM CustomerTenantAccess 
+		{ 
+		get { return _customertenantaccess; } 
+		set { _customertenantaccess = value; }
+		}
 	  private string _createByUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -111,6 +127,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _createbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM CreateByUser 
+		{ 
+		get { return _createbyuser; } 
+		set { _createbyuser = value; }
+		}
 	  private DateTime _createDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -127,38 +151,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _customerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerCode  
-	   {
-	     get { return _customerCode; }
-		 set
-		 {
-		   if(_customerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerCode",OldValue=_customerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerCode=value;
-		   }
-		 }
-	   }
-	  private string _customerName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerName  
-	   {
-	     get { return _customerName; }
-		 set
-		 {
-		   if(_customerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=_customerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerName=value;
-		   }
-		 }
-	   }
 	  private DateTime? _lastShipmentDateInQueue ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -172,22 +164,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastShipmentDateInQueue",OldValue=_lastShipmentDateInQueue,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _lastShipmentDateInQueue=value;
-		   }
-		 }
-	   }
-	  private DateTime _hybridStartDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime HybridStartDate  
-	   {
-	     get { return _hybridStartDate; }
-		 set
-		 {
-		   if(_hybridStartDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HybridStartDate",OldValue=_hybridStartDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _hybridStartDate=value;
 		   }
 		 }
 	   }
@@ -239,38 +215,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _statusType ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusType  
-	   {
-	     get { return _statusType; }
-		 set
-		 {
-		   if(_statusType != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusType",OldValue=_statusType,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusType=value;
-		   }
-		 }
-	   }
-	  private bool _buildBatch ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool BuildBatch  
-	   {
-	     get { return _buildBatch; }
-		 set
-		 {
-		   if(_buildBatch != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BuildBatch",OldValue=_buildBatch,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _buildBatch=value;
-		   }
-		 }
-	   }
+		private CustomerTenantAccessStatusTypePM _statustype;
+		[Include]
+        [DataMember]
+        public virtual CustomerTenantAccessStatusTypePM StatusType 
+		{ 
+		get { return _statustype; } 
+		set { _statustype = value; }
+		}
 	  private bool _isExportActivated ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

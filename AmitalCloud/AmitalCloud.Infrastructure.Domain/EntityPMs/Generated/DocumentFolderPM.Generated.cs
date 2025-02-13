@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -34,7 +35,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isExternalFolder = entity.IsExternalFolder;
 		_searchFields = entity.SearchFields;
 		_parentFolderId = entity.ParentFolderId;
-   }
+		_parentfolder = entity.ParentFolder !=null ? new DocumentFolderPM(entity.ParentFolder) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -166,6 +168,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentFolderPM _parentfolder;
+		[Include]
+        [DataMember]
+        public virtual DocumentFolderPM ParentFolder 
+		{ 
+		get { return _parentfolder; } 
+		set { _parentfolder = value; }
+		}
 	 }
 #endregion Properties
 }

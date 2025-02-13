@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -40,8 +41,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isNew = entity.IsNew;
 		_featureCode = entity.FeatureCode;
 		_tenant = entity.Tenant;
-		_file = default;
-		_fileExtension = default;
 		_inactive = entity.Inactive;
    }
    #endregion Constructors
@@ -268,38 +267,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _tenant=value;
-		   }
-		 }
-	   }
-	  private byte[] _file ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public byte[] File  
-	   {
-	     get { return _file; }
-		 set
-		 {
-		   if(_file != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="File",OldValue=_file,NewValue=value,PropertyType="byte[]"};
-		    NotifyPropertyChanged(values);
-		   _file=value;
-		   }
-		 }
-	   }
-	  private string _fileExtension ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FileExtension  
-	   {
-	     get { return _fileExtension; }
-		 set
-		 {
-		   if(_fileExtension != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileExtension",OldValue=_fileExtension,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fileExtension=value;
 		   }
 		 }
 	   }

@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -28,46 +29,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_isHybrid = entity.IsHybrid;
 		_defaultQuestionnaireId = entity.DefaultQuestionnaireId;
-		_allowAgentInShipmentCustomersLOV = default;
 		_isMobileActivated = entity.IsMobileActivated;
 		_allowEAWBMoreThanTenPackages = entity.AllowEAWBMoreThanTenPackages;
-		_isDocumentsArchive = default;
 		_signature = entity.Signature;
 		_iATA = entity.IATA;
 		_vatNumber = entity.VatNumber;
 		_addressId = entity.AddressId;
 		_company = entity.Company;
 		_paymentTermId = entity.PaymentTermId;
-		_agentId = entity.AgentId;
-		_currencyId = entity.CurrencyId;
+		_paymentterm = entity.PaymentTerm !=null ? new PaymentTermPM(entity.PaymentTerm) : null;
+			_agentId = entity.AgentId;
+		_agentcard = entity.AgentCard !=null ? new CardPM(entity.AgentCard) : null;
+			_currencyId = entity.CurrencyId;
 		_profitCurrencyId = entity.ProfitCurrencyId;
-		_freightCurrencyId = entity.FreightCurrencyId;
-		_otherChargesCurrencyId = entity.OtherChargesCurrencyId;
-		_quoteSaleCurrencyId = entity.QuoteSaleCurrencyId;
-		_volumeUnitCode = entity.VolumeUnitCode;
-		_dimensionsUnitCode = entity.DimensionsUnitCode;
-		_grossWeightUnitCode = entity.GrossWeightUnitCode;
-		_chargeableWeightUnitCode = entity.ChargeableWeightUnitCode;
-		_weightMeasurementUnitCode = entity.WeightMeasurementUnitCode;
-		_exportFreightPrepaidCollectId = entity.ExportFreightPrepaidCollectId;
-		_importFreightPrepaidCollectId = entity.ImportFreightPrepaidCollectId;
-		_exportOtherPrepaidCollectId = entity.ExportOtherPrepaidCollectId;
-		_importOtherPrepaidCollectId = entity.ImportOtherPrepaidCollectId;
-		_masterExportFreightPrepaidCollectId = entity.MasterExportFreightPrepaidCollectId;
-		_masterImportFreightPrepaidCollectId = entity.MasterImportFreightPrepaidCollectId;
-		_masterExportOtherPrepaidCollectId = entity.MasterExportOtherPrepaidCollectId;
-		_masterImportOtherPrepaidCollectId = entity.MasterImportOtherPrepaidCollectId;
-		_sTDVatPercentage = default;
-		_timeZoneOffset = entity.TimeZoneOffset;
+		_profitcurrency = entity.ProfitCurrency !=null ? new CurrencyPM(entity.ProfitCurrency) : null;
+			_freightCurrencyId = entity.FreightCurrencyId;
+		_freightcurrency = entity.FreightCurrency !=null ? new CurrencyPM(entity.FreightCurrency) : null;
+			_otherChargesCurrencyId = entity.OtherChargesCurrencyId;
+		_otherchargescurrency = entity.OtherChargesCurrency !=null ? new CurrencyPM(entity.OtherChargesCurrency) : null;
+			_quoteSaleCurrencyId = entity.QuoteSaleCurrencyId;
+		_quotesalecurrency = entity.QuoteSaleCurrency !=null ? new CurrencyPM(entity.QuoteSaleCurrency) : null;
+			_volumeUnitCode = entity.VolumeUnitCode;
+		_volumeunit = entity.VolumeUnit !=null ? new VolumeUnitPM(entity.VolumeUnit) : null;
+			_dimensionsUnitCode = entity.DimensionsUnitCode;
+		_dimensionsunit = entity.DimensionsUnit !=null ? new DimensionsUnitPM(entity.DimensionsUnit) : null;
+			_grossWeightUnitCode = entity.GrossWeightUnitCode;
+		_grossweightunit = entity.GrossWeightUnit !=null ? new WeightUnitPM(entity.GrossWeightUnit) : null;
+			_chargeableWeightUnitCode = entity.ChargeableWeightUnitCode;
+		_weightunit = entity.WeightUnit !=null ? new WeightUnitPM(entity.WeightUnit) : null;
+			_weightMeasurementUnitCode = entity.WeightMeasurementUnitCode;
+		_chargeableweightunit = entity.ChargeableWeightUnit !=null ? new WeightUnitPM(entity.ChargeableWeightUnit) : null;
+			_exportFreightPrepaidCollectId = entity.ExportFreightPrepaidCollectId;
+		_exportfreightprepaidcollect = entity.ExportFreightPrepaidCollect !=null ? new PrepaidCollectPM(entity.ExportFreightPrepaidCollect) : null;
+			_importFreightPrepaidCollectId = entity.ImportFreightPrepaidCollectId;
+		_importfreightprepaidcollect = entity.ImportFreightPrepaidCollect !=null ? new PrepaidCollectPM(entity.ImportFreightPrepaidCollect) : null;
+			_exportOtherPrepaidCollectId = entity.ExportOtherPrepaidCollectId;
+		_exportotherprepaidcollect = entity.ExportOtherPrepaidCollect !=null ? new PrepaidCollectPM(entity.ExportOtherPrepaidCollect) : null;
+			_importOtherPrepaidCollectId = entity.ImportOtherPrepaidCollectId;
+		_importotherprepaidcollect = entity.ImportOtherPrepaidCollect !=null ? new PrepaidCollectPM(entity.ImportOtherPrepaidCollect) : null;
+			_masterExportFreightPrepaidCollectId = entity.MasterExportFreightPrepaidCollectId;
+		_masterexportfreightprepaidcollect = entity.MasterExportFreightPrepaidCollect !=null ? new PrepaidCollectPM(entity.MasterExportFreightPrepaidCollect) : null;
+			_masterImportFreightPrepaidCollectId = entity.MasterImportFreightPrepaidCollectId;
+		_masterimportfreightprepaidcollect = entity.MasterImportFreightPrepaidCollect !=null ? new PrepaidCollectPM(entity.MasterImportFreightPrepaidCollect) : null;
+			_masterExportOtherPrepaidCollectId = entity.MasterExportOtherPrepaidCollectId;
+		_masterexportotherprepaidcollect = entity.MasterExportOtherPrepaidCollect !=null ? new PrepaidCollectPM(entity.MasterExportOtherPrepaidCollect) : null;
+			_masterImportOtherPrepaidCollectId = entity.MasterImportOtherPrepaidCollectId;
+		_masterimportotherprepaidcollect = entity.MasterImportOtherPrepaidCollect !=null ? new PrepaidCollectPM(entity.MasterImportOtherPrepaidCollect) : null;
+			_timeZoneOffset = entity.TimeZoneOffset;
 		_language = entity.Language;
-		_companyAddress = default;
-		_paymentTermName = default;
-		_agentName = default;
-		_accountingCurrencyCode = default;
-		_profitCurrencyCode = default;
-		_freightCurrencyCode = default;
-		_otherChargesCurrencyCode = default;
-		_quoteSaleCurrencyCode = default;
 		_id = entity.Id;
 		_email = entity.Email;
 		_website = entity.Website;
@@ -77,24 +86,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_dayLightStartDate = entity.DayLightStartDate;
 		_dayLightEndDate = entity.DayLightEndDate;
 		_passwordPolicyCode = entity.PasswordPolicyCode;
-		_passwordStrength = default;
-		_isDataBackupBuilt = entity.IsDataBackupBuilt;
-		_countryName = default;
-		_packageCode = default;
+		_passwordpolicy = entity.PasswordPolicy !=null ? new PasswordPolicyPM(entity.PasswordPolicy) : null;
+			_isDataBackupBuilt = entity.IsDataBackupBuilt;
 		_invoiceSection1 = entity.InvoiceSection1;
 		_invoiceSection2 = entity.InvoiceSection2;
 		_bankDetails = entity.BankDetails;
 		_dateTimeFormat = entity.DateTimeFormat;
 		_isSharedLogisticsActivated = entity.IsSharedLogisticsActivated;
 		_sharedLogisticsMessageLink = entity.SharedLogisticsMessageLink;
-		_profitCurrencyRate = default;
 		_cASSCode = entity.CASSCode;
 		_localCustomsCode = entity.LocalCustomsCode;
 		_vatUniqueTypeCode = entity.VatUniqueTypeCode;
-		_vatMandatoryTypeCode = entity.VatMandatoryTypeCode;
-		_vatUniqueCountryId = entity.VatUniqueCountryId;
-		_vatMandatoryCountryId = entity.VatMandatoryCountryId;
-		_isCustomerTelRequired = entity.IsCustomerTelRequired;
+		_vatuniquetype = entity.VatUniqueType !=null ? new VatUniqueTypePM(entity.VatUniqueType) : null;
+			_vatMandatoryTypeCode = entity.VatMandatoryTypeCode;
+		_vatmandatorytype = entity.VatMandatoryType !=null ? new VatMandatoryTypePM(entity.VatMandatoryType) : null;
+			_vatUniqueCountryId = entity.VatUniqueCountryId;
+		_vatuniquecountry = entity.VatUniqueCountry !=null ? new CountryPM(entity.VatUniqueCountry) : null;
+			_vatMandatoryCountryId = entity.VatMandatoryCountryId;
+		_vatmandatorycountry = entity.VatMandatoryCountry !=null ? new CountryPM(entity.VatMandatoryCountry) : null;
+			_isCustomerTelRequired = entity.IsCustomerTelRequired;
 		_isCustomerFaxRequired = entity.IsCustomerFaxRequired;
 		_isPickDelAdrsRequired = entity.IsPickDelAdrsRequired;
 		_isCustomerAddress1Required = entity.IsCustomerAddress1Required;
@@ -104,33 +114,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_regulatedAgentNumber = entity.RegulatedAgentNumber;
 		_regulatedAgentRegimeActivated = entity.RegulatedAgentRegimeActivated;
 		_customerId = entity.CustomerId;
-		_customerName = default;
-		_customerTenantShareCustomsFile = entity.CustomerTenantShareCustomsFile;
-		_customerTenantShareImportFile = default;
+		_customercard = entity.CustomerCard !=null ? new CardPM(entity.CustomerCard) : null;
+			_customerTenantShareCustomsFile = entity.CustomerTenantShareCustomsFile;
 		_isPotentialTelRequired = entity.IsPotentialTelRequired;
 		_isPotentialFaxRequired = entity.IsPotentialFaxRequired;
 		_vatFormatTypeCode = entity.VatFormatTypeCode;
-		_vatFormatCountryId = entity.VatFormatCountryId;
-		_isNumeric = entity.IsNumeric;
+		_vatformattype = entity.VatFormatType !=null ? new VatFormatTypePM(entity.VatFormatType) : null;
+			_vatFormatCountryId = entity.VatFormatCountryId;
+		_vatformatcountry = entity.VatFormatCountry !=null ? new CountryPM(entity.VatFormatCountry) : null;
+			_isNumeric = entity.IsNumeric;
 		_vatSize = entity.VatSize;
-		_logBoxAdminUserId = default;
 		_searchFields = entity.SearchFields;
-		_accountingCurrencyName = default;
-		_countryCode = default;
-		_temporalPackageCode = default;
-		_temporalStartDate = default;
-		_temporalEndDate = default;
-		_currencyCode = default;
-		_customerMobile = default;
-		_customerPhone = default;
-		_createTenantFromSignUp = default;
 		_accountingActivationDate = entity.AccountingActivationDate;
 		_accountingActivated = entity.AccountingActivated;
-		_currencySign = default;
 		_exportQuotationsToIntegratedSystem = entity.ExportQuotationsToIntegratedSystem;
-		_stockTypeCode = default;
 		_tenantVATManagement = entity.TenantVATManagement;
-		_documentShareAsDefault = default;
 		_storageEncryptionKey = entity.StorageEncryptionKey;
 		_layoutDirection = entity.LayoutDirection;
 		_isWebAccessActivated = entity.IsWebAccessActivated;
@@ -142,24 +140,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isNotesRightToLeftEnabled = entity.IsNotesRightToLeftEnabled;
 		_allowAgentInCustomersLOV = entity.AllowAgentInCustomersLOV;
 		_temperatureUnitCode = entity.TemperatureUnitCode;
-		_defaultSLAId = entity.DefaultSLAId;
+		_temperatureunit = entity.TemperatureUnit !=null ? new TemperatureUnitPM(entity.TemperatureUnit) : null;
+			_defaultSLAId = entity.DefaultSLAId;
 		_localAddressId = entity.LocalAddressId;
-		_privateLabelId = default;
-		_autoArchiveOnInvoice = default;
-		_numberFormatCode = entity.NumberFormatCode;
-		_customerTenantShareExportFile = entity.CustomerTenantShareExportFile;
+		_localaddress = entity.LocalAddress !=null ? new AddressPM(entity.LocalAddress) : null;
+			_numberFormatCode = entity.NumberFormatCode;
+		_numberformat = entity.NumberFormat !=null ? new NumberFormatPM(entity.NumberFormat) : null;
+			_customerTenantShareExportFile = entity.CustomerTenantShareExportFile;
 		_ecommerceSupportEmail = entity.EcommerceSupportEmail;
 		_cBSA = entity.CBSA;
 		_cAAT = entity.CAAT;
 		_isTestTenant = entity.IsTestTenant;
 		_checkDigitControlAlgorithmCode = entity.CheckDigitControlAlgorithmCode;
-		_hideFCLAllIn = entity.HideFCLAllIn;
+		_checkdigitcontrolalgorithm = entity.CheckDigitControlAlgorithm !=null ? new CheckDigitControlAlgorithmPM(entity.CheckDigitControlAlgorithm) : null;
+			_hideFCLAllIn = entity.HideFCLAllIn;
 		_applyVATForAllPartners = entity.ApplyVATForAllPartners;
 		_allowCustomersInAgentsLOV = entity.AllowCustomersInAgentsLOV;
 		_displayDocumentsAndEvents = entity.DisplayDocumentsAndEvents;
-		_showTaxAmountWarning = default;
 		_vatUniquePartnerTypeCode = entity.VatUniquePartnerTypeCode;
-		_isIncrementalBuildRunning = entity.IsIncrementalBuildRunning;
+		_vatuniquepartnertype = entity.VatUniquePartnerType !=null ? new VatUniquePartnerTypePM(entity.VatUniquePartnerType) : null;
+			_isIncrementalBuildRunning = entity.IsIncrementalBuildRunning;
 		_transferQuotationsToUnifreightTrigger = entity.TransferQuotationsToUnifreightTrigger;
 		_sharedLogisMasterMessageLink = entity.SharedLogisMasterMessageLink;
 		_airRatio = entity.AirRatio;
@@ -175,12 +175,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isDigitalPortalAccessActivated = entity.IsDigitalPortalAccessActivated;
 		_useNewTermsOfUse = entity.UseNewTermsOfUse;
 		_shipmentATADateIndicator = entity.ShipmentATADateIndicator;
-		_autoArchiveOnPODExport = default;
 		_showMultiUnitsOfMeasurements = entity.ShowMultiUnitsOfMeasurements;
 		_approveUploadedDocuments = entity.ApproveUploadedDocuments;
-		_dPArchiveShipmentCreateFilter = default;
-		_dPArchiveShipmentArrivalFilter = default;
-		_dPArchiveShipmentDepartFilter = default;
 		_jouranlApprovalIsIdle = entity.JouranlApprovalIsIdle;
 		_ecommerceTenant = entity.EcommerceTenant;
    }
@@ -218,22 +214,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _allowAgentInShipmentCustomersLOV ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool AllowAgentInShipmentCustomersLOV  
-	   {
-	     get { return _allowAgentInShipmentCustomersLOV; }
-		 set
-		 {
-		   if(_allowAgentInShipmentCustomersLOV != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowAgentInShipmentCustomersLOV",OldValue=_allowAgentInShipmentCustomersLOV,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _allowAgentInShipmentCustomersLOV=value;
-		   }
-		 }
-	   }
 	  private bool _isMobileActivated ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -263,22 +243,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowEAWBMoreThanTenPackages",OldValue=_allowEAWBMoreThanTenPackages,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _allowEAWBMoreThanTenPackages=value;
-		   }
-		 }
-	   }
-	  private bool _isDocumentsArchive ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsDocumentsArchive  
-	   {
-	     get { return _isDocumentsArchive; }
-		 set
-		 {
-		   if(_isDocumentsArchive != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDocumentsArchive",OldValue=_isDocumentsArchive,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isDocumentsArchive=value;
 		   }
 		 }
 	   }
@@ -378,6 +342,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PaymentTermPM _paymentterm;
+		[Include]
+        [DataMember]
+        public virtual PaymentTermPM PaymentTerm 
+		{ 
+		get { return _paymentterm; } 
+		set { _paymentterm = value; }
+		}
 	  private string _agentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -394,6 +366,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _agentcard;
+		[Include]
+        [DataMember]
+        public virtual CardPM AgentCard 
+		{ 
+		get { return _agentcard; } 
+		set { _agentcard = value; }
+		}
 	  private string _currencyId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -426,6 +406,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _profitcurrency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM ProfitCurrency 
+		{ 
+		get { return _profitcurrency; } 
+		set { _profitcurrency = value; }
+		}
 	  private string _freightCurrencyId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -442,6 +430,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _freightcurrency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM FreightCurrency 
+		{ 
+		get { return _freightcurrency; } 
+		set { _freightcurrency = value; }
+		}
 	  private string _otherChargesCurrencyId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -458,6 +454,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _otherchargescurrency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM OtherChargesCurrency 
+		{ 
+		get { return _otherchargescurrency; } 
+		set { _otherchargescurrency = value; }
+		}
 	  private string _quoteSaleCurrencyId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -474,6 +478,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _quotesalecurrency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM QuoteSaleCurrency 
+		{ 
+		get { return _quotesalecurrency; } 
+		set { _quotesalecurrency = value; }
+		}
 	  private string _volumeUnitCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -490,6 +502,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VolumeUnitPM _volumeunit;
+		[Include]
+        [DataMember]
+        public virtual VolumeUnitPM VolumeUnit 
+		{ 
+		get { return _volumeunit; } 
+		set { _volumeunit = value; }
+		}
 	  private string _dimensionsUnitCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -506,6 +526,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DimensionsUnitPM _dimensionsunit;
+		[Include]
+        [DataMember]
+        public virtual DimensionsUnitPM DimensionsUnit 
+		{ 
+		get { return _dimensionsunit; } 
+		set { _dimensionsunit = value; }
+		}
 	  private string _grossWeightUnitCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -522,6 +550,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private WeightUnitPM _grossweightunit;
+		[Include]
+        [DataMember]
+        public virtual WeightUnitPM GrossWeightUnit 
+		{ 
+		get { return _grossweightunit; } 
+		set { _grossweightunit = value; }
+		}
 	  private string _chargeableWeightUnitCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -538,6 +574,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private WeightUnitPM _weightunit;
+		[Include]
+        [DataMember]
+        public virtual WeightUnitPM WeightUnit 
+		{ 
+		get { return _weightunit; } 
+		set { _weightunit = value; }
+		}
 	  private string _weightMeasurementUnitCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -554,6 +598,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private WeightUnitPM _chargeableweightunit;
+		[Include]
+        [DataMember]
+        public virtual WeightUnitPM ChargeableWeightUnit 
+		{ 
+		get { return _chargeableweightunit; } 
+		set { _chargeableweightunit = value; }
+		}
 	  private string _exportFreightPrepaidCollectId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -570,6 +622,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PrepaidCollectPM _exportfreightprepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM ExportFreightPrepaidCollect 
+		{ 
+		get { return _exportfreightprepaidcollect; } 
+		set { _exportfreightprepaidcollect = value; }
+		}
 	  private string _importFreightPrepaidCollectId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -586,6 +646,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PrepaidCollectPM _importfreightprepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM ImportFreightPrepaidCollect 
+		{ 
+		get { return _importfreightprepaidcollect; } 
+		set { _importfreightprepaidcollect = value; }
+		}
 	  private string _exportOtherPrepaidCollectId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -602,6 +670,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PrepaidCollectPM _exportotherprepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM ExportOtherPrepaidCollect 
+		{ 
+		get { return _exportotherprepaidcollect; } 
+		set { _exportotherprepaidcollect = value; }
+		}
 	  private string _importOtherPrepaidCollectId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -618,6 +694,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PrepaidCollectPM _importotherprepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM ImportOtherPrepaidCollect 
+		{ 
+		get { return _importotherprepaidcollect; } 
+		set { _importotherprepaidcollect = value; }
+		}
 	  private string _masterExportFreightPrepaidCollectId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -634,6 +718,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PrepaidCollectPM _masterexportfreightprepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM MasterExportFreightPrepaidCollect 
+		{ 
+		get { return _masterexportfreightprepaidcollect; } 
+		set { _masterexportfreightprepaidcollect = value; }
+		}
 	  private string _masterImportFreightPrepaidCollectId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -650,6 +742,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PrepaidCollectPM _masterimportfreightprepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM MasterImportFreightPrepaidCollect 
+		{ 
+		get { return _masterimportfreightprepaidcollect; } 
+		set { _masterimportfreightprepaidcollect = value; }
+		}
 	  private string _masterExportOtherPrepaidCollectId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -666,6 +766,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PrepaidCollectPM _masterexportotherprepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM MasterExportOtherPrepaidCollect 
+		{ 
+		get { return _masterexportotherprepaidcollect; } 
+		set { _masterexportotherprepaidcollect = value; }
+		}
 	  private string _masterImportOtherPrepaidCollectId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -682,22 +790,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private double _sTDVatPercentage ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double STDVatPercentage  
-	   {
-	     get { return _sTDVatPercentage; }
-		 set
-		 {
-		   if(_sTDVatPercentage != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="STDVatPercentage",OldValue=_sTDVatPercentage,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _sTDVatPercentage=value;
-		   }
-		 }
-	   }
+		private PrepaidCollectPM _masterimportotherprepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM MasterImportOtherPrepaidCollect 
+		{ 
+		get { return _masterimportotherprepaidcollect; } 
+		set { _masterimportotherprepaidcollect = value; }
+		}
 	  private double? _timeZoneOffset ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -727,134 +827,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Language",OldValue=_language,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _language=value;
-		   }
-		 }
-	   }
-	  private string _companyAddress ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CompanyAddress  
-	   {
-	     get { return _companyAddress; }
-		 set
-		 {
-		   if(_companyAddress != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CompanyAddress",OldValue=_companyAddress,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _companyAddress=value;
-		   }
-		 }
-	   }
-	  private string _paymentTermName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PaymentTermName  
-	   {
-	     get { return _paymentTermName; }
-		 set
-		 {
-		   if(_paymentTermName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentTermName",OldValue=_paymentTermName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _paymentTermName=value;
-		   }
-		 }
-	   }
-	  private string _agentName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AgentName  
-	   {
-	     get { return _agentName; }
-		 set
-		 {
-		   if(_agentName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AgentName",OldValue=_agentName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _agentName=value;
-		   }
-		 }
-	   }
-	  private string _accountingCurrencyCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AccountingCurrencyCode  
-	   {
-	     get { return _accountingCurrencyCode; }
-		 set
-		 {
-		   if(_accountingCurrencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingCurrencyCode",OldValue=_accountingCurrencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _accountingCurrencyCode=value;
-		   }
-		 }
-	   }
-	  private string _profitCurrencyCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProfitCurrencyCode  
-	   {
-	     get { return _profitCurrencyCode; }
-		 set
-		 {
-		   if(_profitCurrencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfitCurrencyCode",OldValue=_profitCurrencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _profitCurrencyCode=value;
-		   }
-		 }
-	   }
-	  private string _freightCurrencyCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FreightCurrencyCode  
-	   {
-	     get { return _freightCurrencyCode; }
-		 set
-		 {
-		   if(_freightCurrencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FreightCurrencyCode",OldValue=_freightCurrencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _freightCurrencyCode=value;
-		   }
-		 }
-	   }
-	  private string _otherChargesCurrencyCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OtherChargesCurrencyCode  
-	   {
-	     get { return _otherChargesCurrencyCode; }
-		 set
-		 {
-		   if(_otherChargesCurrencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OtherChargesCurrencyCode",OldValue=_otherChargesCurrencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _otherChargesCurrencyCode=value;
-		   }
-		 }
-	   }
-	  private string _quoteSaleCurrencyCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string QuoteSaleCurrencyCode  
-	   {
-	     get { return _quoteSaleCurrencyCode; }
-		 set
-		 {
-		   if(_quoteSaleCurrencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteSaleCurrencyCode",OldValue=_quoteSaleCurrencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _quoteSaleCurrencyCode=value;
 		   }
 		 }
 	   }
@@ -1003,22 +975,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _passwordStrength ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PasswordStrength  
-	   {
-	     get { return _passwordStrength; }
-		 set
-		 {
-		   if(_passwordStrength != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PasswordStrength",OldValue=_passwordStrength,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _passwordStrength=value;
-		   }
-		 }
-	   }
+		private PasswordPolicyPM _passwordpolicy;
+		[Include]
+        [DataMember]
+        public virtual PasswordPolicyPM PasswordPolicy 
+		{ 
+		get { return _passwordpolicy; } 
+		set { _passwordpolicy = value; }
+		}
 	  private bool _isDataBackupBuilt ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1032,38 +996,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDataBackupBuilt",OldValue=_isDataBackupBuilt,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isDataBackupBuilt=value;
-		   }
-		 }
-	   }
-	  private string _countryName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryName  
-	   {
-	     get { return _countryName; }
-		 set
-		 {
-		   if(_countryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryName",OldValue=_countryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryName=value;
-		   }
-		 }
-	   }
-	  private string _packageCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageCode  
-	   {
-	     get { return _packageCode; }
-		 set
-		 {
-		   if(_packageCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageCode",OldValue=_packageCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageCode=value;
 		   }
 		 }
 	   }
@@ -1163,22 +1095,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private double _profitCurrencyRate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double ProfitCurrencyRate  
-	   {
-	     get { return _profitCurrencyRate; }
-		 set
-		 {
-		   if(_profitCurrencyRate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfitCurrencyRate",OldValue=_profitCurrencyRate,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _profitCurrencyRate=value;
-		   }
-		 }
-	   }
 	  private string _cASSCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1227,6 +1143,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VatUniqueTypePM _vatuniquetype;
+		[Include]
+        [DataMember]
+        public virtual VatUniqueTypePM VatUniqueType 
+		{ 
+		get { return _vatuniquetype; } 
+		set { _vatuniquetype = value; }
+		}
 	  private string _vatMandatoryTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1243,6 +1167,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VatMandatoryTypePM _vatmandatorytype;
+		[Include]
+        [DataMember]
+        public virtual VatMandatoryTypePM VatMandatoryType 
+		{ 
+		get { return _vatmandatorytype; } 
+		set { _vatmandatorytype = value; }
+		}
 	  private string _vatUniqueCountryId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1259,6 +1191,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CountryPM _vatuniquecountry;
+		[Include]
+        [DataMember]
+        public virtual CountryPM VatUniqueCountry 
+		{ 
+		get { return _vatuniquecountry; } 
+		set { _vatuniquecountry = value; }
+		}
 	  private string _vatMandatoryCountryId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1275,6 +1215,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CountryPM _vatmandatorycountry;
+		[Include]
+        [DataMember]
+        public virtual CountryPM VatMandatoryCountry 
+		{ 
+		get { return _vatmandatorycountry; } 
+		set { _vatmandatorycountry = value; }
+		}
 	  private bool _isCustomerTelRequired ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1435,22 +1383,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _customerName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerName  
-	   {
-	     get { return _customerName; }
-		 set
-		 {
-		   if(_customerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=_customerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerName=value;
-		   }
-		 }
-	   }
+		private CardPM _customercard;
+		[Include]
+        [DataMember]
+        public virtual CardPM CustomerCard 
+		{ 
+		get { return _customercard; } 
+		set { _customercard = value; }
+		}
 	  private bool _customerTenantShareCustomsFile ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1464,22 +1404,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerTenantShareCustomsFile",OldValue=_customerTenantShareCustomsFile,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _customerTenantShareCustomsFile=value;
-		   }
-		 }
-	   }
-	  private string _customerTenantShareImportFile ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerTenantShareImportFile  
-	   {
-	     get { return _customerTenantShareImportFile; }
-		 set
-		 {
-		   if(_customerTenantShareImportFile != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerTenantShareImportFile",OldValue=_customerTenantShareImportFile,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerTenantShareImportFile=value;
 		   }
 		 }
 	   }
@@ -1531,6 +1455,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VatFormatTypePM _vatformattype;
+		[Include]
+        [DataMember]
+        public virtual VatFormatTypePM VatFormatType 
+		{ 
+		get { return _vatformattype; } 
+		set { _vatformattype = value; }
+		}
 	  private string _vatFormatCountryId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1547,6 +1479,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CountryPM _vatformatcountry;
+		[Include]
+        [DataMember]
+        public virtual CountryPM VatFormatCountry 
+		{ 
+		get { return _vatformatcountry; } 
+		set { _vatformatcountry = value; }
+		}
 	  private bool _isNumeric ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1579,22 +1519,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _logBoxAdminUserId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LogBoxAdminUserId  
-	   {
-	     get { return _logBoxAdminUserId; }
-		 set
-		 {
-		   if(_logBoxAdminUserId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LogBoxAdminUserId",OldValue=_logBoxAdminUserId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _logBoxAdminUserId=value;
-		   }
-		 }
-	   }
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1608,150 +1532,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private string _accountingCurrencyName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AccountingCurrencyName  
-	   {
-	     get { return _accountingCurrencyName; }
-		 set
-		 {
-		   if(_accountingCurrencyName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingCurrencyName",OldValue=_accountingCurrencyName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _accountingCurrencyName=value;
-		   }
-		 }
-	   }
-	  private string _countryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryCode  
-	   {
-	     get { return _countryCode; }
-		 set
-		 {
-		   if(_countryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryCode",OldValue=_countryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryCode=value;
-		   }
-		 }
-	   }
-	  private string _temporalPackageCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TemporalPackageCode  
-	   {
-	     get { return _temporalPackageCode; }
-		 set
-		 {
-		   if(_temporalPackageCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TemporalPackageCode",OldValue=_temporalPackageCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _temporalPackageCode=value;
-		   }
-		 }
-	   }
-	  private DateTime _temporalStartDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime TemporalStartDate  
-	   {
-	     get { return _temporalStartDate; }
-		 set
-		 {
-		   if(_temporalStartDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TemporalStartDate",OldValue=_temporalStartDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _temporalStartDate=value;
-		   }
-		 }
-	   }
-	  private DateTime _temporalEndDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime TemporalEndDate  
-	   {
-	     get { return _temporalEndDate; }
-		 set
-		 {
-		   if(_temporalEndDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TemporalEndDate",OldValue=_temporalEndDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _temporalEndDate=value;
-		   }
-		 }
-	   }
-	  private string _currencyCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CurrencyCode  
-	   {
-	     get { return _currencyCode; }
-		 set
-		 {
-		   if(_currencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=_currencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _currencyCode=value;
-		   }
-		 }
-	   }
-	  private string _customerMobile ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerMobile  
-	   {
-	     get { return _customerMobile; }
-		 set
-		 {
-		   if(_customerMobile != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerMobile",OldValue=_customerMobile,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerMobile=value;
-		   }
-		 }
-	   }
-	  private string _customerPhone ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerPhone  
-	   {
-	     get { return _customerPhone; }
-		 set
-		 {
-		   if(_customerPhone != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerPhone",OldValue=_customerPhone,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerPhone=value;
-		   }
-		 }
-	   }
-	  private bool _createTenantFromSignUp ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool CreateTenantFromSignUp  
-	   {
-	     get { return _createTenantFromSignUp; }
-		 set
-		 {
-		   if(_createTenantFromSignUp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateTenantFromSignUp",OldValue=_createTenantFromSignUp,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _createTenantFromSignUp=value;
 		   }
 		 }
 	   }
@@ -1787,22 +1567,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _currencySign ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CurrencySign  
-	   {
-	     get { return _currencySign; }
-		 set
-		 {
-		   if(_currencySign != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencySign",OldValue=_currencySign,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _currencySign=value;
-		   }
-		 }
-	   }
 	  private bool _exportQuotationsToIntegratedSystem ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1819,22 +1583,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _stockTypeCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StockTypeCode  
-	   {
-	     get { return _stockTypeCode; }
-		 set
-		 {
-		   if(_stockTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StockTypeCode",OldValue=_stockTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _stockTypeCode=value;
-		   }
-		 }
-	   }
 	  private bool _tenantVATManagement ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1848,22 +1596,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantVATManagement",OldValue=_tenantVATManagement,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _tenantVATManagement=value;
-		   }
-		 }
-	   }
-	  private bool _documentShareAsDefault ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool DocumentShareAsDefault  
-	   {
-	     get { return _documentShareAsDefault; }
-		 set
-		 {
-		   if(_documentShareAsDefault != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentShareAsDefault",OldValue=_documentShareAsDefault,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _documentShareAsDefault=value;
 		   }
 		 }
 	   }
@@ -2043,6 +1775,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TemperatureUnitPM _temperatureunit;
+		[Include]
+        [DataMember]
+        public virtual TemperatureUnitPM TemperatureUnit 
+		{ 
+		get { return _temperatureunit; } 
+		set { _temperatureunit = value; }
+		}
 	  private string _defaultSLAId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2075,38 +1815,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _privateLabelId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PrivateLabelId  
-	   {
-	     get { return _privateLabelId; }
-		 set
-		 {
-		   if(_privateLabelId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrivateLabelId",OldValue=_privateLabelId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _privateLabelId=value;
-		   }
-		 }
-	   }
-	  private bool _autoArchiveOnInvoice ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool AutoArchiveOnInvoice  
-	   {
-	     get { return _autoArchiveOnInvoice; }
-		 set
-		 {
-		   if(_autoArchiveOnInvoice != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutoArchiveOnInvoice",OldValue=_autoArchiveOnInvoice,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _autoArchiveOnInvoice=value;
-		   }
-		 }
-	   }
+		private AddressPM _localaddress;
+		[Include]
+        [DataMember]
+        public virtual AddressPM LocalAddress 
+		{ 
+		get { return _localaddress; } 
+		set { _localaddress = value; }
+		}
 	  private string _numberFormatCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2123,6 +1839,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private NumberFormatPM _numberformat;
+		[Include]
+        [DataMember]
+        public virtual NumberFormatPM NumberFormat 
+		{ 
+		get { return _numberformat; } 
+		set { _numberformat = value; }
+		}
 	  private bool _customerTenantShareExportFile ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2219,6 +1943,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CheckDigitControlAlgorithmPM _checkdigitcontrolalgorithm;
+		[Include]
+        [DataMember]
+        public virtual CheckDigitControlAlgorithmPM CheckDigitControlAlgorithm 
+		{ 
+		get { return _checkdigitcontrolalgorithm; } 
+		set { _checkdigitcontrolalgorithm = value; }
+		}
 	  private bool _hideFCLAllIn ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2283,22 +2015,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _showTaxAmountWarning ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool ShowTaxAmountWarning  
-	   {
-	     get { return _showTaxAmountWarning; }
-		 set
-		 {
-		   if(_showTaxAmountWarning != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShowTaxAmountWarning",OldValue=_showTaxAmountWarning,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _showTaxAmountWarning=value;
-		   }
-		 }
-	   }
 	  private string _vatUniquePartnerTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2315,6 +2031,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VatUniquePartnerTypePM _vatuniquepartnertype;
+		[Include]
+        [DataMember]
+        public virtual VatUniquePartnerTypePM VatUniquePartnerType 
+		{ 
+		get { return _vatuniquepartnertype; } 
+		set { _vatuniquepartnertype = value; }
+		}
 	  private bool _isIncrementalBuildRunning ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2571,22 +2295,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _autoArchiveOnPODExport ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool AutoArchiveOnPODExport  
-	   {
-	     get { return _autoArchiveOnPODExport; }
-		 set
-		 {
-		   if(_autoArchiveOnPODExport != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutoArchiveOnPODExport",OldValue=_autoArchiveOnPODExport,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _autoArchiveOnPODExport=value;
-		   }
-		 }
-	   }
 	  private bool _showMultiUnitsOfMeasurements ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2616,54 +2324,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApproveUploadedDocuments",OldValue=_approveUploadedDocuments,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _approveUploadedDocuments=value;
-		   }
-		 }
-	   }
-	  private int? _dPArchiveShipmentCreateFilter ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int? DPArchiveShipmentCreateFilter  
-	   {
-	     get { return _dPArchiveShipmentCreateFilter; }
-		 set
-		 {
-		   if(_dPArchiveShipmentCreateFilter != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DPArchiveShipmentCreateFilter",OldValue=_dPArchiveShipmentCreateFilter,NewValue=value,PropertyType="int?"};
-		    NotifyPropertyChanged(values);
-		   _dPArchiveShipmentCreateFilter=value;
-		   }
-		 }
-	   }
-	  private int? _dPArchiveShipmentArrivalFilter ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int? DPArchiveShipmentArrivalFilter  
-	   {
-	     get { return _dPArchiveShipmentArrivalFilter; }
-		 set
-		 {
-		   if(_dPArchiveShipmentArrivalFilter != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DPArchiveShipmentArrivalFilter",OldValue=_dPArchiveShipmentArrivalFilter,NewValue=value,PropertyType="int?"};
-		    NotifyPropertyChanged(values);
-		   _dPArchiveShipmentArrivalFilter=value;
-		   }
-		 }
-	   }
-	  private int? _dPArchiveShipmentDepartFilter ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int? DPArchiveShipmentDepartFilter  
-	   {
-	     get { return _dPArchiveShipmentDepartFilter; }
-		 set
-		 {
-		   if(_dPArchiveShipmentDepartFilter != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DPArchiveShipmentDepartFilter",OldValue=_dPArchiveShipmentDepartFilter,NewValue=value,PropertyType="int?"};
-		    NotifyPropertyChanged(values);
-		   _dPArchiveShipmentDepartFilter=value;
 		   }
 		 }
 	   }

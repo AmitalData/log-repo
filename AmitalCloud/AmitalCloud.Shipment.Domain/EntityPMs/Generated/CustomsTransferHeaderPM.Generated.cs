@@ -6,6 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -34,10 +35,8 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_transferDate = entity.TransferDate;
 		_fileName = entity.FileName;
 		_customsTransferTypeCode = entity.CustomsTransferTypeCode;
-		_customsTransferTypeName = default;
-		_notes = entity.Notes;
-		_createdByUserName = default;
-		customsTransferLines = default;
+		_customstransfertype = entity.CustomsTransferType !=null ? new CustomsTransferTypePM(entity.CustomsTransferType) : null;
+			_notes = entity.Notes;
 		_shipmentNumber = entity.ShipmentNumber;
    }
    #endregion Constructors
@@ -171,22 +170,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _customsTransferTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomsTransferTypeName  
-	   {
-	     get { return _customsTransferTypeName; }
-		 set
-		 {
-		   if(_customsTransferTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsTransferTypeName",OldValue=_customsTransferTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customsTransferTypeName=value;
-		   }
-		 }
-	   }
+		private CustomsTransferTypePM _customstransfertype;
+		[Include]
+        [DataMember]
+        public virtual CustomsTransferTypePM CustomsTransferType 
+		{ 
+		get { return _customstransfertype; } 
+		set { _customstransfertype = value; }
+		}
 	  private string _notes ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -200,22 +191,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Notes",OldValue=_notes,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _notes=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
 		   }
 		 }
 	   }

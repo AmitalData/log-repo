@@ -6,6 +6,7 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -28,8 +29,8 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    {
 		_tenant = entity.Tenant;
 		_sATInterfaceCode = entity.SATInterfaceCode;
-		_token = entity.Token;
-		_sATInterfaceName = default;
+		_satinterface = entity.SATInterface !=null ? new SATInterfacePM(entity.SATInterface) : null;
+			_token = entity.Token;
 		_activationDate = entity.ActivationDate;
 		_metodoPagoCode = entity.MetodoPagoCode;
 		_isARInvoiceTransferEnabled = entity.IsARInvoiceTransferEnabled;
@@ -72,6 +73,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private SATInterfacePM _satinterface;
+		[Include]
+        [DataMember]
+        public virtual SATInterfacePM SATInterface 
+		{ 
+		get { return _satinterface; } 
+		set { _satinterface = value; }
+		}
 	  private string _token ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -85,22 +94,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Token",OldValue=_token,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _token=value;
-		   }
-		 }
-	   }
-	  private string _sATInterfaceName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SATInterfaceName  
-	   {
-	     get { return _sATInterfaceName; }
-		 set
-		 {
-		   if(_sATInterfaceName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SATInterfaceName",OldValue=_sATInterfaceName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _sATInterfaceName=value;
 		   }
 		 }
 	   }

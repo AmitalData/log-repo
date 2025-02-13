@@ -6,6 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,7 +30,8 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_packageId = entity.PackageId;
-		_harmonize = entity.Harmonize;
+		_package = entity.Package !=null ? new ShipmentPickUpDeliveryPackagePM(entity.Package) : null;
+			_harmonize = entity.Harmonize;
    }
    #endregion Constructors
    #region Properties
@@ -82,6 +84,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPickUpDeliveryPackagePM _package;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPickUpDeliveryPackagePM Package 
+		{ 
+		get { return _package; } 
+		set { _package = value; }
+		}
 	  private string _harmonize ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

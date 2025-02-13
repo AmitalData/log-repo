@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -56,7 +57,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isUserOpened = entity.IsUserOpened;
 		_tenantNumber = entity.TenantNumber;
 		_numberOfUsers = entity.NumberOfUsers;
-		_unassignedCountry = default;
 		_clientId = entity.ClientId;
 		_leadOrigin = entity.LeadOrigin;
 		_campaign = entity.Campaign;
@@ -541,22 +541,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfUsers",OldValue=_numberOfUsers,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _numberOfUsers=value;
-		   }
-		 }
-	   }
-	  private bool _unassignedCountry ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool UnassignedCountry  
-	   {
-	     get { return _unassignedCountry; }
-		 set
-		 {
-		   if(_unassignedCountry != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UnassignedCountry",OldValue=_unassignedCountry,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _unassignedCountry=value;
 		   }
 		 }
 	   }

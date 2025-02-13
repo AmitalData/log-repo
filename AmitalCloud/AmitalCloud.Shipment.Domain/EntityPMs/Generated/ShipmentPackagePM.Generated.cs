@@ -6,6 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.ServiceModel.DomainServices.Server;
@@ -34,7 +35,8 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_originalShipmentPackageId = entity.OriginalShipmentPackageId;
 		_isDeliveryFU = entity.IsDeliveryFU;
 		_deliveryId = entity.DeliveryId;
-		_deliveryETD = entity.DeliveryETD;
+		_delivery = entity.Delivery !=null ? new ShipmentPickUpDeliveryPM(entity.Delivery) : null;
+			_deliveryETD = entity.DeliveryETD;
 		_deliveryATD = entity.DeliveryATD;
 		_deliveryETA = entity.DeliveryETA;
 		_deliveryATA = entity.DeliveryATA;
@@ -42,14 +44,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_deliveryTo = entity.DeliveryTo;
 		_isEmptyContainerReturnFU = entity.IsEmptyContainerReturnFU;
 		_emptyContainerReturnId = entity.EmptyContainerReturnId;
-		_emptyContainerReturnETD = entity.EmptyContainerReturnETD;
+		_emptycontainerreturn = entity.EmptyContainerReturn !=null ? new ShipmentPickUpDeliveryPM(entity.EmptyContainerReturn) : null;
+			_emptyContainerReturnETD = entity.EmptyContainerReturnETD;
 		_emptyContainerReturnATD = entity.EmptyContainerReturnATD;
 		_emptyContainerReturnETA = entity.EmptyContainerReturnETA;
 		_emptyContainerReturnATA = entity.EmptyContainerReturnATA;
 		_emptyContainerReturnFrom = entity.EmptyContainerReturnFrom;
 		_emptyContainerReturnTo = entity.EmptyContainerReturnTo;
 		_packageTypeId = entity.PackageTypeId;
-		_packageTypeName = default;
 		_containerNumber = entity.ContainerNumber;
 		_marksAndNumbers = entity.MarksAndNumbers;
 		_description = entity.Description;
@@ -74,29 +76,11 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_isDangerous = entity.IsDangerous;
 		_volumetricWeight = entity.VolumetricWeight;
 		_commodityId = entity.CommodityId;
-		_numberOfInsidePackages = entity.NumberOfInsidePackages;
+		_commodity = entity.Commodity !=null ? new ShipmentCommodityPM(entity.Commodity) : null;
+			_numberOfInsidePackages = entity.NumberOfInsidePackages;
 		_numberOfInsidePackagesDetails = entity.NumberOfInsidePackagesDetails;
 		_vGM = entity.VGM;
 		_methodUsed = entity.MethodUsed;
-		_isContainer = default;
-		_packageTypeCode = default;
-		_printAs = default;
-		_containerSize = default;
-		_tEU = default;
-		_packageTypeIsAir = default;
-		_packageTypeIsOcean = default;
-		_packageTypeIsInland = default;
-		_packageTypeNote = default;
-		_packageTypeLocalName = default;
-		_packageTypeVolume = default;
-		_isPackageAddedManually = default;
-		_shipmentNumber = default;
-		_shipmentPMId = default;
-		_isAWBWizardDefault = default;
-		_dummyIdGuid = default;
-		_shipmentPM = default;
-		insideShipmentPackages = default;
-		shipmentPackageItems = default;
 		_reference1 = entity.Reference1;
 		_reference2 = entity.Reference2;
 		_reference3 = entity.Reference3;
@@ -109,7 +93,8 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_marinePollutant = entity.MarinePollutant;
 		_notes = entity.Notes;
 		_temperatureUnitCode = entity.TemperatureUnitCode;
-		_nonActiveContainer = entity.NonActiveContainer;
+		_temperatureunit = entity.TemperatureUnit !=null ? new TemperatureUnitPM(entity.TemperatureUnit) : null;
+			_nonActiveContainer = entity.NonActiveContainer;
 		_onCarriageETD = entity.OnCarriageETD;
 		_onCarriageATD = entity.OnCarriageATD;
 		_onCarriageETA = entity.OnCarriageETA;
@@ -117,16 +102,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_reference4 = entity.Reference4;
 		_commodityName = entity.CommodityName;
 		_lastStatusCode = entity.LastStatusCode;
-		_lastStatusName = default;
 		_lastStatusDate = entity.LastStatusDate;
 		_deliveryTransportModeCode = entity.DeliveryTransportModeCode;
-		_eCRTransportModeCode = entity.ECRTransportModeCode;
-		_flashPointTemperatureUnitCode = entity.FlashPointTemperatureUnitCode;
-		_isContainerRefrigerated = default;
-		_splitIndex = default;
-		_isFromSplit = default;
-		shipmentPackageHarmonizes = default;
-		_eTD = entity.ETD;
+		_deliverytransportmode = entity.DeliveryTransportMode !=null ? new PickUpDeliveryTransportModePM(entity.DeliveryTransportMode) : null;
+			_eCRTransportModeCode = entity.ECRTransportModeCode;
+		_ecrtransportmode = entity.ECRTransportMode !=null ? new PickUpDeliveryTransportModePM(entity.ECRTransportMode) : null;
+			_flashPointTemperatureUnitCode = entity.FlashPointTemperatureUnitCode;
+		_flashpointtemperatureunit = entity.FlashPointTemperatureUnit !=null ? new TemperatureUnitPM(entity.FlashPointTemperatureUnit) : null;
+			_eTD = entity.ETD;
 		_eTA = entity.ETA;
 		_routing = entity.Routing;
 		_voyageTripNumber = entity.VoyageTripNumber;
@@ -142,16 +125,11 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_routingIds = entity.RoutingIds;
 		_inUse = entity.InUse;
 		_horseId = entity.HorseId;
-		_horseName = default;
 		_lCLContainerTypeId = entity.LCLContainerTypeId;
-		_containerEntityId = entity.ContainerEntityId;
+		_lclpackagetype = entity.LCLPackageType !=null ? new PackageTypePM(entity.LCLPackageType) : null;
+			_containerEntityId = entity.ContainerEntityId;
 		_containerStatusSourceCode = entity.ContainerStatusSourceCode;
-		_isPackageCheckedInLeg = default;
-		_changeSet = default;
-		_containerStatusName = default;
 		_containerStrippedDate = entity.ContainerStrippedDate;
-		_volumeInCBF = default;
-		_grossWeightInLB = default;
    }
    #endregion Constructors
    #region Properties
@@ -268,6 +246,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPickUpDeliveryPM _delivery;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPickUpDeliveryPM Delivery 
+		{ 
+		get { return _delivery; } 
+		set { _delivery = value; }
+		}
 	  private DateTime? _deliveryETD ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -396,6 +382,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPickUpDeliveryPM _emptycontainerreturn;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPickUpDeliveryPM EmptyContainerReturn 
+		{ 
+		get { return _emptycontainerreturn; } 
+		set { _emptycontainerreturn = value; }
+		}
 	  private DateTime? _emptyContainerReturnETD ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -505,22 +499,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeId",OldValue=_packageTypeId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _packageTypeId=value;
-		   }
-		 }
-	   }
-	  private string _packageTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeName  
-	   {
-	     get { return _packageTypeName; }
-		 set
-		 {
-		   if(_packageTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeName",OldValue=_packageTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeName=value;
 		   }
 		 }
 	   }
@@ -908,6 +886,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentCommodityPM _commodity;
+		[Include]
+        [DataMember]
+        public virtual ShipmentCommodityPM Commodity 
+		{ 
+		get { return _commodity; } 
+		set { _commodity = value; }
+		}
 	  private int _numberOfInsidePackages ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -969,278 +955,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MethodUsed",OldValue=_methodUsed,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _methodUsed=value;
-		   }
-		 }
-	   }
-	  private bool _isContainer ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsContainer  
-	   {
-	     get { return _isContainer; }
-		 set
-		 {
-		   if(_isContainer != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsContainer",OldValue=_isContainer,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isContainer=value;
-		   }
-		 }
-	   }
-	  private string _packageTypeCode ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeCode  
-	   {
-	     get { return _packageTypeCode; }
-		 set
-		 {
-		   if(_packageTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeCode",OldValue=_packageTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeCode=value;
-		   }
-		 }
-	   }
-	  private string _printAs ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PrintAs  
-	   {
-	     get { return _printAs; }
-		 set
-		 {
-		   if(_printAs != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrintAs",OldValue=_printAs,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _printAs=value;
-		   }
-		 }
-	   }
-	  private int _containerSize ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int ContainerSize  
-	   {
-	     get { return _containerSize; }
-		 set
-		 {
-		   if(_containerSize != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerSize",OldValue=_containerSize,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _containerSize=value;
-		   }
-		 }
-	   }
-	  private double _tEU ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double TEU  
-	   {
-	     get { return _tEU; }
-		 set
-		 {
-		   if(_tEU != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TEU",OldValue=_tEU,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _tEU=value;
-		   }
-		 }
-	   }
-	  private bool _packageTypeIsAir ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool PackageTypeIsAir  
-	   {
-	     get { return _packageTypeIsAir; }
-		 set
-		 {
-		   if(_packageTypeIsAir != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeIsAir",OldValue=_packageTypeIsAir,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeIsAir=value;
-		   }
-		 }
-	   }
-	  private bool _packageTypeIsOcean ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool PackageTypeIsOcean  
-	   {
-	     get { return _packageTypeIsOcean; }
-		 set
-		 {
-		   if(_packageTypeIsOcean != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeIsOcean",OldValue=_packageTypeIsOcean,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeIsOcean=value;
-		   }
-		 }
-	   }
-	  private bool _packageTypeIsInland ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool PackageTypeIsInland  
-	   {
-	     get { return _packageTypeIsInland; }
-		 set
-		 {
-		   if(_packageTypeIsInland != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeIsInland",OldValue=_packageTypeIsInland,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeIsInland=value;
-		   }
-		 }
-	   }
-	  private string _packageTypeNote ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeNote  
-	   {
-	     get { return _packageTypeNote; }
-		 set
-		 {
-		   if(_packageTypeNote != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeNote",OldValue=_packageTypeNote,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeNote=value;
-		   }
-		 }
-	   }
-	  private string _packageTypeLocalName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeLocalName  
-	   {
-	     get { return _packageTypeLocalName; }
-		 set
-		 {
-		   if(_packageTypeLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeLocalName",OldValue=_packageTypeLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeLocalName=value;
-		   }
-		 }
-	   }
-	  private decimal _packageTypeVolume ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal PackageTypeVolume  
-	   {
-	     get { return _packageTypeVolume; }
-		 set
-		 {
-		   if(_packageTypeVolume != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeVolume",OldValue=_packageTypeVolume,NewValue=value,PropertyType="decimal"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeVolume=value;
-		   }
-		 }
-	   }
-	  private bool _isPackageAddedManually ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsPackageAddedManually  
-	   {
-	     get { return _isPackageAddedManually; }
-		 set
-		 {
-		   if(_isPackageAddedManually != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPackageAddedManually",OldValue=_isPackageAddedManually,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isPackageAddedManually=value;
-		   }
-		 }
-	   }
-	  private string _shipmentNumber ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentNumber  
-	   {
-	     get { return _shipmentNumber; }
-		 set
-		 {
-		   if(_shipmentNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentNumber",OldValue=_shipmentNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentNumber=value;
-		   }
-		 }
-	   }
-	  private string _shipmentPMId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentPMId  
-	   {
-	     get { return _shipmentPMId; }
-		 set
-		 {
-		   if(_shipmentPMId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentPMId",OldValue=_shipmentPMId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentPMId=value;
-		   }
-		 }
-	   }
-	  private bool _isAWBWizardDefault ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAWBWizardDefault  
-	   {
-	     get { return _isAWBWizardDefault; }
-		 set
-		 {
-		   if(_isAWBWizardDefault != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAWBWizardDefault",OldValue=_isAWBWizardDefault,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isAWBWizardDefault=value;
-		   }
-		 }
-	   }
-	  private string _dummyIdGuid ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DummyIdGuid  
-	   {
-	     get { return _dummyIdGuid; }
-		 set
-		 {
-		   if(_dummyIdGuid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DummyIdGuid",OldValue=_dummyIdGuid,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dummyIdGuid=value;
-		   }
-		 }
-	   }
-	  private string _shipmentPM ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentPM  
-	   {
-	     get { return _shipmentPM; }
-		 set
-		 {
-		   if(_shipmentPM != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentPM",OldValue=_shipmentPM,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentPM=value;
 		   }
 		 }
 	   }
@@ -1502,6 +1216,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TemperatureUnitPM _temperatureunit;
+		[Include]
+        [DataMember]
+        public virtual TemperatureUnitPM TemperatureUnit 
+		{ 
+		get { return _temperatureunit; } 
+		set { _temperatureunit = value; }
+		}
 	  private bool _nonActiveContainer ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1630,22 +1352,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _lastStatusName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LastStatusName  
-	   {
-	     get { return _lastStatusName; }
-		 set
-		 {
-		   if(_lastStatusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastStatusName",OldValue=_lastStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _lastStatusName=value;
-		   }
-		 }
-	   }
 	  private DateTime? _lastStatusDate ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1678,6 +1384,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PickUpDeliveryTransportModePM _deliverytransportmode;
+		[Include]
+        [DataMember]
+        public virtual PickUpDeliveryTransportModePM DeliveryTransportMode 
+		{ 
+		get { return _deliverytransportmode; } 
+		set { _deliverytransportmode = value; }
+		}
 	  private string _eCRTransportModeCode ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1694,6 +1408,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PickUpDeliveryTransportModePM _ecrtransportmode;
+		[Include]
+        [DataMember]
+        public virtual PickUpDeliveryTransportModePM ECRTransportMode 
+		{ 
+		get { return _ecrtransportmode; } 
+		set { _ecrtransportmode = value; }
+		}
 	  private string _flashPointTemperatureUnitCode ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1710,54 +1432,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isContainerRefrigerated ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsContainerRefrigerated  
-	   {
-	     get { return _isContainerRefrigerated; }
-		 set
-		 {
-		   if(_isContainerRefrigerated != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsContainerRefrigerated",OldValue=_isContainerRefrigerated,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isContainerRefrigerated=value;
-		   }
-		 }
-	   }
-	  private int _splitIndex ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int SplitIndex  
-	   {
-	     get { return _splitIndex; }
-		 set
-		 {
-		   if(_splitIndex != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SplitIndex",OldValue=_splitIndex,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _splitIndex=value;
-		   }
-		 }
-	   }
-	  private bool _isFromSplit ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsFromSplit  
-	   {
-	     get { return _isFromSplit; }
-		 set
-		 {
-		   if(_isFromSplit != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromSplit",OldValue=_isFromSplit,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isFromSplit=value;
-		   }
-		 }
-	   }
+		private TemperatureUnitPM _flashpointtemperatureunit;
+		[Include]
+        [DataMember]
+        public virtual TemperatureUnitPM FlashPointTemperatureUnit 
+		{ 
+		get { return _flashpointtemperatureunit; } 
+		set { _flashpointtemperatureunit = value; }
+		}
 	   private List<ShipmentPackageHarmonizePM> shipmentPackageHarmonizes;
 	    
        [Composition]
@@ -2047,22 +1729,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _horseName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string HorseName  
-	   {
-	     get { return _horseName; }
-		 set
-		 {
-		   if(_horseName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HorseName",OldValue=_horseName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _horseName=value;
-		   }
-		 }
-	   }
 	  private string _lCLContainerTypeId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2079,6 +1745,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PackageTypePM _lclpackagetype;
+		[Include]
+        [DataMember]
+        public virtual PackageTypePM LCLPackageType 
+		{ 
+		get { return _lclpackagetype; } 
+		set { _lclpackagetype = value; }
+		}
 	  private string _containerEntityId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2111,54 +1785,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isPackageCheckedInLeg ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsPackageCheckedInLeg  
-	   {
-	     get { return _isPackageCheckedInLeg; }
-		 set
-		 {
-		   if(_isPackageCheckedInLeg != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPackageCheckedInLeg",OldValue=_isPackageCheckedInLeg,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isPackageCheckedInLeg=value;
-		   }
-		 }
-	   }
-	  private string _changeSet ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSet  
-	   {
-	     get { return _changeSet; }
-		 set
-		 {
-		   if(_changeSet != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSet",OldValue=_changeSet,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSet=value;
-		   }
-		 }
-	   }
-	  private string _containerStatusName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContainerStatusName  
-	   {
-	     get { return _containerStatusName; }
-		 set
-		 {
-		   if(_containerStatusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerStatusName",OldValue=_containerStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _containerStatusName=value;
-		   }
-		 }
-	   }
 	  private DateTime? _containerStrippedDate ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2172,38 +1798,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerStrippedDate",OldValue=_containerStrippedDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _containerStrippedDate=value;
-		   }
-		 }
-	   }
-	  private double? _volumeInCBF ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double? VolumeInCBF  
-	   {
-	     get { return _volumeInCBF; }
-		 set
-		 {
-		   if(_volumeInCBF != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VolumeInCBF",OldValue=_volumeInCBF,NewValue=value,PropertyType="double?"};
-		    NotifyPropertyChanged(values);
-		   _volumeInCBF=value;
-		   }
-		 }
-	   }
-	  private double? _grossWeightInLB ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double? GrossWeightInLB  
-	   {
-	     get { return _grossWeightInLB; }
-		 set
-		 {
-		   if(_grossWeightInLB != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossWeightInLB",OldValue=_grossWeightInLB,NewValue=value,PropertyType="double?"};
-		    NotifyPropertyChanged(values);
-		   _grossWeightInLB=value;
 		   }
 		 }
 	   }

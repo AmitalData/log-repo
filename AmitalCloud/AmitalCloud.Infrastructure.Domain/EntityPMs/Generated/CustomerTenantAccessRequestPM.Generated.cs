@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -30,10 +31,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_requestDateTime = entity.RequestDateTime;
 		_requestStatus = entity.RequestStatus;
-		_statusName = default;
-		_forwarderId = entity.ForwarderId;
-		_forwarderName = default;
-		_isCustoms = entity.IsCustoms;
+		_requeststatuscode = entity.RequestStatusCode !=null ? new CustomerTenantAccessStatusTypePM(entity.RequestStatusCode) : null;
+			_forwarderId = entity.ForwarderId;
+		_hybridpartnerid = entity.HybridPartnerId !=null ? new HybridPartnerPM(entity.HybridPartnerId) : null;
+			_isCustoms = entity.IsCustoms;
 		_isExport = entity.IsExport;
    }
    #endregion Constructors
@@ -103,22 +104,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _statusName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	     get { return _statusName; }
-		 set
-		 {
-		   if(_statusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusName=value;
-		   }
-		 }
-	   }
+		private CustomerTenantAccessStatusTypePM _requeststatuscode;
+		[Include]
+        [DataMember]
+        public virtual CustomerTenantAccessStatusTypePM RequestStatusCode 
+		{ 
+		get { return _requeststatuscode; } 
+		set { _requeststatuscode = value; }
+		}
 	  private string _forwarderId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -135,22 +128,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _forwarderName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ForwarderName  
-	   {
-	     get { return _forwarderName; }
-		 set
-		 {
-		   if(_forwarderName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwarderName",OldValue=_forwarderName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _forwarderName=value;
-		   }
-		 }
-	   }
+		private HybridPartnerPM _hybridpartnerid;
+		[Include]
+        [DataMember]
+        public virtual HybridPartnerPM HybridPartnerId 
+		{ 
+		get { return _hybridpartnerid; } 
+		set { _hybridpartnerid = value; }
+		}
 	  private bool _isCustoms ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

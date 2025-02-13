@@ -55,28 +55,9 @@ namespace AmitalCloud.Infrastructure.APITools.Helpers
             return result.Where(a => a.Tenant == tenant).Select(a => a.OurCode).FirstOrDefault() ?? result.Where(a => a.Tenant == 0).Select(a => a.OurCode).FirstOrDefault();
         }
         List<ComputingPartnerTranslationPM> GetAllByComputingPartner(string computingPartner, int tenant)
-        {
-            return
+        =>
                 new Repository<ComputingPartnerTranslation>(context).GetMulti(a => a.ComputingPartnerId == computingPartner && a.Tenant == tenant, a =>
-                    new ComputingPartnerTranslationPM()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        OurCode = a.OurCode,
-                        PartnerCode = a.PartnerCode,
-                        CreateDate = a.CreateDate,
-                        UpdateDate = a.UpdateDate,
-                        CreatedByUserId = a.CreatedByUserId,
-                        UpdatedByUserId = a.UpdatedByUserId,
-                        ObjectTableId = a.ObjectTableId,
-                        ComputingPartnerId = a.ComputingPartnerId,
-                        ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
-                        ComputingPartnerName = a.ComputingPartner == null ? "" : a.ComputingPartner.Name,
-                        CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
-                        UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
-                    }
-                ).ToList();
-        }
+                    new ComputingPartnerTranslationPM(a)).ToList();
         ComputingPartnerPM GetSinglePMByCode(string code, int tenant)
         {
             if (string.IsNullOrWhiteSpace(code)) return new ComputingPartnerPM();

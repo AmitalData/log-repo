@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -38,11 +39,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_inActive = entity.InActive;
 		_description = entity.Description;
 		_directionId = entity.DirectionId;
-		_createdByUserName = default;
-		_updatedByUserName = default;
 		_versionId = entity.VersionId;
-		_packageExecutionLogId = default;
-   }
+		_deploymentpackagesversion = entity.DeploymentPackagesVersion !=null ? new DeploymentPackagesVersionPM(entity.DeploymentPackagesVersion) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -238,38 +237,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
-		   }
-		 }
-	   }
 	  private string _versionId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -286,22 +253,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _packageExecutionLogId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageExecutionLogId  
-	   {
-	     get { return _packageExecutionLogId; }
-		 set
-		 {
-		   if(_packageExecutionLogId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageExecutionLogId",OldValue=_packageExecutionLogId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageExecutionLogId=value;
-		   }
-		 }
-	   }
+		private DeploymentPackagesVersionPM _deploymentpackagesversion;
+		[Include]
+        [DataMember]
+        public virtual DeploymentPackagesVersionPM DeploymentPackagesVersion 
+		{ 
+		get { return _deploymentpackagesversion; } 
+		set { _deploymentpackagesversion = value; }
+		}
 	 }
 #endregion Properties
 }

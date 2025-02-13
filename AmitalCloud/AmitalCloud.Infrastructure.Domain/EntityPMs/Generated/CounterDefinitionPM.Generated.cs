@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -32,10 +33,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_parameter2 = entity.Parameter2;
 		_uniquePerPrefix = entity.UniquePerPrefix;
 		_counterId = entity.CounterId;
-		_prefix = entity.Prefix;
+		_counter = entity.Counter !=null ? new CounterPM(entity.Counter) : null;
+			_prefix = entity.Prefix;
 		_startNumber = entity.StartNumber;
-		_startNumber_Old = default;
-		_isUsed = default;
 		_counterSize = entity.CounterSize;
 		_suffix = entity.Suffix;
 		_inActive = entity.InActive;
@@ -141,6 +141,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CounterPM _counter;
+		[Include]
+        [DataMember]
+        public virtual CounterPM Counter 
+		{ 
+		get { return _counter; } 
+		set { _counter = value; }
+		}
 	  private string _prefix ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -170,38 +178,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartNumber",OldValue=_startNumber,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _startNumber=value;
-		   }
-		 }
-	   }
-	  private int _startNumber_Old ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int StartNumber_Old  
-	   {
-	     get { return _startNumber_Old; }
-		 set
-		 {
-		   if(_startNumber_Old != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartNumber_Old",OldValue=_startNumber_Old,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _startNumber_Old=value;
-		   }
-		 }
-	   }
-	  private bool _isUsed ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsUsed  
-	   {
-	     get { return _isUsed; }
-		 set
-		 {
-		   if(_isUsed != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUsed",OldValue=_isUsed,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isUsed=value;
 		   }
 		 }
 	   }

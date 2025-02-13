@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -28,15 +29,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_id = entity.Id;
 		_logoId = entity.LogoId;
-		_smallLogoId = entity.SmallLogoId;
-		_searchFields = entity.SearchFields;
+		_imagedetail = entity.ImageDetail !=null ? new ImageDetailPM(entity.ImageDetail) : null;
+			_smallLogoId = entity.SmallLogoId;
+		_imagedetail1 = entity.ImageDetail1 !=null ? new ImageDetailPM(entity.ImageDetail1) : null;
+			_searchFields = entity.SearchFields;
 		_inActive = entity.InActive;
-		_tenant = default;
 		_name = entity.Name;
 		_localName = entity.LocalName;
 		_partnerTenant = entity.PartnerTenant;
-		_isHasRequest = default;
-		_statusName = default;
 		_isExternalPartner = entity.IsExternalPartner;
 		_receiveAllStatuses = entity.ReceiveAllStatuses;
 		_allowSendingDocsToAgent = entity.AllowSendingDocsToAgent;
@@ -77,6 +77,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ImageDetailPM _imagedetail;
+		[Include]
+        [DataMember]
+        public virtual ImageDetailPM ImageDetail 
+		{ 
+		get { return _imagedetail; } 
+		set { _imagedetail = value; }
+		}
 	  private string _smallLogoId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -93,6 +101,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ImageDetailPM _imagedetail1;
+		[Include]
+        [DataMember]
+        public virtual ImageDetailPM ImageDetail1 
+		{ 
+		get { return _imagedetail1; } 
+		set { _imagedetail1 = value; }
+		}
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -122,22 +138,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=_inActive,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _inActive=value;
-		   }
-		 }
-	   }
-	  private int _tenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public override int Tenant  
-	   {
-	     get { return _tenant; }
-		 set
-		 {
-		   if(_tenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _tenant=value;
 		   }
 		 }
 	   }
@@ -186,38 +186,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerTenant",OldValue=_partnerTenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _partnerTenant=value;
-		   }
-		 }
-	   }
-	  private bool _isHasRequest ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHasRequest  
-	   {
-	     get { return _isHasRequest; }
-		 set
-		 {
-		   if(_isHasRequest != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHasRequest",OldValue=_isHasRequest,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHasRequest=value;
-		   }
-		 }
-	   }
-	  private string _statusName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	     get { return _statusName; }
-		 set
-		 {
-		   if(_statusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusName=value;
 		   }
 		 }
 	   }

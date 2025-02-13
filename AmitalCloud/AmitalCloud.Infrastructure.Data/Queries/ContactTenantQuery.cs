@@ -22,23 +22,13 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public ContactTenantPM GetContactTenantForUser(string contactId, int tenant)
         {
             return (from a in repository.GetMulti(a => a.ContactId == contactId && a.TenantId == tenant)
-                    select new ContactTenantPM()
-                    {
-                        ContactId = a.ContactId,
-                        Id = a.Id,
-                        TenantId = a.TenantId,
-                    }).FirstOrDefault();
+                    select new ContactTenantPM(a)).FirstOrDefault();
 
         }
         public ContactTenantPM GetSinglePM(string id, int tenant)
         {
             return (from a in repository.GetMulti(a => a.Id == id && a.TenantId == tenant)
-                    select new ContactTenantPM()
-                    {
-                        ContactId = a.ContactId,
-                        Id = a.Id,
-                        TenantId = a.TenantId,
-                    }).FirstOrDefault();
+                    select new ContactTenantPM(a)).FirstOrDefault();
         }
     }
 }

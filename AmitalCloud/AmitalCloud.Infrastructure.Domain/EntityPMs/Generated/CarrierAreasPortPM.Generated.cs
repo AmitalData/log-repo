@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,11 +32,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_name = entity.Name;
 		_addedDate = entity.AddedDate;
 		_addedByUserId = entity.AddedByUserId;
-		_carrierAreaId = entity.CarrierAreaId;
-		_portId = entity.PortId;
-		_code = default;
-		_countryCode = default;
-   }
+		_addedbyuser = entity.AddedByUser !=null ? new UserPM(entity.AddedByUser) : null;
+			_carrierAreaId = entity.CarrierAreaId;
+		_carriersarea = entity.CarriersArea !=null ? new CarrierAreaPM(entity.CarriersArea) : null;
+			_portId = entity.PortId;
+		_port = entity.Port !=null ? new PortPM(entity.Port) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -119,6 +121,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _addedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM AddedByUser 
+		{ 
+		get { return _addedbyuser; } 
+		set { _addedbyuser = value; }
+		}
 	  private string _carrierAreaId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -135,6 +145,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CarrierAreaPM _carriersarea;
+		[Include]
+        [DataMember]
+        public virtual CarrierAreaPM CarriersArea 
+		{ 
+		get { return _carriersarea; } 
+		set { _carriersarea = value; }
+		}
 	  private string _portId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -151,38 +169,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _code ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Code  
-	   {
-	     get { return _code; }
-		 set
-		 {
-		   if(_code != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=_code,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _code=value;
-		   }
-		 }
-	   }
-	  private string _countryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryCode  
-	   {
-	     get { return _countryCode; }
-		 set
-		 {
-		   if(_countryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryCode",OldValue=_countryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryCode=value;
-		   }
-		 }
-	   }
+		private PortPM _port;
+		[Include]
+        [DataMember]
+        public virtual PortPM Port 
+		{ 
+		get { return _port; } 
+		set { _port = value; }
+		}
 	 }
 #endregion Properties
 }

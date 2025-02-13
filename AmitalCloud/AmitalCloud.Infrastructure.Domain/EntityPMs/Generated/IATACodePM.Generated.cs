@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_name = entity.Name;
 		_measurementCode = entity.MeasurementCode;
 		_dueTypeCode = entity.DueTypeCode;
-		_isIATA = entity.IsIATA;
+		_duetype = entity.DueType !=null ? new DueTypePM(entity.DueType) : null;
+			_isIATA = entity.IsIATA;
 		_inActive = entity.InActive;
 		_airlineId = entity.AirlineId;
 		_searchFields = entity.SearchFields;
@@ -119,6 +121,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DueTypePM _duetype;
+		[Include]
+        [DataMember]
+        public virtual DueTypePM DueType 
+		{ 
+		get { return _duetype; } 
+		set { _duetype = value; }
+		}
 	  private bool _isIATA ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

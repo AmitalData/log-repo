@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.ServiceModel.DomainServices.Server;
@@ -28,9 +29,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public ReportPM(Report entity) : base()
    {
 		_reportGroupId = entity.ReportGroupId;
-		_featureId = entity.FeatureId;
-		_reportDocumentId = entity.ReportDocumentId;
-		_id = entity.Id;
+		_reportgroup = entity.ReportGroup !=null ? new ReportGroupPM(entity.ReportGroup) : null;
+			_featureId = entity.FeatureId;
+		_feature = entity.Feature !=null ? new FeaturePM(entity.Feature) : null;
+			_reportDocumentId = entity.ReportDocumentId;
+		_reportdocument = entity.ReportDocument !=null ? new DocumentPM(entity.ReportDocument) : null;
+			_id = entity.Id;
 		_tenant = entity.Tenant;
 		_name = entity.Name;
 		_filterControlName = entity.FilterControlName;
@@ -38,19 +42,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_searchFields = entity.SearchFields;
 		_code = entity.Code;
 		_inActive = entity.InActive;
-		_isSecured = default;
-		_reportBody = default;
-		_hasTemplate = default;
-		_featureCode = default;
 		_defaultTemplateId = entity.DefaultTemplateId;
-		_defaultMessageTemplateId = entity.DefaultMessageTemplateId;
-		_localName = entity.LocalName;
+		_reportstemplate = entity.ReportsTemplate !=null ? new ReportsTemplatePM(entity.ReportsTemplate) : null;
+			_defaultMessageTemplateId = entity.DefaultMessageTemplateId;
+		_reportstemplatedefaultmessage = entity.ReportsTemplateDefaultMessage !=null ? new ReportsTemplatePM(entity.ReportsTemplateDefaultMessage) : null;
+			_localName = entity.LocalName;
 		_filterHtmlComponentUrl = entity.FilterHtmlComponentUrl;
 		_featureUniqeCode = entity.FeatureUniqeCode;
 		_availableForScheduling = entity.AvailableForScheduling;
 		_disablePreview = entity.DisablePreview;
 		_defaultExcelTemplateId = entity.DefaultExcelTemplateId;
-		_isExcelReportAllowed = entity.IsExcelReportAllowed;
+		_reportstemplatedefaultexcel = entity.ReportsTemplateDefaultExcel !=null ? new ReportsTemplatePM(entity.ReportsTemplateDefaultExcel) : null;
+			_isExcelReportAllowed = entity.IsExcelReportAllowed;
    }
    #endregion Constructors
    #region Properties
@@ -70,6 +73,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ReportGroupPM _reportgroup;
+		[Include]
+        [DataMember]
+        public virtual ReportGroupPM ReportGroup 
+		{ 
+		get { return _reportgroup; } 
+		set { _reportgroup = value; }
+		}
 	  private string _featureId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -86,6 +97,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FeaturePM _feature;
+		[Include]
+        [DataMember]
+        public virtual FeaturePM Feature 
+		{ 
+		get { return _feature; } 
+		set { _feature = value; }
+		}
 	  private string _reportDocumentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -102,6 +121,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentPM _reportdocument;
+		[Include]
+        [DataMember]
+        public virtual DocumentPM ReportDocument 
+		{ 
+		get { return _reportdocument; } 
+		set { _reportdocument = value; }
+		}
 	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -231,70 +258,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
-		   }
-		 }
-	   }
-	  private string _reportBody ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ReportBody  
-	   {
-	     get { return _reportBody; }
-		 set
-		 {
-		   if(_reportBody != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReportBody",OldValue=_reportBody,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _reportBody=value;
-		   }
-		 }
-	   }
-	  private bool _hasTemplate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool hasTemplate  
-	   {
-	     get { return _hasTemplate; }
-		 set
-		 {
-		   if(_hasTemplate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="hasTemplate",OldValue=_hasTemplate,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _hasTemplate=value;
-		   }
-		 }
-	   }
-	  private string _featureCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FeatureCode  
-	   {
-	     get { return _featureCode; }
-		 set
-		 {
-		   if(_featureCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FeatureCode",OldValue=_featureCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _featureCode=value;
-		   }
-		 }
-	   }
 	  private string _defaultTemplateId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -311,6 +274,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ReportsTemplatePM _reportstemplate;
+		[Include]
+        [DataMember]
+        public virtual ReportsTemplatePM ReportsTemplate 
+		{ 
+		get { return _reportstemplate; } 
+		set { _reportstemplate = value; }
+		}
 	  private string _defaultMessageTemplateId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -327,6 +298,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ReportsTemplatePM _reportstemplatedefaultmessage;
+		[Include]
+        [DataMember]
+        public virtual ReportsTemplatePM ReportsTemplateDefaultMessage 
+		{ 
+		get { return _reportstemplatedefaultmessage; } 
+		set { _reportstemplatedefaultmessage = value; }
+		}
 	  private string _localName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -423,6 +402,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ReportsTemplatePM _reportstemplatedefaultexcel;
+		[Include]
+        [DataMember]
+        public virtual ReportsTemplatePM ReportsTemplateDefaultExcel 
+		{ 
+		get { return _reportstemplatedefaultexcel; } 
+		set { _reportstemplatedefaultexcel = value; }
+		}
 	  private bool _isExcelReportAllowed ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

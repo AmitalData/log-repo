@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -29,7 +30,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_objectTableId = entity.ObjectTableId;
-		_unassignedCode = entity.UnassignedCode;
+		_entityobjecttable = entity.EntityObjectTable !=null ? new ObjectTablePM(entity.EntityObjectTable) : null;
+			_unassignedCode = entity.UnassignedCode;
    }
    #endregion Constructors
    #region Properties
@@ -82,6 +84,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTablePM _entityobjecttable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM EntityObjectTable 
+		{ 
+		get { return _entityobjecttable; } 
+		set { _entityobjecttable = value; }
+		}
 	  private string _unassignedCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

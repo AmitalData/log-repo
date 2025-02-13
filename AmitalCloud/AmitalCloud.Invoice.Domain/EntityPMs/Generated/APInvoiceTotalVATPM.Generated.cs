@@ -6,6 +6,7 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -38,10 +39,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_localVatableAmount = entity.LocalVatableAmount;
 		_vatPercent = entity.VatPercent;
 		_vatTypeId = entity.VatTypeId;
-		_vatTypeName = default;
 		_aPInvoiceId = entity.APInvoiceId;
-		_vatTypeCell = default;
-		_vatRecognizedPercentage = default;
    }
    #endregion Constructors
    #region Properties
@@ -238,22 +236,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _vatTypeName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VatTypeName  
-	   {
-	     get { return _vatTypeName; }
-		 set
-		 {
-		   if(_vatTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatTypeName",OldValue=_vatTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vatTypeName=value;
-		   }
-		 }
-	   }
 	  private string _aPInvoiceId ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -267,38 +249,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="APInvoiceId",OldValue=_aPInvoiceId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _aPInvoiceId=value;
-		   }
-		 }
-	   }
-	  private string _vatTypeCell ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VatTypeCell  
-	   {
-	     get { return _vatTypeCell; }
-		 set
-		 {
-		   if(_vatTypeCell != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatTypeCell",OldValue=_vatTypeCell,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vatTypeCell=value;
-		   }
-		 }
-	   }
-	  private double _vatRecognizedPercentage ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double VatRecognizedPercentage  
-	   {
-	     get { return _vatRecognizedPercentage; }
-		 set
-		 {
-		   if(_vatRecognizedPercentage != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatRecognizedPercentage",OldValue=_vatRecognizedPercentage,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _vatRecognizedPercentage=value;
 		   }
 		 }
 	   }

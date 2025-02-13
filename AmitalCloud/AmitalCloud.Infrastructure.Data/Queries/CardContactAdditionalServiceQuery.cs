@@ -23,12 +23,12 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public CardContactAdditionalServicePM GetSinglePM(string id, int tenant)
             => repository.GetMulti(a=> a.Tenant == tenant && a.Id == id,a=> new CardContactAdditionalServicePM(a)
             {
-                AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
+                //AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
             }, "AdditionalService").FirstOrDefault();
         public List<CardContactAdditionalServicePM> GetCardContactAdditionalServicePMsByCardContactId(string CardContactId, int tenant)
             => repository.GetMulti(a=> a.Tenant == tenant && a.CardContactId == CardContactId, a => new CardContactAdditionalServicePM(a)
             {
-                AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
+                //AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
             }, "AdditionalService").ToList();
     }
 }

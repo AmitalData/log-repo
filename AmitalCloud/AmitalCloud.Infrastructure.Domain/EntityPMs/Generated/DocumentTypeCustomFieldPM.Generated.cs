@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
@@ -33,12 +34,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_fieldCode = entity.FieldCode;
 		_name = entity.Name;
 		_fieldDataTypeCode = entity.FieldDataTypeCode;
-		_fieldDataTypeName = default;
-		_inActive = entity.InActive;
+		_fielddatatype = entity.FieldDataType !=null ? new FieldDataTypePM(entity.FieldDataType) : null;
+			_inActive = entity.InActive;
 		_isRequired = entity.IsRequired;
 		_multiLine = entity.MultiLine;
 		_defaultValue = entity.DefaultValue;
-		_fieldValue = default;
    }
    #endregion Constructors
    #region Properties
@@ -155,22 +155,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _fieldDataTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FieldDataTypeName  
-	   {
-	     get { return _fieldDataTypeName; }
-		 set
-		 {
-		   if(_fieldDataTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FieldDataTypeName",OldValue=_fieldDataTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fieldDataTypeName=value;
-		   }
-		 }
-	   }
+		private FieldDataTypePM _fielddatatype;
+		[Include]
+        [DataMember]
+        public virtual FieldDataTypePM FieldDataType 
+		{ 
+		get { return _fielddatatype; } 
+		set { _fielddatatype = value; }
+		}
 	  private bool _inActive ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -232,22 +224,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultValue",OldValue=_defaultValue,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _defaultValue=value;
-		   }
-		 }
-	   }
-	  private string _fieldValue ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FieldValue  
-	   {
-	     get { return _fieldValue; }
-		 set
-		 {
-		   if(_fieldValue != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FieldValue",OldValue=_fieldValue,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fieldValue=value;
 		   }
 		 }
 	   }
