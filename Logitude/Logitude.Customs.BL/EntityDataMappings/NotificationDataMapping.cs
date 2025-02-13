@@ -15,6 +15,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.Gl
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -73,7 +74,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 ObjectTableRepository rep = new ObjectTableRepository(0);
                 ObjectTable objectTable = rep.GetObjectTableById(entityPOCO.ObjectTableId, entityPOCO.Tenant);
-                entityPM.ObjectTableName = objectTable?.Name;
+                entityPM.ObjectTableName = objectTable.Name;
             }
 
             if (entityPOCO.EntityId != null)
