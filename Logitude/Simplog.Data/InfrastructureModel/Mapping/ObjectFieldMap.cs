@@ -74,6 +74,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DefaultAdditionalFilters).IsMaxLength().IsUnicode(true);
             this.Property(t => t.ForMetaDataOnly);
             this.Property(t => t.IsListFilter);
+            this.Property(t => t.ObjectFieldDataMapping).HasMaxLength(256).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ObjectFields");
@@ -168,6 +169,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DefaultAdditionalFilters).HasColumnName("DefaultAdditionalFilters");
             this.Property(t => t.ForMetaDataOnly).HasColumnName("ForMetaDataOnly");
             this.Property(t => t.IsListFilter).HasColumnName("IsListFilter");
+            this.Property(t=> t.ObjectFieldDataMapping).HasColumnName("ObjectFieldDataMapping");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

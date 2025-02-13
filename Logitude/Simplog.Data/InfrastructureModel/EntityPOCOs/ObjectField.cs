@@ -185,5 +185,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool ForMetaDataOnly { get; set; }
         public bool IsListFilter { get; set; }
 
+        public string ObjectFieldDataMapping { get; set; }
+
     }
 }

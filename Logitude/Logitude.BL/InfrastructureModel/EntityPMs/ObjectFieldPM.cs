@@ -171,5 +171,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         public string RelatedEntities { get; set; }
         public bool IsRelatedEntity { get; set; }
+        public string ObjectFieldDataMapping { get; set; }
+
     }
 }

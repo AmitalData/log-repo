@@ -454,6 +454,10 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 field.ModelName = GetAttributeStringValue(fieldNode.Attributes["ModelName"]);
             }
+            if (fieldNode.Attributes["ObjectFieldDataMapping"] != null)
+            {
+                field.ObjectFieldDataMapping = GetAttributeStringValue(fieldNode.Attributes["ObjectFieldDataMapping"]);
+            }
 
             return field;
 

@@ -1404,6 +1404,11 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("ModelName", GetStringValue(f.ModelName), fieldElement, null);
                 }
+                if (!string.IsNullOrEmpty(f.ObjectFieldDataMapping))
+                {
+                    SetAttribute("ObjectFieldDataMapping", GetStringValue(f.ObjectFieldDataMapping), fieldElement, null);
+                }
+
             }
 
             #endregion
