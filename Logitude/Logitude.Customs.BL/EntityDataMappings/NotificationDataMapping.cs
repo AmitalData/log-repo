@@ -73,7 +73,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 ObjectTableRepository rep = new ObjectTableRepository(0);
                 ObjectTable objectTable = rep.GetObjectTableById(entityPOCO.ObjectTableId, entityPOCO.Tenant);
-                entityPM.ObjectTableName = objectTable.Name;
+                entityPM.ObjectTableName = objectTable?.Name;
             }
 
             if (entityPOCO.EntityId != null)
