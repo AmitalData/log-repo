@@ -1,0 +1,50 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data;
+ 
+namespace Logitude.Accounting.Data.EntityMapping
+{
+ 
+    public class Aur_PaymentMap : EntityTypeConfiguration<Aur_Payment>
+    {
+	    string dbms;
+        public Aur_PaymentMap()
+        { 
+				this.ToTable("Aur_Payments");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+
+            this.Property(t => t.DraftNumber).HasColumnName("DraftNumber").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.ForMonth).HasColumnName("ForMonth").HasMaxLength(12).IsUnicode(false);
+
+            this.Property(t => t.SaleOrder).HasColumnName("SaleOrder").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.Customer).HasColumnName("Customer").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.CustomerReference1).HasColumnName("CustomerReference1").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.InvoiceType).HasColumnName("InvoiceType").HasMaxLength(20).IsUnicode(true);
+
+            this.Property(t => t.PaymentRequestStatus).HasColumnName("PaymentRequestStatus").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+        }
+    }
+}
+	 

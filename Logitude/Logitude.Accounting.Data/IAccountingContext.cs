@@ -26,6 +26,10 @@ namespace Logitude.Accounting.Data
 		 IDbSet<ARPaymentCheque> ARPaymentCheques { get; }
 		 IDbSet<ARPaymentChequeStatus> ARPaymentChequeStatuses { get; }
 		 IDbSet<ARPaymentsJournal> ARPaymentsJournals { get; }
+		 IDbSet<Aur_Item> Aur_Items { get; }
+		 IDbSet<Aur_Payment> Aur_Payments { get; }
+		 IDbSet<Aur_PaymentItem> Aur_PaymentItems { get; }
+		 IDbSet<Aur_Timesheet> Aur_Timesheets { get; }
 		 IDbSet<AutomaticExternalRconcilMthod> AutomaticExternalRconcilMthods { get; }
 		 IDbSet<AutomaticReconcile> AutomaticReconciles { get; }
 		 IDbSet<AutomaticReconcileMethod> AutomaticReconcileMethods { get; }
