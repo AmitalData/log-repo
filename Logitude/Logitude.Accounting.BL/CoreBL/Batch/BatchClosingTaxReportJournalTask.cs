@@ -32,7 +32,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             catch (Exception ex)
             {
 
-                LogitudeSettings.HandleLogMe(ex.ToString(), true, "BatchGLAccountInterestActivationBalanceTask", new DateTime(2019, 10, 1));
+                LogitudeSettings.HandleLogMe(ex.ToString(), true, "BatchClosingTaxReportJournalTask", new DateTime(2019, 10, 1));
                 throw;
             }
         }

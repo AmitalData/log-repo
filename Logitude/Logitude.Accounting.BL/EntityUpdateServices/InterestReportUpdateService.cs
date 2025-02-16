@@ -27,6 +27,10 @@ using Logitude.Accounting.BL.Validators;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Accounting.BL.CoreBL.Batch;
+using Logitude.Accounting.BL.Utils;
+using Logitude.Accounting.Data;
+using System.Net;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -51,16 +55,30 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         List<InterestReportPM> interestReportPMs = interestReportQueryService.GetInterestReportsForCustomer(entityPM.CustomerId, cardPM.GLAccountId, entityPM.Tenant);
                         if (interestReportPMs == null || interestReportPMs.Count == 0)
                         {
-                            if (gLAccountPM.InterestOpenBalance == null)
+                            // Prepare the arguments for the GL Account Interest Activation Balance process
+                            var args = new GLAccountInterestActivationBalanceArgs()
                             {
-                                bool showLocal = false;
-                                //show local 
-                                ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
-                                if (loggedContact != null) showLocal = !loggedContact.DontShowLocal;
+                                Tenant = gLAccountPM.Tenant,
+                                GLAccountId = gLAccountPM.Id,
+                                AccountTypeCode = null,
+                                InterestActivationDate = gLAccountPM.InterestCalculationStartDate ?? DateTime.MinValue,
+                                LastMadeGLAccountId = null,
+                                MaxGLAccountsPerQuery = 100,
+                                ActionDate = DateTime.Today,
+                                BatchIt = 0,
+                            };
 
-                                string errorText = TextCodesTranslator.TranslateText("InterestReport.O.OpeningBalanceNotCalculated", entityPM.Tenant, showLocal);
-                                if (String.IsNullOrEmpty(errorText)) errorText = "Opening balance for interest has not been calculated";
-                                throw new ApplicationException($"GLAccount {gLAccountPM.InternalNumber} {errorText}");
+                            // Run the activation balance calculation
+                            var activationBalanceBatch = new GLAccountInterestActivationBalanceBatch();
+                            activationBalanceBatch.RunGLAccountInterestActivationBalance(args);
+
+                            // Retrieve the response text and status code
+                            string responseText = activationBalanceBatch.ResponseText();
+                            HttpStatusCode statusCode = activationBalanceBatch.StatusCode();
+
+                            if (statusCode != HttpStatusCode.Accepted)
+                            {
+                                throw new ApplicationException($"GLAccount {gLAccountPM.InternalNumber} {responseText}");
                             }
 
                             entityPM.OpenBalance = gLAccountPM.InterestOpenBalance;
