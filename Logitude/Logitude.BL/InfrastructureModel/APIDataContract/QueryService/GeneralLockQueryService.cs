@@ -24,7 +24,6 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
         }
 		public GeneralLockPM CheckIsLocked(int tenant, string sessionId, string userId, string entityId, string objectTableName, bool isFromCahnge = false)
 		{
-			return null;
 			var generalLockQuery = new GeneralLockQuery(tenant);
 			ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
 
