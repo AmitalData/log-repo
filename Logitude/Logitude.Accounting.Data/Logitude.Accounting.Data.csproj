@@ -204,9 +204,7 @@
     <Compile Include="EntityListQueryServices\Generated\InterestReportStatuseListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\InterestTransactionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalAdditionalDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\JournalExternalReconcileListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalMoreDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\JournalReconcileListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RevaluationStatusListQueryService.Generated.cs" />
@@ -289,7 +287,6 @@
     <Compile Include="EntityLists\Generated\InterestReportStatuseList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InterestTransactionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalAdditionalDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\JournalExternalReconcileList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalMoreDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportStatusList.Generated.cs" />
