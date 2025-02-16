@@ -717,6 +717,7 @@
     <None Include="EntityFiles\CB_CustomsItemLinkage.lxml" />
     <None Include="EntityFiles\CB_LevyCondition.lxml" />
     <None Include="EntityFiles\CB_LevyExclusion.lxml" />
+    <None Include="EntityFiles\CB_Preference.lxml" />
     <None Include="EntityFiles\CB_QuotaComputedData.lxml" />
     <None Include="EntityFiles\CB_RegularityRequiredCertificate.lxml" />
     <None Include="EntityFiles\CB_RequirementComputedData.lxml" />
