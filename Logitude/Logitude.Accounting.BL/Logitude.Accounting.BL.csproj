@@ -579,6 +579,10 @@
     <Compile Include="EntityDataMappings\ARPaymentChequeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentChequeStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentsJournalDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Aur_ItemDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Aur_PaymentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Aur_PaymentItemDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Aur_TimesheetDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutomaticExternalReconcileMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutomaticReconcileDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutomaticReconcileMethodDataMapping.cs" />
@@ -616,6 +620,10 @@
     <Compile Include="EntityDataMappings\Generated\ARPaymentChequeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentChequeStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentsJournalDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Aur_ItemDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Aur_PaymentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Aur_PaymentItemDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Aur_TimesheetDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutomaticExternalReconcileMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutomaticReconcileDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutomaticReconcileMethodDataMapping.Generated.cs" />
@@ -807,6 +815,10 @@
     <Compile Include="EntityQueryServices\Generated\AccountingNoteQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ARPaymentChequeStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ARPaymentsJournalQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Aur_ItemQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Aur_PaymentItemQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Aur_PaymentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Aur_TimesheetQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutomaticExternalReconcileMethodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BankPageEntryTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CalculatedChartsLineTypeQueryService.Generated.cs" />
@@ -912,6 +924,10 @@
     <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServices\AccountingEntityJournalUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingIntegrityCheckUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Aur_ItemUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Aur_PaymentItemUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Aur_PaymentUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Aur_TimesheetUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ChequeCounterSerialUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountMoreDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingNoteUpdateService.cs" />

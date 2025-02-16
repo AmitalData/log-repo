@@ -1057,8 +1057,15 @@
     <Compile Include="AccountingModel\DomainServices\OpenFormatReportDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.Responsibility.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_ItemViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_PaymentItemViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_PaymentViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_TimesheetViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\Aur_ItemController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\Aur_PaymentController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\Aur_TimesheetController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\TruckerSettingExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ResponsibilityViewsController.Generated.cs" />
@@ -4178,6 +4185,10 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ARPaymentChequeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ARPaymentsJournalUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AuditLogUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\Aur_ItemUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\Aur_PaymentItemUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\Aur_PaymentUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\Aur_TimesheetUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AutomaticExternalReconcileMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\AutonomyRegionTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BankAccountUpdateClass.cs" />

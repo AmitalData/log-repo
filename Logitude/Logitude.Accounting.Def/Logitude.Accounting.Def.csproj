@@ -78,6 +78,10 @@
     <Compile Include="EntityPMs\Generated\ARPaymentChequePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentChequeStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentsJournalPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\Aur_ItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\Aur_PaymentItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\Aur_PaymentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\Aur_TimesheetPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutomaticExternalReconcileMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutomaticReconcileMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutomaticReconcilePM.Generated.cs" />
