@@ -96,6 +96,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsLogEnabled).HasColumnName("IsLogEnabled");
             this.Property(t => t.StorageType).HasColumnName("StorageType");
             this.Property(t => t.LogitudeCRMTenantNumber).HasColumnName("LogitudeCRMTenantNumber");
+            this.Property(t => t.AmitalTenant).HasColumnName("AmitalTenant");
             this.Property(t => t.System2RedirectFraction).HasColumnName("System2RedirectFraction");
             this.Property(t => t.AutoSignupEmail).HasColumnName("AutoSignupEmail");
             this.Property(t => t.AutoSignupPassword).HasColumnName("AutoSignupPassword");

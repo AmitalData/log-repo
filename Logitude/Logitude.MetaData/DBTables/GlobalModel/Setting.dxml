@@ -648,4 +648,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+  Name="AmitalTenant"
+  Type="int"
+  DefaultValue="145">
+    <Constraints
+      Nullable="false" />
+  </Column>
  </Table>

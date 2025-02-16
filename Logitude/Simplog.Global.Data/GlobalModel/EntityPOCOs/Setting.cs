@@ -104,6 +104,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 		public string LogitudeIISURL { get; set; }
 		public string ExportUrl { get; set; }
 		public string TempStorageConnection { get; set; }
+		public int AmitalTenant { get; set; }
 
 	}
  }
