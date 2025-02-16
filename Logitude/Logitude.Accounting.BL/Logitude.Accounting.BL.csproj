@@ -709,6 +709,8 @@
     <Compile Include="EntityDataMappings\Generated\TaxReportLineTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaxReportStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaxWithholdingAssessingOfficeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxWithholdingAssessOfficeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantIdleStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TestEntityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UserDefinedReportDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VatReportStatusDataMapping.Generated.cs" />
@@ -871,6 +873,7 @@
     <Compile Include="EntityQueryServices\Generated\TaxReportQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaxReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaxWithholdingAssessOfficeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TenantIdleStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UserDefinedReportQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VatReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WithholdingTaxDeductionTypeQueryService.Generated.cs" />
@@ -929,6 +932,7 @@
     <Compile Include="EntityUpdateServices\Generated\Aur_PaymentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\Aur_TimesheetUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ChequeCounterSerialUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TenantIdleStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountMoreDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingNoteUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ARPaymentChequeUpdateService.cs" />

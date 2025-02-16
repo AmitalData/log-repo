@@ -82,6 +82,7 @@
     <None Include="DBOthers\SProcedures\usp_MonthlyBalancesReport.dxml" />
     <None Include="DBTables\Aur_Payment.dxml" />
     <None Include="DBTables\Aur_PaymentItem.dxml" />
+    <None Include="DBTables\Aur_Timesheet.dxml" />
     <None Include="EntityFiles\Aur_PaymentItem.lxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
@@ -180,7 +181,6 @@
     <None Include="DBTables\ARPaymentChequeStatus.dxml" />
     <None Include="DBTables\ARPaymentsJournal.dxml" />
     <None Include="DBTables\Aur_Item.dxml" />
-    <None Include="DBTables\Aur_Timesheet.dxml" />
     <None Include="DBTables\AutomaticExternalReconcileMethod.dxml" />
     <None Include="DBTables\AutomaticReconcile.dxml" />
     <None Include="DBTables\AutomaticReconcileMethod.dxml" />
