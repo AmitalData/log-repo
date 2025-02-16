@@ -894,6 +894,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string myCustomURL ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MyCustomURL  
+	   {
+	    
+	     get
+		{
+		   return myCustomURL;
+		 }
+		 set
+		 {
+		   if(myCustomURL != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MyCustomURL",OldValue=myCustomURL,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   myCustomURL=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -458,7 +458,7 @@
                       <!-- Line -->
                       <log-column [header]="'JournalLine.F.Line' | TextCodeTranslationPipe" [width]="'40'" [Alignment]="isRTL ? 'right' : 'left'">
                           <ng-template let-item>
-                              <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate [NextMoveWithEnter]="true">
+                              <log-cell-template [IgnoreMods]="true" [TabIndex]="-1" #logcelltemplate [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div class="TextTrimming" text-start>
                                     <span>{{JournalLines?.Collection.indexOf(item) + 1}}</span>
                                   </div>
@@ -469,7 +469,7 @@
                       <!-- ActionCode -->
                       <log-column [header]="'JournalLine.F.ActionName' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ActionId'">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [NextMoveWithEnter]="true">
+                              <log-cell-template #logcelltemplate [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span>{{item.ActionName}}</span>
                                   </div>
@@ -493,7 +493,7 @@
                       <!-- AccDay -->
                       <log-column [header]="'Journal.O.AccDay' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'AccDay'">
                           <ng-template let-item>
-                              <log-cell-template [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" #logcelltemplate [NextMoveWithEnter]="true">
+                              <log-cell-template [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" #logcelltemplate [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span>{{item.AccDay}}</span>
                                   </div>
@@ -508,7 +508,7 @@
                       <!-- Ref. Date -->
                       <log-column [header]="'JournalLine.F.DocumentDate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DocumentDate'">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true">
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span>{{item.DocumentDate | DateTimeToDatePipe}}</span>
                                   </div>
@@ -524,7 +524,7 @@
                       <!-- Due Date -->
                       <log-column [header]="'JournalLine.F.DueDate' | TextCodeTranslationPipe" [width]="'70'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DueDate'">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true">
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span>{{item.DueDate | DateTimeToDatePipe}}</span>
                                   </div>
@@ -539,7 +539,7 @@
                       <!-- D. Account -->
                       <log-column [header]="'JournalLine.F.DebitAccountName' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DebitAccountId'">
                         <ng-template let-item>
-                            <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true">
+                            <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                     <span></span>
                                     <span *ngIf="(Approved || Voided) && item.DebitAccountName" class="hyperlink"
@@ -574,7 +574,7 @@
                       <!-- DebitAccountNumber -->
                       <log-column [header]="'JournalLine.F.DebitAccountNumber' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DebitAccountNumber'">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [NextMoveWithEnter]="true" [IsEnabled]="false" [TabIndex]="-1">
+                              <log-cell-template #logcelltemplate [NextMoveWithEnter]="true" [IsEnabled]="false" [TabIndex]="-1" [RIndex]="item.rowIndex">
                                   <div [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span>{{item.DebitAccountNumber}}</span>
                                   </div>
@@ -585,7 +585,7 @@
                       <!-- C. Account -->
                       <log-column [header]="'JournalLine.F.CreditAccountName' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAccountId'">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true">
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span *ngIf="Approved || Voided"
                                       [attr.title]="(item.CreditAccountNumber ? item.CreditAccountNumber : '' ) +
@@ -621,7 +621,7 @@
                        <!-- CreditAccountNumber -->
                        <log-column [header]="'JournalLine.F.CreditAccountNumber' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAccountNumber'">
                             <ng-template let-item>
-                                <log-cell-template #logcelltemplate [IsEnabled]="false" [TabIndex]="-1"  [NextMoveWithEnter]="true">
+                                <log-cell-template #logcelltemplate [IsEnabled]="false" [TabIndex]="-1"  [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                     <div [style.text-align]="isRTL ? 'right' : 'left'">
                                         <span>{{item.CreditAccountNumber}}</span>
                                     </div>
@@ -632,7 +632,7 @@
                       <!-- LocalAmount -->
                       <log-column [width]="'100'" [binding]="'LocalAmount'" [Alignment]="isRTL ? 'right' : 'left'" [header]="txt_Amount + ' (' + TenantCurrency + ')'">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true">
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div style="width:100%;height:100%;">
                                       <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
                                           <span>{{item.LocalAmount | NumbersPipe:'N2'}}</span>
@@ -650,7 +650,7 @@
                       <log-column [header]="'JournalLine.F.CurrencyCode' | TextCodeTranslationPipe" [width]="'80'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CurrencyId'">
                         <ng-template let-item>                          
                         
-                            <log-cell-template #logcelltemplate [NextMoveWithEnter]="true" [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode">
+                            <log-cell-template #logcelltemplate [NextMoveWithEnter]="true" [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode" [RIndex]="item.rowIndex">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                     <span>{{item.CurrencyCode}}</span>
                                 </div>
@@ -671,7 +671,7 @@
                       <!-- ForeignAmount -->
                       <log-column [width]="'90'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ForeignAmount'" [header]="'JournalLine.F.ForeignAmount' | TextCodeTranslationPipe">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode&&item.enableForeighAmountField ? 0 : -1" [IsEnabled]="item.enableForeighAmountField && !!item.ActionCode" [NextMoveWithEnter]="true">
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode&&item.enableForeighAmountField ? 0 : -1" [IsEnabled]="item.enableForeighAmountField && !!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
                                       <div [attr.id]="'tooltip-'+ item.SessionIndex + item.Line" id="t" class="small-tooltip" (mouseover)="item.OnMouseOver()" (mouseleave)="item.OnMouseLeave()">
                                           <span>{{item.ForeignAmount | NumbersPipe:'N2'}}</span>
@@ -692,7 +692,7 @@
                     <!-- Exchange rate -->
                     <log-column [header]="'LedgerTransaction.F.ExchangeRate' | TextCodeTranslationPipe" [width]="'90'" [Alignment]="isRTL ? 'right' : 'left'">
                       <ng-template let-item>
-                          <log-cell-template #logcelltemplate [IsEnabled]="false" [NextMoveWithEnter]="true">
+                          <log-cell-template #logcelltemplate [IsEnabled]="false" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                             <div style="text-align: center;display: inline-block;width: 30px;"  *ngIf="item.isRateMoreThanFivePerc()" title="{{'Journal.O.DifferenceExchangeRate' | TextCodeTranslationPipe}}">
                                 <img src="./Images/favicon.png" />
                             </div>
@@ -705,7 +705,7 @@
                       <!-- Reference1 -->
                       <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference1'" [header]="txt_Reference+' 1'">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true">
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span>{{item.Reference1}}</span>
                                   </div>
@@ -722,7 +722,7 @@
                       <!-- Reference2 -->
                       <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference2'" [header]="txt_Reference + ' 2'">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true">
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span>{{item.Reference2}}</span>
                                   </div>
@@ -739,7 +739,7 @@
                       <!-- Reference3 -->
                       <log-column [width]="'75'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference3'" [header]="txt_Reference + ' 3'">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true">
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span>{{item.Reference3}}</span>
                                   </div>
@@ -756,7 +756,7 @@
                       <!-- Notes -->
                       <log-column [width]="'250'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Notes'" [header]="'Accounting.General.O.Notes' | TextCodeTranslationPipe">
                           <ng-template let-item>
-                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true">
+                              <log-cell-template #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <div [attr.title]="item.Notes" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'">
                                       <span>{{item.Notes}} </span>
                                       <!--<span>Rate:{{item.currencyRate}}, Manual: {{item.isRateManualy}}</span>-->
@@ -773,7 +773,7 @@
                       <!-- Buttons -->
                       <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="'left'" >
                           <ng-template let-item>
-                              <log-cell-template [IgnoreMods]="true" [TabIndex]="item.ActionCode && IsJournalEditableAfterApproval ? 0 : -1" [IsEnabled]="!!item.ActionCode && IsJournalEditableAfterApproval" [NextMoveWithEnter]="true">
+                              <log-cell-template [IgnoreMods]="true" [TabIndex]="item.ActionCode && IsJournalEditableAfterApproval ? 0 : -1" [IsEnabled]="!!item.ActionCode && IsJournalEditableAfterApproval" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <IconButton *ngIf="IsJournalEditableAfterApproval" float-start [Name]="'Edit'" [IsSmall]="true" (click)="EditJournalLine(item)"
                                               style="display: block; margin-left:3px; margin-top:4px;"></IconButton>
                               </log-cell-template>
@@ -782,7 +782,7 @@
 
                       <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'">
                           <ng-template let-item>
-                              <log-cell-template [IgnoreMods]="true" [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true">
+                              <log-cell-template [IgnoreMods]="true" [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="!!item.ActionCode" [NextMoveWithEnter]="true" [RIndex]="item.rowIndex">
                                   <span class="CellSeparator"></span>
                                   <IconButton float-start [Name]="'Delete'" [disabled]="journalDisabled" [IsSmall]="true"
                                               style="display: block; margin-left:3px; margin-top:4px;" (click)="RemoveLine(item)"></IconButton>

@@ -799,7 +799,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var reconciliations = new List<ReconciliationPM>();
             if (reconLines.Any())
             {
-                List<string> recosIds = reconLines.Select(d => d.ReconciliationId).ToList();
+                List<string> recosIds = reconLines.Select(d => d.ReconciliationId).Distinct().ToList();
                 ReconciliationQueryService recoQuery = new ReconciliationQueryService(tenant);
                 reconciliations = recoQuery.GetReconciliationsByIds(recosIds, tenant);
             }

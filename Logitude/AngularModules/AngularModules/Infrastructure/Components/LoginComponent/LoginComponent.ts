@@ -197,8 +197,8 @@ export class LoginComponent implements OnInit {
             this.StartLoginProcess();
          }     
         
-         if (isDevMode())
-            this.developerLogin();         
+        //  if (isDevMode())
+        //     this.developerLogin();         
 
 
   
@@ -208,14 +208,13 @@ export class LoginComponent implements OnInit {
     async developerLogin() {
         // this.Email = 'itzik@amital.co.il'
         // this.Password = 'xhx@word3';
-        this.Email ='shoshana@amital.co.il';
-        this.Password = 'Sh254256';
+  
         this.LoginClicked();
 
         while(!this.TenantList?.length)
             await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
 
-        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 74);
+        // this.SelectedCompany = this.TenantList.find(d => d.Tenant == 74);
 
         this.ContinueClicked()
     }

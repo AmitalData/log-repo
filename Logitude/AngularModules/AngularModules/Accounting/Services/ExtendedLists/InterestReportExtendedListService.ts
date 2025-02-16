@@ -160,8 +160,22 @@ GetInterestLastBatchServiceByTenant() {
   }
 
   PostInterestReportsForEligibleCustomerCreationInBatch(interestCalculationDate:Date) {
+
     let postUrl:string=ServiceHelper.GetLogitudeURL() + 'api/interestreportsforeligiblecustomercreation';
     return this.httpClient.put(postUrl + "/PutInterestReportsForEligibleCustomerCreationInBatch", interestCalculationDate, ServiceHelper.GetHttpHeaders()).pipe(
+        map(res => {
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var result = res;
+            serviceResponse.Result = result;
+
+            return serviceResponse;
+        }),
+        catchError(ServiceHelper.HandleServiceError));
+}
+SendSignedInvoices(selectList: string[]) {
+     
+    return this.httpClient.put(this._apiUrl + "/PutSendSignedInvoices", JSON.stringify(selectList), ServiceHelper.GetHttpHeaders()).pipe(
         map(res => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();

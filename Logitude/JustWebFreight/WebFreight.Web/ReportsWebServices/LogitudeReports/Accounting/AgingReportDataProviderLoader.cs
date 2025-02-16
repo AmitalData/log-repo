@@ -1,4 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -31,12 +34,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private bool isFromGLAccountAgingData = false;
         private int tenant;
         string filterReportByLocalCurrency = "filter_LocalCurr";
-
+        public List<LedgerTransactionList> ExternalTransactions;
+        IAccountingContext accountingContext;
         public AgingReportDataProviderLoader(int _tenant)
         {
             tenant = _tenant;
             showLocals = LoggedContactResolver.GetLoggedContactShowLocal(_tenant);
-
+            accountingContext = AccountingContext.GetContext(tenant);
         }
         public AccountingAgingDataProvider LoadFromXML(byte[] xmlFilters)
         {
@@ -47,6 +51,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             AgingReportService agingReportService = new AgingReportService(BuildReportParameters());
             agingReportService.RunReport();
             List<PeriodMExtended> resultedPeriods = agingReportService.MyPeriodExtendedList;
+            GetExternalTransactionsForPeriodsAccounts(agingReportService.MyPeriodExtendedList);
 
             return BuildDataProvider(resultedPeriods);
         }
@@ -65,7 +70,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             dataProvider.IsFromGLAccountAgingData = isFromGLAccountAgingData;
 
             SetLocalCurrency(dataProvider);
-            AddTotalBalancePeriods(filteredPeriods, dataProvider); 
+            AddTotalBalancePeriods(filteredPeriods, dataProvider);
             AddTotalBalanceForiegn(filteredPeriods, dataProvider);
             AddTotalLocalBalancePeriods(filteredPeriods, dataProvider);
             string currencyOriginalLocalValue = GetFilterValue<string>("CurrencyOriginalLocalValue");
@@ -81,10 +86,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             SetPeriodsTotal(filteredPeriods, dataProvider);
 
             ResharpPeriodsName(dataProvider);
-            
+
             return dataProvider;
         }
 
+        private void GetExternalTransactionsForPeriodsAccounts(List<PeriodMExtended> agingPeriods)
+        {
+            List<string> accountsIds = agingPeriods.Select(p => p.AccountId).Distinct().ToList();
+            LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(accountingContext);
+            ExternalTransactions = ledgerQuery.GetExternalTransactionsForAccounts(accountsIds, tenant).ToList();
+        }
 
 
         private void EnsureSalesmanIdIfSalesmanRestricted(AgingReportParam args)
@@ -122,10 +133,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             if (groupBy == "filter_Due")
             {
-                if(filterBy == "Debtors")
+                if (filterBy == "Debtors")
                     resultedPeriods = resultedPeriods.Where(d => d.LocalBalanceInDue > 0).ToList();
                 else if (filterBy == "DebtBetween")
-                    resultedPeriods = FilterPeriodsBetweenTwoValues(resultedPeriods,true);
+                    resultedPeriods = FilterPeriodsBetweenTwoValues(resultedPeriods, true);
 
             }
             else
@@ -136,19 +147,19 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     resultedPeriods = FilterPeriodsBetweenTwoValues(resultedPeriods, false);
 
             }
-            resultedPeriods= FilterPeriodsBySecusrityLevel(resultedPeriods);
-         
+            resultedPeriods = FilterPeriodsBySecusrityLevel(resultedPeriods);
+
 
             return resultedPeriods;
         }
-        private  List<PeriodMExtended> FilterPeriodsBySecusrityLevel(List<PeriodMExtended> resultedPeriods)
+        private List<PeriodMExtended> FilterPeriodsBySecusrityLevel(List<PeriodMExtended> resultedPeriods)
         {
             UserPM loggedUer = GetLoggerUser();
             if (!loggedUer.IsCustomerCare)
                 return resultedPeriods.Where(d => (d.ChartOfAccountSecurityLevel <= (loggedUer.SecurityLevel ?? 0)) || d.ChartOfAccountSecurityLevel == null).ToList();
             else return resultedPeriods;
         }
-        private  List<PeriodMExtended> FilterPeriodsBetweenTwoValues(List<PeriodMExtended> resultedPeriods, Boolean useLocalBalanceInDue)
+        private List<PeriodMExtended> FilterPeriodsBetweenTwoValues(List<PeriodMExtended> resultedPeriods, Boolean useLocalBalanceInDue)
         {
             decimal? FromBalanceFilterAmount = GetNullableDecimalFilterValue("FromBalanceFilterValue");
             decimal? ToBalanceFilterAmount = GetNullableDecimalFilterValue("ToBalanceFilterValue"); ;
@@ -158,7 +169,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             Boolean applayBetweenBalanceFillter = FromBalanceFilterAmount != null && ToBalanceFilterAmount != null;
             if (applayAboveBalanceFillter)
             {
-                resultedPeriods =  resultedPeriods.Where(d => useLocalBalanceInDue ? d.LocalBalanceInDue >= FromBalanceFilterAmount: d.BalanceInLocalCurrency >= FromBalanceFilterAmount).ToList();
+                resultedPeriods = resultedPeriods.Where(d => useLocalBalanceInDue ? d.LocalBalanceInDue >= FromBalanceFilterAmount : d.BalanceInLocalCurrency >= FromBalanceFilterAmount).ToList();
             }
             else if (applayBelowBalanceFillter)
             {
@@ -215,11 +226,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 totalData.AgingPeriods.Remove(item);
         }
 
+        decimal sumTotalCredit = 0;
         private void AddTotalBalancePeriods(List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
         {
             List<AgingPeriod> groupedPeriodsByAccount;
 
-            bool showDetailedCurrencyAccounts = GetFilterValue<bool> ("Detailed");
+            bool showDetailedCurrencyAccounts = GetFilterValue<bool>("Detailed");
             if (showDetailedCurrencyAccounts)
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountAndCurr).Select(d => new AgingPeriod()
                 {
@@ -240,7 +252,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     TotalOpenShipments = d.First().TotalOpenShipments,
                     BalanceInLocalCurrency = d.First().BalanceInLocalCurrency,
                     CustomerVatNumber = d.First().CustomerVatNumber,
-                    CustomerPaymentTerm = d.First().AccountTermLocalName,                    
+                    CustomerPaymentTerm = d.First().AccountTermLocalName,
                     GLAccountStandardInterestRate = d.First().GLAccountStandardInterestRate,
                     AccountSalesmanName = d.First().AccountSalesmanName,
                     AccountSalesmanLocalName = d.First().AccountSalesmanLocalName,
@@ -265,13 +277,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountContactEmail = d.First().AccountContactEmail,
                     AccountContactName = d.First().AccountContactName,
                     AccountContactPhone = d.First().AccountContactPhone,
-                   
-
+                    AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+                    CreditLimit = (decimal)d.First().CreditLimitAmount,
+                    ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
+                    TotalLocal = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+                    TotalForeign = d.Sum(x => x.Total),
+                    SumTotalCredit = sumTotalCredit,
                 }).ToList();
+
+
+         
             else
-                groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
-                {
-                    PeriodName = showLocals ? SummaryPeriodsHebrewString : SummaryPeriodsString,
+                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
+        {
+            PeriodName = showLocals ? SummaryPeriodsHebrewString : SummaryPeriodsString,
                     Total = d.Sum(x => x.Total),
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
@@ -310,15 +329,27 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
-                    AccountContactEmail = d.First().AccountContactEmail,
+                     AccountContactEmail = d.First().AccountContactEmail,
                     AccountContactName = d.First().AccountContactName,
                     AccountContactPhone = d.First().AccountContactPhone,
-                }).ToList();
-            totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
+ 					AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					CreditLimit = (decimal)d.First().CreditLimitAmount,
+					ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
+					TotalLocal = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					TotalForeign = d.Sum(x => x.Total),
+					SumTotalCredit = sumTotalCredit,
+				}).ToList();
+        totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
             
-        }
+        }  
+		private static decimal? GetBalanceSummationForSplittedAccounts(IGrouping<string, PeriodMExtended> customerPeriods)
+		{
+			return customerPeriods
+							.GroupBy(d => new { d.CurrencyId, d.SplitAccountId })
+							.Sum(d => d.First().BalanceInLocalCurrency);
+		}
 
-    private void AddTotalBalanceForiegn(List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
+		private void AddTotalBalanceForiegn(List<PeriodMExtended> result, AccountingAgingDataProvider totalData)
         {
             List<AgingPeriod> groupedPeriodsByAccount;
 
@@ -368,12 +399,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
-
-                    AccountContactEmail = d.First().AccountContactEmail, 
+ 					AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					CreditLimit = (decimal)d.First().CreditLimitAmount,
+					ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
+					TotalLocal = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					TotalForeign = d.Sum(x => x.Total),
+					SumTotalCredit = sumTotalCredit,
+                     AccountContactEmail = d.First().AccountContactEmail, 
                     AccountContactName = d.First().AccountContactName,
                     AccountContactPhone = d.First().AccountContactPhone,
 
-                }).ToList();
+				}).ToList();
             else
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
                 {
@@ -419,12 +455,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
-
-                    AccountContactName = d.First().AccountContactName,
+ 					AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					CreditLimit = (decimal)d.First().CreditLimitAmount,
+					ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
+					TotalLocal = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					TotalForeign = d.Sum(x => x.Total),
+					SumTotalCredit = sumTotalCredit,
+                     AccountContactName = d.First().AccountContactName,
                     AccountContactEmail = d.First().AccountContactEmail,
                     AccountContactPhone = d.First().AccountContactPhone,
 
-                }).ToList();
+				}).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
             
         }
@@ -478,12 +519,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
-                    AccountContactName = d.First().AccountContactName,
+                     AccountContactName = d.First().AccountContactName,
                     AccountContactEmail = d.First().AccountContactEmail,
                     AccountContactPhone = d.First().AccountContactPhone,
-
-
-            }).ToList();
+ 					AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					CreditLimit = (decimal)d.First().CreditLimitAmount,
+					ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
+					TotalLocal = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					TotalForeign = d.Sum(x => x.Total),
+					SumTotalCredit = sumTotalCredit,
+ 
+				}).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
                 groupedPeriodsByAccount = result.Where(d => d.Total != null && d.CurrencyCode != totalData.TenantCurrencyCode).GroupBy(d => d.AccountAndCurr).Distinct().Select(d => new AgingPeriod()
                 {
@@ -528,11 +574,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
-                    AccountContactName = d.First().AccountContactName,
+                     AccountContactName = d.First().AccountContactName,
                     AccountContactEmail = d.First().AccountContactEmail,
                     AccountContactPhone = d.First().AccountContactPhone,
 
-                }).ToList();
+ 					AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					CreditLimit = (decimal)d.First().CreditLimitAmount,
+				    ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
+					TotalLocal = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					TotalForeign = d.Sum(x => x.Total),
+					SumTotalCredit = sumTotalCredit,
+ 				}).ToList();
             }
             else
                 groupedPeriodsByAccount = result.Where(d => d.Total != null).GroupBy(d => d.AccountId).Distinct().Select(d => new AgingPeriod()
@@ -577,11 +629,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
-                    AccountContactName = d.First().AccountContactName,
+                     AccountContactName = d.First().AccountContactName,
                     AccountContactEmail = d.First().AccountContactEmail,
                     AccountContactPhone = d.First().AccountContactPhone,
 
-                }).ToList();
+ 					AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					CreditLimit = (decimal)d.First().CreditLimitAmount,
+					ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
+					TotalLocal = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					TotalForeign = d.Sum(x => x.Total),
+					SumTotalCredit = sumTotalCredit,
+ 				}).ToList();
 
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
 
@@ -636,11 +694,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
-                    AccountContactName = d.First().AccountContactName,
+                     AccountContactName = d.First().AccountContactName,
                     AccountContactEmail = d.First().AccountContactEmail,
                     AccountContactPhone = d.First().AccountContactPhone,
 
-                }).ToList();
+ 					AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					CreditLimit = (decimal)d.First().CreditLimitAmount,
+					ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
+					TotalLocal = GetBalanceSummationForSplittedAccounts(d) ?? 0,
+					TotalForeign = d.Sum(x => x.Total),
+					SumTotalCredit = sumTotalCredit,
+ 				}).ToList();
             }
             else
                 groupedPeriodsByAccount = totalData.AgingPeriods.GroupBy(d => d.AccountName).Distinct().Select(d => new AgingPeriod()
@@ -686,8 +750,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
-
-                }).ToList();
+					AccountingBalance = d.First().AccountingBalance,
+					CreditLimit = (decimal)d.First().CreditLimit,
+					ExternalTransactionsTotal = d.First().ExternalTransactionsTotal,
+					TotalLocal = d.First().TotalLocal,
+					TotalForeign = d.First().TotalForeign,
+					SumTotalCredit = sumTotalCredit,
+				}).ToList();
 
             
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
@@ -1000,12 +1069,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                         record.Category4LocalName = item.Category4LocalName;
                         record.Category5LocalName = item.Category5LocalName;
 
-                        record.Total = item.Total;
+                        record.Total = item.Total;					  
                     record.AccountContactName = item.AccountContactName;
                     record.AccountContactEmail = item.AccountContactEmail;
                     record.AccountContactPhone = item.AccountContactPhone;
 
-                        periods.Add(record);
+					periods.Add(record);
                     }
 
                 

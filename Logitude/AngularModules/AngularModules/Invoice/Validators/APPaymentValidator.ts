@@ -49,10 +49,10 @@ export class APPaymentValidator {
             }
         }
 
-        if ((entityPm.PaymentMethodCode == "CH" || entityPm.PaymentMethodCode == "BT" || entityPm.PaymentMethodCode == "CC") && entityPm.ValueDate == null) {
-            validationResults.push(msg.replace("%FieldName", "Value Date"));
+        // if ((entityPm.PaymentMethodCode == "CH" || entityPm.PaymentMethodCode == "BT" || entityPm.PaymentMethodCode == "CC") && entityPm.ValueDate == null) {
+        //     validationResults.push(msg.replace("%FieldName", "Value Date"));
 
-        }
+        // }
         if (entityPm.HasInvoicesErrors) {
             validationResults.push(TextCodeTranslator.Translate("APPayment.M.PaymentInvoicesHaveErrors"));
         }

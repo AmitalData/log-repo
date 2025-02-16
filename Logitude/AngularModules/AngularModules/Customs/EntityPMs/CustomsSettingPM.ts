@@ -214,6 +214,11 @@ export class CustomsSettingPM {
     public set ForbiddenSigns(newValue: string) { if (this.forbiddenSigns != newValue) { this.forbiddenSigns = newValue; this.MarkAsDirty("ForbiddenSigns"); } }
        
 	 
+    private myCustomURL: string;
+    public get MyCustomURL() { return this.myCustomURL; }
+    public set MyCustomURL(newValue: string) { if (this.myCustomURL != newValue) { this.myCustomURL = newValue; this.MarkAsDirty("MyCustomURL"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		

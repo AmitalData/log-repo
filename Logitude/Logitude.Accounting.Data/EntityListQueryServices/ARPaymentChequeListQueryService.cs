@@ -105,7 +105,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         queryableData = queryableData.Where(d => d.StatusCode == "1" && d.ValueDate.Date <= DateTime.Today.Date);
                     }
 
-                    if (item.FieldName == "StatusCode" && item.FieldValue.Equals("5") && item.FieldValue2.Equals("6"))
+                    if (item.FieldName == "UnRedeemedChequeStatus" && item.FieldValue.Equals("5") && item.FieldValue2.Equals("6"))
                     {
                         queryableData = queryableData.Where(d => d.StatusCode != "5" && d.StatusCode != "6");
                     }
