@@ -3072,6 +3072,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;Accounting.General.O.ReportTotalInterest&quot;"
+      DefaultText="&quot;Report Total Interest&quot;"
+      LocalDefaultText="&quot;סה”כ ריבית לדו”ח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+      <TextCode
       Code="&quot;Accounting.General.O.BankQueries&quot;"
       DefaultText="&quot;Bank Queries&quot;"
       LocalDefaultText="&quot;שאילתות בנקים&quot;"

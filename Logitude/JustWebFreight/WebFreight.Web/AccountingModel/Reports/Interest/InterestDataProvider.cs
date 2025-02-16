@@ -29,6 +29,8 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal? PostponedChequesCommission { get; set; }
         public int CountPostponedCheques { get; set; }
         public decimal? TotalAmountWithPostponedCheques { get; set; }
+        public List<InterestReportFlatLine> InterestReportFlatLineList { get; set; }
+
     }
 
     public class InterestReportLinesByDateProvider
@@ -55,6 +57,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
     public class InterestTransactionProvider
     {
         public string EntityType { get; set; }
+        public string EntityTypeCode { get; set; }
         public string EntityNumber { get; set; }
         public decimal LocalAmount { get; set; }
         public DateTime? InterestValueDate { get; set; }
@@ -63,4 +66,28 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
 
      }
 
+    public class InterestReportFlatLine
+    {
+        public int LineNo { get; set; }
+        public string LineType { get; set; }
+        public DateTime? Date { get; set; }
+        public int? NumberOfDays { get; set; }
+        public string Reference1 { get; set; }
+        public string Notes { get; set; }
+        public decimal? LocalAmount { get; set; }
+        public decimal? TotalToDate { get; set; }
+        public decimal? AccumulatedForInterest { get; set; }
+        public string Currency { get; set; }
+        public decimal? ForeignAmount { get; set; }
+        public decimal? StdPercentage { get; set; }
+        public decimal? TotalStdInterest { get; set; }
+        public decimal? CalculatedStdInterest { get; set; }
+        public decimal? ExcPercentage { get; set; }
+        public decimal? TotalExcInterest { get; set; }
+        public decimal? CalculatedExcInterest { get; set; }
+        public decimal? CrdPercentage { get; set; }
+        public decimal? TotalCrdInterest { get; set; }
+        public decimal? CalculatedCrdInterest { get; set; }
+        public string CalculationDetails { get; set; }
+    }
 }

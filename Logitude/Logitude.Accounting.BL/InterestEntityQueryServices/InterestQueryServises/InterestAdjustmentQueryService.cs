@@ -25,7 +25,7 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 result.JournalNumber = journalPM.JournalNumber;
                 result.AccountCode = "1";
                 result.EntityCode = "5";
-                result.EntityType = "Adjsutments";
+                result.EntityType = "Adjustments";
                 result.EntityTypeCode = "AJ";
             }
 

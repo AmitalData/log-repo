@@ -315,11 +315,11 @@ namespace Logitude.Accounting.BL.InterestService
             InterestEntityResult entityResult = GetInterestEntityResultByInterestTransaction(interestTransactionLists);
         
             interestTransactionLists.JournalNumber = GetSingleJournalnumberByInterestTransaction(entityResult, interestTransactionLists, JournalNumbers);
-            interestTransactionLists.InterestEntityNumber = entityResult.EntityNumber;
-            interestTransactionLists.InterestEntityType = entityResult.EntityType;
-            interestTransactionLists.InterestEntityIconCode = entityResult.EntityTypeCode;
-            interestTransactionLists.JournalId = entityResult.JournalId;
-            interestTransactionLists.AccountEntityCode = entityResult.AccountCode;
+            interestTransactionLists.InterestEntityNumber = entityResult.EntityNumber; //aRInvoice.InvoiceNumber //aRPaymentPM.PaymentNo //journalPM.JournalNumber //journalPM.JournalNumber //reportPM.ReportNumber
+            interestTransactionLists.InterestEntityType = entityResult.EntityType;     //"ARInvoice" //"ARPayment" //"Journal" //"Adjustments" //"Interest Report"
+            interestTransactionLists.InterestEntityIconCode = entityResult.EntityTypeCode; // "IN" //"PY" //"JR" //"AJ" //"IR"
+            interestTransactionLists.JournalId = entityResult.JournalId;               //aRInvoice.JournalId //aRPaymentPM.JournalId //journalPM.Id //journalPM.Id //null
+            interestTransactionLists.AccountEntityCode = entityResult.AccountCode;     //"2" //"3" //"1" //"1" //"11"
             interestTransactionLists.CurrencyCode = GetSingleCurrencyCodeByInterestTransaction(interestTransactionLists, CurencyCodes);
 
             return interestTransactionLists;
