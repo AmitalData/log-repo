@@ -65,13 +65,12 @@ namespace Logitude.Accounting.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-		    //if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-      //      {
-      //          var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
-      //          config.Workarounds.DisableQuoting = true;
-      //          config.Workarounds.IgnoreSchemaName = true;
-                
-      //      }
+//		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+//            {
+//                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
+//                config.Workarounds.DisableQuoting = true;
+//                config.Workarounds.IgnoreSchemaName = true;
+//            }
             Database.SetInitializer<AccountingContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			
