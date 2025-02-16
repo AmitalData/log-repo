@@ -364,7 +364,11 @@ export class TaxReportMenuButtonsHandler {
                     messageWindow.Width = 500;
                     messageWindow.IsMessageMultiLine = true;
                     let message: string = TextCodeTranslator.Translate(TextCode.TaxReportCantBeClosedValidationMessage);
-                    message += '\n(' + reconciledTaxReportLines + ')'
+                    message += '\n';
+                    reconciledTaxReportLines.forEach((line) => {
+                        message += `${TextCodeTranslator.Translate(TextCode.ErrorInTaxReportLine)}: ${line.Line}, ${TextCodeTranslator.Translate(TextCode.ErrorInTaxReportLineReconciliation)}: ${line.ReconsileNumber}\n`;
+                    });
+                    
                     messageWindow.Show(message);
                 }
             });
@@ -487,6 +491,10 @@ enum TextCode {
     TaxReportCloseJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
     TaxReportCancelClosingJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
      TaxReportOCancelLaterReports = "TaxReport.O.CancelLaterReports",
+     ErrorInTaxReportLine = "TaxReportLine.F.Line",
+     ErrorInTaxReportLineReconciliation = "Reconciliation",
+
+
  }
 function CloneDeep(EntityPM: TaxReportPM) {
     throw new Error('Function not implemented.');

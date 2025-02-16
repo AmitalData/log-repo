@@ -34,12 +34,16 @@ export class MainPageComponent {
 	selectSearchBy: string;
 
 	constructor(private API_MainService: API_MainService, private searchService: SearchService, private filterPopupService: FilterPopupService,
-		private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService
-
-	) {
+		private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private headerService: HeaderService) {
 		this._filters = this.filterService.getFilters();
-	}
+		this.getByIsDiscountCodes();
+  }
 
+	getByIsDiscountCodes() {
+		this.headerService.IsDiscountCodes.subscribe((value) => {
+			this.IsDiscountCodes = value;
+		});
+	}
 	getCustomsItemHierarchic(filtersSearch: FiltersSearch): string {
 		const selectedFilters = [];
 		if (filtersSearch.parts) selectedFilters.push(FilterOption.Parts);
@@ -57,6 +61,7 @@ export class MainPageComponent {
 		else this.checkIsFeaturePermessionCustomsBook(() => this.getSearchData(searchBy));
 	}
 
+	IsDiscountCodes: boolean = false;
 	getSearchData(searchBy: any) {
 		this.selectSearchBy = searchBy;
 		let filtersSearch: FiltersSearch = this.filterPopupService.getFilters();
@@ -71,6 +76,8 @@ export class MainPageComponent {
 			PageSize: 0,
 			Tenant: SessionInfo.LoggedUserTenant
 		};
+		if (this.IsDiscountCodes)
+			filters.IsDiscountCodes = this.IsDiscountCodes;
 
 		if (filters.CustomsItemHierarchic === '') {
 			filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;

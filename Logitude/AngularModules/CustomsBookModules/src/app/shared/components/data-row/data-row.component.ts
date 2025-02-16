@@ -26,7 +26,6 @@ export class DataRowComponent implements OnInit {
 	@Input() data: CB_CustomsItemComputedDataList;
 	@Input() isSelected?: boolean = true;
 
-	@Input() showTaxData: boolean = false;
 	@Input() showDetailsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	@Input() state = 'search';
 	@Input() searchItem?: string = '';
@@ -54,16 +53,12 @@ export class DataRowComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		//this.getCustomsBookAgreementLevelData(); #114817
 		this.showRulesData();
 		this.selectedSearchBy = this.searchService.selectSearchBy;
 		this.addCommentService.fullCommentsData.subscribe((data: RemarksClassificationList[]) => {
 			this.data.remarksClassificationList = data.filter(x => x.CustomsItemsID == this.data.CustomsItemID);
 			this.showCommentsData();
 		});
-		// this.addCommentService.allComments.subscribe((data: RemarksClassificationList[]) => {
-		// 	this.showCommentsData();
-		// });
 	}
 
 	getBackgroundColor(): string {
@@ -73,23 +68,6 @@ export class DataRowComponent implements OnInit {
 	getTextColor(): string {
 		return this.preferencesService.getPreference(this.level, PreferenceType.Text);
 	}
-
-	// #114817 cancel this call on init of data row. instead, call it on click to open side window
-	// TariffList1: CB_TariffList;
-	// TariffList2: CB_TariffList;
-	// TariffListCount: number = 0;
-	// TariffListData: CB_TariffList[] = [];
-	// getCustomsBookAgreementLevelData() {
-	// 	if (!this.showTaxData || !this.data.CustomsItemID || !this.data?.PH_MeasurementUnitID) return;
-	// 	this.API_MainService.GetCustomsBookAgreementLevelData(this.data?.CustomsItemID, this.data?.PH_MeasurementUnitID).subscribe((data: any) => {
-	// 		this.TariffListData = data.body;
-	// 		if (!this.TariffListData) return;
-	// 		this.TariffList1 = this.TariffListData.find(x => x.TradeAgreementName == 'מכס כללי');
-	// 		this.TariffList2 = this.TariffListData.find(x => x.TradeAgreementName == 'מס קניה');
-	// 		this.TariffListCount = this.TariffListData.filter(x => x.TradeAgreementName != 'מס קניה').length;
-	// 		this.contentWidth();
-	// 	});
-	// }
 
 	highlight(text: string, search: string): string {
 		if (!search) {
@@ -135,16 +113,7 @@ export class DataRowComponent implements OnInit {
 		this.showDetailsOpen.subscribe((value) => {
 			this.isShowDetailsOpen = value;
 			if (value) this.dynamicDivClick(); // when window open
-			else {
-				this.buildSetWidth();
-				// if (!this.showTaxData || (!this.isShowDetailsOpen && this.TariffListData?.length === 0) || this.screenWidth <= 1900) 
-				// this.buildSetWidth();
-				// else {
-				// 	this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "27%");
-				// 	this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'white-space', 'nowrap');
-				// 	this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'text-overflow', 'ellipsis');
-				// }
-			}
+			else this.buildSetWidth();
 		});
 	}
 
@@ -193,36 +162,6 @@ export class DataRowComponent implements OnInit {
 		});
 	}
 
-	// showCommentsData() {
-	// 	this.API_MainService.GetAllCommentsByCustomsItemId(this.data.CustomsItemID, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
-	// 		this.comments = data.body;
-
-	// 		if (!this.comments) return; // TODO: add error message
-
-	// 		if (this.searchItem != "" && this.comments[0]?.RemarkDescription?.includes(this.searchItem)) {
-	// 			this.isSearchItemExistRemark = true;
-	// 		}
-	// 		else this.isSearchItemExistRemark = false;
-
-	// 		this.countOfComments = this.comments?.length > 0 ? this.comments.length : 0;
-	// 	});
-	// }
-
-	//showRulesData(customsItemID: number) {
-	//  this.API_MainService.GetCustomsBookRulesData(customsItemID).subscribe((data: any) => {
-	//    const result: RulesDetailsList[] = data.body;
-	//    if (!data.body) return; // TODO: add error message
-
-	//    if (this.searchItem == "") return;
-	//    result.forEach((rule: RulesDetailsList) => {
-	//      if (rule.Rules.includes(this.searchItem)) {
-	//        this.isSearchItemExistRule = true;
-	//        return;
-	//      }
-	//    });
-	//  });
-	//}
-
 	showCommentsClicked(event: MouseEvent) {
 		let selection = window.getSelection();
 		let isTextSelected = selection && selection?.toString().length > 0;
@@ -254,26 +193,26 @@ export class DataRowComponent implements OnInit {
 	buildSetWidth() {
 		if (this.screenWidth <= 620) this.widthSmaller = true;
 		else this.widthSmaller = false;
-		// let isExistData = this.TariffListData?.length > 0 ? true : false;
+		//#115478 delete using showTaxData input
 		let isExistData = !this.data?.PurchaseTax && !this.data?.MeasurementUnitName && !this.data?.CustomsRate && !this.data?.OptionalTaxAddition ? false : true;
 		isExistData = !isExistData && this.data?.MeasurementUnitName && this.level > 3 ? true : isExistData;
 		// Set width:
-		if (this.showTaxData && isExistData && this.screenWidth > 1199 && this.screenWidth < 1300) {
+		if (isExistData && this.screenWidth > 1199 && this.screenWidth < 1300) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "10%");
 		}
-		else if (this.showTaxData && isExistData && this.screenWidth >= 1301 && this.screenWidth < 1350) {
+		else if (isExistData && this.screenWidth >= 1301 && this.screenWidth < 1350) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "16%");
 		}
-		else if (this.showTaxData && isExistData && this.screenWidth >= 1351 && this.screenWidth < 1700) {
+		else if (isExistData && this.screenWidth >= 1351 && this.screenWidth < 1700) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "25%");
 		}
-		else if (this.showTaxData && isExistData && this.screenWidth >= 1701 && this.screenWidth < 1900) {
+		else if (isExistData && this.screenWidth >= 1701 && this.screenWidth < 1900) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "40%");
 		}
-		else if (this.showTaxData && isExistData && this.screenWidth >= 1901 && this.screenWidth < 2250) {
+		else if (isExistData && this.screenWidth >= 1901 && this.screenWidth < 2250) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "45%");
 		}
-		else if (this.showTaxData && isExistData && this.screenWidth >= 2250) {
+		else if (isExistData && this.screenWidth >= 2250) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "50%");
 		}
 		else if (this.screenWidth <= 550) {

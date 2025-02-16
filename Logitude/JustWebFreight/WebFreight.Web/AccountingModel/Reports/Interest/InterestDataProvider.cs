@@ -26,6 +26,9 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal? CalculatedPostponedChequesCommision { get; set; }
         public decimal? AllotmentCommession { get; set; }
         public string AllotmentCalculation { get; set; }
+        public decimal? PostponedChequesCommission { get; set; }
+        public int CountPostponedCheques { get; set; }
+        public decimal? TotalAmountWithPostponedCheques { get; set; }
     }
 
     public class InterestReportLinesByDateProvider

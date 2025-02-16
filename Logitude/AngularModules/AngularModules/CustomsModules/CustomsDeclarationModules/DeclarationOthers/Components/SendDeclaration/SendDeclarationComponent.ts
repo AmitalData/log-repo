@@ -477,10 +477,11 @@ export class SendDeclarationService implements OnDestroy {
                             });
                     }
                 });
-
+        var IncotermCode = this.EntityPM.SupplierInvoices[0].IncotermCode
+        
         AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseCheckInsuranseReturnIsNeededAmount(
             this.EntityPM.CustomFileNo, this.EntityPM.Id
-            , "SendDeclarationService", "OPEN"
+            , "SendDeclarationService", "OPEN", IncotermCode
         );
     }
     public ObjectTableName: string = "Customs.Declaration";

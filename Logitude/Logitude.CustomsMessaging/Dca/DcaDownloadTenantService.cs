@@ -128,11 +128,12 @@ namespace Logitude.CustomsMessaging.Dca
                        ).ToList();
 #endif
             _AllDcaPreFixWithoutInOutUpper = new List<string>();
+			_AllDcaPreFixByEnvironment = new List<string>();
 
 
 
 
-            if (AddUnifreightTester == true)
+			if (AddUnifreightTester == true)
             {
                 _InterfaceListDCA.Add(interfaceTypeQueryService.GetWithInterfaceManagementDefinition(_CustomsSettingPM.Tenant, "UT01").First());
             }
@@ -181,6 +182,14 @@ namespace Logitude.CustomsMessaging.Dca
                     Debug.WriteLine("Due Not register in Container: Removing " + rec.Code);
                 }
 
+                if(rec.InterfaceManagement.Environment == "Export")
+                {
+					var l = GetAllPreFix(rec);
+					if (l.Count() > 0)
+					{
+						_AllDcaPreFixByEnvironment.AddRange(l);
+					}
+				}
 
             }
         }
@@ -268,8 +277,9 @@ namespace Logitude.CustomsMessaging.Dca
                         _AllDcaPreFixWithoutInOutUpper,
                         this._InterfaceListDCA,
                         _AllInterface,
-                        dedicatedCourierDCAModel
-                        );
+                        dedicatedCourierDCAModel,
+						_AllDcaPreFixByEnvironment
+						);
                     dcaDirect9200TenantService.DownloadAll(/*debugIIGMessageId*/);
                     if (dedicatedCourierDCAModel != null)
                     {
@@ -281,7 +291,7 @@ namespace Logitude.CustomsMessaging.Dca
                 sw.Restart();
 
 
-                var restoreWaitingImportService = new Restore9100.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA);
+                var restoreWaitingImportService = new Restore9100.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA, _AllDcaPreFixByEnvironment);
                 restoreWaitingImportService.RestoreWaitingImportSaveInDB();
 
                 sb.AppendLine($"RestoreWaitingImportSaveInDB({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
@@ -849,8 +859,9 @@ out myMessageOut);
         DcaManager _DcaManager;
         private List<string> _AllDcaPreFixWithoutInOutUpper;
         private Stopwatch _swDownAll;
+		private List<string> _AllDcaPreFixByEnvironment;
 
-        private bool DoDcaMessageFile(InterfaceTenantDefinitionManagementPM messageDCA, DCAFileModel dcaFile)
+		private bool DoDcaMessageFile(InterfaceTenantDefinitionManagementPM messageDCA, DCAFileModel dcaFile)
         {
             bool myErrorOccurred;
             string myMoreParams = "";

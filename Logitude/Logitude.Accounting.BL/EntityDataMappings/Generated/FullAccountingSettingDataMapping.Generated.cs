@@ -65,7 +65,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AllowEditingExchangeRate, 
 	         NumberingByChartOfAccount, 
 	         OppositeAccountNumber, 
-	         TenantForConfirmationNumberApi,
+	         TenantForConfirmationNumberApi, 
+	         InvoiceNotes, 
+	         InterestInvoiceNotes,
 	      }
 
 
@@ -132,7 +134,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AllowEditingExchangeRate, 
 	         NumberingByChartOfAccount, 
 	         OppositeAccountNumber, 
-	         TenantForConfirmationNumberApi,
+	         TenantForConfirmationNumberApi, 
+	         InvoiceNotes, 
+	         InterestInvoiceNotes,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -354,6 +358,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TenantForConfirmationNumberApi))
             {
 				entityPOCO.TenantForConfirmationNumberApi = entityPM.TenantForConfirmationNumberApi;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceNotes))
+            {
+				entityPOCO.InvoiceNotes = entityPM.InvoiceNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestInvoiceNotes))
+            {
+				entityPOCO.InterestInvoiceNotes = entityPM.InterestInvoiceNotes;
 			}
 			}
 
@@ -580,6 +594,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.TenantForConfirmationNumberApi = entityPOCO.TenantForConfirmationNumberApi;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvoiceNotes))
+            {
+					entityPM.InvoiceNotes = entityPOCO.InvoiceNotes;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InterestInvoiceNotes))
+            {
+					entityPM.InterestInvoiceNotes = entityPOCO.InterestInvoiceNotes;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -801,6 +825,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.TenantForConfirmationNumberApi = entityPM.TenantForConfirmationNumberApi;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceNotes))
+            {
+                oldEntityPM.InvoiceNotes = entityPM.InvoiceNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestInvoiceNotes))
+            {
+                oldEntityPM.InterestInvoiceNotes = entityPM.InterestInvoiceNotes;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(FullAccountingSettingPM entityPM)
@@ -809,6 +843,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.InvoiceNotes)) //T4 find type == nText 
+            {
+                entityPM.InvoiceNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.InvoiceNotes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.InterestInvoiceNotes)) //T4 find type == nText 
+            {
+                entityPM.InterestInvoiceNotes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.InterestInvoiceNotes));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

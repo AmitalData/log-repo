@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.Repsitories
             throw new NotImplementedException();
         }
 
-        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainViewSearchByText(string searchFields, string customsBookType, string customsItemHierarchic, bool isReamarks, bool isRules, int tenant)
+        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainViewSearchByText(string searchFields, string customsBookType, string customsItemHierarchic, bool isReamarks, bool isRules, int tenant, bool isDiscountCodes)
         {
             try
             {
@@ -48,6 +48,7 @@ namespace Logitude.Customs.Data.Repsitories
                     command.Parameters.AddWithValue("@Remarks", isReamarks);
                     command.Parameters.AddWithValue("@Rules", isRules);
                     command.Parameters.AddWithValue("@Tenant", tenant);
+                    command.Parameters.AddWithValue("@IsDiscountCodes", isDiscountCodes);
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -87,7 +88,7 @@ namespace Logitude.Customs.Data.Repsitories
             }
         }
 
-        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainViewSearchByClassification(string customsBookType, string fullClassification, int tenant)
+        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainViewSearchByClassification(string customsBookType, string fullClassification, int tenant, bool isDiscountCodes)
         {
             try
             {
@@ -103,6 +104,7 @@ namespace Logitude.Customs.Data.Repsitories
                     AddSqlParameter(command, "@CustomsBookType", customsBookType);
                     AddSqlParameter(command, "@FullClassification", fullClassification);
                     command.Parameters.AddWithValue("@Tenant", tenant);
+                    command.Parameters.AddWithValue("@IsDiscountCodes", isDiscountCodes);
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -141,7 +143,7 @@ namespace Logitude.Customs.Data.Repsitories
             }
         }
 
-        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainView(string customsBookType, int tenant)
+        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainView(string customsBookType, int tenant, bool isDiscountCodes)
         {
             try
             {
@@ -156,6 +158,7 @@ namespace Logitude.Customs.Data.Repsitories
 
                     AddSqlParameter(command, "@CustomsBookType", customsBookType);
                     command.Parameters.AddWithValue("@Tenant", tenant);
+                    command.Parameters.AddWithValue("@IsDiscountCodes", isDiscountCodes);
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())

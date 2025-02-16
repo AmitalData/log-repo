@@ -99,8 +99,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataV2OLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelData.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
     <None Include="DBOthers\Procedures\usp_CustomsBookRulesDetailsOLD.dxml" />
@@ -695,6 +697,7 @@
     <None Include="EntityFiles\CB_CustomsItemLinkage.lxml" />
     <None Include="EntityFiles\CB_LevyCondition.lxml" />
     <None Include="EntityFiles\CB_LevyExclusion.lxml" />
+    <None Include="EntityFiles\CB_Preference.lxml" />
     <None Include="EntityFiles\CB_QuotaComputedData.lxml" />
     <None Include="EntityFiles\CB_RegularityRequiredCertificate.lxml" />
     <None Include="EntityFiles\CB_RequirementComputedData.lxml" />

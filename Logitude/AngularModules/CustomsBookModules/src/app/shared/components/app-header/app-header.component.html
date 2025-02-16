@@ -11,6 +11,15 @@
 		<div class="page-top-box">
 			<app-page-top class="app-page-top-box" (searchClick)="SearchByText($event)"></app-page-top>
 		</div>
+		<!-- discountCodes area -->
+		<div class="togglediscountCodes"  *ngIf="selected != 'אוטונומיה'">
+			<ul role="discountCodesTab">
+				<li [class.checked]="IsDiscountCodes">
+					<label><input (click)="updateIsDiscountCodes()" type="radio" name="pageSearch_toggle" [checked]="IsDiscountCodes"
+							class="fst-btn" aria-controls="sectionSelect1" /><span>{{discountCodes}}</span></label>
+				</li>
+			</ul>
+		</div>
 		<!-- header area -->
 		<div class="headerToggle">
 			<ul role="tablist">

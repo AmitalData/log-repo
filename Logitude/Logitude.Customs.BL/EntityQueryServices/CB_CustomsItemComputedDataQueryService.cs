@@ -21,19 +21,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
 { 
    public partial class CB_CustomsItemComputedDataQueryService: EntityQueryService<CB_CustomsItemComputedData,CB_CustomsItemComputedDataKeys,CB_CustomsItemComputedDataPM,object,CB_CustomsItemComputedDataKeys>
    {
-        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainViewSearchByText(string searchFields, string customsBookType, string customsItemHierarchic, bool isReamarks, bool isRules, int tenant)
+        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainViewSearchByText(string searchFields, string customsBookType, string customsItemHierarchic, bool isReamarks, bool isRules, int tenant, bool isDiscountCodes)
         {
-            return this.repository.GetCustomsBookMainViewSearchByText(searchFields, customsBookType, customsItemHierarchic, isReamarks, isRules, tenant);
+            return this.repository.GetCustomsBookMainViewSearchByText(searchFields, customsBookType, customsItemHierarchic, isReamarks, isRules, tenant, isDiscountCodes);
         }
 
-        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainViewSearchByClassification(string customsBookType, string fullClassification, int tenant)
+        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainViewSearchByClassification(string customsBookType, string fullClassification, int tenant, bool isDiscountCodes)
         {
-            return this.repository.GetCustomsBookMainViewSearchByClassification(customsBookType, fullClassification, tenant);
+            return this.repository.GetCustomsBookMainViewSearchByClassification(customsBookType, fullClassification, tenant, isDiscountCodes);
         }
 
-        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainView(string customsBookType, int tenant)
+        public List<CB_CustomsItemComputedDataList> GetCustomsBookMainView(string customsBookType, int tenant, bool isDiscountCodes)
         {
-            return this.repository.GetCustomsBookMainView(customsBookType, tenant);
+            return this.repository.GetCustomsBookMainView(customsBookType, tenant, isDiscountCodes);
         }
 
     }
