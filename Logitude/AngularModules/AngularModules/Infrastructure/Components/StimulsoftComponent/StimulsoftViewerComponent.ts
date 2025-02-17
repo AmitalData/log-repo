@@ -976,7 +976,6 @@ ResetEditableField(field: EditableFieldPosition){
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: reportId, ObjectTableName: "Report" });
 
-                    let isEditComponentSaved = false;
                     cmpRef.instance.BackCompleted.subscribe(bk => {
 
                         var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";
