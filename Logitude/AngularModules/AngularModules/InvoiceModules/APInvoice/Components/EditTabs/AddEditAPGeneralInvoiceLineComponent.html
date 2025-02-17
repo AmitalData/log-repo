@@ -209,10 +209,19 @@
                             <tr class="FormFieldRow">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'OpenAmount'" [NoObjectField]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'APInvoiceLine.O.OpenAmount'"></LogLabel>
+                            <!-- PayableDebitGLAcountId -->
+                            <tr class="FormFieldRow">
+                                    <LogLabel [ObjectFieldName]="'PayableDebitGLAcountId'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <td>
-                                    <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [Text]="DataContext.OpenAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogLov [ObjectFieldName]="'PayableDebitGLAcountId'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext" [SelectedValue]="DataContext.PayableDebitGLAcountId"
+                                            [LookUpTableName]="'GLAccount'"
+                                            [DependencyFilter1Value]="false"
+                                            [DependencyFilter2Value]="'1'" [QueryFilterItems]="PayableDebitGLAcountFilterItems">
+                                    </LogLov>
                                 </td>
 
                                 <td>
