@@ -315,7 +315,100 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string customerReference2 ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerReference2  
+	   {
+	    
+	     get
+		{
+		   return customerReference2;
+		 }
+		 set
+		 {
+		   if(customerReference2 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerReference2",OldValue=customerReference2,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerReference2=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<Aur_ItemPM> items;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("Aur_Payment_Aur_Item", "Id","PaymentId,Line")]
+	   [DataMember]
+	   public virtual List<Aur_ItemPM> Items  
+	   {
+	        get
+             {
+                 if (items == null)
+                 {
+                     items = new List<Aur_ItemPM>();
+                 }
+                 return items;
+              }
+             set { items = value; }
 	    }
+		   
+	   private List<Aur_ItemPM>  deletedItems;
+	   public virtual List<Aur_ItemPM> DeletedItems  
+	   {
+	        get
+             {
+                 if ( deletedItems == null)
+                 {
+                      deletedItems = new List<Aur_ItemPM>();
+                 }
+                 return  deletedItems;
+              }
+             set {  deletedItems = value; }
+	    }
+	  
+	   private List<Aur_TimesheetPM> timeSheets;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("Aur_Payment_Aur_Timesheet", "Id","PaymentId,Line")]
+	   [DataMember]
+	   public virtual List<Aur_TimesheetPM> TimeSheets  
+	   {
+	        get
+             {
+                 if (timeSheets == null)
+                 {
+                     timeSheets = new List<Aur_TimesheetPM>();
+                 }
+                 return timeSheets;
+              }
+             set { timeSheets = value; }
+	    }
+		   
+	   private List<Aur_TimesheetPM>  deletedTimeSheets;
+	   public virtual List<Aur_TimesheetPM> DeletedTimeSheets  
+	   {
+	        get
+             {
+                 if ( deletedTimeSheets == null)
+                 {
+                      deletedTimeSheets = new List<Aur_TimesheetPM>();
+                 }
+                 return  deletedTimeSheets;
+              }
+             set {  deletedTimeSheets = value; }
+	    }
+	  	    }
    
 }
 	 

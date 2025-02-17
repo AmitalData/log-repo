@@ -22,6 +22,8 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {Aur_PaymentPM} from '../../EntityPMs/Aur_PaymentPM';
 
 import {Aur_PaymentItemPM} from '../../EntityPMs/Aur_PaymentItemPM';
+import {Aur_ItemPM} from '../../EntityPMs/Aur_ItemPM';
+import {Aur_TimesheetPM} from '../../EntityPMs/Aur_TimesheetPM';
 
 @Injectable()
 
@@ -184,6 +186,8 @@ export class Aur_PaymentPMService {
             }
 			
                this.MapPaymentItem(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapItems(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapTimeSheets(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -197,6 +201,24 @@ export class Aur_PaymentPMService {
 						
 							 
             entityPM.OldEntityPM.PaymentItem.push(newAur_PaymentItemPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.Items = [];
+            for (var item in entityPM.Items) {
+            var myAur_ItemPM = entityPM.Items[item];
+            var newAur_ItemPM: Aur_ItemPM = this.clone(myAur_ItemPM);
+						
+							 
+            entityPM.OldEntityPM.Items.push(newAur_ItemPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.TimeSheets = [];
+            for (var item in entityPM.TimeSheets) {
+            var myAur_TimesheetPM = entityPM.TimeSheets[item];
+            var newAur_TimesheetPM: Aur_TimesheetPM = this.clone(myAur_TimesheetPM);
+						
+							 
+            entityPM.OldEntityPM.TimeSheets.push(newAur_TimesheetPM);
             }
 			   
 		}
@@ -297,6 +319,190 @@ export class Aur_PaymentPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.PaymentItem.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapItems(entityPM: Aur_PaymentPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldItems: Aur_ItemPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldItems = entityPM.OldEntityPM.Items;
+        }
+
+        entityPM.Items = new Array<Aur_ItemPM>();
+        for (var item in jsonPM.Items) {
+            var jItem = jsonPM.Items[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newAur_ItemPM: Aur_ItemPM;
+	  
+            if (mapParent) {
+                newAur_ItemPM = new Aur_ItemPM(entityPM);
+            }
+            else
+            {
+                newAur_ItemPM = new Aur_ItemPM(null);
+            }
+ 			newAur_ItemPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+				                  var pmProperty = pmKeysArray[pmKey];
+                newAur_ItemPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newAur_ItemPM.UniqueKey = Guid.newGuid();
+                newAur_ItemPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newAur_ItemPM.OldEntityPM = this.clone(newAur_ItemPM);
+
+				
+            }
+            else {
+                if (newAur_ItemPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newAur_ItemPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newAur_ItemPM.ChangeSetOp = "Insert";
+                }
+ 
+                newAur_ItemPM.OldEntityPM = null;
+                newAur_ItemPM.EntityParentPM = null;
+            }
+			 newAur_ItemPM.DisableMarkAsDirty = false;
+			 newAur_ItemPM.IsDirty = false;
+            entityPM.Items.push(newAur_ItemPM);
+        }
+        if (oldItems) {
+            
+            for (var itemKey in oldItems) {
+                if (entityPM.Items.filter(p=> p.UniqueKey === oldItems[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldItems[itemKey]) {
+                        //oldItems[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.Items.push(oldItems[itemKey]);
+						var oldItemJson = oldItems[itemKey];
+                        var deletedPM: Aur_ItemPM = new Aur_ItemPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.Items.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapTimeSheets(entityPM: Aur_PaymentPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldTimeSheets: Aur_TimesheetPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldTimeSheets = entityPM.OldEntityPM.TimeSheets;
+        }
+
+        entityPM.TimeSheets = new Array<Aur_TimesheetPM>();
+        for (var item in jsonPM.TimeSheets) {
+            var jItem = jsonPM.TimeSheets[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newAur_TimesheetPM: Aur_TimesheetPM;
+	  
+            if (mapParent) {
+                newAur_TimesheetPM = new Aur_TimesheetPM(entityPM);
+            }
+            else
+            {
+                newAur_TimesheetPM = new Aur_TimesheetPM(null);
+            }
+ 			newAur_TimesheetPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+				                  var pmProperty = pmKeysArray[pmKey];
+                newAur_TimesheetPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newAur_TimesheetPM.UniqueKey = Guid.newGuid();
+                newAur_TimesheetPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newAur_TimesheetPM.OldEntityPM = this.clone(newAur_TimesheetPM);
+
+				
+            }
+            else {
+                if (newAur_TimesheetPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newAur_TimesheetPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newAur_TimesheetPM.ChangeSetOp = "Insert";
+                }
+ 
+                newAur_TimesheetPM.OldEntityPM = null;
+                newAur_TimesheetPM.EntityParentPM = null;
+            }
+			 newAur_TimesheetPM.DisableMarkAsDirty = false;
+			 newAur_TimesheetPM.IsDirty = false;
+            entityPM.TimeSheets.push(newAur_TimesheetPM);
+        }
+        if (oldTimeSheets) {
+            
+            for (var itemKey in oldTimeSheets) {
+                if (entityPM.TimeSheets.filter(p=> p.UniqueKey === oldTimeSheets[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldTimeSheets[itemKey]) {
+                        //oldTimeSheets[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.TimeSheets.push(oldTimeSheets[itemKey]);
+						var oldItemJson = oldTimeSheets[itemKey];
+                        var deletedPM: Aur_TimesheetPM = new Aur_TimesheetPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.TimeSheets.push(deletedPM);
                     }
                 }
             }

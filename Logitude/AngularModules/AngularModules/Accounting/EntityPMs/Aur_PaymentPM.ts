@@ -8,6 +8,8 @@
 //------------------------------------------------------------------------------
 
 import {Aur_PaymentItemPM} from './Aur_PaymentItemPM';
+import {Aur_ItemPM} from './Aur_ItemPM';
+import {Aur_TimesheetPM} from './Aur_TimesheetPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -114,7 +116,80 @@ export class Aur_PaymentPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private customerReference2: string;
+    public get CustomerReference2() { return this.customerReference2; }
+    public set CustomerReference2(newValue: string) { if (this.customerReference2 != newValue) { this.customerReference2 = newValue; this.MarkAsDirty("CustomerReference2"); } }
+       
+	 
+     
+	private items: Aur_ItemPM[];
+    get  Items() {
+        if (this.items == null) {
+            this.items = [];
+        }
 
+        return this.items;
+    }
+    set  Items(newValue: Aur_ItemPM[]) {
+        if (this.items != newValue) {
+            this.items = newValue;
+        }
+    }
+    public AddAur_Item(item: Aur_ItemPM) {
+        if (item != null) {
+            var index = this. Items.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. Items.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveAur_Item(item: Aur_ItemPM) {
+        if (item != null) {
+            var index = this. Items.indexOf(item);
+            if (index > -1) {
+                this. Items.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public Items: Array<Aur_ItemPM>= [];
+      
+	private timeSheets: Aur_TimesheetPM[];
+    get  TimeSheets() {
+        if (this.timeSheets == null) {
+            this.timeSheets = [];
+        }
+
+        return this.timeSheets;
+    }
+    set  TimeSheets(newValue: Aur_TimesheetPM[]) {
+        if (this.timeSheets != newValue) {
+            this.timeSheets = newValue;
+        }
+    }
+    public AddAur_Timesheet(item: Aur_TimesheetPM) {
+        if (item != null) {
+            var index = this. TimeSheets.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. TimeSheets.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveAur_Timesheet(item: Aur_TimesheetPM) {
+        if (item != null) {
+            var index = this. TimeSheets.indexOf(item);
+            if (index > -1) {
+                this. TimeSheets.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public TimeSheets: Array<Aur_TimesheetPM>= [];
+ 
     public OldEntityPM: Aur_PaymentPM;
 		
     public IsDirty: boolean;
