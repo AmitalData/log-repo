@@ -24,8 +24,7 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 { 
-
-   public partial class Aur_ItemQueryService: EntityQueryService<Aur_Item,Aur_ItemKeys,Aur_ItemPM,Aur_PaymentPM,Aur_PaymentKeys>
+   public partial class Aur_ItemQueryService: EntityQueryService<POCO.Aur_Item,Aur_ItemKeys,Aur_ItemPM,Aur_PaymentPM,Aur_PaymentKeys>
    {
    
         Aur_ItemRepository repository;
