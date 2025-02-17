@@ -41,7 +41,7 @@
   Name="&quot;Bluesnap Contract&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
-  NoViewController="false"
+  NoViewController="true"
   NoPMController="true"
   NoTS="false"
   HasCompactSearch="false"

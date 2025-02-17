@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
 using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
@@ -29,7 +30,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public ShipmentPM(POCO.Shipment entity) : base()
    {
 		_id = entity.Id;
-		//_shipmentmasterdata = entity.ShipmentMasterData !=null ? new ShipmentMasterDataPM(entity.ShipmentMasterData) : null;
+		_shipmentmasterdata = entity.ShipmentMasterData !=null ? new ShipmentMasterDataPM(entity.ShipmentMasterData) : null;
 			_includesCustoms = entity.IncludesCustoms;
 		_declarationNumber = entity.DeclarationNumber;
 		_declarationDate = entity.DeclarationDate;
@@ -52,7 +53,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_profitCurrencyId = entity.ProfitCurrencyId;
 		_profitcurrency = entity.ProfitCurrency !=null ? new CurrencyPM(entity.ProfitCurrency) : null;
 			_nextLegCode = entity.NextLegCode;
-		//_nextleg = entity.NextLeg !=null ? new NextLegPM(entity.NextLeg) : null;
+		_nextleg = entity.NextLeg !=null ? new NextLegPM(entity.NextLeg) : null;
 			_field1 = entity.Field1;
 		_field2 = entity.Field2;
 		_field3 = entity.Field3;
@@ -273,10 +274,10 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 			_estimateProfitInProfitCurrency = entity.EstimateProfitInProfitCurrency;
 		_profitInProfitCurrency = entity.ProfitInProfitCurrency;
 		_fHLStatusCode = entity.FHLStatusCode;
-		//_fhlstatus = entity.FHLStatus !=null ? new FHLStatusPM(entity.FHLStatus) : null;
+		_fhlstatus = entity.FHLStatus !=null ? new FHLStatusPM(entity.FHLStatus) : null;
 			_aWBPrint = entity.AWBPrint;
 		_carrierLastStatusCode = entity.CarrierLastStatusCode;
-		//_carrierlaststatus = entity.CarrierLastStatus !=null ? new AWBStatusPM(entity.CarrierLastStatus) : null;
+		_carrierlaststatus = entity.CarrierLastStatus !=null ? new AWBStatusPM(entity.CarrierLastStatus) : null;
 			_carrierLastStatusDate = entity.CarrierLastStatusDate;
 		_fNAReason = entity.FNAReason;
 		_fHLStatusDate = entity.FHLStatusDate;
@@ -364,7 +365,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_otherParticipantInformationReference3 = entity.OtherParticipantInformationReference3;
 		_packagesQuantity = entity.PackagesQuantity;
 		_cargonautFHLStatusCode = entity.CargonautFHLStatusCode;
-		//_cargonautfhlstatus = entity.CargonautFHLStatus !=null ? new FHLStatusPM(entity.CargonautFHLStatus) : null;
+		_cargonautfhlstatus = entity.CargonautFHLStatus !=null ? new FHLStatusPM(entity.CargonautFHLStatus) : null;
 			_cargonautFHLStatusDate = entity.CargonautFHLStatusDate;
 		_numberOfInsidePackages = entity.NumberOfInsidePackages;
 		_numberOfInsidePackagesDetails = entity.NumberOfInsidePackagesDetails;
@@ -730,11 +731,9 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_userid = entity.UserId !=null ? new UserPM(entity.UserId) : null;
 			_iskaNumber = entity.IskaNumber;
    }
-
-
-        #endregion Constructors
-        #region Properties
-        private string _id ;
+   #endregion Constructors
+   #region Properties
+   	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -11401,9 +11400,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		set { _userid = value; }
 		}
 	  private string _iskaNumber ;
-        private EntityPOCOs.Shipment shipmentCode;
-
-        [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
+	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
        public string IskaNumber  
 	   {

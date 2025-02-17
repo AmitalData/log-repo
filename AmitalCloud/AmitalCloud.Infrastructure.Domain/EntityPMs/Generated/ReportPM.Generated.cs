@@ -14,8 +14,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -26,7 +27,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ReportPM :  ChildEntitiesCustomFieldPM   {
    #region Constructors
    public ReportPM() : base() {} 
-   public ReportPM(Report entity) : base()
+   public ReportPM(POCO.Report entity) : base()
    {
 		_reportGroupId = entity.ReportGroupId;
 		_reportgroup = entity.ReportGroup !=null ? new ReportGroupPM(entity.ReportGroup) : null;

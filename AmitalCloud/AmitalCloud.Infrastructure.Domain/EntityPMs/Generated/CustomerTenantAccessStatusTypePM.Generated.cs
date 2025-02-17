@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomerTenantAccessStatusTypePM : BaseEntityPM   {
    #region Constructors
    public CustomerTenantAccessStatusTypePM() : base() {} 
-   public CustomerTenantAccessStatusTypePM(CustomerTenantAccessStatusType entity) : base()
+   public CustomerTenantAccessStatusTypePM(POCO.CustomerTenantAccessStatusType entity) : base()
    {
 		_code = entity.Code;
 		_englishName = entity.EnglishName;

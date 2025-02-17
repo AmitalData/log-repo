@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class PickUpDeliveryTransportModePM : BaseEntityPM   {
    #region Constructors
    public PickUpDeliveryTransportModePM() : base() {} 
-   public PickUpDeliveryTransportModePM(PickUpDeliveryTransportMode entity) : base()
+   public PickUpDeliveryTransportModePM(POCO.PickUpDeliveryTransportMode entity) : base()
    {
 		_code = entity.Code;
    }

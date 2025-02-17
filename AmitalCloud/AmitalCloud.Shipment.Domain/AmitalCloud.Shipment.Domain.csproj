@@ -397,6 +397,7 @@
     <Compile Include="EntityPMs\Manual\PickUpDeliveryTypePM.cs" />
     <Compile Include="EntityPMs\Manual\ShipmentPayableAmountTypePM.cs" />
     <Compile Include="EntityPMs\Manual\ShipmentPayableLineStatusPM.cs" />
+    <Compile Include="EntityPMs\Manual\ShipmentReceivableLineStatusPM.cs" />
     <Compile Include="EntityPMs\ShipmentAPInvoicePM.cs" />
     <Compile Include="EntityPMs\ShipmentARInvoiceMoneyPM.cs" />
     <Compile Include="EntityPMs\ShipmentARInvoicePM.cs" />

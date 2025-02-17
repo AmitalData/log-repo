@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomerProductActualDataPM : BaseEntityPM   {
    #region Constructors
    public CustomerProductActualDataPM() : base() {} 
-   public CustomerProductActualDataPM(CustomerProductActualData entity) : base()
+   public CustomerProductActualDataPM(POCO.CustomerProductActualData entity) : base()
    {
 		_tenant = entity.Tenant;
 		_customerId = entity.CustomerId;

@@ -14,8 +14,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -26,7 +27,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class MasterPM :  ChildEntitiesCustomFieldPM   {
    #region Constructors
    public MasterPM() : base() {} 
-   public MasterPM(Master entity) : base()
+   public MasterPM(POCO.Master entity) : base()
    {
 		_specialServicesTypeId = entity.SpecialServicesTypeId;
 		_documentsClosingDate = entity.DocumentsClosingDate;

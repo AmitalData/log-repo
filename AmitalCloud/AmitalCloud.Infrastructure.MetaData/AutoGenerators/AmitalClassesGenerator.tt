@@ -42,6 +42,21 @@ namespaces.Add("domaininterfacesspacestring","AmitalCloud.Infrastructure.Domain.
 this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 	GenerateIContext("../EntityFiles","../../AmitalCloud.Infrastructure.Domain/Interfaces","AmitalCloudContext");
 	GenerateContext("../EntityFiles","../../AmitalCloud.Infrastructure.Data/Context","AmitalCloudContext");
+	GenerateIContext("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Domain/Interfaces","AmitalCloudContext.AutoCreated");
+	GenerateContext("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Data/Context","AmitalCloudContext.AutoCreated");
+
+
+GenerateAllPocos("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Domain/EntityPOCOs");	
+GenerateAllPMs("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Domain/EntityPMs",namespaces);
+GenerateAllKeys("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Domain/EntityKeys",namespaces);
+GenerateAllEntityMaps("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Domain/EntityMapping");
+GenerateAllLists("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Domain/EntityLists");
+GenerateAllUpdateServices("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Application/EntityUpdateServices","AmitalCloudContext",namespaces);
+GenerateAllQueryServices("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Application/EntityQueryServices","AmitalCloudContext",namespaces);
+GenerateAllListQueryServices("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Application/EntityListQueryServices","AmitalCloudContext",namespaces);
+
+
+
 
 GenerateAllPocos("../EntityFiles","../../AmitalCloud.Infrastructure.Domain/EntityPOCOs");	
 GenerateAllPocos("../EntityFiles/GlobalModel","../../AmitalCloud.Infrastructure.Domain/EntityPOCOs");	

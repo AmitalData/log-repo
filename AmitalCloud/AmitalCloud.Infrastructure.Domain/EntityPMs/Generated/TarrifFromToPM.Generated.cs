@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TarrifFromToPM : BaseEntityPM   {
    #region Constructors
    public TarrifFromToPM() : base() {} 
-   public TarrifFromToPM(TarrifFromTo entity) : base()
+   public TarrifFromToPM(POCO.TarrifFromTo entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

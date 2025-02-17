@@ -13,10 +13,10 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 
 
@@ -38,7 +38,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_paymentRef = entity.PaymentRef;
 		_valueDate = entity.ValueDate;
 		_bankAccountId = entity.BankAccountId;
-		//_bankaccount = entity.BankAccount !=null ? new BankAccountPM(entity.BankAccount) : null;
+		_bankaccount = entity.BankAccount !=null ? new BankAccountPM(entity.BankAccount) : null;
 			_currencyId = entity.CurrencyId;
 		_currency = entity.Currency !=null ? new CurrencyPM(entity.Currency) : null;
 			_localAmount = entity.LocalAmount;

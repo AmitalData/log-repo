@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 
 
@@ -61,7 +61,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_isExpense = entity.IsExpense;
 		_gLAccountId = entity.GLAccountId;
 		_lineActionCode = entity.LineActionCode;
-		//_arinvoicelineaction = entity.ARInvoiceLineAction !=null ? new ARInvoiceLineActionPM(entity.ARInvoiceLineAction) : null;
+		_arinvoicelineaction = entity.ARInvoiceLineAction !=null ? new ARInvoiceLineActionPM(entity.ARInvoiceLineAction) : null;
 			_isRegionalTax = entity.IsRegionalTax;
 		_invoiceCurrencyExchangeRate = entity.InvoiceCurrencyExchangeRate;
    }
@@ -580,14 +580,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
-		//private ARInvoiceLineActionPM _arinvoicelineaction;
-		//[Include]
-  //      [DataMember]
-        //public virtual ARInvoiceLineActionPM ARInvoiceLineAction 
-		//{ 
-		//get { return _arinvoicelineaction; } 
-		//set { _arinvoicelineaction = value; }
-		//}
+		private ARInvoiceLineActionPM _arinvoicelineaction;
+		[Include]
+        [DataMember]
+        public virtual ARInvoiceLineActionPM ARInvoiceLineAction 
+		{ 
+		get { return _arinvoicelineaction; } 
+		set { _arinvoicelineaction = value; }
+		}
 	  private bool _isRegionalTax ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]

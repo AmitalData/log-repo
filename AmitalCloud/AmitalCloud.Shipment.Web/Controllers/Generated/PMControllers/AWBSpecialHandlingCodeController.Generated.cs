@@ -10,10 +10,12 @@ using AmitalCloud.Infrastructure.Web.BaseClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs ;
 using AmitalCloud.Shipment.Application.EntityUpdateServices;
 using AmitalCloud.Shipment.Application.EntityQueryServices;
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
+
 namespace AmitalCloud.Shipment.Web.Controllers.Generated.PMControllers
 { 
 
-    public partial class AWBSpecialHandlingCodesController : BasePMControler <AWBSpecialHandlingCodeQueryService, AWBSpecialHandlingCodeUpdateService, AWBSpecialHandlingCodePM>
+    public partial class AWBSpecialHandlingCodesController : BasePMControler <AWBSpecialHandlingCodeQueryService, AWBSpecialHandlingCodeUpdateService, AWBSpecialHandlingCodePM,AWBSpecialHandlingCode>
     {
     	public AWBSpecialHandlingCodesController() :base("AWBSpecialHandlingCode", false , false, true)  {}
     }

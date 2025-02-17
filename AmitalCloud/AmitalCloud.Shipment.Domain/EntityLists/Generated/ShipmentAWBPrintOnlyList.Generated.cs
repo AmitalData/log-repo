@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
@@ -22,7 +22,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
    {
        #region Constructors
        public ShipmentAWBPrintOnlyList() : base() {}
-       public ShipmentAWBPrintOnlyList(ShipmentAWBPrintOnly entity) : base()
+       public ShipmentAWBPrintOnlyList(POCO.ShipmentAWBPrintOnly entity) : base()
        {
           Id  = entity.Id;
        }

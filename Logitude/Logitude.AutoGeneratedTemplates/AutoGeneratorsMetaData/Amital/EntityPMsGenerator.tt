@@ -42,7 +42,7 @@ public void GeneratePM(string xmlFilePath, string outputFilePath)
 
 	if (entity.IsMetadataOnlyTable.GetType() == typeof(string) && entity.IsMetadataOnlyTable == "true")
 	{
-		return;
+		//return;
 	}
 
 	WritePMMethod(entity);
@@ -162,8 +162,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using <#= NamespacesDictionary["domaininterfacesspacestring"] #>;
-using <#= NamespacesDictionary["pocosspacestring"] #>;
+using POCO = <#= NamespacesDictionary["pocosspacestring"] #>;
 <#+ if (!string.IsNullOrEmpty(usingStatements)) { #><#= usingStatements #><#+ } #>
 
 
@@ -176,7 +177,7 @@ namespace <#= pmnamespacestring #>
    {
    #region Constructors
    public <#=tableName #>PM() : base() {} 
-   public <#=tableName #>PM(<#=tableName #> entity) : base()
+   public <#=tableName #>PM(POCO.<#=tableName #> entity) : base()
    {
 <#+
  	foreach(var field in entity["field"])  

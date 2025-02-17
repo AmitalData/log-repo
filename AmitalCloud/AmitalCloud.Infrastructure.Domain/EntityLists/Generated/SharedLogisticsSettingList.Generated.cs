@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    {
        #region Constructors
        public SharedLogisticsSettingList() : base() {}
-       public SharedLogisticsSettingList(SharedLogisticsSetting entity) : base()
+       public SharedLogisticsSettingList(POCO.SharedLogisticsSetting entity) : base()
        {
           Tenant  = entity.Tenant;
           Id  = entity.Id;

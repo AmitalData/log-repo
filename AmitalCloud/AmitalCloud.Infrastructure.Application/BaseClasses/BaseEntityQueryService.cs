@@ -1,11 +1,13 @@
 ﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {
-    public abstract class BaseEntityQueryService<TContext, TEntityPOCO, TEntityKeys, TEntityPM, TEntityList, TkeyType> : IBaseEntityQueryService<TEntityPM> where TEntityPOCO : BaseEntity, new()
+    public abstract class BaseEntityQueryService<TContext, TEntityPOCO, TEntityKeys, TEntityPM, TEntityList, TkeyType> : IBaseEntityQueryService<TEntityPM, TEntityPOCO> where TEntityPOCO : BaseEntity, new()
     where TEntityPM : IEntityPM, new()
     where TEntityKeys : IEntityKeyFields<TEntityPOCO, TkeyType>, new()
     where TEntityList : class, new()
@@ -117,5 +119,9 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             }
             return entityPMs;
         }
-    }
+        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate,string include)
+        => Repository.GetMulti(predicate
+            ,a=> (TEntityPM)typeof(TEntityPM).GetConstructor(new Type[] { typeof(TEntityPOCO)}).Invoke(a, null)
+            , include);
+}
 }

@@ -14,8 +14,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -26,7 +27,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class AccountingPartnerPM :  ChildEntitiesCustomFieldPM   {
    #region Constructors
    public AccountingPartnerPM() : base() {} 
-   public AccountingPartnerPM(AccountingPartner entity) : base()
+   public AccountingPartnerPM(POCO.AccountingPartner entity) : base()
    {
 		_id = entity.Id;
 		_card = entity.Card !=null ? new CardPM(entity.Card) : null;

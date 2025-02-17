@@ -1,10 +1,11 @@
+using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-    public class GlobalContact
+    public class GlobalContact : BaseEntity
     {
         [Key]
         public string Id { get; set; }

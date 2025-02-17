@@ -13,16 +13,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.BaseClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class ChargesTypeList : CustomFieldList   
+   public partial class ChargesTypeList : BaseCustomFieldList   
    {
        #region Constructors
        public ChargesTypeList() : base() {}
-       public ChargesTypeList(ChargesType entity) : base()
+       public ChargesTypeList(POCO.ChargesType entity) : base()
        {
           Id  = entity.Id;
           Tenant  = entity.Tenant;

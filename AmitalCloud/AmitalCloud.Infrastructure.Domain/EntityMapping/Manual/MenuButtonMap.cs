@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
-    public class MenuButtonMap : EntityTypeConfiguration<MenuButton>
+    public partial class MenuButtonMap : EntityTypeConfiguration<MenuButton>
     {
         public MenuButtonMap()
         {

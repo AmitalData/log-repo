@@ -41,7 +41,7 @@
   Name="&quot;Package&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
-  NoViewController="false"
+  NoViewController="true"
   NoPMController="true"
   NoTS="false"
   NoDefaultFeatures="true"

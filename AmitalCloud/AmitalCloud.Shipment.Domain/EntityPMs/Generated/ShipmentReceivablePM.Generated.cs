@@ -14,8 +14,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 
@@ -28,7 +29,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentReceivablePM :  ChildEntitiesCustomFieldPM   {
    #region Constructors
    public ShipmentReceivablePM() : base() {} 
-   public ShipmentReceivablePM(ShipmentReceivable entity) : base()
+   public ShipmentReceivablePM(POCO.ShipmentReceivable entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -55,7 +56,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_aWBPrint = entity.AWBPrint;
 		_dueTypeCode = entity.DueTypeCode;
 		_shipmentReceivableLineStatusCode = entity.ShipmentReceivableLineStatusCode;
-		//_shipmentreceivablelinestatus = entity.ShipmentReceivableLineStatus !=null ? new ShipmentReceivableLineStatusPM(entity.ShipmentReceivableLineStatus) : null;
+		_shipmentreceivablelinestatus = entity.ShipmentReceivableLineStatus !=null ? new ShipmentReceivableLineStatusPM(entity.ShipmentReceivableLineStatus) : null;
 			_prepaidCollectId = entity.PrepaidCollectId;
 		_measurementId = entity.MeasurementId;
 		_quantity = entity.Quantity;
@@ -458,14 +459,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-		//private ShipmentReceivableLineStatusPM _shipmentreceivablelinestatus;
-		//[Include]
-  //      [DataMember]
-  //      public virtual ShipmentReceivableLineStatusPM ShipmentReceivableLineStatus 
-		//{ 
-		//get { return _shipmentreceivablelinestatus; } 
-		//set { _shipmentreceivablelinestatus = value; }
-		//}
+		private ShipmentReceivableLineStatusPM _shipmentreceivablelinestatus;
+		[Include]
+        [DataMember]
+        public virtual ShipmentReceivableLineStatusPM ShipmentReceivableLineStatus 
+		{ 
+		get { return _shipmentreceivablelinestatus; } 
+		set { _shipmentreceivablelinestatus = value; }
+		}
 	  private string _prepaidCollectId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

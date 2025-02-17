@@ -16,10 +16,11 @@ using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.BaseClasses
 {
-    public abstract class BasePMControler<TService, TUpdateService, TEntityPM> : ApiController
-        where TService : class, IBaseEntityQueryService<TEntityPM>
+    public abstract class BasePMControler<TService, TUpdateService, TEntityPM, TEntityPOCO> : ApiController
+        where TService : class, IBaseEntityQueryService<TEntityPM, TEntityPOCO>
         where TUpdateService : class, IBaseEntityUpdateService<TEntityPM>
         where TEntityPM : class, IEntityPM, new()
+        where TEntityPOCO : IEntity
     {
         private protected string ObjectTableName;
         private protected bool EnableSecurity;
@@ -150,9 +151,9 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
             }
             return authToken.Tenant;
         }
-        private IBaseEntityQueryService<TEntityPM> GetService(int tenant)
+        private IBaseEntityQueryService<TEntityPM, TEntityPOCO> GetService(int tenant)
         {
-            return (IBaseEntityQueryService<TEntityPM>)typeof(TService).GetConstructor(new Type[] { typeof(int) }).Invoke(null, new object[] { tenant });
+            return (IBaseEntityQueryService<TEntityPM, TEntityPOCO>)typeof(TService).GetConstructor(new Type[] { typeof(int) }).Invoke(null, new object[] { tenant });
         }
         private IBaseEntityUpdateService<TEntityPM> GetUpdateService(int tenant)
         {

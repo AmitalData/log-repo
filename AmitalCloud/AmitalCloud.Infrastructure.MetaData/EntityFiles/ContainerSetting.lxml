@@ -45,7 +45,7 @@
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
   NoViewController="true"
-  NoPMController="false"
+  NoPMController="true"
   NoTS="false"
   NoDefaultFeatures="true"
   HasCompactSearch="false"
