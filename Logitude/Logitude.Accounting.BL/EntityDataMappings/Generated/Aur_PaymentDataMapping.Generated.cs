@@ -32,7 +32,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InvoiceType, 
 	         PaymentRequestStatus, 
 	         ErrorMessage, 
-	         Tenant,
+	         Tenant, 
+	         CustomerReference2,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InvoiceType, 
 	         PaymentRequestStatus, 
 	         ErrorMessage, 
-	         Tenant,
+	         Tenant, 
+	         CustomerReference2,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -106,6 +108,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerReference2))
+            {
+				entityPOCO.CustomerReference2 = entityPM.CustomerReference2;
 			}
 			}
 
@@ -167,6 +174,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.Tenant = entityPOCO.Tenant;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerReference2))
+            {
+					entityPM.CustomerReference2 = entityPOCO.CustomerReference2;
+            }
+
 		}
 
 		public void PMToOldPM(Aur_PaymentPM entityPM, Aur_PaymentPM oldEntityPM)
@@ -221,6 +233,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerReference2))
+            {
+                oldEntityPM.CustomerReference2 = entityPM.CustomerReference2;
             }
 			
 		}

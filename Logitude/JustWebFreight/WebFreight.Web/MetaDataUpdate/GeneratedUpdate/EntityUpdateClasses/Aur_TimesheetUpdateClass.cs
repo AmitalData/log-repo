@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class Aur_TimesheetUpdateClass
    {  		
-		public const string HashString = "07507af30783d4fdefbe697f9ab29153";
+		public const string HashString = "a9cc4b903c2428b005cca5bbf108a4de";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,16 +126,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SortingByObjectField =  "Line",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Aur Timesheet",
-			      				    Code =  "0c3a",
+			      				    Code =  "1765",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Accounting",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -1336,13 +1337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable Aur_TimesheetObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Aur_Timesheet" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature Aur_TimesheetFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = Aur_TimesheetObjectTable.Id, Tenant = 0, NameTextCodeCode = "Aur_Timesheet.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Aur_TimesheetObjectTable);
-		   Feature Aur_TimesheetFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = Aur_TimesheetObjectTable.Id, Tenant = 0, NameTextCodeCode = "Aur_Timesheet.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Aur_TimesheetObjectTable);
-		   Feature Aur_TimesheetFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = Aur_TimesheetObjectTable.Id, Tenant = 0, NameTextCodeCode = "Aur_Timesheet.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Aur_TimesheetObjectTable);
-		   Feature Aur_TimesheetFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = Aur_TimesheetObjectTable.Id, Tenant = 0, NameTextCodeCode = "Aur_Timesheet.Features.PackageFeature", NameTextCodeDefaultText = "Aur_Timesheet Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,Aur_TimesheetObjectTable);    
+	    {     
 	    
 		}
 

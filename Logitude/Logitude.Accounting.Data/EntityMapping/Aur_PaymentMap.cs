@@ -44,6 +44,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.CustomerReference2).HasColumnName("CustomerReference2").HasMaxLength(5).IsUnicode(false);
         }
     }
 }

@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Aur_Payment"
   DefaultText="&quot;Aur_PaymentItem&quot;"
-  Code="&quot;170f&quot;"
+  Code="&quot;1286&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"

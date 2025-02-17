@@ -17,7 +17,7 @@ using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Accounting.BL.EntityQueryServices
 { 
-   public partial class Aur_ItemQueryService: EntityQueryService<Aur_Item,Aur_ItemKeys,Aur_ItemPM,object,Aur_ItemKeys>
+   public partial class Aur_ItemQueryService: EntityQueryService<Aur_Item,Aur_ItemKeys,Aur_ItemPM,Aur_PaymentPM,Aur_PaymentKeys>
    {
    
         Aur_ItemRepository repository;

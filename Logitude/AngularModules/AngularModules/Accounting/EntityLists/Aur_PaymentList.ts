@@ -19,6 +19,7 @@ export class Aur_PaymentList {
 	PaymentRequestStatus: string;
 	ErrorMessage: string;
 	Tenant: number;
+	CustomerReference2: string;
 	
 }
  

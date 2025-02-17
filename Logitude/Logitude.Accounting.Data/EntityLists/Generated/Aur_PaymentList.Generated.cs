@@ -36,6 +36,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ErrorMessage  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+       [DataMember]
+       public string CustomerReference2  { get; set; }
    }
 
 }

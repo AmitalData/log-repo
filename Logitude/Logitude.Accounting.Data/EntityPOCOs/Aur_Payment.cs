@@ -41,6 +41,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ErrorMessage { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [Column("CustomerReference2")]
+	    public string CustomerReference2 { get; set; }
     }
 }
 	 
