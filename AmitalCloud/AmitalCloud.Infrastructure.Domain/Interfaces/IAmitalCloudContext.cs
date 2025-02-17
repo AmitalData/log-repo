@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace AmitalCloud.Infrastructure.Domain.Interfaces
 {
-    public interface IAmitalCloudContext : IContext
+    public partial interface IAmitalCloudContext : IContext
     {
        	 IDbSet<Account> Accounts1 { get; }
 		 IDbSet<AccountingPartner> AccountingPartners { get; }
@@ -145,6 +145,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<FilingInbox> FilingInboxes { get; }
 		 IDbSet<FilingInboxAttachment> FilingInboxAttachments { get; }
 		 IDbSet<FilingInboxAttachmentLog> FilingInboxAttachmentLogs { get; }
+		 IDbSet<FollowUp> FollowUps { get; }
 		 IDbSet<FTPDetail> FTPDetails { get; }
 		 IDbSet<GlobalZone> GlobalZones { get; }
 		 IDbSet<Horse> Horses { get; }
@@ -170,6 +171,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<MAWBStack> MAWBStacks { get; }
 		 IDbSet<Measurement> Measurements { get; }
 		 IDbSet<Mention> Mentions { get; }
+		 IDbSet<MenuButton> MenuButtons { get; }
 		 IDbSet<MetodoPago> MetodoPagos { get; }
 		 IDbSet<MoveType> MoveTypes { get; }
 		 IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs { get; }
@@ -215,6 +217,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<ReportExecutionLog> ReportExecutionLogs { get; }
 		 IDbSet<ReportsTemplate> ReportsTemplates { get; }
 		 IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; }
+		 IDbSet<Responsibility> Responsibilities { get; }
 		 IDbSet<Restriction> Restrictions { get; }
 		 IDbSet<Role> Roles { get; }
 		 IDbSet<RuleUpdateHistory> RuleUpdateHistories { get; }
@@ -273,50 +276,9 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get; }
 		 IDbSet<WeightUnit> WeightUnits { get; }
 		 IDbSet<WorkerRoleName> WorkerRoleNames { get; }
-		    IDbSet<Counter> Counters { get; }
-        IDbSet<ObjectTableRule> ObjectTableRules { get; }
-        IDbSet<Query> Queries { get; }
-        IDbSet<TriggerType> TriggerTypes { get; }
-        IDbSet<ObjectFieldValidation> ObjectFieldValidations { get; }
-        IDbSet<RuleType> RuleTypes { get; }
-        IDbSet<QueryColumn> QueryColumns { get; }
-        IDbSet<ObjectFieldModification> ObjectFieldModifications { get; }
+	        IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
         IDbSet<ObjectField> ObjectFieldsDbSet { get; }
-        IDbSet<ScreenField> ScreenFields { get; }
-        IDbSet<Screen> Screens { get; }
-        IDbSet<ScreenModification> ScreenModifications { get; }
-        IDbSet<AdvancedQueryFilter> AdvancedQueryFilters { get; }
-        IDbSet<ObjectTableLastUpdate> ObjectTableLastUpdates { get; }
-        IDbSet<ObjectTableType> ObjectTableTypes { get; }
-        IDbSet<QueryGroup> QueryGroups { get; }
-        IDbSet<RuleConditionField> RuleConditionFields { get; }
-        IDbSet<SharedUserQuery> SharedUserQueries { get; }
-        IDbSet<ObjectTableHelperControl> ObjectTableHelperControls { get; }
-        IDbSet<ObjectTableRuleField> ObjectTableRuleFields { get; }
-        IDbSet<ObjectTableTab> ObjectTableTabs { get; }
-        IDbSet<Translation> Translations { get; }
-        IDbSet<CustomPickList> CustomPickLists { get; }
-        IDbSet<BlobFile> BlobFiles { get; }
-        IDbSet<QueueDefinition> QueueDefinitions { get; }
-        IDbSet<Document> Documents { get; }
-        IDbSet<QueueMessage> QueueMessages { get; }
-        IDbSet<CounterLastNumber> CounterLastNumbers { get; }
-        IDbSet<CounterStat> CounterStats { get; }
-        IDbSet<PackageFeature> PackageFeatures { get; }
-        IDbSet<Feature> Features { get; }
-        IDbSet<RoleFeature> RoleFeatures { get; }
-        IDbSet<CardContact> CardContacts { get; }
-        IDbSet<UserLastLogin> UserLastLogins { get; }
-        IDbSet<ContactTenant> ContactTenants { get; }
-        IDbSet<ContactTenantRole> ContactTenantRoles { get; }
-        IDbSet<UserLoginLog> UserLoginLogs { get; }
-        IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
-        IDbSet<UserPermittedProduct> UserPermittedProducts { get; }
-        IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; }
-        IDbSet<DocumentsMetaDataType> DocumentsMetaDataTypes { get;  }
-        IDbSet<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues { get; }
-        IDbSet<CommunicationLogStep> CommunicationLogSteps { get; }
-        IDbSet<GeneralLock> GeneralLocks { get; }
          void DetectChanges();
+
     }
 }

@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Shipment.Domain.Interfaces;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -26,7 +26,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentProductItemPM : BaseEntityPM   {
    #region Constructors
    public ShipmentProductItemPM() : base() {} 
-   public ShipmentProductItemPM(ShipmentProductItem entity) : base()
+   public ShipmentProductItemPM(POCO.ShipmentProductItem entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

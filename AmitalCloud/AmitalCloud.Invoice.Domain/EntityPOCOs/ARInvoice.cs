@@ -238,7 +238,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPOCOs
 	    public bool IsGeneralInvoice { get; set; }
         [Column("SATPaymentMethodCode")]
 	    public string SATPaymentMethodCode { get; set; }
-		public virtual ICollection<ARInvoice> InvoiceEntities { get; set; }
+		//public virtual ICollection<ARInvoiceEntity> InvoiceEntities { get; set; }
 		//public virtual ICollection<ARInvoiceTransferHistory> InvoiceTransfers { get; set; }
         [Column("TransmissionError")]
 	    public string TransmissionError { get; set; }

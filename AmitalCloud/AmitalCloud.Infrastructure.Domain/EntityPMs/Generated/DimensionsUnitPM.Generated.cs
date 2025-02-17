@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class DimensionsUnitPM : BaseEntityPM   {
    #region Constructors
    public DimensionsUnitPM() : base() {} 
-   public DimensionsUnitPM(DimensionsUnit entity) : base()
+   public DimensionsUnitPM(POCO.DimensionsUnit entity) : base()
    {
 		_code = entity.Code;
 		_name = entity.Name;

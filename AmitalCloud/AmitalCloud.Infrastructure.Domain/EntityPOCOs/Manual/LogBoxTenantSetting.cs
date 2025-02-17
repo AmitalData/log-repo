@@ -26,6 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public bool AutoArchiveOnInvoice { get; set; }
         public bool ShowTaxAmountWarning { get; set; }
         public bool AutoArchiveOnPODExport { get; set; }
+		[ForeignKey("Id")]
         public Tenant Tenant { get; set; }
     }
 }

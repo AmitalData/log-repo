@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using System.ComponentModel.DataAnnotations;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 {
-    public class AdvancedQueryFilterPM
+    public class AdvancedQueryFilterPM : BaseEntityPM
     {
         [Key]
         public string Id { get; set; }

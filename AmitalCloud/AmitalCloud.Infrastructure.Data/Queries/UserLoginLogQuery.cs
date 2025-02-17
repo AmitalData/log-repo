@@ -114,7 +114,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                                              IP = a.IP,
                                                              GMTDateTime = a.GMTDateTime,
                                                              LocalDateTime = a.LocalDateTime,
-                                                             IPSiteUri = "http://www.infosniper.net/index.php?ip_address=" + a.IP,
+                                                             //IPSiteUri = "http://www.infosniper.net/index.php?ip_address=" + a.IP,
 
                                                          };
             return userLoginLogs;

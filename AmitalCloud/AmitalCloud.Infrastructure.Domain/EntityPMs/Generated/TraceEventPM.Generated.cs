@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TraceEventPM : BaseEntityPM   {
    #region Constructors
    public TraceEventPM() : base() {} 
-   public TraceEventPM(TraceEvent entity) : base()
+   public TraceEventPM(POCO.TraceEvent entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -37,8 +38,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isAddedManually = entity.IsAddedManually;
 		_partnerName = entity.PartnerName;
 		_eventTypeId = entity.EventTypeId;
-		_eventtype = entity.EventType !=null ? new EventTypePM(entity.EventType) : null;
-			_notes = entity.Notes;
+		_notes = entity.Notes;
 		_eventDateTime = entity.EventDateTime;
 		_logDateTime = entity.LogDateTime;
 		_userId = entity.UserId;
@@ -211,14 +211,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private EventTypePM _eventtype;
-		[Include]
-        [DataMember]
-        public virtual EventTypePM EventType 
-		{ 
-		get { return _eventtype; } 
-		set { _eventtype = value; }
-		}
 	  private string _notes ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -111,7 +111,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 {
                     DocumentsMetaDataTypeId = documentsMetaDataTypeId,
                     MetaDataValue = MetaDataTypeValue,
-                    DocumentsMetaDataTypeCode = MetaDataTypeCode,
+                    //DocumentsMetaDataTypeCode = MetaDataTypeCode,
 
                 };
                 documentsFilingMetaDataValueQuery.Create(documentsFilingPM, temp);
@@ -170,7 +170,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 {
                     DocumentsMetaDataTypeId = documentsMetaDataTypeId,
                     MetaDataValue = MetaDataTypeValue,
-                    DocumentsMetaDataTypeCode = MetaDataTypeCode,
+                    //DocumentsMetaDataTypeCode = MetaDataTypeCode,
 
                 };
                 documentsFilingMetaDataValueQuery.Create(documentsFilingPM, temp);
@@ -203,21 +203,10 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
 
         public IQueryable<DocumentsFilingMetaDataValuePM> GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(string documentsFilingId, int tenant)
-        {
-            IQueryable<DocumentsFilingMetaDataValuePM> documents = from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")
+        => from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")
                                                                    where a.Tenant == tenant && a.DocumentsFilingId == documentsFilingId
-                                                                   select new DocumentsFilingMetaDataValuePM()
-                                                                   {
+                                                                   select new DocumentsFilingMetaDataValuePM(a);
 
-                                                                       Id = a.Id,
-                                                                       DocumentsFilingId = a.DocumentsFilingId,
-                                                                       DocumentsMetaDataTypeId = a.DocumentsMetaDataTypeId,
-                                                                       MetaDataValue = a.MetaDataValue,
-                                                                       Tenant = a.Tenant,
-                                                                       DocumentsMetaDataTypeCode = a.DocumentsMetaDataType != null ? a.DocumentsMetaDataType.Code : ""
-                                                                   };
-            return documents;
-        }
 
         public IQueryable<DocumentsFilingMetaDataValuePM> GetDocumentsFilingMetaDataValuePMsByTenant1(int tenant)
         {
@@ -250,22 +239,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
 
         public DocumentsFilingMetaDataValuePM GetDocumentsFilingMetaDataValuePMsByDocumentIdTypeTenant(string documentsFilingId, string Type, int tenant)
-        {
-            DocumentsFilingMetaDataValuePM documents = (from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")
+        => (from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")
                                                         where a.Tenant == tenant && a.DocumentsFilingId == documentsFilingId && a.DocumentsMetaDataTypeId == Type
-                                                        select new DocumentsFilingMetaDataValuePM()
-                                                        {
-
-                                                            Id = a.Id,
-                                                            DocumentsFilingId = a.DocumentsFilingId,
-                                                            DocumentsMetaDataTypeId = a.DocumentsMetaDataTypeId,
-                                                            MetaDataValue = a.MetaDataValue,
-                                                            Tenant = a.Tenant,
-                                                            DocumentsMetaDataTypeCode = a.DocumentsMetaDataType != null ? a.DocumentsMetaDataType.Code : ""
-                                                        }).FirstOrDefault();
-            return documents;
-        }
-
+                                                        select new DocumentsFilingMetaDataValuePM(a)).FirstOrDefault();
         public List<string> GetDocumentsFilingMetaDataValuesPMsByTenantMetaDataValueDocumentsMetaDataTypeId(int tenant, string CARFI, string courierhawb, string INTGR_R, string integratorCode)
         {
             var documents = (from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")

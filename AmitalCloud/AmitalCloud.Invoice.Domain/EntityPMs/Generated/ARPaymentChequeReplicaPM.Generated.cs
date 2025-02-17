@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
@@ -42,7 +43,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_bankBranch = entity.BankBranch;
 		_bankAccount = entity.BankAccount;
 		_statusCode = entity.StatusCode;
-		//_arpaymentchequestatus = entity.ARPaymentChequeStatus !=null ? new ARPaymentChequeStatusPM(entity.ARPaymentChequeStatus) : null;
+		_arpaymentchequestatus = entity.ARPaymentChequeStatus !=null ? new ARPaymentChequeStatusPM(entity.ARPaymentChequeStatus) : null;
 			_exchangeRate = entity.ExchangeRate;
    }
    #endregion Constructors

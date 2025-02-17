@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 {
-    public class MenuButtonPM
+    public partial class MenuButtonPM
     {
         public string HtmlComponentPath;
 

@@ -6,13 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -21,6 +24,29 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [CustomValidation(typeof(IInfrastructureClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class FollowUpPM : BaseEntityPM   {
+   #region Constructors
+   public FollowUpPM() : base() {} 
+   public FollowUpPM(POCO.FollowUp entity) : base()
+   {
+		_id = entity.Id;
+		_shipmentId = entity.ShipmentId;
+		_jobId = entity.JobId;
+		_tenant = entity.Tenant;
+		_internalDocumentId = entity.InternalDocumentId;
+		_internaldocument = entity.InternalDocument !=null ? new DocumentOutPM(entity.InternalDocument) : null;
+			_legType = entity.LegType;
+		_area = entity.Area;
+		_documentTypeId = entity.DocumentTypeId;
+		_automationId = entity.AutomationId;
+		_notes = entity.Notes;
+		_eventTypeId = entity.EventTypeId;
+		_eventtype = entity.EventType !=null ? new EventTypePM(entity.EventType) : null;
+			_ownerUserId = entity.OwnerUserId;
+		_owneruser = entity.OwnerUser !=null ? new UserPM(entity.OwnerUser) : null;
+			_date = entity.Date;
+   }
+   #endregion Constructors
+   #region Properties
    	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -86,22 +112,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isNew ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsNew  
-	   {
-	     get { return _isNew; }
-		 set
-		 {
-		   if(_isNew != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsNew",OldValue=_isNew,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isNew=value;
-		   }
-		 }
-	   }
 	  private string _internalDocumentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -118,6 +128,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentOutPM _internaldocument;
+		[Include]
+        [DataMember]
+        public virtual DocumentOutPM InternalDocument 
+		{ 
+		get { return _internaldocument; } 
+		set { _internaldocument = value; }
+		}
 	  private string _legType ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -214,6 +232,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private EventTypePM _eventtype;
+		[Include]
+        [DataMember]
+        public virtual EventTypePM EventType 
+		{ 
+		get { return _eventtype; } 
+		set { _eventtype = value; }
+		}
 	  private string _ownerUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -230,6 +256,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _owneruser;
+		[Include]
+        [DataMember]
+        public virtual UserPM OwnerUser 
+		{ 
+		get { return _owneruser; } 
+		set { _owneruser = value; }
+		}
 	  private DateTime? _date ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -246,149 +280,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _doneNote ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DoneNote  
-	   {
-	     get { return _doneNote; }
-		 set
-		 {
-		   if(_doneNote != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DoneNote",OldValue=_doneNote,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _doneNote=value;
-		   }
-		 }
-	   }
-	  private DateTime? _doneDateTime ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? DoneDateTime  
-	   {
-	     get { return _doneDateTime; }
-		 set
-		 {
-		   if(_doneDateTime != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DoneDateTime",OldValue=_doneDateTime,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   _doneDateTime=value;
-		   }
-		 }
-	   }
-	  private bool _done ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool Done  
-	   {
-	     get { return _done; }
-		 set
-		 {
-		   if(_done != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Done",OldValue=_done,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _done=value;
-		   }
-		 }
-	   }
-	  private string _externalDocumentId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalDocumentId  
-	   {
-	     get { return _externalDocumentId; }
-		 set
-		 {
-		   if(_externalDocumentId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalDocumentId",OldValue=_externalDocumentId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalDocumentId=value;
-		   }
-		 }
-	   }
-	  private bool _deleted ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool Deleted  
-	   {
-	     get { return _deleted; }
-		 set
-		 {
-		   if(_deleted != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Deleted",OldValue=_deleted,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _deleted=value;
-		   }
-		 }
-	   }
-	  private string _entityDateId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EntityDateId  
-	   {
-	     get { return _entityDateId; }
-		 set
-		 {
-		   if(_entityDateId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityDateId",OldValue=_entityDateId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _entityDateId=value;
-		   }
-		 }
-	   }
-	  private string _eventTypeFollowUpName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EventTypeFollowUpName  
-	   {
-	     get { return _eventTypeFollowUpName; }
-		 set
-		 {
-		   if(_eventTypeFollowUpName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EventTypeFollowUpName",OldValue=_eventTypeFollowUpName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _eventTypeFollowUpName=value;
-		   }
-		 }
-	   }
-	  private bool _manualActivatedFollowUp ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool ManualActivatedFollowUp  
-	   {
-	     get { return _manualActivatedFollowUp; }
-		 set
-		 {
-		   if(_manualActivatedFollowUp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ManualActivatedFollowUp",OldValue=_manualActivatedFollowUp,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _manualActivatedFollowUp=value;
-		   }
-		 }
-	   }
-	  private string _ownerUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OwnerUserName  
-	   {
-	     get { return _ownerUserName; }
-		 set
-		 {
-		   if(_ownerUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerUserName",OldValue=_ownerUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _ownerUserName=value;
-		   }
-		 }
-	   }
 	 }
+#endregion Properties
 }

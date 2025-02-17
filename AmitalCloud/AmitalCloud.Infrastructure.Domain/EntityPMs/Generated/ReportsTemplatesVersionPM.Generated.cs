@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ReportsTemplatesVersionPM : BaseEntityPM   {
    #region Constructors
    public ReportsTemplatesVersionPM() : base() {} 
-   public ReportsTemplatesVersionPM(ReportsTemplatesVersion entity) : base()
+   public ReportsTemplatesVersionPM(POCO.ReportsTemplatesVersion entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

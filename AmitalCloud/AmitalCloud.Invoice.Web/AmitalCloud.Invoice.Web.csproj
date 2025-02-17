@@ -180,63 +180,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\AccountingPaymentMethodViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\AccountingSystemsSettingViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\AccountingSystemsSyncStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\AccountingTransferHeaderViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\AccountingTransferLineViewsController.Generated.cs" />
     <Compile Include="Controllers\Generated\ListControllers\AccountingTransferTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\APInvoiceLineViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\APInvoicePaymentViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\APInvoiceStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\APInvoiceTotalVATViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\APInvoiceTransferStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\APInvoiceTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\APInvoiceViewsController.Generated.cs" />
     <Compile Include="Controllers\Generated\ListControllers\APPaymentStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\APPaymentTransferStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\APPaymentViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoiceLineViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoicePaymentViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoicesSignedStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoiceStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoiceStockLineViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoiceStocksStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoiceStockViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoiceTotalVatViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoiceTransferStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoiceTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARInvoiceViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARPaymentBankTranferViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARPaymentChequeReplicaViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARPaymentStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\Generated\ListControllers\ARPaymentTransferStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ARPaymentViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\BankAccountLiteViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ConfirmationNumberDefaultViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ConfirmationNumberStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\CreditCardTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\ExternalSystemsTablesCodeViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\QBOGlobalTaxCalculationViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\SATInterfaceSettingViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\SATInterfaceViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\SATInvoiceStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\SATPaymentMethodViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\ListControllers\SATTransferStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\AccountingPaymentMethodController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\AccountingSystemsSettingController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\AccountingSystemsSyncStatusController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\AccountingTransferHeaderController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\APInvoiceController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\APPaymentController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\ARInvoiceController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\ARInvoiceStockController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\ARPaymentController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\BankAccountLiteController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\ConfirmationNumberDefaultController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\CreditCardTypeController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\ExternalSystemsTablesCodeController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\SATInterfaceSettingController.Generated.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -276,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Generated\PMControllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

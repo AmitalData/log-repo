@@ -13,16 +13,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.BaseClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class AirlineList : CustomFieldList   
+   public partial class AirlineList : BaseCustomFieldList   
    {
        #region Constructors
        public AirlineList() : base() {}
-       public AirlineList(Airline entity) : base()
+       public AirlineList(POCO.Airline entity) : base()
        {
           Id  = entity.Id;
           Tenant  = entity.Tenant;

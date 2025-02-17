@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class PortTimeZonePM : BaseEntityPM   {
    #region Constructors
    public PortTimeZonePM() : base() {} 
-   public PortTimeZonePM(PortTimeZone entity) : base()
+   public PortTimeZonePM(POCO.PortTimeZone entity) : base()
    {
 		_code = entity.Code;
 		_name = entity.Name;

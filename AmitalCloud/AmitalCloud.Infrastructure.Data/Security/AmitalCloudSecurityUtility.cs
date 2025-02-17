@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Transactions;
 using System.Web;
 
@@ -671,6 +672,13 @@ namespace AmitalCloud.Infrastructure.Data.Security
                 return exists;
             }
             return true;
+        }
+        public static int AuthenticationOnTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            AuthenticationOnTenant(authToken.Tenant);
+            return authToken.Tenant;
         }
         public static void AuthenticationOnTenant(int tenant)
         {

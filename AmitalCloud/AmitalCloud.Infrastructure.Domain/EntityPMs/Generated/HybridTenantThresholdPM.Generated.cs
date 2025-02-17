@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class HybridTenantThresholdPM : BaseEntityPM   {
    #region Constructors
    public HybridTenantThresholdPM() : base() {} 
-   public HybridTenantThresholdPM(HybridTenantThreshold entity) : base()
+   public HybridTenantThresholdPM(POCO.HybridTenantThreshold entity) : base()
    {
 		_tenant = entity.Tenant;
 		_failedThresold = entity.FailedThresold;

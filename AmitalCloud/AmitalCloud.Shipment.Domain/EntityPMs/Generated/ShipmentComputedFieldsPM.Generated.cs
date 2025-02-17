@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Shipment.Domain.Interfaces;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -26,7 +26,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentComputedFieldsPM : BaseEntityPM   {
    #region Constructors
    public ShipmentComputedFieldsPM() : base() {} 
-   public ShipmentComputedFieldsPM(ShipmentComputedFields entity) : base()
+   public ShipmentComputedFieldsPM(POCO.ShipmentComputedFields entity) : base()
    {
 		_firstPickupATD = entity.FirstPickupATD;
 		_id = entity.Id;

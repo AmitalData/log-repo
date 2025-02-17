@@ -40,7 +40,7 @@
   GenerateDomainService="false"
   ClientModuleName="&quot;Quote&quot;"
   NoViewController="true"
-  NoPMController="false"
+  NoPMController="true"
   NoTS="false"
   NoDefaultFeatures="true"
   HasCompactSearch="false"

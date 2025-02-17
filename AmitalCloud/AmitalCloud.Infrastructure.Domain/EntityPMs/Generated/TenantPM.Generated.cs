@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TenantPM : BaseEntityPM   {
    #region Constructors
    public TenantPM() : base() {} 
-   public TenantPM(Tenant entity) : base()
+   public TenantPM(POCO.Tenant entity) : base()
    {
 		_isHybrid = entity.IsHybrid;
 		_defaultQuestionnaireId = entity.DefaultQuestionnaireId;

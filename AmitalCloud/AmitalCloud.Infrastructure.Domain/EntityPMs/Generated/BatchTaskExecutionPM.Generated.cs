@@ -13,8 +13,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class BatchTaskExecutionPM : BaseEntityPM   {
    #region Constructors
    public BatchTaskExecutionPM() : base() {} 
-   public BatchTaskExecutionPM(BatchTaskExecution entity) : base()
+   public BatchTaskExecutionPM(POCO.BatchTaskExecution entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

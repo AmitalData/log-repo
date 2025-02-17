@@ -66,40 +66,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
 
         public static CommunicationLogStepList GetStepListVersion(CommunicationLogStep a)///itzik said reUse !!!
-        {
-            a = a ?? new CommunicationLogStep();
-            return new CommunicationLogStepList()
-            {
-                CommunicationLogId = a.CommunicationLogId,
-                DocumentId = a.DocumentId,
-                EndDate = a.EndDate,
-                Log = a.LogNormalized(),// a.Log,
-                Name = a.Name,
-                Retries = a.Retries,
-                StartDate = a.StartDate,
-                Status = a.Status,
-                StatusName = a.CommunicationStatusType != null ? a.CommunicationStatusType.Name : null,
-                StepNumber = a.StepNumber,
-                Tenant = a.Tenant,
-            };
-        }
-        private CommunicationLogStepPM GetEntityPM(CommunicationLogStep a)
-        {
-            return new CommunicationLogStepPM()
-            {
-                CommunicationLogId = a.CommunicationLogId,
-                DocumentId = a.DocumentId,
-                EndDate = a.EndDate,
-                Log = a.LogNormalized(), //a.Log,
-                Name = a.Name,
-                Retries = a.Retries,
-                StartDate = a.StartDate,
-                Status = a.Status,
-                StepNumber = a.StepNumber,
-                StatusName = a.CommunicationStatusType != null ? a.CommunicationStatusType.Name : null,
-                Tenant = a.Tenant,
-            };
-        }
+        => new CommunicationLogStepList(a = a ?? new CommunicationLogStep());
+        private CommunicationLogStepPM GetEntityPM(CommunicationLogStep a) => new CommunicationLogStepPM(a);
 
         public IQueryable<CommunicationLogStepList> GetIQueryableEntityList(IQueryable<CommunicationLogStep> iQueryable)
         {
@@ -134,7 +102,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                             if (ArryByte != null)
                             {
                                 string xml = Encoding.UTF8.GetString(ArryByte);
-                                stepListVersion.DocumentData = xml;
+                                //stepListVersion.DocumentData = xml;
                             }
                         }
                     }
@@ -157,7 +125,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                         {
                             xml = Encoding.UTF8.GetString(ArryByte);
                         }
-                        stepListVersion.DocumentData = xml;
+                        //stepListVersion.DocumentData = xml;
                     }
 
                     stepLIstOut.Add(stepListVersion);
@@ -240,8 +208,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             );
             if (stepReq != null)
             {
-                var requestParamXml = stepReq.DocumentData;
-                return requestParamXml;
+                //var requestParamXml = stepReq.DocumentData;
+                return null;
             }
             return null;
         }
