@@ -32,8 +32,7 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
-
-   public partial class Aur_ItemUpdateService:EntityUpdateService<Aur_Item,Aur_ItemPM,Aur_PaymentPM>
+   public partial class Aur_ItemUpdateService:EntityUpdateService<POCO.Aur_Item,Aur_ItemPM,Aur_PaymentPM>
    {
    
         Aur_ItemRepository entityRepository;

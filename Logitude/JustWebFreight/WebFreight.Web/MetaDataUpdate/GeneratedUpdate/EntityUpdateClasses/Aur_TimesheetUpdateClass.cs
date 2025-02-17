@@ -26,7 +26,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class Aur_TimesheetUpdateClass
    {  		
-
 		public const string HashString = "a9cc4b903c2428b005cca5bbf108a4de";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -72,7 +71,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Aur Timesheet",
-
 			      				    Code =  "1765",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
@@ -329,7 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Execution date",
 					  						ListFieldLable =  "ExecutionDateListLable",
 					  						ListLableDefaultText =  "Execution date",
-					  						ListLocalDefaultText =  "תםריך ביצוע",
+					  						ListLocalDefaultText =  "תאריך ביצוע",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -521,7 +519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Approves Related Work",
 					  						ListFieldLable =  "ApprovesRelatedWorkListLable",
 					  						ListLableDefaultText =  "Approves Related Work",
-					  						ListLocalDefaultText =  "מםשר פרויקט מקושר",
+					  						ListLocalDefaultText =  "מאשר פרויקט מקושר",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -649,7 +647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "CRM Contact person",
 					  						ListFieldLable =  "CRMContactpersonListLable",
 					  						ListLableDefaultText =  "CRM Contact person",
-					  						ListLocalDefaultText =  "םיש קשר בפניה",
+					  						ListLocalDefaultText =  "איש קשר בפניה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -713,7 +711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Confirm Request CRM",
 					  						ListFieldLable =  "ConfirmRequestCRMListLable",
 					  						ListLableDefaultText =  "Confirm Request CRM",
-					  						ListLocalDefaultText =  "מםשר הפניה",
+					  						ListLocalDefaultText =  "מאשר הפניה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
