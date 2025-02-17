@@ -598,6 +598,7 @@
     <Compile Include="EntityDataMappings\CB_CustomsItemLinkageDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_LevyConditionDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_LevyExclusionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CB_PreferenceDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_PropertiesDetailsHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CarWeightDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_QuotaComputedDataDataMapping.cs" />
@@ -872,6 +873,7 @@
     <Compile Include="EntityDataMappings\Generated\CB_CustomsItemLinkageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_LevyConditionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_LevyExclusionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CB_PreferenceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_PropertiesDetailsHistoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_QuotaComputedDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_QuotaDataMapping.Generated.cs" />
@@ -1513,6 +1515,7 @@
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleDetailsHistoryQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\CB_PreferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginConnectionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
@@ -2147,6 +2150,7 @@
     <Compile Include="EntityUpdateServices\CertificateOfOriginInvoiceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CB_PreferenceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GovernmentProcTypeTenantUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CarEngineVolumeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CarWeightUpdateService.Generated.cs" />

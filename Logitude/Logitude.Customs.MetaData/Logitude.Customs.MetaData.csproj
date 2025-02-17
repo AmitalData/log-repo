@@ -279,6 +279,7 @@
     <None Include="DBTables\CB_CustomsItemLinkage.dxml" />
     <None Include="DBTables\CB_LevyCondition.dxml" />
     <None Include="DBTables\CB_LevyExclusion.dxml" />
+    <None Include="DBTables\CB_Preference.dxml" />
     <None Include="DBTables\CB_PropertiesDetailsHistory.dxml" />
     <None Include="DBTables\CB_Quota.dxml" />
     <None Include="DBTables\CB_QuotaComputedData.dxml" />
