@@ -41,9 +41,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<CB_Preference> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CB_Preference> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+	}
 
 
 }
