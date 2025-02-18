@@ -107,6 +107,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("ForbiddenSigns")]
 	    public string ForbiddenSigns { get; set; }
 
+        [Column("MyCustomURL")]
+	    public string MyCustomURL { get; set; }
+
     }
 }
 	 

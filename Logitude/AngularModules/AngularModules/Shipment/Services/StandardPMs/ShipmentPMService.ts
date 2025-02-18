@@ -38,6 +38,8 @@ import { ShipmentUnassignedFieldPM } from '../../EntityPMs/ShipmentUnassignedFie
 import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
 import { JsonPatchBuilder } from 'Infrastructure/Helpers/JsonPatchBuilder';
 import { AppTool } from 'Infrastructure/Tools';
+import { CustomsSettingPMService } from 'Customs/Services/StandardPMs/CustomsSettingPMService';
+import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationReferantDataPM } from 'Customs/EntityPMs/DeclarationReferantDataPM';
@@ -183,9 +185,31 @@ export class ShipmentPMService {
         */
     }
 
+    getMyCustomUrl() {
+        let res = null;
+        let filters = new ApiQueryFilters(true);
+        filters.addAdditionalFilter("Tenant", InfraSettings.TenantPM.Id, null, null, "Equals", false, false, false, "string");
+
+        new CustomsSettingListService().getByFilters(filters)
+            .subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        if (!AppTool.IsNullOrEmpty(myResponse.Result)) {
+                            new CustomsSettingPMService().get(myResponse.Result[0].Id)
+                                .subscribe((myResponse: ServiceResponse) => {
+                                    res = myResponse.Result.CustomsSettingUrl;
+                                })
+                        }
+                    }
+                }
+            })
+        return res;
+    }
+
     getSingleBySecurityKeyTenantWithoutToken(SecurityKey: string, Tenant: number) {
 
-        var myCustomURL = "https://systemwr.amital.co.il/api/shipment";
+        let CustomURL = this._apiUrl;
+
         //var myAuthHeader = new Headers();
         //myAuthHeader.append('Content-Type', 'application/json');
         //myAuthHeader.append('Accept', 'application/json');
@@ -198,14 +222,21 @@ export class ShipmentPMService {
         //        }
         //    }
         //});
-        if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
-            myCustomURL = this._apiUrl;
-        }
 
+        this.getMyCustomUrl().subscribe((response: ServiceResponse) => {
+
+            if (response.Result) {
+                CustomURL = response.Result;
+            }
+
+            if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
+                CustomURL = this._apiUrl;
+            }
+        });
         //var key = PerformanceLogger.AddLogTime();
         var callTime = new Date();
         return defer(() => {
-            var url = myCustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey;
+            var url = CustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey;
 
             if (!AppTool.IsNullOrUndefined(Tenant)) {
                 url += '&tenant=' + Tenant;
@@ -224,10 +255,10 @@ export class ShipmentPMService {
                     var pmresponse: ServiceResponse;
                     pmresponse = new ServiceResponse();
                     pmresponse.Result = entity;
-              
-                pmresponse.Data = {};
-                pmresponse.Data.WhatsAppMessagingPhoneNumber = response.headers.get('WhatsAppMessagingPhoneNumber');
-                pmresponse.Data.TranzilaPaymentWithBit = response.headers.get('TranzilaPaymentWithBit');
+
+                    pmresponse.Data = {};
+                    pmresponse.Data.WhatsAppMessagingPhoneNumber = response.headers.get('WhatsAppMessagingPhoneNumber');
+                    pmresponse.Data.TranzilaPaymentWithBit = response.headers.get('TranzilaPaymentWithBit');
 
                     return pmresponse;
 
@@ -247,7 +278,7 @@ export class ShipmentPMService {
             })
         */
     }
-   
+
     getLogoAndUrlWithoutToken(securityKey: string): Promise<UrlAndLogo> {
         const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : "https://systemwr.amital.co.il/api/shipment";
         return this._http.get(url + '/GetLogoAndUrlWithoutToken', { params: { securityKey: securityKey } }).toPromise() as Promise<UrlAndLogo>;

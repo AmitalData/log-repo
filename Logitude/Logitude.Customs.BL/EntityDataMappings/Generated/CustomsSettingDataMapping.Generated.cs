@@ -22,100 +22,94 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
+   
+   public partial class CustomsSettingDataMapping: IMapping<CustomsSettingPM, CustomsSetting>,IMappingEncodeBase64NVARCHARFields<CustomsSettingPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         IsConnectedToUniFreight, 
+	         CustomsAgentId, 
+	         SignServiceAddress, 
+	         IIGServiceAddress, 
+	         DCAServiceAddress, 
+	         Tenant, 
+	         DCAPartnerVault, 
+	         UServerServiceAddress, 
+	         DefaultNotificationAssignee, 
+	         SearchFields, 
+	         CustomsEnvoirmentTypeCode, 
+	         OnPremiseFillingService, 
+	         UnfConnectionString, 
+	         TehilaDca, 
+	         BlockAgentBankForMasab, 
+	         PaymentOrderAccCard, 
+	         UnifreightCertificateActivated, 
+	         AutoFillPaymentScreen, 
+	         AutoFillAccountType, 
+	         AutoUnitMeasurement, 
+	         CompanyType, 
+	         IsMessagesPending, 
+	         QtyFeedbackInPendingMessage, 
+	         LastRunningDCAWS, 
+	         LastNumOfMessagesDCAWS, 
+	         SuppressIIGMessageFromDate, 
+	         SuppressIIGMessageToDate, 
+	         HSMCompanyId, 
+	         HSMToken, 
+	         StandAlone, 
+	         OcrToken, 
+	         MaxItemsSendInteractive, 
+	         MaxSISendInteractive, 
+	         ForbiddenSigns, 
+	         MyCustomURL,
+	      }
 
-	public partial class CustomsSettingDataMapping : IMapping<CustomsSettingPM, POCO.CustomsSetting>, IMappingEncodeBase64NVARCHARFields<CustomsSettingPM>
-	{
-		public enum POCOPropertyNames
-		{
-			None,
-			Id,
-			IsConnectedToUniFreight,
-			CustomsAgentId,
-			SignServiceAddress,
-			IIGServiceAddress,
-			DCAServiceAddress,
-			Tenant,
-			DCAPartnerVault,
-			UServerServiceAddress,
-			DefaultNotificationAssignee,
-			SearchFields,
-			CustomsEnvoirmentTypeCode,
-			OnPremiseFillingService,
-			UnfConnectionString,
-			TehilaDca,
-			BlockAgentBankForMasab,
-			PaymentOrderAccCard,
-			UnifreightCertificateActivated,
-			AutoFillPaymentScreen,
-			AutoFillAccountType,
-			AutoUnitMeasurement,
-			CompanyType,
-			IsMessagesPending,
-			QtyFeedbackInPendingMessage,
-			LastRunningDCAWS,
-			LastNumOfMessagesDCAWS,
-			SuppressIIGMessageFromDate,
-			SuppressIIGMessageToDate,
-			HSMCompanyId,
-			HSMToken,
-			StandAlone,
-			OcrToken,
-			MaxItemsSendInteractive,
-			MaxSISendInteractive,
-			CourierDocToken,
-			ForbiddenSigns,
-		}
 
-
-		public enum PMPropertyNames
-		{
-			None,
-			Id,
-			IsConnectedToUniFreight,
-			CustomsAgentId,
-			SignServiceAddress,
-			IIGServiceAddress,
-			DCAServiceAddress,
-			Tenant,
-			DCAPartnerVault,
-			UServerServiceAddress,
-			DefaultNotificationAssignee,
-			DefaultNotificationAssigneeName,
-			SearchFields,
-			CustomsEnvoirmentTypeCode,
-			CustomsEnvoirmentTypeName,
-			OnPremiseFillingService,
-			UnfConnectionString,
-			TehilaDca,
-			BlockAgentBankForMasab,
-			PaymentOrderAccCard,
-			UnifreightCertificateActivated,
-			AutoFillPaymentScreen,
-			AutoFillAccountType,
-			AutoUnitMeasurement,
-			CompanyType,
-			IsMessagesPending,
-			QtyFeedbackInPendingMessage,
-			LastRunningDCAWS,
-			LastNumOfMessagesDCAWS,
-			ServiceScript,
-			SuppressIIGMessageFromDate,
-			SuppressIIGMessageToDate,
-			HSMCompanyId,
-			HSMToken,
-			StandAlone,
-			OcrToken,
-			MaxItemsSendInteractive,
-			MaxSISendInteractive,
-			CourierDocToken,
-			ForbiddenSigns,
-		}
-
-		List<POCOPropertyNames> CustomMappedPOCOProperties = new List<POCOPropertyNames>();
-		List<PMPropertyNames> CustomMappedPMProperties = new List<PMPropertyNames>();
-
-		public void PMToPOCO(CustomsSettingPM entityPM, POCO.CustomsSetting entityPOCO)
-		{
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         IsConnectedToUniFreight, 
+	         CustomsAgentId, 
+	         SignServiceAddress, 
+	         IIGServiceAddress, 
+	         DCAServiceAddress, 
+	         Tenant, 
+	         DCAPartnerVault, 
+	         UServerServiceAddress, 
+	         DefaultNotificationAssignee, 
+	         DefaultNotificationAssigneeName, 
+	         SearchFields, 
+	         CustomsEnvoirmentTypeCode, 
+	         CustomsEnvoirmentTypeName, 
+	         OnPremiseFillingService, 
+	         UnfConnectionString, 
+	         TehilaDca, 
+	         BlockAgentBankForMasab, 
+	         PaymentOrderAccCard, 
+	         UnifreightCertificateActivated, 
+	         AutoFillPaymentScreen, 
+	         AutoFillAccountType, 
+	         AutoUnitMeasurement, 
+	         CompanyType, 
+	         IsMessagesPending, 
+	         QtyFeedbackInPendingMessage, 
+	         LastRunningDCAWS, 
+	         LastNumOfMessagesDCAWS, 
+	         ServiceScript, 
+	         SuppressIIGMessageFromDate, 
+	         SuppressIIGMessageToDate, 
+	         HSMCompanyId, 
+	         HSMToken, 
+	         StandAlone, 
+	         OcrToken, 
+	         MaxItemsSendInteractive, 
+	         MaxSISendInteractive, 
+	         ForbiddenSigns, 
+	         MyCustomURL,
+	      }
 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConnectedToUniFreight))
 			{
@@ -290,6 +284,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			{
 				entityPOCO.ForbiddenSigns = entityPM.ForbiddenSigns;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MyCustomURL))
+            {
+				entityPOCO.MyCustomURL = entityPM.MyCustomURL;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
 
 			BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		}
@@ -478,6 +480,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
 
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MyCustomURL))
+            {
+					entityPM.MyCustomURL = entityPOCO.MyCustomURL;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -654,9 +661,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				oldEntityPM.CourierDocToken = entityPM.CourierDocToken;
 			}
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
-			{
-				oldEntityPM.ForbiddenSigns = entityPM.ForbiddenSigns;
-			}
+			
+            {
+                oldEntityPM.ForbiddenSigns = entityPM.ForbiddenSigns;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MyCustomURL))
+            {
+                oldEntityPM.MyCustomURL = entityPM.MyCustomURL;
+            }
+			
 
 		}
 

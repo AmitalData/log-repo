@@ -100,6 +100,8 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CourierDocToken).HasColumnName("CourierDocToken").HasMaxLength(1024).IsUnicode(false);
             this.Property(t => t.ForbiddenSigns).HasColumnName("ForbiddenSigns").HasMaxLength(128).IsUnicode(true);
+
+            this.Property(t => t.MyCustomURL).HasColumnName("MyCustomURL").HasMaxLength(128).IsUnicode(false);
         }
     }
 }
