@@ -19,14 +19,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CB_PreferencePM entityPM, CB_Preference entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPOCO.Id = entityPM.Id;
+            entityPOCO.Tenant = entityPM.Tenant;
+            entityPOCO.BackgroundColor = entityPM.BackgroundColor;
+            entityPOCO.TextColor = entityPM.TextColor;
+            entityPOCO.UserId = entityPM.UserId;
         }
 
         public void CustomPOCOToPM(CB_PreferencePM entityPM, CB_Preference entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPM.Id = entityPOCO.Id;
+            entityPM.Tenant = entityPOCO.Tenant;
+            entityPM.BackgroundColor = entityPOCO.BackgroundColor;
+            entityPM.TextColor = entityPOCO.TextColor;
+            entityPM.UserId = entityPOCO.UserId;
         }
-   }
+    }
 
 
 }
