@@ -31,7 +31,6 @@ namespace Simplog.Server.Infrastructure
         public static string StorageAccountKey { get; set; }
         public static string StorageType { get; set; }
         public static int LogitudeCRMTenantNumber { get; set; }
-        public static int AmitalTenant { get; set; }
         public static string AutoSignupEmail { get; set; }
         public static string AutoSignupPassword { get; set; }
         public static bool ForceHttps { get; set; }

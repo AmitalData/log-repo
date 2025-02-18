@@ -59,8 +59,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("HourlyRate")]
 	    public decimal HourlyRate { get; set; }
      [Key]
+        [ForeignKey("Aur_Payment")]
         [Column("PaymentId")]
 	    public string PaymentId { get; set; }
+	      
+        public virtual Aur_Payment Aur_Payment { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
     }

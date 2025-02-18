@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class Aur_PaymentItemUpdateClass
    {  		
-		public const string HashString = "6f9a229613682de3760796a830311bb4";
+		public const string HashString = "debec4ddb290e3bd66af90cb4ecf964f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Aur_PaymentItem",
-			      				    Code =  "1286",
+			      				    Code =  "542f",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -135,7 +135,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Id",
 					  						ListFieldLable =  "PaymentIdListLable",
 					  						ListLableDefaultText =  "Id",
-					  						IsForeignKey =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Aur_Payment",
+					  						NavigationPropertyName =  "Aur_Payment",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  true,
 					  						IsFixedLength =  false,

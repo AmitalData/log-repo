@@ -1057,6 +1057,7 @@
     <Compile Include="AccountingModel\DomainServices\OpenFormatReportDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.Responsibility.cs" />
+    <Compile Include="Controllers\AccountingModel\Aur_PaymentController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_ItemViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_PaymentItemViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_PaymentViewsController.Generated.cs" />

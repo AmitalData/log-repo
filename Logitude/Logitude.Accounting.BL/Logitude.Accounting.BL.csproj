@@ -924,6 +924,10 @@
     <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServices\AccountingEntityJournalUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingIntegrityCheckUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Aur_ItemUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Aur_PaymentItemUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Aur_PaymentUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Aur_TimesheetUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\Aur_ItemUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\Aur_PaymentItemUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\Aur_PaymentUpdateService.Generated.cs" />

@@ -26,8 +26,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	 string dbms;
 
         [Key]
+        [ForeignKey("Aur_Payment")]
         [Column("PaymentId")]
 	    public string PaymentId { get; set; }
+	      
+        public virtual Aur_Payment Aur_Payment { get; set; }
      [Key]
         [Column("Line")]
 	    public int Line { get; set; }
