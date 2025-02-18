@@ -29,6 +29,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string TextColor { get; set; }
         [Column("UserId")]
 	    public string UserId { get; set; }
+        [Column("Level")]
+	    public int Level { get; set; }
     }
 }
 	 

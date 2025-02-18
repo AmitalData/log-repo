@@ -39,4 +39,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Level"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

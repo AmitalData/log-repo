@@ -26,7 +26,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         BackgroundColor, 
 	         TextColor, 
-	         UserId,
+	         UserId, 
+	         Level,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Tenant, 
 	         BackgroundColor, 
 	         TextColor, 
-	         UserId,
+	         UserId, 
+	         Level,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +66,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UserId))
             {
 				entityPOCO.UserId = entityPM.UserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Level))
+            {
+				entityPOCO.Level = entityPM.Level;
 			}
 			}
 
@@ -95,6 +102,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.UserId = entityPOCO.UserId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Level))
+            {
+					entityPM.Level = entityPOCO.Level;
+            }
+
 		}
 
 		public void PMToOldPM(CB_PreferencePM entityPM, CB_PreferencePM oldEntityPM)
@@ -119,6 +131,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UserId))
             {
                 oldEntityPM.UserId = entityPM.UserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Level))
+            {
+                oldEntityPM.Level = entityPM.Level;
             }
 			
 		}
