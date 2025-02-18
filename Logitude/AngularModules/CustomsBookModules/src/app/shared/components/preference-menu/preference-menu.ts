@@ -3,6 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SearchCustomsItemAutocomplateComponent } from '../page-top/search-customs-item-autocomplate/search-customs-item-autocomplate.component';
 import { NgFor } from '@angular/common';
+import { CB_Preference, PreferenceType, PreferencesService } from './PreferencesService';
+import { API_MainService } from '../../../core/API_MainService';
+import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 
 @Component({
   selector: 'app-preference-menu',
@@ -11,7 +14,7 @@ import { NgFor } from '@angular/common';
   templateUrl: './preference-menu.html',
   styleUrl: './preference-menu.css',
 })
-export class PreferenceMenuComponent {
+export class PreferenceMenuComponent implements OnInit {
   preferenceTypeBackground: PreferenceType = PreferenceType.Background;
   preferenceTypeText: PreferenceType = PreferenceType.Text;
 
@@ -22,42 +25,74 @@ export class PreferenceMenuComponent {
     [PreferenceType.Text]: Array(7).fill('#000000')
   };
 
-  constructor(private preferencesService: PreferencesService) {
+  constructor(private preferencesService: PreferencesService, private apiService: API_MainService) {
     this.levels.forEach(level => {
       this.preferences[PreferenceType.Background][level - 1] = this.preferencesService.getPreference(level, PreferenceType.Background);
       this.preferences[PreferenceType.Text][level - 1] = this.preferencesService.getPreference(level, PreferenceType.Text);
     });
+
+
+  }
+
+  tenant = 6;
+  ngOnInit(): void {
+    // this.addNewPreference();
+    // this.updatePreference();
+    this.deletePreference();
+
+    // this.getPreferencesByUserId('1-9', 0);
   }
 
   updatePreferences(level: number) {
     this.preferencesService.setPreference(level, this.preferences[this.selectedType][level - 1], this.selectedType);
   }
-}
 
-import { Injectable } from '@angular/core';
+  // 1. build function are get by user id and tenant:
+  getPreferencesByUserId(userId: string, tenant: number) {
 
-@Injectable({
-	providedIn: 'root'
-})
+    // init preferences by user id
+    this.apiService.GetCB_PreferenceByUserIdAndTenant(userId, tenant).subscribe((data: any) => {
+      let PreferencesList: CB_Preference[] = data?.body;
+      console.log(PreferencesList);
 
-
-export class PreferencesService {
-	private preferences = {
-		[PreferenceType.Background]: Array(7).fill('#F3F5F7'), // default colors
-		[PreferenceType.Text]: Array(7).fill('#1C1C1C') // default colors
-	};
-
-	setPreference(level: number, color: string, type: PreferenceType) {
-		this.preferences[type][level - 1] = color; // level is 1-based, array is 0-based
-	}
-
-	getPreference(level: number, type: PreferenceType): string {
-		return this.preferences[type][level - 1] || (type === PreferenceType.Background ? '#F3F5F7' : '#1C1C1C');
-	}
-}
+    });
+  }
+  data: CB_Preference = {
+    Id: '',
+    Tenant: SessionInfo.LoggedUserTenant,
+    BackgroundColor: '#F3F5F7',
+    TextColor: '#1C1C1C',
+    UserId: SessionInfo.LoggedUserId,
+    Level: 1
+  };
+  // 2. build function are add new preference:
+  addNewPreference() {
 
 
-export enum PreferenceType {
-  Background = 'background',
-  Text = 'text'
+    // data.UserId = SessionInfo.LoggedUserEmail;
+    // this.data.Tenant = 6;
+    // init preferences by user id
+    this.apiService.AddNewCB_Preference(this.data).subscribe((preferences) => {
+      console.log(preferences);
+
+    });
+  }
+
+  updatePreference() {
+    this.data.Id = '1-1';
+    this.data.BackgroundColor = '#F3F5F3';
+    // init preferences by user id
+    this.apiService.EditCB_Preference(this.data).subscribe((preferences) => {
+      console.log(preferences);
+
+    });
+  }
+  deletePreference() {
+    this.data.Id = '1-3';
+    // init preferences by user id
+    this.apiService.DeleteCB_Preference(this.data).subscribe((preferences) => {
+      console.log(preferences);
+    });
+  }
+
 }

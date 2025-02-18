@@ -9,7 +9,7 @@ import { CB_CustomsItemComputedDataList, CB_TariffList, RemarksClassificationLis
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { SearchBy, SearchService } from '../page-top/service/top-page.service';
-import { PreferencesService, PreferenceType } from '../preference-menu/preference-menu';
+import { PreferencesService, PreferenceType } from '../preference-menu/PreferencesService';
 
 @Component({
 	selector: 'app-data-row',
