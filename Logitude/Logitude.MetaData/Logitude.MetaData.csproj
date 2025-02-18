@@ -1409,6 +1409,7 @@
     <None Include="EntityFiles\ShipmentsModel\ContainerStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerStatusSource.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DeploymentPackage.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ExternalLink.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OBLType.lxml" />
     <None Include="EntityFiles\CommonDataModel\PaymentGatewayPartner.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteVATsTotal.lxml" />

@@ -888,6 +888,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferLine.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\DigitalShipmentsDataView.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ExternalLink.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\HarmonizeCode.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingTransStatus.cs" />
@@ -928,6 +929,7 @@
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferLineMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransferTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\DigitalShipmentDataViewMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ExternalLinkMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\HarmonizeCodeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRABookingStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRABookingTransStatusMap.cs" />
@@ -1356,6 +1358,7 @@
     <Compile Include="CommonDataModel\Repositories\ShippingLineRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AccountingInformationIdentifierRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AWBAdditionalHandlingInfoRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ExternalLinkRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\HarmonizeCodeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRABookingStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRABookingTransStatusRepository.cs" />
