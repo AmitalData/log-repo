@@ -44,7 +44,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.GLAccountsFilterItems = new ApiQueryFilters();
         this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
         this.PayableDebitGLAcountFilterItems = new ApiQueryFilters();
-        this.PayableDebitGLAcountFilterItems.addAdditionalFilter("PayableDebitFilter", "2", null, null, "Equals", true, false, false, "string", false, true);
+       this.PayableDebitGLAcountFilterItems.addAdditionalFilter("PayableDebitFilter", "2", null, null, "Equals", true, false, false, "string", false, true);
 
     }
   
@@ -95,10 +95,10 @@ export class AddEditAPGeneralInvoiceLineComponent {
             var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatTypeId");
             errors.push(msg.replace("%FieldName", field));
         }
-        if (AppTool.IsNullOrEmpty(this.EntityPM.PayableDebitGLAcountId)) {
-            var field = TextCodeTranslator.Translate("APInvoiceLine.F.PayableDebitGLAcountId");
-            errors.push(msg.replace("%FieldName", field));
-        }
+         if (AppTool.IsNullOrEmpty(this.EntityPM.PayableDebitGLAcountId)) {
+             var field = TextCodeTranslator.Translate("APInvoiceLine.F.PayableDebitGLAcountId");
+             errors.push(msg.replace("%FieldName", field));
+         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.VatPercentage)) {
             if (!this.EntityPM.VatIsMultiPercentage) {

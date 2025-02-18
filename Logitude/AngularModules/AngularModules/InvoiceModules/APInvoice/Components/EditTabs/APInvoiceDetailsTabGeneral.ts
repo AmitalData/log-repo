@@ -1360,11 +1360,17 @@ export class APInvoiceLineItem extends BaseComponent {
             this.invoiceLinePM.ForiegnCurrencyId = value;
         }
     }
-    get PayableDebitGLAcountId() { return this.ForiegnCurrencyId; }
+    get PayableDebitGLAcountId() { return this.invoiceLinePM.PayableDebitGLAcountId; }
     set PayableDebitGLAcountId(value: string) {
-        if (this.invoiceLinePM.ForiegnCurrencyId != value) {
-            this.invoiceLinePM.ForiegnCurrencyId = value;
+        if (this.invoiceLinePM.PayableDebitGLAcountId != value) {
+            this.invoiceLinePM.PayableDebitGLAcountId = value;
             this.SetUIProperties_PayableDebitGLAcountId();
+        }
+     }
+     get PayableDebitGLAcountName() { return this.invoiceLinePM.PayableDebitGLAcountName }
+     set PayableDebitGLAcountName(value: string) {
+      if (this.invoiceLinePM.PayableDebitGLAcountName != value) {
+            this.invoiceLinePM.PayableDebitGLAcountName = value;
         }
     }
     get ForiegnExchangeRate() { return this.invoiceLinePM.ForiegnExchangeRate; }
@@ -1514,8 +1520,8 @@ export class APInvoiceLineItem extends BaseComponent {
         this.UIProperties.SetRequired("LocalDescription", this.ObjectTableName, AppTool.IsNullOrEmpty(this.LocalDescription));
     }
     SetUIProperties_PayableDebitGLAcountId() {
-        this.UIProperties.SetRequired("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PayableDebitGLAcountId));
-        this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.chargesTypeList?.PayableDebitGLAcountId));
+       this.UIProperties.SetRequired("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PayableDebitGLAcountId));
+       this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.chargesTypeList?.PayableDebitGLAcountId));
 
     }
     // Line Properties
@@ -1732,6 +1738,8 @@ export class APInvoiceLineItem extends BaseComponent {
                                 this.invoiceLinePM.ChargeTypeGLAccountId = this.chargesTypeList.PayableDebitGLAcountId;
                                 if (!myResponse.HasError) {
                                     this.Glaccount = myResponse.Result;
+                                    this.PayableDebitGLAcountName = this.Glaccount?.LocalName;
+                                   
                                 }
                             });
                         }
