@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_PreferenceUpdateClass
    {  		
-		public const string HashString = "2195ec106b0e61467636862511d87625";
+		public const string HashString = "c77b5a9ea7f656477f40eb2272705dad";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -133,9 +133,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "BS64:Iteh16TXqCDXodeZ15XXldeSINeU16LXk9ek15XXqiDXoteZ16bXldeRIg==",
+			      				    LocalDefaultText =  "העדפות משתמש לעיצוב רמות",
 			      				    DefaultText =  "CB Preference",
-			      				    Code =  "be23",
+			      				    Code =  "e877",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
