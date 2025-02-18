@@ -2,8 +2,7 @@
 using System.Linq;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityLists;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
@@ -31,17 +30,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             DefaultAndConfigurationKeyPM result =
             (from a in repository.context.DefaultAndConfigurationKey
-             where a.SetKey == setkey && a.Tenant == tenant
-             select new DefaultAndConfigurationKeyPM()
-             {
-                 Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
-                 SetType1 = a.SetType1,
-                 SetKey = a.SetKey,
-                 ShortDescription = a.ShortDescription,
-                 FullDesctiption = a.FullDesctiption,
-                 SetType2 = a.SetType2,
-             }).FirstOrDefault();
+            where a.SetKey == setkey && a.Tenant == tenant
+            select new DefaultAndConfigurationKeyPM()
+            { 
+               Tenant = a.Tenant,
+               CreateDate = a.CreateDate,
+               SetType1 = a.SetType1,
+               SetKey = a.SetKey,
+               ShortDescription = a.ShortDescription,
+               FullDesctiption = a.FullDesctiption,
+               SetType2 = a.SetType2,
+            }).FirstOrDefault();
 
             return result;
         }
@@ -69,17 +68,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableEntityList(IQueryable<DefaultAndConfigurationKey> iQueryable)
         {
             IQueryable<DefaultAndConfigurationKeyList> result = from a in iQueryable
-                                                                select new DefaultAndConfigurationKeyList()
-                                                                {
-
-                                                                    Tenant = a.Tenant,
-                                                                    CreateDate = a.CreateDate,
-                                                                    SetType1 = a.SetType1,
-                                                                    SetKey = a.SetKey,
-                                                                    ShortDescription = a.ShortDescription,
-                                                                    FullDesctiption = a.FullDesctiption,
-                                                                    SetType2 = a.SetType2
-                                                                };
+                select new DefaultAndConfigurationKeyList()
+                {
+                                                                 
+                    Tenant = a.Tenant,
+                    CreateDate = a.CreateDate,
+                    SetType1 = a.SetType1,
+                    SetKey = a.SetKey,
+                    ShortDescription = a.ShortDescription,
+                    FullDesctiption = a.FullDesctiption,
+                    SetType2 = a.SetType2
+                };
 
             return result;
         }

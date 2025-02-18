@@ -3,11 +3,11 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -57,7 +57,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         EventTypeClass eventTypeClass = eventTypeArgs.EventTypeList.Where(d => d.Code == eventTypeList.Code).FirstOrDefault();
                         if (eventTypeClass != null)
                         {
-                            if(eventTypeClass.Date!=null) eventTypeList.EventDateTime = eventTypeClass.Date;
+                            if (eventTypeClass.Date != null) eventTypeList.EventDateTime = eventTypeClass.Date;
                             else eventTypeList.EventDateTime = TenantServerConfigration.GetCurrentDateTime(eventTypeArgs.Tenant);
                         }
                     }
@@ -73,10 +73,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     }
 
                 }
-               
 
 
-              TraceEventRepository traceEventRepository = new TraceEventRepository(eventTypeArgs.Tenant);
+
+                TraceEventRepository traceEventRepository = new TraceEventRepository(eventTypeArgs.Tenant);
 
                 if (eventList != null && eventList.Count > 0)
                 {
@@ -114,10 +114,24 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
         }
 
 
+        public HttpResponseMessage PostTraceEvent([FromBody] PostTraceEventArgs args)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
+                if(string.IsNullOrEmpty(args.loggedUserEmail))
+                    args.loggedUserEmail = authToken.Email;
+                
+                TraceHelper.Create(args.tenant, args.entityId, args.tableName, args.notes, args.eventTypeCode, args.loggedUserEmail);                
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
 
-
-
-
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

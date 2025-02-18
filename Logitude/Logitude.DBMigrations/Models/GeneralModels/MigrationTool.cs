@@ -9,6 +9,7 @@ using System.Text;
 using System.Reflection;
 using System.Xml;
 using Oracle.ManagedDataAccess.Client;
+//using Oracle.DataAccess.Client;
 
 namespace Logitude.DBMigrations.Models
 {
@@ -45,8 +46,7 @@ namespace Logitude.DBMigrations.Models
             {
                 if (!(ToolArguments.IsArgumentProvided(Arguments.DEV) || (RunSettings.DebugMode && RunSettings.DevMode)))
                 {
-                    StartNormalMigrations();
-                    StartZeroDownTimeMigrations();
+                    StartNormalMigrations(true);
                 }
                 else
                 {
@@ -56,8 +56,7 @@ namespace Logitude.DBMigrations.Models
                     Console.WriteLine("");
 
                     ToolArguments.Arguments = new List<string>(ToolArguments.Arguments) { Arguments.ZERODOWNTIME }.ToArray();
-                    StartNormalMigrations();
-                    StartZeroDownTimeMigrations();
+                    StartNormalMigrations(true);
                 }
             }
             else
@@ -66,24 +65,39 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected void StartNormalMigrations()
+        protected void StartNormalMigrations(bool IsStartZeroDown = false)
         {
             string[] dxmlFiles = GetDXMLFilesFromRoot(Root);
             string[] sxmlFiles = GetSXMLFilesFromRoot(Root);
+            foreach (var mainConnectionString in ToolConfigurations.MainArrConnectionString)
+			{
+                ToolConfigurations.MainConnectionString = mainConnectionString;
+				Console.WriteLine(ToolConfigurations.MainConnectionString);
+				ValidateDBFiles(dxmlFiles, sxmlFiles);
+                PrepareRequiredData();
+                
+                string dbConfigurationsDxml = dxmlFiles.Where(d => Path.GetFileName(d).ToLower() == "DBMigrationConfigurations.dxml".ToLower()).FirstOrDefault();
+                ValidateDatabaseEnvConfiguration(dbConfigurationsDxml);
+                
+                GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
+                SaveScripts(scriptsToSave);
+                ExportMissingIndexesWarnings();
+                ExportMissingUniqueConstraintsWarnings();
+                if(IsStartZeroDown)
+				  StartZeroDownTimeMigrations();
+				ResetParameter();
+			}
+		}
+		protected void ResetParameter()
+		{
+            DBConfigurationsManager.ResetDBConfiguration();
+		    MissingIndexesWarnings = "";
+		    MissingUniqueConstraintsWarnings = "";
+			DXMLHashes = null;
+			IncludedModules = null;
+	}
 
-            ValidateDBFiles(dxmlFiles, sxmlFiles);
-            PrepareRequiredData();
-
-            string dbConfigurationsDxml = dxmlFiles.Where(d => Path.GetFileName(d).ToLower() == "DBMigrationConfigurations.dxml".ToLower()).FirstOrDefault();
-            ValidateDatabaseEnvConfiguration(dbConfigurationsDxml);
-
-            GeneratedScript scriptsToSave = GenerateAndExecuteDBScripts(dxmlFiles, sxmlFiles);
-            SaveScripts(scriptsToSave);
-            ExportMissingIndexesWarnings();
-            ExportMissingUniqueConstraintsWarnings();
-        }
-
-        protected void ValidateDBFiles(string[] dxmlFiles, string[] sxmlFiles)
+		protected void ValidateDBFiles(string[] dxmlFiles, string[] sxmlFiles)
         {
             if (!(RunSettings.DebugMode && !RunSettings.ValidateFiles))
             {
@@ -289,7 +303,7 @@ namespace Logitude.DBMigrations.Models
 
             foreach (var dxmlTable in dxmlTables)
             {
-          //      if (!(dxmlTable.DXMLFileName.Contains("DigitalFieldSecuri"))) continue;
+                //      if (!(dxmlTable.DXMLFileName.Contains("DigitalFieldSecuri"))) continue;
                 Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
 
                 if (IsDXMLFileForHistoryTable(dxmlTable.DXMLFileName))
@@ -679,6 +693,7 @@ namespace Logitude.DBMigrations.Models
 
                 try
                 {
+                    oracleConnection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                     oracleConnection.Open();
 
                     string[] commands = script.Split(new string[] { ";\n" }, StringSplitOptions.None);
@@ -693,7 +708,18 @@ namespace Logitude.DBMigrations.Models
                             oracleCommand.CommandText = (command.ToUpper().EndsWith(" END") || command.ToUpper().EndsWith("\nEND")) ? (command + ";") : command;
                             currentCommandText = oracleCommand.CommandText;
                             PrintExecutingScript(currentCommandText);
-                            oracleCommand.ExecuteNonQuery();
+                            try
+                            {
+                                oracleCommand.ExecuteNonQuery();
+                            }
+                            catch (Exception ex)
+                            {
+                                // if (!ex.Message.Contains("ORA-01442") && !ex.Message.Contains("ORA-02262") && !ex.Message.Contains("ORA-22858"))
+                                if (!ex.Message.Contains("ORA-01442"))
+                                {
+                                    throw ex;
+                                }
+                             }
                         }
                     }
 
@@ -1109,6 +1135,7 @@ namespace Logitude.DBMigrations.Models
 
                 try
                 {
+                    connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                     connection.Open();
                     reader = command.ExecuteReader();
 
@@ -1223,6 +1250,7 @@ namespace Logitude.DBMigrations.Models
 
                             try
                             {
+                                oracleConnection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                                 oracleConnection.Open();
                                 OracleCommand oracleCommand = new OracleCommand();
                                 oracleCommand.Connection = oracleConnection;
@@ -1323,6 +1351,7 @@ namespace Logitude.DBMigrations.Models
                 {
                     try
                     {
+                        oracleConnection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                         oracleConnection.Open();
                     }
                     catch (Exception exception)
@@ -1712,6 +1741,7 @@ namespace Logitude.DBMigrations.Models
 
                     try
                     {
+                        connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                         connection.Open();
                         reader = command.ExecuteReader();
 
@@ -1796,6 +1826,7 @@ namespace Logitude.DBMigrations.Models
 
                 try
                 {
+                    connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                     connection.Open();
                     reader = command.ExecuteReader();
 
@@ -1853,7 +1884,7 @@ namespace Logitude.DBMigrations.Models
         protected ExecuteSxmlFileResult ShouldExecuteSxmlFile(string sxmlFileName, ScriptDefinition scriptDefinition)
         {
 
-            
+
             if (!ExecutedSxmlFiles.Where(e => e.SxmlFileName.ToLower() == sxmlFileName.ToLower() && e.DBType.ToLower() == scriptDefinition.DBType.ToLower()).Any())
             {
                 return new ExecuteSxmlFileResult
@@ -1886,7 +1917,7 @@ namespace Logitude.DBMigrations.Models
                             Action = null
                         };
                     }
-                    
+
                     ExitTool("Error: The Script Inside " + sxmlFileName + " File Has Been Changed, If You Are Sure You Want To Continue Executing The Script, You Should Change The Script Version");
                 }
 
@@ -1982,6 +2013,7 @@ namespace Logitude.DBMigrations.Models
 
                     try
                     {
+                        connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
                         connection.Open();
                         reader = command.ExecuteReader();
 
@@ -2162,7 +2194,7 @@ namespace Logitude.DBMigrations.Models
         {
             string databaseType = ToolConfigurations.DatabaseType;
             string globalConnectionString = ToolConfigurations.GlobalConnectionString;
-            string mainConnectionString = ToolConfigurations.MainConnectionString;
+            List<string> mainArrConnectionString = ToolConfigurations.MainArrConnectionString;
             string systemLogsConnectionString = ToolConfigurations.SystemLogsConnectionString;
 
             if (String.IsNullOrEmpty(databaseType))
@@ -2177,7 +2209,7 @@ namespace Logitude.DBMigrations.Models
             {
                 ExitTool("Error: Cannot Find GlobalConnectionString in Configuration File");
             }
-            if (String.IsNullOrEmpty(mainConnectionString))
+            if (mainArrConnectionString == null || mainArrConnectionString.Count() == 0)
             {
                 ExitTool("Error: Cannot Find MainConnectionString in Configuration File");
             }
@@ -2199,18 +2231,15 @@ namespace Logitude.DBMigrations.Models
             string mainConnectionString = ToolConfigurations.MainConnectionString;
             string systemLogsConnectionString = ToolConfigurations.SystemLogsConnectionString;
             string cargoTrackingConnectionString = ToolConfigurations.CargoTrackingConnectionString;
-            string globalDB, globalSource, mainDB, mainSource, systemLogsDB, systemLogsSource, databaseTypeMessage, databaseNameMessage;
+            string globalDB, globalSource, systemLogsDB, systemLogsSource, databaseTypeMessage, databaseNameMessage;
             string cargoTrackingDB = null, cargoTrackingSource = null;
 
             if (databaseType.ToLower() == "oracle")
             {
                 OracleConnectionStringBuilder globalConnectionStringBuilder = new OracleConnectionStringBuilder(globalConnectionString);
-                OracleConnectionStringBuilder mainConnectionStringBuilder = new OracleConnectionStringBuilder(mainConnectionString);
                 OracleConnectionStringBuilder systemLogsConnectionStringBuilder = new OracleConnectionStringBuilder(systemLogsConnectionString);
                 globalDB = globalConnectionStringBuilder.UserID;
-                globalSource = globalConnectionStringBuilder.DataSource;
-                mainDB = mainConnectionStringBuilder.UserID;
-                mainSource = mainConnectionStringBuilder.DataSource;
+                globalSource = globalConnectionStringBuilder.DataSource;          
                 systemLogsDB = systemLogsConnectionStringBuilder.UserID;
                 systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
                 databaseTypeMessage = "Oracle";
@@ -2225,13 +2254,10 @@ namespace Logitude.DBMigrations.Models
             else
             {
                 SqlConnectionStringBuilder globalConnectionStringBuilder = new SqlConnectionStringBuilder(globalConnectionString);
-                SqlConnectionStringBuilder mainConnectionStringBuilder = new SqlConnectionStringBuilder(mainConnectionString);
                 SqlConnectionStringBuilder systemLogsConnectionStringBuilder = new SqlConnectionStringBuilder(systemLogsConnectionString);
 
                 globalDB = globalConnectionStringBuilder.InitialCatalog;
-                globalSource = globalConnectionStringBuilder.DataSource;
-                mainDB = mainConnectionStringBuilder.InitialCatalog;
-                mainSource = mainConnectionStringBuilder.DataSource;
+                globalSource = globalConnectionStringBuilder.DataSource;             
                 systemLogsDB = systemLogsConnectionStringBuilder.InitialCatalog;
                 systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
 
@@ -2248,7 +2274,7 @@ namespace Logitude.DBMigrations.Models
             string appSettingsMessage = "Tool Database Settings\nDatabase Type: " + databaseTypeMessage + "\n" +
                                         "Applying Migrations On The Following Databases:\n" +
                                         "Global Database: " + databaseNameMessage + " = " + "\"" + globalDB + "\"" + " And Data Source = " + "\"" + globalSource + "\"" + "\n" +
-                                        "Main Database: " + databaseNameMessage + " = " + "\"" + mainDB + "\"" + " And Data Source = " + "\"" + mainSource + "\"" + "\n" +
+                                        DisplayMainToolSettings(databaseNameMessage) +     
                                         "SystemLogs Database: " + databaseNameMessage + " = " + "\"" + systemLogsDB + "\"" + " And Data Source = " + "\"" + systemLogsSource + "\"" + "\n";
 
             if (!string.IsNullOrEmpty(cargoTrackingDB))
@@ -2272,8 +2298,34 @@ namespace Logitude.DBMigrations.Models
                 Console.Write("\n");
             }
         }
+        protected string DisplayMainToolSettings(string databaseNameMessage)
+        {
+            string message = string.Empty;
+            string mainDB, mainSource;
+			foreach (var mainConnectionString in ToolConfigurations.MainArrConnectionString)
+            {
+                if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+                {
+					OracleConnectionStringBuilder mainConnectionStringBuilder = new OracleConnectionStringBuilder(mainConnectionString);
+					mainDB = mainConnectionStringBuilder.UserID;
+					mainSource = mainConnectionStringBuilder.DataSource;
 
-        protected void ValidateAndReadRoot()
+				}
+				else
+                {
+					SqlConnectionStringBuilder mainConnectionStringBuilder = new SqlConnectionStringBuilder(mainConnectionString);
+					mainDB = mainConnectionStringBuilder.InitialCatalog;
+					mainSource = mainConnectionStringBuilder.DataSource;
+				}
+                message += "Main Database: " + databaseNameMessage + " = " + "\"" + mainDB + "\"" + " And Data Source = " + "\"" + mainSource + "\"" + "\n";
+
+
+			}
+            return message;
+		}
+		
+
+		protected void ValidateAndReadRoot()
         {
             if (!ToolArguments.IsArgumentProvided(Arguments.SERVICE))
             {
@@ -2325,27 +2377,32 @@ namespace Logitude.DBMigrations.Models
         protected void StartZeroDownTimeMigrations()
         {
             if (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
-            {
-                Console.WriteLine("\nZero Down Time Migrations Started");
-                ZeroDownTimeMigrations zeroDownTimeMigrations = CreateZeroDownTimeMigrations();
-                if (zeroDownTimeMigrations != null)
-                {
-                    zeroDownTimeMigrations.Start();
-                    Console.WriteLine("Zero Down Time Migrations Finished");
-                }
-                else
-                {
-                    Console.WriteLine("Zero Down Time Migrations Not Implemented");
-                }
-
+            {              
+                    Console.WriteLine("\nZero Down Time Migrations Started");
+                    ZeroDownTimeMigrations zeroDownTimeMigrations = CreateZeroDownTimeMigrations();
+                    if (zeroDownTimeMigrations != null)
+                    {
+                        zeroDownTimeMigrations.Start();
+                        Console.WriteLine("Zero Down Time Migrations Finished");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Zero Down Time Migrations Not Implemented");
+                    }
+              
             }
         }
 
         protected void StartZeroDownTimeService()
         {
-            Console.WriteLine("Zero Down Time Service Started");
-            ZeroDownTimeMigrations zeroDownTimeMigrations = CreateZeroDownTimeMigrations();
-            zeroDownTimeMigrations.StartAsService();
+            foreach (var mainConnectionString in ToolConfigurations.MainArrConnectionString)
+            {
+                ToolConfigurations.MainConnectionString = mainConnectionString;
+				Console.WriteLine(ToolConfigurations.MainConnectionString);
+				Console.WriteLine("Zero Down Time Service Started");
+                ZeroDownTimeMigrations zeroDownTimeMigrations = CreateZeroDownTimeMigrations();
+                zeroDownTimeMigrations.StartAsService();
+            }
         }
 
         protected ZeroDownTimeMigrations CreateZeroDownTimeMigrations()
@@ -2640,7 +2697,18 @@ namespace Logitude.DBMigrations.Models
 
                 ToolConfigurations.DatabaseType = databaseTypeElement == null ? null : (databaseTypeElement.Attributes["value"]?.Value);
                 ToolConfigurations.GlobalConnectionString = globalConnectionStringElement == null ? null : (globalConnectionStringElement.Attributes["value"]?.Value);
-                ToolConfigurations.MainConnectionString = mainConnectionStringElement == null ? null : (mainConnectionStringElement.Attributes["value"]?.Value);
+                List<string> connMains = GetDBMainActiveFroGlobalDB();
+                if (connMains == null || connMains.Count() == 0)
+                {
+                    ToolConfigurations.MainArrConnectionString[0] = mainConnectionStringElement == null ? null : (mainConnectionStringElement.Attributes["value"]?.Value);
+
+				}
+                else
+                {
+					ToolConfigurations.MainArrConnectionString = connMains;
+
+				}
+
                 ToolConfigurations.SystemLogsConnectionString = systemLogsConnectionStringElement == null ? null : (systemLogsConnectionStringElement.Attributes["value"]?.Value);
                 ToolConfigurations.CargoTrackingConnectionString = cargoTrackingConnectionStringElement == null ? null : (cargoTrackingConnectionStringElement.Attributes["value"]?.Value);
                 ToolConfigurations.AOTScriptsExecutionTimeOut = aotScriptsExecutionTimeOut;
@@ -2658,8 +2726,126 @@ namespace Logitude.DBMigrations.Models
                 ExitTool("Error: Cannot Set Tool Configurations");
             }
         }
+		protected List<string> GetDBMainActiveFroGlobalDB()
+		{
+			List<string> connMains = new List<string>();
+            string connectionString = ToolConfigurations.GlobalConnectionString;
+			if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
+			{
+				string queryString = "SELECT * FROM \"GLOBALDBS\" where IsActive=1";
 
-        protected void ValidateDatabaseEnvConfiguration(string dbConfigurationsDxml)
+
+				OracleDataReader reader = null;
+				OracleConnection connection = new OracleConnection(connectionString);
+				OracleCommand command = new OracleCommand(queryString, connection);
+
+				try
+				{
+					connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
+					connection.Open();
+					reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						var DBConnection = reader["DBConnection"].ToString();
+
+						// פיצול המחרוזת לפי סימן ";" לצורך חיתוך רכיבים
+						string[] parameters = DBConnection.Split(';');
+
+						// הכרזה על משתנים כדי לשמור את הערכים
+						string userId = "";
+						string password = "";
+						string dataSource = "";
+						string port = "";
+						string sid = "";
+
+						// מעבר על כל רכיב והפקת הערכים
+						foreach (var parameter in parameters)
+						{
+							if (parameter.StartsWith("User Id=", StringComparison.OrdinalIgnoreCase))
+							{
+								userId = parameter.Split('=')[1].Trim();
+							}
+							else if (parameter.StartsWith("Password=", StringComparison.OrdinalIgnoreCase))
+							{
+								password = parameter.Split('=')[1].Trim();
+							}
+							else if (parameter.StartsWith("Data Source=", StringComparison.OrdinalIgnoreCase))
+							{
+								dataSource = parameter.Split('=')[1].Trim();
+							}
+							else if (parameter.StartsWith("port=", StringComparison.OrdinalIgnoreCase))
+							{
+								port = parameter.Split('=')[1].Trim();
+							}
+							else if (parameter.StartsWith("sid=", StringComparison.OrdinalIgnoreCase))
+							{
+								sid = parameter.Split('=')[1].Trim();
+							}
+						}
+
+						// יצירת המחרוזת החדשה בתבנית הרצויה
+						string connectionMainString = $"user id={userId};password={password};data source=//{dataSource}:{port}/{sid}";
+						connMains.Add(connectionMainString);
+					}
+
+					reader.Close();
+					connection.Close();
+				}
+				catch (Exception ex)
+				{
+					if (reader != null)
+					{
+						reader.Close();
+					}
+					connection.Close();
+					ExitTool(ex.Message.ToString());
+				}
+
+			}
+			else
+			{
+				string queryString = "SELECT * FROM [dbo].[GlobalDBs] where [IsActive] = 1";
+
+
+				SqlDataReader reader = null;
+				SqlConnection connection = new SqlConnection(connectionString);
+				SqlCommand command = new SqlCommand(queryString, connection);
+
+				try
+				{
+					connection.Open();
+					reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+                        var DBConnection = reader["DBConnection"].ToString();
+                        var DBConnections = DBConnection.Split(',');
+
+						string databaseName = DBConnections[0];
+						string userId = DBConnections[1];
+						string password = DBConnections[2];
+						string dataSource = DBConnections[3];
+						string connectionMainString = $"Data Source={dataSource};Initial Catalog={databaseName};Integrated Security=False;Persist Security Info=True;User ID={userId};Password={password};MultipleActiveResultSets=True;";
+						connMains.Add(connectionMainString);
+					}
+
+					reader.Close();
+					connection.Close();
+				}
+				catch (Exception ex)
+				{
+					if (reader != null)
+					{
+						reader.Close();
+					}
+					connection.Close();
+					ExitTool(ex.Message.ToString());
+				}
+			}
+            return connMains;
+		}
+		protected void ValidateDatabaseEnvConfiguration(string dbConfigurationsDxml)
         {
             if (!DBConfigurationsManager.IsDBConfigurationExists("Env"))
             {
@@ -2681,6 +2867,10 @@ namespace Logitude.DBMigrations.Models
         protected void ExitTool(string message)
         {
             Console.WriteLine(message);
+#if DEBUG
+
+            Console.ReadLine();
+#endif
             Environment.Exit(1);
         }
     }

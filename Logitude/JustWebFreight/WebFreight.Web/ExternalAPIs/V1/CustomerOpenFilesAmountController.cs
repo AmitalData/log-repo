@@ -18,6 +18,7 @@ using System.Web.Http.ModelBinding;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -33,7 +34,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = GetAuthenticationToken();
+                        AuthenticationToken authToken = GetAuthenticationToken();
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                         SecurityUtility.AuthenticateAccessibleAPI("Customer Open Files Amount", authToken.Tenant);
@@ -71,10 +72,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        private Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken GetAuthenticationToken()
+        private AuthenticationToken GetAuthenticationToken()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
-            Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             return authToken;
         }

@@ -15,10 +15,10 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -692,12 +692,17 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 ShipmentRepository ShipmentRepository;
                 Shipment MyShipment;
                 ShipmentAdditionalCloudData data;
+                if (tenant == null)
+                {
+                    if (HttpContext.Current.Items.Contains("Tenant"))
+                        tenant = (int)HttpContext.Current.Items["Tenant"];
+                }
 
                 const string testKey = "d5e6d15f4cb24f12a8ac9c5e8c54a06d";
                 if (securityId == testKey)
                 {
-                    Repository = new ShipmentAdditionalCloudDataRepository(0);
-                    ShipmentRepository = new ShipmentRepository(0);
+                    Repository = new ShipmentAdditionalCloudDataRepository((int)tenant);
+                    ShipmentRepository = new ShipmentRepository((int)tenant);
                     data = Repository.GetSingleShipmentAdditionalCloudDataTest();
                 }
                 else

@@ -4,7 +4,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -65,7 +65,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         SecurityUtility.CheckContactFeature("PortTimeZone", "NEW", authToken.Tenant);
                         SecurityUtility.AuthenticationOnEntityTenant("PortTimeZone", 0, authToken.Tenant);
 
-                        ICommonDataContext MyContext = CommonDataContext.GetContext(0);
+                        ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                         PortTimeZoneService service = new PortTimeZoneService(MyContext, 0);
                         service.Create(entityPM);
 
@@ -116,7 +116,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                             CacheManager.CacheWrapper.Invalidate(entityPmName);
                         }
 
-                        ICommonDataContext MyContext = CommonDataContext.GetContext(0);
+                        ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                         PortTimeZoneService service = new PortTimeZoneService(MyContext, 0);
 
                         service.Update(entityPM);

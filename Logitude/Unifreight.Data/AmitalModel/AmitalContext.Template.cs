@@ -309,6 +309,23 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.COMMISSIONPERCENT)
                     .HasColumnName(@"COMMISSION_PERCENT")
                     .HasColumnType("double");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.INCOTERMIDN)
+                    .HasColumnName(@"INCOTERM_ID_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.COUNTRYIDN)
+                    .HasColumnName(@"COUNTRY_ID_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.CURRENCYIDN)
+                    .HasColumnName(@"CURRENCY_ID_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar2");
+
+          
             #endregion
 
             #region CCUMSHGR
@@ -396,7 +413,7 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.DESCOFGOODS1)
                     .HasColumnName(@"DESC_OF_GOODS1")
                     .HasMaxLength(30)
-                    .HasColumnType("varchar2");
+                    .HasColumnType("nvarchar2");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.DESCOFGOODS2)
                     .HasColumnName(@"DESC_OF_GOODS2")
@@ -525,7 +542,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.HANDTYPE)
                     .HasColumnName(@"HAND_TYPE")
-                    .HasColumnType("bool");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.PROCESSWANT)
                     .HasColumnName(@"PROCESS_WANT")
@@ -1894,9 +1911,19 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.TOTALINVOICELINESNO)
                     .HasColumnName(@"TOTAL_INVOICE_LINES_NO")
                     .HasColumnType("int");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.RIGHTOWNIDN)
+                    .HasColumnName(@"RIGHT_OWN_ID_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CCUFILEM>()
+               .Property(p => p.SELLCONDITIONIDN)
+                   .HasColumnName(@"SELL_CONDITION_ID_N")
+                   .HasMaxLength(35)
+                   .HasColumnType("varchar2");
 
 
-
+                
 
 
 
@@ -4906,6 +4933,16 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CFIMSVDOC>()
                 .Property(p => p.INVOICENO)
                     .HasColumnName(@"INVOICE_NO")
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.SELLERID)
+                .HasColumnName("SELLER_ID")
+                .HasMaxLength(36)
+                .HasColumnType("varchar2");
+            modelBuilder.Entity<CFIMSVDOC>()
+                .Property(p => p.SELLERNAME)
+                .HasColumnName("SELLER_NAME")
                     .HasMaxLength(50)
                     .HasColumnType("varchar2");
             #endregion
@@ -10941,6 +10978,148 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region GGGEXTSRVACT
+
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .HasKey(p => new { p.EXTSRVID, p.INST })
+                .ToTable("GGGEXTSRVACTs", "V5122");
+            // Properties:
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.EXTSRVID)
+                    .IsRequired()
+                    .HasColumnName(@"EXTSRV_ID")
+                    .HasMaxLength(32)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.INST)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("bool");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PORT)
+                    .HasMaxLength(8)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.SERVER)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.REFERENCE)
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.WINDOWSUSER)
+                .HasColumnName(@"WINDOWS_USER")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.BASEPATH)
+                .HasColumnName(@"BASE_PATH")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM1DESC)
+                .HasColumnName(@"PARAM1_DESC")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM1VALUE)
+                .HasColumnName(@"PARAM1_VALUE")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM2DESC)
+                .HasColumnName(@"PARAM2_DESC")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM2VALUE)
+                .HasColumnName(@"PARAM2_VALUE")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM3DESC)
+                .HasColumnName(@"PARAM3_DESC")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM3VALUE)
+                .HasColumnName(@"PARAM3_VALUE")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM4DESC)
+                .HasColumnName(@"PARAM4_DESC")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM4VALUE)
+                .HasColumnName(@"PARAM4_VALUE")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM5DESC)
+                .HasColumnName(@"PARAM5_DESC")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM5VALUE)
+                .HasColumnName(@"PARAM5_VALUE")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.BLOCKRECORD)
+                .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.BASELOGPATH1)
+                .HasColumnName(@"BASE_LOG_PATH1")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.BASELOGPATH2)
+                .HasColumnName(@"BASE_LOG_PATH2")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.CONFIGURATIONPARAMS)
+                .HasColumnName(@"CONFIGURATION_PARAMS")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.ENVID)
+                .HasColumnName(@"ENV_ID")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.WINDOWSDOMAIN)
+                .HasColumnName(@"WINDOWS_DOMAIN")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM6DESC)
+                .HasColumnName(@"PARAM6_DESC")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM7DESC)
+                    .HasColumnName(@"PARAM7_DESC")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM6VALUE)
+                .HasColumnName(@"PARAM6_VALUE")
+                    .HasColumnType("clob");
+            modelBuilder.Entity<GGGEXTSRVACT>()
+                .Property(p => p.PARAM7VALUE)
+                .HasColumnName(@"PARAM7_VALUE")
+                    .HasColumnType("clob");
+
+            #endregion
+
+
 
             #region Disabled conventions
 
@@ -11028,6 +11207,21 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.COMMISSIONPERCENT)
                     .HasColumnName(@"COMMISSION_PERCENT")
                     .HasColumnType("float");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.INCOTERMIDN)
+                .HasColumnName(@"INCOTERM_ID_N")
+                .HasMaxLength(35)
+                .HasColumnType("varchar");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.COUNTRYIDN)
+                    .HasColumnName(@"COUNTRY_ID_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.CURRENCYIDN)
+                    .HasColumnName(@"CURRENCY_ID_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
 
             #endregion
 
@@ -11314,7 +11508,7 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.DESCOFGOODS1)
                     .HasColumnName(@"DESC_OF_GOODS1")
                     .HasMaxLength(30)
-                    .HasColumnType("varchar");
+                    .HasColumnType("nvarchar");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.DESCOFGOODS2)
                     .HasColumnName(@"DESC_OF_GOODS2")
@@ -11427,7 +11621,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("bigint");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.DRAFTSTATUS)
                     .HasColumnName(@"DRAFT_STATUS")
@@ -11443,7 +11637,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.HANDTYPE)
                     .HasColumnName(@"HAND_TYPE")
-                    .HasColumnType("bit");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.PROCESSWANT)
                     .HasColumnName(@"PROCESS_WANT")
@@ -12149,13 +12343,13 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.PAYORDNO)
                     .HasColumnName(@"PAY_ORD_NO")
@@ -12167,11 +12361,11 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("char");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.TYPE)
-                    .HasColumnType("SMALLINT");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.PAYEETYPE)
                     .HasColumnName(@"PAYEE_TYPE")
-                    .HasColumnType("SMALLINT");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.PAYAMOUNT)
                     .HasColumnName(@"PAY_AMOUNT")
@@ -12180,11 +12374,11 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.ACCOUNTNAME)
                     .HasColumnName(@"ACCOUNT_NAME")
                     .HasMaxLength(30)
-                    .HasColumnType("varchar");
+                    .HasColumnType("nvarchar");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.BANKID)
                     .HasColumnName(@"BANK_ID")
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.BANKBRANCH)
                     .HasColumnName(@"BANK_BRANCH")
@@ -12686,6 +12880,16 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.TOTALINVOICELINESNO)
                     .HasColumnName(@"TOTAL_INVOICE_LINES_NO")
                     .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.RIGHTOWNIDN)
+                    .HasColumnName(@"RIGHT_OWN_ID_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+               .Property(p => p.SELLCONDITIONIDN)
+                   .HasColumnName(@"SELL_CONDITION_ID_N")
+                   .HasMaxLength(35)
+                   .HasColumnType("varchar");
 
 
 
@@ -13184,7 +13388,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<YCULTASK>()
                 .Property(p => p.REQUESTDATA)
                     .HasColumnName(@"REQUEST_DATA")
-                    .HasColumnType("varchar(max)");
+                    .HasColumnType("nvarchar(max)");
             modelBuilder.Entity<YCULTASK>()
                 .Property(p => p.RESPONSE)
                     .HasColumnType("varchar(max)");
@@ -13198,6 +13402,61 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"USR_CODE")
                     .HasMaxLength(15)
                     .HasColumnType("varchar");
+
+            #endregion
+
+            #region SYNRECORD
+
+            modelBuilder.Entity<SyncRecord>()
+                .HasKey(p => new { p.Id })
+                .ToTable("SYNCRECORD", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.Id)
+                .HasColumnName(@"Id")
+                .IsRequired()
+                .HasMaxLength(36)
+                .HasColumnType("nvarchar");
+            modelBuilder.Entity<SyncRecord>()
+            .Property(p => p.Tenant)
+                .HasColumnName(@"Tenant")
+                .IsRequired()
+                .HasColumnType("int");
+            modelBuilder.Entity<SyncRecord>()
+            .Property(p => p.Entname)
+                .HasColumnName(@"Entname")
+                .HasMaxLength(60)
+                .HasColumnType("nvarchar");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.KeyVal)
+                .HasColumnName(@"KeyVal")
+                .HasMaxLength(255)
+                .HasColumnType("nvarchar");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.FileNo)
+                .HasColumnName(@"FileNo")
+                .HasMaxLength(50)
+                .HasColumnType("nvarchar");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.TrigAction)
+                .HasColumnName(@"TrigAction")
+                .HasMaxLength(1)
+                .HasColumnType("nvarchar");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.CreateDate)
+                .IsRequired()
+                .HasColumnName(@"CreateDate")
+                .HasColumnType("Datetime");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.SyncDT)
+                .HasColumnName(@"SyncDT")
+                .HasColumnType("Datetime");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.IsSync)
+                .IsRequired()
+                .HasColumnName(@"IsSync")
+                .HasColumnType("int");
+
 
             #endregion
 
@@ -13331,7 +13590,6 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<EFIMMN> EFIMMNs { get; set; }
         public virtual DbSet<LFIFILEM> LFIFILEMs { get; set; }
         public virtual DbSet<GAQTEAM> GAQTEAMs { get; set; }
-       
-
+        public virtual DbSet<SyncRecord> SyncRecord { get; set; }
     }
 }

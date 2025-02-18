@@ -20,7 +20,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using Devart.Data.Linq;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;

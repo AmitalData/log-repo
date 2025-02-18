@@ -1,5 +1,6 @@
 ﻿using AmitalCustomsWindowsService.Tester.LoadTest;
 using Logitude.Server.Tools.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,7 +29,9 @@ namespace AmitalCustomsWindowsService
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var err = e.ExceptionObject.ToString();
-            NetCommonHelper.Logger.DevLog.Instance.WriteError("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString() + "Err:" + e.ToString() + err);
+            
+            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(new Exception("CurrentDomain_UnhandledException!!!"),JsonConvert.SerializeObject( e));
+            //System.Diagnostics.Debugger.Launch();
             var featureCheckMaxPoolSizeWasReachedThenRetart = ConfigurationManager.AppSettings["20180219.CheckMaxPoolSizeWasReachedThenRetart"] == "1";
             if (featureCheckMaxPoolSizeWasReachedThenRetart) { }
             Environment.Exit(-1);
@@ -36,8 +39,7 @@ namespace AmitalCustomsWindowsService
         protected override void OnStart(string[] args)
         {
             // TODO: Add code here to start your service.
-            Task.Factory.StartNew(() =>
-            {
+            Task.Factory.StartNew(() => {
                 StartMe();
             });
         }
@@ -45,15 +47,15 @@ namespace AmitalCustomsWindowsService
         protected override void OnStop()
         {
             // TODO: Add code here to perform any tear-down necessary to stop your service.
-
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("OnStop()");
+            
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("OnStop()");
             _LoadTestWorkerService.StopThreads();
         }
 
         public void StartMe()
         {
             //throw new NotImplementedException();
-
+            
             Program.ThreadStartStaticIsMustB4UsingTheDB();
             _LoadTestWorkerService.EnshureThreadWorking(true);
         }

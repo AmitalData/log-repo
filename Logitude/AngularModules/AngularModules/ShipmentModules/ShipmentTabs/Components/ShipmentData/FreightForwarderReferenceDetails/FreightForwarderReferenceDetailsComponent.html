@@ -1,0 +1,88 @@
+
+<table *ngIf="IsResourcesReady">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="height: 20px;padding-bottom: 0px;top:2px; left:5px;width:30px">
+            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="Add()" style="top:18px; "></IconButton>
+        </td>
+    </tr>
+
+    <tr style="height:5px"></tr>
+
+    <tr style="height:100%;bottom:5px">
+
+        <td colspan="2">
+
+            <div class="CellContent" style="bottom: 5px;padding:5px">
+
+                <logitude-edit-grid GridWidth="100%"
+                                    GridHeight="100%"
+                                    (RowEnded)="OnRowEnded($event)"
+                                    [UseVirtuallization]="true"
+                                    [ItemSource]="ItemsSource">
+
+
+
+                    <!-- ForwarderShipmentNumber -->
+                    <log-column [header]="'FreightForwarderReference.F.ForwarderShipmentNumber' | TextCodeTranslationPipe" [binding]="'ForwarderShipmentNumber'" [width]="'180'" [Editable]="true" [Alignment]="'right'" >
+                        <ng-template let-item >
+                            <log-cell-template (CellClicked)="onCellSelected($event,item)" #logcelltemplate [RIndex]="item.rowIndex" [IsEnabled] = "!item.ForwarderFileConnect">
+                                <div class="TextTrimming" style="direction: ltr; text-align:left" *ngIf="logcelltemplate.IsDisplayMode">
+                                    <span>{{item.ForwarderShipmentNumber}}</span>
+                                </div>
+                                <div style="direction: ltr;" *ngIf="logcelltemplate.IsEditMode">
+                                    <LogTextBox [ObjectFieldName]="'ForwarderShipmentNumber'" [DataContext]="item" [InputType]="'text'" [FocusOnMe]="true"
+                                                [Text]="item.ForwarderShipmentNumber" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                    <!-- delete button -->
+                    <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'" >
+                        <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate [IsEnabled] = "!item.ForwarderFileConnect">
+                                <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
+                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [IsEnabled] = "!item.ForwarderFileConnect" (click)="item.DeleteButtonClicked(item)"></IconButton>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                </logitude-edit-grid>
+            </div>
+        </td>
+    </tr>
+
+    <tr><td><div></div></td></tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

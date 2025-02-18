@@ -266,8 +266,8 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />
-	<Index
-   Columns="Tenant,Code" />
+  <Index
+    Columns="Tenant,Code" />
   <Index
     Columns="AutomaticLastUpdateDate" />
 </Table>

@@ -1,7 +1,6 @@
 ﻿using System;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.InfrastructureModel.EntityLists;
@@ -34,7 +33,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Create(DefaultAndConfigurationPM theEntityPm)
         {
-
+            
             this.entityPM = theEntityPm;
             this.Poco = new DefaultAndConfiguration();
             DefaultAndConfigurationMapping.MapEntity(theEntityPm, Poco, true);
@@ -45,7 +44,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Update(DefaultAndConfigurationPM theEntityPm)
         {
-
+             
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleDefaultAndConfiguration(theEntityPm.Id);
             DefaultAndConfigurationMapping.MapEntity(theEntityPm, Poco, false);
@@ -55,8 +54,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         }
 
         public void Delete(string Id)
-        {
-            this.Poco = entityRepository.GetSingleDefaultAndConfiguration(Id);
+        { 
+            this.Poco = entityRepository.GetSingleDefaultAndConfiguration(Id); 
             entityRepository.Remove(Poco);
             entityRepository.SubmitChanges();
             DefaultService.Instance.ClearCache(Poco.Tenant, entityPM.SetKey, entityPM.AdditionalKey);

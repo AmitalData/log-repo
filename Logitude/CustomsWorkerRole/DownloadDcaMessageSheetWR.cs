@@ -126,7 +126,7 @@ namespace CustomsWorkerRole
             if (DateTime.Now.Subtract(_LastActiveAt) < TimeSpan.FromSeconds(10))
             {
                 Thread.Sleep(TimeSpan.FromSeconds(2));
-                Debug.WriteLine("do not disturb the DCAServer Wait 10 sec ");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("do not disturb the DCAServer Wait 10 sec ");
                 return;
             }
             _LastActiveAt = DateTime.Now;
@@ -166,7 +166,7 @@ namespace CustomsWorkerRole
                 if (!costomSettingDCAList.Any())
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteError("_DedicatedCourierDCAModel.Tenant is not valid!!!! must env.CompanyType == B and in customssetting !!");
-                   
+                    //Thread.Sleep(TimeSpan.FromMinutes(3));
                     Thread.Sleep(TimeSpan.FromSeconds(3));
                     return;
                 }

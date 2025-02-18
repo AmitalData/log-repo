@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -33,6 +33,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 {
                     entityPocos = entityPocos.Where(msg => msg.RetryNumber == retryNumber);
                 }
+            }
+
+
+            if (tenant != 0)
+            {
+                entityPocos = entityPocos.Where(msg => msg.Tenant == tenant);
             }
 
             //var sqlQuery = entityPocos.ToString();

@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
 
                         sw = Stopwatch.StartNew();
                         var id = journalTesterClass.InsertRandomJournal(accountingContext, tenant, forYear, MM);
-                        Debug.WriteLine("create journal " + id.ToString() + " TOOK:" + sw.Elapsed.ToString());
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("create journal " + id.ToString() + " TOOK:" + sw.Elapsed.ToString());
                         count++;
 
                     }

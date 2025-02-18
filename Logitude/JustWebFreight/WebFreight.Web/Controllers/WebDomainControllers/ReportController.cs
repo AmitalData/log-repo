@@ -6,7 +6,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -27,6 +27,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Configuration;
 using static WebFreight.Web.Helpers.ReportHelper;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -45,6 +46,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ReportRepository reportRepository = new ReportRepository(tenant);
                 ReportQuery reportQuery = new ReportQuery(reportRepository);
                 List<ReportList> reportLists = reportQuery.GetReportListsByGroupIdAndTenant(groupId, tenant).Where(d => d.Code == "CUPA" || !string.IsNullOrEmpty(d.DefaultTemplateId) || !string.IsNullOrEmpty(d.DefaultExcelTemplateId)).OrderBy(d => d.Name).ToList();
+
+                return Request.CreateResponse(HttpStatusCode.OK, reportLists);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetReportByCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                List<ReportList> result = new List<ReportList>();
+                ReportRepository reportRepository = new ReportRepository(authToken.Tenant);
+                ReportQuery reportQuery = new ReportQuery(reportRepository);
+                ReportList reportLists = reportQuery.GetReportByCode(code, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, reportLists);
             }
@@ -401,7 +423,65 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetReportByTenantAndUserToMenu(string id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
+                List<ReportExecutionLogPM> reportExecutionLogs = reportExecutionLogQuery.GetReportExecutionLogPMsByTenantAndUserLastWeek(authToken.Tenant, id).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLogs);
+            }
+            catch (Exception ex)
+            {
 
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetCheckReportsStatus(string ids)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
+                List<string> idsList = ids?.Split(',').ToList();
+                List<ReportExecutionLogPM> reportExecutionLogs = reportExecutionLogQuery.GetReportExecutionLogPMsByIds(idsList, authToken.Tenant).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLogs);
+            }
+            catch (Exception ex)
+            {
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage PostDeleteFromMenu(string reportId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                var tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                SecurityUtility.CheckContactFeature("ReportExecutionLog", "READ", tenant);
+                SecurityUtility.CheckContactFeature("ReportExecutionLog", "UPDATE", tenant);
+                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
+                reportExecutionLogQuery.DeleteFromMenu(reportId, tenant);
+
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, "OK");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
         public HttpResponseMessage GetCheckIfStimulSoftReportIsBliud(string reportKey, int tenant)
         {
             try

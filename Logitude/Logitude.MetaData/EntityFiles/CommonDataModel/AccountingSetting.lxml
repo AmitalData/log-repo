@@ -1589,6 +1589,7 @@
     Id="&quot;5c5524d0-17b5-4982-b9f4-d5598845b2ac&quot;"
     FieldName="&quot;AllowPositiveAmountsInTheCreditNote&quot;"
     ShortName="AllowPstvAmountsInCrdtNote"
+
     OldNames="AllowPositiveAmountsInTheCreditNote,AllowPstvAmountsInCrdtNote"
     IsNew="false"
     IsChecked="false"

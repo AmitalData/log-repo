@@ -10,13 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 //using Logitude.BL.CommonDataModel.EntityPMs;
 //using Logitude.BL.CommonDataModel.EntityQueries;
 //using Logitude.BL.Security;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -469,7 +469,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
             cardPM.GLAccountId = glaccountId;
             cardPM.GLAccountDisplayNumber = displayNumber;
-            cardPM.IsFromGlaAccountUpdate = isFromGlaAccountUpdate;
+            //cardPM.IsFromGlaAccountUpdate = isFromGlaAccountUpdate;
             CardService cardService = new CardService(context, tenant);
             cardService.Update(cardPM);
         }
@@ -640,7 +640,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     throw new ApplicationException("Can't change chart of account type while the account has a transactions");
                 }
             }
-
 
 
             //CurrencyQuery currencyQuery = new CurrencyQuery(entityPM.Tenant);
@@ -2365,7 +2364,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode && entityPM.IsMultiCurrency == false)
+                if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode)
                 {
                     //check glaccount transactions
                     LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(accountingContext);
@@ -2411,7 +2410,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CardPM card = query.GetSinglePM(cardId, tenant);
                 card.GLAccountId = glAccountId;
                 card.GLAccountDisplayNumber = GetDisplayNumberFromGLAccount(glAccountId, tenant);
-                card.IsFromGlaAccountUpdate = true;
+                //card.IsFromGlaAccountUpdate = true;
                 service.Update(card);
             }
         }
@@ -2757,8 +2756,38 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new Exception("File is empty");
             }
         }
-
-
+        public (DateTime? MarkDate, bool WasNull) SetIsMark(string glaccountId, int tenant)
+        {
+            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
+            var glaccount = gLAccountQuery.GetSingle(glaccountId, true, false);
+            bool wasNull = false;
+            if (glaccount != null && (glaccount.MarkDate == null || (DateTime.UtcNow - glaccount.MarkDate.Value).TotalHours > 1))
+            {
+                var dtValue = new DateTime();
+                DateTime.TryParse( DateTime.Now.ToString(),out dtValue);
+                glaccount.MarkDate = dtValue;
+                glaccount.ChangeSetOp = ChangeSetOperation.Update;
+                wasNull = true;
+               Update(glaccount, true);
+            }
+            return (glaccount?.MarkDate, wasNull);
+        }
+        public bool UndoMark(string glaccountId, int tenant)
+        {
+            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
+            var glaccount = gLAccountQuery.GetSingle(glaccountId, true, false);
+            if (glaccount != null)
+            {
+              
+                    glaccount.MarkDate = null;
+                    glaccount.ChangeSetOp = ChangeSetOperation.Update;
+                    Update(glaccount, true);
+                    return true;
+           
+              
+            }
+            return false;
+        }
 
         public void UpdateGLAccountWithAdditionalData(string glaccountId, int tenant, string excludeCardId = null, string excludeContactId = null, string includeContactId = null)
         {

@@ -78,7 +78,7 @@ namespace AmitalCustomsWindowsService.BL
                     catch (Exception e)
                     {
                         //_TWorker.
-                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,this.GetType().FullName );
+                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                         Thread.Sleep(TimeSpan.FromMinutes(1));
                     }
 
@@ -94,7 +94,7 @@ namespace AmitalCustomsWindowsService.BL
                 if (DateTime.Now.Subtract(_LastReprtAt) > TimeSpan.FromHours(1))
                 {
                     _LastReprtAt = DateTime.Now;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":Still Alive");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(typeof(TWorker).FullName + ":Still Alive");
                 }
                 Thread.Sleep(TimeSpan.FromSeconds(_intervalInSec));
 

@@ -2,7 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -25,7 +25,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         public TenantHybridPartnerService(int tenant)
         {
             hybridPartnerQuery = new HybridPartnerQuery(tenant);
-            iCommonDataContext = CommonDataContext.GetContext(0);
+            iCommonDataContext = CommonDataContext.GetContext(tenant);
             hybridPartnerService = new HybridPartnerService(iCommonDataContext);
             this.tenant = tenant;
         }

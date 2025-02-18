@@ -36,7 +36,7 @@ namespace Unifreight.BL.EntityUpdateServices
         {
             //entityPM.LOGTIME = DateTime.Now;
             entityPM.LOGTIME  = DateTime.Now;
-            //if (string.IsNullOrWhiteSpace(entityPM.TASKID))
+            if (string.IsNullOrWhiteSpace(entityPM.TASKID))
             {
                 entityPM.TASKID = CommCounterUtil.GetUnique30(entityPM.LOGTIME);
             }

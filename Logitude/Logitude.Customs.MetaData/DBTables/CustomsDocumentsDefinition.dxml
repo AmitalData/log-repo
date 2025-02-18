@@ -27,7 +27,7 @@
   </Column>
   <Column
     Name="TransportationTypeCode"
-    Type="varchar"
+    Type="char"
     Size="1">
     <Constraints
       Nullable="true" />
@@ -72,9 +72,9 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="TransportationTypeCode"
-    ReferencedTable="CustomsTransportModes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTable="TransportModes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="ProcessTypeCode"
     ReferencedTable="GovernmentProcedureTypes"

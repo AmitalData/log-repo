@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
@@ -45,6 +45,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.IsAutoComplete = objectTablesDetails.IsAutoComplete;
                 objectTable.SortingByObjectField = objectTablesDetails.SortingByObjectField;
                 objectTable.DBTableName = objectTablesDetails.DBTableName;
+                objectTable.DBTableShortName = objectTablesDetails.DBTableShortName;
                 objectTable.InActive = objectTablesDetails.InActive;
                 objectTable.IsSaveButtonVisible = objectTablesDetails.IsSaveButtonVisible;
                 objectTable.MainTipCode = objectTablesDetails.MainTipCode;
@@ -167,8 +168,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.SupportSubEntity = objectTablesDetails.SupportSubEntity;
                 objectTable.ApplyGenericCustomFields = objectTablesDetails.ApplyGenericCustomFields;
                 objectTable.AvailableInDocumentTypes = objectTablesDetails.AvailableInDocumentTypes;
+				objectTable.IsLock = objectTablesDetails.IsLock;
+				objectTable.RelatedEntity = objectTablesDetails.RelatedEntity;
+				objectTable.ThisKey = objectTablesDetails.ThisKey;
+				objectTable.RelatedKey = objectTablesDetails.RelatedKey;
 
-                return objectTable;
+				return objectTable;
                 #endregion
             }
 
@@ -203,6 +208,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectTable.IsAutoComplete = objectTablesDetails.IsAutoComplete;
                 updatedObjectTable.SortingByObjectField = objectTablesDetails.SortingByObjectField;
                 updatedObjectTable.DBTableName = objectTablesDetails.DBTableName;
+                updatedObjectTable.DBTableShortName = objectTablesDetails.DBTableShortName;
                 updatedObjectTable.InActive = objectTablesDetails.InActive;
                 updatedObjectTable.IsSaveButtonVisible = objectTablesDetails.IsSaveButtonVisible;
                 updatedObjectTable.IsComposition = objectTablesDetails.IsComposition;
@@ -326,8 +332,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectTable.SupportSubEntity = objectTablesDetails.SupportSubEntity;
                 updatedObjectTable.ApplyGenericCustomFields = objectTablesDetails.ApplyGenericCustomFields;
                 updatedObjectTable.AvailableInDocumentTypes = objectTablesDetails.AvailableInDocumentTypes;
+				updatedObjectTable.IsLock = objectTablesDetails.IsLock;
+				updatedObjectTable.RelatedEntity = objectTablesDetails.RelatedEntity;
+				updatedObjectTable.ThisKey = objectTablesDetails.ThisKey;
+				updatedObjectTable.RelatedKey = objectTablesDetails.RelatedKey;
 
-                objectTableRepository.Update(updatedObjectTable);
+				objectTableRepository.Update(updatedObjectTable);
                 return updatedObjectTable;
                 #endregion
             }
@@ -501,6 +511,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
                 newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
                 newObjectField.FieldName = objectFieldDetails.FieldName;
+                newObjectField.ShortName = objectFieldDetails.ShortName;
                 newObjectField.Code = objectFieldDetails.Code;
                 if (string.IsNullOrEmpty(newObjectField.FieldCode))
                 {
@@ -627,6 +638,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.RecordType = objectFieldDetails.RecordType;
                 newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
                 newObjectField.DisplayInRequiredFields = objectFieldDetails.DisplayInRequiredFields;
+                newObjectField.ObjectFieldDataMapping = objectFieldDetails.ObjectFieldDataMapping;
                 newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 newObjectField.LeftKey = objectFieldDetails.ThisKey;
@@ -731,6 +743,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
                 updatedObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
                 updatedObjectField.DisplayInRequiredFields = objectFieldDetails.DisplayInRequiredFields;
+                updatedObjectField.ObjectFieldDataMapping = objectFieldDetails.ObjectFieldDataMapping;
                 updatedObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 updatedObjectField.LeftKey = objectFieldDetails.ThisKey;
@@ -1158,6 +1171,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
                 newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
                 newObjectField.FieldName = objectFieldDetails.FieldName;
+                newObjectField.ShortName = objectFieldDetails.ShortName;
                 newObjectField.Code = objectFieldDetails.Code;
                 if (string.IsNullOrEmpty(newObjectField.FieldCode))
                 {
@@ -1284,6 +1298,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.RecordType = objectFieldDetails.RecordType;
                 newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
                 newObjectField.DisplayInRequiredFields = objectFieldDetails.DisplayInRequiredFields;
+                newObjectField.ObjectFieldDataMapping = objectFieldDetails.ObjectFieldDataMapping;
                 newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 newObjectField.LeftKey = objectFieldDetails.ThisKey;
@@ -1387,6 +1402,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
                 updatedObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
                 updatedObjectField.DisplayInRequiredFields = objectFieldDetails.DisplayInRequiredFields;
+                updatedObjectField.ObjectFieldDataMapping = objectFieldDetails.ObjectFieldDataMapping;
                 updatedObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 updatedObjectField.LeftKey = objectFieldDetails.ThisKey;
@@ -1764,6 +1780,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
             newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
             newObjectField.FieldName = objectFieldDetails.FieldName;
+            newObjectField.ShortName = objectFieldDetails.ShortName;
             newObjectField.Code = objectFieldDetails.Code;
             if (string.IsNullOrEmpty(newObjectField.FieldCode))
             {
@@ -1890,6 +1907,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.RecordType = objectFieldDetails.RecordType;
             newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
             newObjectField.DisplayInRequiredFields = objectFieldDetails.DisplayInRequiredFields;
+            newObjectField.ObjectFieldDataMapping = objectFieldDetails.ObjectFieldDataMapping;
             newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
             newObjectField.LeftKey = objectFieldDetails.ThisKey;

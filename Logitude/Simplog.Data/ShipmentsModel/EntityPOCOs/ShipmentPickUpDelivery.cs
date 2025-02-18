@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
@@ -48,6 +48,29 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ParentPickUpDeliveryId { get; set; }
         public int? ChildPickUpIndex { get; set; }
         public int? ChildDeliveryIndex { get; set; }
+        public string DeliveryContact { get; set; }
+        [ForeignKey("Contacts")]
+        public virtual Contact ShipmentDeliveryContact { get; set; }
+        public string PackageTypeCode { get; set; }
+        [ForeignKey("PackageType")]
+        public virtual PackageType PackageType { get; set; }
+        public int? Quantity { get; set; }
+        public double? GrossWeight { get; set; }
+        public double? Volume { get; set; }
+        public double? CustomerChargeableWeight { get; set; }
+        public double? TruckerChargeableWeight { get; set; }
+        public string DescriptionOfGoods { get; set; }
+        public string Commodity { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public string ToAddressCityId { get; set; }
+        [ForeignKey("CountryCity")]
+        public CountryCity ToCountryCity { get; set; }
+        public string FromAddressCityId { get; set; }
+        [ForeignKey("CountryCity")]
+        public CountryCity FromCountryCity { get; set; }
+        public string ResponsibilityCode { get; set; }
+        [ForeignKey("Responsibility")]
+        public virtual Responsibility Responsibility { get; set; }
 
         [ForeignKey("TransportModeCode")]
         public PickUpDeliveryTransportMode TransportMode { get; set; }

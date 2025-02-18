@@ -275,9 +275,36 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="MawbDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="Vessel"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FlightVoyageNumber"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CarrierCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OriginCountryCode"
+    Type="varchar"
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -324,6 +351,11 @@
   <Relation
     ForeignKeyColumn="Vessel"
     ReferencedTable="Vessels"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CarrierCode"
+    ReferencedTable="Airlines"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

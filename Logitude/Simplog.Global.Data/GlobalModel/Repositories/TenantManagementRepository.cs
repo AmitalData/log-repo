@@ -310,7 +310,29 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         {
             return (from a in context.TenantManagements where a.Id == id select a.ScheduledTasksLimitPerReport).FirstOrDefault();
         }
-          
+		public TenantManagement GetTenantManagementByExportTenant(int exportTenant)
+		{
+			string entityName = "TenantManagementExportTenant" + exportTenant;
+            TenantManagement entity = null;
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+                    entity = (from a in context.TenantManagements where a.ExportTenant == exportTenant select a).FirstOrDefault();
+                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    entity = (TenantManagement)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            else
+            {
+				entity = (from a in context.TenantManagements where a.ExportTenant == exportTenant select a).FirstOrDefault();
+			}
 
-    }
+			return entity;
+		}		
+
+	}
 }

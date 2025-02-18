@@ -94,11 +94,37 @@ namespace Logitude.Customs.Data.Repsitories
             }
             return accountNo;
         }
+        public List<string> GetCardIdsByDefaultValue(string Distr, string DefaultTypeCode, List<string> groups, int Tenant)
+        {
+            List<string> cardIds = new List<string>();
+
+            var query =
+                (from a in context.DefaultValues
+                 join b in context.DefaultTypes
+                                 on a.DefaultTypeId equals b.Id
+                 join c in context.Cards
+                                 on a.CardId equals c.Id
+                 where a.Distr == Distr
+                       && (groups.Contains(a.ShortValue) || groups.Contains(a.DefValue))
+                       && a.Tenant == Tenant
+                       && b.Code == DefaultTypeCode
+                 select c).ToList();
+            if (query != null && query.Count > 0)
+            {
+                foreach (var item in query)
+                {
+                    cardIds.Add(item.Id);
+                }
+            }
+            return cardIds;
+        }
+
+
     }
 
 
-       
-    }
+
+}
 
    
 

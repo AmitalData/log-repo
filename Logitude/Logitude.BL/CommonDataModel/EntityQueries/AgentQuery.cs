@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
@@ -23,19 +23,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AgentRepository repository;
 
-        public AgentQuery()
-        {
-            repository = new AgentRepository();
-        }
-
+        //public AgentQuery()
+        //{
+        //    repository = new AgentRepository();
+        //}
+        int Tenant;
         public AgentQuery(int tenant)
         {
             repository = new AgentRepository(tenant);
+            Tenant = tenant;
+
         }
 
         public AgentQuery(AgentRepository agentRepository)
         {
             repository = agentRepository;
+            
         }
 
         public AgentPM GetSinglePM(string id, int tenant)
@@ -438,7 +441,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<AgentList> GetIQueryableEntityList(IQueryable<Agent> iQueryable)
         {
-            string objcetTableId = new ObjectTableQuery(0).GetObjectTableIdByName("Card");
+            string objcetTableId = new ObjectTableQuery(Tenant).GetObjectTableIdByName("Card");
             IQueryable<AgentList> result = (from a in iQueryable.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.InvoiceCurrency").Include("Card.PaymentTerm")
                                             join customFieldsMainObject in repository.context.CustomFieldsMainObjects.Where(d => d.ObjectTableId == objcetTableId) on a.Id equals customFieldsMainObject.EntityId into customFieldsMainObjectJoin
                                             from customFieldsMainObject in customFieldsMainObjectJoin.DefaultIfEmpty()

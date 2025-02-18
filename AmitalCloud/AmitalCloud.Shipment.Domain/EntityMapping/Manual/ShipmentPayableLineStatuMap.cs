@@ -1,0 +1,35 @@
+using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+
+namespace AmitalCloud.Shipment.Domain.EntityMapping
+{
+    public class ShipmentPayableLineStatuMap : EntityTypeConfiguration<ShipmentPayableLineStatus>
+    {
+        public ShipmentPayableLineStatuMap()
+        {
+            // Primary Key
+            this.HasKey(t => t.Code);
+
+            // Properties
+            this.Property(t => t.Code)
+                .IsRequired()
+                .HasMaxLength(4)
+                .IsUnicode(false);
+
+            this.Property(t => t.Name)
+                .IsRequired()
+                .HasMaxLength(40)
+                .IsUnicode(false);
+
+            this.Property(t => t.SearchFields)
+                .HasMaxLength(1000)
+                .IsUnicode(true);
+
+            // Table & Column Mappings
+            this.ToTable("ShipmentPayableLineStatus");
+            this.Property(t => t.Code).HasColumnName("Code");
+            this.Property(t => t.Name).HasColumnName("Name");
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+        }
+    }
+}

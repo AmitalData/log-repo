@@ -7,7 +7,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Transactions;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -108,7 +108,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-               //    WebFreightContext  webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+               //    WebFreightContext  webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
                     tenantZeroQuery = (from a in repository.context.ObjectFieldValidations
                                        where (a.Tenant == 0) && a.ObjectFieldCode == objectFieldCode
                                        select new ObjectFieldValidationPM()
@@ -172,7 +172,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
                     tenantZeroQuery = (from a in context.ObjectFieldValidations
                                        where (a.Tenant == 0)
                                        select new ObjectFieldValidationPM()

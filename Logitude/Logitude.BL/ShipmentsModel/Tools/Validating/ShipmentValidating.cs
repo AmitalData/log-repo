@@ -7,7 +7,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.Helpers;
 using System.Data;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -29,10 +29,13 @@ using Simplog.Data.QuoteModel;
 using Logitude.BL.Interfaces;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
@@ -66,7 +69,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
             {
-                ValidateFromPort(entityPM, loggedTenant);
+                ValidateFromPort(entityPM, loggedTenant, isNewEntity);
                 ValidateToPort(entityPM, loggedTenant);
                 ValidateCarrierPrefix(entityPM);
                 ValidateAirlineRestriction(entityPM);
@@ -298,11 +301,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateFromPort(ShipmentPM entityPM, Tenant loggedTenant)
+        private static void ValidateFromPort(ShipmentPM entityPM, Tenant loggedTenant, bool IsNewEntity)
         {
             bool isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
 
-            if (!isInlandDomestic)
+            if (!isInlandDomestic && (entityPM.IsCustomShipment && !IsNewEntity))
             {
                 if (string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
                 {
@@ -357,7 +360,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             bool isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
 
-            if (!isInlandDomestic)
+            if (!isInlandDomestic && !entityPM.IsCustomShipment)
             {
                 if (string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
                 {
@@ -1465,6 +1468,131 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
+
+        public static void ValidateCustomShipment(ShipmentPM entityPM, bool isNewEntity)
+        {
+            if (string.IsNullOrEmpty(entityPM.DepartmentId) && isNewEntity)
+            {
+                throw new ApplicationException("DepartmentId is mandatory");
+            }
+            if (string.IsNullOrEmpty(entityPM.CustomerId) && isNewEntity)
+            {
+                throw new ApplicationException("CustomerId is mandatory");
+            }
+            if (string.IsNullOrEmpty(entityPM.DeclarationOfficeCode) && isNewEntity)
+            {
+                throw new ApplicationException("DeclarationOfficeCode is mandatory");
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.IskaNumber) && !entityPM.IskaNumber.ToUpper().StartsWith("I"))
+            {
+                throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidIskaNumber", entityPM.Tenant, true));
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.Mawb) && entityPM.TransportModeId == "A" && !(entityPM.Mawb.Count() == 8 && entityPM.Mawb.Count(char.IsDigit) == 8))
+            {
+                throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidMawb", entityPM.Tenant, true));
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.FlightVoyageNumber))
+            {
+                if (entityPM.TransportModeId == "A" && !(entityPM.FlightVoyageNumber.Count() == 4 && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 4))
+                {
+                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber", entityPM.Tenant, true));
+                }
+                if (entityPM.TransportModeId == "O" && !(entityPM.FlightVoyageNumber.Count() == 4 && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 3 && char.IsLetter(entityPM.FlightVoyageNumber[0])))
+                {
+                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber1", entityPM.Tenant, true));
+                }
+            }
+        }
+        public static List<MessageDetails> ValidateCheckAndConnectCustomShipment(ShipmentPM entityPM, Shipment shipment)
+        {
+            // get shipment freight forwarder reference and declaration referant data
+            FreightForwarderReferenceRepository freightForwarderReferenceRepository = new FreightForwarderReferenceRepository(entityPM.Tenant);
+            FreightForwarderReference freightForwarderReferenceList = freightForwarderReferenceRepository.GetByForwarderShipmentNumber(entityPM.ForwarderShipmentNumber, entityPM.Tenant).FirstOrDefault();
+
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+            string decId = declarationQueryService.GetIdByCustomFileNo(entityPM.ShipmentNumber, entityPM.Tenant);
+            DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(entityPM.Tenant);
+            DeclarationReferantData declarationReferantDataPM = declarationReferantDataRepository.GetSingle(decId, entityPM.Tenant);
+
+            List<MessageDetails> messageDetailsList = new List<MessageDetails>();
+
+            if (entityPM.CustomerId != shipment.CustomerId)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedCustomerId);
+            }
+            if (entityPM.ForwarderShipmentNumber == freightForwarderReferenceList?.ForwarderShipmentNumber && entityPM.FreightForwarderId == shipment.FreightForwarderId)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.CustomFileAlreadyLinked);
+            }
+            if (!string.IsNullOrEmpty(shipment.TransportModeId) && entityPM.TransportModeId != shipment.TransportModeId)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedTransportModeId);
+            }
+            if (!string.IsNullOrEmpty(declarationReferantDataPM?.CarrierCode) && entityPM.CarrierCode != declarationReferantDataPM.CarrierCode)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedCarrierCode);
+            }
+            if (!string.IsNullOrEmpty(declarationReferantDataPM?.Mawb) && entityPM.Mawb != declarationReferantDataPM.Mawb)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedMawb);
+            }
+            if (!string.IsNullOrEmpty(shipment.House) && entityPM.House != shipment.House)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedHouse);
+            }
+            if (!string.IsNullOrEmpty(shipment.IskaNumber) && entityPM.IskaNumber != shipment.IskaNumber)
+            {
+                messageDetailsList.Add(MessageDetailsProvider.NotMatchedIskaNumber);
+            }
+            return messageDetailsList;
+        }
+
+        public static class MessageDetailsProvider
+        {
+            private static readonly Dictionary<string, MessageDetails> PredefinedMessageDetailsList = new Dictionary<string, MessageDetails>()
+            {
+                { "NotFoundShipmentNumber", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 1, MessageData = "תיק עמילות לא קיים" } },
+                { "NotMatchedCustomerId", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 2, MessageData = "לקוח  בתיק שילוח שונה מלקוח מתיק העמילות" } },
+                { "CustomFileAlreadyLinked", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 3, MessageData = "תיק מקושר כבר לתיק שילוח" } },
+                { "NotMatchedTransportModeId", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 4, MessageData = "סוג הובלה לא מתאים" } },
+                { "NotMatchedCarrierCode", new MessageDetails { MessageType = MessageTypeEnum.Warning, MessageCode = 5, MessageData = "קוד חב' תעופה לא מתאים" } },
+                { "NotMatchedMawb", new MessageDetails { MessageType = MessageTypeEnum.Warning, MessageCode = 6, MessageData = "שטר מטען ראשי לא זהה" } },
+                { "NotMatchedHouse", new MessageDetails { MessageType = MessageTypeEnum.Warning, MessageCode = 7, MessageData = "שטר מטען פנימי לא זהה" } },
+                { "NotMatchedIskaNumber", new MessageDetails { MessageType = MessageTypeEnum.Warning, MessageCode = 8, MessageData = "מזהה עיסקה פנימי לא זהה" } },
+                { "FoundShipment", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 9, MessageData = "אותר תיק עמילות" } },
+                { "FoundMultipleShipments", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 10, MessageData = "אותרו כמה תיקי עמילות מתאימים לחיבור" } },
+                { "LinkedToAnotherForwarderShipment", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 11, MessageData = "תיק עמילות {CustomShipmentNumber} מחובר לתיק שילוח {ForwarderShipmentNumber}" } },
+            };
+
+            public static MessageDetails NotFoundShipmentNumber => PredefinedMessageDetailsList["NotFoundShipmentNumber"];
+            public static MessageDetails NotMatchedCustomerId => PredefinedMessageDetailsList["NotMatchedCustomerId"];
+            public static MessageDetails CustomFileAlreadyLinked => PredefinedMessageDetailsList["CustomFileAlreadyLinked"];
+            public static MessageDetails NotMatchedTransportModeId => PredefinedMessageDetailsList["NotMatchedTransportModeId"];
+            public static MessageDetails NotMatchedCarrierCode => PredefinedMessageDetailsList["NotMatchedCarrierCode"];
+            public static MessageDetails NotMatchedMawb => PredefinedMessageDetailsList["NotMatchedMawb"];
+            public static MessageDetails NotMatchedHouse => PredefinedMessageDetailsList["NotMatchedHouse"];
+            public static MessageDetails NotMatchedIskaNumber => PredefinedMessageDetailsList["NotMatchedIskaNumber"];
+            public static MessageDetails FoundShipment => PredefinedMessageDetailsList["FoundShipment"];
+            public static MessageDetails FoundMultipleShipments => PredefinedMessageDetailsList["FoundMultipleShipments"];
+            public static MessageDetails LinkedToAnotherForwarderShipment => PredefinedMessageDetailsList["LinkedToAnotherForwarderShipment"];
+        }
+
+        public class MessageDetails
+        {
+            public string MessageType { get; set; }
+            public int MessageCode { get; set; }
+            public string MessageData { get; set; }
+        }
+
+        public static class MessageTypeEnum
+        {
+            public const string Error = "Error";
+            public const string Warning = "Warning";
+        }
+
         public static void ValidateContainerNumbers(ShipmentPM entityPM)
         {
             if (entityPM.ShipmentTypeId == "FCL" || entityPM.ShipmentTypeId == "FCLD")

@@ -20,7 +20,7 @@ using System.Security.Cryptography;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
@@ -38,7 +38,7 @@ namespace CommunicationWorkerRole
                     try
                     {
                         LastActivity = DateTime.UtcNow;
-                        //string url = LogitudeSettings.LogitudeURL;//System.Configuration.ConfigurationSettings.AppSettings.Get("LogitudeURL");
+                        //string url = LogitudeSettings.LogitudeURL;//ConfigurationManager.AppSettings.Get("LogitudeURL");
                         //url = url + "/wcfapi/ExternalTasksQueueWcfService.svc";
                         //url = url.Replace("https", "http");
                         Envelope result;

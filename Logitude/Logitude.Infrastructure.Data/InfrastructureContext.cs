@@ -20,6 +20,7 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data; 
 using Logitude.Infrastructure.Data.EntityMapping;
+using Devart.Data.Oracle.Entity.Configuration;
 
 namespace Logitude.Infrastructure.Data
 {
@@ -40,14 +41,28 @@ namespace Logitude.Infrastructure.Data
 			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
 
+        public InfrastructureContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
+            Database.SetInitializer<InfrastructureContext>(null);
+            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+        }
+
         public static IInfrastructureContext GetContext(int tenant)
         {           
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
-            InfrastructureContext context = new InfrastructureContext(connection);
-            return context;
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                DbConnection connection = DatabaseInitializer.GetConnection(currentDb.DBConnection);
+                return new InfrastructureContext(connection);
+            }
+            else
+            {
+                string dbConnectionInfo = DatabaseInitializer.GetConnectionString(currentDb.DBConnection);
+                return new InfrastructureContext(dbConnectionInfo);
+            }
         }
 		public override LogitudeDBSchema LogitudeDBSchema
         {
@@ -58,7 +73,7 @@ namespace Logitude.Infrastructure.Data
 
 		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
+                var config = OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 
             }

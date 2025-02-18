@@ -21,7 +21,7 @@
   <Column
     Name="Code"
     Type="varchar"
-    Size="5">
+    Size="7">
     <Constraints
       Nullable="false" />
   </Column>

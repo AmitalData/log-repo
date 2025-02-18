@@ -1086,7 +1086,10 @@ export class TenantManagementPM {
     public set AmitalApiToken(newValue: string) { if (this.amitalApiToken != newValue) { this.amitalApiToken = newValue; this.MarkAsDirty("AmitalApiToken"); } }
        
 
-       
+    private minutsTimeOutSession: number;
+    public get MinutsTimeOutSession() { return this.minutsTimeOutSession; }
+    public set MinutsTimeOutSession(newValue: number) { if (this.minutsTimeOutSession != newValue) { this.minutsTimeOutSession = newValue; this.MarkAsDirty("MinutsTimeOutSession"); } }
+     
 
     public OldEntityPM: TenantManagementPM;
 		

@@ -30,7 +30,7 @@ using System.Diagnostics;
 using Logitude.Customs.BL.Utils;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.BL.TraceEvents;
 using Unifreight.BL.EntityPMs.UGenerated;
@@ -65,7 +65,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityPM.DeclarationId = entityPM.DeclarationId ?? _DeclarationPMAncestor.Id;
             var a = 44;
             a = 444;
-            Debug.WriteLine("323");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("323");
             ICustomContext _Context = MainContext as CustomContext;
 
             SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(_Context);
@@ -193,60 +193,63 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     this.openTaskForUnifreight = true;
                 }
             }
-            string remarksClass = ""; string remarksChas = "";
+            if (_DeclarationPM != null && _DeclarationPM.Direction != "E")
+            {
+                string remarksClass = ""; string remarksChas = "";
 
-            foreach (SupplierInvoiceItemPM itemPM in entityPM.SupplierInvoiceItems)
-            {
-                if (itemPM.ClassificationCode != itemPM.ClassificationCodeSource && itemPM.ClassificationCodeSource != null)
+                foreach (SupplierInvoiceItemPM itemPM in entityPM.SupplierInvoiceItems)
                 {
-                    if (remarksClass != "")
+                    if (itemPM.ClassificationCode != itemPM.ClassificationCodeSource && itemPM.ClassificationCodeSource != null)
                     {
-                        remarksClass += "\r";
+                        if (remarksClass != "")
+                        {
+                            remarksClass += "\r";
+                        }
+                        remarksClass += "מס' חשבון ספק: " + entityPM.InvoiceNumber;
+                        remarksClass += " שורת פרט מכס: " + itemPM.LineNumber;
+                        remarksClass += " פרט מכס ישן: " + itemPM.ClassificationCodeSource;
+                        remarksClass += " פרט מכס חדש: " + itemPM.ClassificationCode;
                     }
-                    remarksClass += "מס' חשבון ספק: " + entityPM.InvoiceNumber;
-                    remarksClass += " שורת פרט מכס: " + itemPM.LineNumber;
-                    remarksClass += " פרט מכס ישן: " + itemPM.ClassificationCodeSource;
-                    remarksClass += " פרט מכס חדש: " + itemPM.ClassificationCode;
+                    foreach (SupplierInvoiceItemVehiclePM vehicle in itemPM.SupplierInvoiceItemVehicles)
+                    {
+                        if ((vehicle.RichbitFileNumberSource != null || vehicle.VehicleChassisNumberSource != null)
+                            && ((vehicle.RichbitFileNumber != vehicle.RichbitFileNumberSource && vehicle.RichbitFileNumberSource != null)
+                            || (vehicle.VehicleChassisNumber != vehicle.VehicleChassisNumberSource && vehicle.VehicleChassisNumberSource != null)))
+                        {
+                            if (remarksChas != "")
+                            {
+                                remarksChas += "\r";
+                            }
+                            remarksChas += "מס' חשבון ספק: " + entityPM.InvoiceNumber;
+                            remarksChas += " שורת פרט מכס: " + itemPM.LineNumber;
+                            remarksChas += " שורת שלדה: " + vehicle.LineNumber;
+                            if (vehicle.RichbitFileNumberSource != null)
+                            {
+                                remarksChas += " מס' ריכבית ישן: " + vehicle.RichbitFileNumberSource;
+                            }
+                            else
+                            {
+                                remarksChas += " מס' שלדה ישן: " + vehicle.VehicleChassisNumberSource;
+                            }
+                            if (vehicle.RichbitFileNumber != null)
+                            {
+                                remarksChas += " מס' ריכבית חדש: " + vehicle.RichbitFileNumber;
+                            }
+                            else
+                            {
+                                remarksChas += " מס' שלדה חדש: " + vehicle.VehicleChassisNumber;
+                            }
+                        }
+                    }
                 }
-                foreach (SupplierInvoiceItemVehiclePM vehicle in itemPM.SupplierInvoiceItemVehicles)
+                if (remarksClass != "" )
                 {
-                    if ((vehicle.RichbitFileNumberSource != null || vehicle.VehicleChassisNumberSource != null)
-                        && ((vehicle.RichbitFileNumber != vehicle.RichbitFileNumberSource && vehicle.RichbitFileNumberSource != null)
-                        || (vehicle.VehicleChassisNumber != vehicle.VehicleChassisNumberSource && vehicle.VehicleChassisNumberSource != null)))
-                    {
-                        if (remarksChas != "")
-                        {
-                            remarksChas += "\r";
-                        }
-                        remarksChas += "מס' חשבון ספק: " + entityPM.InvoiceNumber;
-                        remarksChas += " שורת פרט מכס: " + itemPM.LineNumber;
-                        remarksChas += " שורת שלדה: " + vehicle.LineNumber;
-                        if (vehicle.RichbitFileNumberSource != null)
-                        {
-                            remarksChas += " מס' ריכבית ישן: "  + vehicle.RichbitFileNumberSource;
-                        }
-                        else
-                        {
-                            remarksChas += " מס' שלדה ישן: " + vehicle.VehicleChassisNumberSource;
-                        }
-                        if (vehicle.RichbitFileNumber != null)
-                        {
-                            remarksChas += " מס' ריכבית חדש: " + vehicle.RichbitFileNumber;
-                        }
-                        else
-                        {
-                            remarksChas += " מס' שלדה חדש: " + vehicle.VehicleChassisNumber ;
-                        }
-                    }
+                    SendClass(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarksClass);
                 }
-            }
-            if (remarksClass != "")
-            {
-                SendClass(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarksClass);
-            }
-            if (remarksChas != "")
-            {
-                SendCHAS(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarksChas);
+                if (remarksChas != "")
+                {
+                    SendCHAS(entityPM.Tenant, _DeclarationPM.CustomFileNo, AuthenticationUtil.ResolveUserId(entityPM.Tenant), remarksChas);
+                }
             }
             base.OnUpdating(entityPM, entityPOCO);
         }
@@ -257,16 +260,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             _Context = CustomContext.GetContext(entityPM.Tenant);
 
-            //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            //if (setting.IsConnectedToUniFreight)
-            //if (!string.IsNullOrEmpty(entityPM.InvoiceNumber))
-            //{
-            //    SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(_Context);
-
-            //    if (supplierInvoiceQueryService.CheckIfInvoiceNumberExists(entityPM.DeclarationId, entityPM.InvoiceNumber, entityPM.InvoiceCounterKey, entityPM.Tenant)) {
-            //        throw new Exception(TextCodesTranslator.TranslateText("Customs.Declaration.O.DuplicateInvoiceNumber", entityPM.Tenant));
-            //    }
-            //}
+ 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             _DeclarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
 
@@ -373,11 +367,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public void SendClass(int Tenant, string CustomFileNo, string loggedContactId, string remarks)
         {
-            CustomsSettingQueryService settingService = new CustomsSettingQueryService(Tenant);
-            CustomsSettingPM setting = settingService.GetSettingByTenantN(Tenant);
-
-            if (setting.IsConnectedToUniFreight)
-            {
+         
                 if (string.IsNullOrWhiteSpace(loggedContactId))
                 {
                     ContactRepository contactRepository = new ContactRepository(Tenant);
@@ -404,15 +394,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     Tenant,
                     loggedContactId,
                     MyUnifreightEventParam);
-            }
+           
         }
         public void SendCHAS(int Tenant, string CustomFileNo, string loggedContactId, string remarks)
         {
-            CustomsSettingQueryService settingService = new CustomsSettingQueryService(Tenant);
-            CustomsSettingPM setting = settingService.GetSettingByTenantN(Tenant);
-
-            if (setting.IsConnectedToUniFreight)
-            {
+        
                 if (string.IsNullOrWhiteSpace(loggedContactId))
                 {
                     ContactRepository contactRepository = new ContactRepository(Tenant);
@@ -439,7 +425,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     Tenant,
                     loggedContactId,
                     MyUnifreightEventParam);
-            }
+           
         }
 
         private void SetDeclarationChanged(SupplierInvoicePM entityPM)

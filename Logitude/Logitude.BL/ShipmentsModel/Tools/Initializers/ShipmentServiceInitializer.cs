@@ -9,7 +9,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -86,11 +86,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public List<AWBOCIPM> AWBOCIPMChangeSet;
         public List<ShipmentCommodityPM> ShipmentCommoditiesChangeSet;
         public List<ShipmentAssemblyPM> ShipmentAssembliesChangeSet;
+        public List<ShipmentReferancePM> ShipmentReferanceChangeSet;
         public List<ShipmentStoragePricingPM> ShipmentStoragePricingsChangeSet;
         public List<ShipmentProductItemPM> ShipmentProductItemsChangeSet;
         public List<ShipmentUnassignedFieldPM> ShipmentUnassignedFieldChangeSet;
+		public List<FreightForwarderReferencePM> FreightForwarderReferenceChangeSet;
 
-        public Customer Customer { get; private set; }
+		public Customer Customer { get; private set; }
 
         public ShipmentServiceInitializer(IShipmentsContext ShipmentContext, ShipmentPM entityPM, string loggedEmail)
         {
@@ -114,7 +116,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.ShipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(ShipmentContext);
             this.ShipmentOrderPackageRepository = new ShipmentOrderPackageRepository(ShipmentContext);
             this.ShipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(ShipmentContext);
-            this.IInfrastructureContext = InfrastructureContext.GetContext(0);
+            this.IInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
             this.CardRepository = new CardRepository(this.CommonContext);
             this.AddressRepository = new AddressRepository(this.CommonContext);
             this.ContactRepository = new ContactRepository(this.CommonContext);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using System.Web;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
@@ -233,7 +233,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public static string GetObjectTableByName(string objectTableName)
         {
             if (String.IsNullOrWhiteSpace(objectTableName)) return "";//not must 
-            var objectTableRepository = new ObjectTableRepository(0); // ObjectTabelRepository tenant must be zero !!
+            int tenant = SettingUtil.GetCurrentTenant();
+            var objectTableRepository = new ObjectTableRepository(tenant); // ObjectTabelRepository tenant must be zero !!
             var objectTable = objectTableRepository.GetObjectTableByName(objectTableName,// "Customs.PhysicalCheck", 
                 0, true);
             if(objectTable!=null)
@@ -294,7 +295,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(0);
+                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
                         zeroTenantTables = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
                                             where (a.Tenant == 0 && a.InActive == false)
                                             select a).ToList();

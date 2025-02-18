@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Security;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel;
@@ -39,7 +39,7 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using System.ServiceModel.Web;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Text;
 using System.Net.Http;
@@ -280,7 +280,7 @@ namespace WebFreight.Web
                         {
                             if (dbcontact.Password != loginParameters.Password)
                             {
-                                Debug.WriteLine(@"ihab(@Itzik):SSO:the Hash Password from token irrelevant Allow Login even though HashPass  not match");
+                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"ihab(@Itzik):SSO:the Hash Password from token irrelevant Allow Login even though HashPass  not match");
                                 loginParameters.Password = dbcontact.Password;
                             }
                         }
@@ -697,7 +697,7 @@ namespace WebFreight.Web
 
                 if (!data.HasError)
                 {
-                    data = CheckUserState(email.ToLower(), password, ref contactPassword, loginParameters.ByToken, loginParameters.ClientType);
+                    data = CheckUserState(email.ToLower(), password, ref contactPassword, loginParameters.ByToken, loginParameters.ClientType, loginParameters.Tenant);
                 }
 
                 if (!data.HasError)
@@ -706,12 +706,12 @@ namespace WebFreight.Web
                     bool customerCare = false;
                     bool distributor = false;
                     User logitudeUser = null;
-
+                    //loginParameters.Tenant
                     GlobalContact zeroContact = globalObjectContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.Email == email && d.InActive == false).FirstOrDefault(); //mohammad
 
                     if (zeroContact != null)
                     {
-                        ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                        ICommonDataContext commonDataContext = CommonDataContext.GetContext(loginParameters.Tenant);
                         logitudeUser = (from a in commonDataContext.Users
                                         where a.Id == zeroContact.Id
                                         select a).FirstOrDefault();
@@ -1607,7 +1607,7 @@ namespace WebFreight.Web
                     bool distributor = false;
                     User logitudeUser = null;
                     GlobalContact contact = globalContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.Email.ToLower() == parameters.Email.ToLower() && d.InActive == false).FirstOrDefault(); //mohammad
-                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     if (contact != null)
                     {
 
@@ -1684,7 +1684,7 @@ namespace WebFreight.Web
                         else
                         {
                             contactPassword = null;
-                            user = CheckUserState(email, password, ref contactPassword, parameters.ByToken, parameters.ClientType);
+                            user = CheckUserState(email, password, ref contactPassword, parameters.ByToken, parameters.ClientType,tenant);
                         }
                     }
                     else
@@ -2286,7 +2286,7 @@ namespace WebFreight.Web
 
             if (contact != null)
             {
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                 logitudeUser = (from a in commonDataContext.Users
                                 where a.Id == contact.Id
                                 select a).FirstOrDefault();
@@ -2391,7 +2391,7 @@ namespace WebFreight.Web
                                     }
                                 }
 
-                                ContactInfo myContactInfo = new ContactInfo()
+                                Logitude.BL.Security.ContactInfo myContactInfo = new Logitude.BL.Security.ContactInfo()
                                 {
                                     Tenant = tenant,
                                     ContactEmail = contact.Email,
@@ -2692,7 +2692,7 @@ namespace WebFreight.Web
 
         PasswordCheckService passwordChkService = new PasswordCheckService();
         List<string> CustomerCareEmails = new List<string>();
-        private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken, string clientType)
+        private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken, string clientType,int tenant)
         {
 
             if (!string.IsNullOrEmpty(email)) email = email.ToLower();
@@ -2731,7 +2731,7 @@ namespace WebFreight.Web
                 User logitudeUser = null;
                 if (contact != null)
                 {
-                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     logitudeUser = (from a in commonDataContext.Users
                                     where a.Id == contact.Id
                                     select a).FirstOrDefault();
@@ -3184,7 +3184,7 @@ namespace WebFreight.Web
         //       string computerId = Guid.NewGuid().ToString("N");
         //       string userAgent = !string.IsNullOrEmpty(HttpContext.Current.Request.UserAgent) ? (HttpContext.Current.Request.UserAgent.Length <= 500 ? HttpContext.Current.Request.UserAgent : HttpContext.Current.Request.UserAgent.Substring(0, 500)) : null;
         //       //ContactLoginLogRepository   
-        //       ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+        //       ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
         //       ContactLoginLog contactLog = new ContactLoginLog()
         //       {
         //           Id = IdCounter.GetNumber("ContactLoginLog", tenant).ToString(),
@@ -3281,7 +3281,7 @@ namespace WebFreight.Web
             string computerId = Guid.NewGuid().ToString("N");
             string userAgent = !string.IsNullOrEmpty(HttpContext.Current.Request.UserAgent) ? (HttpContext.Current.Request.UserAgent.Length <= 500 ? HttpContext.Current.Request.UserAgent : HttpContext.Current.Request.UserAgent.Substring(0, 500)) : null;
             //ContactLoginLogRepository   
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             ContactLoginLog contactLog = new ContactLoginLog()
             {
                 Id = IdCounter.GetNumber("ContactLoginLog", tenant).ToString(),

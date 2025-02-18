@@ -11,9 +11,9 @@ using System.Web.Services;
 using System.Xml;
 using System.Xml.Serialization;
 using Logitude.SystemLogs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Syncfusion.Calculate;
@@ -449,8 +449,9 @@ namespace WebFreight.Web.WebServices
         [WebMethod]
         public byte[] ExportFeaturesToCSVFile()
         {
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
-            IWebFreightContext webFreightContext = WebFreightContext.GetContext(0);
+            int tenant = 0;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             var List = (from PackageFeature in commonDataContext.PackageFeatures
                         join Feature in commonDataContext.Features on PackageFeature.FeatureId equals Feature.Id into FeaturePackages
                         from FeaturePackage in FeaturePackages.DefaultIfEmpty()

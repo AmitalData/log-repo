@@ -29,10 +29,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                                                      where a.Id == tenant
                                                      select a).FirstOrDefault();
                         string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                        string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-                        if (enviroment == "azure app service")
-                            currentDb = GetGlobalDbFromEnviroment();
-                        else if (dbms == "oracle")
+                        if (dbms == "oracle")
                         {
                             var query = from a in globalcontext.GlobalDBs
                                         select a;
@@ -103,19 +100,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
             return currentDb;
         }
 
-        private static GlobalDB GetGlobalDbFromEnviroment()
-        {
-            return new GlobalDB()
-            {
-                Id = "0",
-                DBConnection = ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString,
-                IsUpgrading = false,
-                IsActive = true,
-                SharedDWConnection = null,
-                SecondaryAzureDBConnection = null,
-                IsBlocking = false
-            };
-        }
+
 
         private static GlobalDB GetGlobalDbWithoutProxy(GlobalDB currentDb)
         {
@@ -145,20 +130,15 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                     {
-                        string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-                        if (enviroment == "azure app service")
-                            db = GetGlobalDbFromEnviroment();
-
-                        else
-                        {
+                       
                             IGlobalContext context = GlobalContext.GetContext();
 
 
                             db = (from a in context.GlobalDBs
                                   where a.Id == id
                                   select a).FirstOrDefault();
-                        }
-                        CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(db), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        
+                           CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(db), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     }
                     //}
                 }
@@ -172,12 +152,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                 {
-                    string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-                    if (enviroment == "azure app service")
-                        db = GetGlobalDbFromEnviroment();
-
-                    else
-                    {
+                
                         IGlobalContext context = GlobalContext.GetContext();
 
 
@@ -185,7 +160,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                         db = (from a in context.GlobalDBs
                               where a.Id == id
                               select a).FirstOrDefault();
-                    }
+                     
                 }
             }
 
@@ -196,26 +171,21 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
          
         public static GlobalDB GetSingleGlobalDB()
         {
-
+            int tenant = SettingUtil.GetCurrentTenant();
             string name = "TenantDB," + "GetSingleGlobalDB";
             
             GlobalDB db = null;
             db  =CacheManager.GetOrInsertNewObject<GlobalDB>(name, () =>
             {
                 GlobalDB db1stAndOnly1;
-                string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-
-                if (enviroment == "azure app service")
-                    db1stAndOnly1 = GetGlobalDbFromEnviroment();
-
-                else
-                {
+             
                     IGlobalContext context = GlobalContext.GetContext();
 
 
                     db1stAndOnly1 = (from a in context.GlobalDBs
-                                         select a).Single();
-                }
+                                     where a.Id == tenant.ToString()
+                                         select a).FirstOrDefault();
+                
                 return db1stAndOnly1;
 
             }, true); 
@@ -240,11 +210,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
 
                         //#if ORACLE_DB
                         string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                        string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-                        if (enviroment == "azure app service")
-                            currentDb = GetGlobalDbFromEnviroment();
-
-                        else if (dbms == "oracle")
+                         if (dbms == "oracle")
                         {
                             if (globaltenant == null)
                             {
@@ -288,12 +254,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                 {
-                    string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-                    if (enviroment == "azure app service")
-                        currentDb = GetGlobalDbFromEnviroment();
-
-                    else
-                    {
+                  
                         IGlobalContext globalcontext = GlobalContext.GetContext();
 
                         GlobalTenant globaltenant = (from a in globalcontext.GlobalTenants
@@ -319,7 +280,7 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
                         {
                             CacheManager.CacheWrapper.Insert(name, GetGlobalDbWithoutProxy(currentDb), null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
-                    }
+                     
                 }
             currentDb.DBConnection = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(currentDb.DBConnection);
             return currentDb;

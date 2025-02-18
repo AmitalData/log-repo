@@ -12,7 +12,7 @@ using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -652,12 +652,12 @@ namespace WebFreight.Web.WcfApi
             if (string.IsNullOrEmpty(blobname))
                 return UpdateResponseException(response, new ArgumentException("blobname is null or empty"));
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug( "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage start:" + "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId);
 
             SecurityUtility.AuthenticationOnTenant(tenant);
             response = DocumentFileUploadHelper.AddDocumentAndSendToInternalStorage(tenant, blobname, DocumentId);
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug( "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId + " response: " + response.HasError + ", error message: " + response.ErrorMessage);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage finish:"+ "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId + " response: " + response.HasError + ", error message: " + response.ErrorMessage);
             
             return response;
         }

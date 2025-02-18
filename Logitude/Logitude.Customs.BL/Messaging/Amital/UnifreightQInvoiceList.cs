@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 string myParamsXML = UnifreightListsUtil.Serialize(myParams);
                 string UnifreightTester = "";
                 var resXML = SendMessageToUServerUtil.SendMessageToUServer(tenant, myParamsXML, out P_MESSAGE, out UnifreightTester);
-                Debug.WriteLine(UnifreightTester);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(UnifreightTester);
                 if (!String.IsNullOrWhiteSpace(resXML))
                 {
                     //var response = UnifreightListsUtil.Deserialize(resXML);

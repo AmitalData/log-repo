@@ -20,7 +20,7 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
 using Logitude.ShipmentOrderModule.Data; 
 using Logitude.ShipmentOrderModule.Data.EntityMapping;
-
+using Devart.Data.Oracle.Entity.Configuration;
 namespace Logitude.ShipmentOrderModule.Data
 {
    public class ShipmentOrderContext: DbContextBase, IShipmentOrderContext
@@ -58,7 +58,7 @@ namespace Logitude.ShipmentOrderModule.Data
 
 		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
+                var config = OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 
             }

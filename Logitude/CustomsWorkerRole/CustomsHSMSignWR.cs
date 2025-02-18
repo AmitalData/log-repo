@@ -108,7 +108,7 @@ where not exists(select *
                 //else
                 {
                     base.WorkerQueueType = WorkerQueueType.DB;
-                    _CustomDbQueueService = new CustomDbQueueService(myClass, 0);
+					_CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig());
                 }
 
 
@@ -329,8 +329,7 @@ where not exists(select *
 
                 }
 
-
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"hSMSignFile({_Tenant},{customsRequestsSheetId}, {dRequestParamsBase?. SignByPersonalId}, {dRequestParamsBase?.SignByPersonalId})" );
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"hSMSignFile({_Tenant},{customsRequestsSheetId}, {dRequestParamsBase?. SignByPersonalId}, {dRequestParamsBase?.SignByPersonalId})");
                 ExceptionHandler.HandleException(ex, DateTime.Now, _Tenant, "", "ProccessHSMSign-MarkExportSignTaskAsDone", "", null);
 
 
@@ -358,10 +357,9 @@ where not exists(select *
 
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,$"hSMSignFile-SetExceptionMessage({_Tenant},{customsRequestsSheetId})" );
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"hSMSignFile-SetExceptionMessage({_Tenant},{customsRequestsSheetId})");
                 ExceptionHandler.HandleException(ex, DateTime.Now, _Tenant, "", "ProccessHSMSign-SetExceptionMessage", "", null);
 
             }

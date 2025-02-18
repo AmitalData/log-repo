@@ -4,12 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.InfrastructureModel;
@@ -55,6 +55,7 @@ using Microsoft.VisualStudio.Services.Common;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using WebFreight.Web.Helpers.QuoteTemplate;
 using Logitude.BL.CommonDataModel.ExternalService;
+using MetadataUpdateUtility = WebFreight.Web.Helpers.MetadataUpdateUtility;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -602,7 +603,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     AzureLog.SaveLogsInStorage("(" + message + ")" + " Update Tenant 0 Elapsed Time : " + ts.ToString(), "P", DateTime.Now, "", "", 0, null, null, null);
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating All closed tables history ...");
-                    TableLastUpdateClass.UpdateAllClosedTablesHistory();
+                    TableLastUpdateClass.UpdateAllClosedTablesHistory(tenant);
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updateing System metadata history ...");
                     TableLastUpdateClass.UpdateSystemMetaDataHistory();
@@ -755,7 +756,10 @@ namespace WebFreight.Web.MetaDataUpdate
 
             }
 
-         //   WriteLogMessage(message);
+ 
+
+ 
+
             AzureLog.SaveLogsInStorage(message, "L", DateTime.Now, "", "", 0, null, null, null);
 
             try
@@ -946,7 +950,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                 Dictionary<string, EntityStatus> tenantZeroEntityStatus = TenantZeroEntityStatus;
 
-                Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+                Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).GroupBy(d => d.Code+d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
                 Dictionary<string, EventType> tenantZeroEventTypes;
 
@@ -2085,8 +2089,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
         public static byte[] CompressionFileData(string fileName, byte[] fileData)
         {
-            if (ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage == 1)
-                ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
+            if (ICSharpCode.SharpZipLib.Zip.ZipStrings.CodePage == 1)
+                ICSharpCode.SharpZipLib.Zip.ZipStrings.CodePage = 437;
             MemoryStream outputMemStream = new MemoryStream();
             ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
 
@@ -2095,7 +2099,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             var newEntry = new ZipEntry(fileName + ".json");
             newEntry.DateTime = DateTime.Now;
-            ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
+            ICSharpCode.SharpZipLib.Zip.ZipStrings.CodePage = 437;
 
             zipStream.PutNextEntry(newEntry);
 
@@ -2972,8 +2976,10 @@ namespace WebFreight.Web.MetaDataUpdate
                             continue;
                     }
 
+ 
 
                 if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code + entityStatus.ObjectTableId))
+ 
                     {
                         //EntityStatus updatedEntityStatus = currentTenantEntityStatus[entityStatus.Code];
                         //updatedEntityStatus.Name = entityStatus.Name;
@@ -3000,7 +3006,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             Id = IdCounter.GetNumber("EntityStatus", tenant).ToString(),
                         };
                         entityStatusRepository.Add(newEntityStatus);
-                    currentTenantEntityStatus.Add(newEntityStatus.Code + newEntityStatus.ObjectTableId, newEntityStatus);
+                        currentTenantEntityStatus.Add(newEntityStatus.Code, newEntityStatus);
                     }
 
                 }
@@ -3034,8 +3040,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     if (tenantZeroEntityStatu != null)
                     {
 
-					if (currentTenantEntityStatus.Keys.Contains(tenantZeroEntityStatu.Code + tenantZeroEntityStatu.ObjectTableId))
-						currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code+ tenantZeroEntityStatu.ObjectTableId];
+                        currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code];
                     }
 
 

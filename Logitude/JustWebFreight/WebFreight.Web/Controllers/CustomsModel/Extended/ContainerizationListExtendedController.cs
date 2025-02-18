@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(tenant);
                 var CreateContainerizationBL = new CreateContainerization();
                 List<ContainerizationDetails> ContainerizationList = CreateContainerizationBL.CreateContainerizations(entityPM);
-                if (ContainerizationList != null && ContainerizationList?[0]?.Id!="0")
+                if (ContainerizationList != null && ContainerizationList?[0]?.Id != "0")
                 {
 
 
@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     }
                     else
                     {
-                       
+
                         for (int i = 0; i < ContainerizationList.Count; i++)
                         {
                             SendContainerization(ContainerizationList[i].Tenant, SendRequestVIA.WebServiceBatch, ContainerizationList[i].Id, loggedUserId);
@@ -79,7 +79,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
                 var listSendObj = new sendObj();
                 listSendObj.list = ContainerizationList;
-               
+
                 return Request.CreateResponse(HttpStatusCode.OK, listSendObj);
             }
             catch (Exception ex)
@@ -88,13 +88,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public  class sendObj
+        public class sendObj
         {
             public List<ContainerizationDetails> list { get; set; }
         }
-    
-       public void SendContainerization(int tenent, SendRequestVIA sendRequestVIA, string id, string LoggedUserId)
-       {
+
+        public void SendContainerization(int tenent, SendRequestVIA sendRequestVIA, string id, string LoggedUserId)
+        {
 
             try
             {
@@ -119,7 +119,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
                 else
                 {
-                    using (var scopeNewCRS = TransactionFactory.GetNewTransaction()) { 
+                    using (var scopeNewCRS = TransactionFactory.GetNewTransaction()) {
                         SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams, false);
                         scopeNewCRS.Complete();
                     }
@@ -129,87 +129,87 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
 
             }
-       
-       }
-       public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
-       {
-           try
-           {
-               string token = HttpContext.Current.Request.Headers["Token"];
-               AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-               SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-               SecurityUtility.CheckContactFeature("Customs.Containerization", "READ", authToken.Tenant);
-               int tenant = authToken.Tenant;
-               if (filters.Tenant != null)
-                   tenant = tenant;
-       
-               QueryOperations queryOperations = new QueryOperations()
-               {
-                   ObjectTableName = "Customs.Declaration",
-                   PageIndex = filters.PageIndex,
-                   PageSize = filters.PageSize,
-                   QuerySection = "Customs.Declaration",
-                   SortByColumnName = filters.SortBy,
-                   SortDirectin = filters.SortDirection,
-                   GetAll = filters.GetAll,
-               };
-       
-               List<ObjectField> DeclarationObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.Declaration", tenant);
-               List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
-       
-               for (int i = 1; i <= 10; i++)
-               {
-                   object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
-                   object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
-                   object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
-                   object filterValue2 = null;
-       
-                   if (filterNameProp != null)
-                   {
-                       string filterName = filterNameProp.ToString();
-                       string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-       
-                       ObjectField field = DeclarationObjectFields.FirstOrDefault(f => f.FieldName == filterName);
-                       if (field != null)
-                       {
-                           string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
-                           object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-       
-                           string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
-                           object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-       
-                           queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-                       }
-                       else
-                           queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
-                   }
-               }
-               if (!string.IsNullOrEmpty(filters.AdditionalFilters))
-               {
-                   JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                   var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
-       
-                   foreach (QueryFilterItem filter in filters_list)
-                   {
-                       ObjectField field = DeclarationObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-                       if (field != null)
-                       {
-                           string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
-                           object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-       
-                           string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
-                           object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-       
-                           queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-                       }
-                       else
-                       {
-                           queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                       }
-                   }
-               }
-               ICustomContext MyContext = CustomContext.GetContext(tenant);
-               DeclarationListQueryService declarationListQueryService = new DeclarationListQueryService(MyContext);
+
+        }
+        public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.Containerization", "READ", authToken.Tenant);
+                int tenant = authToken.Tenant;
+                if (filters.Tenant != null)
+                    tenant = tenant;
+
+                QueryOperations queryOperations = new QueryOperations()
+                {
+                    ObjectTableName = "Customs.Declaration",
+                    PageIndex = filters.PageIndex,
+                    PageSize = filters.PageSize,
+                    QuerySection = "Customs.Declaration",
+                    SortByColumnName = filters.SortBy,
+                    SortDirectin = filters.SortDirection,
+                    GetAll = filters.GetAll,
+                };
+
+                List<ObjectField> DeclarationObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.Declaration", tenant);
+                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+
+                for (int i = 1; i <= 10; i++)
+                {
+                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                    object filterValue2 = null;
+
+                    if (filterNameProp != null)
+                    {
+                        string filterName = filterNameProp.ToString();
+                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+
+                        ObjectField field = DeclarationObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                        }
+                        else
+                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                    }
+                }
+                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                {
+                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                    foreach (QueryFilterItem filter in filters_list)
+                    {
+                        ObjectField field = DeclarationObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                        }
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
+                    }
+                }
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                DeclarationListQueryService declarationListQueryService = new DeclarationListQueryService(MyContext);
                 var filter1 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsConsOfDecEquelsCont");
                 var containerizationID = "";
                 if (filter1 != null)
@@ -218,9 +218,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
 
 
-               
-                string CargoTypeCode=null, ManifestNumber = null, SecondCargoID = null,ThirdCargoID = null;
-              
+
+                string CargoTypeCode = null, ManifestNumber = null, SecondCargoID = null, ThirdCargoID = null;
+
                 var filter2 = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "KeyCargo1");
 
                 if (filter2 != null)
@@ -232,29 +232,56 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 if (filter3 != null)
                 {
-                   
+
                     SecondCargoID = filter3.FieldValue?.ToString();
                     ThirdCargoID = filter3.FieldValue2?.ToString();
 
                 }
                 List<DeclarationList> entityLists = declarationListQueryService.GetListForContainerization(queryOperations, tenant, containerizationID, CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
-       
-               ServiceResponse response = new ServiceResponse();
-               if (filters.GetCount)
-               {
-                   int count = declarationListQueryService.GetListCount(queryOperations, tenant);
-                   response.Count = count;
-               }
-       
-               response.Result = entityLists;
-               HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-               return reponseMessage;
-       
-           }
-           catch (Exception ex)
-           {
-               return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-           }
-       }
-     }
+
+                ServiceResponse response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    int count = declarationListQueryService.GetListCount(queryOperations, tenant);
+                    response.Count = count;
+                }
+
+                response.Result = entityLists;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                return reponseMessage;
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetContainerizationsByIds(string Ids)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                ContainerizationQueryService containerizationQueryService = new ContainerizationQueryService(customContext);
+                List<ContainerizationList> containerizationPMs = containerizationQueryService.GetContainerizationsByIds(Ids, tenant);
+                ServiceResponse response = new ServiceResponse();
+                response.Count = containerizationPMs.Count();
+                response.Result = containerizationPMs;
+
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+     
+    }
 }

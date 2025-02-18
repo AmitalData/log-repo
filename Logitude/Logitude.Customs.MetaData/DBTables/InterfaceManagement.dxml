@@ -134,6 +134,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="EntityLockId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultSendOptionsCode"
     ReferencedTable="InterfaceSendOptions"
@@ -144,4 +151,9 @@
     ReferencedTable="SignatureTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="EntityLockId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.TreeFilterQuery.Iterator;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;

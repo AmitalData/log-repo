@@ -3,7 +3,7 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Profact.TimbraCFDI40;
 using Profact.TimbraCFDI40.Complementos.Pagos20;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;

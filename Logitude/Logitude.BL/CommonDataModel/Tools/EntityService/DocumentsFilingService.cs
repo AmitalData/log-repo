@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -33,7 +33,7 @@ using Logitude.SystemLogs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.SystemLogs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Configuration;
 using System.Xml.Serialization;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -56,6 +56,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data;
 using System.Runtime.Remoting.Contexts;
+using Logitude.Customs.BL.Messaging.Amital;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -1043,6 +1044,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
              new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
 
+
              if (entityPM.IsUpdateSharedDocument)
             {
                 IQueueService queueservice = new DbQueueService();
@@ -1512,6 +1514,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 (
                 (!extDocPM.IsHybrid   && LogitudeSettings.IsCostomsDeploy) ||
                 (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
+
                  && !extDocPM.NoAddToTasksQueue)  
                  )
             {
@@ -1772,7 +1775,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, Envelope>(
                 amitalCustomFileCommunicationModel, /*myDocumentsFilingPM*/ myEnvelope);
             bool pImmediately = true;
-            var info = myUServerCommunicationService.Send(pImmediately);
+            UServerCommunicationServiceInfoM info = myUServerCommunicationService.Send(pImmediately);
             if (info.GenericResponseObj?.Status !="0" )//&&  !string.IsNullOrWhiteSpace(info.GenericResponseObj?.ErrorDescription))
             {
                 throw new Exception($"Send 2 Urouter ErrorDescription{info.GenericResponseObj?.ErrorDescription}");
@@ -1793,6 +1796,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (documentsFilingMetaDataValueChangeSet != null)
             {
              
+
                 foreach (DocumentsFilingMetaDataValuePM itemPM in documentsFilingMetaDataValueChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)

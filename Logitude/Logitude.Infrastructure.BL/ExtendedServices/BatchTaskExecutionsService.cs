@@ -52,7 +52,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
         {
             Logitude.Infrastructure.Data.IInfrastructureContext context = Logitude.Infrastructure.Data.InfrastructureContext.GetContext(this.BatchTaskExecution.Tenant);
             BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), this.BatchTaskExecution.Tenant);
-            Debug.WriteLine(statusCode+",,inside chagne status");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(statusCode+",,inside chagne status");
             BatchTaskExecution.StatusCode = statusCode;
             switch (statusCode)
             {
@@ -97,7 +97,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
             }
             BatchTaskExecution.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             batchTaskExecutionUpdateService.Update(BatchTaskExecution, true);
-            Debug.WriteLine(statusCode + ",,inside chagne status after update");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(statusCode + ",,inside chagne status after update");
         }
 
         public virtual DateTime GetCurrentDateTime(int tenant)

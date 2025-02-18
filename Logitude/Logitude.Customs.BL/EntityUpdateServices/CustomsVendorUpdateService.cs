@@ -32,12 +32,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(CustomsVendorPM entityPM)
         {
             //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
-            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (setting.IsConnectedToUniFreight)
-            {
-                UpdateUnifreight(entityPM);
-            }
-            
+        
+            UpdateUnifreight(entityPM);                      
             ConnectToCustomsRequestsSheet(entityPM);
             UpdateNotification(entityPM);
         }

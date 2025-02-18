@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using Logitude.SystemLogs;
 using Simplog.Global.Data.GlobalModel;
@@ -15,6 +16,9 @@ namespace CustomsWorkerRole
         {
             try
             {
+
+
+
                 IGlobalContext globalcontext = GlobalContext.GetContext();
                 bool isUpgrading = (from a in globalcontext.GlobalDBs
                                     select a).FirstOrDefault().IsUpgrading;
@@ -27,5 +31,6 @@ namespace CustomsWorkerRole
                 return false;
             }
         }
+
     }
 }

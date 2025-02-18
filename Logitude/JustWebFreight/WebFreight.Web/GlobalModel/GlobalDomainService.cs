@@ -1,9 +1,9 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -210,6 +210,7 @@ namespace WebFreight.Web.GlobalModel
         {
             return globalTenantsRepository.GetGlobalTenantsByTenant(0);
         }
+        public List<GlobalTenant> GetAllTenants() =>globalTenantsRepository.All();
 
         public GlobalTenant GetGlobalTenantsByTenant(int tenant)
         {

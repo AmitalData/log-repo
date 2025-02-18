@@ -278,13 +278,13 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             }
             catch (Exception eee)
             {
-
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee, sb.ToString());
-                throw new Exception(eee.ToString(), eee);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee, "AccountingIntegrityService");
+                sb.AppendLine(eee.ToString());
+                throw new Exception(eee.ToString(), eee);// Itzik the exceptions is not thrown so i threw them
             }
             finally
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sb.ToString());
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("AccountingIntegrityService:"+sb.ToString() );
             }
 
 

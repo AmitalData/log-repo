@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools.Helpers;
 using Microsoft.WindowsAzure.Storage.Blob;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
@@ -8,11 +8,13 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.StorageService
 {
-    public class AzureBlobService : IBlobService, IDisposable
+    public class AzureBlobService : IBlobService , IDisposable
     {
         public byte[] Read(BlobFileInfo fileInfo)
         {
@@ -168,7 +170,7 @@ namespace Logitude.Server.Tools.StorageService
 
         //    return blobfile;
 
-
+          
         //}
 
         private void GetFileBlobContainerWithoutAzureFolder(BlobFileInfo fileInfo, out string localPath, out CloudBlobContainer blobContainer)
@@ -259,12 +261,11 @@ namespace Logitude.Server.Tools.StorageService
 
         public void Write(byte[] data, BlobFileInfo fileInfo)
         {
-         
             string localPath = null;
             CloudBlobContainer blobContainer = null;
             GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
 
-            
+
             var blobfile = blobContainer.GetBlockBlobReference(localPath);
             using (Stream blobstream = blobfile.OpenWrite())
             {
@@ -307,7 +308,7 @@ namespace Logitude.Server.Tools.StorageService
             //temp file ( to be deleted when upload done)
             var tempcloudBlockBlob = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName, ""));
 
-
+        
 
             if (sentBytes < fileInfo.FileSize)
             {
@@ -474,9 +475,9 @@ namespace Logitude.Server.Tools.StorageService
 
             //
 
+          
 
         }
-
         public void Dispose()
         {
         }

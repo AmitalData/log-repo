@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Linq;
 
@@ -48,7 +47,7 @@ namespace Logitude.BL.Helpers
             {
                 if (string.IsNullOrWhiteSpace(value) || string.IsNullOrWhiteSpace(typeString))
                     return null;
-
+                
                 Type type = Type.GetType(typeString) ?? AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetType(typeString) != null)?.GetType(typeString);
                 if (type == null)
                     throw new Exception("Type not found: " + typeString);

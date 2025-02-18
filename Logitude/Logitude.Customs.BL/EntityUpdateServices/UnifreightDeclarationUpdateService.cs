@@ -16,7 +16,7 @@ using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -195,19 +195,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     _IsConsignmentChanged = IsConsignmentChanged();
                 }
 
-                //_IsSupplerInvChanged = true;
-                //var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
-                //if (setting != null)
-                //{
-                //  if (!setting.IsConnectedToUnifreight)
-                //if (!_DirtyDeclarationPM.IsConnectedToUnifreight)
-                //{
-                //    return;
-                //}
-                //}
-                
+      
 
-                TransactionScope scope = null;//TransactionFactory.GetNewTransaction())//new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted }))
+                TransactionScope scope = null;
                 if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
                 {
                     scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
@@ -231,7 +221,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             LogMessagingUtil.Instance.AppendLine("Update3: GetFILENOByCUSTOMFILENO, file: " + lCUSTOMFILENO);
                         bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
                         if (isConnectedToUniFreight) {
-                            int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
+                            int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, _DirtyDeclarationPM.Tenant);
                         }
                         
 
@@ -1275,6 +1265,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var cardRepository = new CardRepository(_DirtyDeclarationPM.Tenant);
             var userRepository = new UserRepository(_DirtyDeclarationPM.Tenant);
             var DepartmentRepository = new DepartmentRepository(_DirtyDeclarationPM.Tenant);
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             string userCode = "";
             _loanAmount = 0; // moran 17.1.16 - Task 19798
             if (_CCUFILEMPM == null)
@@ -1536,6 +1527,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (short.TryParse(rightownid, out importerEntitlementTypeCode))
                 {
                     _CCUFILEMPM.RIGHTOWNID = importerEntitlementTypeCode;
+                }
+                if (!isConnectedToUniFreight)
+                {
+                    _CCUFILEMPM.RIGHTOWNIDN = _DirtyDeclarationPM.ImporterEntitlementTypeCode;
                 }
             }
 
@@ -2498,6 +2493,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private Unifreight.BL.EntityPMs.SupplierInvoicePM SetSupplierInvoice(Def.EntityPMs.SupplierInvoicePM decSupplierInvoice)
         {
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             CustomsExchangeRatePM rate = new CustomsExchangeRatePM();
             Unifreight.BL.EntityPMs.SupplierInvoicePM supplierInvoicePM = new Unifreight.BL.EntityPMs.SupplierInvoicePM();
             supplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -2521,6 +2517,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 //Set Customs file fields
                 _CCUFILEMPM.SELLCONDITIONID = GetTranslationP2L("IIGC", "CTBINCOTERMS", decSupplierInvoice.IncotermCode);
+                if(!isConnectedToUniFreight)
+                {
+                    _CCUFILEMPM.SELLCONDITIONIDN = decSupplierInvoice.IncotermCode;
+                }
                 _CCUFILEMPM.COINID = GetTranslationP2L("IIGC", "CTBCURRENCY", decSupplierInvoice.InvoiceCurrencyTypeCode);
                 _CCUFILEMPM.COINIDN = decSupplierInvoice.InvoiceCurrencyTypeCode;
 
@@ -2625,6 +2625,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             supplierInvoicePM.COUNTRYID = GetTranslationP2L("IIGC", "CTBCOUNTRY", decSupplierInvoice.IssueCountryCode);
             supplierInvoicePM.INCOTERMID = GetTranslationP2L("IIGC", "CTBINCOTERMS", decSupplierInvoice.IncotermCode);
             supplierInvoicePM.CURRENCYID = GetTranslationP2L("IIGC", "CTBCURRENCY", decSupplierInvoice.InvoiceCurrencyTypeCode);
+            if (!isConnectedToUniFreight)
+            {
+                supplierInvoicePM.COUNTRYIDN = decSupplierInvoice.IssueCountryCode;
+                supplierInvoicePM.INCOTERMIDN = decSupplierInvoice.IncotermCode;
+                supplierInvoicePM.CURRENCYIDN = decSupplierInvoice.InvoiceCurrencyTypeCode;
+                supplierInvoicePM.Tenant = _DirtyDeclarationPM.Tenant;
+            }
              CalculateSupplierInvoiceModifications(_CCUFILEMPM, supplierInvoicePM, decSupplierInvoice);
 
             supplierInvoicePM.CHANGINGVALUE = supplierInvoicePM.CHANGINGVALUE.GetValueOrDefault() + supplierInvoicePM.VALUE;
@@ -2905,6 +2912,13 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
         {
             SupplierInvoiceItem103PM supplierInvoiceItem103PM = new SupplierInvoiceItem103PM();
             supplierInvoiceItem103PM.ChangeSetOp = ChangeSetOperation.Insert;
+
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
+            if (!setting.IsConnectedToUniFreight)
+            {
+                supplierInvoiceItem103PM.Tenant = decSupplierInvoice.Tenant;
+
+            }
             if (_IsSupplerInvUpdateCCUFILEM) // moran 14.6.16 - Task 21737
             {
                 supplierInvoiceItem103PM.ChangeSetOp = ChangeSetOperation.None;
@@ -3312,6 +3326,12 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             if (!_IsSupplerInvChanged)
             {
                 supplierInvoiceItem105PM.ChangeSetOp = ChangeSetOperation.None;
+            }
+
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
+            if (!setting.IsConnectedToUniFreight)
+            {
+                supplierInvoiceItem105PM.Tenant=decSupplierInvoice.Tenant;
             }
             //Yuval Chalup 03.04.2016 TASK-20599 + TASK-20834 --->
 
@@ -3726,21 +3746,12 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             return existChange;
         }
 
-        //static HashSet<string> _HashSet = new HashSet<string>();
-        //static Dictionary<string,int>  _HashSet1 = new Dictionary<string,int>();
-        //int i;
+ 
         private string GetTranslationP2L(string partnerID, string tableID, string partnerCode)
         {
             bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(this._DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
 
-            //i++;
-            //_HashSet.Add(partnerID + "," + tableID + "," + partnerCode);
-            //if (!_HashSet1.ContainsKey(this.GetHashCode().ToString() + tableID))
-            //{
-            //    _HashSet1[this.GetHashCode().ToString() + tableID] = 0;
-            //}
-            //_HashSet1[this.GetHashCode().ToString() + tableID] = ++_HashSet1[this.GetHashCode().ToString() + tableID];
-            //return "";
+ 
             if (isConnectedToUnifreight) {
                 if (partnerID == null || tableID == null || partnerCode == null)
                 {
@@ -3756,8 +3767,7 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
                     return GetTranslationP2LFromCache(partnerID, tableID, partnerCode);
                 }
                 var myGTRTRANPM = _GTRTRANQueryService.GetSingle(partnerID, tableID, partnerCode, null, true);
-                //GTRTRAN myGTRTRANPM = myGTRTRANQueryService.GetTranslationP2L(partnerID, tableID, partnerCode);
-
+ 
                 if (myGTRTRANPM == null)
                 {
                     if (tableID == "CTBBONDED") // moran 15.5.16 - Task 20709

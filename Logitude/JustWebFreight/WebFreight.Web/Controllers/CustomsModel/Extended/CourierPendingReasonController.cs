@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -112,7 +112,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 
                 CourierPendingReasonQueryService courierPendingReasonQuery = new CourierPendingReasonQueryService(MyContext);
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingleCourierPendingReasonByCode(code, authToken.Tenant);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingle(code,false,false);
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = courierPendingReasonPM;

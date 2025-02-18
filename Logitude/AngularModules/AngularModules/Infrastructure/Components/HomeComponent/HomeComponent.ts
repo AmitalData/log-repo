@@ -1,5 +1,5 @@
 declare var window: any;
-import { HostListener, Component, ViewContainerRef, ViewChild, ViewChildren, QueryList, Output, EventEmitter, OnDestroy} from '@angular/core';
+import { HostListener, Component, ViewContainerRef, ViewChild, ViewChildren, QueryList, Output, EventEmitter, OnDestroy, ElementRef} from '@angular/core';
 import {AppTool} from '../../Tools';
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../Utilities/SessionLocator';
@@ -23,15 +23,31 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BluesnapContractPMService } from '../../Services/StandardPMs/BluesnapContractPMService';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
-import { interval } from 'rxjs';
-import { timeInterval } from 'rxjs/operators';
+import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import { takeWhile,timeInterval } from 'rxjs/operators';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 import { RatesTableExtendedService } from 'Infrastructure/Services/ExtendedPMs/RatesTableExtendedService';
+import { RelatedDocumentViewModel } from 'CustomsModules/CustomsDocuments/Components/RelatedDocumentViewModel';
+import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
+import { ReportExecutionLogPM } from 'Common/EntityPMs/ReportExecutionLogPM';
+import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewComponent';
+import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
+import { transform } from 'cypress/types/lodash';
+import { parseString } from 'xml2js';
+import { ReportsWorkspaceComponent } from 'TimeManagement/Components/Workspaces/ReportsWorkspaceComponent';
+import { ReportPMService } from 'Common/Services/StandardPMs/ReportPMService';
+import { ReportsTemplateListExtendedService } from 'Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
+import { ReportPM } from 'Common/EntityPMs/ReportPM';
+import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
+import { ReportExecutionLogPMService } from 'Common/Services/StandardPMs/ReportExecutionLogPMService';
+import { ReportMenuComponent } from 'Report/Components/ReportMenuComponent';
 
 @Component({
     templateUrl: './HomeComponent.html',
+    providers: [ReportService]
+
 })
 
 export class HomeComponent implements OnDestroy{
@@ -55,11 +71,25 @@ export class HomeComponent implements OnDestroy{
     private IsINTTRAPackage = false;
     public PaymentChanelCode: string;
     public AccountingActivated=false;
-    constructor() {
+    private InactivityTimeout: any;
+    private InactivityLimit: number = 0;
+    private readonly LogoutTime: number = 300;
+    private WarningShown = false; 
+    private MinutsTimeOutSession = SessionLocator.TenantManagementJS.MinutsTimeOutSession
+    isReportPanelVisible: boolean = false;
+    currentReportId: string = "";
+    private reportPanelTimeout: any;
+    public isPinned: boolean = false;
+    countDoneRepors: number =0;
+
+
+    constructor(private reportService: ReportService) {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
         SessionLocator.AllSessions = new Array<SessionComponent>();
         SessionLocator.HomeComponent = this;
+        this.MinutsTimeOutSession = (AppTool.IsNullOrEmpty(this.MinutsTimeOutSession) ? 60 : this.MinutsTimeOutSession )
+        this.InactivityLimit =  this.MinutsTimeOutSession  * 60 * 1000; // 15 
         this.ChangeHeaderColor = ObjectsLocator.TenantManagementJS.ChangeHeaderColor;
         if (this.ChangeHeaderColor)
         {
@@ -77,7 +107,7 @@ export class HomeComponent implements OnDestroy{
             this.InitializeAppHeader();
             this.CheckAmitalBrowserInUse();
         }
-
+        
         if (!SessionInfo.KeepUserLoggedIn) {
             // sessionTimeout
             var sessionTimeout: DetectUserInActivity = new DetectUserInActivity();
@@ -112,10 +142,11 @@ export class HomeComponent implements OnDestroy{
     public SystemFontFamily: string = "'Lucida Sans Unicode', 'Lucida Grande', sans-serif";
     table: any;
     InitializeComponent() {
+        
         this.InitializeBluesnapComponents();
         this.InitializeChargifyComponents();
         this.IsCountryIsrael = SessionLocator.TenantManagementJS.CountryName == "Israel";
-
+        this.InitializeReport();
         this.SetIsINTTRAPackage();
         var isNewSignupTenant = false;
 
@@ -151,7 +182,13 @@ export class HomeComponent implements OnDestroy{
     InitializeChargifyComponents() {
         this.IsChargifyAccount = SessionLocator.TenantManagementJS.PaymentChannelCode == "CY";
     }
-
+    InitializeReport(){
+        this.reportService.LoadReports();
+        this.reportService.reportsCount$.subscribe(count => {
+            this.countDoneRepors = count;
+          });
+      
+    }
     USDLastUpdate=null;
     GetCurrencyRateLastUpdate(){
         var myService: RatesTableExtendedService = new RatesTableExtendedService();
@@ -760,7 +797,7 @@ export class HomeComponent implements OnDestroy{
         );
 
     }
-
+    ReportMenuComponent:ReportMenuComponent
     // Notification Bell
     badjCount: number;
     IsBadjCountVisibile: boolean;
@@ -779,7 +816,50 @@ export class HomeComponent implements OnDestroy{
             this.showLockIndicator = newValue;
         }
     }
+    public HasFeatureReport:boolean= FeatureLocator.HasFeaturePermession("Report", "Module");
 
+    get IsReportPanelVisible() { return this.isReportPanelVisible; }
+    set IsReportPanelVisible(newValue: boolean) {
+       
+       
+        this.isReportPanelVisible = newValue;
+        
+        if(!newValue){
+            this.isPinned = false;
+
+        }
+    }
+    get CurrentReportId() { return this.currentReportId; }
+    set CurrentReportId(newValue: string) {
+        
+        if (this.currentReportId != newValue) {
+            this.currentReportId = newValue;
+            this.reportService.LoadReports()
+           
+        }
+    }
+    IsReportPanelVisibleChanged() {
+        this.IsReportPanelVisible =!this.isReportPanelVisible;
+        this.CurrentReportId = "";
+    }
+    TogglePinReportPanel(event: any) {
+       
+        if (event==true) {
+            this.isPinned = true;
+        } else {
+            this.isPinned = false;
+        }
+    }
+    
+    keepReportPanelOpen() {
+        this.IsReportPanelVisible = true;
+    }
+
+    closeReportPanel() {
+        if(!this.isPinned)
+           this.IsReportPanelVisible = false;
+    }
+    
     notificationExtendedListService: NotificationExtendedListService = new NotificationExtendedListService();
     GetBadjCount() {
         this.notificationExtendedListService.GetNotificationsBadjCount(SessionLocator.LoggedUserId).subscribe((response:any) => {
@@ -1101,6 +1181,9 @@ export class HomeComponent implements OnDestroy{
     }
 
     Close(tabItem: SessionTabItem) {
+        var ClosedTabEditComponent = tabItem.SessionComponent.CurrentEditComponent;
+        if (ClosedTabEditComponent != null) 
+            ServiceHelper.DeleteGeneralLock(ClosedTabEditComponent.EntityId ,ClosedTabEditComponent.ObjectTableName);
 
         var itemIndex = this.Tabs.indexOf(tabItem);
         if (itemIndex > -1) {
@@ -1119,15 +1202,85 @@ export class HomeComponent implements OnDestroy{
                 if (!this.IsShowUserDetailsArea) this.IsShowUserDetailsArea = true;
             }
         }
-    }
+    } 
+    ngOnInit() {
+        this.StartTimer();
 
+        window.addEventListener('mousemove', () => this.ResetTimer());
+        window.addEventListener('keypress', () => this.ResetTimer());
+    }
     private SaveCompletedEvent: any = null;
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         this.SaveCompletedEvent = null;
+        clearTimeout(this.InactivityTimeout);
 
+        window.removeEventListener('mousemove', this.ResetTimer);
+        window.removeEventListener('keypress', this.ResetTimer);
+    }
+    StartTimer() {
+        this.InactivityTimeout = setTimeout(() => {
+          this.ShowWarning();
+        }, this.InactivityLimit);
+    }
+        
+    ResetTimer() {
+        if (!this.WarningShown) {
+           clearTimeout(this.InactivityTimeout);
+           this.StartTimer();
+        }
     }
 
+     ShowWarning() {
+        let remainingTime = this.LogoutTime;
+        var confirmWindow = new ConfirmWindow();
+        var warningMessage = '';
+        const hoursTimeOut = Math.floor(this.MinutsTimeOutSession / 60);
+        const minutesTimeOut = this.MinutsTimeOutSession % 60;
+        const displayWarningMessage = () => {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            warningMessage = TextCodeTranslator.Translate("General.O.MessageSession");
+            warningMessage =  warningMessage.replace("%", `${String(hoursTimeOut).padStart(2, '0')}:${String(minutesTimeOut).padStart(2, '0')}`);
+            warningMessage =  warningMessage.replace("$", `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
+
+           
+
+            if (this.WarningShown) {
+                confirmWindow.message = warningMessage; // עדכן םת תוכן ההודעה
+                return
+            }
+           confirmWindow.Title = TextCodeTranslator.Translate("General.O.SessionTimedOut");
+           confirmWindow.Width = 400;
+           confirmWindow.Height = 180;
+           confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.O.Continue");
+           confirmWindow.ShowNoButton = false;
+           confirmWindow.IsMultipleMessages = true;
+           confirmWindow.Show(warningMessage);
+      
+           confirmWindow.WindowClosed.subscribe((event: any) => {
+               if (confirmWindow.Yes) {
+                   this.WarningShown = false;
+                   clearInterval(timer);
+                   this.ResetTimer();                  
+               }
+           
+           });
+        }
+        
+        const timer = setInterval(() => {
+  
+                if (remainingTime > 0) {
+                    displayWarningMessage();
+                    this.WarningShown = true; // עדכן שההודעה הוצגה
+                    remainingTime--;
+                } else {
+                    clearInterval(timer);
+                    this.SignoutClicked();
+                }
+        }, 1000);  // כל שנייה
+    }
+        
     RunSignupWizard() {
         SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Maintenance/Wizard/WizardBaseComponent", this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
@@ -1807,13 +1960,15 @@ export class HomeComponent implements OnDestroy{
         var params: any[] = [{ name: "Token", value: SessionInfo.DocumentDownloadToken }]
         ServiceHelper.OpenWindowWithParams(url, params);
     }
-    SignoutClicked() {
-        SessionLocator.Index = 0;
+     SignoutClicked() {
+         SessionLocator.Index = 0;
+
+         ServiceHelper.DeleteGeneralLockBySessionId();
 
         SessionLocator.AllSessions.forEach((item) => {
             item.DestroySession();
         });
-
+      
         this.SignoutCompleted.emit("event from child");
     }
 
@@ -2023,8 +2178,8 @@ export class HomeComponent implements OnDestroy{
             }
         });
     }
+ 
 }
-
 export class SessionTabItem {
     public Index: number;
     public IsSelected: boolean = false;
@@ -2148,3 +2303,4 @@ export class TenantUserDataClass {
 
 
 }
+

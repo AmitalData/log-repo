@@ -13,7 +13,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.AmitalMessaging.Infrastructure;
 
@@ -27,7 +27,7 @@ using System;
 using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.Messaging.Amital.CustomFile;
 using Logitude.Customs.BL.Models;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Models;
 using Logitude.CustomsMessaging.MessagingServices;
@@ -212,7 +212,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override void PostGetRequest(DF_NG_2751_MSG10000_ExportDeclaration customRequest, GenericRequestParams requestParams)
         {
-            
+            _forbiddenSigns = ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
+
             if (this._context == null)
             {
                 this._context = CustomContext.GetContext(requestParams.Tenant);
@@ -708,6 +709,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationDMExtensions GetDMExtensions(DeclarationPM declarationPM)
         {
+            _forbiddenSigns = ForbiddenSignsUtil.GetForbiddenSigns(declarationPM.Tenant);
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.CustomFileNo = declarationPM.CustomFileNo;
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -749,8 +751,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 foreach (var declarationExportRecipient in declarationPM.DeclarationExportRecipients)
                 {
                     DeclarationDMExtensionsRecipientDetails declarationDMExtensionsRecipientDetails1 = new DeclarationDMExtensionsRecipientDetails();
-                    declarationDMExtensionsRecipientDetails1.Name = declarationExportRecipient.RecipientName;
-                    declarationDMExtensionsRecipientDetails1.Address = declarationExportRecipient.RecipientAddress;
+                    declarationDMExtensionsRecipientDetails1.Name = ForbiddenSignsUtil.ReplaceForbiddenChars(declarationExportRecipient.RecipientName, _forbiddenSigns);
+                    declarationDMExtensionsRecipientDetails1.Address = ForbiddenSignsUtil.ReplaceForbiddenChars(declarationExportRecipient.RecipientAddress, _forbiddenSigns);
                     declarationDMExtensionsRecipientDetails1.IssueLocation = SetCodeTypeValue<DeclarationDMExtensionsRecipientDetailsIssueLocation>(declarationExportRecipient.RecipientIssueCountryCode);
                     declarationDMExtensionsRecipientDetails.Add(declarationDMExtensionsRecipientDetails1);
 

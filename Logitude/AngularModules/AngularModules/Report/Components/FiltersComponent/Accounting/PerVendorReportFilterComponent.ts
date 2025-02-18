@@ -135,11 +135,55 @@ export class PerVendorReportFilterComponent extends BaseComponent {
 
         return isOldDate;
     }
-
-    //#endregion
-    private errors: string[] = [];
-    RunButtonClicked() {
-
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+        if (this.isReady) {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        this.VendorFilterSelectedValue = "All"
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "Vendor":{
+                    this.GetGLAccount(queryFilterItem.FieldValue);
+                    
+                    break;
+                }
+                case "CardId":{
+                    this.VendorId = queryFilterItem.FieldValue;
+                    this.VendorFilterSelectedValue = "Vendor"
+                    break;
+                }
+                   
+               
+            }
+  
+           
+    
+        }
+    }
+    ValidateSelectedFilters() {
         this.errors = [];
         this.ValidationErrorsList = [];
         if (this.VendorFilterSelectedValue == "Vendor" && !this.vendor) {
@@ -154,22 +198,22 @@ export class PerVendorReportFilterComponent extends BaseComponent {
         if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
             this.errors.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
         }
-        if (this.errors.length == 0) {
+       return this.errors.length == 0;
+    }
+    //#endregion
+    private errors: string[] = [];
+    RunButtonClicked() {
+
+       
+        if (this.ValidateSelectedFilters()) {
 
 
-            var myFilterItems: QueryFilterItem[] = [];
-            myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
-            myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
-
-            if (this.VendorFilterSelectedValue != "All") {
-                myFilterItems.push(new QueryFilterItem("Vendor", this.Vendor.GLAccountId, "string"));
-                myFilterItems.push(new QueryFilterItem("CardId", this.VendorGLAccount.CardId, "string"));
-            }
+           
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
-            myReportFliter.QueryFilterItemLists = myFilterItems;
+            myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
 
             this.RunReportEvent.emit(myReportFliter);
 
@@ -178,7 +222,17 @@ export class PerVendorReportFilterComponent extends BaseComponent {
         }
     }
 
+    GetQueryFilterItems(){
+        var myFilterItems: QueryFilterItem[] = [];
+        myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
+        myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
 
+        if (this.VendorFilterSelectedValue != "All") {
+            myFilterItems.push(new QueryFilterItem("Vendor", this.Vendor.GLAccountId, "string"));
+            myFilterItems.push(new QueryFilterItem("CardId", this.VendorGLAccount.CardId, "string"));
+        }
+        return myFilterItems;
+    }
     private fromDate: Date;
     public get FromDate() { return this.fromDate; }
     public set FromDate(value: Date) {

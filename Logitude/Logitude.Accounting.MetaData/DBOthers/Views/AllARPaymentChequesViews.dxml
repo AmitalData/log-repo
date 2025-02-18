@@ -1,4 +1,4 @@
-﻿<View DBType="Main" Name="AllARPaymentChequesViews" Schema="dbo" Module="Accounting">
+﻿	<View DBType="Main" Name="AllARPaymentChequesViews" Schema="dbo" Module="Accounting">
 	<SqlScript>
 		<![CDATA[
 CREATE  view [dbo].[AllARPaymentChequesViews] as
@@ -38,15 +38,16 @@ trns.AccountingEntityReference,trns.LocalAmountCredit,trns.LocalAmountDebit,trns
 trns.journalnumber,trns.Id as journalId,trns.AccountingEntityCode,trns.AccountingEntityId,chk.localname,chk.EnglishName,trns.Notes
 from trns
 inner join chk on trns.AccountingEntityId = chk.PaymentId and trns.JournalLineNumber= chk.LineNumber  and chk.Tenant = trns.Tenant
-
+ 
 union all
-
+ 
 select distinct  l.AccountId,l.id, l.tenant, l.DueDate,
 'J' as [type],
 j.AccountingEntityReference,l.LocalAmountCredit,l.LocalAmountDebit,l.ForeignAmountCredit,l.ForeignAmountDebit,l.reference1,l.reference2,l.reference3,
 j.journalnumber,j.Id as journalId,j.AccountingEntityCode,j.AccountingEntityId
-,'',''
-,l.Notes
+,'','',''
+,l.Notes,
+'' as ChequeId
 from
 LedgerTransactions l inner join
 journals j
@@ -55,7 +56,7 @@ inner join GLAccounts g
 on  l.Tenant = g.Tenant and l.OppositeAccountId = g.Id 
 where
 j.ExternalSystem is not null and l.DueDate > getdate()
-and l.LocalAmountCredit != 0 AND g.ChartOfAccountsTypeCode = '5'; 
+and l.LocalAmountCredit != 0 AND g.ChartOfAccountsTypeCode = '5';
     ]]>
 	</SqlScript>
 	<OracleScript>

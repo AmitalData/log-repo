@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -14,6 +14,9 @@ using System.Xml.Serialization;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.Repsitories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using System.Web;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
@@ -43,11 +46,25 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             //                                              TransportModeName = s.CustomsTransportMode != null? s.CustomsTransportMode.LocalName : null,
 
             //                                          });
+            if (Tenant == 0)
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                if (token != null)
+                {
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    Tenant = Tenant = authToken.Tenant;
+                }
+                else
+                {
+                    Tenant = 0;
+                }
+            }
 
             IQueryable<CustomsHouseTypeList> query = (from a in iQueryable
 
-                                                      join d in context.CustomsHouseTypeAdditionals.Include("CustomsTransportMode").Include("UnloadingSiteType")
-                                                      on a.Code equals d.Code 
+                                                      join d in context.CustomsHouseTypeAdditionals.Include("TransportMode").Include("UnloadingSiteType")
+                                                      on a.Code equals d.Code
+                                                      where d.Tenant  == Tenant
                                                       select new CustomsHouseTypeList()
                                                       {
                                                           Code = a.Code,
@@ -58,7 +75,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           UnloadPortCode = d.UnloadPortCode,
                                                           UnloadPortName = d.UnloadingSiteType != null ? d.UnloadingSiteType.LocalName : null,
                                                           TransportModeId = d.TransportModeId,
-                                                          TransportModeName = d.CustomsTransportMode != null ? d.CustomsTransportMode.LocalName : null,
+                                                          TransportModeName = d.TransportMode != null ? d.TransportMode.LocalName : null,
                                                       });
             return query;
 		}

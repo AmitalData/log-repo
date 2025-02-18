@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -52,9 +52,10 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using System.Xml;
-using System.Globalization;
+ using Newtonsoft.Json;
+ using System.Globalization;
 using System.Configuration;
-
+ 
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -695,5 +696,35 @@ new XElement("FileStreamError",
             }
         }
 
-    }
+
+		[HttpPost]
+		public async Task<HttpResponseMessage> UpdateDeclarationInU2L()
+		{
+			try
+			{
+                string body = await Request.Content.ReadAsStringAsync();
+                var myAmitalCu= JsonConvert.DeserializeObject<LogitudeCustomsFile>(body);
+				var amitalObjExample = new LOGICUSTFILE();
+
+				amitalObjExample.LogitudeCustomsFile = new LogitudeCustomsFile[] { myAmitalCu };
+
+				var xml = Logitude.AmitalMessaging.Utils.XmlGenericUtil<LOGICUSTFILE>.SerializeObject(amitalObjExample);
+
+				var dus = new Logitude.Customs.BL.Messaging.U2L.ImportDeclaration.DeclarationUpsertService();
+				string MoreParams = ""; string MessageOut = "";
+				dus.ProccessGenericRequest(xml, ref MoreParams,
+					out MessageOut);
+
+				return Request.CreateResponse(HttpStatusCode.OK, MessageOut);
+
+			}
+
+			catch (Exception ex)
+			{
+
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+
+	}
 }

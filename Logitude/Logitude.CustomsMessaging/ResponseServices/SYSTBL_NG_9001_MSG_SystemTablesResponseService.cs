@@ -1,5 +1,6 @@
 ﻿using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
@@ -14,7 +15,10 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.Helpers.ClosedTable;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -27,6 +31,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Unifreight.Data.AmitalModel.EntityPOCOs;
+using Unifreight.Data.AmitalModel.Repsitories;
 using UnifreightIIG.Common.SystemTableServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
@@ -84,10 +90,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 )
             {
 
-                //var customContext = CustomContext.GetContext(0);
+                //var customContext = CustomContext.GetContext(tenant);
                 //closedTableService can dispose the customContext
                 var closedTableService = Logitude.CustomsMessaging.Helpers.ClosedTable.ClosedTableServiceFactory.CreateNew(
-                    CustomContext.GetContext(0),//closedTableService can dispose the customContext //customContext,
+                    CustomContext.GetContext(requestParams.Tenant),//closedTableService can dispose the customContext //customContext,
                                                 //requestParams.TableId,
                     customResponse.tableName,
                     //customResponse.TableData.ToList(),
@@ -106,7 +112,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         throw;
                     }
 
-                    CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(0));
+                    CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(requestParams.Tenant));
                     CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = requestParams.TableId });
                     ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
 
@@ -147,10 +153,45 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (syncUnifreight)
             {
                 var list = customResponse.TableData.OrderBy(rec => rec.id).ToList();
-                SystemTables.Send2Amital(requestParams.TableId, list, requestParams.Tenant);
+                var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).IsConnectedToUniFreight;
+                if (isConnectedToUniFreight)
+                {
+                    SystemTables.Send2Amital(requestParams.TableId, list, requestParams.Tenant);
+                }
+                else
+                {
+                    UpdateSyncRecord(customResponse, requestParams);
+                }
             }
-        }
 
+
+
+        }
+        void UpdateSyncRecord(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
+        {
+            ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
+            var qs = new CustomsClosedTableQueryService(customContext);
+            string objecttableid = qs.GetObjectTableIdById(requestParams.TableId);
+            var tableName = "";
+            if (!string.IsNullOrWhiteSpace(objecttableid))
+            {
+                ObjectTableQuery objectTableQuery = new ObjectTableQuery(requestParams.Tenant);
+                tableName = objectTableQuery.GetSinglePM(objecttableid, requestParams.Tenant).DBTableName;
+            }
+
+            var syncRecord = new SyncRecord();
+            syncRecord.CreateDate = DateTime.Now;
+            syncRecord.Id = Guid.NewGuid().ToString();
+            syncRecord.Tenant = 0;
+            syncRecord.KeyVal = "ALL";
+            syncRecord.Entname = tableName;
+            syncRecord.TrigAction = "U";
+            syncRecord.IsSync = 0;
+            syncRecord.FileNo = "0";
+            var syncRecordRepository = new SyncRecordRepository(requestParams.Tenant);
+            syncRecordRepository.Add(syncRecord);
+            syncRecordRepository.SubmitChanges();
+        }
         private void UpdateCustomZipFile(int tenant, string LoggingUserId)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CustomsClosedTable");
@@ -269,7 +310,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                             LogMessagingUtil.Instance.Append(
                             @"1344:InternationalSite:Calc=
  if (!string.IsNullOrWhiteSpace(dr[""extraNumericData""].ToString()))
-     CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
+     CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(tenant));
         var myCountry = customsCountryQueryService.GetSingleByMalamID(newResponseTableData.extraNumericData.ToString());
         if (myCountry != null && !string.IsNullOrWhiteSpace(myCountry.Code))
         {
@@ -283,7 +324,7 @@ ID List :
                                                         if (!string.IsNullOrWhiteSpace(dr["ExtraNumericData"].ToString()))
                                                         {
                                                             LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                            CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(0));
+                                                            CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(CustomContext.GetContext(tenant));
                                                             if (!string.IsNullOrWhiteSpace(newResponseTableData.extraNumericData.ToString()))
                                                             {
                                                                 var myCountry = customsCountryQueryService.GetSingleByMalamID(newResponseTableData.extraNumericData.ToString());
@@ -1444,7 +1485,7 @@ ID List :
         }
         public override void OnRequestFail(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
         {
-            CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(0));
+            CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(CustomContext.GetContext(requestParams.Tenant));
             CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = requestParams.TableId });
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
 

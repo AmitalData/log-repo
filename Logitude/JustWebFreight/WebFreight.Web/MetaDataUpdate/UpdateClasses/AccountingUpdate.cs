@@ -1,10 +1,10 @@
 ﻿using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -86,11 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         {
             string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
 
-            if (enviroment == "azure app service")
-                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
-
-            else
-            {
+      
                 GlobalDBRepository globalDbRep = new GlobalDBRepository();
                 List<GlobalDB> dbList = globalDbRep.GetGlobalDBs().ToList();
 
@@ -98,7 +94,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
                 {
                     LoadBaseTablesForConnection(db.DBConnection);
                 }
-            }
+             
         }
        
         public void UpgradeClosedTablesForTenantZero()
@@ -106,11 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             isUpdate = true;
 
             string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-            if (enviroment == "azure app service")
-                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
-
-            else
-            {
+           
                 List<GlobalDB> dbList = null;
                 using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
                 {
@@ -123,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
                 {
                     LoadBaseTablesForConnection(db.DBConnection);
                 }
-            }
+             
         }
 
         // ------ Closed Tables Data -------- //

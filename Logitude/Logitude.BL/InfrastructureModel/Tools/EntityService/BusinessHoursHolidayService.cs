@@ -2,7 +2,7 @@
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -61,6 +61,16 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
            
             BusinessHoursHolidayMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
+            entityRepository.SubmitChanges();
+        }
+
+
+        public void Delete(BusinessHoursHolidayPM entityPM)
+        {
+            this.isNewEntity = false;
+            this.entityPm = entityPM;
+            this.Poco = entityRepository.GetSingleBusinessHoursHolidays(entityPM.Id, entityPm.Tenant);
+            entityRepository.Remove(Poco);
             entityRepository.SubmitChanges();
         }
     }

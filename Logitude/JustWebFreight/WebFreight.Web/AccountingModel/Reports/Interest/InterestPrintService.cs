@@ -1,10 +1,12 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.InterestService;
+using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
@@ -69,6 +71,49 @@ using WebFreight.Web.Helpers;
                    }).ToList(),
             }).ToList();
 
+            List<FutureInterestTransactionProvider> futureInterestTransactions = new List<FutureInterestTransactionProvider>();
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            InterestTransactionListQueryService interestTransactionQueryService = new InterestTransactionListQueryService(context);
+            DateTime reportMonthLastDay = DateTimeStaticExtention.GetLastDayOfMonth(InteerstReportPM.InterestCalculationDate.Date);
+            IQueryable<InterestTransactionList> futureQuery = interestTransactionQueryService.GetFutureInterestTransactionsByInterestReportMonth(reportMonthLastDay, tenant);
+            if (futureQuery != null)
+            { 
+                List<InterestTransactionList> transactionLists = futureQuery.ToList();
+                if (transactionLists.Count > 0) 
+                { 
+                    foreach (InterestTransactionList transactionList in transactionLists)
+                    {
+                        FutureInterestTransactionProvider futureInterestTransactionProvider = new FutureInterestTransactionProvider()
+                        { 
+                            AccountEntityCode = transactionList.AccountEntityCode,
+                            AccountingEntityCode = transactionList.AccountingEntityCode,
+                            AccountingDate = transactionList.AccountingDate,
+                            CreateDateTime = transactionList.CreateDateTime,    
+                            CurrencyCode = transactionList.CurrencyCode,
+                            ForeignAmount = transactionList.ForeignAmount,
+                            EntityType = transactionList.InterestEntityIconCode,
+                            EntityNumber = transactionList.InterestEntityNumber,
+                            InterestValueDate = transactionList.InterestValueDate,
+                            IsCancelled = transactionList.IsCancelled,
+                            IsClosed = transactionList.IsClosed,
+                            InterestEntityTypeCode = transactionList.InterestEntityTypeCode,
+                            InterestEntityType = transactionList.InterestEntityType, 
+                            JournalNumber = transactionList.JournalNumber,
+                            LocalAmount = transactionList.LocalAmount,
+                            Notes = transactionList.Notes,
+                            OriginalEntityLineNumber = transactionList.OriginalEntityLineNumber,
+                            SearchFields = transactionList.SearchFields,
+                            Source = transactionList.Source,
+                            SourceType = transactionList.SourceType,
+                            SourceTypeCode = transactionList.SourceTypeCode,
+                            Tenant = transactionList.Tenant,
+                        };
+                        futureInterestTransactions.Add(futureInterestTransactionProvider);
+                    }
+                }
+            }
+            InterestReportDP.FutureInterestTransactions = futureInterestTransactions;
+
             GetGLAccountDisplayNumber(tenant, InterestReportDP, InteerstReportPM);
 
             InterestReportDP.OpenBalance = InteerstReportPM.OpenBalance;
@@ -105,7 +150,6 @@ using WebFreight.Web.Helpers;
             return null;
         }
 
-
         private static decimal? GetPostponedChequesCommission(string glaccountId, int tenant)
         {
             GLAccountQueryService glAccountQuery = new GLAccountQueryService(tenant);
@@ -124,5 +168,18 @@ using WebFreight.Web.Helpers;
                 return 0;
             }
         }
+
+
+    }
+
+    public static class DateTimeStaticExtention
+    {
+        public static DateTime GetLastDayOfMonth(this DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, DateTime.DaysInMonth(dateTime.Year, dateTime.Month));
+        }
+
+
+        
     }
 }

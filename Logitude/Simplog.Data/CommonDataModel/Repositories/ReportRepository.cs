@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -142,6 +142,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.Reports
                     where record.Tenant != 0
+                    select record);
+        }
+
+        public IQueryable<Report> GetReportsToUpdateAvailableForScheduling (string code,bool availableForScheduling)
+        {
+            return (from record in context.Reports
+                    where record.Code ==code && record.Tenant !=0 && record.AvailableForScheduling!= availableForScheduling
                     select record);
         }
     }

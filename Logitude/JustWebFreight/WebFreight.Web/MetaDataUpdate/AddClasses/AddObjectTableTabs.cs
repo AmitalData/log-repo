@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
@@ -36,9 +36,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTableTab.HtmlComponentName = objectTableTabDetails.HtmlComponentName;
                 objectTableTab.HtmlComponentUrl = objectTableTabDetails.HtmlComponentUrl;
                 objectTableTab.FeatureUniqeCode = objectTableTabDetails.FeatureUniqeCode;
+				objectTableTab.IsLocked = objectTableTabDetails.IsLocked;
 
 
-                objectTableTabRepository.Update(objectTableTab);
+				objectTableTabRepository.Update(objectTableTab);
             }
             else
             {
@@ -56,7 +57,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     HtmlComponentName = objectTableTabDetails.HtmlComponentName,
                     HtmlComponentUrl = objectTableTabDetails.HtmlComponentUrl,
                     FeatureUniqeCode = objectTableTabDetails.FeatureUniqeCode,
-
+                    IsLocked = objectTableTabDetails.IsLocked
 
                 };
  

@@ -144,14 +144,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
             if (requestParams.TestCase != null)
             {
                 BuildRequestContentHeaderB4Sign(customRequest);
-                 
-
-                        //var Fake2892 = new Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService(requestParams);
-                //_ResponseHeader= Fake2892.CallWS(out response);
-
-           
-            exceptionMessage = null;
-            return response;
+                switch (requestParams.TestCase.Code)
+                {
+                    case "8235Valid":
+                        var Fake8237ValidMsg = new Fake_DF_NG_8237_ValidExportDeclerationAmendmentReplyResponseService(requestParams);
+                        _ResponseHeader = Fake8237ValidMsg.CallWS(requestParams, out response);
+                        break;
+                    case "8235Rejected":
+                        var Fake8237NotValidMsg = new Fake_DF_NG_8237_NotValidExportDeclerationAmendmentReplyResponseService(requestParams);
+                        _ResponseHeader = Fake8237NotValidMsg.CallWS(requestParams, out response);
+                        break;
+                }
+                exceptionMessage = null;
+                return response;
          
             }
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };

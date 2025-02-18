@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.Mocks;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -650,7 +650,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.AmountInInvoiceCurrency == 0)
                 {
                     //***102417/
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("APInvoiceNormalService.InitializeComponent: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("APINV_PD:APInvoiceNormalService.InitializeComponent: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
                         + ", SetApproved"
                         + ", old status= " + entityPM.StatusCode
                         + ", AmountInInvoiceCurrency= " + entityPM.AmountInInvoiceCurrency.ToString());
@@ -1855,7 +1855,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             else
                             {
                                 //***102417/
-                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("APInvoiceNormalService.UpdateInvoiceAmountDue: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
+                                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("APINV_PD:APInvoiceNormalService.UpdateInvoiceAmountDue: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
                                 + ", old status= " + entityPM.StatusCode
                                 + ", invoicepayments.Count= " + invoicepayments.Count.ToString()
                                 + ", connectedPaymentAmount= " + conntectedPaymentAmount.ToString()

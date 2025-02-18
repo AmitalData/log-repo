@@ -42,9 +42,9 @@ import { AmitalAPIAddApiWindowComponent } from './AmitalAPI/WindowsComponent/Ami
 import { AmitalAPIAddClientWindowComponent } from './AmitalAPI/WindowsComponent/AmitalAPIAddClientWindowComponent';
 import { AmitalAPIAddSchemaWindowComponent } from './AmitalAPI/WindowsComponent/AmitalAPIAddSchemaWindowComponent';
 import { AmitalAPISchemaTable } from './AmitalAPI/components/AmitalAPISchemaTable';
-import { CloseSaveButtonsComponent } from './AmitalAPI/components/CloseSaveButtonsComponent';
 import { LogTexBoxFormComponent } from './AmitalAPI/components/LogTexBoxFormComponent';
 import { LogitudeGridSimpleComponent } from './AmitalAPI/components/LogitudeGridSimpleComponent';
+
 
 export const Components =
     [
@@ -92,7 +92,6 @@ export const Components =
         AmitalAPIAddSchemaWindowComponent,
         AmitalAPISchemaTable,
         LogTexBoxFormComponent,
-        CloseSaveButtonsComponent,
         AmitalAPIRequestsComponent,
         LogitudeGridSimpleComponent,
     ];
@@ -147,7 +146,6 @@ export class ModuleDeclarations {
             case "AmitalAPIAddSchemaWindowComponent": { myResult = AmitalAPIAddSchemaWindowComponent; break; }
             case "AmitalAPISchemaTable": { myResult = AmitalAPISchemaTable; break; }
             case "LogTexBoxFormComponent": { myResult = LogTexBoxFormComponent; break; }
-            case "CloseSaveButtonsComponent": { myResult = CloseSaveButtonsComponent; break; }
             case "AmitalAPIRequestsComponent": { myResult = AmitalAPIRequestsComponent; break; }
             case "LogitudeGridSimpleComponent": { myResult = LogitudeGridSimpleComponent; break; }            
         }

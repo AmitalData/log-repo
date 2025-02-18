@@ -1,11 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Server.Infrastructure;
-using System;
-using Simplog.Data.Helpers;
 using System.Text;
+using Simplog.Data.Helpers;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
@@ -320,7 +320,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return context.Shipments
                 .Include("AccountManagerUser.Contact")
                 .Include("SalesmanUser.Contact")
-                .Where(e=>e.Id ==id && e.Tenant == tenant).FirstOrDefault();
+                .Where(e => e.Id == id && e.Tenant == tenant).FirstOrDefault();
         }
 
         public Shipment GetSingleShipmentOnlyByNumber(string number, int tenant)
@@ -365,6 +365,27 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             IQueryable<ShipmentDataView> result = (from f in dataViewEntities.ShipmentDataViews where f.Tenant == tenant select f);
             return result;
         }
+
+        public IQueryable<CustomsShipmentDataView> GetCustomsShipmentViewsByTenant(int tenant)
+        {
+            IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
+
+            if (useSecondaryDB)
+            {
+                dataViewEntities = ShipmentDataViewContext.GetSecContext(tenant);
+            }
+            // For Testing the ElasticSearch Indexer
+            // Temporary Code, need to be removed
+            if (tenant == 0)
+            {
+                return (from f in dataViewEntities.CustomsShipmentDataView select f);
+            }
+
+            // end of Temporary Code
+            IQueryable<CustomsShipmentDataView> result = (from f in dataViewEntities.CustomsShipmentDataView where f.Tenant == tenant select f);
+            return result;
+        }
+
         public IQueryable<LogBoxShipmentDataView> GetLogBoxShipmentViewsByTenant(int tenant)
         {
             ILogBoxShipmentDataViewContext dataViewEntities = LogBoxShipmentDataViewContext.GetContext(tenant);
@@ -758,7 +779,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return shipments;
         }
         public IQueryable<Shipment> GetShipmentsForUnpaidInvoicesReportWithInnerSelect(int tenant)
-        { 
+        {
             IQueryable<Shipment> shipments = from a in context.Shipments.Include("ShipperCard").Include("ShipmentMasterData").Include("ToPort")
                                              where (from entity in context.ARInvoicesForReports
                                                     where entity.Tenant == tenant && entity.StatusCode != "LL" && !entity.IsConstituentInvoice

@@ -1,7 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Infrastructure.BL.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.Accounting.BL.EntityQueryServices;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class AccountingEntegrityCheckController : ApiController
     {

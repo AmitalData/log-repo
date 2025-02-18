@@ -132,7 +132,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     SetUIProperties() {
         var isVatNumberRequired = false;
 
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && this.EntityPM.VendorCountry === "ISRAEL") {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
                 isVatNumberRequired = true;
             }
@@ -775,7 +775,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
             this.AddReuiredErrorMessage("APInvoice.F.DueDate");
         }
 
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && this.EntityPM.VendorCountry === "ISRAEL") {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
                 this.AddReuiredErrorMessage("APInvoice.F.VATNumber");
             }

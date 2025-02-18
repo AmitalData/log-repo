@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -128,7 +128,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        CourierDeclarationStatusCode = myJoinCourierDeclarationStatuses.CourierDeclarationStatusCode,
                                                        CourierManifestStatusCode = myJoinCourierDeclarationStatuses.CourierManifestStatusCode,
                                                        IsCourierMissingClassification = myJoinCourierDeclarationStatuses.IsCourierMissingClassification,
-
+                                                       IsReadyForInvoice =a.IsReadyForInvoice
 
                                                       
 

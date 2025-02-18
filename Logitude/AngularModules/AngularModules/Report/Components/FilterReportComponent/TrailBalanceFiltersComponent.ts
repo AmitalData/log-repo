@@ -60,6 +60,8 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     isChartOfAccountsTypesDisabled: boolean = false;
     isChartOfAccountsDisabled: boolean = false;
     isOpened: boolean = false;
+    ChartOfAccountsSelectedValue:string
+    ChartOfAccountsTypeSelectedValue: string;
 
     constructor()
     {
@@ -96,7 +98,120 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         this.LoadResources();
 
     }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        this.IsSchedulerReport = isSchedulerReport;
+        this.GetDropDownItemsData()
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+        this.SetEnabledProperties();
+    }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+         
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        switch (queryFilterItem.FieldName) {
+            case "FromDate":
+                this.FromDate = new Date(queryFilterItem.FieldValue);
+                break;
+            case "ToDate":
+                this.ToDate =new Date(queryFilterItem.FieldValue);
+                break;
+            case "Level":{
+                this.level = queryFilterItem.FieldValue;
+                this.FilterSelectedValue = queryFilterItem.FieldValue;
+                    break;
+            }
+                   
+            case "Category1":{
+                    this.Category1 = queryFilterItem.FieldValue;
+                    if(this.Category1)
+                    this.SelectedCategory = "Category 1";
+                    break;
+            }
+                       
+            case "Category2":{
+                    this.Category2 = queryFilterItem.FieldValue;
+                    if(this.Category2)
+                    this.SelectedCategory = "Category 2";
+                    break;
+            }
+                 case "Category3":{
+                    this.Category3 = queryFilterItem.FieldValue;
+                    if(this.Category3)
+                    this.SelectedCategory = "Category 3";
+                    break;
+                 }
+                case "Category4":{
+                    this.Category4 = queryFilterItem.FieldValue;
+                    if(this.Category4)
+                    this.SelectedCategory = "Category 4";
+                    break;
+                }
+                   
+                case "Category5":{
+                    this.Category5 = queryFilterItem.FieldValue;
+                    if(this.Category5)
+                       this.SelectedCategory = "Category 5";
+                    break;
+                }
+                case "CurrencyDetailed":
+                    this.CurrencyFilter = queryFilterItem.FieldValue;
+                                            break;
+                case "DetailedForCustomers":
+                    this.DetailedForCustomers = queryFilterItem.FieldValue;
+                                                break;
+                case "DetailedForFiles":
+                    this.DetailedForFiles = queryFilterItem.FieldValue;
+                                                    break;
+                case "DetailedForJobs":
+                    this.DetailedForJobs = queryFilterItem.FieldValue;
+                                                        break;
+                case "DetailedForVendors":
+                    this.DetailedForVendors = queryFilterItem.FieldValue;
+                                                            break;
+                case "DontShowCardsWith0Balance":
+                    this.DontShowCardsWith0Balance = queryFilterItem.FieldValue;
+                                                                break;
+                case "ChartOfAccountId":
+                    this.ChartOfAccountId = queryFilterItem.FieldValue;
+                                                                    break;
+                case "ChartOfAccountsTypeCodeList":{
+                    this.ChartOfAccountsTypeSelectedValue = queryFilterItem.FieldValue;
+                    if(this.ChartOfAccountsTypeSelectedValue?.split(',').length>0 )
+                        this.chartOfAccountsTypeComboboxValue="NotAll";
+                    else
+                        this.chartOfAccountsTypeComboboxValue="All"
+                    break;
+                }
+                    
+                case "ChartOfAccountsIdList":{
+                    this.ChartOfAccountsSelectedValue = queryFilterItem.FieldValue;
+                    if(this.ChartOfAccountsSelectedValue?.split(',').length>0 )
+                        this.chartOfAccountsComboBoxValue="NotAll";
+                    else
+                        this.chartOfAccountsComboBoxValue="All";
+                    break;
 
+                }
+
+                                        
+               
+           
+        }
+
+    }
     isReady = false;
     private LoadResources()
     {
@@ -119,7 +234,11 @@ export class TrailBalanceFiltersComponent extends BaseComponent
             .subscribe((arg: any) =>
             {
                 this.chartOfAccounts = arg.Result;                
-                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`}}).sort((a, b) => a.Code - b.Code);
+                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,
+                    Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`,
+                    Checked: this.ChartOfAccountsSelectedValue?.split(',').some(selectedItem =>this.ChartOfAccountsComboBoxValue=="NotAll" && (selectedItem === item.Id || selectedItem === item.Code))
+
+                }}).sort((a, b) => a.Code - b.Code);
             });
     }
     private getChartOfAccountsTypes()
@@ -130,7 +249,11 @@ export class TrailBalanceFiltersComponent extends BaseComponent
             .subscribe((arg: any) =>
             {
                 this.chartOfAccountsTypes = arg.Result;
-                this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item=>{return{...item,Name: item.LocalName||item.EnglishName}});
+                this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item=>{return{...item,
+                    Name: item.LocalName||item.EnglishName,
+                    Checked: this.ChartOfAccountsTypeSelectedValue?.split(',').some(selectedItem =>this.ChartOfAccountsTypeComboboxValue=="NotAll" && (selectedItem === item.Id || selectedItem === item.Code))
+
+                }});
             });
     }
 
@@ -455,7 +578,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
     public FilterSelectedValue: string = 'ChartOfAccountType';
     FilterItemClicked(itemValue: string)
-    {debugger
+    {
         if (this.FilterSelectedValue != itemValue) {
             this.FilterSelectedValue = itemValue;
             this.Level = itemValue;
@@ -499,8 +622,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         this.SelectedCategory = item;
     }
     //#endregion
-    RunReport()
-    {
+    ValidateSelectedFilters(){
         this.ValidationErrorsList = [];
 
         if (this.ToDate == null) {
@@ -526,52 +648,12 @@ export class TrailBalanceFiltersComponent extends BaseComponent
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
         }
 
-
-        if (this.ValidationErrorsList.length == 0) {
-
-            this.queryFilterItems = new Array<QueryFilterItem>();
-
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ToDate";
-            this.queryFilterItem.FieldValue = this.ToDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "LessThanOrEqual";
-            this.queryFilterItems.push(this.queryFilterItem);
-            if (!this.Level) this.Level = "ChartOfAccountType";
-            this.queryFilterItems.push(new QueryFilterItem("Level", this.Level));
-            //if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
-            //    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
-            //    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
-            //}
-
-            //else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
-            //    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "2"));
-            //}
-            //else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITH") {
-            //    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "1"));
-            //}
-            this.queryFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
-            this.queryFilterItems.push(new QueryFilterItem("Category1", this.Category1, "String"));
-            this.queryFilterItems.push(new QueryFilterItem("Category2", this.Category2, "String"));
-            this.queryFilterItems.push(new QueryFilterItem("Category3", this.Category3, "String"));
-            this.queryFilterItems.push(new QueryFilterItem("Category4", this.Category4, "String"));
-            this.queryFilterItems.push(new QueryFilterItem("Category5", this.Category5, "String"));
-            this.queryFilterItems.push(new QueryFilterItem("CurrencyDetailed", this.CurrencyFilter, "boolean"));
-            this.queryFilterItems.push(new QueryFilterItem("DetailedForCustomers", this.DetailedForCustomers, "boolean"));
-            this.queryFilterItems.push(new QueryFilterItem("DetailedForFiles", this.DetailedForFiles, "boolean"));
-            this.queryFilterItems.push(new QueryFilterItem("DetailedForJobs", this.DetailedForJobs, "boolean"));
-            this.queryFilterItems.push(new QueryFilterItem("DetailedForVendors", this.DetailedForVendors, "boolean"));
-
-            this.queryFilterItems.push(new QueryFilterItem("DontShowCardsWith0Balance", this.DontShowCardsWith0Balance, "boolean"));
-            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountId", this.ChartOfAccountId, "String"));
-
-            if(this.selectedChartOfAccountsTypes)
-                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList",  this.selectedChartOfAccountsTypes.map(item=>item.Code).join(','), "String"));
-            if(this.selectedChartOfAccounts)
-                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.selectedChartOfAccounts.map(item=>item.Id).join(','), "String"));
-
+        return this.ValidationErrorsList.length == 0;
+    }
+    RunReport()
+    {
+       
+        if (this.ValidateSelectedFilters()) {
 
 
 
@@ -579,7 +661,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
             this.reportFliter = new ReportFliter();
             //this.reportFliter.Level = this.Level;
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
 
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
@@ -596,6 +678,53 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
 
         }
+
+    }
+    GetQueryFilterItems(){
+
+        this.queryFilterItems = new Array<QueryFilterItem>();
+
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "ToDate";
+        this.queryFilterItem.FieldValue = this.ToDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "LessThanOrEqual";
+        this.queryFilterItems.push(this.queryFilterItem);
+        if (!this.Level) this.Level = "ChartOfAccountType";
+        this.queryFilterItems.push(new QueryFilterItem("Level", this.Level));
+        //if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
+        //    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
+        //    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
+        //}
+
+        //else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
+        //    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "2"));
+        //}
+        //else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITH") {
+        //    this.queryFilterItems.push(new QueryFilterItem("CardFilter", "1"));
+        //}
+        this.queryFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
+        this.queryFilterItems.push(new QueryFilterItem("Category1", this.Category1, "String"));
+        this.queryFilterItems.push(new QueryFilterItem("Category2", this.Category2, "String"));
+        this.queryFilterItems.push(new QueryFilterItem("Category3", this.Category3, "String"));
+        this.queryFilterItems.push(new QueryFilterItem("Category4", this.Category4, "String"));
+        this.queryFilterItems.push(new QueryFilterItem("Category5", this.Category5, "String"));
+        this.queryFilterItems.push(new QueryFilterItem("CurrencyDetailed", this.CurrencyFilter, "boolean"));
+        this.queryFilterItems.push(new QueryFilterItem("DetailedForCustomers", this.DetailedForCustomers, "boolean"));
+        this.queryFilterItems.push(new QueryFilterItem("DetailedForFiles", this.DetailedForFiles, "boolean"));
+        this.queryFilterItems.push(new QueryFilterItem("DetailedForJobs", this.DetailedForJobs, "boolean"));
+        this.queryFilterItems.push(new QueryFilterItem("DetailedForVendors", this.DetailedForVendors, "boolean"));
+
+        this.queryFilterItems.push(new QueryFilterItem("DontShowCardsWith0Balance", this.DontShowCardsWith0Balance, "boolean"));
+        this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountId", this.ChartOfAccountId, "String"));
+
+        if(this.selectedChartOfAccountsTypes)
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList",  this.selectedChartOfAccountsTypes.map(item=>item.Code).join(','), "String"));
+        if(this.selectedChartOfAccounts)
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.selectedChartOfAccounts.map(item=>item.Id).join(','), "String"));
+        return this.queryFilterItems;
 
     }
 

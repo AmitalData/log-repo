@@ -26,6 +26,13 @@ import {GroupageContainerComponent} from './Components/Windows/Groupage/Groupage
 import { HarmonizesComponent } from './Components/Windows/Harmonizes/HarmonizesComponent';
 import { ProductItemsTabComponent } from './Components/ProductItems/ProductItemsTabComponent';
 import { EditCustomerProductItemComponent } from './Components/ProductItems/EditCustomerProductItemComponent';
+import { ShipmentPackagesTabComponent } from './Components/ShipmentPackages/ShipmentPackagesTabComponent';
+import { ShipmentDataTabComponent } from './Components/ShipmentData/ShipmentDataTabComponent';
+import { ShipmentReferenceDetailsComponent } from './Components/ShipmentData/ShipmentReferenceDetails/ShipmentReferenceDetailsComponent';
+import { FreightForwarderReferenceDetailsComponent } from './Components/ShipmentData/FreightForwarderReferenceDetails/FreightForwarderReferenceDetailsComponent';
+import { InlandTransportTabComponent } from './Components/InlandTransport/InlandTransportTabComponent';
+import { AddEditInlandTransportComponent } from './Components/InlandTransport/AddEditInlandTransportComponent';
+import { InlandTransportMainTabComponent } from './Components/InlandTransport/InlandTransportTabs/InlandTransportMainTabComponent';
 
 export const Components =
     [
@@ -39,6 +46,12 @@ export const Components =
         ShipmentAuditTabComponent,
         OverviewTabComponent,
         CustomsTabComponent,
+        ShipmentPackagesTabComponent,
+        ShipmentDataTabComponent,
+        InlandTransportTabComponent,
+        AddEditInlandTransportComponent,
+        InlandTransportMainTabComponent,
+        ShipmentReferenceDetailsComponent,
         ExportFileComponent,
         OrdersTabComponent,
         AddEditOrderPackageComponent,
@@ -57,6 +70,7 @@ export const Components =
         HarmonizesComponent,
         ProductItemsTabComponent,
         EditCustomerProductItemComponent,
+        FreightForwarderReferenceDetailsComponent
     ];
 
 export class ModuleDeclarations {
@@ -93,6 +107,14 @@ export class ModuleDeclarations {
             case "HarmonizesComponent": { myResult = HarmonizesComponent; break; }
             case "ProductItemsTabComponent": { myResult = ProductItemsTabComponent; break; }
             case "EditCustomerProductItemComponent": { myResult = EditCustomerProductItemComponent; break; }
+            case "ShipmentPackagesTabComponent" : { myResult = ShipmentPackagesTabComponent; break; }
+            case "ShipmentDataTabComponent" : { myResult = ShipmentDataTabComponent; break; }
+            case "InlandTransportTabComponent" : { myResult = InlandTransportTabComponent; break; }
+            case "AddEditInlandTransportComponent" : { myResult = AddEditInlandTransportComponent; break; }
+            case "InlandTransportMainTabComponent" : { myResult = InlandTransportMainTabComponent; break; }
+            case "ShipmentReferenceDetailsComponent" : { myResult = ShipmentReferenceDetailsComponent; break; }
+            case "FreightForwarderReferenceDetailsComponent" : { myResult = FreightForwarderReferenceDetailsComponent; break; }
+
         }
 
         return myResult;

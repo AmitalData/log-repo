@@ -53,7 +53,7 @@ namespace CustomsWorkerRole
             using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
             {
                 LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
-                CustomDbQueueService _CustomDbQueueService = new CustomDbQueueService(myClass, 0, item);
+                CustomDbQueueService _CustomDbQueueService = new CustomDbQueueService(myClass, SettingUtil.GetTenantDBFromConfig(), item);
                 bool successProcessMessage = true;
 
                 successProcessMessage = ProcessMessage_Db(item, myClass);
@@ -99,12 +99,22 @@ namespace CustomsWorkerRole
                 {
                     string morethan = "";
                     string str = LogMessagingUtilWR.Instance.GetString(out morethan);
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(str + "_" + morethan);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(str);
+                    
                 }
             }
         }
 
-      
+        private void LogTime(string msg)
+        {
+            DateTime stopLogAt = new DateTime(2023, 06, 01);
+            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
+            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+            msg += DateTime.Now.ToString();
+
+            LogitudeSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
+        }
 
         protected virtual bool ProcessMessage_Db(CustomDBQueueMessage msgResponse, string myClass)
         {
@@ -121,7 +131,7 @@ namespace CustomsWorkerRole
 
                 if (String.IsNullOrWhiteSpace(analyzeClass))
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError("analyzeClass is null");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("analyzeClass is null" + ":" + "rabbitmq");
                     //_CustomDbQueueService.SafeAbandon();
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :analyzeClass ==null", null);
                     //message.DeadLetter();
@@ -139,7 +149,7 @@ namespace CustomsWorkerRole
                 int.TryParse(msgResponse.Properties["Tenant"].ToString(), out tenant);
                 if (tenant == -1)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError("Tenant is null");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("Tenant is null" + ":" + "rabbitmq");
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :tenant==-1", null);
                     return false;
                 }

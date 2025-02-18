@@ -17,7 +17,7 @@ using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -321,7 +321,7 @@ namespace Logitude.Accounting.BL.Validators
             if (debugit)
             {
                 var serializedObject = ProxyUtil.JsonConvertSerialize(myJournalPM);
-                Debug.WriteLine(serializedObject);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(serializedObject);
             }
             var errorsList = new MyList<string>();
             

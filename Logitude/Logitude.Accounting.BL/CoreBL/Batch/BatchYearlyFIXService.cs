@@ -53,7 +53,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                                 catch (Exception E) when (E.Message == ReverseEngineerTotalByMonth_ControlAccountService.const_isokNothingDone)
                                 {
 
-                                    Debug.WriteLine("const_isokNothingDone");
+                                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("const_isokNothingDone");
                                     //throw;
                                 }
                                 break;
@@ -68,7 +68,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                                 catch (Exception E) when (E.Message == ReverseEngineerTotalByMonth_ControlAccountService.const_isokNothingDone)
                                 {
 
-                                    Debug.WriteLine("const_isokNothingDone");
+                                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("const_isokNothingDone");
                                     //throw;
                                 }
                                 break;

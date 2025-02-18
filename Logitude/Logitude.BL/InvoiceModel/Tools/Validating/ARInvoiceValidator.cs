@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -549,7 +549,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         throw new ApplicationException("Wrong Line Local Amount");
                     }
-                    if (IsFullAccountingActivated(entityPM.Tenant) && item.ForiegnExchangeRate != null)
+                    if (IsFullAccountingActivated(entityPM.Tenant) && item.ForiegnExchangeRate != null && !entityPM.IsExternalEntity)
                     {
                         CheckForeignAmountForInvoiceLineFullAccounting(item);
                     }
@@ -569,7 +569,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         //   if (item.InvoiceCurrencyExchangeRate == null) item.InvoiceCurrencyExchangeRate = entityPM.InvoiceCurrencyExchangeRate;
                         //  lineInvoiceAmount_Computed = IsFullAccountingActivated(entityPM.Tenant) ? MethodHelper.Round(item.ForiegnCurrencyAmount * item.InvoiceCurrencyExchangeRate, 2) : lineInvoiceAmount_Computed;
-                        if (IsFullAccountingActivated(entityPM.Tenant))
+                        if (IsFullAccountingActivated(entityPM.Tenant) && !entityPM.IsExternalEntity)
                         {
                             CheckFullAccountingLineLocalAmount(item);
                         }
@@ -753,11 +753,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     double computedInvoiceAmount = (double)(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate.Value);
                     localAmount_Computed = MethodHelper.Round(localAmount_Computed, 2);
                     var difference = Math.Abs((double)(localAmount - localAmount_Computed));
-                    if (localAmount != localAmount_Computed && difference > 0.011)
+                    if (localAmount != localAmount_Computed && difference > 0.011 && !entityPM.IsExternalEntity)
                     {
                         throw new ApplicationException("Wrong Invoice Local Amount");
                     }
-                    if (IsFullAccountingActivated(entityPM.Tenant))
+                    if (IsFullAccountingActivated(entityPM.Tenant) && !entityPM.IsExternalEntity)
                     {
                         computedInvoiceAmount = Math.Round(computedInvoiceAmount, 2);
                         if (Math.Abs((double)(computedInvoiceAmount - localAmount)) >= 0.1)

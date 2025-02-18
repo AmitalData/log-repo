@@ -4,7 +4,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Amital;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -172,7 +172,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
 
 
-        public HttpResponseMessage GetSkipAutoInsurance(string customerCode, int tenant)
+        public HttpResponseMessage GetSkipAutoInsurance(string customerCode, int tenant,string direction)
         {
 
             try
@@ -183,7 +183,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                var skipautoinsurance = GetSkipAutoInsurancePrivate(customerCode, tenant);
+                var skipautoinsurance = direction == "E" ? false: GetSkipAutoInsurancePrivate(customerCode, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, new { SkipAutoInsurance = skipautoinsurance });
             }
@@ -203,12 +203,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return true;
             }
-            var customsSettingQueryService = new CustomsSettingQueryService(tenant);
-            var pm=customsSettingQueryService.GetSettingByTenantN(tenant);
-            if (!pm.IsConnectedToUniFreight)
-            {
-                return true;
-            }
+ 
             string UNFAutoInsurance_DefaultValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_AUTO_INSUR", "NON", "NON", tenant);
             if (String.IsNullOrWhiteSpace(UNFAutoInsurance_DefaultValue))
             {
@@ -409,7 +404,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                  SecurityUtility.AuthenticationOnTenant(tenant);
 
 
-                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                ICustomContext MyContext = CustomContext.GetContext(0);
 
                 CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(MyContext);
 

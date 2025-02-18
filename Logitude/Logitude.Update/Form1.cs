@@ -40,11 +40,11 @@ using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.VisualBasic.FileIO;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.ShipmentsModel;
@@ -89,7 +89,7 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using WebFreight.Web.MetaDataUpdate;
-using WebFreight.Web.MetaDataUpdate.SendBox;
+//using WebFreight.Web.MetaDataUpdate.SendBox;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.StorageService;
 using System.Web;
@@ -114,6 +114,7 @@ using Logitude.Server.Tools.TreeFilterQuery;
 using Newtonsoft.Json;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using WebFreight.Web.GlobalModel;
 
 
 namespace Logitude.Update
@@ -187,7 +188,13 @@ namespace Logitude.Update
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
             InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
-            CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
+            Dictionary<int, string> globalDBs = new Dictionary<int, string>();
+            List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
+            foreach (var item in globalTenants)
+            {
+                globalDBs.Add(item.Id, item.GlobalDBId);
+            }
+            CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache, globalDBs);
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -289,7 +296,7 @@ namespace Logitude.Update
             Thread thread = new Thread(() =>
             {
                 UpdateModule(0, "customs", UpdateCustomslbl);
-                Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
+                Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory(0);
                 Logitude.BL.Helpers.TableLastUpdateClass.UpdateSystemMetaDataHistory();
 
 
@@ -1035,7 +1042,7 @@ User/Pass",
         //    //serivce.Update(customSettings,true);
 
 
-        //    ICustomContext customContext = CustomContext.GetContext(0);
+        //    ICustomContext customContext = CustomContext.GetContext(tenant);
         //    CustomDocumentTypeMetaDataRepository customDocumentTypeMetaDataRepository = new CustomDocumentTypeMetaDataRepository(customContext);
         //    List<CustomDocumentTypeMetaData> customDocumentTypeMetaDataList = customDocumentTypeMetaDataRepository.GetAll().ToList();
         //    CustomMetaDataTypeRepository metaDataTypeRepository = new CustomMetaDataTypeRepository(customContext);
@@ -1348,7 +1355,7 @@ User/Pass",
                     {
                         if (tenant.Id != 0)
                         {
-                            DocumentTypeUpdateClass.UpdateDataForTenant(tenant.Id, "");
+                           // DocumentTypeUpdateClass.UpdateDataForTenant(tenant.Id, "");
                             label1.Text = "Update tenant" + tenant.Id + "completed successfully";
                         }
                     }
@@ -1993,7 +2000,7 @@ User/Pass",
             cacheOnClientUpdateToolStripMenuItem.Click += //new System.EventHandler(this.cacheOnClientUpdateToolStripMenuItem_Click);
                 (s1, e1) =>
                 {
-                    Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
+                    Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory(0);
                 };
             this.sandBoxToolStripMenuItem.DropDownItems.Add(cacheOnClientUpdateToolStripMenuItem);
         }
@@ -2381,6 +2388,7 @@ User/Pass",
         }
         private void Run(List<DataItem> allDataLines)
         {
+            int tenant = 0;
             if (allDataLines.Count > 0)
             {
                 //List<string> allPortsCodes = allDataLines.Where(d => d.PortCode != null).Select(s => s.PortCode).ToList();
@@ -2938,7 +2946,7 @@ User/Pass",
         private void RunAddingWarehouse(List<WarehouseItem> allDataLines)
         {
             allDataLines = allDataLines.Where(d => !string.IsNullOrEmpty(d.Code) && !string.IsNullOrEmpty(d.Name) && !string.IsNullOrEmpty(d.Address1) && !string.IsNullOrEmpty(d.City)).ToList();
-
+            int tenant = 0; 
             if (allDataLines.Count > 0)
             {
                 ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
@@ -3149,7 +3157,7 @@ User/Pass",
             if (allDataLines.Count > 0)
             {
                 int tenant = int.Parse(tenant_TXT.Text);
-                ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+                ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
                 ComputingPartner ComputingPartner = myCommonContext.ComputingPartners.Where(d => d.Tenant == tenant && d.Code == "API").FirstOrDefault();
                 if (ComputingPartner != null)
                 {
@@ -3396,6 +3404,7 @@ User/Pass",
 
         private void button37_Click(object sender, EventArgs e)
         {
+            int tenant = 0;
             IAccountingContext accountingContext = AccountingContext.GetContext(0);
             JournalQueryService journalQuery = new JournalQueryService(1);
             List<Journal> journals = accountingContext.Journals.ToList();
@@ -3439,7 +3448,8 @@ User/Pass",
 
         private void btnDownloadMrt_Click(object sender, EventArgs e)
         {
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            int tenant = 0;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
             //if (contact != null)
             //{
 
@@ -3988,8 +3998,8 @@ User/Pass",
                     string[] namesArray = name.Split('.');
                     airlineCodes.Add(namesArray[0]);
                 }
-
-                ICommonDataContext context = CommonDataContext.GetContext(0);
+                int tenant = 0;
+                ICommonDataContext context = CommonDataContext.GetContext(tenant);
                 CardRepository cardRepository = new CardRepository(context);
                 List<Card> airlines = context.Cards.Where(d => d.PartnerTypeId == "AL" && airlineCodes.Contains(d.Code)).ToList();
 
@@ -4281,7 +4291,7 @@ User/Pass",
             //timer1.Enabled = true;
             //timer1.Start();
 
-            //IWebFreightContext context = WebFreightContext.GetContext(0);
+            //IWebFreightContext context = WebFreightContext.GetContext(tenant);
             //MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
             //updateClass.UpgradeClosedTablesForTenantZero();
 
@@ -4738,10 +4748,17 @@ User/Pass",
         {
             if (textBox2.Text == "0")
             {
-                var listofTenants = GetTenantListThatHasTaskScheduler();
-                foreach (var tenant in listofTenants)
+                try
                 {
-                    UpdateRatesByExternalXmlForAllTenantWithSchedular(tenant);
+                    var listofTenants = GetTenantListThatHasTaskScheduler();
+                    foreach (var tenant in listofTenants)
+                    {
+                        UpdateRatesByExternalXmlForAllTenantWithSchedular(tenant);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace($"UpdateRatesByExternalXmlForAllTenantWithSchedular error :({ex.InnerException})");
                 }
             }
             else
@@ -4755,15 +4772,22 @@ User/Pass",
 
         public static void UpdateRatesByExternalXmlForAllTenantWithSchedular(int tenant)
         {
-
-            LoggedContactResolver.RegisterLoggedContactUtil();
-            ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(tenant);
-            ratesUpdateService.UpdateRatesByExternalXml();
+            try
+            {
+                LoggedContactResolver.RegisterLoggedContactUtil();
+                ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(tenant);
+                ratesUpdateService.UpdateRatesByExternalXml();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
 
         }
         public static List<int> GetTenantListThatHasTaskScheduler()
         {
-            var objectContext = WebFreightContext.GetContext(0);
+            int tenant = 0;
+            var objectContext = WebFreightContext.GetContext(tenant);
             TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
             var list = TasksSchedulerRepository.GetTenantListThatHasTaskScheduler("ExchangeRateUpdateTask");
             return list;
@@ -4852,11 +4876,12 @@ User/Pass",
          
         private void CreateBackup()
         {
-            IAccountingContext Context = AccountingContext.GetContext(0);
+            int tenant = 0;
+            IAccountingContext Context = AccountingContext.GetContext(tenant);
             string connectionString = Context.GetConnection().ConnectionString;
             SqlConnection sqlConnection1 = new SqlConnection(connectionString);
 
-            int tenant = Convert.ToInt32(textBox3.Text);
+            tenant = Convert.ToInt32(textBox3.Text);
             SqlCommand cmd = new SqlCommand
             {
                 CommandText = String.Format("IF object_id('[dbo].[TempJournalAdditional]') IS  NULL Begin SELECT * INTO TempJournalAdditional FROM JournalAdditionalDatas End", tenant),
@@ -4930,7 +4955,7 @@ User/Pass",
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
 
             oceanInsightStatisticsSheet2 = new List<ExcelOI>();
-            ICommonDataContext context = CommonDataContext.GetContext(0);
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
 
             List<CommunicationLog> communications = context.CommunicationLogs.Where(a => a.Subject == "Ocean Insights Status"
                                                             && !string.IsNullOrEmpty(a.AWBNumber)
@@ -5680,8 +5705,8 @@ User/Pass",
                 SetControlPropertyValue(UploadTimeZonesLabel, "Text", "Uploading...");
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
-
-                ICommonDataContext commonContext = CommonDataContext.GetContext(0);
+                int tenant = 0;
+                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 PortTimeZoneRepository portTimeZoneRepository = new PortTimeZoneRepository(commonContext);
 
                 foreach (TimeZoneExcelItem item in excelTimeZones)
@@ -6621,8 +6646,8 @@ User/Pass",
         {
             if (allDataLines.Count == 0)
                 return;
-
-            ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+            int tenant = 0;
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
             logsLabel.Text = "Missed States";
             excelListView.Items.Clear();
             excelListView.Columns.Clear();

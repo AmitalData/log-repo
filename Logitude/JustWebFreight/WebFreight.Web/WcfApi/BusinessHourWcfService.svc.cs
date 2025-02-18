@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -27,7 +27,7 @@ using Logitude.Customs.Data.EntityMapping;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -69,6 +69,11 @@ namespace WebFreight.Web.WcfApi
                     else
                     {
                         entityPM.Id = businessHour.Id;
+
+                        if (entityPM.ChangeSetOp == ChangeSetOperation.Delete)
+                        {
+                            service.Delete(entityPM);
+                        }
                         service.Update(entityPM);
                     }
                   

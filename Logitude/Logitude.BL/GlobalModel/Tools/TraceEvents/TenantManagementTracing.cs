@@ -4,9 +4,9 @@ using System.Linq;
 using System.Transactions;
 using System.Web;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -33,7 +33,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                 {
 
 
-                    IGlobalContext MyGlContext = GlobalContext.GetContext(0);
+                    IGlobalContext MyGlContext = GlobalContext.GetContext(entityPM.Id);
                     TenantManagementLicenseRepository tenantManagementLicenseRepository = new TenantManagementLicenseRepository(MyGlContext);
                     var tenantManagementLicenseQuery = tenantManagementLicenseRepository.GetTenantManagementLicenses(entityPM.Id);
                     if (tenantManagementLicenseQuery != null)
@@ -75,203 +75,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                         loggedContact = contactRep.GetSingleContactByEmail("system@tenant0.com", 0);
                     }
 
-                    string notes = null;
-                    using (TransactionScope updateScope = TransactionFactory.GetNewTransaction())
-                    {    
-                        if (entityPM.IsRecurring != poco.IsRecurring)
-                        {
-                            notes = "Is recurring was updated";
-                        }
-
-                        if (entityPM.PackageCode != poco.PackageCode)
-                        {
-                            PackageRepository repo = new PackageRepository(0);
-                            Package entity_Pm = repo.GetSinglePackage(entityPM.PackageCode);
-
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = entity_Pm == null ? "Package changed" : "Package changed to " + entity_Pm.Name;
-                            }
-                            else
-                            {
-                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Package changed" : "Package changed to " + entity_Pm.Name);
-                            }
-                        }
-
-                        if (entityPM.RecurringPeriodCode != poco.RecurringPeriodCode)
-                        {
-                            RecurringPeriodRepository repo = new RecurringPeriodRepository(0);
-                            RecurringPeriod entity_Pm = repo.GetSingleRecurringPeriod(entityPM.RecurringPeriodCode);
-
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = entity_Pm == null ? "Recurring period changed" : "Recurring period changed to " + entity_Pm.Name;
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Recurring period changed" : "Recurring period changed to " + entity_Pm.Name);
-                            }
-                        }
-
-                        if (entityPM.FirstPaymentDate != poco.FirstPaymentDate)
-                        {
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = "First payment date changed from " + poco.FirstPaymentDate + " to " + entityPM.FirstPaymentDate;
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + "First payment date changed from " + poco.FirstPaymentDate + " to " + entityPM.FirstPaymentDate;
-                            }
-                        }
-
-                        if (entityPM.PaidUntilDate != poco.PaidUntilDate)
-                        {
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = "Paid until date changed from " + poco.PaidUntilDate + " to " + entityPM.PaidUntilDate;
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + "Paid until date changed from " + poco.PaidUntilDate + " to " + entityPM.PaidUntilDate;
-                            }
-                        }
-
-                        if (entityPM.PaymentCurrencyCode != poco.PaymentCurrencyCode)
-                        {
-                            PaymentCurrencyRepository repo = new PaymentCurrencyRepository(0);
-                            PaymentCurrency entity_Pm = repo.GetSinglePaymentCurrency(entityPM.PaymentCurrencyCode);
-
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = entity_Pm == null ? "Payment currency changed" : "Payment currency changed to " + entity_Pm.Name;
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Payment currency changed" : "Payment currency changed to " + entity_Pm.Name);
-                            }
-                        }
-
-                        if (entityPM.PaymentChannelCode != poco.PaymentChannelCode)
-                        {
-                            PaymentChannelRepository repo = new PaymentChannelRepository(0);
-                            PaymentChannel entity_Pm = repo.GetSinglePaymentChannel(entityPM.PaymentChannelCode);
-
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = entity_Pm == null ? "Payment channel changed" : "Payment channel changed to " + entity_Pm.Name;
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Payment channel changed" : "Payment channel changed to " + entity_Pm.Name);
-                            }
-                        }
-
-                        if (entityPM.PaymentMethodCode != poco.PaymentMethodCode)
-                        {
-                            PaymentMethodRepository repo = new PaymentMethodRepository(0);
-                            PaymentMethod entity_Pm = repo.GetSinglePaymentMethod(entityPM.PaymentMethodCode);
-
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = entity_Pm == null ? "Payment method changed" : "Payment method changed to " + entity_Pm.Name;
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Payment method changed" : "Payment method changed to " + entity_Pm.Name);
-                            }
-                        }
-
-                        if (entityPM.BluesnapAccount != poco.BluesnapAccount)
-                        {
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = "Bluesnap account was updated";
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + "Bluesnap account was updated";
-                            }
-                        }
-
-                        if (entityPM.MainContract != poco.MainContract)
-                        {
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = "Main contract was updated";
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + "Main contract was updated";
-                            }
-                        }
-
-                        if (entityPM.LicensePrice != poco.LicensePrice)
-                        {
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = "License price was updated";
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + "License price was updated";
-                            }
-                        }
-
-                        if (entityPM.BluesnapContractId != poco.BluesnapContractId)
-                        {
-                            IGlobalContext context = GlobalContext.GetContext(0);
-                            BluesnapContractRepository repo = new BluesnapContractRepository(context);
-                            BluesnapContract entity_Pm = repo.GetSingleBluesnapContract(entityPM.BluesnapContractId, 0);
-
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = entity_Pm == null ? "Bluesnap contract changed" : "Bluesnap contract changed to " + entity_Pm.Name;
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Bluesnap contract changed" : "Bluesnap contract changed to " + entity_Pm.Name);
-                            }
-                        }
-
-                        if (entityPM.BillingByLogitude != poco.BillingByLogitude)
-                        {
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = "Billing by Logitude was updated";
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + "Billing by Logitude was updated";
-                            }
-                        }
-
-                        if (entityPM.ResellerCommission != poco.ResellerCommission)
-                        {
-                            if (string.IsNullOrEmpty(notes))
-                            {
-                                notes = "Reseller commission was updated";
-                            }
-
-                            else
-                            {
-                                notes = notes + Environment.NewLine + "Reseller commission was updated";
-                            }
-                        }
-
-                        updateScope.Complete();
-                    }
+                    string notes = TenantManagementTraceEventNotes.CreateNotes(entityPM, poco);
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
@@ -545,6 +349,6 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                 notes = notes.TrimEnd(' ').TrimEnd(',') + "\n";
             }
             return notes; 
-        }
+        }       
     }
 }

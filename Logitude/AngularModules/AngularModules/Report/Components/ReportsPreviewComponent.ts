@@ -19,6 +19,7 @@ import { QueryFilterItem } from './Filters/QueryFilterItem';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { HomeComponent } from 'Infrastructure/Components/HomeComponent/HomeComponent';
 
 @Component({
     selector: 'ReportsPreviewComponent',
@@ -40,6 +41,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public IsResourcesReady: boolean = false;
     public ComponentRef: ComponentRef<ReportsPreviewComponent>;
     public IsSchedulerReport: boolean = false;
+    public IsMenuReport: boolean = false;
+
     DefaultReportTemplateId: string;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     StimulsoftArg: StimulsoftArg;
@@ -55,6 +58,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     @ViewChild('CustomerChild', { read: ViewContainerRef, static: false }) customerViewContainerRef: ViewContainerRef;
     ReportsRunUsingWR: boolean = false;
     IsUsedReportsRunUsingWR: boolean = false;
+    @Output() OnDone: EventEmitter<any> = new EventEmitter();
 
     NumberOfRequests: number = 0;
     public isRTL: boolean = false;
@@ -98,9 +102,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     QueryFilterItems: Array<QueryFilterItem>;
-    SetReportFilterItems(reportFilterItems: Array<QueryFilterItem>) {
-      this.IsSchedulerReport = true;
-        if (reportFilterItems && reportFilterItems.length!=0) {
+    SetReportFilterItems(reportFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean=true) {
+        this.IsSchedulerReport = isSchedulerReport;
+        this.IsMenuReport = !isSchedulerReport;
+          if (reportFilterItems && reportFilterItems.length!=0) {
             this.QueryFilterItems = reportFilterItems;
         }
     }
@@ -111,12 +116,17 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     GetReportFilterMainCustomerFieldName() {
-        const mainCustomerName = this.ReportFilterConmponent.GetMainCustomerFieldName();
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.GetMainCustomerFieldName === 'function') { 
+        const mainCustomerName = this.ReportFilterConmponent.GetMainCustomerFieldName()
         return mainCustomerName;
+        }
+        return null
     }
 
     IsPartnersChanged(SelectedTab) {
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.IsPartnersChanged === 'function') 
         return this.ReportFilterConmponent.IsPartnersChanged(SelectedTab);
+       return false;
     }
 
     GetReportTemplateId() {
@@ -194,12 +204,16 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     ValidateSelectedFilters() {
-        return this.ReportFilterConmponent.ValidateSelectedFilters();
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.ValidateSelectedFilters === 'function') {
+            return this.ReportFilterConmponent.ValidateSelectedFilters();
+        }
+        return true;
     }
 
     PrepareContactList() {
         this.CleanPartnersObslist();
-        this.ReportFilterConmponent.PrepareContactList();
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.PrepareContactList === 'function') 
+          this.ReportFilterConmponent.PrepareContactList();
     }
 
     LoadReportFilterComponent() {
@@ -215,13 +229,18 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 if (this.ReportFilterConmponent['InitializeComponent']) {
                     this.ReportFilterConmponent.InitializeComponent(this);
                 }
-
+                if (this.IsSchedulerReport || this.IsMenuReport) 
+                    this.ReportFilterConmponent.SetQueryFilterItems(this.QueryFilterItems,this.IsSchedulerReport,this.ReportFliter?.CustomerId,this.ReportFliter?.IncludeOperationalyClosed,this.ReportFliter?.DateType);
+               if (this.IsSchedulerReport )
+                    this.ReportFilterConmponent.SetRunReportTitle();
+                
                 if (this.ReportFilterConmponent['RunReportEvent']) {
                     this.ReportFilterConmponent.RunReportEvent.subscribe(s => {
                         if (s) {
                             if (this.IsSchedulerReport) {
                                 //this.CurrentSession.ResizeCurrentWindow(1050);
                             }
+
                             this.GenerateReport(s, false);
                         }
                     });
@@ -406,6 +425,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
         var isSetStimualData = false;
         this.IsRunReportFailed = false;
         this.IsRunReportSucceeded = false;
+
+        if (!this.StimulsoftArg) {
+            this.StimulsoftArg = new StimulsoftArg();
+        }
         this.StimulsoftArg.NumberOfPage = this.ReportFliter.NumberOfPage;
         this.StimulsoftArg.PartnersObslist = this.PartnersObslist;
         this.StimulsoftArg.ReportFliter = this.ReportFliter;
@@ -421,6 +444,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.StimulsoftArg.BuildStimulReportResult = myResponse.Result;
                 isSetStimualData = true;
             }
+            this.OnDone.emit(myResponse);
+
         } else isSetStimualData = true;
 
 
@@ -514,8 +539,19 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
 
             if (!myResponse.HasError) {
+                var messageWindow = new MessageWindow();
+                messageWindow.ShowSuccessIcon = true;
+
+                messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
+                SessionLocator.HomeComponent.IsReportPanelVisible = true;
+                SessionLocator.HomeComponent.CurrentReportId = myResponse.Result.ReportKey;
+                SessionLocator.HomeComponent.isPinned = true;
+
+                this.BackButtonClicked()
                 this.ReportFliter = myResponse.Result;
-                this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
+                this.StopBusyIndicator();
+                
+                //this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
             } else {
 
                 filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = false;
@@ -529,9 +565,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
         });
 
     }
-
-
-    //Stimul Soft Report Timer
 
   initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
     return interval(2000).pipe(timeInterval());

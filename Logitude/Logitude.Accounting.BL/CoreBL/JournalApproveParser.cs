@@ -161,10 +161,15 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             try
             {
-
+                string logtext = "";
 
                 if (_JournalPM.StatusCode == "6" )
                 {
+                    logtext = "JournalApproveParser.ParseIt(), Point 1, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                        + ", Status=" + _JournalPM.StatusCode
+                        + ", QueueId=" + _JournalPM.QueueId;
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
                     OnApproveUpdatingFillArrangeJournalPMResetControlAccount();
                 }
 
@@ -187,9 +192,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     throw new ApplicationException("JournalApproveParser(" + this._JournalPM.Id + "): No Journal line ");
                 }
 
+                logtext = "JournalApproveParser.ParseIt(), Point 2, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
                 CreateLedger_MapByJournalActionType();
 
                 CheckLedgerTransactions();
+
+                logtext = "JournalApproveParser.ParseIt(), Point 5, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
 
                 CreateGLAccountTotalByMonthFromLedger();
                 CheckGLAccountTotalByMonth();
@@ -200,7 +215,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     CheckControlGLAccountTotalByMonths();
                 }
 
+                logtext = "JournalApproveParser.ParseIt(), Point 8, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
                 CheckTotalByMonthDateType();
+
+
+                logtext = "JournalApproveParser.ParseIt(), Point 9, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
             }
             catch (Exception)
             {
@@ -231,7 +258,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void CreateLedger_MapByJournalActionType()
         {
-            foreach (JournalLinePM item in _JournalPM.JournalLines)
+            foreach (JournalLinePM item in _JournalPM.JournalLines?.Where(a=>a.ChangeSetOp != ChangeSetOperation.Delete))
             {
                 switch (item.EnsureSettingActionTypeCodeEnum())
                 {
@@ -717,7 +744,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void CheckLedgerTransactions()
         {
             var TotalLocalAmountInJornal = _JournalPM.JournalLines
-                .Where(jl => jl.EnsureSettingActionTypeCodeEnum() != JournalActionTypeEnum.Debit) // Why credit ? credit is not vat splitded (like debit)
+                .Where(jl => jl.EnsureSettingActionTypeCodeEnum() != JournalActionTypeEnum.Debit && jl.ChangeSetOp != ChangeSetOperation.Delete) // Why credit ? credit is not vat splitded (like debit)
                  .Sum(jl => jl.LocalAmount);
 
             var totalLocalAmountCredit = LedgerTransactions.Sum(rec => rec.LocalAmountCredit);

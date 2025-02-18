@@ -15,7 +15,7 @@ using Microsoft.Practices.Unity;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.SS.Formula.Functions;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -822,6 +822,8 @@ namespace WebFreight.Web.Helpers
                 byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
                 byte[] reportDataProvider = BuildReportDataProvider(reportFliter, filters);
                 if (reportDataProvider == null && reportFliter.IsSchedulerReport) return report;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"reportDataProvider length: {reportDataProvider.Length}");
+
                 byte[] template = GetReportByteByType(reportFliter);
                 if (template == null) throw new Exception("Report Template is missing");
                 else
@@ -1355,13 +1357,19 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataManager.GetData();
                         break;
                     }
-                 case "ECCR":
+                case "SHTO":
+                    {
+                        ShipmentFormLoader myDataManager = new ShipmentFormLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+                case "ECCR":
                     {
                         CustomsCollateralLoader myDataManager = new CustomsCollateralLoader(filters, reportFliter.tenant);
                         dataProvider = myDataManager.GetData();
                         break;
                     }
-                 case "COO":
+                case "COO":
                     {
                         CertificateOfOriginLoader myDataManager = new CertificateOfOriginLoader(filters, reportFliter.tenant);
                         dataProvider = myDataManager.GetData();
@@ -1373,7 +1381,7 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataManager.GetData();
                         break;
                     }
-                     #endregion
+                    #endregion
             }
             return dataProvider;
         }
@@ -2700,8 +2708,21 @@ namespace WebFreight.Web.Helpers
                         //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "EXDE", Name = "ExportDeclarationDataProvider", BusinessObjectValue = reportDataProvider };
 
-                             break;
+                            break;
                         }
+
+                case "SHTO":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentFormDataProvider));
+                        ShipmentFormDataProvider reportDataProvider = (ShipmentFormDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "SHTO", Name = "ShipmentFormDataProvider", BusinessObjectValue = reportDataProvider };
+
+                        break;
+                    }
+
                 case "ECCR":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(CustomsCollateralDataProvider));
@@ -2710,7 +2731,7 @@ namespace WebFreight.Web.Helpers
                         //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ECCR", Name = "CustomsCollateralDataProvider", BusinessObjectValue = reportDataProvider };
-                             break;
+                            break;
                         }
 
                 case "COO":
@@ -2728,7 +2749,7 @@ namespace WebFreight.Web.Helpers
                         CertificateOfOriginCountDataProvider reportDataProvider = (CertificateOfOriginCountDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "COOC", Name = "CertificateOfOriginCountDataProvider", BusinessObjectValue = reportDataProvider };
- 
+
                         break;
                     }
             }

@@ -2,8 +2,7 @@
 <Table
   Name="Groups"
   Schema="dbo"
-  DBType="Main"
-  Module="Social">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
@@ -27,8 +26,8 @@
   </Column>
   <Column
     Name="Description"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
@@ -51,9 +50,4 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
-    ForeignKeyColumn="OwnerId"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
 </Table>

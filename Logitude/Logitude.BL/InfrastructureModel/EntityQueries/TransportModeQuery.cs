@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.InfrastructureModel.EntityLists;
@@ -103,6 +103,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        Id = entity.Id,
                                                        Name = entity.Name,
                                                        SearchFields = entity.SearchFields,
+                                                       LocalName = entity.LocalName,
                                                    };
             return result;
         }

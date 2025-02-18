@@ -20,18 +20,18 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="LocalName"
-    Type="varchar"
-    Size="100"
-    DefaultValue="''">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="SearchFields"
     Type="nvarchar"
     Size="1000">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="200"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

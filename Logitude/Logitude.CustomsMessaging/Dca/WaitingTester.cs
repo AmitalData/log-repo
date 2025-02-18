@@ -15,7 +15,7 @@ namespace Logitude.CustomsMessaging.Dca
         {
             //12 or 13
 
-            Debug.WriteLine("SendWaiting:");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SendWaiting:");
             int succ = 0;
 
             try
@@ -57,7 +57,7 @@ namespace Logitude.CustomsMessaging.Dca
 
             }
 
-            Debug.WriteLine("GetDeclarationsThatCanResend:succ:" + succ.ToString());
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetDeclarationsThatCanResend:succ:" + succ.ToString());
         }
     }
 }

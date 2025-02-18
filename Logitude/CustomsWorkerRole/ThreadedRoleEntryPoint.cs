@@ -254,13 +254,10 @@ namespace CustomsWorkerRole
             {
                 if (DateTime.Now > stopLogAt) return;
                 if (err)
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError(mess + suffix);
-                }
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(mess + ":" + suffix);
                 else
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess + suffix);
-                }
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess + ":" + suffix);
+                
             });
 
 

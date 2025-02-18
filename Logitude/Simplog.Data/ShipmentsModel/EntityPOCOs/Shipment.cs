@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
@@ -333,6 +333,11 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? OrderChargeableWeight { get; set; }
         public bool OrderGrossWeightEdited { get; set; }
         public bool OrderChargeableWeightEdited { get; set; }
+        public string LockerCode { get; set; }
+        public string LockerName { get; set; }
+        public string LockerCity { get; set; }
+        public string LockerAddress { get; set; }
+
         #endregion
 
         #region AWB
@@ -561,6 +566,13 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? AutomaticLastUpdateDate { get; set; }
         public string ENSNumber { get; set; }
         public DateTime? ENSDate { get; set; }
+
+        #region UniCloudShipment
+        public string ReferantUserId { get; set; }
+        public virtual User UserId { get; set; }
+        public string IskaNumber { get; set; }
+        public bool UniCloudShipment { get; set; }
+        #endregion
 
         #region WarehouseLeg
         public string WarehouseLegWarehouseId { get; set; }

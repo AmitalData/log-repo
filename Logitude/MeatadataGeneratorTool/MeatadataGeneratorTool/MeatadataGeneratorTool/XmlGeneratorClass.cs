@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
-//using Simplog.Data.InfrastructureModel.EntityPOCOs;
+//using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using MeatadataGeneratorTool.QueryModule;
 using MeatadataGeneratorTool.ScreensModule;
 using MeatadataGeneratorTool.TabsModule;
@@ -23,6 +23,7 @@ using MeatadataGeneratorTool.Helpers;
 using MeatadataGeneratorTool.TextCodes;
 using MeatadataGeneratorTool.Features;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace MeatadataGeneratorTool
 {
@@ -1020,8 +1021,12 @@ namespace MeatadataGeneratorTool
             SetAttribute("SupportSubEntity", table.SupportSubEntity.ToString().ToLower(), entityElement);
             SetAttribute("ApplyGenericCustomFields", table.ApplyGenericCustomFields.ToString().ToLower(), entityElement);
             SetAttribute("AvailableInDocumentTypes", table.AvailableInDocumentTypes.ToString().ToLower(), entityElement);
+			SetAttribute("IsLock", table.IsLock.ToString().ToLower(), entityElement);
+			SetAttribute("RelatedEntity", GetStringValue(table.RelatedEntity), entityElement);
+			SetAttribute("ThisKey", GetStringValue(table.ThisKey), entityElement);
+			SetAttribute("RelatedKey", GetStringValue(table.RelatedKey), entityElement);
 
-            SetAttribute("HasHelper", table.HasHelper.ToString().ToLower(), entityElement);
+			SetAttribute("HasHelper", table.HasHelper.ToString().ToLower(), entityElement);
             SetAttribute("HasShortTitle", table.HasShortTitle.ToString().ToLower(), entityElement);
             SetAttribute("HasFiltersMenu", table.HasFiltersMenu.ToString().ToLower(), entityElement);
 
@@ -1399,6 +1404,11 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("ModelName", GetStringValue(f.ModelName), fieldElement, null);
                 }
+                if (!string.IsNullOrEmpty(f.ObjectFieldDataMapping))
+                {
+                    SetAttribute("ObjectFieldDataMapping", GetStringValue(f.ObjectFieldDataMapping), fieldElement, null);
+                }
+
             }
 
             #endregion
@@ -1697,14 +1707,15 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), TabElement, null);
                 SetAttribute("IsSpellChecked", f.IsSpellChecked.ToString().ToLower(), TabElement, null);
                 SetAttribute("HasGeneralFeature", f.HasGeneralFeature.ToString().ToLower(), TabElement, null);
+				SetAttribute("IsLocked", f.IsLocked.ToString().ToLower(), TabElement, null);
 
-            }
+			}
 
-            #endregion
+			#endregion
 
-            #region Event Types Properties
+			#region Event Types Properties
 
-            XmlElement TypesElement = doc.CreateElement("EventTypes");
+			XmlElement TypesElement = doc.CreateElement("EventTypes");
             entityElement.AppendChild(TypesElement);
 
             foreach (EventTypesViewModel f in table.EventTypesObsList)
@@ -2368,6 +2379,15 @@ namespace MeatadataGeneratorTool
         {
             if (attrValue != null)
             {
+                if (IsHebrew(attrValue) && fieldElement.Name != "Record")
+                {
+                    fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
+
+                    attrValue = ConvertToBase64(attrValue);
+                    attrValue = "\"" + "BS64:" + attrValue + "\"";
+
+
+                }
                 fieldElement.SetAttribute(atrrName, attrValue);
             }
         }
@@ -2380,8 +2400,28 @@ namespace MeatadataGeneratorTool
         {
             if (!string.IsNullOrEmpty(attrValue))
             {
+                if (IsHebrew(attrValue) && fieldElement.Name != "Record")
+                {
+                    fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
+
+                    attrValue = ConvertToBase64(attrValue);
+                    attrValue = "\"" + "BS64:" + attrValue + "\"";
+                }
                 fieldElement.SetAttribute(atrrName, attrValue);
             }
+        }
+
+
+        private static bool IsHebrew(string text)
+        {
+            Regex hebrewRegex = new Regex(@"[\u0590-\u05FF]");
+            return hebrewRegex.IsMatch(text);
+        }
+
+        private static string ConvertToBase64(string text)
+        {
+            var bytes = Encoding.UTF8.GetBytes(text);
+            return Convert.ToBase64String(bytes);
         }
         #endregion
 

@@ -86,9 +86,7 @@ namespace WebFreight.Web.DataProviders
         public string ChartOfAccountsTypeLocalName { get; set; }
          public string AccountContactName { get; set; }
         public string AccountContactEmail { get; set; }
-        public string AccountContactPhone { get; set; }
-
- 
+        public string AccountContactPhone { get; set; } 
 		public decimal AccountingBalance { get; set; }
 		public decimal CreditLimit { get; set; }
 
@@ -103,6 +101,7 @@ namespace WebFreight.Web.DataProviders
 		public decimal TotalLocal { get; set; } = 0;
 		public decimal TotalForeign { get; set; } = 0;
 		public decimal SumTotalCredit { get; set; } = 0;
+
 
 
 

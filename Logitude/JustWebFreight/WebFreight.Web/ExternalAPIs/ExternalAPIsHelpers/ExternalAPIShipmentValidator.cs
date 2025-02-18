@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Web;
 using WebFreight.Web.Validators;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Infrastructure.Data;
@@ -595,7 +595,7 @@ namespace WebFreight.Web.ExternalAPIs.ExternalAPIsHelpers
         private bool IsOceanInsightFeatureToggleExistInTenant()
         {
             string ocaenInsightFeatureToggleCode = "OIC";
-            IInfrastructureContext context = InfrastructureContext.GetContext(0);
+            IInfrastructureContext context = InfrastructureContext.GetContext(tenant);
             FeatureToggleRepository repository = new FeatureToggleRepository(context);
             IQueryable<FeatureToggle> featureToggles = repository.GetAll(0);
             List<FeatureToggle> featureTogglesList = featureToggles.ToList();

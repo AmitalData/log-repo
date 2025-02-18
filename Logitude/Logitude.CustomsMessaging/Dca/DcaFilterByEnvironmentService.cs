@@ -41,25 +41,26 @@ namespace Logitude.CustomsMessaging.Dca
                 if (isEI= SecurityUtility.CheckFeature("Customs.Declaration", "IIGEXPORTIMPORTDECLARATION", tenant) == true)
                 {
                     dca[tenant] = DcaFilterByEnvironment.ImportAndExport;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DcaFilterByEnvironment.ImportAndExport");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("DcaFilterByEnvironment.ImportAndExport" + ":" + "DcaFilterByEnvironment");
 
                 }else if (isE= SecurityUtility.CheckFeature("Customs.Declaration", "EXPORTDECLARATIONPSCREEN", tenant) == true)
                 {
                     dca[tenant] = DcaFilterByEnvironment.Export;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DcaFilterByEnvironment.Export");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("DcaFilterByEnvironment.Export" + ":" + "DcaFilterByEnvironment");
                 }
                 else
                 {
                     isI = true;
                     dca[tenant] = DcaFilterByEnvironment.Import;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DcaFilterByEnvironment.Import");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("DcaFilterByEnvironment.Import" + ":" + "DcaFilterByEnvironment");
                 }
             }
             catch (System.Exception ex)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "DcaFilterByEnvironment");
 
-               
+                
+                
                 dca[tenant] = DcaFilterByEnvironment.Import;
 
             }
@@ -113,7 +114,7 @@ namespace Logitude.CustomsMessaging.Dca
                 var list = outgoingMessage.Select(r => r.Filename).ToList();
                 sbLocal.AppendLine(string.Join(Environment.NewLine, list));
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sbLocal.ToString()+ $"Tenant_{tenant}_DcaFilterByEnvironment");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sbLocal.ToString()+":"+ $"Tenant_{tenant}_DcaFilterByEnvironment");
             }
     
             return new FilterByEnvironmentOutGoingResult(outgoingMessage, sbLocal);
@@ -160,7 +161,7 @@ namespace Logitude.CustomsMessaging.Dca
             {
                 var list=listOfDCAFile.Select(r => r.SelectedFileDownload).ToList();
                 sbLocal.AppendLine(string.Join(Environment.NewLine, list));
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sbLocal.ToString()+ $"Tenant_{tenant}_DcaFilterByEnvironment");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sbLocal.ToString() + $"Tenant_{tenant}_DcaFilterByEnvironment");
             }
             //Debug.WriteLine(sbLocal.ToString());
             return new FilterByEnvironmentListOfDCAFileResult(listOfDCAFile, sbLocal);
@@ -170,7 +171,7 @@ namespace Logitude.CustomsMessaging.Dca
         {
             if (_Write00LogCounter > 10)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("after == 0!!!" + sbLocal.ToString()+ $"Tenant_{tenant}_DcaFilterByEnvironment_Warning");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("after == 0!!!" + sbLocal.ToString() + $"Tenant_{tenant}_DcaFilterByEnvironment_Warning");
                 _Write00LogCounter = 0;
             }
             _Write00LogCounter++;

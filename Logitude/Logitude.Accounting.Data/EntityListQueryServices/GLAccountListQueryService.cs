@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,10 +15,11 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.CustomFilters;
 using System.Web;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -27,8 +28,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
         public IQueryable<GLAccountList> GetIqueryableList(IQueryable<GLAccount> iQueryable, User loggedUser)
         {
-            int tenant=0;
-            if(iQueryable!=null && iQueryable.Count() > 0)
+            int tenant = 0;
+            if (iQueryable != null && iQueryable.Count() > 0)
             {
                 tenant = iQueryable.FirstOrDefault().Tenant;
             }
@@ -37,10 +38,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
-            FullAccountingSetting fullAccountingSettings = context.FullAccountingSettings.Where(a => a.Tenant ==tenant).FirstOrDefault();
+            FullAccountingSetting fullAccountingSettings = context.FullAccountingSettings.Where(a => a.Tenant == tenant).FirstOrDefault();
             IQueryable<GLAccountList> query;
 
-            if (fullAccountingSettings!=null &&fullAccountingSettings.IsSecurityLevelActivated)
+            if (fullAccountingSettings != null && fullAccountingSettings.IsSecurityLevelActivated)
             {
                 query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                              //  join ledgerTransactions in context.LedgerTransactions on a.Id equals ledgerTransactions.AccountId
@@ -152,8 +153,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Category4LocalName = a.Category4.LocalName,
                              Category5LocalName = a.Category5.LocalName,
 
-
                              ActiveForInterest = a.ActiveForInterest,
+
+                             MarkDate = a.MarkDate,
                              ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
                              MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
                              InterestCalculationStartDate = a.InterestCalculationStartDate,
@@ -190,14 +192,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Phone = CardsDatas != null ? CardsDatas.Phone : null,
 
 
-                                                   Salesman = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? (a.SalesmanUser.Contact.LocalName == null ? a.SalesmanUser.Contact.EnglishName : a.SalesmanUser.Contact.LocalName) : null) : null,
-                                                   Collector = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
-                            CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
-                                                   Category1Id = a.Category1Id,
-                                                   Category2Id = a.Category2Id,
-                                                   Category3Id = a.Category3Id,
-                                                   Category4Id = a.Category4Id,
-                                                   Category5Id = a.Category5Id,
+                              Salesman = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? (a.SalesmanUser.Contact.LocalName == null ? a.SalesmanUser.Contact.EnglishName : a.SalesmanUser.Contact.LocalName) : null) : null,
+                              Collector = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
+                             CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
+                             Category1Id = a.Category1Id,
+                             Category2Id = a.Category2Id,
+                             Category3Id = a.Category3Id,
+                             Category4Id = a.Category4Id,
+                             Category5Id = a.Category5Id,
                              // GLAccount Follow Up Datas
                              FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
                              FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
@@ -205,35 +207,35 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              ChartOfAccountSecurityLevel = chartOfAccount.ChartOfAccountSecurityLevel,
 
                              IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
-                             Access = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             Access = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))),
                              //Access = glaccount.Access,
 
 
                              Period0 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period0 : 0,//GetPeriodValue("0", glaccount, loggedUser.SecurityLevel),
-                             Period1 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             Period1 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period1 : 0,
-                             Period2 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             Period2 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period2 : 0,
-                             Period3 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             Period3 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period3 : 0,
-                             Period4 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             Period4 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period4 : 0,
-                             Period5 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             Period5 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.Period5 : 0,
-                             PeriodFuture = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             PeriodFuture = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.PeriodFuture : 0,//GetPeriodValue("Future", glaccount, loggedUser.SecurityLevel),
-                             PeriodPast = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             PeriodPast = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? AgingDatas.PeriodPast : 0,//GetPeriodValue("Past", glaccount, loggedUser.SecurityLevel),
 
-                             BalanceInForeignCurrency = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             BalanceInForeignCurrency = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.BalanceInForeignCurrency : 0,
-                             BalanceInLocalCurrency = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             BalanceInLocalCurrency = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.BalanceInLocalCurrency : 0,
-                             ForeignBalanceInDue = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             ForeignBalanceInDue = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.ForeignBalanceInDue : 0,
-                             LocalBalanceInDue = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             LocalBalanceInDue = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.LocalBalanceInDue : 0,
                              CalculatedAgingPeriod1 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
@@ -244,7 +246,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                       + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period4") != -1 ? AgingDatas.Period4 : 0)
                                                       + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("Period5") != -1 ? AgingDatas.Period5 : 0)
                                                       + (fullAccountingSettings.FirstPeriodsMonths.IndexOf("PeriodPast") != -1 ? AgingDatas.PeriodPast : 0) : 0,
-                             CalculatedAgingPeriod2 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             CalculatedAgingPeriod2 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
                                       (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period0") != -1 ? AgingDatas.Period0 : 0)
                                                       + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period1") != -1 ? AgingDatas.Period1 : 0)
@@ -253,18 +255,18 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                       + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period4") != -1 ? AgingDatas.Period4 : 0)
                                                       + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("Period5") != -1 ? AgingDatas.Period5 : 0)
                                                       + (fullAccountingSettings.SecondPeriodsMonths.IndexOf("PeriodPast") != -1 ? AgingDatas.PeriodPast : 0) : 0,
-                             CalculatedAgingPeriod3 = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             CalculatedAgingPeriod3 = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ?
-                                      (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period0")!=-1  ? AgingDatas.Period0 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period1") !=-1 ? AgingDatas.Period1 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period2")!=-1 ? AgingDatas.Period2 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period3")!=-1?  AgingDatas.Period3 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period4") !=-1? AgingDatas.Period4 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period5")!=-1 ? AgingDatas.Period5 : 0)
-                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("PeriodPast") !=-1? AgingDatas.PeriodPast : 0) : 0,
+                                      (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period0") != -1 ? AgingDatas.Period0 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period1") != -1 ? AgingDatas.Period1 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period2") != -1 ? AgingDatas.Period2 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period3") != -1 ? AgingDatas.Period3 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period4") != -1 ? AgingDatas.Period4 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("Period5") != -1 ? AgingDatas.Period5 : 0)
+                                                      + (fullAccountingSettings.ThirdsPeriodsMonths.IndexOf("PeriodPast") != -1 ? AgingDatas.PeriodPast : 0) : 0,
                              TotalOpenChequesInLocalCur = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotalOpenChequesInLocalCur : 0,
-                             TotFutureOpenChequesInLocalCur = ( (fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
+                             TotFutureOpenChequesInLocalCur = ((fullAccountingSettings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                       || (fullAccountingSettings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.TotFutureOpenChequesInLocalCur : 0,
 
                              Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
@@ -272,8 +274,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              CreditUsed = -1 * ((((decimal)(long)((CardsDatas.CreditLimit == null ? 0 : CardsDatas.CreditLimit) * 10000)) / 10000) + (-1 * MoreDatas.BalanceInLocalCurrency) + (-1 * (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)) + (-1 * (CardsDatas.TotalOpenShipments ?? 0))),
 
                              InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
-                                                   ( (CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100 ),
-                                                   ContactId = a.ContactId,
+                                                     ( (CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100 ),
+                                                    ContactId = a.ContactId,
                                                    ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
                                                    ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
                                                    ContactEmail = a.Contact != null ? a.Contact.Email : null,
@@ -281,6 +283,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    CollectorName = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
                                                    SalesmanUserId = a.SalesmanUserId,
 
+  
 
                          }); ;
             }
@@ -289,7 +292,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                              //  join ledgerTransactions in context.LedgerTransactions on a.Id equals ledgerTransactions.AccountId
 
-                        
+
                          join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
                          join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
 
@@ -396,7 +399,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Category4LocalName = a.Category4.LocalName,
                              Category5LocalName = a.Category5.LocalName,
 
-
+                             MarkDate= a.MarkDate,
                              ActiveForInterest = a.ActiveForInterest,
                              ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
                              MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
@@ -490,7 +493,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
 
 
-                             CreditUsed = -1*((((decimal)(long)((CardsDatas.CreditLimit == null ? 0 : CardsDatas.CreditLimit) * 10000)) / 10000) + (-1 * MoreDatas.BalanceInLocalCurrency) + (-1 * (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)) + (-1 * (CardsDatas.TotalOpenShipments ?? 0))),
+                             CreditUsed = -1 * ((((decimal)(long)((CardsDatas.CreditLimit == null ? 0 : CardsDatas.CreditLimit) * 10000)) / 10000) + (-1 * MoreDatas.BalanceInLocalCurrency) + (-1 * (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)) + (-1 * (CardsDatas.TotalOpenShipments ?? 0))),
 
                              InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
                              ((CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100),
@@ -505,7 +508,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                          });
             }
 
-                return query;
+            return query;
         }
         public List<GLAccountList> GetListShort(QueryOperations queryOperations, int tenant)
         {
@@ -632,12 +635,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                {
                                                    Id = a.Id,
                                                    Tenant = a.Tenant,
-                                                  InternalNumber = a.InternalNumber,
+                                                   InternalNumber = a.InternalNumber,
                                                    AccountTypeCode = a.AccountTypeCode,
 
                                                    DisplayNumber = a.DisplayNumber,
                                                    EnglishName = a.EnglishName,
-                                                  LocalName = a.LocalName,
+                                                   LocalName = a.LocalName,
                                                    SearchFields = a.SearchFields,
                                                    IsMultiCurrency = a.IsMultiCurrency,
                                                    CurrencyId = a.CurrencyId,
@@ -648,7 +651,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    ReconcileMethodCode = a.ReconcileMethodCode,
                                                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
                                                    CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
-                                                CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                                                   CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
                                                    BalanceInLocalCurrency = (!settings.IsSecurityLevelActivated
                                                             || (settings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                                             || (settings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.BalanceInLocalCurrency : 0,
@@ -657,7 +660,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                }); ;
 
-           
+
 
 
             return query;
@@ -740,8 +743,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            Category3LocalName = glaccount.Category3LocalName,
                            Category4LocalName = glaccount.Category4LocalName,
                            Category5LocalName = glaccount.Category5LocalName,
-
-
+                           MarkDate = glaccount.MarkDate,
                            ActiveForInterest = glaccount.ActiveForInterest,
                            ActiveForInterestCreditInvoice = glaccount.ActiveForInterestCreditInvoice,
                            MinimumInterestInvoiceBilling = glaccount.MinimumInterestInvoiceBilling,
@@ -1157,15 +1159,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                               EnglishName = a.EnglishName,
                                                               LocalName = a.LocalName,
                                                               ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
-                                                              ContactEmail  = a.Contact != null ? a.Contact.Email : null,
+                                                              ContactEmail = a.Contact != null ? a.Contact.Email : null,
                                                               ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
                                                               ActiveForInterest = a.ActiveForInterest,
+                                                              MarkDate=a.MarkDate
                                                           });
             //var xxx = accountListQuery.ToList();
 
             return accountListQuery;
         }
 
+ 
         public List<GLAccountList> GetQuickSearchList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
@@ -1267,5 +1271,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
             return query2.ToList();
         }
+
     }
 }

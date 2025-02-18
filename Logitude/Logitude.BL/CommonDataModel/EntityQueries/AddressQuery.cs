@@ -7,6 +7,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Text.RegularExpressions;
@@ -358,23 +359,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return addressLists;
         }
 
-        public List<AddressList> GetAddressesByCardIds(List<string> cardIds,  int tenant)
+        public List<AddressList> GetAddressesByCardIds(List<string> cardIds, int tenant)
         {
             List<AddressList> addressLists = (from a in repository.context.Addresses
                                               where a.Tenant == tenant
                                               && cardIds.Contains(a.CardId)
-                                            
+
                                               select new AddressList()
                                               {
                                                   CardId = a.CardId,
                                                   ZipCode = a.ZipCode,
                                                   City = a.City,
                                                   CountryCode = a.Country != null ? a.Country.Code : null,
-                                                  CountryName = a.Country != null ? a.IsLocalLanguage? a.Country.LocalName : a.Country.EnglishName  : null,
+                                                  CountryName = a.Country != null ? a.IsLocalLanguage ? a.Country.LocalName : a.Country.EnglishName : null,
                                                   AddressTypeId = a.AddressTypeId,
                                                   Id = a.Id,
                                                   Address1 = a.Address1,
-                                                  Address2= a.Address2,
+                                                  Address2 = a.Address2,
                                                   PhoneNumber = a.PhoneNumber,
                                               }).ToList();
 
@@ -390,7 +391,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   where a.Tenant == tenant
                                     && a.CardId == cardId
                                   && a.AddressTypeId.ToUpper() == typeId.ToUpper()
-                                  &&!a.InActive
+                                  && !a.InActive
                                   select a).FirstOrDefault();
 
             if (entityPOCO != null)
@@ -404,6 +405,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CardId = entityPOCO.CardId,
                     SearchFields = entityPOCO.SearchFields,
                     City = entityPOCO.City,
+                    CityId = entityPOCO.CityId,
+                    TruckerId = entityPOCO.TruckerId,
+                    Responsibility = entityPOCO.Responsibility,
                     Description = entityPOCO.Description,
                     FaxNumber = entityPOCO.FaxNumber,
                     Id = entityPOCO.Id,
@@ -531,6 +535,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   StateEnglishName = a.State != null ? a.State.EnglishName : null,
                                                   HasStates = a.Country == null ? false : a.Country.HasStates,
                                                   IsStateRequired = a.Country == null ? false : a.Country.IsStateRequired,
+                                                  CityId = a.CityId,
+                                                  TransportationInstructions = a.TransportationInstructions,
+                                                  TruckerId = a.TruckerId,
+                                                  Responsibility = a.Responsibility,
                                               };
             return addresses;
         }
@@ -545,6 +553,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  Address1 = entity.Address1,
                                                  Address2 = entity.Address2,
                                                  City = entity.City,
+                                                 CityId = entity.CityId,
                                                  Description = entity.Description,
                                                  FaxNumber = entity.FaxNumber,
                                                  Name = entity.Name,

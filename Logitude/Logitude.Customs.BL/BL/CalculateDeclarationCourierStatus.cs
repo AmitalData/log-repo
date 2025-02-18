@@ -142,7 +142,7 @@ namespace Logitude.Customs.BL.BL
                 CalcCourierDeclarationStatusCode(myDeclarationCourierStatusPM);
                 CalcCourierPaymentStatusCode(myDeclarationCourierStatusPM);
                 CalcIsCourierMissingClassification(myDeclarationCourierStatusPM);
-               CalcHighLowValue(myDeclarationCourierStatusPM);
+                CalcHighLowValue(myDeclarationCourierStatusPM);
                 CalcSpecialActionStatus(myDeclarationCourierStatusPM);
                 CalcFastIndividualProcess(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings902(myDeclarationCourierStatusPM);
@@ -252,8 +252,7 @@ namespace Logitude.Customs.BL.BL
         {
             var setting = CustomsSettingQueryService.GetSettingByTenant(myDeclarationCourierStatusPM.Tenant);
 
-            if (setting != null & setting.IsConnectedToUniFreight)
-            {
+          
 
                     if (myDeclarationCourierStatusPM == null) return;
                 //Set HighLowValue
@@ -271,7 +270,7 @@ namespace Logitude.Customs.BL.BL
                     {
                         myDeclarationCourierStatusPM.HighLowValue = "L";
                     }
-                }
+               
         }
 
         

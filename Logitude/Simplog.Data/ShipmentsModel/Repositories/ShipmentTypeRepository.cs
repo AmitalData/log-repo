@@ -33,6 +33,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from record in context.ShipmentTypes where record.Id == id select record).FirstOrDefault();
         }
+        public ShipmentType GetSingleShipmentTypeByName(string name)
+        {
+            return (from record in context.ShipmentTypes where record.Name == name select record).FirstOrDefault();
+        }
 
         public void Add(ShipmentType entity)
         {

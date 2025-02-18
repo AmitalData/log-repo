@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Procedure  
+  DBType="Main" Name="usp_MonthlyBalancesReport" Schema="dbo" Module="Accounting">
+  >
+  <SqlScript>
+    <![CDATA[
+ CREATE PROCEDURE [dbo].[usp_MonthlyBalancesReport]
+
+@Year INT,	
+@Tenant INT 
+AS
+BEGIN
+SELECT 
+        AccountId AS ACCOUNTID,
+		gt.Month,
+		max(g.ChartOfAccountsId) as chartOfAccount,
+		max(g.LocalName) as LocalName,
+		max(g.EnglishName) as EnglishName,
+		max(g.DisplayNumber) as DisplayNumber,
+		SUM(CASE WHEN gt.Month = 1 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH1,
+        SUM(CASE WHEN gt.Month = 2 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH2,
+        SUM(CASE WHEN gt.Month = 3 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH3,
+        SUM(CASE WHEN gt.Month = 4 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH4,
+        SUM(CASE WHEN gt.Month = 5 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH5,
+        SUM(CASE WHEN gt.Month = 6 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH6,
+        SUM(CASE WHEN gt.Month = 7 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH7,
+        SUM(CASE WHEN gt.Month = 8 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH8,
+        SUM(CASE WHEN gt.Month = 9 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH9,
+        SUM(CASE WHEN gt.Month = 10 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH10,
+        SUM(CASE WHEN gt.Month = 11 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH11,
+        SUM(CASE WHEN gt.Month = 12 THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH12,
+		SUM(gt.LocalAmountDebit - gt.LocalAmountCredit) AS TOTAL_MONTHS
+
+    FROM 
+        GLAccounts g 
+    INNER JOIN  
+        GLAccountTotalByMonths gt ON g.Id = gt.AccountId
+    WHERE 
+        g.Tenant = @Tenant
+        AND gt.Year = @Year
+        AND g.IsControlAccount = 0
+    GROUP BY 
+        gt.AccountId,gt.Month
+
+	order by chartOfAccount
+   
+END
+	
+    
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</Procedure>

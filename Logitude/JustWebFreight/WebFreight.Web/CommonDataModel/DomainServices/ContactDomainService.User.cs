@@ -7,10 +7,10 @@ using System.ServiceModel.DomainServices.Server;
 using System.Transactions;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.GlobalModel;
@@ -410,9 +410,22 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
             }
 
+            List<UserFreelancerGroupPM> userFreelancerGroupPMChangeSet = ChangeSet.GetAssociatedChanges(currentUser, d => d.FreelancerGroups).Cast<UserFreelancerGroupPM>().ToList();
+            foreach (UserFreelancerGroupPM itemPM in userFreelancerGroupPMChangeSet)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
+                    case ChangeOperation.Update: { itemPM.ChangeSetOp = ChangeSetOperation.Update; break; }
+                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
+                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
+                }
+            }
+
             UserService service = new UserService(objectContext, currentUser.Tenant);
             service.SetChangeSet(userPermittedBranchPMChangeSet);
             service.SetProductChangeSet(userPermittedProductPMChangeSet);
+            service.SetFreeLancerGroupChangeSet(userFreelancerGroupPMChangeSet);
             service.Update(currentUser);
 
             TableLastUpdateClass.UpdateTableHistory(currentUser.Tenant, "User");

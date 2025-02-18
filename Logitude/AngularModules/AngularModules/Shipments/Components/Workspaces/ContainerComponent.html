@@ -1,0 +1,93 @@
+<table *ngIf="IsResourcesReady">
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 21px;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:265px;">
+                        <div class="MediaFill">
+                            <SectionBox [Scrolling]="true">
+                                <SectionHead>Containers Queries</SectionHead>
+                                <SectionBody>
+                                    <!-- Containers Views -->
+                                    <div class="QueriesSection" *ngIf="IsContainersFeatureActivated">
+                                        <div>Open Containers</div>
+                                        <div>
+                                            <p attr.data-cy="{{'ContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Containers')" *ngIf="IsQueryVisible_Containers">{{'Container.Q.Containers' | TextCodeTranslationPipe}} ({{ContainersCount}})</p>
+                                            <p attr.data-cy="{{'PendingPOLDepartureView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PendingPOLDeparture')" *ngIf="IsQueryVisible_PendingPOLDepartureView">{{'Container.Q.PendingPOLDeparture' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'InTransitNewView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('InTransitNew')" *ngIf="IsQueryVisible_InTransitNewView">{{'Container.Q.InTransitNew' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'InTransitTransshipmentsView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('InTransitTransshipments')" *ngIf="IsQueryVisible_InTransitTransshipmentsView">{{'Container.Q.InTransitTransshipments' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'PendingArrivalView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PendingArrival')" *ngIf="IsQueryVisible_PendingArrivalView">{{'Container.Q.PendingArrival' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'PendingDischargeView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PendingDischarge')" *ngIf="IsQueryVisible_PendingDischargeView">{{'Container.Q.PendingDischarge' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'PendingGateOutView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PendingGateOut')" *ngIf="IsQueryVisible_PendingGateOutView">{{'Container.Q.PendingGateOut' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'PendingDeliveryView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PendingDelivery')" *ngIf="IsQueryVisible_PendingDeliveryView">{{'Container.Q.PendingDelivery' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'PendingEmptyReturnView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PendingEmptyReturn')" *ngIf="IsQueryVisible_PendingEmptyReturnView">{{'Container.Q.PendingEmptyReturn' | TextCodeTranslationPipe}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="QueriesSection" *ngIf="IsContainersFeatureActivated">
+                                        <div>Others</div>
+                                        <div>
+                                            <p attr.data-cy="{{'TrackContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('PreviousTrackedContainers')" *ngIf="IsQueryVisible_PreviousTrackedContainers">{{'Container.Q.PreviousTrackedContainers' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'AllContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('All Containers')" *ngIf="IsQueryVisible_AllContainers">{{'Container.Q.AllContainers' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'ClosedContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Closed Containers')" *ngIf="IsQueryVisible_ClosedContainers">{{'Container.Q.ClosedContainers' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'ExceptionsView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Exceptions')" *ngIf="IsQueryVisible_ExceptionsView">{{'Container.Q.Exceptions' | TextCodeTranslationPipe}}</p>
+                                            <p attr.data-cy="{{'CancelledContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('Cancelled Containers')" *ngIf="IsQueryVisible_CancelledContainers">{{'Container.Q.CancelledContainers' | TextCodeTranslationPipe}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
+                                        <div>My Views</div>
+                                        <div>
+                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'ContainerFollowUp'" [BackButtonTitle]="BackButtonTitle" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                        </div>
+                                        <div>
+                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Container'" [BackButtonTitle]="BackButtonTitle" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                        </div>
+                                    </div>
+
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div class="MediaFill">
+                            <SectionBox [Scrolling]="true">
+                                <SectionHead></SectionHead>
+                                <SectionBody>
+                                    <ContainerViewsGraph (OnViewClick)="ViewQuery($event)"></ContainerViewsGraph>
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

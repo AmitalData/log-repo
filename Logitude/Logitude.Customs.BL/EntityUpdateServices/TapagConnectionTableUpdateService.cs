@@ -14,8 +14,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     {
         protected override void OnUpdating(TapagConnectionTablePM entityPM)
         {
-            //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            //if (setting.IsConnectedToUniFreight)
+             
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
             if (declarationPM != null && (declarationPM.IsConnectedToUnifreight || declarationPM.IsAmendment==true ))
@@ -23,7 +22,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 UpdateUnifreight(entityPM);
             }
 
-            //UpdateNotification(entityPM);
         }
     }
 }

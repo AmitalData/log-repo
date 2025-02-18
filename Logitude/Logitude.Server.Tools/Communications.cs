@@ -12,10 +12,10 @@ using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -380,7 +380,7 @@ namespace Logitude.Server.Tools
 
                     var queueService = new CustomDbQueueService//();
                                                                //queueService.InitializeQueue
-                    (queueName, 0);
+                    (queueName, tenant);
                     var messageProperties = new Dictionary<string, string>();
                     messageProperties["CommunicationLogId"] = communicationLogId;
                     messageProperties["Tenant"] = tenant.ToString();
@@ -524,7 +524,7 @@ namespace Logitude.Server.Tools
                         OracleDbType = OracleDbType.NVarChar,
                         //Size = -1,
                         ParameterName = "iv_pLog",
-                        Value = log
+                        Value = (log.ToString().Length  >2000) ?log.ToString().Substring(0,2000):log
                     };
                     cmd.Parameters.Add(pLog);
                     var pExceptionMessage = new OracleParameter()

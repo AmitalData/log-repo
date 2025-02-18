@@ -29,6 +29,7 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Accounting.BL.CloseTables;
 using System.Globalization;
 using System.Diagnostics;
+using Logitude.Accounting.BL.EntityDataMappings;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -233,18 +234,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 bool isUpdate = false;
 
-                if (notToSendKeyList.Contains(row.Line))
+                if (notToSendKeyList.Contains(row.Line) && row.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                 {
                     isUpdate = true;
                     row.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
                     row.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
                 }
-                else if (duplicateKeyList.Contains(row.Line))
+                else if (duplicateKeyList.Contains(row.Line) && row.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                 {
                     isUpdate = true;
                     row.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
                 }
-                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
+                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference || row.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                 {
                     isUpdate = true;
                     row.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
@@ -573,6 +574,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 };
                 EventTracer.CreateTraceEvent(eventTracerArgs);
             }
+        }
+
+
+        public TaxReport UpdateTaxReportIsEdited(TaxReportPM entityPM)
+        {
+
+                    IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+
+                    TaxReportRepository repo = new TaxReportRepository(MyContext);
+                    var mapping = new TaxReportDataMapping();
+                    var poco = new Logitude.Accounting.Data.EntityPOCOs.TaxReport();
+                    mapping.CustomPMToPOCO(entityPM, poco);
+                    mapping.PMToPOCO(entityPM, poco);
+                    repo.Update(poco);
+                    repo.SubmitChanges();
+
+                    return  poco;
+                
         }
     }
 }

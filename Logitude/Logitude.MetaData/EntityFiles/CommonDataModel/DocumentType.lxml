@@ -374,6 +374,7 @@
     Id="&quot;7f937119-9eec-4e57-8957-14db11367a1a&quot;"
     FieldName="&quot;DocumentTypeDefaultReportTemplateId&quot;"
     ShortName="DocTypeDefaultReportTempId"
+
     OldNames="DocumentTypeDefaultReportTemplateId,DocTypeDefaultReportTempId"
     IsNew="false"
     IsChecked="false"
@@ -416,6 +417,7 @@
     DisplayInDocumentReferences="false"
     InActive="false"
     DisplayLongName="false"
+
     FullFieldLable="&quot;DocumentTypeDefaultReportTemplateId&quot;"
     DefaultText="&quot;DocumentTypeDefaultReportTemplateId&quot;"
     FullLocalDefaultText="&quot;DocumentTypeDefaultReportTemplateId&quot;"

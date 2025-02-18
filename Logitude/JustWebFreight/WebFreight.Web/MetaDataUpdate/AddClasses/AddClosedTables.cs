@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -150,12 +150,13 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 TransportMode transportMode = transportModeRepository.GetSingleTransportMode(transportModeDetails.Id);
                 transportMode.Name = transportModeDetails.Name;
+                transportMode.LocalName = transportModeDetails.LocalName;
                 transportMode.SearchFields = (transportModeDetails.Id + "," + transportModeDetails.Name).ToLower();
                 transportModeRepository.Update(transportMode);
             }
             else
             {
-                TransportMode newTransportMode = new TransportMode() { Id = transportModeDetails.Id, Name = transportModeDetails.Name, SearchFields = (transportModeDetails.Id + "," + transportModeDetails.Name).ToLower() };
+                TransportMode newTransportMode = new TransportMode() { Id = transportModeDetails.Id, Name = transportModeDetails.Name, LocalName=transportModeDetails.LocalName ,SearchFields = (transportModeDetails.Id + "," + transportModeDetails.Name).ToLower() };
                 transportModeRepository.Add(newTransportMode);
             }
         }

@@ -9,7 +9,7 @@ import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
     template: `<div style="overflow: hidden; text-overflow: ellipsis;">
                 
                <span>
-                 <div [attr.data-cy]="DataCy +'_Text'" style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent" innerHTML="{{ rowData[fieldName] | highlight : SearchTerm}}">
+                 <div [attr.data-cy]="DataCy +'_Text'" style="text-overflow: ellipsis; overflow: hidden;" [style.textAlign]="RTL == true ? 'right' : 'left'" [style.direction]="RTL == true ? 'rtl' : 'ltr'" *ngIf="noComponent" innerHTML="{{ rowData[fieldName] | highlight : SearchTerm}}">
                      <!--<span style="text-overflow: ellipsis" [style.float]="RTL == true ? 'right' : 'left'" *ngIf="noComponent"> 
                            {{rowData[fieldName]}} 
                     </span>-->
@@ -72,6 +72,12 @@ export class ListTemplateComponent implements OnInit {
         }
 
         //this.CD.detectChanges();
+        this.RTL = this.containsHebrew(this.rowData[this.fieldName]);
+    }
+
+    containsHebrew(text) {
+        const hebrewRegex = /[\u0590-\u05FF]/;
+        return hebrewRegex.test(text);
     }
 
     public get EntityChangedData() {

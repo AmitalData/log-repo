@@ -47,6 +47,8 @@ import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureTo
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { CountryListService } from '../../../Common/Services/StandardLists/CountryListService';
 import { VesselList } from '../../../Common/EntityLists/VesselList';
+import { CustomsHouseTypeList } from 'Customs/EntityLists/CustomsHouseTypeList';
+import { ColumnsWidths } from 'Infrastructure/Components/LogitudeComponents/LogLovV2Component';
 
 @Component({
     templateUrl: './NewShipmentComponent.html',
@@ -80,6 +82,17 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Create");
 
         this.SetCardDependency();
+
+        this.ColumnsWidths = [
+            { ColumnName: 'Code', Width: 40 },
+            { ColumnName: 'CalculatedEnglishName', Width: 85 },
+            { ColumnName: 'CalculatedLocalName', Width: 85 },
+            { ColumnName: 'Address1', Width: 50 },
+            { ColumnName: 'PartnerTypeName', Width: 50 },
+            { ColumnName: 'CountryName', Width: 50 },
+            { ColumnName: 'CityName', Width: 50 },
+            { ColumnName: 'CountryCode', Width: 60 },
+        ];
     }
 
     private SetCardDependency() {
@@ -139,19 +152,21 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
     private GeneratedComponent: any;
     ngAfterViewInit() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.Child.Location)
-            .then(cmpRef => {
+        if (this.Child?.Location) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.Child.Location)
+                .then(cmpRef => {
 
-                this.GeneratedComponent = cmpRef.instance;
+                    this.GeneratedComponent = cmpRef.instance;
 
-                cmpRef.instance.LoadCompleted.subscribe(s => {
-                    this.SetUIProperties_GeneratedComponent();
+                    cmpRef.instance.LoadCompleted.subscribe(s => {
+                        this.SetUIProperties_GeneratedComponent();
+                    });
+
+                    var screenCode = "NewShipment";
+                    cmpRef.instance.LabelWidth = 110;
+                    cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
                 });
-
-                var screenCode = "NewShipment";
-                cmpRef.instance.LabelWidth = 110;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
-            });
+        }
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.PropertyChangedEvent);
@@ -254,8 +269,18 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     public ShowShipmentLevels: boolean = true;
     public IsStandalone: boolean = false;
     public IsNewStandAlonePickupDelivery: boolean = false; 
+    public ColumnsWidths: ColumnsWidths[];
     SetWindowArgs(args: any) {
-        if (args.IsNew == null) {
+        this.EntityPM.IsCustomShipment = args?.QueryNameTextCode == "CustomsShipments";
+        if (this.EntityPM.IsCustomShipment) {
+            this.EntityPM.DepartmentId = null;
+            this.DirectionId = "C";
+            this.EntityPM.UniCloudShipment = true;
+            this.ShowShipmentLevels = false;
+            this.SetCustomerRequired();
+        }
+
+        if (args.IsNew == null && !args?.QueryNameTextCode) {
             this.SourceEntityPM = args.Shipment;
             this.EntityPM.ShipmentLevelCode = args.ShipmentLevelCode;
             this.IsShipmentLevelFixed = args.IsShipmentLevelFixed;
@@ -449,6 +474,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             else if (!AppTool.IsNullOrEmpty(this.ShipmentTypeId)) {
                 isScreenEnabled = true;
             }
+
+        }
+        else if (this.EntityPM.IsCustomShipment) {
+            isScreenEnabled = true;
         }
 
         this.IsScreenEnabled = isScreenEnabled;
@@ -469,7 +498,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.UIProperties.SetEnabled("ConsigneeReference2", this.ObjectTableName, isScreenEnabled);
 
         //Customer
-        this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, isScreenEnabled || this.EntityPM.IsCustomShipment);
         this.UIProperties.SetEnabled("ShipmentCustomerTypeCode", this.ObjectTableName, isScreenEnabled);
 
         // Pickup
@@ -575,7 +604,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
 
         else {
-            if (!this.IsShipmentLevelFixed) {
+            if (!this.IsShipmentLevelFixed && !this.EntityPM.IsCustomShipment) {
                 this.ShowShipmentLevels = true;
             }
         }
@@ -631,6 +660,62 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         }
     }
 
+    IsCustomShipmentValid: boolean;
+    ValidateCustomShipment() {
+        // todo: in ShipmentValidator
+        this.IsCustomShipmentValid = !AppTool.IsNullOrEmpty(this.DepartmentId) && !AppTool.IsNullOrEmpty(this.TransportModeId) && !AppTool.IsNullOrEmpty(this.CustomerId) && !AppTool.IsNullOrEmpty(this.DeclarationOfficeCode);
+    }
+
+    private customsHouseType: CustomsHouseTypeList;
+    get CustomsHouseType() { return this.customsHouseType; }
+    set CustomsHouseType(value: CustomsHouseTypeList) {
+        if (this.customsHouseType != value) {
+            this.customsHouseType = value;
+
+            if (!AppTool.IsNullOrEmpty(value?.Code)) {
+                this.DeclarationOfficeCode = value.Code;
+            }
+
+            if(!AppTool.IsNullOrEmpty(value?.LocalName)) {
+                this.DeclarationOfficeName = value.LocalName;
+            }
+
+            if (!AppTool.IsNullOrEmpty(value?.TransportModeId)) {
+                this.TransportModeId = value.TransportModeId;
+            }
+        }
+    }
+
+    get DeclarationOfficeCode() { return this.EntityPM.DeclarationOfficeCode; }
+    set DeclarationOfficeCode(value: string) {
+        if (this.EntityPM.DeclarationOfficeCode != value) {
+            this.EntityPM.DeclarationOfficeCode = value;
+
+            this.ValidateCustomShipment();
+        }
+    }
+
+
+    get DeclarationOfficeName() { return this.EntityPM.DeclarationOfficeName; }
+    set DeclarationOfficeName(value: string) {
+        if (this.EntityPM.DeclarationOfficeName != value) {
+            this.EntityPM.DeclarationOfficeName = value;
+        }
+    }
+
+
+
+
+
+    get DepartmentId() { return this.EntityPM.DepartmentId; }
+    set DepartmentId(value: string) {
+        if (this.EntityPM.DepartmentId != value) {
+            this.EntityPM.DepartmentId = value;
+
+            this.ValidateCustomShipment();
+        }
+    }
+
     get TransportModeId() { return this.EntityPM.TransportModeId; }
     set TransportModeId(newValue: string) {
         if (this.EntityPM.TransportModeId != newValue) {
@@ -662,6 +747,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             this.BuildShipmentSubTypes();
             this.LoadAllowedAirline();
             this.ValidateMasterField();
+
+            if (this.EntityPM.IsCustomShipment) {
+                this.ValidateCustomShipment();
+            }
         }
     }
 
@@ -1706,6 +1795,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     }
                 });
             }
+            if (this.EntityPM.IsCustomShipment) {
+                this.ValidateCustomShipment();
+            }
         }
     }
 
@@ -1841,7 +1933,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
     private SetCustomerRequired() {
         var isRequired: boolean = false
 
-        if (AppTool.IsNullOrEmpty(this.CustomerId) || AppTool.IsNullOrEmpty(this.ShipmentCustomerTypeCode)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerId) || AppTool.IsNullOrEmpty(this.ShipmentCustomerTypeCode) || this.EntityPM.IsCustomShipment) {
             isRequired = true;
         }
 
@@ -1927,6 +2019,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
                     else if (this.ShipmentCustomerTypeCode == "CON") {
                         isCustomer = this.IsConsigneeMyCustomer;
+                    }
+                    else if (this.EntityPM.IsCustomShipment) {
+                        isCustomer = true;
+                        title = TextCodeTranslator.Translate("Shipment.O.NewCustomer")
                     }
                 }
             }
@@ -4218,10 +4314,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
             confirmWindow.Width = 450;
             confirmWindow.Height = 190;
             confirmWindow.ShowCancelButton = false;
-            confirmWindow.YesButtonText = "Don't Save";
-            confirmWindow.NoButtonText = "Cancel";
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.DontSave");
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
+
             confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-            confirmWindow.Show("You are about to cancel Shipment and all data will be lost");
+            confirmWindow.Show(TextCodeTranslator.Translate("Shipment.O.NewShipmentCancelWarning"));
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.CloseWizardWindow();
@@ -4248,7 +4345,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.SetInlandDomesticOnFinish();
 
         var validator = new ShipmentValidator();
-        this.ValidationErrorsList = validator.Validate(this.EntityPM);
+        if (this.EntityPM.IsCustomShipment) {
+           this.ValidationErrorsList = [];
+        } else {
+            this.ValidationErrorsList = validator.Validate(this.EntityPM);
+        }
 
         if (!AppTool.IsNullOrZero(this.OrderGrossWeight) || !AppTool.IsNullOrZero(this.BookingVolume) || !AppTool.IsNullOrZero(this.OrderChargeableWeight)) {
             if (AppTool.IsNullOrZero(this.BookingNumberOfPackages)) {
@@ -4618,7 +4719,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
         this.CurrentSession.StartBusyIndicator("Creating...");
 
         this.SetDataOnFinish();
-
+        
         this.myShipmentPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
             this.CurrentSession.StopBusyIndicator();
@@ -4638,16 +4739,21 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
 
                 this.CurrentSession.CloseCurrentWindowEmit('OK');
 
-                if (this.IsShipmentCreatedFromOtherEntity()) {
+                if (this.IsShipmentCreatedFromOtherEntity() || this.EntityPM.IsCustomShipment) {
 
                     var myBackButtonLabel: string = null;
                     var myBackSessionTextCode: string = null;
+                    var selectedTabCode: string = null;
 
                     if (this.IsBuildFromQuote) {
                         myBackButtonLabel = "Quote: " + this.SourceEntityPM.QuoteNumber;
                         myBackSessionTextCode = "General.MH.Quotes";
                     }
-
+                    else if (this.EntityPM.IsCustomShipment) {
+                        myBackButtonLabel = TextCodeTranslator.Translate("General.MH.CustomsShipments");
+                        myBackSessionTextCode = "General.MH.CustomsShipments";
+                        selectedTabCode = "SHDA";
+                    }
                     else {
                         myBackButtonLabel = "Shipment: " + this.SourceEntityPM.ShipmentNumber;
                         myBackSessionTextCode = "General.MH.Operations";
@@ -4656,7 +4762,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, After
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'Shipment', BackButtonLabel: myBackButtonLabel });
+                            cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'Shipment', BackButtonLabel: myBackButtonLabel, SelectedTabCode: selectedTabCode });
 
                             this.CurrentSession.ChangeSessionHeader({ MenuTextCode: "General.MH.Operations" });
 

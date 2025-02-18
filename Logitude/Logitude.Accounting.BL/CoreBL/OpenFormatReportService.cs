@@ -20,10 +20,10 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure;
@@ -457,7 +457,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 Suppress_DoNotShowCardWithoutActivity = false,
                 IsRevenueExpenseReport = false,
                 MyTrailReportLevel = ReportLevel.GLAccount,
-
+                IsTrialBalanceReport = false,
 
             };
 
@@ -1190,7 +1190,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             C100VatSum = a + "-" + vatAmount.PadLeft(14, '0');
 
                         }
-                        else if (item.VatAmount > 0)
+                        else if (item.VatAmount >= 0)
                         {
                             C100VatSum = a + "+" + vatAmount.PadLeft(14, '0');
                         }
@@ -1655,7 +1655,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             C100VatSum = a + "-" + vatAmount.PadLeft(14, '0');
                         }
-                        else if (item.VatAmount > 0)
+                        else if (item.VatAmount >= 0)
                         {
                             C100VatSum = a + "+" + vatAmount.PadLeft(14, '0');
                         }
@@ -2053,16 +2053,26 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (item.DocumentAmountAndVATAmount > 0)
                     {
+                        C100SumAfterDiscount = a + "+";
+                        C100SumBeforeDiscount = a + "+";
                         C100SumIncludeVat = a + "+";
                         if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
                         C100SumIncludeVat += DocumentAmountAndVATAmount.PadLeft(14, '0');
+                        C100SumAfterDiscount += DocumentAmountAndVATAmount.PadLeft(14, '0');
+                        C100SumBeforeDiscount += DocumentAmountAndVATAmount.PadLeft(14, '0');
+
+
                     }
 
                     else if (item.DocumentAmountAndVATAmount < 0)
                     {
+                        C100SumAfterDiscount = a + "-";
+                        C100SumBeforeDiscount = a + "-";
                         C100SumIncludeVat = a + "-";
                         if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
                         C100SumIncludeVat += DocumentAmountAndVATAmount.PadLeft(14, '0');
+                        C100SumAfterDiscount += DocumentAmountAndVATAmount.PadLeft(14, '0');
+                        C100SumBeforeDiscount += DocumentAmountAndVATAmount.PadLeft(14, '0');
                     }
                 }
 

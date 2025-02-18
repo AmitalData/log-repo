@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 namespace Simplog.Data.CommonDataModel.Mapping
 {
     public class UnassignedEntityMap : EntityTypeConfiguration<UnassignedEntity>

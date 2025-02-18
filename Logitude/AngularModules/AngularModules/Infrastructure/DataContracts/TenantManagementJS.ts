@@ -57,6 +57,7 @@ export class TenantManagementJS {
     public CountryName: string;
     public MainAdditionalPackageApplied: boolean;
     public IsContainerTrackingPrepaid: boolean;
+    public MinutsTimeOutSession: number;
 
     private tenantManagementLicenses: TenantManagementLicensePM[];
     get TenantManagementLicenses() {

@@ -55,7 +55,7 @@ namespace Logitude.Server.Tools.Helpers
             {
                 value = "<<<Truncate" + value.Substring(0, 2048) + "Truncate>>>";
             }
-            Debug.WriteLine(value);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(value);
             if (!LogMessaging) return this;
             
             if (_StringBuilder.Length > _Max) return this;
@@ -201,7 +201,7 @@ namespace Logitude.Server.Tools.Helpers
             {
                 Line = "<<<Truncate" + Line.Substring(0, 2048) + "Truncate>>>";
             }
-            Debug.WriteLine(Line);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(Line);
             if (!LogMessaging) return this;
 
             if (_StringBuilder.Length > _Max) return this;

@@ -64,12 +64,12 @@ namespace Logitude.Server.Tools.QueueService
         new private QueueResponse Receive() { throw new NotImplementedException(); }
         new private QueueResponse Receive(TimeSpan serverWaitTime) { throw new NotImplementedException(); }
         new private void Complete(string messageId) { throw new NotImplementedException(); }
-        new public List<CustomDBQueueMessage> Receive_new(int? nextRunDelayInSec = null)
+        new public List<CustomDBQueueMessage> Receive_new(int? nextRunDelayInSec = null, int? selectCount = null)
         {
             CurrentCustomQueueResponse = null;
             nextRunDelayInSec = nextRunDelayInSec ?? (int)(CustomDbQueueParams.LockDuration.TotalSeconds);
             base.CurrentMessageId = null;
-            var q = base.Receive_new(nextRunDelayInSec.Value);
+            var q = base.Receive_new(nextRunDelayInSec.Value, selectCount: selectCount);
             if (q == null || q.Count == 0)
             {
                 return null;

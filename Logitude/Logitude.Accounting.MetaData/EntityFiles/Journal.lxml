@@ -4119,7 +4119,7 @@
     QuerySection="&quot;Journal&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     IsSpellChecked="false">
@@ -4185,7 +4185,7 @@
     QuerySection="&quot;Journal&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     IsSpellChecked="false">
@@ -4243,7 +4243,7 @@
     QuerySection="&quot;Journal&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     IsSpellChecked="false">
@@ -4309,7 +4309,7 @@
     QuerySection="&quot;Journal&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     IsSpellChecked="false">
@@ -4375,7 +4375,7 @@
     QuerySection="&quot;Journal&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     IsSpellChecked="false">

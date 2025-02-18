@@ -6,7 +6,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -32,18 +32,18 @@ namespace CommunicationWorkerRole.Services
             this.currentTask = task;
         }
 
-        public void ExecuteDailyAutomaticallyClosingContainers()
+        public void ExecuteDailyAutomaticallyClosingContainers(int tenant)
         {
-            this.GetAllContainers();
+            this.GetAllContainers(tenant);
             foreach (Container container in allContainers)
             {
                 this.ManageClosedContainer(container);
             }
         }
 
-        private void GetAllContainers()
+        private void GetAllContainers(int tenant)
         {
-            shipmentsContext = ShipmentsContext.GetContext(0);
+            shipmentsContext = ShipmentsContext.GetContext(tenant);
             allContainers = (from d in shipmentsContext.Containers
                              where !d.IsClosed
                              select d);

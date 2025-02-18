@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mocks;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -354,7 +354,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.GetForeignFields();
             this.RunStoredProcedures();
-            this.AfterServiceFinished();
+           
             if (entityPM.ARInvoiceTypeCode == "IT")
             {
 
@@ -375,7 +375,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
-
+            this.GenerateInvoiceNumber();
+            this.AfterServiceFinished();
+            ARInvoiceMapping.MapEntity(entityPM, invoice, false, loggedContactId);
+            invoiceRepository.Update(invoice);
+            invoiceRepository.SubmitChanges();
             new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
 
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
@@ -516,7 +520,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("apiResponse.Msg :{0}", apiResponse.Msg));
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("apiResponse.Msg :{0}", apiResponse.Msg));
 
                         entityPM.ConfirmationNumberStatus = "5";
                         entityPM.APIResponseToConfirmation = apiResponse.Msg?.Length > 500 ? apiResponse.Msg?.Substring(0, 500) : apiResponse.Msg;
@@ -539,7 +543,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             catch (Exception ex)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "apiResponse ");
 
                 entityPM.ConfirmationNumberStatus = "5";
                 entityPM.APIResponseToConfirmation = ex.Message.Length > 500 ? ex.Message.Substring(0, 500) : ex.Message;
@@ -1328,7 +1332,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (!entityPM.IsInvoiceNumberManuallySet)
                     {
-                        this.GenerateInvoiceNumber();
+                       // this.GenerateInvoiceNumber();
                     }
                 }
 
@@ -1400,7 +1404,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (!entityPM.IsInvoiceNumberManuallySet)
                 {
-                    this.GenerateInvoiceNumber();
+                   // this.GenerateInvoiceNumber();
                 }
 
                 this.UpdateNeedRebuild();
@@ -1445,7 +1449,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.StatusCode = "AC";
 
-                this.GenerateInvoiceNumber();
+               // this.GenerateInvoiceNumber();
             }
 
             if (!entityPM.IsConstituentInvoice)
@@ -5078,7 +5082,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 invoiceLine.LocalCurrencyAmount = invoiceLine.ForiegnCurrencyAmount;
             }
-            else
+            else if (!(this.isNewEntity && this.entityPM.IsExternalEntity && invoiceLine.LocalCurrencyAmount.HasValue)) // if new, external, and has a value - do not compute it
             {
                 invoiceLine.LocalCurrencyAmount = MethodHelper.Round((invoiceLine.ForiegnCurrencyAmount * invoiceLine.ForiegnExchangeRate), 2);
             }

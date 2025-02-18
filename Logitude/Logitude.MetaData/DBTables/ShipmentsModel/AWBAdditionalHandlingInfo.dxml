@@ -34,8 +34,8 @@
   </Column>
   <Column
     Name="PrintDescription"
-    Type="varchar"
-    Size="60">
+    Type="nvarchar"
+    Size="120">
     <Constraints
       Nullable="false" />
   </Column>

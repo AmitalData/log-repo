@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 namespace Simplog.Data.InfrastructureModel.Repositories
 {

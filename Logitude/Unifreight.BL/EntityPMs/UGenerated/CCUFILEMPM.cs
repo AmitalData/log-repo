@@ -183,6 +183,9 @@ namespace Unifreight.BL.EntityPMs
 
         public DateTime? LAST_UPDATE_DT { get; set; }
 
+        public string RIGHTOWNIDN { get; set; }
+        public string SELLCONDITIONIDN { get; set; }
+
 
     }
 }

@@ -505,6 +505,41 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="DBTableShortName"
+    OldNames="DBTableShortName1"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsLock"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RelatedEntity"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ThisKey"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RelatedKey"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="HeaderScreenId"
     ReferencedTable="Screens"
@@ -533,16 +568,14 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo"
     Ignore="true" />
-
-  <Index
-    Columns="CacheOnClient,IsClosed" />
-
   <Relation
     ForeignKeyColumn="FullNameTextCodeId"
     ReferencedTable="TextCodes"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo"
     Ignore="true" />
+  <Index
+    Columns="CacheOnClient,IsClosed" />
   <UniqueConstraint
     Columns="Name,Tenant" />
 </Table>

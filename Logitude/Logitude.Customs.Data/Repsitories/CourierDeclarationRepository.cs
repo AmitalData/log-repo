@@ -52,6 +52,18 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CourierMasterId == courierMasterId && a.Tenant == tenant
                     select a);
         }
+        public string GetFirstDeclarationCustomFileByCourierMasterId(int tenant, string courierMasterId)
+        {
+            var declaration = (from a in context.Declarations
+                               join c in context.CourierDeclarations on a.Id equals c.DeclarationId
+                    where c.CourierMasterId == courierMasterId && a.Tenant == tenant
+                    select a).FirstOrDefault();
+            if(declaration != null)
+            {
+                return declaration.CustomFileNo;
+            }
+            return null;
+        }
 
         public CourierDeclaration GetCourierDeclarationByDeclarationId(string declarationId, int tenant)
         {

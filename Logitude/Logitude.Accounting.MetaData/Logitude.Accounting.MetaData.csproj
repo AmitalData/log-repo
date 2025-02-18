@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,18 +10,20 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Accounting.MetaData</RootNamespace>
     <AssemblyName>Logitude.Accounting.MetaData</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +31,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,10 +41,10 @@
       <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -71,8 +74,17 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Content Include="DBOthers\0Types\GLAccountAgingDataType.xml" />
-    <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="DBOthers\SProcedures\usp_OpenTransaction.dxml" />
+    <None Include="DBOthers\SProcedures\usp_MonthlyBalancesReport.dxml" />
+    <None Include="DBTables\Aur_Payment.dxml" />
+    <None Include="DBTables\Aur_PaymentItem.dxml" />
+    <None Include="DBTables\Aur_Timesheet.dxml" />
+    <None Include="EntityFiles\Aur_PaymentItem.lxml" />
+    <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
     <Content Include="DBScripts\202204131020_AddInterestTransactionsForRegularJournals.axml" />
@@ -168,6 +180,7 @@
     <None Include="DBTables\ARPaymentCheque.dxml" />
     <None Include="DBTables\ARPaymentChequeStatus.dxml" />
     <None Include="DBTables\ARPaymentsJournal.dxml" />
+    <None Include="DBTables\Aur_Item.dxml" />
     <None Include="DBTables\AutomaticExternalReconcileMethod.dxml" />
     <None Include="DBTables\AutomaticReconcile.dxml" />
     <None Include="DBTables\AutomaticReconcileMethod.dxml" />
@@ -256,62 +269,6 @@
     <None Include="DBTables\UserDefinedReport.dxml" />
     <None Include="DBTables\VatReportStatus.dxml" />
     <None Include="DBTables\WithholdingTaxDeductionType.dxml" />
-    <None Include="EntityFiles\AccountingCompanyType.lxml" />
-    <None Include="EntityFiles\AccountingEntityJournal.lxml" />
-    <None Include="EntityFiles\AccountingNote.lxml" />
-    <None Include="EntityFiles\ARPaymentsJournal.lxml" />
-    <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
-    <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
-    <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
-    <None Include="EntityFiles\ChequeCounterSerial.lxml" />
-    <None Include="EntityFiles\CopyFromTenant0.lxml" />
-    <None Include="EntityFiles\GLAccountAgingData.lxml" />
-    <None Include="EntityFiles\GLAccountCardsData.lxml" />
-    <None Include="EntityFiles\GLAccountCounter.lxml" />
-    <None Include="EntityFiles\GLAccountFollowUpData.lxml" />
-    <None Include="EntityFiles\GLAccountInterestPeriod.lxml" />
-    <None Include="EntityFiles\GLAccountRecocileData.lxml" />
-    <None Include="EntityFiles\IntegrityCheckStatus.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\AutomaticExternalReconcileMethod.lxml" />
-    <None Include="EntityFiles\AccountingIntegrityCheck.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\GLAccount.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\GLAccountMoreData.lxml" />
-    <None Include="EntityFiles\GLAccountWithholdingTax.lxml" />
-    <None Include="EntityFiles\ExternalPageAdditionalData.lxml" />
-    <None Include="EntityFiles\InterestBasesPeriod.lxml" />
-    <None Include="EntityFiles\InterestBasesType.lxml" />
-    <None Include="EntityFiles\InterestEntityType.lxml" />
-    <None Include="EntityFiles\InterestLastBatchService.lxml" />
-    <None Include="EntityFiles\InterestReport.lxml" />
-    <None Include="EntityFiles\InterestReportLine.lxml" />
-    <None Include="EntityFiles\InterestReportLinesByDate.lxml" />
-    <None Include="EntityFiles\InterestReportsConnectInvoice.lxml" />
-    <None Include="EntityFiles\InterestReportStatuse.lxml" />
-    <None Include="EntityFiles\InterestTransaction.lxml" />
-    <None Include="EntityFiles\JournalAdditionalData.lxml" />
-    <None Include="EntityFiles\JournalExternalReconcile.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\JournalMoreData.lxml" />
-    <None Include="EntityFiles\JournalReconcile.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\BankPageEntryType.lxml" />
-    <None Include="EntityFiles\OpenFormatReport.lxml" />
-    <None Include="EntityFiles\OpenFormatReportStatus.lxml" />
-    <None Include="EntityFiles\PaymentCheque.lxml" />
-    <None Include="EntityFiles\PaymentChequeLine.lxml" />
-    <None Include="EntityFiles\PaymentChequeStatus.lxml" />
-    <None Include="EntityFiles\ReconcileExternalPageStatus.lxml" />
-    <None Include="EntityFiles\GLAccountTotalDateType.lxml">
-      <SubType>Designer</SubType>
-    </None>
     <Compile Include="AutoGenerators\AccountingDataContractsClassesGenerator.cs">
       <DependentUpon>AccountingDataContractsClassesGenerator.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -324,7 +281,114 @@
       <DependentUpon>ElasticDemoGen.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="EntityFiles\AccountingCompanyType.lxml" />
+    <None Include="EntityFiles\AccountingEntity.lxml" />
+    <None Include="EntityFiles\AccountingEntityJournal.lxml" />
+    <None Include="EntityFiles\AccountingIntegrityCheck.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\AccountingNote.lxml" />
+    <None Include="EntityFiles\AccountingPeriod.lxml" />
+    <None Include="EntityFiles\ARPaymentCheque.lxml" />
+    <None Include="EntityFiles\ARPaymentChequeStatus.lxml" />
+    <None Include="EntityFiles\ARPaymentsJournal.lxml" />
+    <None Include="EntityFiles\Aur_Item.lxml" />
+    <None Include="EntityFiles\Aur_Payment.lxml" />
+    <None Include="EntityFiles\Aur_Timesheet.lxml" />
+    <None Include="EntityFiles\AutomaticExternalReconcileMethod.lxml" />
+    <None Include="EntityFiles\AutomaticReconcile.lxml" />
+    <None Include="EntityFiles\AutomaticReconcileMethod.lxml" />
+    <None Include="EntityFiles\BankAccount.lxml" />
+    <None Include="EntityFiles\BankCode.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\BankDeposit.lxml" />
+    <None Include="EntityFiles\BankDepositLine.lxml" />
+    <None Include="EntityFiles\BankPageEntryType.lxml" />
+    <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
+    <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
+    <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
+    <None Include="EntityFiles\CashBook.lxml" />
+    <None Include="EntityFiles\CashBookLine.lxml" />
+    <None Include="EntityFiles\CashBookType.lxml" />
+    <None Include="EntityFiles\Category1.lxml" />
+    <None Include="EntityFiles\Category2.lxml" />
+    <None Include="EntityFiles\Category3.lxml" />
+    <None Include="EntityFiles\Category4.lxml" />
+    <None Include="EntityFiles\Category5.lxml" />
+    <None Include="EntityFiles\ChartOfAccount.lxml" />
+    <None Include="EntityFiles\ChartOfAccountsType.lxml" />
+    <None Include="EntityFiles\ChequeCounterSerial.lxml" />
+    <None Include="EntityFiles\CopyFromTenant0.lxml" />
+    <None Include="EntityFiles\ExternalPageAdditionalData.lxml" />
+    <None Include="EntityFiles\ExternalReconciliation.lxml" />
+    <None Include="EntityFiles\ExternalReconciliationLine.lxml" />
+    <None Include="EntityFiles\FullAccountingSetting.lxml" />
+    <None Include="EntityFiles\GLAccount.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GLAccountAgingData.lxml" />
+    <None Include="EntityFiles\GLAccountCardsData.lxml" />
+    <None Include="EntityFiles\GLAccountCounter.lxml" />
+    <None Include="EntityFiles\GLAccountCurrency.lxml" />
+    <None Include="EntityFiles\GLAccountFollowUpData.lxml" />
+    <None Include="EntityFiles\GLAccountInterestPeriod.lxml" />
+    <None Include="EntityFiles\GLAccountMoreData.lxml" />
+    <None Include="EntityFiles\GLAccountRecocileData.lxml" />
+    <None Include="EntityFiles\GLAccountTotalByMonth.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GLAccountTotalDateType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GLAccountType.lxml" />
+    <None Include="EntityFiles\GLAccountWithholdingTax.lxml" />
+    <None Include="EntityFiles\IntegrityCheckStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\InterestBasesPeriod.lxml" />
+    <None Include="EntityFiles\InterestBasesType.lxml" />
+    <None Include="EntityFiles\InterestEntityType.lxml" />
+    <None Include="EntityFiles\InterestLastBatchService.lxml" />
+    <None Include="EntityFiles\InterestReport.lxml" />
+    <None Include="EntityFiles\InterestReportLine.lxml" />
+    <None Include="EntityFiles\InterestReportLinesByDate.lxml" />
+    <None Include="EntityFiles\InterestReportsConnectInvoice.lxml" />
+    <None Include="EntityFiles\InterestReportStatuse.lxml" />
+    <None Include="EntityFiles\InterestTransaction.lxml" />
+    <None Include="EntityFiles\Journal.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\JournalActionType.lxml" />
+    <None Include="EntityFiles\JournalAdditionalData.lxml" />
+    <None Include="EntityFiles\JournalExternalReconcile.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\JournalLine.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\JournalMoreData.lxml" />
+    <None Include="EntityFiles\JournalReconcile.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\JournalStatusType.lxml" />
+    <None Include="EntityFiles\JournalType.lxml" />
+    <None Include="EntityFiles\LedgerTransaction.lxml" />
+    <None Include="EntityFiles\OpenFormatReport.lxml" />
+    <None Include="EntityFiles\OpenFormatReportStatus.lxml" />
+    <None Include="EntityFiles\PaymentCheque.lxml" />
+    <None Include="EntityFiles\PaymentChequeLine.lxml" />
+    <None Include="EntityFiles\PaymentChequeStatus.lxml" />
+    <None Include="EntityFiles\PeriodType.lxml" />
+    <None Include="EntityFiles\ReconcileExternalPage.lxml" />
+    <None Include="EntityFiles\ReconcileExternalPageLine.lxml" />
+    <None Include="EntityFiles\ReconcileExternalPageStatus.lxml" />
+    <None Include="EntityFiles\ReconcileMethod.lxml" />
+    <None Include="EntityFiles\Reconciliation.lxml" />
+    <None Include="EntityFiles\ReconciliationLine.lxml" />
+    <None Include="EntityFiles\Revaluation.lxml" />
     <None Include="EntityFiles\RevaluationStatus.lxml" />
+    <None Include="EntityFiles\RevenueExpenseType.lxml" />
     <None Include="EntityFiles\TaxDeductionReport.lxml" />
     <None Include="EntityFiles\TaxDeductionReportStatus.lxml" />
     <None Include="EntityFiles\TaxReport.lxml" />
@@ -334,10 +398,12 @@
     <None Include="EntityFiles\TaxReportLineStatus.lxml" />
     <None Include="EntityFiles\TaxReportLineTransmitStatus.lxml" />
     <None Include="EntityFiles\TaxReportLineType.lxml" />
+    <None Include="EntityFiles\TaxReportStatus.lxml" />
+    <None Include="EntityFiles\TaxWithholdingAssessOffice.lxml" />
     <None Include="EntityFiles\TenantIdleStatus.lxml" />
+    <None Include="EntityFiles\TestEntity.lxml" />
     <None Include="EntityFiles\UserDefinedReport.lxml" />
     <None Include="EntityFiles\VatReportStatus.lxml" />
-    <None Include="EntityFiles\TaxReportStatus.lxml" />
     <None Include="EntityFiles\WithholdingTaxDeductionType.lxml" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -346,9 +412,9 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Global.Data</Name>
+      <Name>Simplog.Data.Global</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -364,56 +430,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ContextGenerator.cs</LastGenOutput>
     </None>
-    <None Include="EntityFiles\AccountingEntity.lxml" />
-    <None Include="EntityFiles\AccountingPeriod.lxml" />
-    <None Include="EntityFiles\ARPaymentCheque.lxml" />
-    <None Include="EntityFiles\ARPaymentChequeStatus.lxml" />
-    <None Include="EntityFiles\AutomaticReconcile.lxml" />
-    <None Include="EntityFiles\Category1.lxml" />
-    <None Include="EntityFiles\Category2.lxml" />
-    <None Include="EntityFiles\Category3.lxml" />
-    <None Include="EntityFiles\Category4.lxml" />
-    <None Include="EntityFiles\Category5.lxml" />
-    <None Include="EntityFiles\AutomaticReconcileMethod.lxml" />
-    <None Include="EntityFiles\BankAccount.lxml" />
-    <None Include="EntityFiles\BankCode.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\CashBook.lxml" />
-    <None Include="EntityFiles\CashBookLine.lxml" />
-    <None Include="EntityFiles\CashBookType.lxml" />
-    <None Include="EntityFiles\ChartOfAccount.lxml" />
-    <None Include="EntityFiles\ChartOfAccountsType.lxml" />
-    <None Include="EntityFiles\BankDeposit.lxml" />
-    <None Include="EntityFiles\BankDepositLine.lxml" />
-    <None Include="EntityFiles\FullAccountingSetting.lxml" />
-    <None Include="EntityFiles\GLAccountCurrency.lxml" />
-    <None Include="EntityFiles\GLAccountTotalByMonth.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\GLAccountType.lxml" />
-    <None Include="EntityFiles\Journal.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\JournalActionType.lxml" />
-    <None Include="EntityFiles\JournalLine.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\JournalStatusType.lxml" />
-    <None Include="EntityFiles\JournalType.lxml" />
-    <None Include="EntityFiles\LedgerTransaction.lxml" />
-    <None Include="EntityFiles\PeriodType.lxml" />
-    <None Include="EntityFiles\ReconcileMethod.lxml" />
-    <None Include="EntityFiles\ReconcileExternalPage.lxml" />
-    <None Include="EntityFiles\ExternalReconciliation.lxml" />
-    <None Include="EntityFiles\Reconciliation.lxml" />
-    <None Include="EntityFiles\ReconcileExternalPageLine.lxml" />
-    <None Include="EntityFiles\ExternalReconciliationLine.lxml" />
-    <None Include="EntityFiles\ReconciliationLine.lxml" />
-    <None Include="EntityFiles\Revaluation.lxml" />
-    <None Include="EntityFiles\RevenueExpenseType.lxml" />
-    <None Include="EntityFiles\TaxWithholdingAssessOffice.lxml" />
-    <None Include="EntityFiles\TestEntity.lxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
@@ -437,6 +453,14 @@
     <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

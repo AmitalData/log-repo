@@ -22,6 +22,7 @@ export class DocumentTypeList {
 		ObjectTableId: string;
 		ObjectTableName: string;
 		Subject: string;
+
 		DocumentTypeDefaultReportTemplateId: string;
 		DocumentTypeDefaultHTMLTemplateId: string;
 		DocumentTypeDefaultEditorTool: string;
@@ -57,4 +58,4 @@ export class DocumentTypeList {
 		PrintingFieldsScreenCode: string;
 		AddedManually: boolean;
 	
-}
+}

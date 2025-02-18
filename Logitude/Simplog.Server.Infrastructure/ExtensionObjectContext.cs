@@ -97,7 +97,35 @@ using Simplog.Server.Infrastructure;
         return db.ExecuteStoreQuery<T>(newselectSql, parameters).ToList();
 
     }
-        public static int DeleteWhere<T>(this System.Data.Entity.DbContext dbContext, Expression<Func<T, bool>> filter) where T : class
+	public static List<T> GetListWhere<T>(this System.Data.Entity.DbContext dbContext, Expression<Func<T, bool>> filter) where T : class
+	{
+		using (var myIDbContextLogger = (dbContext as DbContextBase).CreateLogger())
+		{
+			List<T> myOut = null;
+			try
+			{
+				var adapter = (System.Data.Entity.Infrastructure.IObjectContextAdapter)dbContext;
+				var objectContext = adapter.ObjectContext;
+				myOut = objectContext.GetListWhere<T>(filter);
+			}
+			catch (Exception e)
+			{
+				e.ChangeExceptionMess(myIDbContextLogger.ToString());
+				throw;
+			}
+			return myOut;
+		}
+	}
+	public static List<T> GetListWhere<T>(this System.Data.Entity.Core.Objects.ObjectContext db, Expression<Func<T, bool>> filter) where T : class
+	{
+		var query = db.CreateObjectSet<T>().Where(filter) as ObjectQuery;
+		string selectSql = query.ToTraceString();
+		var parameters = query.Parameters.Select(p => GetDbParameter(p.Name, p.Value)).ToArray();
+
+		return db.ExecuteStoreQuery<T>(selectSql, parameters).ToList();
+
+	}
+	public static int DeleteWhere<T>(this System.Data.Entity.DbContext dbContext, Expression<Func<T, bool>> filter) where T : class
         {
 
             var adapter = (System.Data.Entity.Infrastructure.IObjectContextAdapter)dbContext;

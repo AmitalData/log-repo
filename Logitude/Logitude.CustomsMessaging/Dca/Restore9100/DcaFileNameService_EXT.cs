@@ -27,7 +27,7 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
 );
             if (messageDCA==null)
             {
-                Debug.WriteLine($"file:{myFileName} not exist in Interface library ");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"file:{myFileName} not exist in Interface library ");
             }
             return (messageDCA, dcaFile);
 

@@ -32,6 +32,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsAutoComplete { get; set; }
         public string SortingByObjectField { get; set; }
         public string DBTableName { get; set; }
+        public string DBTableShortName { get; set; }
+
         public int CustomFieldsCount { get; set; }
         public bool HasCustomFields { get; set; }
         public string DescriptionTextCodeId { get; set; }
@@ -81,5 +83,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string FullNameTextCodeCode { get; set; }
         public string FullNameTextCodeDefaultText { get; set; }
         public bool AvailableInDocumentTypes { get; set; }
-    }
+		public bool IsLock { get; set; }
+		public string RelatedEntity { get; set; }
+		public string ThisKey { get; set; }
+		public string RelatedKey { get; set; }
+	}
 }

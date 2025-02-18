@@ -3,10 +3,10 @@ using System.Data.Entity;
 using System.Transactions;
 using Simplog.Data.ShipmentModel.Mapping;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Mapping;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.ShipmentsModel.Mapping;
 using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.ShipmentsModel
@@ -16,6 +16,7 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentDataView> shipmentDataViews;
 
         public IDbSet<DigitalShipmentsDataView> DigitalShipmentsDataView { get; set; }
+        public IDbSet<CustomsShipmentDataView> CustomsShipmentDataView { get; set; }
 
         public ShipmentDataViewContext()
         {
@@ -24,7 +25,7 @@ namespace Simplog.Data.ShipmentsModel
         }
 
         public ShipmentDataViewContext(DbConnection connection)
-            : base(connection,true)
+            : base(connection, true)
         {
             Database.SetInitializer<ShipmentDataViewContext>(null);
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
@@ -32,7 +33,7 @@ namespace Simplog.Data.ShipmentsModel
 
         public IDbSet<ShipmentDataView> ShipmentDataViews
         {
-           get; set;
+            get; set;
         }
 
         public IDbSet<ShipmentCountryDashboardView> ShipmentCountryDashboardViews
@@ -53,7 +54,7 @@ namespace Simplog.Data.ShipmentsModel
 
         public void SetAsModified(object entity)
         {
-           
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -68,13 +69,13 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentCountryDashboardViewMap());
             modelBuilder.Configurations.Add(new ShipmentDirectionTransmodeViewMap());
             modelBuilder.Configurations.Add(new ShipmentsCustomersDashboardViewMap());
-           
+
             base.OnModelCreating(modelBuilder);
         }
 
         public static IShipmentDataViewContext GetContext(int tenant)
         {
-       
+
             GlobalDB currentDb;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -83,7 +84,7 @@ namespace Simplog.Data.ShipmentsModel
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             ShipmentDataViewContext context = new ShipmentDataViewContext(connection);
             return context;
 
@@ -93,7 +94,7 @@ namespace Simplog.Data.ShipmentsModel
 
         public void DetectChanges()
         {
-           // throw new System.NotImplementedException();
+            // throw new System.NotImplementedException();
         }
 
 

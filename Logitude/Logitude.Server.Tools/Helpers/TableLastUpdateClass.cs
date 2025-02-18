@@ -1,10 +1,10 @@
 using System;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -244,14 +244,14 @@ namespace Logitude.BL.Helpers
                 }
             }
         }
-        public static void UpdateCacheTableHistory()
+        public static void UpdateCacheTableHistory(int tenant)
         {
             string sqlDDL_NoNeedCommit = "delete objecttablelastupdates where objecttableid   in ( select id From  objecttables where id in (select objecttableid from objecttablelastupdates ) and name not like 'Custom%') ";
-            ((CustomContext.GetContext(0)) as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
+            ((CustomContext.GetContext(tenant)) as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
 (dr) =>
 {
 
-    Debug.WriteLine($"ExecuteReaderSingleResult: {dr.GetString(0)}", false);
+   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ExecuteReaderSingleResult: {dr.GetString(0)}");
 return 0;
 });
 
@@ -309,9 +309,9 @@ return 0;
         }
 
 
-        public static void UpdateAllClosedTablesHistory()
+        public static void UpdateAllClosedTablesHistory(int tenant)
         {
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             ObjectTableLastUpdateRepository tableLastUpdateRepository = new ObjectTableLastUpdateRepository(context);
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
             ContactRepository contactRepository = new ContactRepository(0);

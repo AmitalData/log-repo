@@ -34,7 +34,11 @@ export function FillCardDetails(cardDetails: CardDetails) {
 export function CreateCard() {
     cy.DefineRequestWait(RestAPI.POST, URLs.PartnersDomain, RequestAliases.PostCard)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+    cy.wait(2000);
+    cy.Click(BaseSelectors.ConfirmWindowButton , null);
+
 }
+
 
 export function AssertCreateCard(CardType: string) {
     BaseAssertion.AssertStatusCode(RequestAliases.PostCard, 200).then((interception) => {

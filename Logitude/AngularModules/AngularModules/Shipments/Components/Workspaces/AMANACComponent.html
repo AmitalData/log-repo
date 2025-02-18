@@ -1,0 +1,69 @@
+
+<table>
+    <tr>
+        <td style="width: 300px;">
+            <table>
+                <tr style="height: 1px;">
+                    <td>
+                        <div class="QueriesSection">
+                            <div>Ocean Shipments</div>
+                            <div>
+                                <HyperlinkQuery attr.data-cy="{{'OceanNewTransfer' | IdGeneratorAsyncPipe | async}}" (click)="NewTransferClicked('Ocean')">New Transfer</HyperlinkQuery>
+
+                                <!--<HyperlinkQuery>Not Ready Shipments</HyperlinkQuery>-->
+
+                                <HyperlinkQuery attr.data-cy="{{'OceanMarkedasblockedfortransfer' | IdGeneratorAsyncPipe | async}}" (click)="ViewBlockedShipmentsClicked('Ocean')">
+                                    <span>Marked as blocked for transfer</span>
+                                    <span>({{BlockedOceanShipmentsCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery attr.data-cy="{{'OceanTransferHistory' | IdGeneratorAsyncPipe | async}}" (click)="ViewQueryClicked('AMOS')">Transfer History</HyperlinkQuery>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td style="width: 10px;">
+            <div></div>
+        </td>
+
+
+        <td>
+            <table>
+                <tr style="height: 1px;">
+                    <td>
+                        <div class="QueriesSection">
+                            <div>Air Shipments</div>
+                            <div>
+                                <HyperlinkQuery attr.data-cy="{{'AirNewTransfer' | IdGeneratorAsyncPipe | async}}" (click)="NewTransferClicked('Air')">New Transfer</HyperlinkQuery>
+
+                                <!--<HyperlinkQuery>Not Ready Shipments</HyperlinkQuery>-->
+
+                                <HyperlinkQuery attr.data-cy="{{'AirMarkedasblockedfortransfer' | IdGeneratorAsyncPipe | async}}" (click)="ViewBlockedShipmentsClicked('Air')">
+                                    <span>Marked as blocked for transfer</span>
+                                    <span>({{BlockedAirShipmentsCount}})</span>
+                                </HyperlinkQuery>
+
+                                <HyperlinkQuery attr.data-cy="{{'AirTransferHistory' | IdGeneratorAsyncPipe | async}}" (click)="ViewQueryClicked('AMAS')">Transfer History</HyperlinkQuery>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

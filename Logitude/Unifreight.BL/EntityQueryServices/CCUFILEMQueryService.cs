@@ -13,6 +13,7 @@ using Unifreight.BL.EntityDataMappings;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Unifreight.BL.EntityQueryServices
 {
@@ -72,9 +73,16 @@ namespace Unifreight.BL.EntityQueryServices
             return (this.Repository as CCUFILEMRepository).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
         }
 
-        public int? GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(long lCUSTOMFILENO)
+        public int? GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(long lCUSTOMFILENO,int tenant)
         {
-            return (this.Repository as CCUFILEMRepository).LockByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
+			CustomsSettingRepository customsSettingRepository = new CustomsSettingRepository(tenant);
+			var mySetting = customsSettingRepository.GetSettingByTenantCache(tenant);
+		
+            if (mySetting.IsConnectedToUniFreight)
+            {
+                return (this.Repository as CCUFILEMRepository).LockByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
+            }
+            return 0; 
         }
 
         //<--- Yuval Chalup 19.11.2015 TASK-17450        

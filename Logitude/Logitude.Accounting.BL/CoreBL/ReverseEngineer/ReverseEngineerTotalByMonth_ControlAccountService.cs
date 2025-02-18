@@ -251,7 +251,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             finally
             {
-                Debug.WriteLine(debugIt);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(debugIt);
             }
 
 
@@ -405,7 +405,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 for (int month = 1; month < 13; month++)
                 {
-                    Debug.WriteLine($"{year},{month}");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{year},{month}");
                     var s = new ReverseEngineerTotalByMonth_ControlAccountService(new DateTime(year,month,1), myTenant, "");
                     s.DoDotCrashOnNothing2DO = true;
                     s.FixDbIntegrityFromLedgeToTotal(/*false*/);

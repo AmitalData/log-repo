@@ -219,7 +219,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-
   <Column
     Name="CustomerTenantNumber"
     Type="int">
@@ -490,10 +489,8 @@
     Columns="SearchFields" />
   <Index
     Columns="Tenant,ExternalEntityReference,ExternalEntityName" />
-
-	<Index
-  Columns="EntityId,ObjectTableId,EntityReference,DirectionCode" />
-    Columns="Tenant,IsDeleted,IsTransferdToQBO" />
+  <Index
+    Columns="EntityId,ObjectTableId,EntityReference,DirectionCode" />
   <UniqueConstraint
     Env="logbox"
     Columns="Tenant,ComputedForwarderDocumentId" />

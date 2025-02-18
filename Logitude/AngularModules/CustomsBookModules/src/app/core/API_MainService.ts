@@ -13,6 +13,7 @@ export interface Filters {
 	SkippedRows?: number;
 	PageSize?: number;
 	Tenant?: number;
+	IsDiscountCodes?: boolean;
 }
 
 @Injectable({
@@ -45,7 +46,7 @@ export class API_MainService extends BaseService {
 	}
 
 	GetCustomsBookMainView(filters: Filters) {	
-		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}`;
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}&IsDiscountCodes=${filters.IsDiscountCodes}`;
 		return this.Get(url);
 	}
 

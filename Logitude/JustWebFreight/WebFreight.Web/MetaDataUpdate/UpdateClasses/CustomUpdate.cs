@@ -16,10 +16,10 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -15139,6 +15139,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature recallClientsForCutomsFeature = tenantFeatures.Where(d => d.Code == "recallClientsForCutoms" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature LogisticActionRequestFeature = tenantFeatures.Where(d => d.Code == "LogisticActionRequest" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature WorkSheetFromExcelFeature = tenantFeatures.Where(d => d.Code == "WorkSheetFromExcel" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature customsShipmentsFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSSHIPMENTS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
 
             #region MenusCUSTOMSDECLARATIONFeature
@@ -15164,10 +15165,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSCO", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 16, CategoryTypeCode = null, TextCode = "General.MH.Containerization", Icon = "CustomersPath", FeatureId = containerizationFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Containerization").FirstOrDefault().Id, FeatureUniqeCode = containerizationFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSES", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 19, CategoryTypeCode = null, TextCode = "General.MH.ExportStorage", Icon = "CustomersPath", FeatureId = exportStorageFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.ExportStorage").FirstOrDefault().Id, FeatureUniqeCode = exportStorageFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { HtmlView = "./CustomsModules/CustomsReport/Components/CustomsReportsComponent", Code = "CSRP", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 18, CategoryTypeCode = null, TextCode = "General.MH.CustomsReports", Icon = "ReportsPath", FeatureId = reportsFeature.Id, FeatureUniqeCode = reportsFeature.FeatureUniqeCode, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.Declaration").FirstOrDefault().Id }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CLAR", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 21, CategoryTypeCode = null, TextCode = "General.MH.LogisticActionRequest", Icon = "CustomersPath", FeatureId = LogisticActionRequestFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.LogisticActionRequest").FirstOrDefault().Id, FeatureUniqeCode = LogisticActionRequestFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CLAR", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 21, CategoryTypeCode = null, TextCode = "General.MH.LogisticActionRequest", Icon = "CustomersPath", FeatureId = LogisticActionRequestFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.LogisticActionRequest").FirstOrDefault().Id, FeatureUniqeCode = LogisticActionRequestFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "DEUT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 21, CategoryTypeCode = null, TextCode = "Customs.General.O.WorkSheetFromExcel", Icon = "CustomersPath", FeatureId = WorkSheetFromExcelFeature.Id, ObjectTableId = tenantObjectTables.Where(o => o.Name == "Customs.CourierMaster").FirstOrDefault().Id, FeatureUniqeCode = WorkSheetFromExcelFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-
-
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSSH", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 1, CategoryTypeCode = null, TextCode = "General.MH.CustomsShipments", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id, FeatureId = customsShipmentsFeature.Id, FeatureUniqeCode = customsShipmentsFeature.FeatureUniqeCode, QuerySection = "CustomsShipments" }, MenusTablesRepository, tenantMenusTables);
+ 
 
        
 
@@ -16510,11 +16511,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         public void LoadBaseTablesForDataBases()
         {
             string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-            if (enviroment == "azure app service")
-                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
-
-            else
-            {
+    
                 GlobalDBRepository globalDbRep = new GlobalDBRepository();
                 List<GlobalDB> dbList = globalDbRep.GetGlobalDBs().ToList();
 
@@ -16522,7 +16519,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 {
                     LoadBaseTablesForConnection(db.DBConnection);
                 }
-            }
+            
         }
 
         public void UpgradeClosedTablesForTenantZero()
@@ -16530,16 +16527,12 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             isUpdate = true;
 
             string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
-            if (enviroment == "azure app service")
-                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
-
-            else
-            {
+         
                 List<GlobalDB> dbList = null;
                 using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
                 {
                     GlobalDBRepository globalDbRep = new GlobalDBRepository();
-                    dbList = globalDbRep.GetGlobalDBs().ToList();
+                    dbList = globalDbRep.GetActiveDataBases().ToList();
                     scop.Complete();
                 }
 
@@ -16547,7 +16540,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 {
                     LoadBaseTablesForConnection(db.DBConnection);
                 }
-            }
+             
         }
 
         private void LoadBaseTablesForConnection(string connectionStr)

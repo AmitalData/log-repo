@@ -42,5 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string Code { get; set; }
         [DataMember]
         public bool IsHybrid { get; set; }
+        [DataMember]
+        public string DirectionId { get; set; }
     }
 }

@@ -2207,6 +2207,7 @@
     Id="&quot;bc9daddd-6a2c-492c-ac8f-e54df29d2fea&quot;"
     FieldName="&quot;MasterExportFreightPrepaidCollectId&quot;"
     ShortName="MasterExportFreightPCId"
+
     OldNames="MasterExportFreightPrepaidCollectId,MasterExportFreightPCId"
     IsNew="false"
     IsChecked="false"
@@ -2289,6 +2290,7 @@
     Id="&quot;0253a9b8-1efa-4d8a-b0fd-739468dadf54&quot;"
     FieldName="&quot;MasterImportFreightPrepaidCollectId&quot;"
     ShortName="MasterImportFreightPCId"
+
     OldNames="MasterImportFreightPrepaidCollectId,MasterImportFreightPCId"
     IsNew="false"
     IsChecked="false"
@@ -2371,6 +2373,7 @@
     Id="&quot;b70f0da7-16ae-43de-aefa-fbe1845bd8ee&quot;"
     FieldName="&quot;MasterExportOtherPrepaidCollectId&quot;"
     ShortName="MasterExportOtherPCId"
+
     OldNames="MasterExportOtherPrepaidCollectId,MasterExportOtherPCId"
     IsNew="false"
     IsChecked="false"
@@ -2453,6 +2456,7 @@
     Id="&quot;443d817a-c751-48f6-abe2-462f2c711b96&quot;"
     FieldName="&quot;MasterImportOtherPrepaidCollectId&quot;"
     ShortName="MasterImportOtherPCId"
+
     OldNames="MasterImportOtherPrepaidCollectId,MasterImportOtherPCId"
     IsNew="false"
     IsChecked="false"
@@ -5881,6 +5885,7 @@
     Id="&quot;8ad7cd98-0de3-4e6c-9456-7e01e6d19da5&quot;"
     FieldName="&quot;VatMandatoryForPotentialCustomers&quot;"
     ShortName="VaTMandatoryPotentialCustomers"
+
     OldNames="VatMandatoryForPotentialCustomers,VaTMandatoryPotentialCustomers"
     IsNew="false"
     IsChecked="false"
@@ -8120,6 +8125,7 @@
     Id="&quot;160e04a5-dd4a-4044-81e6-7ca5af6234dc&quot;"
     FieldName="&quot;ExportQuotationsToIntegratedSystem&quot;"
     ShortName="ExportQuotationsToIntegrated"
+
     OldNames="ExportQuotationsToIntegratedSystem,ExportQuotationsToIntegrated"
     IsNew="false"
     IsChecked="false"
@@ -9198,6 +9204,7 @@
     Id="&quot;511229f4-e329-4c66-bdb5-1739f53102da&quot;"
     FieldName="&quot;IsCorrespondenceRightToLeftEnabled&quot;"
     ShortName="IsCorrespondenceRTLEnabled"
+
     OldNames="IsCorrespondenceRightToLeftEnabled,IsCorrespondenceRTLEnabled"
     IsNew="false"
     IsChecked="false"
@@ -10900,7 +10907,9 @@
     Id="&quot;ba2b597c-ce4e-4d15-94ba-7c1b97ad708a&quot;"
     FieldName="&quot;TransferQuotationsToUnifreightTrigger&quot;"
     ShortName="TransferQuotationsToUNFTrigger"
+
     OldNames="TransferQuotationsToUnifreightTrigger,TransferQuotationsToUNFTrigger"
+
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -11398,6 +11407,7 @@
     EnableFullscreenTextBox="false" />
   <field
     Id="&quot;537393bc-4a37-4f14-976d-6ab075b0053e&quot;"
+
     FieldName="&quot;IsQuotesRequestActivatedInShared&quot;"
     ShortName="IsQuotesRequestActivated"
     OldNames="IsQuotesRequestActivatedInShared,IsQuotesRequestActivatInShared,IsQuotesRequestActivated"

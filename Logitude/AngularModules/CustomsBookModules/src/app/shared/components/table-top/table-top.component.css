@@ -90,7 +90,7 @@
 /* Media Queries for Responsive Design */
 @media (max-width: 800px) {
 	.mainTable_top {
-		top: 230px;
+		top: 240px;
 	}
 }
 

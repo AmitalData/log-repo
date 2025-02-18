@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel.DomainServices.Server;
 using System.ServiceModel.DomainServices.Server.ApplicationServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 

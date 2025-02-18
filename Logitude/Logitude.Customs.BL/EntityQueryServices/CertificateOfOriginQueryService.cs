@@ -82,10 +82,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public Dictionary<string, byte[]> GetToolTipFromStorage()
         {
-           
-            Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-            Dictionary<string, byte[]> ArryByte = storageservice.ReadAllFilesInFolder("tenant0", "CertificateOfOrigin");
-			return ArryByte ;
+			if (LogitudeSettings.StorageServiceMode == "Azure")
+			{
+				Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+				Dictionary<string, byte[]> ArryByte = storageservice.ReadAllFilesInFolder("tenant0", "CertificateOfOrigin");
+				return ArryByte;
+			}
+			return null;
         }
 
     }

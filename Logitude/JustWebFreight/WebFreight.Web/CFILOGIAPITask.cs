@@ -137,6 +137,52 @@ customs.Declarations d on p.PARENTENTITYID = d.id where t.DOCUMENTSFILINGID=@DOC
 <DAT name=""EXAMPLE_RESULT"">455993853</DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
 <OCC>
+<DAT name=""CODE"">A75</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select invoicenumber,InvoiceCurrencyTypeCode,IssueCountryCode from supplierinvoices</DAT>
+<DAT name=""REFERENCE"">CFIFFORMS.Lp_Currency_Check2</DAT>
+<DAT name=""PARAMETERS"">DeclarationId=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select invoicenumber,InvoiceCurrencyTypeCode,IssueCountryCode from supplierinvoices where  and Tenant=@Tenant and DeclarationId=@DeclarationId</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select invoicenumber,InvoiceCurrencyTypeCode,IssueCountryCode from supplierinvoices where  and Tenant=@Tenant and DeclarationId=@DeclarationId</DAT>
+<DAT name=""EXAMPLE_RESULT"">111,3333,1</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A76</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>Select TAXRATE,TAXBASEAMOUNT from SUPPLIERINVOICEITEMSTAXES</DAT>
+<DAT name=""REFERENCE"">CFIRDEC</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select TAXRATE,TAXBASEAMOUNT from SUPPLIERINVOICEITEMSTAXES where SUPPLIERINVOICEITEMSTAXES.DECLARATIONID = @DECLARATIONID  and SUPPLIERINVOICEITEMSTAXES.INVOICECOUNTERKEY = @INVOICECOUNTERKEY and SUPPLIERINVOICEITEMSTAXES.LINENUMBER = @LINENUMBER and SUPPLIERINVOICEITEMSTAXES.TENANT = @Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select TAXRATE,TAXBASEAMOUNT from SUPPLIERINVOICEITEMSTAXES where SUPPLIERINVOICEITEMSTAXES.DECLARATIONID = @DECLARATIONID  and SUPPLIERINVOICEITEMSTAXES.INVOICECOUNTERKEY = @INVOICECOUNTERKEY and SUPPLIERINVOICEITEMSTAXES.LINENUMBER = @LINENUMBER and SUPPLIERINVOICEITEMSTAXES.TENANT = @Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"">111,3333</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A77</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select count(*) from SupplierInvioceItemCertificats</DAT>
+<DAT name=""REFERENCE"">CFIFFORMS</DAT>
+<DAT name=""PARAMETERS"">DeclarationId=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select count(*) from SupplierInvioceItemCertificats where(1=1) and Tenant='1' and DeclarationId='45345' and CertificateExemptionTypeCode in ('60','61','62','63')</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select count(*) from SupplierInvioceItemCertificats where(1=1) and Tenant=@Tenant and DeclarationId=@DeclarationId and CertificateExemptionTypeCode in ('60','61','62','63')</DAT>
+<DAT name=""EXAMPLE_RESULT"">4</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A78</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select Documentsfilings.id from DECLARATIONS,Documentsfilings</DAT>
+<DAT name=""REFERENCE"">HYBRID SERVICE</DAT>
+<DAT name=""PARAMETERS"">DeclarationId=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>test</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select Documentsfilings.id from Customs.DECLARATIONS,dbo.Documentsfilings where
+documentsfilings.externalentityreference=declarations.customfileno and
+declarations.customfileno is not null and
+declarations.hatradate >= cast(@hatradate as date) and
+DECLARATIONS.tenant =@Tenant  and
+Documentsfilings.tenant=@Tenant and
+(externalentityname=@Entname or externalentityname is null)
+order by  hatradate
+OFFSET @OFFSETNUM ROWS FETCH NEXT @NEXTNUM ROWS ONLY
+</DAT>
+<DAT name=""EXAMPLE_RESULT"">4645</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT>
+</OCC>
+<OCC>
 <DAT name=""CODE"">A1</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT LoadingFactor</DAT>
 <DAT name=""REFERENCE"">CFIFFORMS.Lp_LogiDeclarationsDB</DAT>

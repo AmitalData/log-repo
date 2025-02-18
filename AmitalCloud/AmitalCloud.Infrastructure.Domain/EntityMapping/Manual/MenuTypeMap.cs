@@ -1,0 +1,30 @@
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+
+namespace AmitalCloud.Infrastructure.Domain.EntityMapping
+{
+    public class MenuTypeMap : EntityTypeConfiguration<MenuType>
+    {
+        public MenuTypeMap()
+        {
+            // Primary Key
+            this.HasKey(t => t.Code);
+
+            // Properties
+            this.Property(t => t.Code)
+                .IsRequired()
+                .HasMaxLength(4)
+                .IsUnicode(false);
+
+            this.Property(t => t.Name)
+                .IsRequired()
+                .HasMaxLength(40)
+                .IsUnicode(false);
+
+            // Table & Column Mappings
+            this.ToTable("MenuTypes");
+            this.Property(t => t.Code).HasColumnName("Code");
+            this.Property(t => t.Name).HasColumnName("Name");
+        }
+    }
+}

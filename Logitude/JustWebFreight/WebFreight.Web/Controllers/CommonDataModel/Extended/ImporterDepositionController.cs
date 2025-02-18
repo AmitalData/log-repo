@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ using Logitude.BL.CommonDataModel.CodePropertiesMapping;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Newtonsoft.Json;
 using Logitude.Server.Tools.QueueService;

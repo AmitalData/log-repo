@@ -3,10 +3,10 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -183,15 +183,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                         entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 
+
                     }
 
-
-                    service.Update(entityPM);
-                    entityPM.SchedulerDetailsXML = null;
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                        service.Update(entityPM);
+                        entityPM.SchedulerDetailsXML = null;
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
                 }
-            }
+           
 
             catch (Exception ex)
             {

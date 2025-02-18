@@ -208,6 +208,21 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StandaloneShipmentNumber { get; set; }
         public bool IsConnectedToStandalone { get; set; }
         public string CarrierLocalName { get; set; }
+        public string DeliveryContact { get; set; }
+        public string ResponsibilityCode { get; set; }
+        public string Responsibility { get; set; }
+        public string PackageTypeCode { get; set; }
+        public string PackageTypeName { get; set; }
+        public int? Quantity { get; set; }
+        public double? GrossWeight { get; set; }
+        public double? Volume { get; set; }
+        public double? CustomerChargeableWeight { get; set; }
+        public double? TruckerChargeableWeight { get; set; }
+        public string DescriptionOfGoods { get; set; }
+        public string Commodity { get; set; }
+        public string FromAddressCityId { get; set; }
+        public string ToAddressCityId { get; set; }
+        public DateTime? CreateDate { get; set; }
 
         public string ChangeSet { get; set; }
     }

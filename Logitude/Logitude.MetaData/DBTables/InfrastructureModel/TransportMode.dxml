@@ -32,6 +32,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LocalName"
+    Type="nvarchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Index
     Columns="AutomaticLastUpdateDate" />
 </Table>

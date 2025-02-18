@@ -11,10 +11,10 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -1011,6 +1011,152 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, args);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        [HttpPut]
+        public HttpResponseMessage CheckDuplicate(PartnerServicePM args)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                    int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    string VatNumber = "" ;
+                    string Code =" " ;
+                    switch (args.PartnerTypeId)
+                    {
+                        case "AG":
+                            {
+                                if (args.Agent != null)
+                                {
+                                    VatNumber = args.Agent.VatNumber;
+                                    Code = args.Agent?.Code;
+                                }
+
+                                break;
+                            }
+
+                        case "CS":
+                        case "PO":
+                            {
+                                if (args.Customer != null)
+                                {
+                                   VatNumber = args.Customer.VatNumber;
+                                    Code = args.Customer?.Code;
+                                }
+
+                                break;
+                            }
+
+                        case "CG":
+                            {
+                                if (args.CustomAgent != null)
+                                {
+                                    VatNumber = args.CustomAgent.VatNumber;
+                                    Code = args.CustomAgent?.Code;
+                                }
+
+                                break;
+                            }
+
+                        case "SG":
+                            {
+                                if (args.ShippingAgent != null)
+                                {
+                                    VatNumber = args.ShippingAgent.VatNumber;
+                                    Code = args.ShippingAgent?.Code;
+                                }
+
+                                break;
+                            }
+
+                        case "VD":
+                            {
+                                if (args.Vendor != null)
+                                {
+                                    VatNumber = args.Vendor.VatNumber;
+                                    Code = args.Vendor?.Code;
+                                }
+
+                                break;
+                            }
+
+                        case "WH":
+                            {
+                                if (args.Warehouse != null)
+                                {
+                                    VatNumber = args.Warehouse.VatNumber;
+                                    Code = args.Warehouse?.Code;
+                                }
+
+                                break;
+                            }
+
+                        case "AL":
+                            {
+                                if (args.Airline != null)
+                                {
+                                    VatNumber = args.Airline.VatNumber;
+                                    Code = args.Airline?.Code;
+                                }
+
+                                break;
+                            }
+
+                        case "SL":
+                            {
+                                if (args.ShippingLine != null)
+                                {
+                                    VatNumber = args.ShippingLine.VatNumber;
+                                    Code = args.ShippingLine?.Code;
+                                }
+
+                                break;
+                            }
+
+                        case "TR":
+                            {
+                                if (args.Trucker != null)
+                                {
+                                    VatNumber = args.Trucker.VatNumber;
+                                    Code = args.Trucker?.Code;
+                                }
+
+                                break;
+                            }
+
+                        case "AC"://Accounting Partner
+                            {
+                                if (args.AccountingPartner != null)
+                                {
+                                    VatNumber = args.AccountingPartner.VatNumber;
+                                    Code = args.AccountingPartner?.Code;
+                                }
+
+                                break;
+                            }
+                    }
+                    string response = null;
+                    if (!string.IsNullOrEmpty(VatNumber))
+                    {
+                        ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+                        CardService entityQuery = new CardService(objectContext, tenant);
+                        response = entityQuery.CheckIfVatNumberExists(args.PartnerTypeId, VatNumber, Code, tenant);
+                    }
+                      
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, response);
                 }
             }
 

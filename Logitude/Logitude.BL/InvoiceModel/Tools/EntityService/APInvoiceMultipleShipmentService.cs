@@ -8,10 +8,10 @@ using Logitude.BL.InvoiceModel.Tools.Validating;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -272,7 +272,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.AmountInInvoiceCurrency == 0)
                 {
                     //***102417/
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("APInvoiceMultipleShipmentService.InitializeComponents: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("APINV_PD:APInvoiceMultipleShipmentService.InitializeComponents: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
                         + ", SetApproved"
                         + ", old status= " + entityPM.StatusCode
                         + ", AmountInInvoiceCurrency= " + entityPM.AmountInInvoiceCurrency.ToString()); 
@@ -1162,7 +1162,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             else
                             {
                                 //***102417/
-                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("APInvoiceMultipleShipmentService.UpdateInvoiceAmountDue: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
+                                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("APINV_PD:APInvoiceMultipleShipmentService.UpdateInvoiceAmountDue: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
                                 + ", old status= " + entityPM.StatusCode
                                 + ", invoicepayments.Count= " + invoicepayments.Count.ToString()
                                 + ", connectedPaymentAmount= " + conntectedPaymentAmount.ToString()

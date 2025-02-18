@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -17,6 +17,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string FullNameTextCodeId { get; set; }
         public string ObjectTableId { get; set; }
         public string FieldName { get; set; }
+        public string ShortName { get; set; }
         public string Code { get; set; }
         public string DataTypeCode { get; set; }
         public int MaxLength { get; set; }
@@ -183,6 +184,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string DefaultAdditionalFilters { get; set; }
         public bool ForMetaDataOnly { get; set; }
         public bool IsListFilter { get; set; }
+
+        public string ObjectFieldDataMapping { get; set; }
 
     }
 }

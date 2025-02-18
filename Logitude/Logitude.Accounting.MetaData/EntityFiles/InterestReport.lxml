@@ -4644,7 +4644,7 @@
     QuerySection="&quot;InterestReport&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDateTime&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
@@ -4717,7 +4717,7 @@
     QuerySection="&quot;InterestReport&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDateTime&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
@@ -4794,7 +4794,7 @@
     QuerySection="&quot;InterestReport&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDateTime&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
@@ -4871,7 +4871,7 @@
     QuerySection="&quot;InterestReport&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDateTime&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">

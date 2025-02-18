@@ -86,17 +86,20 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
             if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["20230102.SuppressRestoreWaitingImportSaveInDB"]))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Suppress RestoreWaitingImportSaveInDB");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Suppress RestoreWaitingImportSaveInDB");
+
 
                 return;
             }
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportService.RestoreWaitingImportSaveInDB()");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportService.RestoreWaitingImportSaveInDB()");
+
 
             var dcaFilterByEnvironmentService = new DcaFilterByEnvironmentService();
             if (dcaFilterByEnvironmentService.GetDCAEnvPerTenant(_CustomsSettingPM.Tenant) != DcaFilterByEnvironment.Export)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-only in export cloud");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-only in export cloud");
+
                 return;
             }
             try
@@ -110,21 +113,24 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                 }
                 var request = GetRequest(_LastRetrive.Value);
                 var sw = Stopwatch.StartNew();
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-Send 9100 restore fromDate {request.GetOptions.fromDate}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-Send 9100 restore fromDate {request.GetOptions.fromDate}");
+
 
                 var response = SendOutgoingMessageRequest(request);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-Send 9100 took {sw.Elapsed}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-Send 9100 took {sw.Elapsed}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"t{_CustomsSettingPM.Tenant};fromDate {request.GetOptions.fromDate}; OutgoingMessage={response?.OutgoingMessage?.Length}" + ":" + "DCAStopwatch");
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"t{_CustomsSettingPM.Tenant};fromDate {request.GetOptions.fromDate}; OutgoingMessage={response?.OutgoingMessage?.Length}");
                 if (response?.OutgoingMessage?.Length == null || response?.OutgoingMessage?.Length == 0)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-OutgoingMessage == 0 - nothing todo");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-OutgoingMessage == 0 - nothing todo");
+
 
                     return;
                 }
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-OutgoingMessage == {response?.OutgoingMessage?.Length}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RestoreWaitingImportSaveInDB-OutgoingMessage == {response?.OutgoingMessage?.Length}");
 
 
+               
                 var dOnlyNewImportMessagges = FilterOnlyNewImportMessagges(response);
 
 
@@ -145,11 +151,11 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                     );
                 if (outgoingMessage9100ResponseAnalyze.exceptionBag.Count > 0)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError(String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.exceptionBag.ToList()) + $"RestoreWaitingImport_Error_T{_CustomsSettingPM.Tenant}");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.exceptionBag.ToList())+":"+ $"RestoreWaitingImport_Error_T{_CustomsSettingPM.Tenant}");
                 }
                 if (outgoingMessage9100ResponseAnalyze.sbFilenameQueue.Count > 0)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.sbFilenameQueue.ToList()) + $"RestoreWaitingImport_Files_T{_CustomsSettingPM.Tenant}");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(String.Join(Environment.NewLine, outgoingMessage9100ResponseAnalyze.sbFilenameQueue.ToList()) + ":" + $"RestoreWaitingImport_Files_T{_CustomsSettingPM.Tenant}");
                 }
 
 

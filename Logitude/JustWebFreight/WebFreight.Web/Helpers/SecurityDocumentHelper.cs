@@ -1,10 +1,12 @@
 ﻿using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Simplog.Global.Data.GlobalModel;
 
 namespace WebFreight.Web.Helpers
 {
@@ -16,8 +18,7 @@ namespace WebFreight.Web.Helpers
    
             if (!string.IsNullOrEmpty(token))
             {
-                ICommonDataContext context = CommonDataContext.GetContext(0);
-                AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
+                AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(GlobalContext.GetContext(0));
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 if (authToken != null && authToken.ClientType == "DocumentDownload" && authToken.ExpirationDate != null)
                 {

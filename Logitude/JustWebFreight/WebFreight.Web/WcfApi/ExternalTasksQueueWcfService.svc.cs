@@ -10,7 +10,7 @@ using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -34,6 +34,7 @@ using WebFreight.Web.WebServices;
 using System.Data.Entity.Infrastructure;
 using Logitude.Customs.Data.EntityPOCOs;
 using System.Windows.Media.Effects;
+using System.Diagnostics;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -49,6 +50,8 @@ namespace WebFreight.Web.WcfApi
 #if !tzuri_req
         public Response GetDataCFIRDEC( Dictionary<string, string> queryParams, int tenant)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             var response = new Response();
             try
             {
@@ -220,6 +223,9 @@ namespace WebFreight.Web.WcfApi
                     response.HasError = false;
                     //results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
                     //results.Add("sql_query", sqlQuery);
+                    stopwatch.Stop();
+                    double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
+                    if (log_level == "DEBUG") all_results.Add("ALL_SQL", elapsedSeconds.ToString());
                     response.Result = JsonConvert.SerializeObject(all_results);
                 }
                 return (response);
@@ -242,6 +248,8 @@ namespace WebFreight.Web.WcfApi
 
         void get_table_lines(string id,string sqlQuery,ref Dictionary<string, string> results, SqlConnection connection,string log_level)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             List<List<string>> all_lines = new List<List<string>>();
             using (var cmd = new SqlCommand(sqlQuery, connection))
             {
@@ -265,7 +273,12 @@ namespace WebFreight.Web.WcfApi
 
                 }
             }
-            if (log_level == "DEBUG") results.Add($"{id}_SQL", sqlQuery);
+            if (log_level == "DEBUG")
+            {
+                stopwatch.Stop();
+                double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
+                results.Add($"{id}_SQL", $"{elapsedSeconds.ToString()}:{sqlQuery}");
+            }
             results.Add(id, JsonConvert.SerializeObject(all_lines));
             
             return;
@@ -304,6 +317,12 @@ namespace WebFreight.Web.WcfApi
             var response = new Response();
             try
             {
+                bool from_global = false;
+                if(queryParams.ContainsKey("from_global"))
+                {
+                    bool.TryParse(queryParams["from_global"], out from_global);
+                    queryParams.Remove("from_global");
+                }
                 //tenant = 6;//temppppp
 
                 //SecurityUtility.AuthenticationOnTenant(tenant);
@@ -314,7 +333,7 @@ namespace WebFreight.Web.WcfApi
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant1 = 0;
-                    if(authToken != null) tenant1 = authToken.Tenant; 
+                    if (authToken != null) tenant1 = authToken.Tenant;
                 }
 
                 if (tenant == 0)
@@ -326,14 +345,20 @@ namespace WebFreight.Web.WcfApi
 
                 if (queryId == "CFIRDEC")
                 {
-                    response = GetDataCFIRDEC(queryParams,  tenant);
+                    response = GetDataCFIRDEC(queryParams, tenant);
                     return (response);
                 }
-
+                CFILOGIAPI sql_logi = new CFILOGIAPI();
                 List<CFILOGIAPI> logi_list = new List<CFILOGIAPI>();  // to do call once !!!!!!!!!!!!!!!!!!!!!!!!!
                 logi_list = CFILOGIAPITask.GetLogiOcc();
-                CFILOGIAPI sql_logi = logi_list.Where(x => x.CODE == queryId).FirstOrDefault();
-
+                if (queryId == "EXTERNAL_LOGIAPI")
+                {
+                    sql_logi = JsonConvert.DeserializeObject<CFILOGIAPI>(queryParams["CFILOGIAPI"]);
+                }
+                else
+                {
+                    sql_logi = logi_list.Where(x => x.CODE == queryId).FirstOrDefault();
+                }
                 if (sql_logi == null)
                 {
                     response.HasError = true;
@@ -355,7 +380,7 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
 
-
+                String remark ="";
 
 
 
@@ -365,9 +390,28 @@ namespace WebFreight.Web.WcfApi
                 List<List<string>> all_lines = new List<List<string>>();
                 int rows_effected = 0;
                 var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                var GlobalContext = new Simplog.Global.Data.GlobalModel.GlobalContext();
+                if (sqlQuery.IndexOf("@NEXTNUM") > -1)
+                {
+                    sqlQuery = sqlQuery.Replace("@NEXTNUM", queryParams["NEXTNUM"]);
+                    sqlQuery = sqlQuery.Replace("@OFFSETNUM", queryParams["OFFSETNUM"]);
+                }
                 using (SqlConnection connection = new SqlConnection())
                 {
-                    connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                    if (from_global)
+                    {
+                        connection.ConnectionString = GlobalContext.Database.Connection.ConnectionString;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("global db : " + connection.ConnectionString);
+
+                        remark = "GlobalContext";
+                    }
+                    else
+                    {
+                        connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ship db : " + connection.ConnectionString);
+                        remark = "ShipmentsContext";
+                    }
+                    
                     connection.Open();
                     //sqlQuery = "SELECT IMPORTERID,ID from Customs.DECLARATIONS where (ID = @LOGITUDE_FILE ) AND TENANT = @Tenant";
                     using (var cmd = new SqlCommand(sqlQuery, connection))
@@ -386,7 +430,7 @@ namespace WebFreight.Web.WcfApi
                         {
                             using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-                                
+
 
                                 if (reader.HasRows)
                                 {
@@ -410,6 +454,7 @@ namespace WebFreight.Web.WcfApi
                         results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
                         results.Add("sql_query", sqlQuery);
                         results.Add("rows_effected", rows_effected.ToString());
+                        results.Add("remark", remark);
                         response.Result = JsonConvert.SerializeObject(results);
                     }
                 }

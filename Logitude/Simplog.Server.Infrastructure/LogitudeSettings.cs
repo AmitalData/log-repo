@@ -90,7 +90,7 @@ namespace Simplog.Server.Infrastructure
         public static Func<int, LogitudeCustomsSettingsM> GetLogitudeCustomsSettingsMInject { get; set; }
         public static Action<Exception ,string ,string> HandleDbExceptionInject { get; set; }
 
-        public static Action<bool ,bool> HandleBuildObjectTablesZipFilesData_Inject { get; set; }
+        public static Action<bool ,bool > HandleBuildObjectTablesZipFilesData_Inject { get; set; }
 
         static string _DatabaseManagementSystem;
 
@@ -172,6 +172,7 @@ namespace Simplog.Server.Infrastructure
 
         public string OnPremiseFillingService { get; set; }
         public bool IsConnectedToUniFreight { get; set; }
+        public string Id { get; set; }
         
     }
 

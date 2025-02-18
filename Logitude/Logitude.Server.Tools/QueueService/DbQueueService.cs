@@ -2,7 +2,7 @@
 using Logitude.Server.Tools.Helpers;
 using Newtonsoft.Json;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -1028,11 +1028,11 @@ namespace Logitude.Server.Tools.QueueService
             return response;
         }
 
-        public List<QueueResponse> Receive_new(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null)
+        public List<QueueResponse> Receive_new(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null, int? selectCount = null)
         {
             if (LogitudeSettings.IsCostomsDeploy)
             {
-                return ReceiveCustoms_new(nextRunDelayInSec);
+                return ReceiveCustoms_new(nextRunDelayInSec, selectCount);
             }
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
             long messageId = -1;
@@ -1534,8 +1534,8 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             SqlCommand cmd = new SqlCommand("[dbo].[Queue_DelayMessageandChangeStatusTozero]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
-                            SqlParameter delayPar = new SqlParameter("@V_DelaySeconds", SqlDbType.Int);
+                            SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                            SqlParameter delayPar = new SqlParameter("@DelaySeconds", SqlDbType.Int);
 
 
                             messageIdPar.Direction = ParameterDirection.Input;

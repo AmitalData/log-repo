@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -29,8 +29,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.Description)
                 .IsRequired()
-                .HasMaxLength(40)
-                .IsUnicode(false);
+                .HasMaxLength(80)
+                .IsUnicode(true);
 
             this.Property(t => t.LastUpdatedByUserId)
                 .HasMaxLength(15)

@@ -163,8 +163,8 @@
   </Column>
   <Column
     Name="Description"
-    Type="varchar"
-    Size="2000">
+    Type="nvarchar"
+    Size="4000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -247,8 +247,8 @@
   </Column>
   <Column
     Name="MaterialDescription"
-    Type="varchar"
-    Size="30">
+    Type="nvarchar"
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>

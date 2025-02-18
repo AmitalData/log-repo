@@ -78,7 +78,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             
 
 
-            query.ToList().ForEach(rec => Debug.WriteLine(rec.ToString()));
+            query.ToList().ForEach(rec =>NetCommonHelper.Logger.DevLog.Instance.WriteDebug(rec.ToString()));
             var myGoodsShipment= query.FirstOrDefault(rec => rec.Level == 1 & rec.WCOID == "67A");
 
             var myGoodsShipmentChilds = GetChildren(query.ToList() ,myGoodsShipment);
@@ -98,7 +98,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
 
             if (myDB2.First().XmlTag == my1a.XmlTag)
             {
-                Debug.WriteLine("bad");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("bad");
             }
             
         }

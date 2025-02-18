@@ -277,9 +277,10 @@
                                                         <div></div>
                                                     </td>
                                             
-                                                    <td *ngIf="!IsViewMode" class="FooterCell">
+                                                    <td *ngIf="!HideFooterSaveButton && !IsViewMode" class="FooterCell">
                                                         <button class="RedButton" (click)="FooterButtonsClicked('submit')" [disabled]="false"
-                                                            [attr.data-cy]="'SubmitButton'">{{SubmitFooterButtonLabel || 'Ok'}}</button>
+                                                            [attr.data-cy]="'SubmitButton'">{{SubmitFooterButtonLabel ||
+                                                            'Ok'}}</button>
                                                     </td>
                                                 </tr>
                                             </table>

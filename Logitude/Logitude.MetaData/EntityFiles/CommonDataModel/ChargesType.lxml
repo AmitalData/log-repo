@@ -750,6 +750,7 @@
     DigitsAfterPoint="0"
     InActive="false"
     DisplayLongName="false"
+
     FullFieldLable="&quot;PayablesChargesTypeExternalCode&quot;"
     DefaultText="&quot;PayablesChargesTypeExternalCode&quot;"
     FullLocalDefaultText="&quot;PayablesChargesTypeExternalCode&quot;"
@@ -859,6 +860,7 @@
     EnableFullscreenTextBox="false" />
   <field
     Id="&quot;bdfbf66a-1033-4e48-954b-3f4fde18c539&quot;"
+
     FieldName="&quot;ReceivableCreditAccountExternalId&quot;"
     OldNames="ReceivableCreditAccountExternalId"
     IsNew="false"
@@ -936,6 +938,7 @@
     EnableFullscreenTextBox="false" />
   <field
     Id="&quot;fa2bed3a-a29b-4473-8532-779111201428&quot;"
+
     FieldName="&quot;ChargesTypeExternalCodeExternalId&quot;"
     OldNames="ChargesTypeExternalCodeExternalId"
     IsNew="false"

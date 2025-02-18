@@ -7,7 +7,7 @@ using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -42,22 +42,20 @@ namespace Logitude.Customs.BL.Messaging.Amital
         }
 
 
-        public UServerCommunicationServiceInfoM Send(bool? pImmediately = null, bool SuppressBuildCom = false)
+        public UServerCommunicationServiceInfoM Send(bool? pImmediately = null, bool SuppressBuildCom = false,string reqParam = null)
         {
             return Send(
                 new UServerCommunicationServiceParam()
                 {
                     SendImmediately = pImmediately,
-                    SuppressBuildCom = SuppressBuildCom
+                    SuppressBuildCom = SuppressBuildCom,
+                    reqParam = reqParam
                 });
         }
 
         public UServerCommunicationServiceInfoM Send(UServerCommunicationServiceParam uServerCommunicationServiceParam)
         {
-            //if (UnifreightIIGCommonUtil.GetTenantSetting(GetTenant()) == null)
-            //{
-            //    throw new Exception("SendFileToAmitalService():no setting for tenant");
-            //}
+         
 
             bool testDelay = false;
             if (testDelay)
@@ -114,9 +112,9 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 FolderName = "Amital",
                 From = _From, //"Logitude",
                 InOut = "O",
-
-                //XMLData=some xml data string 
-            };
+				AdditionalFields = uServerCommunicationServiceParam.reqParam
+				//XMLData=some xml data string 
+			};
             var myMainObject = "";
             if (_CommunicationModel.UnifaceMethodType == Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.AnalyzeStandard)
             {
@@ -144,33 +142,38 @@ namespace Logitude.Customs.BL.Messaging.Amital
             //LogMessagingUtil.Instance.AppendLine(unifaceTester);
             myByteData = Encoding.UTF8.GetBytes(myUrouterParam);
             _CommunicationsParams.ByteData = myByteData;
-            if (Immediately)
+			if (Immediately && uServerCommunicationServiceParam.SuppressBuildCom)
+			{
+
+			}
+			else
+			{
+				///using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{
+					myInfo.CommunicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
+					///scope.Compl
+				}
+			}
+			if (Immediately)
             {
-                string P_MESSAGE = "";
+				myUrouterParam = GetUrouterParams(myMainObject, myInfo.CommunicationLogId);
+				string P_MESSAGE = "";
                 string uniTester = "";
-                var response = SendMessageToUServerUtil.SendMessageToUServer(GetTenant(), myUrouterParam, out P_MESSAGE, out uniTester);
+                var response = SendMessageToUServerUtil.SendMessageToUServer(GetTenant(), myUrouterParam, out P_MESSAGE, out uniTester, _CommunicationsParams);
 
                 myInfo.GenericResponseObj = TryGetGenericResponseObj(response);
                 myInfo.ImmediatelyResponse = response;
                 myInfo.ImmediatelyMessage = P_MESSAGE;
                 _CommunicationsParams.Logs = response;
                 _CommunicationsParams.Status = "D";
-            }
-            if (Immediately && uServerCommunicationServiceParam.SuppressBuildCom)
-            {
+                if(!string.IsNullOrEmpty(myInfo.CommunicationLogId))
+				Communications.UpdateCommunicationLogStatus(myInfo.CommunicationLogId, GetTenant(), null, "D", response, null);
 
-            }
-            else
-            {
-                ///using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    myInfo.CommunicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
-                    ///scope.Compl
-                }
-            }
+			}
 
 
-            if (!Immediately)
+
+			if (!Immediately)
             {
                 var onTransactionCompleted = " Build  SendDataToExternalServicesBQ ";
                 
@@ -245,7 +248,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
 
  
-        string GetUrouterParams(string mainXml)
+        string GetUrouterParams(string mainXml,string communicationLogId = null)
         {
             var myParams = new Hashtable();
             myParams.Add("componentname", "GWSFLOGITUDE");
@@ -262,7 +265,11 @@ namespace Logitude.Customs.BL.Messaging.Amital
                 myParams["GWSFLOGITUDE:componentname"] = _CommunicationModel.UnifaceComponentName;
                 myParams["GWSFLOGITUDE:operation"] = _CommunicationModel.UnifaceOperation;
             }
-            myParams["GWSFLOGITUDE:Xml"] = mainXml;
+            if (!string.IsNullOrWhiteSpace(communicationLogId))
+			{
+				myParams["CommunicationLogId"] = communicationLogId;
+			}
+			myParams["GWSFLOGITUDE:Xml"] = mainXml;
             string xmlIn = UnifreightListsUtil.Serialize(myParams);
             return xmlIn;
 
@@ -384,7 +391,7 @@ MoreParams:blockdata ~{1}~
 
             var mySerilazeObject = XmlGenericUtil<TransmissionBodyType>.SerializeObject(this._TransmissionBodyModel, true);
 
-            Debug.WriteLine(mySerilazeObject);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mySerilazeObject);
 
 
 
@@ -412,14 +419,11 @@ MoreParams:blockdata ~{1}~
             )
         {
             var mySetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(curTenant);
-            if (pForceSendUnfConnection)
+            if (pForceSendUnfConnection)//יתקים רק בעדכון טבלאות מכס מתוך הרשימה
             {
                 if (String.IsNullOrWhiteSpace(mySetting.UnfConnectionString)) return null;
             }
-            else if (!mySetting.IsConnectedToUniFreight)
-            {
-                return null;
-            }
+          
 
             bool immediately = false;
             var myAmitalCommunicationModel = new AmitalCommunicationModelBase(
@@ -464,6 +468,8 @@ MoreParams:blockdata ~{1}~
         public bool? SendImmediately { get; set; }
         public bool SuppressBuildCom { get; internal set; }
         public TimeSpan UServerDelayTime { get; set; }
-    }
+		public string reqParam { get; set; }
+
+	}
 
 }

@@ -9,7 +9,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -209,7 +209,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
             if (Send2MasofIfNeededService.GetStopLogAt() > DateTime.Now)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sb.ToString());
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sb.ToString()+ "GWMessageECTHRDataMaman:");
             }
             
             string aw8 = null;

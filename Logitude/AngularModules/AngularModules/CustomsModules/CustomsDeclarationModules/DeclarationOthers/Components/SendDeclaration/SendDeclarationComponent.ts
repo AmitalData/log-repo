@@ -320,6 +320,7 @@ export class SendDeclarationService implements OnDestroy {
             }
 
             else {
+                ServiceHelper.DeleteGeneralLock(this.CurrentSession.CurrentEditComponent.EntityId ,this.CurrentSession.CurrentEditComponent.ObjectTableName)
                 this.EntityPM = myResponse.Result;
                 if (this.CurrentSession.CurrentEditComponent) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
@@ -796,6 +797,10 @@ export class SendDeclarationService implements OnDestroy {
     }
 
     CheckFreightByIncoterm() {
+       if(this.EntityPM.Direction=='E'){
+        this.SendDeclaration();
+        return;
+       } 
         //this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
 
         //this.DeclarationService.CheckFreightAmountsByIncoterm(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {

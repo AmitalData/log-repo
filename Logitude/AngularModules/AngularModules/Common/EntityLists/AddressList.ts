@@ -13,6 +13,7 @@ export class AddressList {
 		Address2: string;
 		Description: string;
 		City: string;
+		CityId: string;
 		ZipCode: string;
 		FaxNumber: string;
 		PhoneNumber: string;
@@ -30,5 +31,8 @@ export class AddressList {
 		SearchFields: string;
 		StateId: string;
 		ATTN: string;
+		TransportationInstructions: string;
+		Responsibility: string;
+		TruckerId: string;
 	
-}
+}

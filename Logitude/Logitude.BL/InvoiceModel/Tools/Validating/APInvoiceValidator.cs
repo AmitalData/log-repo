@@ -2,7 +2,7 @@
 using System.Linq;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 
 using Logitude.BL.CommonDataModel;
@@ -57,7 +57,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             AccountingSetting accountingSetting = (from d in commonContext.AccountingSettings where d.Id == entityPM.Tenant select d).FirstOrDefault();
             if (accountingSetting != null)
             {
-                if (accountingSetting.IsVatNumberMandatoryInAP)
+                if (accountingSetting.IsVatNumberMandatoryInAP && entityPM.VendorCountry == "ISRAEL")
                 {
                     if (string.IsNullOrEmpty(entityPM.VATNumber))
                     {
@@ -780,10 +780,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException("Wrong Invoice Total Local Amount");
                 }
                 #endregion
-
-
-
+ 
             }
+ 
+
+                
+               
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)

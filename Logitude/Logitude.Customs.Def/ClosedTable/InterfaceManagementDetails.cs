@@ -3265,7 +3265,7 @@ namespace Logitude.Customs.Def.ClosedTable
 
                 ///DCAInUniCourierBatchSend_MsgMessagingService
                 InOut = InOutEnum.I.ToString(),
-                Description = "העלאת מסמך מבונדד",
+                Description = "העלאת מסמך אוטומטי",
                 DcaPrefixName = "UnifreightCustomBatch_UCBNDCD_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = CONST_DefaultPriority,

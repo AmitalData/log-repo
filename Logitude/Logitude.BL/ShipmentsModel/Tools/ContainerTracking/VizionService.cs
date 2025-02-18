@@ -47,14 +47,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         {
             var headers = GetHeaders();
             var referenceViaBillOfLadingRequest = CreateCreateReferenceViaBillOfLadingRequest(shipment);
-            var result = APICaller.CallApi<VizionReferenceResponce>(Source.ProviderURL + "/references", referenceViaBillOfLadingRequest, Method.POST, headers);
+            var result = APICaller.CallApi<VizionReferenceResponce>(Source.ProviderURL + "/references", referenceViaBillOfLadingRequest, Method.Post, headers);
             return result;
 
         }
         public List<VizionCarrier> GetAllCarriers()
         {
             var headers = GetHeaders();
-            var result = APICaller.CallApi<List<VizionCarrier>>(Source.ProviderURL+ "/carriers", null, Method.GET, headers);
+            var result = APICaller.CallApi<List<VizionCarrier>>(Source.ProviderURL+ "/carriers", null, Method.Get, headers);
             return result;
         }
 
@@ -89,21 +89,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.ContainerTracking
         {
             var headers = GetHeaders();
             var referenceViaCarrierCodeRequest = CreateReferenceViaCarrierCodeRequest(containerTrackingArgs, shipment);
-            var result = APICaller.CallApi<VizionReferenceResponce>(Source.ProviderURL+ "/references", referenceViaCarrierCodeRequest, Method.POST, headers);
+            var result = APICaller.CallApi<VizionReferenceResponce>(Source.ProviderURL+ "/references", referenceViaCarrierCodeRequest, Method.Post, headers);
             return result;
         }
 
         public UnsubscribeResult Unsubscribe(ContainerTrackingRequestPM containerTrackingRequest)
         {
             var headers = GetHeaders();
-            var result = APICaller.CallApi<UnsubscribeResult>(Source.ProviderURL + "/references/"+ containerTrackingRequest.RequestId, null, Method.DELETE, headers);
+            var result = APICaller.CallApi<UnsubscribeResult>(Source.ProviderURL + "/references/"+ containerTrackingRequest.RequestId, null, Method.Delete, headers);
             return result;
         }
 
         internal object GetActiveRequests()
         {
             var headers = GetHeaders();
-            var result = APICaller.CallApi<List<ActiveRequest>>(Source.ProviderURL + "/references", null, Method.GET, headers);
+            var result = APICaller.CallApi<List<ActiveRequest>>(Source.ProviderURL + "/references", null, Method.Get, headers);
             return result;
         }
     }

@@ -46,6 +46,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         ////[Association("QuoteDepartment", "Id", "DepartmentId")]
         //public List<Quote> Quotes { get; set; }
 
+        public string DirectionId { get; set; }
 
 
     }

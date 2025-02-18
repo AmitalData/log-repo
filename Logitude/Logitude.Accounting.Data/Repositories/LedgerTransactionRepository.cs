@@ -20,7 +20,7 @@ using Logitude.Accounting.Data.DataContract;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Runtime.InteropServices;
 using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -1604,7 +1604,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             if (!String.IsNullOrEmpty(gLAccountId))
             {
                 return (from record in context.LedgerTransactions
-                        where record.Tenant == tenant && record.AccountId == gLAccountId && record.Mark == true
+                        where record.Tenant == tenant && record.AccountId == gLAccountId && record.Mark == true 
                                                       && (record.OpenAmount != 0m || record.AmountToReconcile != 0m)
                         select record).ToList();
             }

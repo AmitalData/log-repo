@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -32,8 +32,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                .IsUnicode(false);
 
             this.Property(t => t.Description)
-              .HasMaxLength(500)
-              .IsUnicode(false);
+              .HasMaxLength(100)
+              .IsUnicode(true);
 
 
             this.Property(t => t.InActive)

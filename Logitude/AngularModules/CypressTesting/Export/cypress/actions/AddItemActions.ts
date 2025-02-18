@@ -23,15 +23,16 @@ export function FillSearchField(addItemDetails: AddItemDetails) {
 
 export function CreateNewItem(addItemDetails: AddItemDetails) {
    cy.get(AddItemSelectors.EditButtonInvoice).click();
-   cy.wait(5000);
+   cy.wait(10000);
    cy.get(AddItemSelectors.AddItemButton).click();
    
  }
 
  export function FillItem(addItemDetails: AddItemDetails) {
+    
     cy.get(AddItemSelectors.ItemNo).type(addItemDetails.ItemNo);
     cy.get(AddItemSelectors.ItemDescription).type(addItemDetails.ItemDescription);
-    cy.get(AddItemSelectors.Item).type(addItemDetails.Item);
+    //cy.get(AddItemSelectors.Item).type(addItemDetails.Item);
     FillMatchingDDL(AddItemSelectors.TradeAgreementCode, addItemDetails.TradeAgreementCode);  
     FillMatchingDDL(AddItemSelectors.ProtocolCode, addItemDetails.ProtocolCode); 
     cy.get(AddItemSelectors.UnitsQuantity).type(addItemDetails.UnitsQuantity);

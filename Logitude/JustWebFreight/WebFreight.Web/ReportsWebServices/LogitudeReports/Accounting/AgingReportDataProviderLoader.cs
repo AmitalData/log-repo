@@ -277,6 +277,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountContactEmail = d.First().AccountContactEmail,
                     AccountContactName = d.First().AccountContactName,
                     AccountContactPhone = d.First().AccountContactPhone,
+                   
                     AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
                     CreditLimit = (decimal)d.First().CreditLimitAmount,
                     ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
@@ -332,6 +333,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                      AccountContactEmail = d.First().AccountContactEmail,
                     AccountContactName = d.First().AccountContactName,
                     AccountContactPhone = d.First().AccountContactPhone,
+              
  					AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
 					CreditLimit = (decimal)d.First().CreditLimitAmount,
 					ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
@@ -399,6 +401,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+
  					AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
 					CreditLimit = (decimal)d.First().CreditLimitAmount,
 					ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),
@@ -455,6 +458,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ChartOfAccountsEnglishName = d.First().ChartOfAccountsEnglishName,
                     ChartOfAccountsTypeEnglishName = d.First().ChartOfAccountsTypeEnglishName,
                     ChartOfAccountsTypeLocalName = d.First().ChartOfAccountsTypeLocalName,
+
  					AccountingBalance = GetBalanceSummationForSplittedAccounts(d) ?? 0,
 					CreditLimit = (decimal)d.First().CreditLimitAmount,
 					ExternalTransactionsTotal = ExternalTransactions.Where(lt => lt.AccountId == d.First().AccountId).Sum(x => x.LocalAmountCredit),

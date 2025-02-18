@@ -6,13 +6,13 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.CommonDataModel.DataContracts;
 using Logitude.BL.ShipmentsModel.EntityLists;
@@ -481,16 +481,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return docTypePm;
         }
-        
+
         public DocumentTypePM GetDigitalSinglePMByCodeAndTenant(string code, int tenant)
         {
             DocumentTypePM docTypePm = repository.context
                                                  .DocumentTypes
-                                                 .Where(a => a.Code == code 
+                                                 .Where(a => a.Code == code
                                                              && a.Tenant == tenant)
                                                  .Select(a => new DocumentTypePM()
                                                  {
-                                                    Id = a.Id
+                                                     Id = a.Id
                                                  })
                                                 .FirstOrDefault();
             return docTypePm;
@@ -1437,7 +1437,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 return d;
             }
-            
+
         }
 
         private bool IsFullAccountingActivated(int tenant)
@@ -2244,9 +2244,36 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return d;
         }
+        public DocumentType GetDocumentTypeByCode(string code, int tenant, bool fromCache = false)
+        {
+            DocumentType docTypePm = null;
 
+            string entityName = "DocumentTypePM" + code + tenant;
+
+            if (HttpContext.Current != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+                    docTypePm = (from a in repository.context.DocumentTypes
+                                 where a.Code == code && a.Tenant == tenant
+								 select a).FirstOrDefault();
+					if (docTypePm != null)
+                        CacheManager.CacheWrapper.Insert(entityName, docTypePm, null);
+                }
+                else
+                {
+                    docTypePm = (DocumentType)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            else
+            {
+				docTypePm = (from a in repository.context.DocumentTypes
+							 where a.Code == code && a.Tenant == tenant
+                             select a).FirstOrDefault();
+			}
+            return docTypePm;
+        }
     }
-
     public class ShareDocumentTypesArgs
     {
         public string EntityId { get; set; }

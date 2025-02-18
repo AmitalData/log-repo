@@ -45,7 +45,7 @@ namespace CustomsWorkerRole.BL
             serviceNameList = serviceNameList.Select(r => r.ToLower()).ToList();
             if (serviceNameList.Count == 0)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist ");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(new Exception($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist "));
                 ExitEnsureLogWrite();
                 return;
             }

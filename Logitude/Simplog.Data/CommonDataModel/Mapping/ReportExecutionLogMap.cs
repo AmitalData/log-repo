@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -80,6 +80,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.DisablePreview).HasColumnName("DisablePreview");
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
+            this.Property(t => t.NotDisplayInMenu).HasColumnName("NotDisplayInMenu");
 
 
             // Relationships

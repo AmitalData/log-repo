@@ -261,6 +261,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                         const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
                         const result = this.parseXml(xmlData(XMLOfConsignmentsDetailsToCertificateOfOriginOut));
 
+                        EntityPM.ExporterName = result?.ExporterName || this.entityPM.ExporterName;
+                        EntityPM.ExporterAddress = result?.ExporterAddress || this.entityPM.ExporterAddress;
+                        EntityPM.ConsigneeName = result?.ConsigneeName || this.entityPM.ConsigneeName;
+                        EntityPM.ConsigneeAddress = result?.ConsigneeAddress || this.entityPM.ConsigneeAddress;
+                        this.entityPM = EntityPM;
+                    
                         if (AppTool.IsNullOrEmpty(result) || AppTool.IsNullOrEmpty(result?.certificateOfOriginItems) || result?.certificateOfOriginItems == 0) {
                             this.initCertificateOriginItemItems(EntityPM);
                         }
@@ -366,7 +372,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         const customFileNo = customsFile.getElementsByTagName('CustomFileNo')[0]?.textContent || '';
         const id = customsFile.getElementsByTagName('Id')[0]?.textContent || '';
         const certificateType = customsFile.getElementsByTagName('CertificateType')[0]?.textContent || '';
-
+        const ExporterName = customsFile.getElementsByTagName('ExporterName')[0]?.textContent || '';
+        const ExporterAddress = customsFile.getElementsByTagName('ExporterAddress')[0]?.textContent || '';
+        const ConsigneeName = customsFile.getElementsByTagName('ConsigneeName')[0]?.textContent || '';
+        const ConsigneeAddress = customsFile.getElementsByTagName('ConsigneeAddress')[0]?.textContent || '';
+        
         const items = customsFile.getElementsByTagName('CertificateOfOriginItem');
         const certificateOfOriginItems: any[] = [];
 
@@ -393,6 +403,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             customFileNo,
             id,
             certificateType,
+            ExporterName,
+            ExporterAddress,
+            ConsigneeName,
+            ConsigneeAddress,
             certificateOfOriginItems,
         };
     }
@@ -402,6 +416,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             CustomFileNo: this.currentDeclaration.CustomFileNo,
             Id: this.currentDeclaration.Id,
             CertificateType: EntityPM.CooTypeCode,
+            ExporterName: EntityPM.ExporterName,
+            ExporterAddress: EntityPM.ExporterAddress,
+            ConsigneeName: EntityPM.ConsigneeName,
+            ConsigneeAddress: EntityPM.ConsigneeAddress,
             // MAP CertificateOfOriginItems to Unifreight BY THIS STRUCTURE:
             CertificateOfOriginItems: this.currentDeclaration.Consignments.map(consignment => ({
                 ItemSerial: consignment.ConsignmentNumber,
@@ -413,8 +431,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 IsoContainerType: ""
             }))
         };
-        const xmlDataString = this.convertToXML(data);
-        console.log(xmlDataString);
+        // const xmlDataString = this.convertToXML(data);
+        // console.log(xmlDataString);
 
         return this.convertToXML(data);
     }
@@ -426,6 +444,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         certificate.ele('CustomFileNo', data.CustomFileNo);
         certificate.ele('Id', data.Id);
         certificate.ele('CertificateType', data.CertificateType || ''); // Handle potentially undefined CertificateType
+        certificate.ele('ExporterName', data.ExporterName || ''); 
+        certificate.ele('ExporterAddress', data.ExporterAddress || ''); 
+        certificate.ele('ConsigneeName', data.ConsigneeName || ''); 
+        certificate.ele('ConsigneeAddress', data.ConsigneeAddress || '');
 
         const items = certificate.ele('CertificateOfOriginItems');
 

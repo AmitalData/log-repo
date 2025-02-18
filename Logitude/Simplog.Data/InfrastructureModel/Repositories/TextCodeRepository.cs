@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Simplog.Server.Infrastructure;
+using System.Text;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -148,7 +149,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew,new TimeSpan(2,0,0)))
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(0);
+                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
                         zeroTenantTextCodes = (from a in context.TextCodes//.Include("ObjectTable")//.Include("SpellCheckedByUser")
                                                   where a.Tenant == 0 && a.InActive == false
                                                   select a).ToList();
@@ -190,14 +191,36 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public TextCode GetSingleTextCodeByCode(string code)
-        {
-            return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
-                    where a.Code == code
-                    select a).FirstOrDefault();
-        }
+		public TextCode GetSingleTextCodeByCode(string code, bool fromCache = false)
+		{
+			string codeName = "GetSingleTextCodeByCode" + code;
+			TextCode textCode = new TextCode();
+			if (fromCache)
+			{
+				if (CacheManager.CacheWrapper.Get(codeName) == null)
+				{
+					textCode = (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
+								where a.Code == code
+								select a).FirstOrDefault();
 
-        public TextCode GetSingleTextCodeByTenant(string code, int tenant)
+					CacheManager.CacheWrapper.Insert(codeName, textCode, null);
+				}
+				else
+				{
+					textCode = (TextCode)CacheManager.CacheWrapper.Get(codeName);
+				}
+				return textCode;
+			}
+			else
+			{
+				return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
+						where a.Code == code
+						select a).FirstOrDefault();
+			}
+
+		}
+
+		public TextCode GetSingleTextCodeByTenant(string code, int tenant)
         {
             return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
                     where a.Code == code && a.Tenant == tenant
@@ -263,6 +286,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
      
         public void Add(TextCode entity)
         {
+            entity.LocalDefaultText = TryConvertFromBase64(entity.LocalDefaultText);
+
             context.TextCodes.Add(entity);
         }
 
@@ -274,6 +299,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public void Update(TextCode entity)
         {
+            entity.LocalDefaultText = TryConvertFromBase64(entity.LocalDefaultText);
+
             try { context.TextCodes.Attach(entity); }
             catch { }
             context.SetAsModified(entity);
@@ -316,6 +343,50 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                             select a).ToList().Count();
 
             return textcodes;
+        }
+        public static string TryConvertFromBase64(string input)
+        {
+            try
+            {
+                if (input == null)
+                {
+                    return null;
+                }
+                if (input.StartsWith("BS64:") || input.StartsWith("\"BS64:"))
+                {
+
+                    return ConvertFromBase64(input);
+
+
+                }
+                return input;
+
+            }
+            catch (FormatException)
+            {
+                return input;
+            }
+        }
+
+        private static string ConvertFromBase64(string input)
+        {
+            string substringToRemove = "\"";
+            string backUp = input;
+            try
+            {
+                input = input.Trim('\"');
+                input = input.Substring(5);//REMOVE BS64:
+                byte[] data = Convert.FromBase64String(input);
+                string decodedString = Encoding.UTF8.GetString(data);
+                decodedString = decodedString.Trim('\"');
+                return decodedString;
+
+            }
+            catch (FormatException)
+            {
+                return backUp;
+            }
+
         }
 
     }

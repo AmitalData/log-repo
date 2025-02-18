@@ -6,7 +6,7 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
@@ -24,6 +24,7 @@ using Logitude.Server.Tools.QueueService;
 using System.Collections.Generic;
 using System;
 using Logitude.Server.Tools.CustomFields;
+using System.IO.Packaging;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -212,6 +213,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 return false;
             }
             else return true;
+        }
+        public string CheckIfVatNumberExists(string partnerTypeId, string vatNumber, string code, int tenant)
+        {
+           return entityRepository.CheckIfVatNumberExists(partnerTypeId, vatNumber, code, tenant);
         }
         public void RunStoredProcedures()
         {

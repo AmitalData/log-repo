@@ -21,7 +21,7 @@ using Microsoft.WindowsAzure.Storage.Queue;
 using Logitude.SystemLogs;
 using System.Diagnostics;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools;
 using CommunicationWorkerRole.Services.Logbox;
 using System.Net.Http;
@@ -115,7 +115,7 @@ namespace CommunicationWorkerRole
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.ToString());
+                   NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "SignUpWorkerRole : Run() Method", null);
                     Thread.Sleep(10000);
                 }
@@ -124,10 +124,10 @@ namespace CommunicationWorkerRole
 
         public void CreateTenant(SignUpInfoClass signUpInfo)
         {
-            Debug.WriteLine("CreateTenant:Email=" + signUpInfo.Email);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateTenant:Email=" + signUpInfo.Email);
             string password = SignUpClass.StartSignUp(signUpInfo);
             this.Password = password;
-            Debug.WriteLine("CreateTenant:password=" + password);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateTenant:password=" + password);
             //EmailsWorkerRole emailrole = new EmailsWorkerRole();
 
 
@@ -149,7 +149,7 @@ namespace CommunicationWorkerRole
 
              string emailbody = HtmlTemplate.ToString();
 
-            Debug.WriteLine(emailbody);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(emailbody);
             EmailCommunicationParams emailParams = new EmailCommunicationParams();
             if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
             {
@@ -174,7 +174,7 @@ namespace CommunicationWorkerRole
             }
 
             Communications.AddEmailCommunicationLogQueue(emailParams, 0);
-            Debug.WriteLine("SendEmail:done!!");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SendEmail:done!!");
         }
 
         private static EmailCommunicationParams GetLogboxEmailCommunicationParams(SignUpInfoClass signUpInfo, string emailbody)

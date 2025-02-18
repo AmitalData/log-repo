@@ -10,6 +10,7 @@ import { ShipmentDeliveryValidator } from './ShipmentDeliveryValidator';
 export interface IShipmentValidator {
     Validate(shipmentPM: ShipmentPM): any[];
 }
+declare var window: any;
 
 export class ShipmentValidator implements IShipmentValidator {
     private Errors: string[] = [];
@@ -54,12 +55,14 @@ export class ShipmentValidator implements IShipmentValidator {
                     this.Errors.push("Declaration Date field is required");
                 }
             }
-
             this.ValidatePackages();
-            this.ValidatePickups();
-            this.ValidateDeliveries();
-            this.ValidatePayables();
-            this.ValidateReceivables();
+            if  (!this.entityPM.IsCustomShipment) {
+                this.ValidatePickups();
+                this.ValidateDeliveries();
+                this.ValidatePayables();
+                this.ValidateReceivables();
+            }
+            
             //this.ValidateProductItems();
             RoutingHelper.ValidateRoutingsActualDates(entityPM, this.Errors);
             RoutingHelper.ValidateRoutingsSeriesDates(entityPM, this.Errors);
@@ -107,14 +110,14 @@ export class ShipmentValidator implements IShipmentValidator {
             //}
 
             //else {
-            if (AppTool.IsNullOrEmpty(this.entityPM.CustomerId) || AppTool.IsNullOrEmpty(this.entityPM.ShipmentCustomerTypeCode)) {
+            if (AppTool.IsNullOrEmpty(this.entityPM.CustomerId) || (AppTool.IsNullOrEmpty(this.entityPM.ShipmentCustomerTypeCode) && !this.entityPM.IsCustomShipment)) {
                 this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.CustomerId")));
             }
             //}
         }
     }
     private ValidatePorts() {
-        if (!this.IsInlandDomestic) {
+        if (!this.IsInlandDomestic && !this.entityPM.IsCustomShipment) {
             if (AppTool.IsNullOrEmpty(this.entityPM.MainCarriageFromPortId)) {
                 var textCode = ShipmentTool.GetFromPortTextCode(this.entityPM.TransportModeId, this.entityPM.ShipmentLevelCode);
                 this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate(textCode)));
@@ -127,7 +130,7 @@ export class ShipmentValidator implements IShipmentValidator {
         }
     }
     private ValidateInlandDomestic() {
-        if (this.IsInlandDomestic) {
+        if (this.IsInlandDomestic && !this.entityPM.IsCustomShipment) {
             if (this.entityPM.ShipmentLevelCode == "C") {
                 this.Errors.push("Master inland domestic are not allowed");
             }
@@ -183,7 +186,37 @@ export class ShipmentValidator implements IShipmentValidator {
         }
     }
 
+    private GetTranslatedRequiredError(objectfield: any, translatedRequiredError: string) {
+        let fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
+        let fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
+
+        return fieldError;
+    }
+
     private ValidatePackages() {
+        if(this.entityPM.IsCustomShipment  && this.entityPM.ShipmentTypeId == "FCLD"){
+            this.entityPM.ShipmentPackages.forEach(item => {
+                Validator.TryValidateObject(item, "ShipmentPackage", this.Errors);
+                var error = this.ValidateContainerNumber(item.ContainerNumber);
+                if(!AppTool.IsNullOrEmpty(error)){
+                    this.Errors.push(error);
+                }
+                if(AppTool.IsNullOrEmpty(item.ContainerNumber)){
+                    var objectTable = window.ObjectTables.filter(x => x.Name === "ShipmentPackage")[0];
+                    if(objectTable){   
+                        var objectFields = window.ObjectFields.filter(x => x.ObjectTableId === objectTable.Id);
+                        if(objectFields){
+                            var objectfield = objectFields.filter(d => d.FieldName == "ContainerNumber")[0];
+                            this.Errors.push(this.GetTranslatedRequiredError(objectfield, TextCodeTranslator.Translate("General.M.FieldIsRequired")));
+    
+                        }
+                    }
+                    
+                }
+
+            });
+            return;
+        }
         if (this.IsFCLEntity) {
             for (var i = 1; i <= 5; i++) {
                 if (!AppTool.IsNullOrEmpty(this.entityPM["Quantity" + i]) && AppTool.IsNullOrEmpty(this.entityPM["PackageTypeId" + i])) {
@@ -195,25 +228,34 @@ export class ShipmentValidator implements IShipmentValidator {
 
         this.entityPM.ShipmentPackages.forEach(item => {
             Validator.TryValidateObject(item, "ShipmentPackage", this.Errors);
-
+       
             if (this.entityPM.TransportModeId != 'A') {
                 if (AppTool.IsNullOrEmpty(item.PackageTypeId)) {
-
+       
                     if (this.IsLCLEntity) {
                         this.Errors.push("Package Type is required");
                     }
-
+       
                     else {
                         this.Errors.push("Container Type is required");
                     }
                 }
-
+       
                 if (AppTool.IsNullOrEmpty(item.Weight)) {
                     this.Errors.push("Gross Weight is required");
                 }
             }
+           
+            
         });
     }
+
+
+    ValidateContainerNumber(input: string): string {
+        return FormatTool.ValidateContainerNumber(input);
+    }
+
+
     private ValidatePickups() {
 
         var validator = new ShipmentPickupValidator();
@@ -238,6 +280,7 @@ export class ShipmentValidator implements IShipmentValidator {
         });
 
     }
+
     private ValidatePayables() {
 
         var vatTypesIds: string[] = [];

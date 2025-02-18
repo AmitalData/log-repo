@@ -1,6 +1,7 @@
 ﻿using AmitalCustomsWindowsService.BL;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Utils;
+using Newtonsoft.Json;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,9 @@ namespace AmitalCustomsWindowsService
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var err = e.ExceptionObject.ToString();
-            NetCommonHelper.Logger.DevLog.Instance.WriteError   ("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString()+" Err:"+e + err);
-            var featureCheckMaxPoolSizeWasReachedThenRetart = ConfigurationManager.AppSettings["20180219.CheckMaxPoolSizeWasReachedThenRetart"] == "1";
+            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(new Exception("CurrentDomain_UnhandledException"),JsonConvert.SerializeObject(e));
+            //System.Diagnostics.Debugger.Launch();
+           var featureCheckMaxPoolSizeWasReachedThenRetart = ConfigurationManager.AppSettings["20180219.CheckMaxPoolSizeWasReachedThenRetart"] == "1";
             if (featureCheckMaxPoolSizeWasReachedThenRetart) { }
             Environment.Exit(-1);
         }
@@ -111,7 +113,7 @@ namespace AmitalCustomsWindowsService
                         if (DateTime.Now.Subtract(_LastRestartAt) > TimeSpan.FromMinutes(restartEveryInMin.Value))
                         {
                             restart = true;
-                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("restart now ");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("restart now ");
                         }
                     }
                     _DBWorkerService.EnshureThreadWorking(restart);
@@ -196,8 +198,8 @@ namespace AmitalCustomsWindowsService
             try
             {
 
-                if (Logger.WorkingDir == "") return;
-                Logger.DeleteAllLogState();
+                //if (Logger.WorkingDir == "") return;
+                //Logger.DeleteAllLogState();
                 if (!ServiceState.CurrentDate.Equals(DateTime.Now.Date))
                 {
                     ServiceState.RaiseAnotherDay();
@@ -220,7 +222,7 @@ namespace AmitalCustomsWindowsService
                     CustomsWorkerRole.Utils.LogUtil.LogMe("AmitalCustomsWindowsServiceState",
                     "M", DateTime.Now, "AmitalCustomsWindowsService", state, 0, Environment.UserName, Environment.MachineName, "");
                 }
-                Logger.LogState(state, "");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(state);
             }
             catch (Exception ex)
             {
@@ -242,7 +244,7 @@ namespace AmitalCustomsWindowsService
         protected override void OnStop()
         {
             // TODO: Add code here to perform any tear-down necessary to stop your service.
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("OnStop()");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("OnStop()");
             WorkerRoleServiceLocator.PleaseShutDown = true;
             _DBWorkerService.StopThreads();
         }

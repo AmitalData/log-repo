@@ -7,7 +7,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.Security;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.DataContracts;
@@ -1426,8 +1426,15 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             }).ToList();
 
             return invoicePMs;
+        } 
+      public List<APInvoiceLine> GetAPInvoiceLinesByChargeTypeId(string ChargesTypeId, int tenant)
+        {
+            List<APInvoiceLine> APInvoiceLines = (from a in repository.context.APInvoices
+                                                  join line in repository.context.APInvoiceLines on a.Id equals line.APInvoiceId
+                                                  where a.Tenant == tenant && a.StatusCode == "WA" && line.ChargesTypeId == ChargesTypeId
+                                                  select line).ToList();
+            return APInvoiceLines;
         }
-
         public List<APInvoicePM> GetVoidedAPInvoicesByIds(List<string> Ids, int tenant, DateTime taxReportDate)
         {
             DateTime beginOfMonthOfTaxReportDate = new DateTime(taxReportDate.Year, taxReportDate.Month, 1);

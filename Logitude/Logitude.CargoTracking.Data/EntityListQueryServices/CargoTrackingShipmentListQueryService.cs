@@ -193,8 +193,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ChargeableWeightInKG = shipment.ChargeableWeightInKG,
                                                                ChargeableWeight = shipment.ChargeableWeight,
                                                                ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode,
-                                                               IncotermName = shipment.IncotermName
-
+                                                               IncotermName = shipment.IncotermName,
+                                                              LockerAddress= shipment.LockerAddress,
+                                                              LockerCity = shipment.LockerCity,
+                                                               LockerCode = shipment.LockerCode,
+                                                               LockerName = shipment.LockerName
                                                            });
             return query;
         }
@@ -251,6 +254,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     IsOperationalClosed = shipment.IsOperationalClosed,
                     SecurityKey = shipment.SecurityKey,
                     CurrentMilestoneCode = shipment.CurrentMilestoneCode,
+                    LockerAddress = shipment.LockerAddress,
+                    LockerCity = shipment.LockerCity,
+                    LockerCode = shipment.LockerCode,
+                    LockerName = shipment.LockerName
 
                     //ForwardingShipmentNumber = shipment.ForwardingShipmentNumber,
 
@@ -761,6 +768,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 IsOperationalClosed = shipment.IsOperationalClosed,
                 SecurityKey = shipment.SecurityKey,
                 CurrentMilestoneCode = shipment.CurrentMilestoneCode,
+                LockerAddress = shipment.LockerAddress,
+                LockerCity = shipment.LockerCity,
+                LockerCode = shipment.LockerCode,
+                LockerName = shipment.LockerName
+
             });
         }
 
@@ -970,7 +982,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (shipmentSearchInput.CustomersIds.Count > 0)
             {
 
-                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count));
+
+             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count));
+
 
                 shipments = shipments.Where(d =>
                             shipmentSearchInput.CustomersIds.Contains(d.CustomerId)
@@ -1037,7 +1051,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateGreaterThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.OpenDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateGreaterThan))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("Filter OpenDateGreaterThan {0} ", shipmentSearchInput.OpenDateGreaterThan));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Filter OpenDateGreaterThan {0} ", shipmentSearchInput.OpenDateGreaterThan));
 
                 shipments = shipments.Where(d => d.CreateDate >= openDateGreaterThan);
             }

@@ -6,7 +6,7 @@ using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Profact.TimbraCFDI;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;

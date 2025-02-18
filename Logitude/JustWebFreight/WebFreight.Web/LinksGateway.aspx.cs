@@ -21,7 +21,8 @@ namespace WebFreight.Web
             //http://localhost:9996/LinksGateway.aspx?Menu=PREQ&SecurityKey=d5e6d15f4cb24f12a8ac9c5e8c54a06d
             var Menu = Request.QueryString["Menu"];
             if (Menu == null) { return; }
-            if (Menu == "PREQ" || Menu == "UID")
+            Menu = Menu.ToLower();
+            if (Menu == "preq" || Menu == "uid")
             {
                 var Tenant = Request.QueryString["Tenant"];
                 var SecurityKey = Request.QueryString["SecurityKey"];

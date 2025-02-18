@@ -230,7 +230,7 @@
   </Column>
   <Column
     Name="TransportModeId"
-    Type="varchar"
+    Type="char"
     Size="1">
     <Constraints
       Nullable="true" />
@@ -1109,6 +1109,20 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="SystemConnection"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
@@ -1181,9 +1195,9 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="TransportModeId"
-    ReferencedTable="CustomsTransportModes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTable="TransportModes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DepartmentId"
     ReferencedTable="Departments"
@@ -1339,6 +1353,16 @@
     ReferencedTable="AmendmentRequestStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="SystemConnection"
+    ReferencedTable="NUniclouds"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ShipmentId"
+    ReferencedTable="Shipments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="AmendmentOriginalDeclartation" />
   <Index
@@ -1351,6 +1375,8 @@
     Columns="AmendmentRequestNumber" />
   <Index
     Columns="Direction" />
+  <Index
+    Columns="CustomFileNo" />
   <Index
     Columns="Tenant,AmendmentOriginalDeclartation" />
   <Index

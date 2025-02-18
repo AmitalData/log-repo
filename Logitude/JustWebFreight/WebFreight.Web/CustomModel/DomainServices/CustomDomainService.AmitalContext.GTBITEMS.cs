@@ -52,11 +52,11 @@ namespace WebFreight.Web.CustomModel.DomainServices
 
                 DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
                 string partner = defaultValueQueryService.GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", customerCode, tenant); // S=Supplier I=Client
-                    Debug.WriteLine("GetDefault" + sw.ElapsedMilliseconds);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetDefault" + sw.ElapsedMilliseconds);
                 if (partner == "S") // If Supplier get Unifreight card
                 {
                     customerCode = defaultValueQueryService.GetDefaultAccountNumber("ISRAEL", "CEX_CUS_SUP", "NON", customerCode, tenant);
-                        Debug.WriteLine("GetDefaultAccountNumber" + sw.ElapsedMilliseconds);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetDefaultAccountNumber" + sw.ElapsedMilliseconds);
                 }
 
                 if (string.IsNullOrWhiteSpace(customerCode))
@@ -100,7 +100,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
         //         .Take(top);
 
         //        var aynList = q.ToList();
-        //        Debug.WriteLine("ToList():" + sw.ElapsedMilliseconds);
+        //       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ToList():" + sw.ElapsedMilliseconds);
         //    var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, rec.ic, tenant)).ToList();
         //    return l;
         //    //var listService = new GTBITEMQueryService(GetAmitalContext(tenant));
@@ -136,14 +136,14 @@ namespace WebFreight.Web.CustomModel.DomainServices
                 q = q.Take(top);
 
                 var aynList = q.ToList();
-                Debug.WriteLine("ToList():" + sw.ElapsedMilliseconds);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ToList():" + sw.ElapsedMilliseconds);
                 var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
                 return l;
 
             }
             finally
             {
-                Debug.WriteLine("GTBITEMS" + sw.ElapsedMilliseconds);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GTBITEMS" + sw.ElapsedMilliseconds);
             }
         }
 

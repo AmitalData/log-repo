@@ -21,6 +21,20 @@ namespace Logitude.Server.Tools.Helpers
         {
             if (list == null || list.Count() == 0)
                 return;
+            if (tableName == "TextCodes")
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    var item = list[i];
+                    var property = item.GetType().GetProperty("LocalDefaultText");
+                    if (property != null && property.PropertyType == typeof(string))
+                    {
+                        var value = property.GetValue(item) as string;
+                        var convertedValue = TryConvertFromBase64(value);
+                        property.SetValue(item, convertedValue);
+                    }
+                }
+            }
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
                 RunOracleSqlInsert(tableName, list);
@@ -197,6 +211,52 @@ namespace Logitude.Server.Tools.Helpers
                 }
             }
             return shortfieldName;
+        }
+
+        public static string TryConvertFromBase64(string input)
+        {
+            try
+            {
+                if (input == null)
+                {
+                    return null;
+                }
+                if (input.StartsWith("BS64:") || input.StartsWith("\"BS64:"))
+                {
+
+                    return ConvertFromBase64(input);
+
+
+                }
+                return input;
+
+            }
+            catch (FormatException)
+            {
+                return input;
+            }
+        }
+
+        private static string ConvertFromBase64(string input)
+        {
+            string substringToRemove = "\"";
+            string backUp = input;
+            try
+            {
+                input = input.Trim('\"');
+                input = input.Substring(5);//REMOVE BS64:
+                byte[] data = Convert.FromBase64String(input);
+                string decodedString = Encoding.UTF8.GetString(data);
+                decodedString = decodedString.Trim('\"');
+
+                return decodedString;
+
+            }
+            catch (FormatException)
+            {
+                return backUp;
+            }
+
         }
 
     }

@@ -22,7 +22,7 @@ namespace CommunicationWorkerRole
                     try
                     {
                         LastActivity = DateTime.UtcNow;
-                        string url = LogitudeSettings.LogitudeURL;//System.Configuration.ConfigurationSettings.AppSettings.Get("LogitudeURL");
+                        string url = LogitudeSettings.LogitudeURL;//ConfigurationManager.AppSettings.Get("LogitudeURL");
                         url = url + "/WebServices/WarmWebService.asmx";
                         url = url.Replace("https", "http");
                         WarmServiceReference.WarmWebServiceSoapClient warmService = new WarmServiceReference.WarmWebServiceSoapClient();
@@ -36,6 +36,7 @@ namespace CommunicationWorkerRole
                     }
                     catch (Exception e)
                     {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                         ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "WarmWorkerRole",null);
                         Thread.Sleep(10000);
                     }

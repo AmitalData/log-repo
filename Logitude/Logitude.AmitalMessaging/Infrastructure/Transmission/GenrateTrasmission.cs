@@ -52,7 +52,7 @@ namespace Logitude.AmitalMessaging.Infrastructure.Transmission
 
 //            var mySerilazeObject = UnifreightIIG.Common.Utils.XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
 
-//            Debug.WriteLine(mySerilazeObject);
+//           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mySerilazeObject);
 
 //            //GGGHQANALYZE >>  GGGHQANALYZE
 //            /*
@@ -114,7 +114,7 @@ namespace Logitude.AmitalMessaging.Infrastructure.Transmission
 
 //            var mySerilazeObject = UnifreightIIG.Common.Utils.XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
 
-//            Debug.WriteLine(mySerilazeObject);
+//           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mySerilazeObject);
 
 //            //GGGHQANALYZE >>  GGGHQANALYZE
 //            /*

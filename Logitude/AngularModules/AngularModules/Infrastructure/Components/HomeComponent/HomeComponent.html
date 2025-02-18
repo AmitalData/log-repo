@@ -153,11 +153,12 @@
     }
 
     .circle {
-        background-color: #A11E21;
+        background-color:#d9d9d9;
         height: 15px;
         width: 15px;
         border-radius: 15px;
         text-align: center;
+        color:#8e98a1
     }
 
     hr {
@@ -167,6 +168,24 @@
         border-top: 1px solid #ccc;
         padding: 0;
     }
+    
+    .DocsListButton {
+        transition: .5s all;
+        width: 215px;
+        font-size: 16px;
+        cursor: pointer;
+        user-select: none;
+        border-right: 1px solid #e7ebee;
+    }
+
+    .DocsListButton:hover {
+        background: #f4f4f4;
+    }
+
+    .DocsListButton:active {
+        background: #f0f0f0;
+    }
+  
 </style>
 
 <table style="background: white; min-width: 1024px; min-height: 600px;" *ngIf="!IsNewSignupTenant" [style.direction]="LayoutDirection" [style.font-family]="SystemFontFamily">
@@ -267,11 +286,21 @@
                                             <td style="width: 5px;">
                                                 <div></div>
                                             </td>
+                                            <td *ngIf="HasFeatureReport" [title]="'General.MH.Reports' | TextCodeTranslationPipe" style="width: 20px; position: relative;" class="DocsListButton" (click)="IsReportPanelVisibleChanged()"
+                                                [class.BrdrRt]="IsReportPanelVisible">
+                                                <img src="./Images/Split/report.png" style="padding-left: 5px; margin-top: -4px; height: 19px;" />
+                                                <div  class="circle" style="position: absolute; top: -3px; right: -6px;">
+                                                    {{countDoneRepors}}
+                                                </div>
+                                            </td>
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
 
                                             <td style="width: 20px;">
                                                 <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
                                                     <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
-                                                    <div class="ToggleButtonMenu" style="right:-50px" attr.data-cy="{{'SettingsMenuButton'}}">
+                                                    <div class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl'? {'right': '-80px'} : {'left': '-80px'}" attr.data-cy="{{'SettingsMenuButton'}}">
                                                         <!-- Please If you want to add a new button but this condition in that button *ngIf="IsLogBox == false"-->
                                                         <button *ngIf="IsCustomizationVisible" (click)="LanguageSettingsClicked()">Language Settings</button>
                                                         <button *ngIf="IsSignatureVisible" (click)="SignatureClicked()">Signature</button>
@@ -294,7 +323,7 @@
                                             <td style="width: 5px;">
                                                 <div></div>
                                             </td>
-
+                                           
                                             <td style="width: 20px;">
                                                 <IconButton [Name]="'Help'" [IsIconOnly]="true" (click)="HelpButtonClicked()" title="Help Center"></IconButton>
                                             </td>
@@ -549,3 +578,6 @@
         </td>
     </tr>
 </table>
+<div *ngIf="IsReportPanelVisible"  (mouseleave)="closeReportPanel()" >
+    <ReportMenuComponent (PinnedChanged)="TogglePinReportPanel($event)" (mouseenter)="keepReportPanelOpen()" (mouseleave)="closeReportPanel()" [CurrentReportId]="CurrentReportId" [IsReportPanelVisible]="IsReportPanelVisible"></ReportMenuComponent>
+</div>

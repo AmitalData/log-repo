@@ -1974,6 +1974,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         var IsDefualt = false;
 
         if (selectitem.TemplateType == "P") {
+
             if (selectitem.Id == this.CurrentDocumentType.DocumentTypeDefaultReportTemplateId) {
                 IsDefualt = true;
             }

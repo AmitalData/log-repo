@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -11,6 +11,8 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -175,6 +177,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 Tenant = a.Tenant,
                                 EntityId = a.EntityId,
                                 EntityPayableId = a.EntityPayableId,
+                                PayableDebitGLAcountId = a.PayableDebitGLAcountId,
+
                                 RefundAmount = a.RefundAmount,
                                 ForiegnCurrencyId = a.ForiegnCurrencyId,
                                 ForiegnExchangeRate = a.ForiegnExchangeRate,
@@ -193,6 +197,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);
                 APInvoiceTotalVATRepository invoiceTotalVatRepository = new APInvoiceTotalVATRepository(tenant);
+                GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
 
                 List<APInvoiceTotalVAT> totalVats = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(invoiceId, tenant).ToList();
 
@@ -225,7 +230,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             item.VendorName = vendorCard.EnglishName;
                         }
                     }
+                    GLAccount PayableDebitGLAcount = gLAccountRepository.GetSingle(item.PayableDebitGLAcountId,tenant);
+                    if (PayableDebitGLAcount != null)
+                    {
+                        item.PayableDebitGLAcountName = PayableDebitGLAcount.LocalName;
 
+
+                    }
                     if (!string.IsNullOrEmpty(item.VatTypeId))
                     {
                         VatType vatType = VatTypeRepository.GetSingleVatType(item.VatTypeId, tenant, true);

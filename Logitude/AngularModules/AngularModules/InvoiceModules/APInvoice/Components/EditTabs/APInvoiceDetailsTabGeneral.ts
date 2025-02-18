@@ -216,6 +216,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, false);
 
         }
 
@@ -230,6 +231,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("LocalDescription", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, true);
+
             if (this.EntityPM.InvoicePayments.length > 0) {
                 this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, false);
@@ -268,7 +271,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     SetUIProperties_VATNumber() {
         var isRequired = false;
 
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && this.EntityPM.VendorCountry === "ISRAEL") {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
                 isRequired = true;
             }
@@ -1357,7 +1360,19 @@ export class APInvoiceLineItem extends BaseComponent {
             this.invoiceLinePM.ForiegnCurrencyId = value;
         }
     }
-
+    get PayableDebitGLAcountId() { return this.invoiceLinePM.PayableDebitGLAcountId; }
+    set PayableDebitGLAcountId(value: string) {
+        if (this.invoiceLinePM.PayableDebitGLAcountId != value) {
+            this.invoiceLinePM.PayableDebitGLAcountId = value;
+            this.SetUIProperties_PayableDebitGLAcountId();
+        }
+     }
+     get PayableDebitGLAcountName() { return this.invoiceLinePM.PayableDebitGLAcountName }
+     set PayableDebitGLAcountName(value: string) {
+      if (this.invoiceLinePM.PayableDebitGLAcountName != value) {
+            this.invoiceLinePM.PayableDebitGLAcountName = value;
+        }
+    }
     get ForiegnExchangeRate() { return this.invoiceLinePM.ForiegnExchangeRate; }
     set ForiegnExchangeRate(value: number) {
         if (this.invoiceLinePM != null) {
@@ -1426,6 +1441,7 @@ export class APInvoiceLineItem extends BaseComponent {
         this.SetUIProperties_EditControls();
         this.SetUIProperties_VAT();
         this.SetUIProperties_Description();
+        this.SetUIProperties_PayableDebitGLAcountId();
     }
     SetUIProperties_Rate() {
         var isFieldEnabled = false;
@@ -1503,7 +1519,11 @@ export class APInvoiceLineItem extends BaseComponent {
     SetUIProperties_Description() {
         this.UIProperties.SetRequired("LocalDescription", this.ObjectTableName, AppTool.IsNullOrEmpty(this.LocalDescription));
     }
+    SetUIProperties_PayableDebitGLAcountId() {
+       this.UIProperties.SetRequired("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PayableDebitGLAcountId));
+       this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.chargesTypeList?.PayableDebitGLAcountId));
 
+    }
     // Line Properties
     public RefreshLine() {
         //FirePropertyChanged("Exists");
@@ -1692,6 +1712,8 @@ export class APInvoiceLineItem extends BaseComponent {
             this.Description = null;
             this.LocalDescription = null;
             this.Glaccount = null;
+            this.chargesTypeList = null;
+            this.PayableDebitGLAcountId = null;
         }
 
         else {
@@ -1709,12 +1731,15 @@ export class APInvoiceLineItem extends BaseComponent {
                         }
 
                         this.LocalDescription = this.chargesTypeList.LocalName;
+                        this.PayableDebitGLAcountId = this.chargesTypeList.PayableDebitGLAcountId;
 
                         if (!AppTool.IsNullOrEmpty(this.chargesTypeList.PayableDebitGLAcountId)) {
                             this.fatherComponent.myGLAccountPMService.get(this.chargesTypeList.PayableDebitGLAcountId).subscribe((myResponse: ServiceResponse) => {
                                 this.invoiceLinePM.ChargeTypeGLAccountId = this.chargesTypeList.PayableDebitGLAcountId;
                                 if (!myResponse.HasError) {
                                     this.Glaccount = myResponse.Result;
+                                    this.PayableDebitGLAcountName = this.Glaccount?.LocalName;
+                                   
                                 }
                             });
                         }

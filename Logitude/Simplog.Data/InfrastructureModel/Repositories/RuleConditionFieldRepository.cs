@@ -5,7 +5,7 @@ using System.Transactions;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -70,7 +70,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
                     zeroRuleConditionField = (from a in context.RuleConditionFields.Include("ObjectField") 
                                             where a.Tenant == 0
                                             select a).ToList();

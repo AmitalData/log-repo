@@ -74,5 +74,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             CourierDeclarationRepository courierMasterRepository = new CourierDeclarationRepository(context);
             return courierMasterRepository.CountNoOfCourierHawbWithoutDelivery(couriermasterid, tenant);
         }
+        public string GetFirstDeclarationCustomFileByCourierMasterId(string courierMasterId, int tenant)
+        {
+            return  repository.GetFirstDeclarationCustomFileByCourierMasterId(tenant, courierMasterId);
+        }
     }
 }

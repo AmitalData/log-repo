@@ -41,8 +41,8 @@
   </Column>
   <Column
     Name="Description"
-    Type="varchar"
-    Size="250">
+    Type="nvarchar"
+    Size="500">
     <Constraints
       Nullable="true" />
   </Column>
@@ -90,9 +90,9 @@
     <Constraints
       Nullable="true" />
   </Column>
-  
   <Column
     Name="EndOfMonth"
+    OldNames="CurrentMonth"
     Type="bit">
     <Constraints
       Nullable="false" />

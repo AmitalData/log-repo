@@ -1,6 +1,6 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         public HttpResponseMessage GetEntityResourceByTableName(string objectTableName, int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            tenant = authToken.Tenant;
+
+            //SecurityUtility.AuthenticationOnTenant(tenant);
             byte[] zipfilebyte = null;
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, tenant, false);

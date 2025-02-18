@@ -1,7 +1,6 @@
 import { EventEmitter, OnInit, Output, Component, ComponentRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { QueueMessagesMoreDetailsExtendedListService } from 'Accounting/Services/ExtendedLists/QueueMessagesMoreDetailsExtendedListService';
-import { CustomsClosedTablesComponent } from 'CustomsModules/CustomsMaintenance/Components/CustomsClosedTablesComponent';
 import { ListComponentArgs } from 'Infrastructure/Args';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
@@ -16,7 +15,7 @@ export class QueueMessageMoreDetails extends BaseComponent implements OnInit {
     private _entityListService: QueueMessagesMoreDetailsExtendedListService;
     public ValidationErrorsList: string[] = [];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    public ComponentRef: ComponentRef<CustomsClosedTablesComponent>;
+    public ComponentRef: ComponentRef<any>;
     private CurrentSession = SessionLocator.SelectedSession;
     public columns: any[] = null;
     formData: FormGroup;
@@ -38,12 +37,6 @@ export class QueueMessageMoreDetails extends BaseComponent implements OnInit {
     constructor(private fb: FormBuilder) {
         super();
         this._entityListService = new QueueMessagesMoreDetailsExtendedListService();
-        // var month = new Date().getMonth();
-        // var Year = new Date().getFullYear();
-        // var Day = new Date().getDate();
-        // this.ToDate = this.SetDate(Year, month, Day);
-        // this.FromDate = this.SetDate(Year, month, Day);
-        // this.FromDate.setUTCDate(this.ToDate.getDate() - 14);
     }
     public GridHeaderText: string = "Queue Messages More Details";
 

@@ -3,7 +3,7 @@ using WebFreight.Web.Security;
 using WebFreight.Web.Helpers;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using Logitude.Accounting.Def.EntityPMs;
@@ -14,7 +14,7 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
@@ -42,7 +42,7 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
 
     public class GetTaxReportLinesResponse
@@ -730,6 +730,34 @@ namespace WebFreight.Web.Controllers.AccountingModel
             var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dataBytes);
             string winHebrewString = winHebrewEncoding.GetString(hebBytes);
             return winHebrewString.Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
+
+        }
+        public HttpResponseMessage PutTaxReportIsEdited(TaxReportPM entityPM)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, authToken.Tenant);
+                    IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
+
+                    TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), entityPM.Tenant); 
+                    var poco = taxReportUpdateService.UpdateTaxReportIsEdited(entityPM);
+
+                    scope.Complete();
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                    return Request.CreateResponse(HttpStatusCode.OK, poco);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
 
         }
 

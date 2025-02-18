@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -45,6 +45,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ScreenCode { get; set; }
         public string OriginalTabCode { get; set; }
         public bool HideTabNameInScreen { get; set; }
+        public bool IsLocked { get; set; }
 
     }
 }

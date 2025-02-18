@@ -141,6 +141,34 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckerId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransportationInstructions"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Responsibility"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AddressTypeId"
     ReferencedTable="AddressTypes"
@@ -161,8 +189,23 @@
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CityId"
+    ReferencedTable="CountryCities"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TruckerId"
+    ReferencedTable="Truckers"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="Responsibility"
+    ReferencedTable="Responsibilities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="AutomaticLastUpdateDate" />
-	<Index
-   Columns="ExternalId,Tenant" />
+  <Index
+    Columns="ExternalId,Tenant" />
 </Table>

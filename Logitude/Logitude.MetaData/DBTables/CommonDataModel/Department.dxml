@@ -65,6 +65,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="DirectionId"
+    Type="char"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="DirectionId"
+    ReferencedTable="Directions"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="AutomaticLastUpdateDate" />
 </Table>

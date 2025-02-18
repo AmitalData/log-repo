@@ -378,6 +378,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
     public ResetMustRefresh() {
         this.MustRefresh = null;
         this.MustRefreshMessage = null;
+        this.CurrentSession.CurrentEditComponent.RefreshEntity();   
     }
     public CustomsAnswersShowManifest: boolean = false;
     public ShowDeclarationClassificationComponentTAB: boolean = false;

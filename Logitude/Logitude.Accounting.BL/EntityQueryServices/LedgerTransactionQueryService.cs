@@ -7,14 +7,22 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using System;
+ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
-
+ using System.Text;
+using System.Threading.Tasks;
+using Logitude.Accounting.BL.DataContract;
+using Logitude.Accounting.BL.CloseTables;
+using System.Data.Entity;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Microsoft.Practices.ObjectBuilder2;
+ 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
     public partial class LedgerTransactionQueryService : EntityQueryService<LedgerTransaction, LedgerTransactionKeys, LedgerTransactionPM, object, LedgerTransactionKeys>
@@ -103,8 +111,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             
             var qLedgerTransByAcountingDate =
                 this.repository.GetAll(tenant).Where(rec =>
-                    EntityFunctions.TruncateTime(rec.AccountingDate) >= fromDate.Date &&
-                    EntityFunctions.TruncateTime(rec.AccountingDate) <= toDate.Date);
+                    rec.AccountingDate >= fromDate.Date &&
+                    rec.AccountingDate <= toDate.Date);
+
             if (!string.IsNullOrWhiteSpace(JournalId))
             {
                 qLedgerTransByAcountingDate = qLedgerTransByAcountingDate.Where(rec => rec.JournalId == JournalId);
@@ -602,6 +611,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return jIds;
         }
 
+     
+ 
+
 
         public List<LedgerTransactionJournalLineLT> GetAPInvoiceLedgerTransactionsByIdList(List<String> ledgerTransactionIds, int tenant)
         {
@@ -609,7 +621,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return ledgerTransactionLineLTs;
         }
-
+ 
         public List<LedgerTransactionPM> GetLedgerTransactionDTOByIdList(List<string> idList, int tenant)
         {
             var pocos= repository.GetLedgerTransactionsByIdList(idList, tenant);
@@ -861,6 +873,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return reconciledTransactions;
 
         }
+ 
 
         public LedgerTransaction GetPaymentTransaction(string arpaymentId, int tenant)
         {
@@ -902,6 +915,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return openInvoicesTransactions;
         }
 
+ 
+ 
 
         public List<LedgerTransactionJournalLineLT> GetOpenInvoicesTransactionsForAccountLT(string billToGLAccountId, string arpaymentId, int tenant)
         {
@@ -946,7 +961,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return rv;
         }
-
+ 
         /// <summary>
         /// Returns any invoice transaction which is reconciled with the payment. --Abdullah
         /// </summary>
@@ -1030,6 +1045,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return numbersString;
         }
 
+    
+
         private static string GetReconciliationNumbersForInvoiceLT(List<ReconciliationLinePM> recoLines, List<ReconciliationPM> reconciliationsOnPaymentInvoices, LedgerTransactionJournalLineLT invoiceTransaction)
         {
             List<ReconciliationLinePM> transactionRecoLines = recoLines
@@ -1062,6 +1079,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<ReconciliationLinePM> recoLines = recoLineQuery.GetLinesByTransactionIdsWithoutMapping(transactionsIds, tenant).ToList();
             return recoLines;
         }
+
+     
 
         private List<ReconciliationPM> GetReconciliationsByReconcileLines(int tenant, List<ReconciliationLinePM> recoLines)
         {
@@ -1338,6 +1357,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
+ 
+     
+
+ 
+    
+
+
         public IQueryable<LedgerTransaction> GetTransactionsForMonthAndSourceTypeMode(int year, int month, int tenant, string sourceTypeCode, string mode)
         {
             DateTime monthStart = new DateTime(year, month, 1, 0, 0, 0);
@@ -1498,5 +1524,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public decimal ForeignAmountDebit { get; internal set; }
         public decimal LocalAmountDebit { get; internal set; }
         public string OpenAmountCurrencyId { get; internal set; }
+    }
+
+
+    public class GetNextLTArgs
+    {
+        public int Tenant { get; set; }
+        public string AccountId { get; set; }
+        public string LastCheckedId { get; set; }
+        public DateTime ToAccountingDate { get; set; }
+        public int ThisTimeMadeCount { get; set; }
+        public bool Stop { get; set; }
+
+
     }
 }

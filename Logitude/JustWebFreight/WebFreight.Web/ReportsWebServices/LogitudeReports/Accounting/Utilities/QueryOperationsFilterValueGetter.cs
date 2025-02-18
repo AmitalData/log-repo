@@ -87,6 +87,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             return queryOperations.QueryFilterItems.Where(d => d.FieldName == FieldName).Select(x=>x.Operator).FirstOrDefault();
         }
+		
  		private QueryFilterItem GetFilterItemByFieldName(string FieldName)
         {
             return queryOperations.QueryFilterItems.Where(d => d.FieldName == FieldName).FirstOrDefault();

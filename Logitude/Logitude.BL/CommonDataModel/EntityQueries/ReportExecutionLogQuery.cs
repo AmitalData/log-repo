@@ -1,10 +1,18 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Mapping;
+using Logitude.Customs.Data;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq; 
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +51,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ReportFilterXML = a.ReportFilterXML,
                         ReportId = a.ReportId,
                         ReportName = a.Report != null ? a.Report.Name : null,
+                        ReportLocalName = a.Report != null ? a.Report.LocalName : null,
+
                         ReportTemplateId = a.ReportTemplateId,
                         RetryNumber = a.RetryNumber,
                         StartDate = a.StartDate,
@@ -70,6 +80,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ReportFilterXML = a.ReportFilterXML,
                         ReportId = a.ReportId,
                         ReportName = a.Report != null ? a.Report.Name : null,
+                        ReportLocalName = a.Report != null ? a.Report.LocalName : null,
+
                         ReportTemplateId = a.ReportTemplateId,
                         RetryNumber = a.RetryNumber,
                         StartDate = a.StartDate,
@@ -96,6 +108,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             ReportFilterXML = a.ReportFilterXML,
                                                             ReportId = a.ReportId,
                                                             ReportName = a.Report != null ? a.Report.Name : null,
+                                                            ReportLocalName = a.Report != null ? a.Report.LocalName : null,
                                                             ReportTemplateId = a.ReportTemplateId,
                                                             RetryNumber = a.RetryNumber,
                                                             StartDate = a.StartDate,
@@ -105,7 +118,161 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         };
             return result;
         }
-         
-         
+
+        public void CancelStuckReports(int tenant ,string report=null)
+        {
+            if(report=="null")
+            {
+                report = null;
+            }
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(tenant);
+            var contactRep = new ContactRepository(tenant);
+            Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, tenant);
+            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("[dbo].[CancelReportAndUpdateQueueMessage]", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter reportId = new SqlParameter("@ReportId", SqlDbType.NText);
+                SqlParameter cancelByUser = new SqlParameter("@CancelByUser", SqlDbType.NText);
+                SqlParameter tenantId = new SqlParameter("@TenantId", SqlDbType.Int);
+                SqlParameter queueDefinitionCode = new SqlParameter("@QueueDefinitionCode", SqlDbType.NText);
+
+                reportId.Direction = ParameterDirection.Input;
+                cancelByUser.Direction = ParameterDirection.Input;
+                tenantId.Direction = ParameterDirection.Input;
+                queueDefinitionCode.Direction = ParameterDirection.Input;
+
+                reportId.Value = report;
+                cancelByUser.Value= contact?.Id;
+                tenantId.Value = tenant;
+                queueDefinitionCode.Value = FeatureToggleHelper.HasFeatureToggle("RE2", tenant) ? "ReportExecutionLogV2Queue" : "ReportExecutionLogQueue"; 
+
+                cmd.Parameters.Add(reportId);
+                cmd.Parameters.Add(cancelByUser);
+                cmd.Parameters.Add(tenantId);
+                cmd.Parameters.Add(queueDefinitionCode);
+
+                cn.Open();
+                var output = cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+       
+    }
+
+        public void Cancel(ReportExecutionLog reportExecutionLog, string cancelByUserId)
+        {
+           
+            reportExecutionLog.StatusCode = "F";
+            reportExecutionLog.ExceptionMessage = string.Format("Stopped manually by {0}", cancelByUserId);
+            reportExecutionLog.DoneDate = DateTime.Now;
+            repository.Update(reportExecutionLog);
+            
+
+            QueueMessageRepository messagesRepository = new QueueMessageRepository(reportExecutionLog.Tenant);
+            var message = messagesRepository.GetSingleQueueMessageByReportId(reportExecutionLog.Id, reportExecutionLog.Tenant);
+            string strConnString = TenantServerConfigration.GetDbConnection(reportExecutionLog.Tenant);
+            if (message != null)
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand cmd = new SqlCommand("[dbo].[Queue_SetStatus]", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                    SqlParameter statusPar = new SqlParameter("@Statud", SqlDbType.Int);
+
+
+                    messageIdPar.Direction = ParameterDirection.Input;
+                    statusPar.Direction = ParameterDirection.Input;
+
+                    messageIdPar.Value = message.Id;
+                    statusPar.Value = 22;
+
+                    cmd.Parameters.Add(messageIdPar);
+                    cmd.Parameters.Add(statusPar);
+
+                    cn.Open();
+                    var output = cmd.ExecuteNonQuery();
+                    cn.Close();
+                    }
+                     }
+        }
+        public IQueryable<ReportExecutionLogPM> GetReportExecutionLogPMsByTenantAndUserLastWeek(int tenant,string id)
+        {
+            var oneWeekAgo = DateTime.Now.AddDays(-7);
+            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+            return (from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("Report")
+                    where a.Tenant == tenant && a.CreateDate >= oneWeekAgo && a.CreatedByUserId == id   && a.NotDisplayInMenu == false
+                    select new ReportExecutionLogPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        CreatedByUserId = a.CreatedByUserId,
+                        CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                        StatusCode = a.StatusCode,
+                        StatusName = a.CommunicationStatusType != null ? a.CommunicationStatusType.Name : null,
+                        ExceptionMessage = a.ExceptionMessage,
+                        CreateDate = a.CreateDate,
+                        DoneDate = a.DoneDate,
+                        ReportFilterXML = a.ReportFilterXML,
+                        ReportId = a.ReportId,
+                        ReportName = a.Report != null ? a.Report.Name : null,
+                        ReportLocalName = a.Report != null ? a.Report.LocalName : null,
+                        ReportTemplateId = a.ReportTemplateId,
+                        RetryNumber = a.RetryNumber,
+                        StartDate = a.StartDate,
+                        ExecutedByServerName = a.ExecutedByServerName,
+                        DisablePreview = a.DisablePreview,
+                        SearchFields = a.SearchFields,
+                        NotDisplayInMenu=a.NotDisplayInMenu,
+                    });
+        }
+
+        public IQueryable<ReportExecutionLogPM> GetReportExecutionLogPMsByIds(List<string> ids, int tenant)
+        {
+            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+            return (from a in repository.context.ReportExecutionLogs.Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("Report")
+                    where ids.Contains(a.Id) && a.Tenant == tenant 
+                    select new ReportExecutionLogPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        CreatedByUserId = a.CreatedByUserId,
+                        CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                        StatusCode = a.StatusCode,
+                        StatusName = a.CommunicationStatusType != null ? a.CommunicationStatusType.Name : null,
+                        ExceptionMessage = a.ExceptionMessage,
+                        CreateDate = a.CreateDate,
+                        DoneDate = a.DoneDate,
+                        ReportFilterXML = a.ReportFilterXML,
+                        ReportId = a.ReportId,
+                        ReportName = a.Report != null ? a.Report.Name : null,
+                        ReportLocalName= a.Report != null ? a.Report.LocalName : null,
+                        ReportTemplateId = a.ReportTemplateId,
+                        RetryNumber = a.RetryNumber,
+                        StartDate = a.StartDate,
+                        ExecutedByServerName = a.ExecutedByServerName,
+                        DisablePreview = a.DisablePreview,
+                        SearchFields = a.SearchFields,
+                        NotDisplayInMenu = a.NotDisplayInMenu
+                    });
+        }
+        public void DeleteFromMenu(string reportId , int tenant)
+        {
+            var reportExecutionLogRepository = new ReportExecutionLogRepository(tenant);
+            var reportExecutionLog = reportExecutionLogRepository.GetReportExecutionLog(reportId);
+            reportExecutionLog.NotDisplayInMenu = true;
+            reportExecutionLogRepository.Update(reportExecutionLog);
+            reportExecutionLogRepository.SubmitChanges();
+
+
+
+               
+          
+
+        }
     }
 }

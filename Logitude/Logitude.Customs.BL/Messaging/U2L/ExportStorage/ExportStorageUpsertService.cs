@@ -157,7 +157,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                         StorageNo = _UnifreigntExportStorage.StorageNo,
                         OpenDate = AmitalConvertUtil.GetUnifreightFormatedDate(_UnifreigntExportStorage.OpenDate, "UnifreigntExportStorage.OpenDate") ?? DateTime.Now,
                         ExportFileNo = _UnifreigntExportStorage.ExportFileNo,
-                        MarksNumbers = _UnifreigntExportStorage.CargoDetails.CargoDescription + "                    " + _UnifreigntExportStorage.ContainerDetails.Seal.SealType + " : " + _UnifreigntExportStorage.ContainerDetails.Seal.SealNumber,
                     };
                 }
                 else

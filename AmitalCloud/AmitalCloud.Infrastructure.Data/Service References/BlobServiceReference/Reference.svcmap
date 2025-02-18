@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0315e9a7-459d-4e9d-8e2f-b2c4715ada8d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:34488/BlobService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="BlobService.xsd" MetadataType="Schema" ID="bd00f54b-b771-47d3-a8e7-34890f004335" SourceId="1" SourceUrl="http://localhost:34488/BlobService.svc?xsd=xsd2" />
+    <MetadataFile FileName="BlobService1.xsd" MetadataType="Schema" ID="50a54c3e-e48a-4b6f-a570-c235a89038fe" SourceId="1" SourceUrl="http://localhost:34488/BlobService.svc?xsd=xsd0" />
+    <MetadataFile FileName="BlobService1.wsdl" MetadataType="Wsdl" ID="667416cc-9872-4cb0-ac68-57b118c04c17" SourceId="1" SourceUrl="http://localhost:34488/BlobService.svc?wsdl" />
+    <MetadataFile FileName="BlobService2.xsd" MetadataType="Schema" ID="33b7b2bb-3e69-4270-948d-82344bf37764" SourceId="1" SourceUrl="http://localhost:34488/BlobService.svc?xsd=xsd1" />
+    <MetadataFile FileName="BlobService1.disco" MetadataType="Disco" ID="2440068f-f72b-4923-b3b5-eaf8f83395c2" SourceId="1" SourceUrl="http://localhost:34488/BlobService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

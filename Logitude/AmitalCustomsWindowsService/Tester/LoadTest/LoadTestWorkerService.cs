@@ -106,13 +106,13 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             {
                 _Threads[iWorker].Join();
             }
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Async:{LoadTestWR.Async} TotalRetrieve:{sTotalRetrieve} ThreadCount{sThreadCount} took:{sw.Elapsed} TOT." + (LoadTestWR.Async ? "Async" : "Sync"));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Async:{LoadTestWR.Async} TotalRetrieve:{sTotalRetrieve} ThreadCount{sThreadCount} took:{sw.Elapsed} TOT." + (LoadTestWR.Async ? "Async" : "Sync"));
 
         }
         private void StopThread(int iWorker)
         {
             _Workers[iWorker].ServiceStarted = false;//== dispose !!!
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(GetThreadName(iWorker));
+          NetCommonHelper.Logger.DevLog.Instance.WriteDebug(GetThreadName(iWorker));
         }
         private string GetThreadName(int iWorker)
         {
@@ -160,7 +160,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
         public override void WorkOnce()
         {
             //throw new NotImplementedException();
-            Debug.WriteLine("LoadTestWR");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("LoadTestWR");
 
             var myLoadTestParam =this.DebugObject as LoadTestParam;
 
@@ -189,7 +189,8 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
                     var res = q.ToList();
                 }
             }
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Async:{Async} _ThreadHandeleCount:{myLoadTestParam.currentThread} countDone{myLoadTestParam.totalEachThread} took:{sw.Elapsed}  UserInteractive:{Environment.UserInteractive} ");
+
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Async:{Async} _ThreadHandeleCount:{myLoadTestParam.currentThread} countDone{myLoadTestParam.totalEachThread} took:{sw.Elapsed}  UserInteractive:{Environment.UserInteractive} ");
 
         }
         public override void StartMe()

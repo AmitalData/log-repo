@@ -183,7 +183,7 @@
   </Column>
   <Column
     Name="Discount_CustomsItemGroupTypeID"
-    ShortName="Discount_CustomsItemGroupTypeI"
+    ShortName="Discount_CustomsItemGroupTypeID"
     OldNames="Discount_CustomsItemGroupTypID"
     Type="varchar"
     Size="4">
@@ -198,7 +198,7 @@
   </Column>
   <Column
     Name="DiscountRegularityRequirementType"
-    ShortName="DiscountRegularityRequirementT"
+    ShortName="DiscountRegularityRequirementType"
     OldNames="DiscountRegularityRequiremType"
     Type="varchar"
     Size="4">
@@ -248,9 +248,5 @@
     ReferencedTable="CustomsItemGroups"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="DiscountRegularityRequirementType"
-    ReferencedTable="DiscountTypeRegulations"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+ 
 </Table>

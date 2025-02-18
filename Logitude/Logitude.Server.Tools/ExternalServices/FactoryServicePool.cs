@@ -201,7 +201,7 @@ namespace Logitude.Server.Tools.ExternalServices
                 {
 
                    
-                    Debug.WriteLine(ServiceAddressUrl + (success ? ":success" : ":Failed"));
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ServiceAddressUrl + (success ? ":success" : ":Failed"));
                     bool updateSuccess = false;
                     
                     lock (lockObject)

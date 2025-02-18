@@ -212,6 +212,10 @@ import { AddEditChildEntityComponent } from './Components/LogitudeComponents/Cus
 import { NewCustomObjectComponent } from './Components/NewEntity/NewCustomObjectComponent';
 import { DataProviderFieldsNestedList } from '../Report/Components/DataProviderFieldsNestedList';
 import { TreeComponent } from './Components/LogitudeComponents/tree';
+import { NLogSettingsComponent } from './Components/Maintenance/NLogSettingsComponent';
+import { CloseSaveButtonsComponent } from './Components/LogitudeComponents/CloseSaveButtonsComponent';
+import { GeneralLockComponent } from './Components/Maintenance/GeneralLockComponent';
+import { GeneralLockListTemplate } from './Components/Templates/GeneralLockListTemplate';
 
  //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives = [
@@ -297,6 +301,7 @@ export const ControlsComponents = [
     LogFooterComponent,
     TipsComponent,
     CacheLogComponent,
+    NLogSettingsComponent,
     ImageComponent,
     LogTabsComponent,
     LogBooleanComponent,
@@ -337,7 +342,8 @@ export const ControlsComponents = [
     OnUpdateDocumentResultComponent,
     MonthpickerComponent,
     DataProviderFieldsNestedList,
-    SatisfactionSurveyComponent
+   CloseSaveButtonsComponent,
+   GeneralLockListTemplate
 ];
 export const Components = [
     RootComponent,
@@ -433,6 +439,8 @@ export const Components = [
     GridScreenSectionComponent,
     AddEditChildEntityComponent,
     NewCustomObjectComponent,
+    GeneralLockComponent,
+
  ];
  
 export class ModuleDeclarations {
@@ -492,6 +500,8 @@ export class ModuleDeclarations {
             case 'StimulsoftViewerComponent': { myResult = StimulsoftViewerComponent; break; }
             case 'TipsComponent': { myResult = TipsComponent; break; }
             case 'CacheLogComponent': { myResult = CacheLogComponent; break; }
+            case 'NLogSettingsComponent': { myResult = NLogSettingsComponent; break; }
+
             case 'ChooseUserComponent': { myResult = ChooseUserComponent; break; }
 
             case 'ChooseDatesComponent': { myResult = ChooseDatesComponent; break; }
@@ -568,6 +578,10 @@ export class ModuleDeclarations {
                 myResult = SatisfactionSurveyComponent;
                 break;
             }
+            case 'DataProviderFieldsNestedList': { myResult = DataProviderFieldsNestedList; break; }
+            case "GeneralLockComponent": { myResult = GeneralLockComponent; break; }
+            case "GeneralLockListTemplate": { myResult = GeneralLockListTemplate; break; }
+
         }
  
         return myResult;

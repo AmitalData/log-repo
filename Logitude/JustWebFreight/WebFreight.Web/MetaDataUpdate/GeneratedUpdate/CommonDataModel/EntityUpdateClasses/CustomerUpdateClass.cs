@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
  
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -84,11 +84,14 @@ using Logitude.DashboardModule.BL;
 
 
 
+
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerUpdateClass
    {  		
-		public const string HashString = "545baf44309d91b7ad00118812e28f3f";
+
+		public const string HashString = "26b68e0567ec362de9ee76a12ae87b9c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3140,9 +3143,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "LeadDescription",
 					  						ObjectTableName =  "Customer",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  100,
+					  						MaxLength =  200,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -13116,7 +13119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditLimitAmount",
 					  						DefaultText =  "Credit Amount",
-					  						FullLocalDefaultText =  "מסגרת אשראי",
+					  						FullLocalDefaultText =  "מסגרת םשרםי",
 					  						ListFieldLable =  "CreditLimitAmountListLable",
 					  						ListLableDefaultText =  "Credit Amount",
 					  						IsForeignKey =  false,
@@ -14913,10 +14916,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsuredcreditLimit",
 					  						DefaultText =  "Insured Credit Limit",
-					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						FullLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						ListFieldLable =  "InsuredcreditLimitListLable",
 					  						ListLableDefaultText =  "Insured Credit Limit",
-					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						ListLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -15496,7 +15499,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
-					 
 					 						FieldName =  "CodeDataTemplate",
 					  						ObjectTableName =  "Customer",
 					  						FieldsDataType =  "Text",
@@ -15813,6 +15815,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -15885,7 +15888,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ByLastShipmentQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_0.Id, NameTextCodeCode = CustomerTextCode_0.Code, ObjectTableName = "Customer", Code = "By Last Shipment",  QueryGroupCode = "CLNT", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_0.Id,FeatureUniqeCode= CustomerFeature_0.FeatureUniqeCode, DefaultSortName = "LastShipmentDate", DefaultSortDirection = "Descending", Perspective = "customers" }, addedQueries);
+			  Query ByLastShipmentQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_0.Id, NameTextCodeCode = CustomerTextCode_0.Code, ObjectTableName = "Customer", Code = "By Last Shipment",  QueryGroupCode = "CLNT", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_0.Id,FeatureUniqeCode= CustomerFeature_0.FeatureUniqeCode, DefaultSortName = "LastShipmentDate", DefaultSortDirection = "Descending", Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn ByLastShipmentQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id,QueryCode = ByLastShipmentQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -15906,7 +15909,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query ShippersAndConsigneesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_1.Id, NameTextCodeCode = CustomerTextCode_1.Code, ObjectTableName = "Customer", Code = "ShippersAndConsignees",  QueryGroupCode = "CLNT", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_1.Id,FeatureUniqeCode= CustomerFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "ShippersAndConsignees" }, addedQueries);
+			  Query ShippersAndConsigneesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_1.Id, NameTextCodeCode = CustomerTextCode_1.Code, ObjectTableName = "Customer", Code = "ShippersAndConsignees",  QueryGroupCode = "CLNT", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_1.Id,FeatureUniqeCode= CustomerFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "ShippersAndConsignees" }, addedQueries);
 	
 			 QueryColumn ShippersAndConsigneesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShippersAndConsigneesQuery.Id,QueryCode = ShippersAndConsigneesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -15937,7 +15940,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	      
 
 			  Query SharedLogisticsCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_2.Id, NameTextCodeCode = CustomerTextCode_2.Code, ObjectTableName = "Customer", Code = "Shared Logistics Customers",  EditWizardName = "SharedLogistics.Views.InviteCustomersControl",
-			   QueryGroupCode = "CLNT", IndexOrder = 3, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerFeature_2.Id,FeatureUniqeCode= CustomerFeature_2.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Descending", Perspective = "customers" }, addedQueries);
+			   QueryGroupCode = "CLNT", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerFeature_2.Id,FeatureUniqeCode= CustomerFeature_2.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Descending", Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn SharedLogisticsCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id,QueryCode = SharedLogisticsCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.SharedLogisticsInvitationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -15964,7 +15967,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query CustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_3.Id, NameTextCodeCode = CustomerTextCode_3.Code, ObjectTableName = "Customer", Code = "Customers",  QueryGroupCode = "CLNT", IndexOrder = 4, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_3.Id,FeatureUniqeCode= CustomerFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query CustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_3.Id, NameTextCodeCode = CustomerTextCode_3.Code, ObjectTableName = "Customer", Code = "Customers",  QueryGroupCode = "CLNT", IndexOrder = 3, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_3.Id,FeatureUniqeCode= CustomerFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn CustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id,QueryCode = CustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.Code" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -16003,7 +16006,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_Q_MyCustomersAccMngrQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_4.Id, NameTextCodeCode = CustomerTextCode_4.Code, ObjectTableName = "Customer", Code = "Customer.Q.MyCustomersAccMngr",  QueryGroupCode = "CLNT", IndexOrder = 5, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_4.Id,FeatureUniqeCode= CustomerFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_Q_MyCustomersAccMngrQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_4.Id, NameTextCodeCode = CustomerTextCode_4.Code, ObjectTableName = "Customer", Code = "Customer.Q.MyCustomersAccMngr",  QueryGroupCode = "CLNT", IndexOrder = 4, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_4.Id,FeatureUniqeCode= CustomerFeature_4.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id,QueryCode = Customer_Q_MyCustomersAccMngrQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -16035,7 +16038,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_MyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_5.Id, NameTextCodeCode = CustomerTextCode_5.Code, ObjectTableName = "Customer", Code = "Customer.MyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 6, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_5.Id,FeatureUniqeCode= CustomerFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_MyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_5.Id, NameTextCodeCode = CustomerTextCode_5.Code, ObjectTableName = "Customer", Code = "Customer.MyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 5, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_5.Id,FeatureUniqeCode= CustomerFeature_5.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_MyCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id,QueryCode = Customer_MyCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -16067,7 +16070,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_ReadyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_6.Id, NameTextCodeCode = CustomerTextCode_6.Code, ObjectTableName = "Customer", Code = "Customer.ReadyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 7, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_6.Id,FeatureUniqeCode= CustomerFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_ReadyCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_6.Id, NameTextCodeCode = CustomerTextCode_6.Code, ObjectTableName = "Customer", Code = "Customer.ReadyCustomers",  QueryGroupCode = "CLNT", IndexOrder = 6, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_6.Id,FeatureUniqeCode= CustomerFeature_6.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_ReadyCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id,QueryCode = Customer_ReadyCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -16095,7 +16098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_PotentialCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_7.Id, NameTextCodeCode = CustomerTextCode_7.Code, ObjectTableName = "Customer", Code = "Customer.PotentialCustomers",  QueryGroupCode = "CLNT", IndexOrder = 8, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_7.Id,FeatureUniqeCode= CustomerFeature_7.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_PotentialCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_7.Id, NameTextCodeCode = CustomerTextCode_7.Code, ObjectTableName = "Customer", Code = "Customer.PotentialCustomers",  QueryGroupCode = "CLNT", IndexOrder = 7, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_7.Id,FeatureUniqeCode= CustomerFeature_7.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_PotentialCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id,QueryCode = Customer_PotentialCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -16118,7 +16121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_ActiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_8.Id, NameTextCodeCode = CustomerTextCode_8.Code, ObjectTableName = "Customer", Code = "Customer.ActiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 9, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_8.Id,FeatureUniqeCode= CustomerFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_ActiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_8.Id, NameTextCodeCode = CustomerTextCode_8.Code, ObjectTableName = "Customer", Code = "Customer.ActiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 8, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_8.Id,FeatureUniqeCode= CustomerFeature_8.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_ActiveCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id,QueryCode = Customer_ActiveCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -16141,7 +16144,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query Customer_InactiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_9.Id, NameTextCodeCode = CustomerTextCode_9.Code, ObjectTableName = "Customer", Code = "Customer.InactiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 10, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_9.Id,FeatureUniqeCode= CustomerFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
+			  Query Customer_InactiveCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_9.Id, NameTextCodeCode = CustomerTextCode_9.Code, ObjectTableName = "Customer", Code = "Customer.InactiveCustomers",  QueryGroupCode = "CLNT", IndexOrder = 9, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFeature_9.Id,FeatureUniqeCode= CustomerFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = "customers" }, addedQueries);
 	
 			 QueryColumn Customer_InactiveCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id,QueryCode = Customer_InactiveCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.RankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -16166,7 +16169,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query CargoTrackingCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTextCode_10.Id, NameTextCodeCode = CustomerTextCode_10.Code, ObjectTableName = "Customer", Code = "Cargo Tracking Customers",  EditWizardName = "SharedLogistics.Views.InviteCustomersControl",
 			   EditWizardComponentPath = "",
-			   QueryGroupCode = "CLNT", IndexOrder = 11, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerFeature_10.Id,FeatureUniqeCode= CustomerFeature_10.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Ascending", Perspective = "Customers" }, addedQueries);
+			   QueryGroupCode = "CLNT", IndexOrder = 10, Tenant = 0, ObjectTableId = CustomerObjectTable.Id, QuerySection = "Customer", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomerFeature_10.Id,FeatureUniqeCode= CustomerFeature_10.FeatureUniqeCode, DefaultSortName = "SharedLogisticsInvitationStatusName", DefaultSortDirection = "Ascending", Perspective = "Customers" }, addedQueries);
 	
 			 QueryColumn CargoTrackingCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CargoTrackingCustomersQuery.Id,QueryCode = CargoTrackingCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customer.CargoTrackingInvitationStatusName" , ColumnWidth = 100 }, addedQueryColumns);
 

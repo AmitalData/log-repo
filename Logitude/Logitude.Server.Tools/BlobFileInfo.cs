@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools.ExternalServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -63,7 +63,7 @@ namespace Logitude.Server.Tools
             {
                 return false;
             }
-            Debug.Write("UnifreightFillingDelete:Done (meanwhile nothing to do the filling will remain on Unifreight )");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UnifreightFillingDelete:Done (meanwhile nothing to do the filling will remain on Unifreight )");
             return true;
         }
         public static bool UnifreightFillingUpload(this BlobFileInfo fileInfo, byte[] data)
@@ -173,7 +173,7 @@ namespace Logitude.Server.Tools
             }
             if (fileInfo.USuppressWriteDueSameMD5Hash)
             {
-                Debug.WriteLine("fileInfo.USuppressWriteDueSameMD5Hash"); 
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("fileInfo.USuppressWriteDueSameMD5Hash"); 
                 return true;
             }
 

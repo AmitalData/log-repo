@@ -10,8 +10,8 @@ using System.Xml.Serialization;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
@@ -173,7 +173,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             accountingContext = AccountingContext.GetContext(tenant);
             GLAccountListQueryService listService = new GLAccountListQueryService(accountingContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-          //  return listService.GetList(queryOperations, tenant);
+            //  return listService.GetList(queryOperations, tenant);
             List<GLAccountList> list = listService.GetList(queryOperations, tenant);
             List<GLAccountList> ActiveGLAccountList = list.Where(a => a.Inactive == false).ToList();
             foreach (var gLAccountList in ActiveGLAccountList)

@@ -29,7 +29,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using System.Web;
 using Simplog.Data.Helpers;

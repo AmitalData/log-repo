@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity.Core.Objects;
 using System.Diagnostics;
 using System.Globalization;
@@ -14,34 +15,39 @@ using System.Windows.Forms;
 
 namespace Logitude.Server.Tools.Utils
 {
-    public static class Logger
+    public static class TODELETE_Logger
     {
-      
+
         static Dictionary<string, string> suffixs = null;
+
 
 
         delegate DialogResult Show(string text, string caption);
         static ConcurrentQueue<Tuple<string, bool, string>> cq = null;
         static Dictionary<string, Dictionary<string, StreamWriter>> dicStream = null;
         static DateTime lastOldStreamCheck;
-        static Logger()
+        static TODELETE_Logger()
         {
             lastOldStreamCheck = DateTime.Now;
             dicStream = new Dictionary<string, Dictionary<string, StreamWriter>>();
             suffixs = new Dictionary<string, string>();
             cq = new ConcurrentQueue<Tuple<string, bool, string>>();
-            
+
         }
 
-      
-      
+
+
         private static StringBuilder _SBUIErrorBuffer = new StringBuilder();
         private static DateTime UIErrorBufferAt;
 
-       
+
+
+
+
         private delegate void LogMeDelegate(string mess, string suffix);
         private static DateTime LastDelOldAt = DateTime.MinValue;
-      
+
+
         private static int? _LoggerFileSizeLimitInMB = null;
         private static int GetLimitInMB()
         {
@@ -52,7 +58,7 @@ namespace Logitude.Server.Tools.Utils
             int LoggerFileSizeLimitInMB = 100;
             try
             {
-                var sLoggerFileSizeLimitInMB = System.Configuration.ConfigurationSettings.AppSettings["Logger.FileSizeLimitInMB"];
+                var sLoggerFileSizeLimitInMB = ConfigurationManager.AppSettings["Logger.FileSizeLimitInMB"];
                 if (!String.IsNullOrWhiteSpace(sLoggerFileSizeLimitInMB))
                 {
                     LoggerFileSizeLimitInMB = int.Parse(sLoggerFileSizeLimitInMB);
@@ -67,7 +73,7 @@ namespace Logitude.Server.Tools.Utils
             return _LoggerFileSizeLimitInMB.Value;
         }
 
-    
+
         internal static StreamWriter GetStreamWriter(bool error, string suffix)
         {
             string datestr = DateTime.Today.Year + "." + DateTime.Today.Month + "." + DateTime.Today.Day;
@@ -146,7 +152,7 @@ namespace Logitude.Server.Tools.Utils
         {
             try
             {
-                lock (typeof(Logger))
+                lock (typeof(TODELETE_Logger))
                 {
                     string[] files = Directory.GetFiles(WorkingDir, ValidFileName(Application.ProductName) + ".*.State.txt", SearchOption.TopDirectoryOnly);
                     FileInfo fi;
@@ -178,7 +184,7 @@ namespace Logitude.Server.Tools.Utils
                 {
                     FileName = FileName.Replace(c, '.');
                 }
-                lock (typeof(Logger))
+                lock (typeof(TODELETE_Logger))
                 {
                     suffixs.Add(origFileName, FileName);
                 }
@@ -194,9 +200,9 @@ namespace Logitude.Server.Tools.Utils
             string suffixFile = ValidFileName(Suffix) + ".State.txt";
             try
             {
-                lock (typeof(Logger))
+                lock (typeof(TODELETE_Logger))
                 {
-                   
+
                     using (StreamWriter sw = File.CreateText(WorkingDir + ValidFileName(Application.ProductName) + "." + suffixFile))
                     {
                         sw.WriteLine(mess);
@@ -234,7 +240,7 @@ namespace Logitude.Server.Tools.Utils
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.ToString());
+                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
                     }
                 }
                 dicStream.Remove(datestr);
@@ -247,7 +253,9 @@ namespace Logitude.Server.Tools.Utils
         public static string OverrideExecutablePath = "";
 
 
-        
+
+
+
         public static bool ToLogUntilDateyyyyMMdd(string appSettingsLogUntilDateyyyyMMdd, DateTime? graceTimeUntill = null)
         {
 
@@ -279,24 +287,23 @@ namespace Logitude.Server.Tools.Utils
                 return false;
             }
 
+
+
+
+
+
+
+
+
+
+
+
         }
 
-
-       
-
-        
-
-        
-      
-     
-
-       
     }
 
+
 }
-
-
-
 //public static class IQueryableExtensions
 //{
 //    /// <summary>

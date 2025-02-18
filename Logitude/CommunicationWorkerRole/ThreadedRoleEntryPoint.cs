@@ -51,6 +51,7 @@ using Logitude.Server.Tools.Interfaces;
 using CommunicationWorkerRole.Stimulsoft.fonts;
 using Newtonsoft.Json;
 using Logitude.Server.Tools.TreeFilterQuery;
+using WebFreight.Web.GlobalModel;
 
 namespace CommunicationWorkerRole
 {
@@ -205,13 +206,13 @@ namespace CommunicationWorkerRole
                     if (DateTime.Now > stopLogAt) return;
                     if (err)
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError(mess + suffix);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(mess);
                     }
                     else
                     {
-                      NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess+ suffix);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess);
                     }
-                    
+                    //Logger.LogMe(mess, err, suffix);
                 });
                 LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
                 LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
@@ -831,9 +832,14 @@ namespace CommunicationWorkerRole
 
                 LogitudeSettings.WorkerRoleName = LogitudeSettings.WorkerRoleName?? "production";
             }
+            Dictionary<int, string> globalDBs = new Dictionary<int, string>();
+            List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
+            foreach (var item in globalTenants)
+            {
+                globalDBs.Add(item.Id, item.GlobalDBId);
+            }
 
-
-            CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache);//Where is the cache (Why as usuall i neeed to do averything ?!?)
+            CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache, globalDBs);//Where is the cache (Why as usuall i neeed to do averything ?!?)
         }
 
         public void StartLogging()
@@ -907,7 +913,7 @@ namespace CommunicationWorkerRole
             }
             catch (Exception e)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+                //Logger.LogMe(e.ToString(), true);
             }
         }
         public static HttpRuntime _httpRuntime { get; set; }
@@ -922,7 +928,7 @@ namespace CommunicationWorkerRole
                 }
                 catch (Exception e)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+                    //Logger.LogMe(e.ToString(), true);
                 }
                 return null;
 

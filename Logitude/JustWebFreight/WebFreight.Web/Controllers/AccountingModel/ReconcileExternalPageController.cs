@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -57,6 +57,11 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.HSSF.UserModel;
 using IWorkbook = NPOI.SS.UserModel.IWorkbook;
+using Logitude.DatabaseMigration.Migrations;
+using NPOI.SS.Formula.Functions;
+using Microsoft.TeamFoundation.SourceControl.WebApi.Legacy;
+using System.Text.RegularExpressions;
+using Logitude.Accounting.BL.CoreBL;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -497,7 +502,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         }
                         else
                         {
-                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Unsupported file format");
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Unsupported file format")));
                         }
 
                         var sheet = workbook.GetSheetAt(0); // Assuming the first sheet
@@ -553,7 +558,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         DateTime referenceDate;
                         if (DateUtil.IsCellDateFormatted(cell))
                         {
-                            referenceDate = cell.DateCellValue;
+                            referenceDate = Convert.ToDateTime( cell.DateCellValue );
                         }
                         else
                         {
@@ -628,6 +633,60 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
             return myResult;
         }
+
+
+
+
+        [HttpPost]
+        public async Task<HttpResponseMessage> ImportReconcileExternalPageLineFromText(string bankCodeId, string GLAccountID, int tenant, string reconcileExternalPageId, int line)
+        {
+            try
+            {
+                List<ReconcileExternalPageLinePM> list = new List<ReconcileExternalPageLinePM>();
+                ReconcileExternalPageLineParameters filter = new ReconcileExternalPageLineParameters();
+                if (!Request.Content.IsMimeMultipartContent())
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Invalid request format");
+                }
+
+                var provider = new MultipartMemoryStreamProvider();
+                await Request.Content.ReadAsMultipartAsync(provider);
+
+                foreach (var file in provider.Contents)
+                {
+                    var fileName = file.Headers.ContentDisposition.FileName.Trim('\"');
+
+                    using (var stream = await file.ReadAsStreamAsync())
+                    {
+                        String inputText = "";
+                        if (fileName.EndsWith(".dat"))
+                        {
+                            // convert stream to string
+                            var dosEnc = System.Text.Encoding.GetEncoding("DOS-862");
+                            StreamReader reader = new StreamReader(stream, dosEnc, true);
+                            inputText = reader.ReadToEnd();
+                        }
+                        else
+                        {
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, "Unsupported file format");
+                        }
+                        var accountingContext = AccountingContext.GetContext(tenant);
+                        ReconcileExternalPageQueryService reconcileExternalPageQueryQueryService = new ReconcileExternalPageQueryService(accountingContext);
+                        List<ReconcileExternalPageLinePM> myResult = reconcileExternalPageQueryQueryService.BuildReconcileExternalPageLineFromTextLines(inputText, tenant, bankCodeId, reconcileExternalPageId, line, GLAccountID);
+                        filter.ExcelReconcileExternalPageLines = myResult;
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, filter);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
+
         void ProcessCell(ICell cell, Action<ICell> processAction)
         {
             if (cell != null)

@@ -31,7 +31,7 @@ namespace CommunicationWorkerRole.Services
             failedQuotesDetails = new Dictionary<int, QuoteNumbers>();
         }
 
-        public void ExecuteDailyAutomaticallyClosing()
+        public void ExecuteDailyAutomaticallyClosing(int tenant)
         {
 
             IQuotesContext quotesContext;
@@ -40,7 +40,7 @@ namespace CommunicationWorkerRole.Services
             QuoteQuery quoteQuery;
             QuoteService quoteService;
             QuotePM quotePM;
-            quotesContext = QuotesContext.GetContext(0);
+            quotesContext = QuotesContext.GetContext(tenant);
             IQueryable<Quote> allQuotes = (from d in quotesContext.Quotes
                                            where d.IsAutomaticallyClosed && !d.IsClosed && !d.IsCancelled && d.AutomaticallyCloseDate != null
                                            && System.Data.Entity.DbFunctions.TruncateTime(d.AutomaticallyCloseDate) <= System.Data.Entity.DbFunctions.TruncateTime(todayDate)

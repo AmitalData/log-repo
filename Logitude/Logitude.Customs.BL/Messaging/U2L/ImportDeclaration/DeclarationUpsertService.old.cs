@@ -71,7 +71,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 var formatedException = ExceptionFormatUtil.GetFormated(ex);
                 _sbLog.Insert(0, "ProccessRequest():Exception " + formatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                Debug.WriteLine("ProccessRequest():Exception " + formatedException.ToString(), true);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ProccessRequest():Exception " + formatedException.ToString(), true);
                 MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
                 MyGenericResponseObj.Message = "Error while DeclarationUpdateService.Update " + formatedException.Message;
                 MyGenericResponseObj.ErrorDescription = formatedException.ToString();

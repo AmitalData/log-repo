@@ -9,5 +9,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public class ARPaymentLite
     {
         public string Id { get; set; }
+        public string BranchId { get; set; }
     }
 }
