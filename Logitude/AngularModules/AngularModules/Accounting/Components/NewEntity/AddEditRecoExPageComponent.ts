@@ -737,9 +737,12 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         // last no.
         this.tempPageLinesList = new ObservableCollection([]);
 
-        if (filters.ExcelReconcileExternalPageLines.length > 0) {
+        // Choose ExcelReconcileExternalPageLines from filters if available, otherwise read from filters.Result
+        const excelLines = filters.ExcelReconcileExternalPageLines || filters.Result.ExcelReconcileExternalPageLines;
+
+        if (excelLines && excelLines.length > 0) {
             this.ReconcileExternalPagePM.EntryTypeCode = "2";
-            filters.ExcelReconcileExternalPageLines.forEach(element => {
+            excelLines.forEach(element => {
                 this.ReconcileExternalPagePM.AddReconcileExternalPageLine(element);
                 var item = new PageLineModel(element, this);
                 this.tempPageLinesList.Insert(item);
@@ -752,7 +755,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
             this.SelectInvoiceItemMethod(null)
         }
     }
-
+    
     public SelectInvoiceItemMethod(res) {
         var item: PageLineModel = this.PageLinesList.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
         //this.SelectedRow = item;
