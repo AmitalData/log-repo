@@ -22,7 +22,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string InActiveReason { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public DateTime? InActiveDate { get; set; }
-        
+        public string LinkId { get; set; }
+        public DateTime? LastUsedAt { get; set; }
+        public DateTime? DeleteAt { get; set; }
+        public string Params { get; set; }
     }
     
 }

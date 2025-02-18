@@ -44,7 +44,13 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(250)
                 .IsUnicode(false);
 
+            this.Property(t => t.LinkId)
+                .HasMaxLength(15)
+                .IsUnicode(false);
 
+            this.Property(t => t.Params)
+                .HasMaxLength(1000)
+                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("AuthenticationTokens");
@@ -61,6 +67,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.ClientType).HasColumnName("ClientType");
             this.Property(t => t.ExpirationDate).HasColumnName("ExpirationDate");
+            this.Property(t => t.ExpirationDate).HasColumnName("LinkId");
+            this.Property(t => t.ExpirationDate).HasColumnName("LastUsedAt");
+            this.Property(t => t.ExpirationDate).HasColumnName("DeleteAt");
+            this.Property(t => t.ExpirationDate).HasColumnName("Params");
 
         }
     }
