@@ -132,4 +132,9 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Relation
+    ForeignKeyColumn="PaymentId"
+    ReferencedTable="Aur_Payments"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

@@ -19,7 +19,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(Aur_PaymentItemPM entityPM, Aur_PaymentItem entityPOCO)
         {
-            //throw new NotImplementedException();
+            AddPOCOPropertyName(POCOPropertyNames.PaymentId);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.PaymentId = entityPM.PaymentId;
+                entityPOCO.Line = entityPM.Line;
+            }
         }
 
         public void CustomPOCOToPM(Aur_PaymentItemPM entityPM, Aur_PaymentItem entityPOCO)
