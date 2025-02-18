@@ -153,11 +153,12 @@
     }
 
     .circle {
-        background-color: #A11E21;
+        background-color:#d9d9d9;
         height: 15px;
         width: 15px;
         border-radius: 15px;
         text-align: center;
+        color:#8e98a1
     }
 
     hr {
@@ -285,10 +286,12 @@
                                             <td style="width: 5px;">
                                                 <div></div>
                                             </td>
-                                            <td  *ngIf="HasFeatureReport" [title]="'General.MH.Reports' | TextCodeTranslationPipe" style="width: 20px;"  class="DocsListButton" (click)="IsReportPanelVisible = !IsReportPanelVisible"
-                                            [class.BrdrRt]="IsReportPanelVisible">
-                                                  <img  src="./Images/Split/report.png"  style="padding-left: 5px;margin-top: -4px;height: 15px;" />
-                                                                                                                                          
+                                            <td *ngIf="HasFeatureReport" [title]="'General.MH.Reports' | TextCodeTranslationPipe" style="width: 20px; position: relative;" class="DocsListButton" (click)="IsReportPanelVisibleChanged()"
+                                                [class.BrdrRt]="IsReportPanelVisible">
+                                                <img src="./Images/Split/report.png" style="padding-left: 5px; margin-top: -4px; height: 19px;" />
+                                                <div  class="circle" style="position: absolute; top: -3px; right: -6px;">
+                                                    {{countDoneRepors}}
+                                                </div>
                                             </td>
                                             <td style="width: 5px;">
                                                 <div></div>
@@ -575,6 +578,6 @@
         </td>
     </tr>
 </table>
-<div *ngIf="IsReportPanelVisible">
-    <ReportMenuComponent (PinnedChanged)="TogglePinReportPanel($event)"  [CurrentReportId]="CurrentReportId" [IsReportPanelVisible]="IsReportPanelVisible"></ReportMenuComponent>
+<div *ngIf="IsReportPanelVisible"  (mouseleave)="closeReportPanel()" >
+    <ReportMenuComponent (PinnedChanged)="TogglePinReportPanel($event)" (mouseenter)="keepReportPanelOpen()" (mouseleave)="closeReportPanel()" [CurrentReportId]="CurrentReportId" [IsReportPanelVisible]="IsReportPanelVisible"></ReportMenuComponent>
 </div>

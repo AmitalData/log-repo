@@ -11,6 +11,7 @@ import {LastFilter} from '../../../Infrastructure/Utilities/LastFilter';
 import {CodeNameClass} from './CodeNameClass';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeListBoxComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogitudeListBox/LogitudeListBoxComponent';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
 
@@ -74,15 +75,26 @@ export class ContainerTruckingFilterComponent extends BaseComponent implements O
     onSelectedItemShowChanged(item) {
     }
 
-    
+    public IsSchedulerReport: boolean = false;
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
             });
         }
     }
-
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+         
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             switch (queryFilterItem.FieldName) {
@@ -100,8 +112,44 @@ export class ContainerTruckingFilterComponent extends BaseComponent implements O
             }
             }
     }
-
+    ValidateSelectedFilters() {
+        
+        return true;
+    }
     RunReport() {
+        
+
+       
+
+
+        if (!this.DateType) {
+            this.DateType = "CreateDate";
+        }
+
+
+        this.reportFliter = new ReportFliter();
+        this.reportFliter.DateType = this.DateType;
+        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+        this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+        this.reportFliter.NumberOfPage = 1;
+        this.reportFliter.ProcessType = "GenerateReport";
+
+
+
+
+        this.ReportsPreview.CleanPartnersObslist();
+        if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Customer", this.CustomerId);
+        if (!AppTool.IsNullOrEmpty(this.AgentId)) this.ReportsPreview.AddPartner("Agent", this.AgentId);
+        
+
+
+        this.ReportsPreview.GenerateReport(this.reportFliter, true);
+    }
+
+    GetQueryFilterItems(){
         this.queryFilterItems = new Array<QueryFilterItem>();
 
         if (this.MySelectedDirectionFilter != "All") {
@@ -130,39 +178,8 @@ export class ContainerTruckingFilterComponent extends BaseComponent implements O
             this.queryFilterItems.push(this.queryFilterItem);
         }
 
-
-
-       
-
-
-        if (!this.DateType) {
-            this.DateType = "CreateDate";
-        }
-
-
-        this.reportFliter = new ReportFliter();
-        this.reportFliter.DateType = this.DateType;
-        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
-        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-        this.reportFliter.NumberOfPage = 1;
-        this.reportFliter.ProcessType = "GenerateReport";
-
-
-
-
-        this.ReportsPreview.CleanPartnersObslist();
-        if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Customer", this.CustomerId);
-        if (!AppTool.IsNullOrEmpty(this.AgentId)) this.ReportsPreview.AddPartner("Agent", this.AgentId);
-        
-
-
-        this.ReportsPreview.GenerateReport(this.reportFliter, true);
+        return this.queryFilterItems;
     }
-
-
 
 }
 

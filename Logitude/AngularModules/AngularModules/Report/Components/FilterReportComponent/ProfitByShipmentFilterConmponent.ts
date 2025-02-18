@@ -6,6 +6,7 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({    
     selector: 'ProfitByShipmentFilterConmponent',
@@ -86,8 +87,9 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
-  
+    public IsSchedulerReport: boolean = false;
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true,customerId: string=null,IncludeOperationalyClosed:boolean=false) {
+        this.IsSchedulerReport = isSchedulerReport;
         this.IncludeClosed = IncludeOperationalyClosed;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
@@ -95,7 +97,17 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
             });
         }
     }
-
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+         
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             switch (queryFilterItem.FieldName) {
@@ -144,7 +156,35 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
             }
         }
     }
+    ValidateSelectedFilters() {
+        return true;
+    }
     RunReport(isloading: boolean) {
+        
+        this.reportFliter = new ReportFliter();
+        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+        this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+
+        if (this.SelectedCurrency == this.LocalCurrencyCode)
+            this.reportFliter.CurrentCurrencyCodeType = this.LocalCurrencyCode + ",local";
+        else
+            this.reportFliter.CurrentCurrencyCodeType = this.ProfitCurrencyCode + ",profit";
+
+        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+        this.reportFliter.NumberOfPage = 1;
+        this.reportFliter.ProcessType = "GenerateReport";
+
+        this.reportFliter.IncludeOperationalyClosed = this.IncludeClosed;
+
+        this.ReportsPreview.CleanPartnersObslist();
+        if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
+        if (!AppTool.IsNullOrEmpty(this.AgentId)) this.ReportsPreview.AddPartner("Agent", this.AgentId);
+
+        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
+    }
+    GetQueryFilterItems() {
         this.queryFilterItems = new Array<QueryFilterItem>();
 
         if (this.FromDate) {
@@ -254,31 +294,8 @@ export class ProfitByShipmentFilterConmponent extends BaseComponent implements O
         this.queryFilterItem.FieldValue = this.IsByCreateDate;
         this.queryFilterItem.Operator = "Equals";
         this.queryFilterItems.push(this.queryFilterItem);
-
-        this.reportFliter = new ReportFliter();
-        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
-        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-
-        if (this.SelectedCurrency == this.LocalCurrencyCode)
-            this.reportFliter.CurrentCurrencyCodeType = this.LocalCurrencyCode + ",local";
-        else
-            this.reportFliter.CurrentCurrencyCodeType = this.ProfitCurrencyCode + ",profit";
-
-        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-        this.reportFliter.NumberOfPage = 1;
-        this.reportFliter.ProcessType = "GenerateReport";
-
-        this.reportFliter.IncludeOperationalyClosed = this.IncludeClosed;
-
-        this.ReportsPreview.CleanPartnersObslist();
-        if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
-        if (!AppTool.IsNullOrEmpty(this.AgentId)) this.ReportsPreview.AddPartner("Agent", this.AgentId);
-
-        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
+        return this.queryFilterItems;
     }
-
     SetDate(year: number, month: number, day: number) {
         var date = new Date();
         date.setUTCFullYear(year);
