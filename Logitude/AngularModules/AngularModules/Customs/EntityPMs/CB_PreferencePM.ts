@@ -51,6 +51,11 @@ export class CB_PreferencePM {
     public set UserId(newValue: string) { if (this.userId != newValue) { this.userId = newValue; this.MarkAsDirty("UserId"); } }
        
 	 
+    private level: number;
+    public get Level() { return this.level; }
+    public set Level(newValue: number) { if (this.level != newValue) { this.level = newValue; this.MarkAsDirty("Level"); } }
+       
+	 
 
     public OldEntityPM: CB_PreferencePM;
 		

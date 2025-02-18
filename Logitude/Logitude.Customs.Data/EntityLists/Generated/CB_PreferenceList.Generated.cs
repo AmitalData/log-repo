@@ -31,6 +31,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string TextColor  { get; set; }
        [DataMember]
        public string UserId  { get; set; }
+       [DataMember]
+       public int Level  { get; set; }
    }
 
 }

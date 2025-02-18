@@ -13,6 +13,7 @@ export class CB_PreferenceList {
 	BackgroundColor: string;
 	TextColor: string;
 	UserId: string;
+	Level: number;
 	
 }
  

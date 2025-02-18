@@ -1084,6 +1084,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginConnectionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_PreferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_PreferenceController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\CB_PreferenceController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityDWHybridController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityHybridController.cs" />
     <Compile Include="Controllers\HybridModel\AddressHybridController.cs" />

@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -21,7 +22,13 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public CB_Preference GetCB_PreferenceByUserIdAndTenant(string userId, int tenant = 0)
+        {
+            return (from a in context.CB_Preferences
+                    where a.UserId == userId && (a.Tenant == tenant || tenant == 0)
+                    select a).FirstOrDefault();
+        }
+    }
 
 }
    

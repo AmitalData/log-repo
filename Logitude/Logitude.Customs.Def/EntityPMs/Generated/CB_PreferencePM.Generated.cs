@@ -142,6 +142,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int level ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Level  
+	   {
+	    
+	     get
+		{
+		   return level;
+		 }
+		 set
+		 {
+		   if(level != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Level",OldValue=level,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   level=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

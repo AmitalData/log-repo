@@ -39,6 +39,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.TextColor).HasColumnName("TextColor").HasMaxLength(128).IsUnicode(true);
 
             this.Property(t => t.UserId).HasColumnName("UserId").HasMaxLength(128).IsUnicode(true);
+
+            this.Property(t => t.Level).HasColumnName("Level");
         }
     }
 }
