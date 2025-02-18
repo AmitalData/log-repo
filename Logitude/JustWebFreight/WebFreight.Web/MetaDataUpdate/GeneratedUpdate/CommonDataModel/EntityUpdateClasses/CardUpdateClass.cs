@@ -91,7 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    public class CardUpdateClass
    {  		
  
-		public const string HashString = "1577b27acf2dffa811a05297c1b99e77";
+		public const string HashString = "6ee2176ff80c9382ee6f8f7ca488b251";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -10070,6 +10070,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 QueryColumn AllCardsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Card.CityName" , ColumnWidth = 150 }, addedQueryColumns);
 
 			 QueryColumn AllCardsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Card.CountryName" , ColumnWidth = 150 }, addedQueryColumns);
+
+             AdvancedQueryFilter AllCardsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Card.PartnerTypeId", PredefinedValue = "CO",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCardsQuery.Id,QueryCode = AllCardsQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
