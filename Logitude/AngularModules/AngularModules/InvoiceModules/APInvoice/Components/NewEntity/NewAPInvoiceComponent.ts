@@ -248,7 +248,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     SetUIProperties() {
         var isVatNumberRequired = false;
 
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+              if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && this.EntityPM.VendorCountry === "ISRAEL") {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
                 isVatNumberRequired = true;
             }
@@ -274,7 +274,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         }
     }
     SetUIProperties_ExchangeRate() {
-        var isEnabled: boolean = false;
+        var isEnabled: boolean = true;
 
         if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
             if (this.InvoiceCurrencyId) {
@@ -679,7 +679,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     // Properties
     get VATNumberRedDotVisibility() {
         var myResult = false;
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+              if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && this.EntityPM.VendorCountry === "ISRAEL") {
             myResult = true;
         }
 
@@ -833,7 +833,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.DueDate")));
         }
 
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+              if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && this.EntityPM.VendorCountry === "ISRAEL") {
             if (AppTool.IsNullOrEmpty(this.EntityPM.VATNumber)) {
                 errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VATNumber")));
             }
