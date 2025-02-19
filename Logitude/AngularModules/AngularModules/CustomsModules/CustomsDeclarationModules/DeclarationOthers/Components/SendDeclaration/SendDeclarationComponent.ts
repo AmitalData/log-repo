@@ -595,6 +595,7 @@ export class SendDeclarationService implements OnDestroy {
                         this.EntityPM = myResponse.Result;
                         this.CheckCertificateStatus();
                     }
+                    ServiceHelper.DeleteGeneralLockBySessionId();
 
                 });
                 break;
