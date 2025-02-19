@@ -1,5 +1,5 @@
 <div class="mainTable">
-	<app-preference-menu></app-preference-menu> <!-- Add the preference menu component -->
+	<app-preference-menu class="preference_menu_box"></app-preference-menu> <!-- Add the preference menu component -->
 
 	<app-add-comment class="addCommentSlider" />
 	<div class="centeredContent">
@@ -110,7 +110,7 @@
 																								<ng-container *ngFor="let key6 of Object.keys(item.children[key2].children[key3].children[key4].children[key5].children)">
 																									<li [@inOutAnimation]>
 																										<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6].CustomsItemID}}"
-																																	[level]="6"
+																																	[level]="5"
 																																	[fullClassificationLengthCharToDisplay]=""
 																																	[showDetailsOpen]="showDetailsOpen"
 																																	[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]"
@@ -128,7 +128,7 @@
 																												<ng-container *ngFor="let key7 of Object.keys(item.children[key2].children[key3].children[key4].children[key5].children[key6].children)">
 																													<li [@inOutAnimation]>
 																														<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]?.children[key7].CustomsItemID}}"
-																																					[level]="7"
+																																					[level]="5"
 																																					[fullClassificationLengthCharToDisplay]=""
 																																					[showDetailsOpen]="showDetailsOpen"
 																																					[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]?.children[key7]"

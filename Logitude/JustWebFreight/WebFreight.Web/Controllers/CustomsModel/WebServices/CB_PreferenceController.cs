@@ -17,6 +17,7 @@ using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
+using Logitude.Server.Tools;
 
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
@@ -71,6 +72,42 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
+         public HttpResponseMessage AddNewAllCB_Preferences(List<CB_PreferencePM> entityPMs)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                        ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                        CB_PreferenceUpdateService service = new CB_PreferenceUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                        foreach (var entityPM in entityPMs)
+                        {
+                            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                            service.Update(entityPM, true);
+                        }
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPMs);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
 
         public HttpResponseMessage EditCB_Preference(CB_PreferencePM entityPM)
         {
@@ -95,6 +132,44 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+        public HttpResponseMessage EditAllCB_Preferences(List<CB_PreferencePM> entityPMs)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                        ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                        CB_PreferenceUpdateService service = new CB_PreferenceUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                        foreach (var entityPM in entityPMs)
+                        {
+                            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            service.Update(entityPM, true);
+                        }
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPMs);
                     }
                 }
 
@@ -133,6 +208,46 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage DeleteAllCB_Preferences(List<CB_PreferencePM> entityPMs)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                        ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                        CB_PreferenceUpdateService service = new CB_PreferenceUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                        foreach (var entityPM in entityPMs)
+                        {
+                            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            service.Update(entityPM, true);
+                        }
+                        entityPMs.Clear();
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPMs);
                     }
                 }
 

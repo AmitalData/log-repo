@@ -130,14 +130,28 @@ export class API_MainService extends BaseService {
 		const url = `${this._apiUrl}CB_Preference/AddNewCB_Preference`;
 		return this.Post(url, data);
 	}
+	AddNewAllCB_Preferences(data) {
+		const url = `${this._apiUrl}CB_Preference/AddNewAllCB_Preferences`;
+		return this.Post(url, data);
+	}
 	
 	EditCB_Preference(data) {
 		const url = `${this._apiUrl}CB_Preference/EditCB_Preference`;
 		return this.Post(url, data);
 	}
 
+	EditAllCB_Preferences(data) {
+		const url = `${this._apiUrl}CB_Preference/EditAllCB_Preferences`;
+		return this.Post(url, data);
+	}
+
 	DeleteCB_Preference(data) {
 		const url = `${this._apiUrl}CB_Preference/DeleteCB_Preference`;
+		return this.Post(url, data);
+	}
+
+	DeleteAllCB_Preferences(data) {
+		const url = `${this._apiUrl}CB_Preference/DeleteAllCB_Preferences`;
 		return this.Post(url, data);
 	}
 }

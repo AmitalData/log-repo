@@ -64,9 +64,9 @@ export class MainDisplayComponent implements OnInit {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService,
-		private addCommentService: AddCommentService, private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService
-	) {
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService,
+		private filterPopupService: FilterPopupService, private addCommentService: AddCommentService, private loginService: LoginService,
+		private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService) {
 		this.screenWidth = window.innerWidth;
 	}
 	searchState: string = searchState.יבוא;
@@ -75,12 +75,12 @@ export class MainDisplayComponent implements OnInit {
 	ngOnInit() {
 		this.headerService.searchState$.subscribe((data) => {
 			if (!searchState[data]) return;
-			
-			if(this.searchState != searchState[data]){
+
+			if (this.searchState != searchState[data]) {
 				this.searchState = searchState[data];
 				this.InitData();
 			}
-			
+
 			// this.InitData();
 		});
 		this.ListenToItemsSearched();
@@ -143,7 +143,7 @@ export class MainDisplayComponent implements OnInit {
 		this.getRulesData();
 		this.getCommentsData(SessionInfo.LoggedUserTenant);
 
-		
+
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
 			const result: CB_CustomsItemComputedDataList[] = data.body;

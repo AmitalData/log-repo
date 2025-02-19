@@ -401,3 +401,10 @@ a.searchResults_filterPop_clear {
 	}
 }
 
+
+.preference_menu_box {
+	position: absolute;
+    left: 0;
+    z-index: 1;
+	background-color: var(--grey);
+}

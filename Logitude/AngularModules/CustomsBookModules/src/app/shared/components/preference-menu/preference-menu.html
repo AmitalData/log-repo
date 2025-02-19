@@ -1,14 +1,26 @@
 <div class="preference-menu">
-  <h3>Select Colors for Data Rows</h3>
-  <div>
-    <label for="preferenceType">Select Type:</label>
-    <select id="preferenceType" [(ngModel)]="selectedType">
-      <option [value]="preferenceTypeBackground">Background Color</option>
-      <option [value]="preferenceTypeText">Text Color</option>
-    </select>
-  </div>
-  <div *ngFor="let level of levels">
-    <label>Level {{level}} Color:</label>
-    <input type="color" [(ngModel)]="preferences[selectedType][level - 1]" (change)="updatePreferences(level)" />
+  <table>
+    <thead>
+      <tr>
+        <th>היררכיה</th>
+        <th>צבע טקסט</th>
+        <th>צבע רקע</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of hierarchyLevels">
+        <td>{{ item.label }}</td>
+        <td>
+          <input type="color" [(ngModel)]="preferences[item.level-1].BackgroundColor" />
+        </td>
+        <td>
+          <input type="color" [(ngModel)]="preferences[item.level-1].TextColor" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="buttons">
+    <button (click)="savePreferences()">שמור</button>
+    <button (click)="clearPreferences()">CLEAR</button>
   </div>
 </div>
