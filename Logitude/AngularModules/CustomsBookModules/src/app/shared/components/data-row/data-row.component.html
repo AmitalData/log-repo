@@ -11,22 +11,11 @@
 				[title]="data.CIH_GoodsDescription">
 				{{ ClassificationNoDisplay(data,data?.FullClassification) }}
 			</span>
-			<span *ngIf="data?.CI_Parent_CustomsItemIDNum" [title]="data.CIH_GoodsDescription"> | </span>
+			<span *ngIf="data?.CI_Parent_CustomsItemIDNum ||  fullClassificationLengthCharToDisplay === null" [title]="data.CIH_GoodsDescription"> | </span>
 			<span class="full_classification" [title]="data.CIH_GoodsDescription"
 				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)">
 				{{ data.CIH_GoodsDescription }}
 			</span>
-			<!--#114817-->
-			<!--<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'); else getMeasurementUnitName"
-				class	="item_details">
-				<a> {{TariffListCount }} </a>
-				<a> {{ TariffList1?.CustomsRate }} </a>
-				<a> {{ TariffList1?.MeasurementUnitName }} </a>
-				<a> {{ TariffList2?.CustomsRate }} </a>
-				<a *ngIf="TariffList2?.OptionalTaxAddition"> {{
-					TariffList2?.OptionalTaxAddition }} </a>
-				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
-			</div>-->
 			<div *ngIf="!isShowDetailsOpen && !(!data?.PurchaseTax && !data?.MeasurementUnitName && !data?.CustomsRate && !data?.OptionalTaxAddition)"
 				class="item_details">
 				<a>{{ data?.PurchaseTax ?? '-' }}</a>
