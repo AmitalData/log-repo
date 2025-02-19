@@ -37,7 +37,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 SequenceNumber = 1,
                 DeclarationStatusDetails=_decDetails
             };
-        }
+		}
 
         private void SetDeclarationStatusDetails(GenericRequestParams requestParamsData)
         {
@@ -51,9 +51,10 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             _decDetails.DeclarationID = _dec.DeclarationNumber;
             _decDetails.DeclarationOfficeID = _dec.DeclarationOfficeCode;
             _decDetails.DeclarationOfficeText = _dec.DeclarationOfficeName;
-            //_decDetails.TaxationDateTime=
+			_decDetails.LogisticStatusCode = "4";
+			//_decDetails.TaxationDateTime=
 
-            _decDetails.DeclarationStatusCode = _dec.DeclarationStatusTypeCode;
+			_decDetails.DeclarationStatusCode = _dec.DeclarationStatusTypeCode;
             _decDetails.DeclarationAvailabilityLog = new DF_NG_8251_Web02_DeclarationStatus_ResponseDeclarationStatusAnswerDeclarationStatusDetailsDeclarationAvailabilityLog();
             _decDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoLocation = new DF_NG_8251_Web02_DeclarationStatus_ResponseDeclarationStatusAnswerDeclarationStatusDetailsDeclarationAvailabilityLogAvailabiltyLogDeclarationCargoLocation[2];
             _decDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoLocation[0] = new DF_NG_8251_Web02_DeclarationStatus_ResponseDeclarationStatusAnswerDeclarationStatusDetailsDeclarationAvailabilityLogAvailabiltyLogDeclarationCargoLocation();
