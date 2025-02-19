@@ -6,7 +6,7 @@
 	</div>
 	<div class="mainTable_itemName" (click)="showCommentsClicked($event)" #dynamicDiv>
 		<a role="button" [ngClass]="{'selectedLink': isSelected}" (click)="$event.preventDefault()">
-			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum"
+			<span class="full_classification" *ngIf="data?.CI_Parent_CustomsItemIDNum || level != 0"
 				[innerHTML]="highlight(ClassificationNoDisplay(data,data?.FullClassification), searchItem)"
 				[title]="data.CIH_GoodsDescription">
 				{{ ClassificationNoDisplay(data,data?.FullClassification) }}
