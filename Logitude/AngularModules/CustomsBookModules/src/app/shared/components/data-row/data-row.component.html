@@ -12,22 +12,11 @@
 				[title]="data.CIH_GoodsDescription">
 				{{ ClassificationNoDisplay(data,data?.FullClassification) }}
 			</span>
-			<span *ngIf="data?.CI_Parent_CustomsItemIDNum" [title]="data.CIH_GoodsDescription" [ngStyle]="{'color': getTextColor()}"> | </span>
+			<span *ngIf="data?.CI_Parent_CustomsItemIDNum ||  fullClassificationLengthCharToDisplay === null" [title]="data.CIH_GoodsDescription"> | </span>
 			<span class="full_classification" [title]="data.CIH_GoodsDescription"
 				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)" [ngStyle]="{'color': getTextColor()}">
 				{{ data.CIH_GoodsDescription }}
 			</span>
-			<!--#114817-->
-			<!--<div *ngIf="!isShowDetailsOpen && ( TariffListCount > 0 && data?.CI_Parent_CustomsItemIDNum && ClassificationNoDisplay(data,data?.FullClassification).length > 2 && state === 'search'); else getMeasurementUnitName"
-				class	="item_details">
-				<a> {{TariffListCount }} </a>
-				<a> {{ TariffList1?.CustomsRate }} </a>
-				<a> {{ TariffList1?.MeasurementUnitName }} </a>
-				<a> {{ TariffList2?.CustomsRate }} </a>
-				<a *ngIf="TariffList2?.OptionalTaxAddition"> {{
-					TariffList2?.OptionalTaxAddition }} </a>
-				<a *ngIf="!TariffList2?.OptionalTaxAddition"> - </a>
-			</div>-->
 			<div *ngIf="!isShowDetailsOpen && !(!data?.PurchaseTax && !data?.MeasurementUnitName && !data?.CustomsRate && !data?.OptionalTaxAddition)"
 				class="item_details">
 				<a>{{ data?.PurchaseTax ?? '-' }}</a>
@@ -47,21 +36,13 @@
 							[ngClass]="isSelected || isSearchItemExistRule? 'icon-document_full' : 'icon-document'">
 						</i>
 					</a>
-					<!-- <a class="icon"><i role="img" [ngClass]="{'icon-document': !isSelected, 'icon-document_full': isSelected}"> </i></a> -->
-					<!-- <a class="icon"><i role="img" [ngClass]="!showRules ? 'icon-document' : 'icon-document_full'"> </i></a> -->
 				</div>
 			</li>
-			<!--<li>
-				<div class="mainTable_itemPopup">
-					<a class="icon"><i role="img" class="icon-popup"></i> </a>
-				</div>
-			</li> -->
 			<li *ngIf="countOfComments > 0; else newComment">
 				<div class="mainTable_itemComment" (click)="showCommentsClick()">
 					<a class="icon" aria-expanded="true">
 						<i role="img"
 							[ngClass]="isSelected || isSearchItemExistRemark? 'icon-comment_full' : 'icon-comment'"></i>
-						<!-- <i role="img" [ngClass]="{'icon-comment': !isSelected, 'icon-comment_full': isSelected}"></i> -->
 					</a>
 					<span class="countOfComments">{{ countOfComments }}</span>
 				</div>
@@ -73,11 +54,6 @@
 					</div>
 				</li>
 			</ng-template>
-			<!-- <li>
-				<div class="mainTable_itemStarred" (click)="checked = !checked">
-					<a class="icon"><i role="img" [class]="checked ? ' icon-star_full' : 'icon-star'"> </i></a>
-				</div>
-			</li> -->
 		</ul>
 	</div>
 </div>
