@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "99e7e246f2bbdb834510d734fa97abaa";
+		public const string HashString = "d0f8a393d2a3f098820274f89f748e4d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -11627,21 +11627,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "BillToLocalName",
 					  						ObjectTableName =  "ARInvoice",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
 					  						MaxLength =  100,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						Operator =  "StartsWith",
+					  						IsListFilter =  true,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -14745,7 +14745,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "DisplayNumber",
 					  						ObjectTableName =  "ARInvoice",
-					  						FieldsDataType =  "nText",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "GLAccount",
 					  						MinLength =  0,
 					  						MaxLength =  50,
 					  						IsRequired =  false,
@@ -14753,12 +14754,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  true,
-					  						DisplayOnly =  false,
+					  						DisplayOnly =  true,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  50,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
+					  						IsListFilter =  true,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -14766,7 +14767,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						PMPropertyPath =  "DisplayNumber",
 					  						ListPropertyPath =  "DisplayNumber",
 					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
+					  						AutomaticField =  true,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
 					  						IsMulti =  false,
@@ -14790,9 +14791,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ListLocalDefaultText =  "מספר תצוגה",
 					  						HelpTextCode =  "DisplayNumber",
 					  						HelpTextDefaultText =  "Display Number",
-					  						IsForeignKey =  true,
-					  						ForeignEntity =  "GLAccount",
-					  						NavigationPropertyName =  "DisplayNumber",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
