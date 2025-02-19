@@ -18,7 +18,7 @@
 				</ng-template>
 				<ng-container *ngIf="!isLoading">
 					<ul *ngFor="let item of data" class="wtree">
-						<app-data-row id="{{item.CustomsItemID}}" [fullClassificationLengthCharToDisplay]="" [level]="1"
+						<app-data-row id="{{item.CustomsItemID}}" [fullClassificationLengthCharToDisplay]="IsDiscountCodes ? null : 0" [level]="1"
 													[showDetailsOpen]="showDetailsOpen" [data]="item"
 													[isSelected]="showDetails && selectedItemId == item.CustomsItemID"
 													[searchItem]="searchValue" (showCommentSidebar)="showAddComment = !showAddComment"
@@ -73,7 +73,7 @@
 																	<li [@inOutAnimation]>
 																		<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4].CustomsItemID}}"
 																									[level]="4"
-																									[fullClassificationLengthCharToDisplay]=""
+																									[fullClassificationLengthCharToDisplay]="13"
 																									[showDetailsOpen]="showDetailsOpen"
 																									[data]="item?.children[key2]?.children[key3]?.children[key4]"
 																									[searchItem]="searchValue"
@@ -91,7 +91,7 @@
 																					<li [@inOutAnimation]>
 																						<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5].CustomsItemID}}"
 																													[level]="5"
-																													[fullClassificationLengthCharToDisplay]=""
+																													[fullClassificationLengthCharToDisplay]="13"
 																													[showDetailsOpen]="showDetailsOpen"
 																													[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]"
 																													[searchItem]="searchValue"
@@ -109,7 +109,7 @@
 																									<li [@inOutAnimation]>
 																										<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6].CustomsItemID}}"
 																																	[level]="6"
-																																	[fullClassificationLengthCharToDisplay]=""
+																																	[fullClassificationLengthCharToDisplay]="13"
 																																	[showDetailsOpen]="showDetailsOpen"
 																																	[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]"
 																																	[searchItem]="searchValue"
@@ -127,7 +127,7 @@
 																													<li [@inOutAnimation]>
 																														<app-data-row id="{{item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]?.children[key7].CustomsItemID}}"
 																																					[level]="7"
-																																					[fullClassificationLengthCharToDisplay]=""
+																																					[fullClassificationLengthCharToDisplay]="13"
 																																					[showDetailsOpen]="showDetailsOpen"
 																																					[data]="item?.children[key2]?.children[key3]?.children[key4]?.children[key5]?.children[key6]?.children[key7]"
 																																					[searchItem]="searchValue"

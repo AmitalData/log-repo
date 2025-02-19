@@ -87,7 +87,8 @@ export class DataRowComponent implements OnInit {
 	}
 
 	ClassificationNoDisplay(item, value: string): string {
-		if (item.IsLeaf || !this.fullClassificationLengthCharToDisplay || this.fullClassificationLengthCharToDisplay > 5) return value;
+		if (this.fullClassificationLengthCharToDisplay > 0 || this.fullClassificationLengthCharToDisplay === null ) return value;
+		
 		if (value.length >= this.fullClassificationLengthCharToDisplay) {
 			return value.substring(0, this.fullClassificationLengthCharToDisplay);
 		}
