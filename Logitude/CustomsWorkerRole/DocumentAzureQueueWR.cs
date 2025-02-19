@@ -171,7 +171,7 @@ namespace CustomsWorkerRole
 							#region Save document and metadata
 							logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 							response = SaveDocument(filePath, outParams["COM_ID"]);
-							logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+							logs += "after SaveDocument HasError: " + response?.HasError + " ErrorMessage: " + response.ErrorMessage + " InnerErrorMessage: " + response.InnerErrorMessage + " take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 							#endregion
 							if (!response.HasError)
 							{
