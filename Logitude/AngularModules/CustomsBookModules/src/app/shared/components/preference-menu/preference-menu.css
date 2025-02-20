@@ -16,16 +16,36 @@ table {
   border-collapse: collapse;
 }
 
-th,
-td {
-  padding: 8px;
-  text-align: center;
-  border: 1px solid #ddd;
+th, td {
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: right;
+  padding: 12px 10px 11px 0px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--greyRO);
 }
 
-button {
-  padding: 5px 10px;
-  cursor: pointer;
+th {
+  padding: 6px 10px 5px 0px;
+  background-color: var(--grey);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+td {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+tr:nth-last-child(1) td {
+  border-bottom: 0px;
+}
+
+td img {
+  display: block;
+  width: 14px;
 }
 
 .actionButtonsContainer {
