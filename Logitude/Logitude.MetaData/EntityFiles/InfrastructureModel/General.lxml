@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;4432&quot;"
+  Code="&quot;d3e0&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -6003,6 +6003,11 @@
       DefaultText="&quot;The dollar exchange rate was last updated on&quot;"
       LocalDefaultText="&quot;שער מטבע הדולר עודכן לאחרונה בתאריך &quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Others.ExternalLinks&quot;"
+      DefaultText="&quot;ExternalLinks&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

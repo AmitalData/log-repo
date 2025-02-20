@@ -1,8 +1,13 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityLists;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
+using Syncfusion.XlsIO.Implementation.XmlSerialization.Constants;
 using System;
+using System.Linq;
 using System.Web;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
@@ -23,7 +28,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public ExternalLinkPM GetSinglePM(string Ref, bool fromCache = true)
         {
-            if(!fromCache)
+            if (!fromCache)
             {
                 ExternalLink externalLink = repository.GetSingleExternalLink(Ref);
                 return new ExternalLinkPM()
@@ -34,7 +39,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ExpirationDate = externalLink.ExpirationDate,
                     ActivityLog = externalLink.ActivityLog,
                     Params = externalLink.Params
-                };                
+                };
             }
 
             string cacheKey = "ExternalLink_" + Ref;
@@ -71,6 +76,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             authenticationTokenRepository.SubmitChanges();
 
             return externalLinkPM.Link.Replace("{token}", token.Token);
+        }
+
+        public IQueryable<ExternalLinkList> GetIQueryableEntityList(IQueryable<ExternalLink> iQueryable)
+        {
+            IQueryable<ExternalLinkList> result = (from a in iQueryable
+                                                   select new ExternalLinkList()
+                                                   {
+                                                       Id = a.Id,
+                                                       Ref = a.Ref,
+                                                       Link = a.Link,
+                                                       ExpirationDate = a.ExpirationDate,
+                                                       ActivityLog = a.ActivityLog,
+                                                       Params = a.Params
+
+                                                   });
+            return result;
         }
     }
 }
