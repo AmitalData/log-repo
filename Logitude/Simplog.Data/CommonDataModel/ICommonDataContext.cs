@@ -255,6 +255,7 @@ namespace Simplog.Data.CommonDataModel
 
 
         IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
+        IDbSet<ExternalLink> ExternalLinks { get; set; }
 
         void SetAsModified(object entity);
         void DetectChanges();

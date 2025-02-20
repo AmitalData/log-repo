@@ -89,19 +89,7 @@
     Size="15">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="LastUsedAt"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="DeleteAt"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
+  </Column>  
   <Column
     Name="Params"
     Type="nvarchar"

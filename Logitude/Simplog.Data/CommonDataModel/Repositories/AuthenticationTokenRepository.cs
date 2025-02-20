@@ -12,6 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 {
     public class AuthenticationTokenRepository : IRepository<AuthenticationToken>
     {
+        public static readonly string ExternalLink = "ExternalLink";
         ICommonDataContext commonDataContext;
         public AuthenticationTokenRepository(ICommonDataContext context)
         {
@@ -112,6 +113,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     CacheManager.CacheWrapper.Insert(cacheKey, authenticationToken, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
             }
+
+            if (authenticationToken?.ClientType == ExternalLink)
+                throw new AutenticationException("This token is only for external link");
+
             return authenticationToken;
         }
 

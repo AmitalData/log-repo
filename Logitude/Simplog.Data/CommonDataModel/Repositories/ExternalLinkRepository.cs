@@ -1,4 +1,4 @@
-﻿using Simplog.Data.ShipmentsModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -6,18 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simplog.Data.ShipmentsModel.Repositories
+namespace Simplog.Data.CommonDataModel.Repositories
 {
     public class ExternalLinkRepository : IRepository<ExternalLink>
     {
-        IShipmentsContext iContext;
+        ICommonDataContext iContext;
 
         public ExternalLinkRepository(int tenant)
         {
-            iContext = ShipmentsContext.GetContext(tenant);
+            iContext = CommonDataContext.GetContext(tenant);
         }
 
-        public ExternalLinkRepository(IShipmentsContext context)
+        public ExternalLinkRepository(ICommonDataContext context)
         {
             iContext = context;
         }
@@ -59,7 +59,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return Context.ExternalLinks.ToList();
         }
 
-        public IShipmentsContext Context
+        public ICommonDataContext Context
         {
             get { return iContext; }
         }
