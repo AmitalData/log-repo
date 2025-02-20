@@ -277,8 +277,9 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType, string entityId = null, string objectTableId = null, string subject = null)
+        public string AddReportTemplate(string reportId, string description, string userId, string documentId, int tenant, ReportsTemplateRepository reportsTemplateRepository, ReportsTemplatesVersionRepository reportsTemplatesVersionRepository, List<ReportsTemplate> reportsTemplates, bool isSystem, string templateType, string entityId = null, string objectTableId = null, string subject = null, string originalTemplateId = null)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Creating report template for report: {reportId}, template type: {templateType}, tenant: {tenant}, description: {description}");
 
             #region ReportsTemplate
 
@@ -298,6 +299,7 @@ namespace WebFreight.Web.Helpers
                 TemplateType = templateType,
                 EntityId = entityId,
                 ObjectTableId = objectTableId,
+                OriginalTemplateId = originalTemplateId,
                 Subject = subject
             };
             reportsTemplateRepository.Add(reportsTemplate);
@@ -3011,6 +3013,58 @@ namespace WebFreight.Web.Helpers
         #endregion
 
         #region UpdateReport
+
+        public void CopyFromTenant0(int tenant, int tenantToCopy)
+        {
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenantToCopy);
+            reportsTemplateRepository = new ReportsTemplateRepository(commonDataContext);
+            reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(commonDataContext);
+            documentRepository = new DocumentRepository(commonDataContext);
+
+            ContactRepository contactRepository = new ContactRepository(commonDataContext);
+            string userId = contactRepository.GetConactIdByemail("system@tenant" + tenantToCopy.ToString() + ".com", tenantToCopy);
+
+            ReportGroupQuery reportGroupQuery = new ReportGroupQuery();
+            string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
+            tenantZeroReportsTemplate = reportsTemplateRepository.GetReportsTemplates(0)
+                .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId).ToList();
+            tenantZeroReportsTemplatesVersionLists = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(tenantZeroReportsTemplate.Select(d => d.Id).ToList(), 0);
+            documentLists = documentRepository.GetDocumentsByIds(tenantZeroReportsTemplatesVersionLists.Select(d => d.ReportDocumentId).ToList());
+            List<Report> tenantZeroReports = tenantZeroReportsTemplate.Select(a => a.Report).Distinct().ToList();
+
+            myTenantReportsTemplate = reportsTemplateRepository.GetReportsTemplatesWithOutInclude(tenantToCopy);
+            myTenantReportsTemplatesVersion = reportsTemplatesVersionRepository.GetReportsTemplatesVersionsByReportsTemplateIds(myTenantReportsTemplate.Select(d => d.Id).ToList(), tenantToCopy);
+            ReportRepository reportRepository = new ReportRepository(commonDataContext);
+            List<Report> myReports = reportRepository.GetReports(tenantToCopy).ToList();
+
+            tenantZeroReports.ForEach(report => CreateReportTemplates(report, tenantToCopy, userId, myReports));
+
+            documentRepository.SubmitChanges();
+            reportsTemplateRepository.SubmitChanges();
+            reportsTemplatesVersionRepository.SubmitChanges();
+            reportRepository.SubmitChanges();
+        }
+
+        private void CreateReportTemplates(Report report, int tenantToCopy, string userId, List<Report> myReports)
+        {
+            Report currentTenantReport = myReports.Where(d => d.Code == report.Code).FirstOrDefault();
+            if (currentTenantReport == null)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Report not found in tenant " + tenantToCopy + " for code " + report.Code);
+                return;
+            }
+
+            HashSet<string> existingReportTemplates = myTenantReportsTemplate.Where(d => d.ReportId == currentTenantReport.Id).Select(a => a.OriginalTemplateId).ToHashSet();
+
+            List<ReportsTemplate> reportsTemplateToAdd = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.IsCopiedAtSignup && !existingReportTemplates.Contains(d.Id)).ToList();
+
+            // create templates for report template type
+            reportsTemplateToAdd.Where(d => d.TemplateType == "R").ToList().ForEach(reportTemplate => CreateNewReportsTemplate(new CopyReportTemplateArgs { tenant = tenantToCopy, userId = userId, report = report, systemReportTemplate = reportTemplate }, currentTenantReport));
+
+            // create templates for excel template type
+            reportsTemplateToAdd.Where(d => d.TemplateType == "E").ToList().ForEach(reportTemplate => AddExcelDocument(tenantToCopy, userId, report, reportTemplate, currentTenantReport));
+        }
+
         private ReportsTemplateRepository reportsTemplateRepository;
         private ReportsTemplatesVersionRepository reportsTemplatesVersionRepository;
         private DocumentRepository documentRepository;
@@ -3074,17 +3128,26 @@ namespace WebFreight.Web.Helpers
 
                 if (isChangeReport) reportRepository.SubmitChanges();
 
+                ReportGroupQuery reportGroupQuery = new ReportGroupQuery();
+                string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
 
                 isChangeReport = false;
                 foreach (Report report in reportList)
                 {
-                    isChangeReport = UpdateExcelReports(tenant, userId, report, myReports) ? true : isChangeReport;
-                    ReportsTemplate systemReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultTemplateId).FirstOrDefault();
-                    ReportsTemplate systemEmailReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultMessageTemplateId).FirstOrDefault();
-                    if(systemReportTemplate != null)
-                        isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemReportTemplate });
-                    if (systemEmailReportTemplate != null)
-                        isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemEmailReportTemplate });
+                    if (report.ReportGroupId == accountingReportGroupId)
+                    {
+                        CreateReportTemplates(report, tenant, userId, myReports);
+                    }
+                    else
+                    {
+                        isChangeReport = UpdateExcelReports(tenant, userId, report, myReports) ? true : isChangeReport;
+                        ReportsTemplate systemReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultTemplateId).FirstOrDefault();
+                        ReportsTemplate systemEmailReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultMessageTemplateId).FirstOrDefault();
+                        if(systemReportTemplate != null)
+                            isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemReportTemplate });
+                        if (systemEmailReportTemplate != null)
+                            isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemEmailReportTemplate });
+                    }
                 }
 
 
@@ -3163,7 +3226,7 @@ namespace WebFreight.Web.Helpers
             string documentId = AddDocument(documentRepository, tenantZeroReportsTemplatesVersion.ReportDocumentId, copyReportTemplateArgs.report.Tenant, copyReportTemplateArgs.tenant, documentLists);
             if (string.IsNullOrEmpty(documentId)) return copyReportTemplateArgs.isChangeReport;
 
-            string reportTemplateId = AddReportTemplate(currentTenantReport.Id, copyReportTemplateArgs.systemReportTemplate.Description, copyReportTemplateArgs.userId, documentId, copyReportTemplateArgs.tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, copyReportTemplateArgs.systemReportTemplate.TemplateType);
+            string reportTemplateId = AddReportTemplate(currentTenantReport.Id, copyReportTemplateArgs.systemReportTemplate.Description, copyReportTemplateArgs.userId, documentId, copyReportTemplateArgs.tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, copyReportTemplateArgs.systemReportTemplate.TemplateType, null, null, null, copyReportTemplateArgs.systemReportTemplate.Id);
             SetReportDefaultTemplates(copyReportTemplateArgs, currentTenantReport, reportTemplateId);
             return true;
         }
@@ -3272,7 +3335,7 @@ namespace WebFreight.Web.Helpers
             if (string.IsNullOrEmpty(documentId))
                 return false;
 
-            myReport.DefaultExcelTemplateId = AddReportTemplate(myReport.Id, systemExcelReportTemplate.Description, userId, documentId, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, "E");
+            myReport.DefaultExcelTemplateId = AddReportTemplate(myReport.Id, systemExcelReportTemplate.Description, userId, documentId, tenant, reportsTemplateRepository, reportsTemplatesVersionRepository, null, true, "E", null, null, null, systemExcelReportTemplate.Id);
             return true;
 
         }

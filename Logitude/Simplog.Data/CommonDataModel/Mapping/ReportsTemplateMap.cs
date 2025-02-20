@@ -107,6 +107,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsSystemReportFixed).HasColumnName("IsSystemReportFixed");
             this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
             this.Property(t => t.EntityId).HasColumnName("EntityId");
+            this.Property(t => t.IsCopiedAtSignup).HasColumnName("IsCopiedAtSignup");
+            this.Property(t => t.OriginalTemplateId).HasColumnName("OriginalTemplateId");
 
 
             //#if ORACLE_DB
