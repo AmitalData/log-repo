@@ -233,7 +233,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 
             if (!string.IsNullOrEmpty(documentsFilingPM.DocumentTypeId))
             {
-                DocumentType documentType = documentTypeRepository.GetSingleDocumentTypeByCode(documentsFilingPM.DocumentTypeId, documentsFilingPM.Tenant);
+                DocumentType documentType = documentTypeRepository.GetDocumentTypes(documentsFilingPM.Tenant).Where(d => d.Code == documentsFilingPM.DocumentTypeId).FirstOrDefault();
                 if (documentType != null)
                 {
                     documentsFilingPM.DocumentTypeId = documentType.Id;
