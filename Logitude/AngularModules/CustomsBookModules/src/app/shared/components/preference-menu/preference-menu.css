@@ -59,7 +59,7 @@ td img {
   cursor: pointer;
   padding: 8px 12px;
   border: none;
-  background-color: #f8f9fa;
+  background-color: var(--grey);
   text-decoration: none;
   color: #333;
   font-size: 18px;
@@ -78,3 +78,4 @@ td img {
 .fa-save {
   color: black;
 }
+
