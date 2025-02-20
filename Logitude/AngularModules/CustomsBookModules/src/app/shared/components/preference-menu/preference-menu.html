@@ -1,7 +1,7 @@
 <div class="preferenceBox">
   <div class="preference-icon" style="width: 20px; height: 20px; cursor:pointer; position: relative;" title="">
     <a><img class="logoSettings" src="assets/images/settings.png" alt="{{settingsColors}}"
-        (click)="showSettingsClick()" /></a>
+        (click)="showSettingsClick()" [ngStyle]="{ 'opacity': showSetings ? '1' : '0.5' }" /></a>
   </div>
   <div class="preference-menu" *ngIf="showSetings">
     <table>

@@ -7,8 +7,8 @@
   direction: rtl;
   background-color: var(--grey);
   position: absolute;
-  left: 12px;
-  top: 12px;
+  left: 9px;
+  top: 9px;
 }
 
 table {
@@ -16,10 +16,11 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   word-wrap: break-word;
   white-space: normal;
-  text-align: right;
+  text-align: center;
   padding: 12px 10px 11px 0px;
   vertical-align: top;
   border-bottom: 1px solid var(--greyRO);

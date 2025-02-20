@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, NgStyle } from '@angular/common';
 import { CB_Preference, PreferencesService, SettinsTableData } from './PreferencesService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-preference-menu',
   standalone: true,
-  imports: [FormsModule, NgFor, NgIf, MatIconModule],
+  imports: [FormsModule, NgFor, NgIf, MatIconModule, NgStyle],
   templateUrl: './preference-menu.html',
   styleUrl: './preference-menu.css',
 })
