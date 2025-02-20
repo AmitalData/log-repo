@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 import { RomanToolService } from '../../services/roman-tool.service';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
 import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
+import { PreferencesService } from '../preference-menu/PreferencesService';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
@@ -64,7 +65,7 @@ export class MainDisplayComponent implements OnInit {
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService,
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private preferencesService: PreferencesService,
 		private filterPopupService: FilterPopupService, private addCommentService: AddCommentService, private loginService: LoginService,
 		private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService) {
 		this.screenWidth = window.innerWidth;
@@ -320,6 +321,7 @@ export class MainDisplayComponent implements OnInit {
 	updateShowDetailsClick() {
 		this.showDetails = !this.showDetails;
 		this.showDetailsOpen.next(this.showDetails);
+		this.preferencesService.showSettingsClick(false);
 		if (!this.showDetails) {
 			this.showCommentsIsOpen.next(false);
 			this.showRulesIsOpen.next(false);
@@ -468,6 +470,7 @@ export class MainDisplayComponent implements OnInit {
 		// this.data = this.fullData;
 		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;
 		this.toggleVisibility(false, this.data);
+		this.preferencesService.showSettingsClick(false);
 	}
 
 	public orderedDataForSearch = (data) => {
