@@ -294,10 +294,10 @@ namespace Logitude.Accounting.BL.Utils
 
               //    if (!ReportExists(gLAccountId, context, _Tenant))
               //    {
-                        if (!ReportExists(gLAccountId, context, _Tenant))
-                        {
+                      //  if (!ReportExists(gLAccountId, context, _Tenant))
+                      //  {
                             ClearPreviousActivation(gLAccountId, myInterestTransactionRepository, myInterestTransactionService, myInterestTransactionUpdateService, gLAccountQueryService, gLAccountUpdateService, OPEN_, _Tenant);
-                        }
+                      //  }
                         var myGLAccountRepo = new GLAccountRepository(context);
 
                         var myJournalRepository = new JournalRepository(context);
