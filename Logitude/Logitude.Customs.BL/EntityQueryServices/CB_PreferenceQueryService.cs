@@ -15,15 +15,23 @@ namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class CB_PreferenceQueryService : EntityQueryService<CB_Preference, CB_PreferenceKeys, CB_PreferencePM, object, CB_PreferenceKeys>
     {
-        public CB_PreferencePM GetCB_PreferenceByUserIdAndTenant(string userId, int tenant = 0)
+        public List<CB_PreferencePM> GetCB_PreferenceByUserIdAndTenant(string userId, int tenant = 0)
         {
-            CB_Preference CB_Preference = repository.GetCB_PreferenceByUserIdAndTenant(userId, tenant);
+            List<CB_Preference> CB_Preferences = repository.GetCB_PreferenceByUserIdAndTenant(userId, tenant);
+            List<CB_PreferencePM> preferencesPM = new List<CB_PreferencePM>(); // Initialize the list
             CB_PreferencePM preferencePM = null;
-            if (CB_Preference != null)
+            if (CB_Preferences != null && CB_Preferences.Count > 0)
             {
-                preferencePM = this.GetEntityPM(CB_Preference, false, null);
+                foreach (var item in CB_Preferences)
+                {
+                    preferencePM = this.GetEntityPM(item, false, null);
+                    if (preferencePM != null)
+                    {
+                        preferencesPM.Add(preferencePM);
+                    }
+                }
             }
-            return preferencePM;
+            return preferencesPM;
         }
 
     }

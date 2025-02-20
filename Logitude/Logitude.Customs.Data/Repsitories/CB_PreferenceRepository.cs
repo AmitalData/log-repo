@@ -22,11 +22,11 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public CB_Preference GetCB_PreferenceByUserIdAndTenant(string userId, int tenant = 0)
+        public List<CB_Preference> GetCB_PreferenceByUserIdAndTenant(string userId, int tenant = 0)
         {
             return (from a in context.CB_Preferences
                     where a.UserId == userId && (a.Tenant == tenant || tenant == 0)
-                    select a).FirstOrDefault();
+                    select a)?.ToList();
         }
     }
 
