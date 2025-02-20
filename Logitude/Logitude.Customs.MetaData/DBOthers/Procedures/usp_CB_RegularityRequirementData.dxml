@@ -1,8 +1,8 @@
 ﻿<Procedure DBType="Main" Name="usp_CB_RegularityRequirementData" Schema="dbo" Module="Customs">
   <SqlScript>
-	  <![CDATA[		
-    	    			CREATE OR ALTER PROCEDURE [dbo].[usp_CB_RegularityRequirementData]
-          @CustomsItemID NVARCHAR(50)
+    <![CDATA[		
+CREATE OR ALTER PROCEDURE [dbo].[usp_CB_RegularityRequirementData]
+@CustomsItemID NVARCHAR(50)
 AS
 BEGIN
 WITH CTE AS (
@@ -21,9 +21,9 @@ RI.RequirementGoodsDescription +
 COALESCE(' לא כולל ' + EXCLUSION.ExclusionIDs + ' ', '') AS RequirementGoodsDescription, -- תיאור עם החרגות אם קיימות
 AU.LOCALNAME AS Authority, -- גורם מאשר
 CT.LOCALNAME AS ConfirmationType, -- סוג אישור
-CASE 
-    WHEN RC.TrNumber IS NOT NULL THEN 'ת"ר ' + CONVERT(VARCHAR, RC.TrNumber) + ' ' + RC.TextualCondition
-    ELSE RC.TextualCondition
+CASE
+WHEN RC.TrNumber IS NOT NULL THEN 'ת"ר ' + CONVERT(VARCHAR, RC.TrNumber) + ' ' + RC.TextualCondition
+ELSE RC.TextualCondition
 END AS TextualCondition, -- תיאור תנאים
 IR.LocalName AS InterConditionsRelationship, -- יחס תנאים
 RI.IsPersonalImportIncluded, -- חל ביבוא אישי
@@ -71,7 +71,8 @@ WHERE
 R.CustomsItemID = @CustomsItemID
 AND R.StartDate <= GETDATE()
 AND R.EndDate > GETDATE()
-AND R.CountryID IS NULL
+-- AND R.CountryID IS NULL
+AND CB.Fullclassification IS NOT NULL
 )
 SELECT
 CustomsItemID,
