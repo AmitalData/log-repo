@@ -202,6 +202,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="FactoringBank"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

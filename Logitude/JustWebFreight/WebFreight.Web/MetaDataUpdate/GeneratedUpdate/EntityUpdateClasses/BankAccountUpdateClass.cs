@@ -24,7 +24,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankAccountUpdateClass
    {  		
-		public const string HashString = "fe53092851e9f5ed86172418507d6e13";
+		public const string HashString = "5abeff688afee9a725bb17a56bade93f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3032,6 +3032,71 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FactoringBank",
+					  						ObjectTableName =  "BankAccount",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "FactoringBank",
+					  						ListPropertyPath =  "FactoringBank",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "BankAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "FactoringBank",
+					  						DefaultText =  "Factoring Bank",
+					  						FullLocalDefaultText =  "בנק ניכיון",
+					  						ListFieldLable =  "FactoringBankListLable",
+					  						ListLableDefaultText =  "Factoring Bank",
+					  						ListLocalDefaultText =  "בנק ניכיון",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -3068,23 +3133,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllBankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankAccount.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccount.AccountNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccount.FactoringBank" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankAccount.BankId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankAccount.AccountNumber" , ColumnWidth = 120 }, addedQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankAccount.GLAccountNumber" , ColumnWidth = 142 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankAccount.BankId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankAccount.DeferedGLAccountNumber" , ColumnWidth = 174 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankAccount.GLAccountNumber" , ColumnWidth = 142 }, addedQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankAccount.BankCode" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankAccount.DeferedGLAccountNumber" , ColumnWidth = 174 }, addedQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankAccount.BranchNumber" , ColumnWidth = 136 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankAccount.BankCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "BankAccount.DeferredGLAccountId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "BankAccount.BranchNumber" , ColumnWidth = 136 }, addedQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "BankAccount.BranchAddress" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "BankAccount.DeferredGLAccountId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn AllBankAccountsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "BankAccount.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "BankAccount.BranchAddress" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn AllBankAccountsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "BankAccount.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -3101,7 +3168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen BankAccountGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccount.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = BankAccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen BankAccountGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccount.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = BankAccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField BankAccountBankAccountGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -3122,6 +3189,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              ScreenField BankAccountBankAccountGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.BranchAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField BankAccountBankAccountGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.FactoringBank", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 	      
 
@@ -3261,6 +3330,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = BankAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "FBAC",
+                EnglishName =  "Factoring Bank Activated",
+                LocalName =  "Factoring Bank Activated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = BankAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "FBDA",
+                EnglishName =  "Factoring Bank Deactivated",
+                LocalName =  "Factoring Bank Deactivated",
+                IsManualEntry =  false,
+                ShortView =  false,
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
