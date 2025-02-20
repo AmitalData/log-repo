@@ -2866,6 +2866,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
         public IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<PortGroup> PortGroups { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<ExternalLink> ExternalLinks { get; set; }
 
         public IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews
         {

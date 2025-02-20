@@ -257,6 +257,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<TruckerSetting> TruckerSettings { get; set;}
         IDbSet<Responsibility> Responsibilities { get; set; }
         IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
+        IDbSet<ExternalLink> ExternalLinks { get; set; }
 
         void SetAsModified(object entity);
         void DetectChanges();

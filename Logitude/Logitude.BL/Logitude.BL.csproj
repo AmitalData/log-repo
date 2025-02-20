@@ -1143,6 +1143,7 @@
     <Compile Include="ShipmentsModel\CustomFilters\LogBoxShipmentCustomFilter.cs" />
     <Compile Include="ShipmentsModel\EntityLists\LogBoxShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityOtherServices\ContainerShipmentUpdateService.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\ExternalLinkPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusLogPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ReferenceTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReferancePM.cs" />
@@ -1152,6 +1153,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsStatusLogMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.FreightForwarderReference.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentReferance.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\ExternalLinkQuery.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsStatusLogService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\FreightForwarderReferenceService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentReferanceService.cs" />

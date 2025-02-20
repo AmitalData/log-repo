@@ -312,6 +312,7 @@
     <None Include="DBScripts\ShipmentModel\FillContainersDataFromPackages.sxml" />
     <None Include="DBTables\CommonDataModel\DigitalContactLastSetting.dxml" />
     <None Include="DBTables\CommonDataModel\FreelancerGroupType.dxml" />
+    <None Include="DBTables\CommonDataModel\ExternalLink.dxml" />
     <None Include="DBTables\CommonDataModel\HorseGender.dxml" />
     <None Include="DBScripts\ShipmentModel\202205160324_UpdateContainerStatusWorkerRole.sxml" />
     <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
@@ -1428,6 +1429,7 @@
     <None Include="EntityFiles\ShipmentsModel\ContainerStatusSource.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DeploymentPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\FreightForwarderReference.lxml" />
+    <None Include="EntityFiles\CommonDataModel\ExternalLink.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OBLType.lxml" />
     <None Include="EntityFiles\CommonDataModel\PaymentGatewayPartner.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteVATsTotal.lxml" />
