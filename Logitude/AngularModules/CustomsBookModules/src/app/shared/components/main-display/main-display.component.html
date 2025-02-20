@@ -1,6 +1,4 @@
 <div class="mainTable">
-	<app-preference-menu class="preference_menu_box"></app-preference-menu> <!-- Add the preference menu component -->
-
 	<app-add-comment class="addCommentSlider" />
 	<div class="centeredContent">
 		<div class="mainTable_list" *ngIf="!isFeaturePermessionCBMsg; else PermessionCB">
@@ -11,7 +9,7 @@
 					[countSearchResult]="countSearchResult" [searchMode]="searchMode" [showDetails]="showDetails" />
 				<div class="loadingBox"
 					*ngIf="data?.length == 0 && this.searchMode == 'search' && !isLoading; else loading">
-					<span>לם נמצםות תוצםות לחיפוש</span>
+					<span>לא נמצאות תוצאות לחיפוש</span>
 				</div>
 				<ng-template #loading>
 					<div class="loadingBox" *ngIf="isLoading">

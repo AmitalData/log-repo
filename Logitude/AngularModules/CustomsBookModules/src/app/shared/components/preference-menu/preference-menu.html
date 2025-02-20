@@ -1,25 +1,34 @@
-<div class="preference-menu">
-  <table>
-    <thead>
-      <tr>
-        
-        <th *ngFor="let item of tableData.headerColumns">{{item}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of tableData.hierarchyLevels">
-        <td>{{ item.label }}</td>
-        <td>
-          <input type="color" [(ngModel)]="preferences[item.level-1].BackgroundColor" />
-        </td>
-        <td>
-          <input type="color" [(ngModel)]="preferences[item.level-1].TextColor" />
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="buttons">
-    <button (click)="savePreferences()">שמור</button>
-    <button (click)="clearPreferences()">CLEAR</button>
+<div class="preferenceBox">
+  <div class="preference-icon" style="width: 20px; height: 20px; cursor:pointer; position: relative;" title="">
+    <a><img class="logoSettings" src="assets/images/settings.png" alt="{{settingsColors}}"
+        (click)="showSettingsClick()" /></a>
+  </div>
+  <div class="preference-menu" *ngIf="showSetings">
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let item of tableData.headerColumns">{{item}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tableData.hierarchyLevels">
+          <td>{{ item.label }}</td>
+          <td>
+            <input type="color" [(ngModel)]="preferences[item.level-1].BackgroundColor" />
+          </td>
+          <td>
+            <input type="color" [(ngModel)]="preferences[item.level-1].TextColor" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="actionButtonsContainer">
+      <a class="actionCommentBox" role="button" (click)="clearPreferences()" [title]="'מחיקה'">
+        <i class="fa fa-trash"></i>
+      </a>
+      <a class="actionCommentBox" role="button" (click)="savePreferences()" [title]="'שמירה'">
+        <i class="fa fa-save"></i>
+      </a>
+    </div>
   </div>
 </div>

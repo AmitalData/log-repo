@@ -12,7 +12,7 @@
 				[title]="data.CIH_GoodsDescription">
 				{{ ClassificationNoDisplay(data,data?.FullClassification) }}
 			</span>
-			<span *ngIf="data?.CI_Parent_CustomsItemIDNum ||  fullClassificationLengthCharToDisplay === null" [title]="data.CIH_GoodsDescription"> | </span>
+			<span [ngStyle]="{'color': getTextColor()}" *ngIf="data?.CI_Parent_CustomsItemIDNum ||  fullClassificationLengthCharToDisplay === null" [title]="data.CIH_GoodsDescription"> | </span>
 			<span class="full_classification" [title]="data.CIH_GoodsDescription"
 				[innerHTML]="highlight(data.CIH_GoodsDescription, searchItem)" [ngStyle]="{'color': getTextColor()}">
 				{{ data.CIH_GoodsDescription }}
