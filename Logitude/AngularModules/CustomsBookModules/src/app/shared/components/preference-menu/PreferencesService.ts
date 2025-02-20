@@ -92,6 +92,10 @@ export interface HierarchyLevel {
     level: number;
     label: string
 };
+export interface SettinsTableData {
+    hierarchyLevels: HierarchyLevel[];
+    headerColumns: string[];
+};
 
 export enum PreferenceType {
     Background = 'background',
