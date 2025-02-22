@@ -282,7 +282,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     public RateIsEnabled: boolean = false;
     SetUIProperties_ExchangeRate() {
-        var isEnabled: boolean = false;
+        var isEnabled: boolean = true;
 
         if (this.IsScreenEnabled) {
             if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
