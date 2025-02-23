@@ -545,7 +545,7 @@
   </Column>
   <Column
     Name="ManifestErrorXml"
-    Type="varchar"
+    Type="nvarchar"
     Size="-1">
     <Constraints
       Nullable="true" />
