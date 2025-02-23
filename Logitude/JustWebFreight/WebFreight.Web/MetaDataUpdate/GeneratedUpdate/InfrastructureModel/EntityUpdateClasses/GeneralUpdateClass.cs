@@ -95,7 +95,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  
  
 
-		public const string HashString = "4da25ce025edabfd86767b1138cf67ee";
+		public const string HashString = "9c666566b8748af2aa3f182417d4333f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -739,6 +739,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             Feature GeneralFeature_NLogSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NLogSettings", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.NLogSettings", NameTextCodeDefaultText = @"NLog Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, GeneralObjectTable);
 		   Feature GeneralFeature_GENERALLOCK = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERALLOCK", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.GENERALLOCK", NameTextCodeDefaultText = @"GeneralLock" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 		   Feature GeneralFeature_Menu_AllCards = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Menu.AllCards", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Menu.AllCards", NameTextCodeDefaultText = @"AllCards" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
+		   Feature GeneralFeature_General_MC_Others_ExternalLink = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.MC.Others.ExternalLink", FeatureTypeCode = "MC", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.MC.Others.ExternalLink", NameTextCodeDefaultText = @"External Links" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
         }
 
         public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
@@ -2509,7 +2511,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOVendorWithCustomerGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.VendorWithCustomerGLAccount", DefaultText = "The selected operational card is connected to a client-type account and therefore will not be included in the tax withholding report",LocalDefaultText = @"הכרטיס התפעולי שנבחר מחובר לחשבון מסוג לקוח ולכן לא ייכלל בדוח ניכוי מס במקור", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-
  		   TextCode GeneralTextCode_AccountingGeneralOCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Cheques", DefaultText = "Cheques",LocalDefaultText = @"שקים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOLastBankPage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LastBankPage", DefaultText = "This is not the last bank page",LocalDefaultText = @"רק דף אחרון ניתן לעריכה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -2893,7 +2894,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  
 
  		   TextCode GeneralTextCode_GeneralODollarRateUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DollarRateUpdated", DefaultText = "The dollar exchange rate was last updated on",LocalDefaultText = @"שער מטבע הדולר עודכן לאחרונה בתאריך ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-   
+
+ 		   TextCode GeneralTextCode_GeneralMCOthersExternalLinks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.ExternalLinks", DefaultText = "ExternalLinks",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
             TextCode GeneralTextCode_GeneralOAddNewEntity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.AddNewEntity", DefaultText = "AddNewEntity", LocalDefaultText = @"BS64:IiVFbnRpdHkg15TXldeh16Mi", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2901,6 +2903,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralOReportInProcess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ReportInProcess", DefaultText = "The report was created successfully and will be built in a background process.",LocalDefaultText = @"הדוח נוצר בהצלחה ויבנה בתהליך רקע", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
    
+	    
         }
     }
 }

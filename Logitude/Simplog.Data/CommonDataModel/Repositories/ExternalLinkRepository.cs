@@ -27,11 +27,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from a in Context.ExternalLinks where a.Ref == Ref select a).FirstOrDefault();
         }
 
+        public IQueryable<ExternalLink> GetExternalLinks(int tenant) => GetExternalLinks();
         public IQueryable<ExternalLink> GetExternalLinks()
         {
             return (from a in Context.ExternalLinks select a);
         }
-
+        
         public IQueryable<ExternalLink> GetAll()
         {
             return (from a in Context.ExternalLinks select a);

@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ExternalLinkUpdateClass
    {  		
-		public const string HashString = "3ca4bde011e063897c32299a262ad089";
+		public const string HashString = "ac913b8052a481c6f70ad10d5351c191";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -543,7 +543,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ExternalLinkObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalLink" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ExternalLinkGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalLink.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ExternalLinkGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalLink.Tab.General", ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalLinkFeatures.EXLG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalLinkObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EXLG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ExternalLinkGeneralFeature_TH0.Id,FeatureUniqeCode = ExternalLinkGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ExternalLinkObjectTable.Id, TabNameTextCodeId = ExternalLinkGeneralTextCode_TH0.Id, TabNameTextCodeCode = ExternalLinkGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

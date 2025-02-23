@@ -216,7 +216,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 }
 
 
-                ExternalLinkAPiHelper.AddFilters(queryOperations, );
+                ExternalLinkAPiHelper.AddFilters(queryOperations, 0);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
                 
@@ -241,7 +241,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
-				            entityPocos = ExternalLinkAPiHelper.ApplyFilters(entityPocos, );
+				            entityPocos = ExternalLinkAPiHelper.ApplyFilters(entityPocos, 0);
 
                 entityPocos = genericFilter.GetFilteredQuery<ExternalLink>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
