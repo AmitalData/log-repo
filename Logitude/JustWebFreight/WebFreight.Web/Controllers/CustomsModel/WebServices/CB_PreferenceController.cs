@@ -18,7 +18,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.Server.Tools;
-
+ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
