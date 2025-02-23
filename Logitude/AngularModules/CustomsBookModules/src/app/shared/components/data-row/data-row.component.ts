@@ -3,17 +3,18 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar as faStarBold, faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawesome/free-regular-svg-icons';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
-import { NgIf, NgClass } from '@angular/common';
+import { NgIf, NgClass, NgStyle } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { CB_CustomsItemComputedDataList, CB_TariffList, RemarksClassificationList, RulesDetailsList } from '../main-display/main-display.component';
 import { API_MainService } from '../../../core/API_MainService';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
 import { SearchBy, SearchService } from '../page-top/service/top-page.service';
+import { PreferencesService, PreferenceType } from '../preference-menu/PreferencesService';
 
 @Component({
 	selector: 'app-data-row',
 	standalone: true,
-	imports: [FontAwesomeModule, NgIf, NgClass],
+	imports: [FontAwesomeModule, NgIf, NgClass, NgStyle],
 	templateUrl: './data-row.component.html',
 	styleUrl: './data-row.component.css',
 })
@@ -47,7 +48,7 @@ export class DataRowComponent implements OnInit {
 	screenWidth: number;
 	widthSmaller: boolean = false;
 
-	constructor(private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) {
+	constructor(private preferencesService: PreferencesService, private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) {
 		this.screenWidth = window.innerWidth;
 	}
 
@@ -58,6 +59,14 @@ export class DataRowComponent implements OnInit {
 			this.data.remarksClassificationList = data.filter(x => x.CustomsItemsID == this.data.CustomsItemID);
 			this.showCommentsData();
 		});
+	}
+
+	getBackgroundColor(): string {
+		return this.preferencesService.getPreference(this.level, PreferenceType.Background);
+	}
+
+	getTextColor(): string {
+		return this.preferencesService.getPreference(this.level, PreferenceType.Text);
 	}
 
 	highlight(text: string, search: string): string {
@@ -87,8 +96,8 @@ export class DataRowComponent implements OnInit {
 	}
 
 	ClassificationNoDisplay(item, value: string): string {
-		if (this.fullClassificationLengthCharToDisplay > 0 || this.fullClassificationLengthCharToDisplay === null ) return value;
-		
+		if (this.fullClassificationLengthCharToDisplay > 0 || this.fullClassificationLengthCharToDisplay === null) return value;
+
 		if (value.length >= this.fullClassificationLengthCharToDisplay) {
 			return value.substring(0, this.fullClassificationLengthCharToDisplay);
 		}
