@@ -52,7 +52,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchByFieldName, 
 	         SearchType, 
 	         SearchTypesName, 
-	         ExceptKeywords,
+	         ExceptKeywords, 
+	         CourierPendingReasonId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

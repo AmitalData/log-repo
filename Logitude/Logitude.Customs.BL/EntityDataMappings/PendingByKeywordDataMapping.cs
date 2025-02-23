@@ -34,11 +34,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPOCOToPM(PendingByKeywordPM entityPM, PendingByKeyword entityPOCO)
         {
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierPendingReasonName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.CourierPendingReasonId);
             if (entityPOCO.CourierPendingReasonCode != null)
             {
                 CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPOCO.Tenant);
                 CourierPendingReasonPM courierPendingReason = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(entityPOCO.CourierPendingReasonCode, entityPOCO.Tenant);
                 entityPM.CourierPendingReasonName = courierPendingReason.LocalName;
+                entityPM.CourierPendingReasonId = courierPendingReason.Id;
             }
         }
    }

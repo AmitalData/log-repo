@@ -122,23 +122,12 @@ export class AddEditPendingByKeywordComponent
         this._WarningMessage = newValue;
     }
 
-    public get CourierPendingReasonCode() 
+    public get CourierPendingReasonId() 
     {
-        var _CourierPendingReasonExtendedListService = new CourierPendingReasonExtendedListService();
-        var CourierPendingReason: CourierPendingReasonList;
-
-        _CourierPendingReasonExtendedListService.GetSingleFromCacheByCode(this.EntityPM.CourierPendingReasonCode)
-            .subscribe(serviceResponse => {
-                CourierPendingReason = serviceResponse.Result;
-            });
-           if(CourierPendingReason == null){
-                return null;
-           }
-           return CourierPendingReason.Id
-
+        return this.EntityPM.CourierPendingReasonId
     }
-    public set CourierPendingReasonCode(newValue: string) {
-        this.EntityPM.CourierPendingReasonCode = newValue;
+    public set CourierPendingReasonId(newValue: string) {
+        this.EntityPM.CourierPendingReasonId = newValue;
     }
 
     public get CourierPendingReasonName() { return this.EntityPM.CourierPendingReasonName; }

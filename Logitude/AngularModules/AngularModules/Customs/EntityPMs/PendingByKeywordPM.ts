@@ -13,6 +13,8 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { AppTool } from 'Infrastructure/Tools';
+
 
 export class PendingByKeywordPM {
       
@@ -79,6 +81,11 @@ export class PendingByKeywordPM {
     public set ExceptKeywords(newValue: string) { if (this.exceptKeywords != newValue) { this.exceptKeywords = newValue; this.MarkAsDirty("ExceptKeywords"); } }
        
 	 
+    private courierPendingReasonId: string;
+    public get CourierPendingReasonId() { return this.courierPendingReasonId; }
+    public set CourierPendingReasonId(newValue: string) { if (this.courierPendingReasonId != newValue) { this.courierPendingReasonId = newValue; this.MarkAsDirty("CourierPendingReasonId"); } }
+       
+	 
 
     public OldEntityPM: PendingByKeywordPM;
 		
@@ -87,8 +94,10 @@ export class PendingByKeywordPM {
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
+ 	
         this.IsDirty = true;
 		  	
+		 
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.PendingByKeyword");
