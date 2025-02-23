@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;d3e0&quot;"
+  Code="&quot;1ed1&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -8439,6 +8439,15 @@
       FeatureTextCodeCode="&quot;General.Features.Menu.AllCards&quot;"
       FeatureDefaultText="&quot;AllCards&quot;"
       IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;General.MC.Others.ExternalLink&quot;"
+      FeatureTypeCode="&quot;MC&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.MC.Others.ExternalLink&quot;"
+      FeatureDefaultText="&quot;External Links&quot;"
+      IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />

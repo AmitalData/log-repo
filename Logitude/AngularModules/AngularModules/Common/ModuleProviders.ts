@@ -229,6 +229,8 @@ import { MentionListService } from './Services/StandardLists/MentionListService'
 import { MentionPMService } from './Services/StandardPMs/MentionPMService';
 import { CarrierServiceLineListService } from './Services/StandardLists/CarrierServiceLineListService';
 import { WarehouseMenuButtonsHandler } from './Components/MenuButtons/WarehouseMenuButtonsHandler';
+import { ExternalLinkListService } from './Services/StandardLists/ExternalLinkListService';
+import { ExternalLinkPMService } from './Services/StandardPMs/ExternalLinkPMService';
  
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -462,6 +464,8 @@ export class ModuleProviders {
             case "HorseGenderListService": { myResult = new HorseGenderListService(); break; }
             case "PortGroupListService": { myResult = new PortGroupListService(); break; }
             case "PortGroupPMService": { myResult = new PortGroupPMService(); break; }
+            case "ExternalLinkListService": { myResult = new ExternalLinkListService(); break; }
+            case "ExternalLinkPMService": { myResult = new ExternalLinkPMService(); break; }
          }
 
         return myResult;

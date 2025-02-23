@@ -62077,6 +62077,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.HybridTenantStates", DefaultText = "Hybrid Tenant States", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.AirlineStatistics", DefaultText = "Airline Statistics", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.LogitudeMessagesTransmissionLog", DefaultText = "Logitude Messages Transmission Log", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.ExternalLink", DefaultText = "External Link", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
 
             /* Setup */
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Setup.Setup", DefaultText = "Setup", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, TextCodeRepository, textcodes);
