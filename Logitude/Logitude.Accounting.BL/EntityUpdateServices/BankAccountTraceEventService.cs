@@ -76,7 +76,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                    this.CreateActivateOrDeactivateEvent(entityPM,loggedContact,eventNotes);
                 }
-
+                if (entityPM.FactoringBank != entityPOCO.FactoringBank)
+                {
+                    this.CreateActivateOrDeactivateFactoringBankEvent(entityPM, loggedContact, eventNotes);
+                }
                 // create the updated event
                 this.CreateTraceEventForUpdate(entityPM, loggedContact, eventNotes);
             }
@@ -118,7 +121,40 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
         }
+        public void CreateActivateOrDeactivateFactoringBankEvent(BankAccountPM entityPM, ContactPM loggedContact, string eventNotes)
+        {
+            if (entityPM.FactoringBank == true)
+            {
+                EventTracerArgs eventTracerArgs0 = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "BankAccount",
+                    IsAddedManually = false,
+                    EventTypeCode = "FBAC",
+                    Notes = eventNotes,
 
+                };
+                AddEventToList(GetNewTraceEvent(eventTracerArgs0));
+            }
+            else
+            {
+                EventTracerArgs eventTracerArgs1 = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "BankAccount",
+                    IsAddedManually = false,
+                    EventTypeCode = "FBDA",
+                    Notes = eventNotes,
+
+                };
+                AddEventToList(GetNewTraceEvent(eventTracerArgs1));
+            }
+
+        }
         public virtual void InsertTraceEvents()
         {
             foreach (TraceEventResponse response in TraceEventResponses)

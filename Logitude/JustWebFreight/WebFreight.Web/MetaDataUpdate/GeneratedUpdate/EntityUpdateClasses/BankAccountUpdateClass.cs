@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankAccountUpdateClass
    {  		
-		public const string HashString = "5abeff688afee9a725bb17a56bade93f";
+		public const string HashString = "0c911503d914ec471c9497b811606918";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3122,6 +3122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FactoringBank",
 					  						ListPropertyPath =  "FactoringBank",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3508,6 +3509,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode BankAccountTextCode_BankAccountsOPreventChangingCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.PreventChangingCurrency", DefaultText = "The GLAccount is connected to a Bank Account, you can't change the currency",LocalDefaultText = @"לא ניתן לשנות את מטבע הכרטיס מכיוון שהוא כבר מחובר לחשבון בנק", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode BankAccountTextCode_BankAccountsOPreventChangingToIsMultiCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.PreventChangingToIsMultiCurrency", DefaultText = "The GLAccount is connected to a Bank Account or CashBook , you can't change the currency to is multi",LocalDefaultText = @"לא ניתן לשנות כרטיס זה לכרטיס רב מטבעי מכיוון שהוא מחובר לחשבון בנק/קופה", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankAccountTextCode_BankAccountsOCountFutureChecks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.CountFutureChecks", DefaultText = "The bank has %X future checks",LocalDefaultText = @"לבנק קיימות X% המחאות עתידיות", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankAccountTextCode_BankAccountsOAutoRedeemed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.AutoRedeemed", DefaultText = "When the check's due date arrives, it will automatically be marked with the status ''Repaid.''",LocalDefaultText = "בהגיע תאריך ההמחאה היא תסומן אוטומטית בסטטוס ''נפרע''", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode BankAccountTextCode_BankAccountsONotAutoRedeemed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.NotAutoRedeemed", DefaultText = "These checks will not automatically be transferred to a ''paid'' status.",LocalDefaultText = "המחאות אלו לא יועברו אוטומטית לסטטוס ''נפרע''", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

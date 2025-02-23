@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using System.Data.Entity;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -31,6 +32,16 @@ namespace Logitude.Accounting.Data.Repositories
             return entity;
         }
 
+        public List<BankAccount> GetFactoringBankAccounts(int tenant)
+        {
+            List<BankAccount> entities;
+
+            entities = (from a in context.BankAccounts.Include("BankCode")
+                      where a.Inactive==false && a.FactoringBank==true && a.Tenant == tenant
+                        select a).ToList();
+
+            return entities;
+        }
         public BankAccount GetBankAccountByNumber(string number, int tenant)
         {
             BankAccount entity;

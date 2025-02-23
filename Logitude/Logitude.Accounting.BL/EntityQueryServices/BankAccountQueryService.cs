@@ -106,5 +106,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return EntityPM;
         }
+
+        public List<BankAccount> GetFactoringBankAccounts(int tenant)
+        {
+            List<BankAccount> bankAccounts = repository.GetFactoringBankAccounts(tenant);
+
+                      
+            return bankAccounts;
+        }
     }
 }

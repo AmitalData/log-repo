@@ -42,6 +42,9 @@ import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlow
 //import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { take } from 'rxjs/operators';
+import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
+import { resolve } from 'cypress/types/bluebird';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -1679,7 +1682,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         this.SaveEntityChanges(true);
     }
 
-    private SaveEntityChanges(isClosing: boolean, busyIndicatorText: string = null, loadNextEntity: boolean = false, loadPreviousEntity: boolean = false) {
+    private async SaveEntityChanges(isClosing: boolean, busyIndicatorText: string = null, loadNextEntity: boolean = false, loadPreviousEntity: boolean = false) {
         if (this.EntityPM.IsDirty) {
 
             this.ValidationErrorsList = [];
@@ -1692,8 +1695,17 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             }
 
-            this.SaveStart.emit(this.EntityPM)
+            this.SaveStart.emit(this.EntityPM);
+            if(this.ObjectTableName=="BankAccount"){
+                if (this.EntityPM.OldEntityPM?.factoringBank != this.EntityPM.FactoringBank) {
 
+                   const canContinue = await this.CheckOpenCheques(this.EntityPM);
+                   if (!canContinue) {
+                      return;
+                   }
+                  }
+            }
+        
             if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "APInvoice" || this.ObjectTableName == "ARPayment" || this.ObjectTableName == "APPayment"
                 || this.ObjectTableName == "BankDeposit" || this.ObjectTableName == "UserDefinedReport" || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
@@ -1887,6 +1899,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
 
             }
+         
+           
         }
 
         else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
@@ -1896,8 +1910,36 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         else {
             this.Close();
         }
+        
     }
+    arPaymentChequeOperationsService: ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService()
 
+async CheckOpenCheques(entityPM: any): Promise<boolean> {
+    this.CurrentSession.StartBusyIndicator("Check cheques");
+    return new Promise<boolean>((resolve) => {
+        this.arPaymentChequeOperationsService.GetCountOpenChequesByBankAccount(entityPM.Tenant, entityPM.BankCode, entityPM.BranchNumber, entityPM.AccountNumber).subscribe((result: any) => {
+            if (result > 0) {
+                this.StopBusyIndicator();
+
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 450;
+                confirmWindow.Height = 190;
+                var message=entityPM.FactoringBank? "BankAccounts.O.AutoRedeemed":"BankAccounts.O.NotAutoRedeemed";
+                confirmWindow.Show(TextCodeTranslator.Translate("BankAccounts.O.CountFutureChecks").replace("%X", result)+" ,"+TextCodeTranslator.Translate(message))
+                
+                confirmWindow.WindowClosed.subscribe(() => {
+                    if (confirmWindow.Yes) {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                });
+            } else {
+                resolve(true);
+            }
+        });
+    });
+}
     public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
     SaveDraftVersion(isClosing: boolean) {
         var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId

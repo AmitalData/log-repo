@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
@@ -95,7 +96,19 @@ namespace Logitude.Accounting.BL.Utils
 
         }
 
-        
+        public void RedeemOpenChequesByFactoringBank(DateTime valueDate, int tenant = 0)
+        {
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(tenant);
+            ARPaymentChequeQueryService arPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
+            BankDepositRedeemedChequesVerifyService bankDepositRedeemedChequesVerifyService = new BankDepositRedeemedChequesVerifyService();
+
+            List<BankAccount> bankAccounts = bankAccountQueryService.GetFactoringBankAccounts(tenant);
+            foreach (var bank in bankAccounts)
+            {
+                List<ARPaymentChequePM> aRPaymentCheques = arPaymentChequeQueryService.GetOpenChequesByBankAccountInThePast(bank.BankCode.Code, bank.BranchNumber, bank.AccountNumber, bank.Tenant, valueDate);
+                bankDepositRedeemedChequesVerifyService.RedeemCheques(aRPaymentCheques, bank.Tenant);
+            }
+        }
 
     }
 }

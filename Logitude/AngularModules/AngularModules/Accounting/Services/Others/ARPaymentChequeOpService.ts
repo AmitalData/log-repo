@@ -35,4 +35,18 @@ export class ARPaymentChequeOperationsService {
         });
     }
 
+    GetCountOpenChequesByBankAccount(tenant: number, bankId: string, bankBranch: string, bankAccount: string){
+        var url = this._apiUrl + '/GetCountOpenChequesByBankAccount'+
+        `?Tenant=${tenant}&bankId=${bankId}&bankBranch=${bankBranch}&bankAccount=${bankAccount}`;
+        ;
+        return defer(() => {
+            return this._http
+                .get(url, ServiceHelper.GetHttpHeaders())
+                .pipe(map(response => {
+                    var result = response;
+                    return result;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
 }

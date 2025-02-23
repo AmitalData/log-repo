@@ -3538,6 +3538,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;FactoringBank&quot;"
     ListPropertyPath="&quot;FactoringBank&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3977,6 +3978,24 @@
       Code="&quot;BankAccounts.O.PreventChangingToIsMultiCurrency&quot;"
       DefaultText="&quot;The GLAccount is connected to a Bank Account or CashBook , you can't change the currency to is multi&quot;"
       LocalDefaultText="&quot;לא ניתן לשנות כרטיס זה לכרטיס רב מטבעי מכיוון שהוא מחובר לחשבון בנק/קופה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankAccounts.O.CountFutureChecks&quot;"
+      DefaultText="&quot;The bank has %X future checks&quot;"
+      LocalDefaultText="&quot;לבנק קיימות X% המחאות עתידיות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankAccounts.O.AutoRedeemed&quot;"
+      DefaultText="&quot;When the check's due date arrives, it will automatically be marked with the status &quot;Repaid.&quot;&quot;"
+      LocalDefaultText="&quot;בהגיע תאריך ההמחאה היא תסומן אוטומטית בסטטוס &quot;נפרע&quot;&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankAccounts.O.NotAutoRedeemed&quot;"
+      DefaultText="&quot;These checks will not automatically be transferred to a &quot;paid&quot; status.&quot;"
+      LocalDefaultText="&quot;המחאות אלו לא יועברו אוטומטית לסטטוס &quot;נפרע&quot;&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
