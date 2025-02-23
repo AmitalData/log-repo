@@ -288,6 +288,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     initCertificateOriginItemsFromUnifreight(result, EntityPM: CertificateOfOriginPM) {
         this.CertificateOriginItemItems.Clear();
         this.originalItemSource.Clear();
+        const oldItems = this.entityPM.CertificateOriginItemItems.filter(a => !AppTool.IsNullOrEmpty(a.Id));
         this.entityPM.CertificateOriginItemItems = [];
         result?.certificateOfOriginItems?.forEach((unifreightItem) => {
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
@@ -354,6 +355,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 this.entityPM.CertificateOriginItemItems.push(mappedConsignments);
             }
         });
+        
+        oldItems.forEach(item => {
+            item.ChangeSetOp = "Delete";
+            this.entityPM.CertificateOriginItemItems.push(item);
+        });
+        this.entityPM.IsChange = true;  
     }
 
     parseXml(xmlString: string): any {
