@@ -63,9 +63,4 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="CourierPendingReasonCode"
-    ReferencedTable="CourierPendingReasons"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
 </Table>

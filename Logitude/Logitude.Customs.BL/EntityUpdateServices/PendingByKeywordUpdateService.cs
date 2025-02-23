@@ -38,6 +38,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(PendingByKeywordPM entityPM)
         {
+            if (!string.IsNullOrEmpty(entityPM.CourierPendingReasonId))
+            {
+              
+                CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
+                CourierPendingReasonPM courierPendingReason = courierPendingReasonQueryService.GetSingle(entityPM.CourierPendingReasonId, false, true);
+                entityPM.CourierPendingReasonCode = courierPendingReason.Code;
+              
+             
+            }
             if (entityPM.ExceptKeywords != null)
             {
                 var ExceptKeywordspunctuation = entityPM.ExceptKeywords.Where(Char.IsPunctuation).Distinct().ToArray();
