@@ -34,47 +34,52 @@ namespace CustomsWorkerRole
         {
             try
             {
-                DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue start run");
-
-                List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
-                SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
-
-                Lock();
-
-                List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
-
-                if (records == null || records.Count == 0)
+                bool finish = false;
+                while (!finish)
                 {
+                    DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue start run");
+
+                    List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
+                    SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
+
+                    Lock();
+
+                    List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
+
+                    if (records == null || records.Count == 0)
+                    {
+                        Unlock();
+                        finish = true;
+                        return;
+                    }
+
+                    DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
+
+                    records = records.Concat(InsertRecordsForCloseTables(syncRecordQuery, records)).ToList();
+
+                    IEnumerable<IGrouping<int, SyncRecord>> RecordsGroupByTenants = records.GroupBy(record => record.Tenant);
+
+                    foreach (IGrouping<int, SyncRecord> group in RecordsGroupByTenants)
+                    {
+                        List<SyncRecord> recordsOfTenant = group.ToList();
+                        if (recordsOfTenant.Count == 0)
+                            continue;
+
+                        try
+                        {
+                            SendToQueue(recordsOfTenant, group.Key);
+                            syncRecordsInQueueList.AddRange(recordsOfTenant);
+                        }
+                        catch (Exception e)
+                        {
+                            DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue, tenant: " + group.Key);
+                        }
+                    }
+
+                    syncRecordQuery.UpdateStatus(syncRecordsInQueueList, SyncRecordStatus.InQueue);
+
                     Unlock();
-                    return;
                 }
-
-                DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
-
-                records = records.Concat(InsertRecordsForCloseTables(syncRecordQuery, records)).ToList();
-
-                IEnumerable<IGrouping<int, SyncRecord>> RecordsGroupByTenants = records.GroupBy(record => record.Tenant);
-
-                foreach (IGrouping<int, SyncRecord> group in RecordsGroupByTenants)
-                {
-                    List<SyncRecord> recordsOfTenant = group.ToList();
-                    if (recordsOfTenant.Count == 0)
-                        continue;
-
-                    try
-                    {
-                        SendToQueue(recordsOfTenant, group.Key);
-                        syncRecordsInQueueList.AddRange(recordsOfTenant);
-                    }
-                    catch (Exception e)
-                    {
-                        DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue, tenant: " + group.Key);
-                    }
-                }
-
-                syncRecordQuery.UpdateStatus(syncRecordsInQueueList, SyncRecordStatus.InQueue);
-
-                Unlock();
             }
             catch (DbUpdateException e) when (e.Message.Contains("SyncRecordsCCUTableWR") && e.Message.Contains("GeneralLock"))
             {

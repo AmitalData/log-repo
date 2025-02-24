@@ -141,16 +141,17 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             DateTime yesterday = DateTime.Now.AddDays(-1);
 
-            IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
-                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday);
+            IEnumerable<SyncRecord> query = context.SyncRecord.Where(syncRecord =>
+                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday).Take(1000);
 
             logger.WriteDebug($"SyncRecord, GetAndMarkNewSyncRecord db: {context.GetConnection().Database}");
 
-            int recordsCounts = Math.Min(records.Count(), 10000);
+            List<SyncRecord> records = query.ToList();
+            int recordsCounts = records.Count();
             for (int i = 0; i < recordsCounts; i++)
                 records.ElementAt(i).IsSync = SyncRecordStatus.InProcess;
 
-            return records.ToList();
+            return records;
         }
 
         public void UpdateStatus(List<SyncRecord> records, int status)
