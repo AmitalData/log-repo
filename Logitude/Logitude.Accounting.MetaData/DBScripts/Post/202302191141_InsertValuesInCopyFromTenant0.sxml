@@ -12,7 +12,9 @@ FROM (
     ('9999-50', 0, 'Computing Partners'),
     ('9999-60', 0, 'Vat settings'),
     ('9999-70', 0, 'Tasks Scheduler'),
-    ('9999-80', 0, 'CountryCities')
+    ('9999-80', 0, 'CountryCities'),
+    ('9999-90', 0, 'Document Types and Templates'),
+    ('9999-100', 0, 'Report Templates')
 ) AS S(Id, Tenant, TableName)
 WHERE NOT EXISTS (
     SELECT 1

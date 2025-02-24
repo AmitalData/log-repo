@@ -23,6 +23,7 @@ using Logitude.BL.DataContracts;
 using Microsoft.Practices.Unity;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.Server.Tools.Counters;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -2244,6 +2245,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return d;
         }
+
         public DocumentType GetDocumentTypeByCode(string code, int tenant, bool fromCache = false)
         {
             DocumentType docTypePm = null;
@@ -2272,6 +2274,85 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              select a).FirstOrDefault();
 			}
             return docTypePm;
+        }
+
+        public static DocumentType AddDocumentType(DocumentTypePM docType, int theTenant, DocumentTypeRepository theDocumentTypeRepository, DocumentTypeCopyRepository theDocumentTypeCopyRepository,
+            DocumentTypeCustomFieldRepository theDocumentTypeCustomFieldRepository, string tenantZeroObjectTableId, List<DocumentTypeCustomField> tenantZeroCustomFields)
+        {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Creating document type: {docType.Code} {docType.Name}, tenant: {theTenant}, ObjectTableId: {docType.ObjectTableId}");
+            DocumentType newDocType = new DocumentType()
+            {
+                Id = IdCounter.GetNumber("DocumentType", theTenant).ToString(),
+                Code = docType.Code,
+                Name = docType.Name,
+                IsOcean = docType.IsOcean,
+                IsAir = docType.IsAir,
+                IsInland = docType.IsInland,
+                IsDocIn = docType.IsDocIn,
+                IsDocOut = false,
+                FollowUpTypeId = docType.FollowUpTypeId,
+                Tenant = theTenant,
+                ObjectTableId = tenantZeroObjectTableId,
+                SearchFields = docType.SearchFields,
+                IsMaster = docType.IsMaster,
+                IsDirect = docType.IsDirect,
+                IsHouse = docType.IsHouse,
+                TemplateFormatCode = docType.TemplateFormatCode,
+                IsEnabledForCustomers = true,
+                IsCopiedAtSignup = true,
+                CountryCode = docType.CountryCode,
+                Subject = docType.Subject,
+                Notes = docType.Notes,
+                OrderBy = docType.OrderBy,
+                DocumentTypeCategoryCode = docType.DocumentTypeCategoryCode,
+                //IsAgentView = docType.IsAgentView,
+                //IsCustomerView = docType.IsCustomerView,
+                IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
+                PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
+                OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName,
+                OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName,
+                OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName,
+            };
+            foreach (DocumentTypeCopyPM copy in docType.DocumentTypeCopies)
+            {
+                if (!copy.InActive)
+                {
+                    DocumentTypeCopy newCopy = new DocumentTypeCopy()
+                    {
+                        Id = IdCounter.GetNumber("DocumentTypeCopy", theTenant).ToString(),
+                        Code = copy.Code,
+                        Name = copy.Name,
+                        Tenant = theTenant,
+                        IndexOrder = copy.IndexOrder,
+                        IsSelectedByDefault = copy.IsSelectedByDefault,
+                        DocumentTypeId = newDocType.Id,
+                    };
+                    theDocumentTypeCopyRepository.Add(newCopy);
+                }
+            }
+
+            List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
+            foreach (DocumentTypeCustomField customField in zeroCustomFields)
+            {
+                DocumentTypeCustomField newCustomField = new DocumentTypeCustomField()
+                {
+                    DocumentTypeId = newDocType.Id,
+                    DefaultValue = customField.DefaultValue,
+                    FieldCode = customField.FieldCode,
+                    FieldDataTypeCode = customField.FieldDataTypeCode,
+                    Id = IdCounter.GetNumber("DocumentTypeCustomField", theTenant).ToString(),
+                    InActive = customField.InActive,
+                    IndexOrder = customField.IndexOrder,
+                    IsRequired = customField.IsRequired,
+                    MultiLine = customField.MultiLine,
+                    Name = customField.Name,
+                    Tenant = theTenant,
+                };
+                theDocumentTypeCustomFieldRepository.Add(newCustomField);
+            }
+
+            theDocumentTypeRepository.Add(newDocType);
+            return newDocType;
         }
     }
     public class ShareDocumentTypesArgs
