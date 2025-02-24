@@ -1,0 +1,81 @@
+.preference-menu {
+  min-width: 200px;
+  max-width: 300px;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  direction: rtl;
+  background-color: var(--grey);
+  position: absolute;
+  left: 9px;
+  top: 9px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: center;
+  padding: 12px 10px 11px 0px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--greyRO);
+}
+
+th {
+  padding: 6px 10px 5px 0px;
+  background-color: var(--grey);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+td {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+tr:nth-last-child(1) td {
+  border-bottom: 0px;
+}
+
+td img {
+  display: block;
+  width: 14px;
+}
+
+.actionButtonsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actionCommentBox {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: none;
+  background-color: var(--grey);
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.actionCommentBox:hover {
+  background-color: #e0e0e0;
+}
+
+.fa-trash,
+.fa-save {
+  color: black;
+}
+

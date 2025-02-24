@@ -19,6 +19,8 @@ using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -1110,5 +1112,166 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return DocumentsIds;
         }
+
+        public void CopyFromTenant0(int tenant, int tenatToCopy)
+        {
+
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(commonDataContext);
+            DocumentTypeCopyRepository documentTypeCopyRepository = new DocumentTypeCopyRepository(commonDataContext);
+            DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(commonDataContext);
+
+            List<DocumentType> currentTenantDocumentTypes = documentTypeRepository.GetDocumentTypes(tenatToCopy).ToList();
+            Dictionary<string, string> existingDocumentTypeCodes = currentTenantDocumentTypes.ToDictionary(a => a.Code, a => a.Id);
+
+            // get all document types that should be created in the tenant
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            HashSet<string> tenantZeroObjectTableIds = objectTableRepository.GetObjectsByTenant(0)
+                .Where(d => d.InActive == false && (d.ClientModuleName == "Accounting" || d.ClientModuleName == "Invoice")).Select(a => a.Id).ToHashSet();
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(documentTypeRepository);
+            List<DocumentTypePM> tenantZeroDocumentTypes = documentTypeQuery.GetDocumentTypePMsByTenant(0)
+                .Where(docType => !docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers && tenantZeroObjectTableIds.Contains(docType.ObjectTableId)).ToList();
+
+            List<DocumentTypeCustomField> tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
+
+            IQueryable<DocumentTypeTemplatePM> tenantZeroDocumentTypeTemplates = this.GetDocumentTypeTemplatePMsByTenant(0).Where(d => !d.InActive && d.IsCopiedAtSignup && d.IsEnabledForCustomers);
+
+            foreach (DocumentTypePM docType in tenantZeroDocumentTypes) {
+
+                HashSet<string> existingDocumentTypeTemplates = new HashSet<string>();
+
+                string existingDocTypeId;
+                existingDocumentTypeCodes.TryGetValue(docType.Code, out existingDocTypeId);
+
+                // add it only if it is not already in the tenant
+                if (string.IsNullOrEmpty(existingDocTypeId))
+                {
+                    DocumentType addedDocType = DocumentTypeQuery.AddDocumentType(docType, tenatToCopy, documentTypeRepository, documentTypeCopyRepository, documentTypeCustomFieldRepository, docType.ObjectTableId, tenantZeroCustomFields);
+                    currentTenantDocumentTypes.Add(addedDocType);
+                    documentTypeRepository.SubmitChanges();
+                }
+                else
+                {
+                    existingDocumentTypeTemplates = repository.GetDocumentTypeTemplatesByDocumentTypeId(tenatToCopy, existingDocTypeId).Select(a => a.OriginalTemplateId).ToHashSet();
+                }
+
+                List<DocumentTypeTemplatePM> documentTypeTemplatesToAdd = tenantZeroDocumentTypeTemplates.Where(d => d.DocumentTypeId == docType.Id && !existingDocumentTypeTemplates.Contains(d.Id)).ToList();
+
+                if (documentTypeTemplatesToAdd.Count > 0)
+                {
+                    AddDocumentTypeTemplate(docType, tenatToCopy, repository, currentTenantDocumentTypes, documentTypeRepository, documentTypeTemplatesToAdd);
+                }
+            }
+
+            documentTypeCopyRepository.SubmitChanges();
+            documentTypeCustomFieldRepository.SubmitChanges();
+            repository.SubmitChanges();
+        }
+
+        public static void AddDocumentTypeTemplate(DocumentTypePM documenttype, int theTenant, DocumentTypeTemplateRepository documentTypeTemplateRepository, List<DocumentType> currentTenantDocumentTypes, DocumentTypeRepository theDocumentTypeRepository, List<DocumentTypeTemplatePM> tenantZeroDocumentTypeTemplateList, string coutryCode = null)
+        {
+            DocumentType usedDocumenttype = currentTenantDocumentTypes.Where(d => d.Code == documenttype.Code && d.Tenant == theTenant && !d.InActive && d.IsCopiedAtSignup).FirstOrDefault();
+            bool sameCountry = documenttype.CountryCode == coutryCode;
+
+            if (usedDocumenttype != null && (string.IsNullOrEmpty(documenttype.CountryCode?.Trim()) || sameCountry))
+            {
+                List<DocumentTypeTemplate> documentTypeTemplates = new List<DocumentTypeTemplate>();
+                foreach (DocumentTypeTemplatePM documentTypeTemplatePM in tenantZeroDocumentTypeTemplateList.Where(d => d.DocumentTypeId == documenttype.Id))
+                {
+                    if (sameCountry || (string.IsNullOrEmpty(documentTypeTemplatePM.CountryCode?.Trim()) || documentTypeTemplatePM.CountryCode == coutryCode))
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Creating document type template for document type: {documenttype.Code}, tenant: {theTenant}, description: {documentTypeTemplatePM.Description}");
+                        DocumentTypeTemplate newDocumentTypeTemplate = GetInstanceFromDocumentTypeTemplate(theTenant, usedDocumenttype, documentTypeTemplatePM);
+                        documentTypeTemplateRepository.Add(newDocumentTypeTemplate);
+                        documentTypeTemplates.Add(newDocumentTypeTemplate);
+                    }
+                }
+                usedDocumenttype.DocumentTypeDefaultReportTemplateId = GetDocumentTypeDefaultReportTemplateId(documentTypeTemplates, documenttype, coutryCode);
+                usedDocumenttype.DocumentTypeDefaultHTMLTemplateId = GetDocumentTypeDefaultHTMLTemplateId(documentTypeTemplates, documenttype, coutryCode);
+
+                usedDocumenttype.IsDocOut = documenttype.IsDocOut;
+                theDocumentTypeRepository.Update(usedDocumenttype);
+            }
+        }
+
+        private static string GetDocumentTypeDefaultHTMLTemplateId(List<DocumentTypeTemplate> documentTypeTemplates, DocumentTypePM documenttype, string coutryCode)
+        {
+            DocumentTypeTemplate documentTypeDefaultHTMLTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "M" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultHTMLTemplateId).FirstOrDefault();
+
+            if (documentTypeDefaultHTMLTemplate == null)
+            {
+                documentTypeDefaultHTMLTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "M").FirstOrDefault();
+            }
+
+            if (documentTypeDefaultHTMLTemplate == null)
+            {
+                documentTypeDefaultHTMLTemplate = documentTypeTemplates.Where(d => d.TemplateType == "M" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultHTMLTemplateId).FirstOrDefault();
+            }
+
+            if (documentTypeDefaultHTMLTemplate == null)
+            {
+                documentTypeDefaultHTMLTemplate = documentTypeTemplates.Where(d => d.TemplateType == "M").FirstOrDefault();
+            }
+
+            return documentTypeDefaultHTMLTemplate != null ? documentTypeDefaultHTMLTemplate.Id : null;
+        }
+
+        private static string GetDocumentTypeDefaultReportTemplateId(List<DocumentTypeTemplate> documentTypeTemplates, DocumentTypePM documenttype, string coutryCode)
+        {
+            DocumentTypeTemplate documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "P" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
+
+            if (documentTypeDefaultReportTemplate == null)
+            {
+                documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "P").FirstOrDefault();
+
+            }
+            if (documentTypeDefaultReportTemplate == null)
+            {
+                documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.TemplateType == "P" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
+            }
+
+            if (documentTypeDefaultReportTemplate == null)
+            {
+                documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.TemplateType == "P").FirstOrDefault();
+            }
+
+            return documentTypeDefaultReportTemplate != null ? documentTypeDefaultReportTemplate.Id : null;
+        }
+
+        private static DocumentTypeTemplate GetInstanceFromDocumentTypeTemplate(int theTenant, DocumentType documenttype, DocumentTypeTemplatePM documentTypeTemplatePM)
+        {
+            return new DocumentTypeTemplate()
+            {
+                Id = IdCounter.GetNumber("DocumentTypeTemplate", theTenant).ToString(),
+                Tenant = theTenant,
+                TemplateBody = documentTypeTemplatePM.TemplateBody,
+                TemplateBodyHtml = documentTypeTemplatePM.TemplateBodyHtml,
+                TemplateFooterHeight = documentTypeTemplatePM.TemplateFooterHeight,
+                TemplateHeaderHeight = documentTypeTemplatePM.TemplateHeaderHeight,
+                TemplateFooterHtml = documentTypeTemplatePM.TemplateFooterHtml,
+                TemplateHeaderHtml = documentTypeTemplatePM.TemplateHeaderHtml,
+                TemplateType = documentTypeTemplatePM.TemplateType,
+                HorizontalShift = documentTypeTemplatePM.HorizontalShift,
+                InActive = documentTypeTemplatePM.InActive,
+                Description = documentTypeTemplatePM.Description,
+                DocumentTypeId = documenttype.Id,
+                EditorTool = documentTypeTemplatePM.EditorTool,
+                VerticalShift = documentTypeTemplatePM.VerticalShift,
+                IsEnabledForCustomers = true,
+                IsCopiedAtSignup = true,
+                CountryCode = documentTypeTemplatePM.CountryCode,
+                Language = documentTypeTemplatePM.Language,
+                OriginalTemplateId = documentTypeTemplatePM.Id,
+                InternalRemarks = documentTypeTemplatePM.InternalRemarks,
+                Subject = documentTypeTemplatePM.Subject,
+                From = documentTypeTemplatePM.From,
+                CC = documentTypeTemplatePM.CC,
+                ReplyTo = documentTypeTemplatePM.ReplyTo,
+                To = documentTypeTemplatePM.To,
+                IsSystem = documentTypeTemplatePM.IsSystem,
+            };
+        }
+
+
     }
 }

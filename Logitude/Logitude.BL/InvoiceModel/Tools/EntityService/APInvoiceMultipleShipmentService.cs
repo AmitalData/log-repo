@@ -280,7 +280,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     entityPM.IsClosed = true;
                 }
 
-                else
+                else if (entityPM.StatusCode != "VD")
                 {
                     entityPM.StatusCode = "AD";
                 }

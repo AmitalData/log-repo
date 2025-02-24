@@ -6,11 +6,12 @@ import { PageTopComponent } from '../page-top/page-top.component';
 import { SearchService } from '../page-top/service/top-page.service';
 import { NgIf } from '@angular/common';
 import { FilterPopupService } from '../filter-popup/service/filter-popup.service';
+import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
 
 @Component({
 	selector: 'app-header',
 	standalone: true,
-	imports: [FontAwesomeModule, PageTopComponent, NgIf],
+	imports: [FontAwesomeModule, PageTopComponent, NgIf, PreferenceMenuComponent],
 	templateUrl: './app-header.component.html',
 	styleUrl: './app-header.component.css',
 })

@@ -1,27 +1,24 @@
-﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
-using Logitude.BL.Security;
+﻿
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
-using Logitude.CustomsMessaging.Common.RequestParams;
-using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
+using System.Transactions;
+using Logitude.Server.Tools;
+ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -41,5 +38,229 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
 			}
 		}
+        public HttpResponseMessage AddNewCB_Preference(CB_PreferencePM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                        ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
+                        CB_PreferenceUpdateService service = new CB_PreferenceUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                        service.Update(entityPM, true);
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+         public HttpResponseMessage AddNewAllCB_Preferences(List<CB_PreferencePM> entityPMs)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                        ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                        CB_PreferenceUpdateService service = new CB_PreferenceUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                        foreach (var entityPM in entityPMs)
+                        {
+                            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                            service.Update(entityPM, true);
+                        }
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPMs);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        public HttpResponseMessage EditCB_Preference(CB_PreferencePM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                        ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
+                        CB_PreferenceUpdateService service = new CB_PreferenceUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        service.Update(entityPM, true);
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+        public HttpResponseMessage EditAllCB_Preferences(List<CB_PreferencePM> entityPMs)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                        ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                        CB_PreferenceUpdateService service = new CB_PreferenceUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                        foreach (var entityPM in entityPMs)
+                        {
+                            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            service.Update(entityPM, true);
+                        }
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPMs);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage DeleteCB_Preference(CB_PreferencePM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                        ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
+                        CB_PreferenceUpdateService service = new CB_PreferenceUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                        service.Update(entityPM, true);
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage DeleteAllCB_Preferences(List<CB_PreferencePM> entityPMs)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                        ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                        CB_PreferenceUpdateService service = new CB_PreferenceUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                        foreach (var entityPM in entityPMs)
+                        {
+                            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            service.Update(entityPM, true);
+                        }
+                        entityPMs.Clear();
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPMs);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
     }
 }

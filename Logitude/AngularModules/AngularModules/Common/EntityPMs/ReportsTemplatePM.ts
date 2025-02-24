@@ -79,7 +79,10 @@ export class ReportsTemplatePM {
     public get InActive() { return this.inActive; }
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
-	 
+    private isCopiedAtSignup: boolean;
+    public get IsCopiedAtSignup() { return this.isCopiedAtSignup; }
+    public set IsCopiedAtSignup(newValue: boolean) { if (this.isCopiedAtSignup != newValue) { this.isCopiedAtSignup = newValue; this.MarkAsDirty("IsCopiedAtSignup"); } }
+
     private isDefault: boolean;
     public get IsDefault() { return this.isDefault; }
     public set IsDefault(newValue: boolean) { if (this.isDefault != newValue) { this.isDefault = newValue; this.MarkAsDirty("IsDefault"); } }

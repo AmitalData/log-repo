@@ -221,6 +221,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       Subject = a.Subject,
                                                                       ReplyTo = a.ReplyTo,
                                                                       ObjectTableId = a.ObjectTableId,
+                                                                      IsCopiedAtSignup = a.IsCopiedAtSignup,
                                                                       EntityId = a.EntityId
                                                                   };
 

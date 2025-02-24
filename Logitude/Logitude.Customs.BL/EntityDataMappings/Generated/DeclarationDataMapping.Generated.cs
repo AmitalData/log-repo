@@ -453,7 +453,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DiamondsDeclarationFilter, 
 	         SystemConnection, 
 	         IsFromUpdateShipment, 
-	         ShipmentId,
+	         ShipmentId, 
 	         CooStatusName, 
 	         CooStatusCode,
 	      }
@@ -2986,6 +2986,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CasualSupplierAddress)) //T4 find type == nText 
             {
                 entityPM.CasualSupplierAddress = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CasualSupplierAddress));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ManifestErrorXml)) //T4 find type == nText 
+            {
+                entityPM.ManifestErrorXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ManifestErrorXml));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.CourierSearchFields)) //T4 find type == nText 
             {

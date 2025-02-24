@@ -3509,6 +3509,82 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;b0222cc4-ddb6-4a4b-8977-e1693cc9c0a5&quot;"
+    FieldName="&quot;FactoringBank&quot;"
+    OldNames="FactoringBank"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;BankAccount&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    IsListFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;FactoringBank&quot;"
+    ListPropertyPath="&quot;FactoringBank&quot;"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;BankAccount&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;FactoringBank&quot;"
+    DefaultText="&quot;Factoring Bank&quot;"
+    FullLocalDefaultText="&quot;בנק ניכיון&quot;"
+    ListFieldLable="&quot;FactoringBankListLable&quot;"
+    ListLableDefaultText="&quot;Factoring Bank&quot;"
+    ListLocalDefaultText="&quot;בנק ניכיון&quot;"
+    IsNullable="true"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;AllBankAccounts&quot;"
     TextCode="&quot;All bank accounts&quot;"
@@ -3537,46 +3613,51 @@
       <QueryColumn
         QueryCode="&quot;AllBankAccounts&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;FactoringBank&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;AllBankAccounts&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;AccountNumber&quot;"
         ColumnWidth="120" />
       <QueryColumn
         QueryCode="&quot;AllBankAccounts&quot;"
-        IndexOrder="2"
+        IndexOrder="3"
         ObjectFieldName="&quot;BankId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllBankAccounts&quot;"
-        IndexOrder="3"
+        IndexOrder="4"
         ObjectFieldName="&quot;GLAccountNumber&quot;"
         ColumnWidth="142" />
       <QueryColumn
         QueryCode="&quot;AllBankAccounts&quot;"
-        IndexOrder="4"
+        IndexOrder="5"
         ObjectFieldName="&quot;DeferedGLAccountNumber&quot;"
         ColumnWidth="174" />
       <QueryColumn
         QueryCode="&quot;AllBankAccounts&quot;"
-        IndexOrder="5"
+        IndexOrder="6"
         ObjectFieldName="&quot;BankCode&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllBankAccounts&quot;"
-        IndexOrder="6"
+        IndexOrder="7"
         ObjectFieldName="&quot;BranchNumber&quot;"
         ColumnWidth="136" />
       <QueryColumn
         QueryCode="&quot;AllBankAccounts&quot;"
-        IndexOrder="7"
+        IndexOrder="8"
         ObjectFieldName="&quot;DeferredGLAccountId&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllBankAccounts&quot;"
-        IndexOrder="8"
+        IndexOrder="9"
         ObjectFieldName="&quot;BranchAddress&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;AllBankAccounts&quot;"
-        IndexOrder="9"
+        IndexOrder="10"
         ObjectFieldName="&quot;Inactive&quot;"
         ColumnWidth="100" />
     </QueryColumns>
@@ -3589,7 +3670,7 @@
     IsHeaderScreen="false"
     Code="&quot;BankAccount.GeneralTabScreen&quot;"
     NumberOfColumns="2"
-    NumberOfRows="5">
+    NumberOfRows="6">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -3640,6 +3721,11 @@
         Column="1"
         Row="4"
         ObjectFieldName="&quot;Inactive&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="1"
+        Row="5"
+        ObjectFieldName="&quot;FactoringBank&quot;"
         ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>
@@ -3788,6 +3874,32 @@
       IsManualEntry="false"
       ShortView="false"
       EventTypeCategoryCode="&quot;OPE&quot;"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;FBAC&quot;"
+      ObjectTableName="&quot;BankAccount&quot;"
+      EnglishName="&quot;Factoring Bank Activated&quot;"
+      LocalName="&quot;Factoring Bank Activated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;FBDA&quot;"
+      ObjectTableName="&quot;BankAccount&quot;"
+      EnglishName="&quot;Factoring Bank Deactivated&quot;"
+      LocalName="&quot;Factoring Bank Deactivated&quot;"
+      IsManualEntry="false"
+      ShortView="false"
       IsAgentView="false"
       IsCustomerView="false"
       IsSharedLogisticsEnabled="false"
