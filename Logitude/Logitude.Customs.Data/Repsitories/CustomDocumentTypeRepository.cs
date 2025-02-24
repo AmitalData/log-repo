@@ -30,12 +30,17 @@ namespace Logitude.Customs.Data.Repsitories
 
         public IQueryable<CustomDocumentType> GetCustomDocumentTypesIsCourierManadatoryByTenant(int tenant)
         {
-            return (from a in context.CustomDocumentTypes
-                    join c in context.CustomDocumentTypeTenants
-                     on a.Code equals c.Code
-                    where c.Tenant == tenant
-                    select a
-                  ); 
+			return (from a in context.CustomDocumentTypes
+					join c in context.CustomDocumentTypeTenants
+					 on a.Code equals c.Code into tenantGroup
+		            from c in tenantGroup.DefaultIfEmpty()
+					where  c == null || c.Tenant == tenant
+					select new CustomDocumentType
+					{
+						Code = a.Code,
+						IsCourierManadatory = c != null ? c.IsCourierManadatory : a.IsCourierManadatory,
+					});
+                
         }
 
     }
