@@ -1,8 +1,6 @@
 .mainTable_item {
 	position: relative;
-	/* height: 44px; */
 	height: 30px;
-	/* margin-right: 20px; */
 	display: flex;
 	width: 99%;
 	align-items: center;
@@ -11,14 +9,9 @@
 	padding-right: 10px;
 }
 
-/* .mainTable_item:hover {
-	background-color: var(--greyRO);
-} */
-
 .selected {
-	background-color: var(--blue);
+	background-color: var(--blue) !important;
 	color: white;
-	/* font-weight: 700; */
 }
 
 a {

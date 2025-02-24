@@ -32,6 +32,7 @@ export class CB_RequirementComputedDataList {
 	FromEpisodeDetail: string;
 	AutonomyRegion: string;
 	IsVoluntaryOrImporterOfTrust: boolean;
+	TrNumber: number;
 	
 }
  

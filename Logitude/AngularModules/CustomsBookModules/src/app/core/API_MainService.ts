@@ -13,6 +13,7 @@ export interface Filters {
 	SkippedRows?: number;
 	PageSize?: number;
 	Tenant?: number;
+	IsDiscountCodes?: boolean;
 }
 
 @Injectable({
@@ -45,7 +46,7 @@ export class API_MainService extends BaseService {
 	}
 
 	GetCustomsBookMainView(filters: Filters) {	
-		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}`;
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}&IsDiscountCodes=${filters.IsDiscountCodes}`;
 		return this.Get(url);
 	}
 
@@ -118,5 +119,39 @@ export class API_MainService extends BaseService {
 	GetClassifications(): Observable<HttpEvent<Object>> {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetClassifications`;
 		return this.Get(url);
+	}
+
+	GetCB_PreferenceByUserIdAndTenant(userId: string, tenant: number) {
+		const url = `${this._apiUrl}CB_Preference/GetCB_PreferenceByUserIdAndTenant?userId=${userId}&tenant=${tenant}`;
+		return this.Get(url);
+	}
+
+	AddNewCB_Preference(data) {
+		const url = `${this._apiUrl}CB_Preference/AddNewCB_Preference`;
+		return this.Post(url, data);
+	}
+	AddNewAllCB_Preferences(data) {
+		const url = `${this._apiUrl}CB_Preference/AddNewAllCB_Preferences`;
+		return this.Post(url, data);
+	}
+	
+	EditCB_Preference(data) {
+		const url = `${this._apiUrl}CB_Preference/EditCB_Preference`;
+		return this.Post(url, data);
+	}
+
+	EditAllCB_Preferences(data) {
+		const url = `${this._apiUrl}CB_Preference/EditAllCB_Preferences`;
+		return this.Post(url, data);
+	}
+
+	DeleteCB_Preference(data) {
+		const url = `${this._apiUrl}CB_Preference/DeleteCB_Preference`;
+		return this.Post(url, data);
+	}
+
+	DeleteAllCB_Preferences(data) {
+		const url = `${this._apiUrl}CB_Preference/DeleteAllCB_Preferences`;
+		return this.Post(url, data);
 	}
 }
