@@ -268,9 +268,22 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
                                 if (entity == null)
                                 {
-                                    entity = (from a in context.Contacts
-                                              where a.Email == email && a.Tenant == 0
-                                              select a).FirstOrDefault();
+								    entityName = "Contact" + email + 0;
+                                    if(CacheManager.CacheWrapper.Get(entityName) == null)
+                                    {
+									   entity = (from a in context.Contacts
+									   		  where a.Email == email && a.Tenant == 0
+									   		  select a).FirstOrDefault();
+                                       if(entity != null)
+                                       {
+										 CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+
+									   }
+								    }
+                                    else
+                                    {
+									    entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
+								    }
                                 }
                             }
                             //}
