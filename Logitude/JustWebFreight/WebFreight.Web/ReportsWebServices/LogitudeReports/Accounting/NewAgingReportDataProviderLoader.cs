@@ -50,7 +50,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         }
         
-        private NewAccountingAgingDataProvider BuildDataProvider()
+        public NewAccountingAgingDataProvider BuildDataProvider()
         {
             NewAccountingAgingDataProvider dataProvider = new NewAccountingAgingDataProvider();
 
@@ -59,41 +59,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private NewAccountingAgingDataProvider SetAccountingAgingDataLine(NewAccountingAgingDataProvider dataProvider)
         {
-            List<AgingPeriod> AgingDataLine = GetAccountingAgingDataLineByFilter();
-            dataProvider.ChartOfAccountLine = new List<ChartOfAccountLine>();
-            for (int i = 0; i < chartOfAccountList?.Count(); i++)
-            {
-                QueryFilterItem DetailedForJobs = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
-                List<MonthlyBalancesLine> monthlyBalancesLineOfChartOfAccount = monthlyBalancesLine.Where(a => a.ChartOfAccount == chartOfAccountList[i].Id).ToList();
-
-                ChartOfAccountLine chartOfAccountLine =
-                                new ChartOfAccountLine()
-                                {
-                                    QuantityForJanuary = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForJanuary) : 0,
-                                    QuantityForFebruary = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForFebruary) : 0,
-                                    QuantityForMarch = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForMarch) : 0,
-                                    QuantityForApril = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForApril) : 0,
-                                    QuantityForMay = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForMay) : 0,
-                                    QuantityForJune = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForJune) : 0,
-                                    QuantityForJuly = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForJuly) : 0,
-                                    QuantityForAugust = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForAugust) : 0,
-                                    QuantityForSeptember = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForSeptember) : 0,
-                                    QuantityForOctober = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForOctober) : 0,
-                                    QuantityForNovember = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForNovember) : 0,
-                                    QuantityForDecember = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForDecember) : 0,
-                                    TotalReport = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.TotalReport) : 0,
-                                    GLAcountLocalName = chartOfAccountList[i].LocalName,
-                                    GLAcountNumber = chartOfAccountList[i].Code,
-                                    GLAcountEnglishName = chartOfAccountList[i].EnglishName,
-                                    MonthlyBalancesLine = (bool)DetailedForJobs?.FieldValue ? monthlyBalancesLineOfChartOfAccount : new List<MonthlyBalancesLine>()
-
-
-                                };
-                dataProvider.ChartOfAccountLine.Add(chartOfAccountLine);
-
-            }
-
-        }
+            List<NewAgingPeriod> AgingDataLine = GetAccountingAgingDataLineByFilter();
+            dataProvider.AgingPeriods = AgingDataLine;
+            return dataProvider;
+         }
 
         private List<NewAgingPeriod> GetAccountingAgingDataLineByFilter()
         {
@@ -131,10 +100,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 SalesmanId = reader["SalesmanUserId"] != DBNull.Value ? (string)reader["SalesmanUserId"] :null,
                                 CollectorId = reader["CollectorId"] != DBNull.Value ? (string)reader["CollectorId"] : null,
                                 CurrencyId = reader["CurrencyId"] != DBNull.Value ? (string)reader["CurrencyId"] : null,
-                                AccountEnglishName = reader["AccountEnglishName"] != DBNull.Value ? (string)reader["AccountEnglishName"] : null,
-                                AccountLocalName = reader["AccountLocalName"] != DBNull.Value ? (string)reader["AccountLocalName"] : null,
-                                AccountDisplayNumber = reader["AccountDisplayNumber"] != DBNull.Value ? (string)reader["AccountDisplayNumber"] : null,
-
+                                AccountEnglishName = reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
+                                AccountLocalName = reader["LocalName"] != DBNull.Value ? (string)reader["LocalName"] : null,
+                                AccountDisplayNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
+                                BalanceInLocalCurrency = reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal)reader["BalanceInLocalCurrency"] : null,
+                                CreditLimit = reader["CreditLimit"] != DBNull.Value ? (decimal)reader["CreditLimit"] : null,
+                                InsuredCreditLimit = reader["InsuredCreditLimit "] != DBNull.Value ? (double)reader["InsuredCreditLimit "] : null,
+                                AccountingBalance = reader[ "AccountingBalance "] != DBNull.Value ? (decimal)reader["AccountingBalance "] : null,
+                                TotalOpenShipments = reader[ "TotalOpenShipments "] != DBNull.Value ? (decimal)reader["TotalOpenShipments "] : null,
+                                TotalFutureOpenCheques = reader["TotFutureOpenChequesInLocalCur "] != DBNull.Value ? (decimal)reader["TotFutureOpenChequesInLocalCur "] : null,
+                                ExternalTransactionsTotal= reader["ExternalTransactionsTotal "] != DBNull.Value ? (decimal)reader["ExternalTransactionsTotal "] : null,
+                                TotalLocal= reader["BalanceInLocalCurrency "] != DBNull.Value ? (decimal)reader["BalanceInLocalCurrency "] : null,
                             };
                             results.Add(result);
                         }

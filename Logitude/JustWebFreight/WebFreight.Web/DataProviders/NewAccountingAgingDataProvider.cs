@@ -45,6 +45,14 @@ namespace WebFreight.Web.DataProviders
         public decimal CustomerCreditLimit { get; set; }
         public double? InsuredCreditLimit { get; set; }
         public decimal GLAccountStandardInterestRate { get; set; }
+        public decimal? ExternalTransactionsTotal { get; set; }
+        public decimal? FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
+        public decimal? Obligo { get { return TotalToCollect + FutureChequesTotal; } }
+
+        public decimal? CreditUsed { get { return CreditLimit - Obligo; } }
+
+        public decimal? TotalLocal { get; set; } = 0;
+        public decimal? TotalForeign { get; set; } = 0;
 
         public decimal? BalanceInLocalAccountingDate { get; set; }
         public decimal? BalanceInForeignAccountingDate { get; set; }
@@ -89,8 +97,9 @@ namespace WebFreight.Web.DataProviders
         public string CollectorId { get; set; }
         public string SalesmanId { get; set; }
         public string CurrencyId { get; set; }
-
-
+        public decimal? CreditLimit { get; set; }
+         public decimal? TotalToCollect { get { return AccountingBalance + TotalOpenShipments; } }
+        public decimal? AccountingBalance { get; set; }
 
 
     }
