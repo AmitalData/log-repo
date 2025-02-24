@@ -1223,7 +1223,7 @@ namespace WebFreight.Web.Helpers
                         dataProvider = logitudeReportsWebService.LoadAccountingAgingDataProvider(filters, reportFliter.tenant);
                         break;
                     }
-                case "NAGER":
+                case "NAGR":
                     {
                         dataProvider = logitudeReportsWebService.LoadAccountingNewAgingDataProvider(filters, reportFliter.tenant);
                         break;
@@ -1750,7 +1750,7 @@ namespace WebFreight.Web.Helpers
 
                         break;
                     }
-                case "NAGER":
+                case "NAGR":
                     {
                         dataProviderName = "WebFreight.Web.DataProviders.NewAccountingAgingDataProvider";
 
@@ -2460,14 +2460,14 @@ namespace WebFreight.Web.Helpers
 
                             break;
                         }
-                case "NAGER":
+                case "NAGR":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(NewAccountingAgingDataProvider));
                         NewAccountingAgingDataProvider reportDataProvider = (NewAccountingAgingDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         reportDataProvider.Logo = stimulReportDataProviderDetails.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
-                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "NAGER", Name = "NewAccountingAgingDataProvider", BusinessObjectValue = reportDataProvider };
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "NAGR", Name = "NewAccountingAgingDataProvider", BusinessObjectValue = reportDataProvider };
 
                         break;
                     }
@@ -3021,7 +3021,7 @@ namespace WebFreight.Web.Helpers
                     case "CSSR":
                     case "LOCR":
                     case "SRQR":
-                    case "NAGER":
+                    case "NAGR":
                         return true;
 
                     default:

@@ -23,13 +23,12 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
     templateUrl: './NewAgingFilterComponent.html',
 })
 
-export class NewAgingFilterComponent extends BaseComponent implements OnInit
-{
+export class NewAgingFilterComponent extends BaseComponent implements OnInit {
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
-    IsSalesmanRestricted: boolean = false ;
+    IsSalesmanRestricted: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
@@ -41,8 +40,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
-    constructor(public entityListService: EntityListService)
-    {
+    constructor(public entityListService: EntityListService) {
         super();
         this.TenantPM = SessionLocator.TenantPM;
 
@@ -54,17 +52,14 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     }
 
-    private InitComponent()
-    {
+    private InitComponent() {
         this.InitFilters();
 
         this.SetMonthFilterDefaults();
 
-        this.FillAgingMethodList();
     }
 
-    private SetMonthFilterDefaults()
-    {
+    private SetMonthFilterDefaults() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.entityListService.getSingle(this.TenantPM.Id.toString(), "FullAccountingSetting").then((res: any) => {
             this.CurrentSession.StopBusyIndicator();
@@ -72,14 +67,13 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
                 if (myResponse != null) {
                     var res = myResponse.Result;
                     this.FullAccountingSetting = res;
-                    this.NumberOfMonths = this.FullAccountingSetting.NumberOfAgingMonths;
+
                 }
             })
         });
     }
 
-    private InitFilters()
-    {
+    private InitFilters() {
         this.SalesmanFilterItems = new ApiQueryFilters();
         this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
 
@@ -87,54 +81,37 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
         // this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
     }
 
-    private GetResources()
-    {
+    private GetResources() {
         this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { this.isReady = true; });
     }
     private loggedUser: any;
-    GetSalesmanFeature()
-    {
+    GetSalesmanFeature() {
         var salesmanAging = FeatureLocator.HasFeaturePermession("GLAccount", "SalesmanAging");
         var isSalesmanRestrictionsEnabled = !!salesmanAging;
         console.log("[Salesman Aging]", salesmanAging);
 
         this.loggedUser = SessionLocator.LoggedUserPM;
-        if(this.loggedUser.IsSalesman && isSalesmanRestrictionsEnabled){
+        if (this.loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
             this.IsSalesmanRestricted = true;
             this.Salesman = this.loggedUser.Id;
         }
     }
 
 
-    public AgingMethodsList: CodeNameClass[];
     public Name: string;
-    FillAgingMethodList()
-    {
-        this.Name = this.showLocal ? "LocalName" : "Name";
 
-        this.AgingMethodsList = [];
-        this.AgingMethodsList.push(new CodeNameClass("1", "Open Transaction", "תנועות פתוחות"));
-        this.AgingMethodsList.push(new CodeNameClass("2", "Total By Month FIFO", "סכומים חודשים לפי FIFO"));
-        this.SelectedAgingMethod = this.AgingMethodsList[0];
-    }
-    ngOnInit()
-    {
+    ngOnInit() {
         this.SetUIProperties();
     }
 
-    SetUIProperties()
-    {
+    SetUIProperties() {
         this.UIProperties.SetRequired("AgingForDate", "GLAccount", true);
-        //this.UIProperties.SetRequired("Customer", "GLAccount", true);
-        //this.UIProperties.SetRequired("NumberOfMonths", "GLAccount", true);
 
-        if (this.IsSalesmanRestricted)
-        {
+        if (this.IsSalesmanRestricted) {
             this.UIProperties.SetRequired("Salesman", "GLAccount", true);
             this.UIProperties.SetEnabled("Salesman", "GLAccount", false);
         }
-        else
-        {
+        else {
             if (this.filterSelectedValue == "filter_vendor") {
                 this.UIProperties.SetEnabled("Salesman", "GLAccount", false);
                 this.UIProperties.SetEnabled("Collector", "GLAccount", false);
@@ -154,8 +131,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
     //row 1
     private agingForDate: Date = new Date();
     public get AgingForDate() { return this.agingForDate; }
-    public set AgingForDate(value: Date)
-    {
+    public set AgingForDate(value: Date) {
         if (this.agingForDate != value) {
             this.agingForDate = value;
 
@@ -166,12 +142,11 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     private customer: string;
     public get Customer() { return this.customer; }
-    public set Customer(value: string)
-    {
+    public set Customer(value: string) {
         if (this.customer != value) {
             this.customer = value;
 
-            if (value){
+            if (value) {
                 this.ChartOfAccountsId_Dummy = null;
                 this.IsCategoryDisabled = true;
             }
@@ -196,78 +171,54 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
             }
         });
     }
-    private _ChartOfAccountsTypeCode : string = "3";
-    public get ChartOfAccountsTypeCode() : string {
+    private _ChartOfAccountsTypeCode: string = "3";
+    public get ChartOfAccountsTypeCode(): string {
         return this._ChartOfAccountsTypeCode;
     }
-    public set ChartOfAccountsTypeCode(v : string) {
+    public set ChartOfAccountsTypeCode(v: string) {
         this._ChartOfAccountsTypeCode = v;
         this.ChartOfAccountsId_Dummy = null;
     }
     private ChartOfAccountSecurityLevel: any;
     private chartOfAccount: any;
     public get ChartOfAccount() { return this.chartOfAccount; }
-    public set ChartOfAccount(value: any)
-    {
+    public set ChartOfAccount(value: any) {
         if (this.chartOfAccount != value) {
             this.chartOfAccount = value;
-            this.ChartOfAccountSecurityLevel = value? value.ChartOfAccountSecurityLevel: null;
+            this.ChartOfAccountSecurityLevel = value ? value.ChartOfAccountSecurityLevel : null;
         }
     }
 
 
-    private _ChartOfAccountsId : string = null;
-    public get ChartOfAccountsId_Dummy() : string {
+    private _ChartOfAccountsId: string = null;
+    public get ChartOfAccountsId_Dummy(): string {
         return this._ChartOfAccountsId;
     }
-    public set ChartOfAccountsId_Dummy(v : string) {
+    public set ChartOfAccountsId_Dummy(v: string) {
         this._ChartOfAccountsId = v;
     }
 
 
 
-    ValidateDate()
-    {
+    ValidateDate() {
         if (this.AgingForDate) {
-            var newDate = new Date();
-            var currentDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate() + 1, 0, 0, 0); // +1 is to include today date to allowed values
 
-            if (this.AgingForDate > currentDate) {
-                this.UIProperties.SetValidity("AgingForDate", "GLAccount", false, TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
-                return false;
-            } else {
-                this.UIProperties.SetValidity("AgingForDate", "GLAccount", true, "valid");
-                this.UIProperties.SetRequired("AgingForDate", "GLAccount", false);
-                return true;
-            }
+            this.UIProperties.SetValidity("AgingForDate", "GLAccount", true, "valid");
+            this.UIProperties.SetRequired("AgingForDate", "GLAccount", false);
+            return true;
+
         }
         return true;
     }
 
-    //private chartOfAccount: string;
-    //public get ChartOfAccount() { return this.chartOfAccount; }
-    //public set ChartOfAccount(value: string) {
-    //    if (this.chartOfAccount != value) {
-    //        this.chartOfAccount = value;
-    //    }
-    //}
 
-    private numberOfMonths: number;
-    public get NumberOfMonths() { return this.numberOfMonths; }
-    public set NumberOfMonths(value: number)
-    {
-        if (this.numberOfMonths != value) {
-            this.numberOfMonths = value;
-        }
-    }
 
 
     //row 2
 
     private collector: string;
     public get Collector() { return this.collector; }
-    public set Collector(value: string)
-    {
+    public set Collector(value: string) {
         if (this.collector != value) {
             this.collector = value;
         }
@@ -275,8 +226,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     private salesman: string;
     public get Salesman() { return this.salesman; }
-    public set Salesman(value: string)
-    {
+    public set Salesman(value: string) {
         if (this.salesman != value) {
             this.salesman = value;
         }
@@ -286,8 +236,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     private category1: string;
     public get Category1() { return this.category1; }
-    public set Category1(value: string)
-    {
+    public set Category1(value: string) {
         if (this.category1 != value) {
             this.category1 = value;
         }
@@ -296,8 +245,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     private category2: string;
     public get Category2() { return this.category2; }
-    public set Category2(value: string)
-    {
+    public set Category2(value: string) {
         if (this.category2 != value) {
             this.category2 = value;
         }
@@ -305,8 +253,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     private category3: string;
     public get Category3() { return this.category3; }
-    public set Category3(value: string)
-    {
+    public set Category3(value: string) {
         if (this.category3 != value) {
             this.category3 = value;
         }
@@ -314,8 +261,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     private category4: string;
     public get Category4() { return this.category4; }
-    public set Category4(value: string)
-    {
+    public set Category4(value: string) {
         if (this.category4 != value) {
             this.category4 = value;
         }
@@ -324,8 +270,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
     //row 4
     private category5: string;
     public get Category5() { return this.category5; }
-    public set Category5(value: string)
-    {
+    public set Category5(value: string) {
         if (this.category5 != value) {
             this.category5 = value;
         }
@@ -333,8 +278,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     private currenciesDetailed: boolean;
     public get CurrenciesDetailed() { return this.currenciesDetailed; }
-    public set CurrenciesDetailed(value: boolean)
-    {
+    public set CurrenciesDetailed(value: boolean) {
         if (this.currenciesDetailed != value) {
             this.currenciesDetailed = value;
         }
@@ -342,8 +286,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     private balance: number;
     public get Balance() { return this.balance; }
-    public set Balance(value: number)
-    {
+    public set Balance(value: number) {
         if (this.balance != value) {
             this.balance = value;
         }
@@ -366,34 +309,22 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
     }
 
     //#endregion
-     private errors: string[];
-    RunButtonClicked()
-    {
+    private errors: string[];
+    RunButtonClicked() {
         this.SetUIProperties();
 
-         this.errors = [];
+        this.errors = [];
         var categoryValue = null;
         var categoryIndex = null;
         this.ValidationErrorsList = [];
 
-        //#region requierd fields
         if (!this.AgingForDate) { this.errors.push("Aging for date field is requierd"); }
-        //if (!this.Customer) { errors.push("Customer field is requierd"); }
-        if (!this.NumberOfMonths) { this.errors.push("Number of months field is requierd"); }
-        //#endregion
-
-        //#region Date validation
-        var isDateValid = this.ValidateDate();
-        if (!isDateValid)
-            this.errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
-        //#endregion
         this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
 
 
         if (this.errors.length == 0) {
 
 
-            // Selecting category
             if (this.SelectedCategory) {
                 categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
 
@@ -405,15 +336,13 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
             myFilterItems.push(new QueryFilterItem("AgingForDate", this.AgingForDate, "Date"));
             myFilterItems.push(new QueryFilterItem("GLAccountType", this.AccountTypeCode));
             myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
-            myFilterItems.push(new QueryFilterItem("NumberOfMonths", this.NumberOfMonths, "Number"));
             myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
 
             myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
 
             myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
-            myFilterItems.push(new QueryFilterItem("AgingMethod", this.SelectedAgingMethod.Name));
 
-            myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
+            myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); 
             myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
             myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
             myFilterItems.push(new QueryFilterItem("CurrencyOriginalLocalValue", this.currencyFilterSelectedValue));
@@ -442,7 +371,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
             this.ValidationErrorsList = this.errors;
         }
     }
-   
+
     private CheckGLAccountChartOfAccountSecurityLevel() {
         if (this.Customer) {
             return this.CheckSecurityLevel(this.securityLevel);
@@ -469,7 +398,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
                 securityLevel = 0;
             }
             if (!this.loggedUser.IsCustomerCare && securityLevel > this.loggedUser.SecurityLevel) {
-               this.errors.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
+                this.errors.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
                 return false;
             }
             else return true;
@@ -477,14 +406,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
         }
         else return true;
     }
-    private selectedAgingMethod: CodeNameClass;
-    get SelectedAgingMethod() { return this.selectedAgingMethod; }
-    set SelectedAgingMethod(value: CodeNameClass)
-    {
-        if (this.selectedAgingMethod != value) {
-            this.selectedAgingMethod = value;
-        }
-    }
+
 
     //#region Category fields
     IsCategoryDisabled: boolean = false;
@@ -496,8 +418,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
         'Category 5'
     ];
     SelectedCategory: string;
-    SelectedItemChanged(item)
-    {
+    SelectedItemChanged(item) {
         this.SelectedCategory = item;
     }
     //#endregion
@@ -505,21 +426,19 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
     //#region Filter Methods
     public filterSelectedValue: string = 'filter_customer';
     public AccountTypeCode: string = '2';
-    FilterItemClicked(itemValue: string)
-    {
+    FilterItemClicked(itemValue: string) {
         if (this.filterSelectedValue != itemValue) {
             this.filterSelectedValue = itemValue;
             this.FilterChanged();
         }
     }
-    FilterChanged()
-    {
+    FilterChanged() {
 
         this.Customer = null;
         this.Salesman = null;
         this.Collector = null;
         this.ChartOfAccountsId_Dummy = null;
-        this.UIProperties.SetValidity("ChartOfAccountsId", "GLAccount", true,"");
+        this.UIProperties.SetValidity("ChartOfAccountsId", "GLAccount", true, "");
         this.UIProperties.SetRequired("ChartOfAccountsId", "GLAccount", false);
 
 
@@ -544,15 +463,13 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     public balanceFilterSelectedValue: string = 'filter_Debtors';
     public currencyFilterSelectedValue: string = 'filter_OriginalCurr';
-    BalanceFilterItemClicked(itemValue: string)
-    {
+    BalanceFilterItemClicked(itemValue: string) {
         if (this.balanceFilterSelectedValue != itemValue) {
             this.balanceFilterSelectedValue = itemValue;
             this.BalanceFilterChanged();
         }
     }
-    BalanceFilterChanged()
-    {
+    BalanceFilterChanged() {
 
         switch (this.balanceFilterSelectedValue) {
             case 'filter_All':
@@ -572,8 +489,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     }
 
-    CurrencyFilterClicked(itemValue: string)
-    {
+    CurrencyFilterClicked(itemValue: string) {
         if (this.currencyFilterSelectedValue != itemValue) {
             this.currencyFilterSelectedValue = itemValue;
         }
@@ -581,8 +497,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit
 
     // Filter Methods
     public DateFilterSelectedValue: string = 'filter_Due';
-    DateFilterItemClicked(itemValue: string)
-    {
+    DateFilterItemClicked(itemValue: string) {
         if (this.DateFilterSelectedValue != itemValue) {
             this.DateFilterSelectedValue = itemValue;
         }
