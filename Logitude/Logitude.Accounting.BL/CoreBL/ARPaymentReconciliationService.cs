@@ -504,7 +504,12 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else
             {
-                double glaCurrencyRate = GetGLAccountCurrencyRate(recoPM.AccountCurrencyId, tenantCurrencyId, transaction.Tenant);
+                string currencyId = recoPM.AccountCurrencyId;
+                if (string.IsNullOrEmpty(recoPM.AccountCurrencyId))
+                {
+                    currencyId = recoPM.ReconciliationLines[0]?.CurrencyId;
+                }
+                double glaCurrencyRate = GetGLAccountCurrencyRate(currencyId, tenantCurrencyId, transaction.Tenant);
 
                 invoice.AmountDueInLocalCurrency = GetLocal((double)transaction.OpenAmount, glaCurrencyRate);
                 invoice.AmountDue = GetForeign(invoice.AmountDueInLocalCurrency, invoice.InvoiceCurrencyExchangeRate);
