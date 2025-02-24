@@ -39,13 +39,10 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
-using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.Repositories;
-using WebFreight.Web.Controllers.CommonDataModel.ApiHelpers;
-		  
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
 
@@ -66,17 +63,20 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ExternalLinkRepository  externalLinkRepository = new ExternalLinkRepository(MyContext);
-				
-				ExternalLinkQuery  externalLinkQuery = new ExternalLinkQuery(externalLinkRepository);
-				IQueryable<ExternalLink> externalLinks = externalLinkRepository.GetExternalLinks(authToken.Tenant).Where(a=>a.Id == id);
-				ExternalLinkList entityList = externalLinkQuery.GetIQueryableEntityList(externalLinks).FirstOrDefault();
-				if (entityList != null)
+				ExternalLinkList entityList = null;
+				ExternalLink entityPoco = externalLinkRepository.GetSingleExternalLink(id , authToken.Tenant);
+                
+                if (entityPoco != null)
 				{
-                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                	customFieldResolver.SetCustomFieldsValues("ExternalLink",  authToken.Tenant, new List<ExternalLinkList> { entityList }.Cast<object>().ToList());
- 	
-					entityList = ExternalLinkAPiHelper.ApplyFilters(entityList, authToken.Tenant);
-				}
+									List<ExternalLink> singleEntityList = new List<ExternalLink>();
+					singleEntityList.Add(entityPoco);
+
+					ExternalLinkQuery externalLinkQuery = new ExternalLinkQuery(externalLinkRepository);
+					IQueryable<ExternalLink> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<ExternalLinkList> iQueryableEntityList = externalLinkQuery.GetIQueryableEntityList(iQueryable);
+				    entityList = iQueryableEntityList.FirstOrDefault();
+
+			    }
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
@@ -102,15 +102,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ExternalLinkRepository  externalLinkRepository = new ExternalLinkRepository(MyContext);
-				IQueryable<ExternalLink> entityPocos = externalLinkRepository.GetExternalLinks();
+				IQueryable<ExternalLink> entityPocos = externalLinkRepository.GetExternalLinks(authToken.Tenant);
 
 				ExternalLinkQuery externalLinkQuery = new ExternalLinkQuery(externalLinkRepository);
 			    IQueryable<ExternalLinkList> entityLists = externalLinkQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<ExternalLinkList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                customFieldResolver.SetCustomFieldsValues("ExternalLink", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -216,7 +214,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 }
 
 
-                ExternalLinkAPiHelper.AddFilters(queryOperations, 0);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
                 
@@ -233,7 +230,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 ExternalLinkRepository  externalLinkRepository = new ExternalLinkRepository(MyContext);
-                IQueryable<ExternalLink> entityPocos = externalLinkRepository.GetExternalLinks();
+                IQueryable<ExternalLink> entityPocos = externalLinkRepository.GetExternalLinks(tenant);
 
                 ExternalLinkQuery externalLinkQuery = new ExternalLinkQuery(externalLinkRepository);
                 
@@ -241,8 +238,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
-				            entityPocos = ExternalLinkAPiHelper.ApplyFilters(entityPocos, 0);
-
+				
                 entityPocos = genericFilter.GetFilteredQuery<ExternalLink>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<ExternalLinkList> entityLists = externalLinkQuery.GetIQueryableEntityList(entityPocos);
@@ -335,8 +331,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<ExternalLinkList> listResult = entityLists.ToList();
-               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-               customFieldResolver.SetCustomFieldsValues("ExternalLink", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

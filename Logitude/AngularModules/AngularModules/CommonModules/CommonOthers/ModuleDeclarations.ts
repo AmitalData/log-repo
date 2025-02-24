@@ -14,6 +14,7 @@ import { DWFilterSettings } from './Components/DWQueryBuilder/DWFilterSettings';
 import { ProductTypeGeneralTabComponent } from './Components/ProductType/EditTabs/ProductTypeGeneralTabComponent';
 import { DocumentsFilingComponent } from './Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent';
 import { DragDropFileInputComponent } from './Components/drag-drop-file-input/drag-drop-file-input.component';
+import { ExternalLinkComponent } from './Components/ExternalLink/ExternalLinkComponent';
 
 
 
@@ -33,6 +34,7 @@ export const Components =
         ProductTypeGeneralTabComponent,
         DocumentsFilingComponent,
         DragDropFileInputComponent,
+        ExternalLinkComponent,
     ];
 
 export class ModuleDeclarations {
@@ -54,6 +56,7 @@ export class ModuleDeclarations {
             case "ProductTypeGeneralTabComponent": { myResult = ProductTypeGeneralTabComponent; break; }
             case "DocumentsFilingComponent": { myResult = DocumentsFilingComponent; break; }
             case "DragDropFileInputComponent": { myResult = DragDropFileInputComponent; break; }
+            case "ExternalLinkComponent": { myResult = ExternalLinkComponent; break; }                                
         }
 
         return myResult;

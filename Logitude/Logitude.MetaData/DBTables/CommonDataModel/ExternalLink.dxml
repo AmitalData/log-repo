@@ -17,14 +17,14 @@
     Type="varchar"
     Size="20">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Link"
     Type="varchar"
     Size="100">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ExpirationDate"
@@ -44,5 +44,11 @@
     Size="100">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
   </Column>
 </Table>

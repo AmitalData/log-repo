@@ -776,6 +776,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerGroupMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerTeamMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerOpenFilesAmountMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\ExternalLinkMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TruckerSettingMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\FreelancerGroupTypeMapping.cs" />
@@ -802,6 +803,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerTeamService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerStatusQueueService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\ExternalLinkService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TruckerSettingService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\FreelancerGroupTypeService.cs" />
