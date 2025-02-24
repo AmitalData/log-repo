@@ -30,17 +30,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
     public class NewAgingReportDataProviderLoader
     {
-        private const string BalanceInLocalCurrencyString = "Balance In Local Currency";
-        private const string BalanceInLocalCurrencyHebrewString = "יתרה במטבע מקומי";
-        private const string BalanceInForeignCurrencyString = "Balance In Foreign Currency";
-        private const string BalanceInForeignCurrencyHebrewString = "יתרה במטבע זר";
-        private const string SummaryPeriodsString = "Summary Periods";
-        private const string SummaryPeriodsHebrewString = "סיכום תקופות";
+     
         private QueryOperations reportQueryOperations;
         private bool showLocals = false;
-        private bool isFromGLAccountAgingData = false;
         private int tenant;
-        string filterReportByLocalCurrency = "filter_LocalCurr";
 
         public NewAgingReportDataProviderLoader(byte[] xmlFilters, int _tenant)
         {
@@ -103,14 +96,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 AccountEnglishName = reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
                                 AccountLocalName = reader["LocalName"] != DBNull.Value ? (string)reader["LocalName"] : null,
                                 AccountDisplayNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
-                                BalanceInLocalCurrency = reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal)reader["BalanceInLocalCurrency"] : null,
-                                CreditLimit = reader["CreditLimit"] != DBNull.Value ? (decimal)reader["CreditLimit"] : null,
-                                InsuredCreditLimit = reader["InsuredCreditLimit "] != DBNull.Value ? (double)reader["InsuredCreditLimit "] : null,
-                                AccountingBalance = reader[ "AccountingBalance "] != DBNull.Value ? (decimal)reader["AccountingBalance "] : null,
-                                TotalOpenShipments = reader[ "TotalOpenShipments "] != DBNull.Value ? (decimal)reader["TotalOpenShipments "] : null,
-                                TotalFutureOpenCheques = reader["TotFutureOpenChequesInLocalCur "] != DBNull.Value ? (decimal)reader["TotFutureOpenChequesInLocalCur "] : null,
-                                ExternalTransactionsTotal= reader["ExternalTransactionsTotal "] != DBNull.Value ? (decimal)reader["ExternalTransactionsTotal "] : null,
-                                TotalLocal= reader["BalanceInLocalCurrency "] != DBNull.Value ? (decimal)reader["BalanceInLocalCurrency "] : null,
+                                BalanceInLocalCurrency = reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : null,
+                                CreditLimit = reader["CreditLimit"] != DBNull.Value ? (decimal?)reader["CreditLimit"] : null,
+                                InsuredCreditLimit = reader["InsuredCreditLimit "] != DBNull.Value ? (double?)reader["InsuredCreditLimit "] : null,
+                                AccountingBalance = reader[ "AccountingBalance "] != DBNull.Value ? (decimal?)reader["AccountingBalance "] : null,
+                                TotalOpenShipments = reader[ "TotalOpenShipments "] != DBNull.Value ? (decimal?)reader["TotalOpenShipments "] : null,
+                                TotalFutureOpenCheques = reader["TotFutureOpenChequesInLocalCur "] != DBNull.Value ? (decimal?)reader["TotFutureOpenChequesInLocalCur "] : null,
+                                ExternalTransactionsTotal= reader["ExternalTransactionsTotal "] != DBNull.Value ? (decimal?)reader["ExternalTransactionsTotal "] : null,
+                                TotalLocal= reader["BalanceInLocalCurrency "] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency "] : null,
                             };
                             results.Add(result);
                         }
