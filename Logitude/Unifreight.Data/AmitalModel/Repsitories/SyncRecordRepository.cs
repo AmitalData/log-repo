@@ -3,12 +3,15 @@ using System.Linq;
 using Simplog.Server.Infrastructure;
 using System;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using NLog;
+using NetCommonHelper.Logger;
 
 namespace Unifreight.Data.AmitalModel.Repsitories
 {
     public class SyncRecordRepository : IRepository<SyncRecord>
     {
         AmitalContext context;
+        DevLog logger = DevLog.Instance;
 
         public SyncRecordRepository(AmitalContext context)
         {
@@ -140,6 +143,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
                 syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday);
+
+            logger.WriteDebug($"SyncRecord, GetAndMarkNewSyncRecord db: {context.GetConnection().Database}");
 
             int recordsCounts = Math.Min(records.Count(), 10000);
             for (int i = 0; i < recordsCounts; i++)
