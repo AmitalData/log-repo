@@ -31,8 +31,12 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 result.EntityCode = "4";
                 result.EntityType = "Interest Report";
                 result.EntityTypeCode = "IR";
-            }
-           
+                result.OriginalLines = new List<InterestEntityOriginalLineResult>();
+                InterestEntityOriginalLineResult line = new InterestEntityOriginalLineResult();
+                line.OriginalLineNumber = 1;
+                line.Reference1 = reportPM.ReportNumber;
+                line.Notes = null;
+                result.OriginalLines.Add(line);            }
 
             return result;
         }

@@ -27,6 +27,16 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 result.EntityCode = "5";
                 result.EntityType = "Adjustments";
                 result.EntityTypeCode = "AJ";
+
+                result.OriginalLines = new List<InterestEntityOriginalLineResult>();
+                foreach (var item in journalPM.JournalLines)
+                {
+                    InterestEntityOriginalLineResult line = new InterestEntityOriginalLineResult();
+                    line.OriginalLineNumber = item.Line;
+                    line.Reference1 = item.Reference1;
+                    line.Notes = item.Notes;
+                    result.OriginalLines.Add(line);
+                }
             }
 
 

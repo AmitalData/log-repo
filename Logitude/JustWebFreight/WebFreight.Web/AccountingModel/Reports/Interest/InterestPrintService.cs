@@ -63,6 +63,8 @@ using WebFreight.Web.Helpers;
                     InterestValueDate = a.InterestValueDate,
                     CurrencyCode = a.CurrencyCode,
                     ForeignAmount = a.ForeignAmount,
+                    Reference1 = a.Reference1,
+                    Notes = a.Notes, 
                 }).ToList(),
 
                 GroupedInterestTransactionList = interestTransactionLists == null ? null : interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
@@ -86,7 +88,8 @@ using WebFreight.Web.Helpers;
 
                 foreach (var period in InterestReportLines) // For each period
                 {
-                    List<InterestTransactionList> periodInterestTransactionList = interestTransactionLists == null ? null : interestTransactionLists.Where(s => s.InterestValueDate.Date == period.FromDate.Date)
+                    DateTime date = period.FromDate.Value.Date;
+                    List<InterestTransactionList> periodInterestTransactionList = interestTransactionLists == null ? null : interestTransactionLists.Where(s => s.InterestValueDate.Date == date).ToList();
                     List<InterestReportFlatLine> periodLineList = new List<InterestReportFlatLine>();
                     InterestReportFlatLine firstLine = FirstPeriodFlatLine(InterestReportPM, period, periodInterestTransactionList);
 

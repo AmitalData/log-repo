@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -29,6 +30,12 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 result.EntityType = "ARPayment";
                 result.EntityTypeCode = "PY";
 
+                result.OriginalLines = new List<InterestEntityOriginalLineResult>();
+                InterestEntityOriginalLineResult line = new InterestEntityOriginalLineResult();
+                line.OriginalLineNumber = 1;
+                line.Reference1 = aRPaymentPM.PaymentNo;
+                line.Notes = aRPaymentPM.PrintNotes;
+                result.OriginalLines.Add(line);
             }
   
             return result;

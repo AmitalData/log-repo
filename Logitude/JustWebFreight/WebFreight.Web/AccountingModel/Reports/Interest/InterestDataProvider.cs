@@ -63,8 +63,10 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public DateTime? InterestValueDate { get; set; }
         public string CurrencyCode { get; set; }
         public decimal? ForeignAmount { get; set; }
+        public string Reference1 { get; set; }
+        public string Notes { get; set; }
 
-     }
+    }
 
     public class InterestReportFlatLine
     {

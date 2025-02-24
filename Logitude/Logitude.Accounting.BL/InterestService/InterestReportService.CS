@@ -313,15 +313,25 @@ namespace Logitude.Accounting.BL.InterestService
         private InterestTransactionList FillDataInterestTransaction(InterestTransactionList interestTransactionLists, List<string> JournalNumbers, List<string> CurencyCodes)
         {
             InterestEntityResult entityResult = GetInterestEntityResultByInterestTransaction(interestTransactionLists);
-        
+
             interestTransactionLists.JournalNumber = GetSingleJournalnumberByInterestTransaction(entityResult, interestTransactionLists, JournalNumbers);
             interestTransactionLists.InterestEntityNumber = entityResult.EntityNumber; //aRInvoice.InvoiceNumber //aRPaymentPM.PaymentNo //journalPM.JournalNumber //journalPM.JournalNumber //reportPM.ReportNumber
             interestTransactionLists.InterestEntityType = entityResult.EntityType;     //"ARInvoice" //"ARPayment" //"Journal" //"Adjustments" //"Interest Report"
             interestTransactionLists.InterestEntityIconCode = entityResult.EntityTypeCode; // "IN" //"PY" //"JR" //"AJ" //"IR"
             interestTransactionLists.JournalId = entityResult.JournalId;               //aRInvoice.JournalId //aRPaymentPM.JournalId //journalPM.Id //journalPM.Id //null
             interestTransactionLists.AccountEntityCode = entityResult.AccountCode;     //"2" //"3" //"1" //"1" //"11"
+            if (entityResult.OriginalLines.Any(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber))
+            {
+                interestTransactionLists.Reference1 = entityResult.OriginalLines.Where(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber).FirstOrDefault()?.Reference1;
+                interestTransactionLists.Notes = entityResult.OriginalLines.Where(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber).FirstOrDefault()?.Notes;
+            }
+            else
+            {
+                interestTransactionLists.Reference1 = entityResult.OriginalLines.FirstOrDefault()?.Reference1;
+                interestTransactionLists.Notes = entityResult.OriginalLines.FirstOrDefault()?.Notes; 
+            }
             interestTransactionLists.CurrencyCode = GetSingleCurrencyCodeByInterestTransaction(interestTransactionLists, CurencyCodes);
-
+        
             return interestTransactionLists;
         }
 
