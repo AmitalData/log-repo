@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -26,20 +27,39 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             this.repository = repository;
         }
 
-        public ExternalLinkPM GetSinglePM(string Ref, bool fromCache = true)
+        public ExternalLinkPM GetSinglePM(string id, int tenant) => GetSinglePM(id);
+        public ExternalLinkPM GetSinglePM(string id, bool fromCache = true)
         {
             if (!fromCache)
             {
-                ExternalLink externalLink = repository.GetSingleExternalLink(Ref);
-                return new ExternalLinkPM()
-                {
-                    Id = externalLink.Id,
-                    Ref = externalLink.Ref,
-                    Link = externalLink.Link,
-                    ExpirationDate = externalLink.ExpirationDate,
-                    ActivityLog = externalLink.ActivityLog,
-                    Params = externalLink.Params
-                };
+                ExternalLink externalLink = repository.GetSingle(id);
+                if (externalLink == null)
+                    return null;
+                return ExternalLinkMapping.MapPM(externalLink);
+            }
+
+            string cacheKey = "ExternalLink_" + id;
+
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(cacheKey) != null)
+                return (ExternalLinkPM)CacheManager.CacheWrapper.Get(cacheKey);
+
+            ExternalLinkPM externalLinkPM = GetSinglePM(id, fromCache: false);
+            if (externalLinkPM == null)
+                return null;
+            CacheManager.CacheWrapper.Insert(cacheKey, externalLinkPM, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
+
+            return externalLinkPM;
+        }
+
+        public ExternalLinkPM GetSinglePMByRef(string Ref, bool fromCache = true)
+        {
+            if (!fromCache)
+            {
+                ExternalLink externalLink = repository.GetSingleExternalLinkByRef(Ref);
+                if (externalLink == null)
+                    return null;
+
+                return ExternalLinkMapping.MapPM(externalLink);
             }
 
             string cacheKey = "ExternalLink_" + Ref;
@@ -47,7 +67,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(cacheKey) != null)
                 return (ExternalLinkPM)CacheManager.CacheWrapper.Get(cacheKey);
 
-            ExternalLinkPM externalLinkPM = GetSinglePM(Ref, false);
+            ExternalLinkPM externalLinkPM = GetSinglePMByRef(Ref, false);
+            if (externalLinkPM == null)
+                return null;
             CacheManager.CacheWrapper.Insert(cacheKey, externalLinkPM, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
 
             return externalLinkPM;
@@ -56,7 +78,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public string GetExternalLink(string Ref, string param, int tenant)
         {
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(tenant);
-            ExternalLinkPM externalLinkPM = GetSinglePM(Ref);
+            ExternalLinkPM externalLinkPM = GetSinglePMByRef(Ref);
             AuthenticationToken token = new AuthenticationToken()
             {
                 Token = Guid.NewGuid().ToString(),

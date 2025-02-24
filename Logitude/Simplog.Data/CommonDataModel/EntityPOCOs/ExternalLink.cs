@@ -11,5 +11,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int ExpirationDate { get; set; }
         public bool ActivityLog { get; set; }
         public string Params { get; set; }
+        public int Tenant { get; set; }
     }
 }

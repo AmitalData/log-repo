@@ -157,7 +157,7 @@ export class ExternalLinkPMService {
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 1; i++) {
+        for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
@@ -221,6 +221,7 @@ export class ExternalLinkPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: ExternalLinkPM;
 			entityPM = new ExternalLinkPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 

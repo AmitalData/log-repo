@@ -1,0 +1,37 @@
+<div *ngIf='dataReady && tableDataInit' class="view-container">
+    <div class="data-row">
+        <LogLabel [ObjectFieldName]="'Ref'" [ObjectTableName]="ObjectTableName" [DataContext]="externalLinkPM">
+        </LogLabel>
+        <LogTextBox class="data-value" [ObjectFieldName]="'Ref'" [DataContext]="externalLinkPM"></LogTextBox>
+    </div>
+    <div class="data-row">
+        <LogLabel [ObjectFieldName]="'Link'" [ObjectTableName]="ObjectTableName" [DataContext]="externalLinkPM">
+        </LogLabel>
+        <LogTextBox class="data-value" [ObjectFieldName]="'Link'" [DataContext]="externalLinkPM"></LogTextBox>
+    </div>
+    <div class="data-row">
+        <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName"
+            [DataContext]="externalLinkPM"></LogLabel>
+        <LogTextBox class="data-value" [ObjectFieldName]="'ExpirationDate'" [InputType]="'integer'"
+            [DataContext]="externalLinkPM"></LogTextBox>
+    </div>
+    <div class="data-row">
+        <LogLabel [ObjectFieldName]="'Params'" [ObjectTableName]="ObjectTableName" [DataContext]="externalLinkPM">
+        </LogLabel>
+        <LogTextBox class="data-value" [ObjectFieldName]="'Params'" [DataContext]="externalLinkPM"></LogTextBox>
+    </div>
+    <div class="data-row">
+        <LogLabel [ObjectFieldName]="'ActivityLog'" [ObjectTableName]="ObjectTableName" [DataContext]="externalLinkPM">
+        </LogLabel>
+        <BooleanFilter [SelectedValue]="externalLinkPM.ActivityLog ? 'True' : 'False'"
+            (SelectedTypeValueChanged)="externalLinkPM.ActivityLog = $event === 'True'">
+        </BooleanFilter>
+    </div>
+
+    <ValidationSummary *ngIf="errors.length > 0" [ItemsSource]="errors" [SingleLine]="false"></ValidationSummary>
+
+    <div *ngIf="isNew" class='button-wrapper'>
+        <button class="Button" (click)="close(false)">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+        <button class="Button RedButton" (click)="close(true)">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+    </div>   
+</div>

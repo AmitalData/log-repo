@@ -60,7 +60,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 
                 SecurityUtility.CheckContactFeature("ExternalLink", "READ", authToken.Tenant);
                 ExternalLinkQuery externalLinkQuery = new ExternalLinkQuery(authToken.Tenant);
-                ExternalLinkPM externalLinkPM = externalLinkQuery.GetSinglePM(id);
+                ExternalLinkPM externalLinkPM = externalLinkQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -76,7 +76,131 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 
          
 		
+
+        public HttpResponseMessage Post(ExternalLinkPM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("ExternalLink", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ExternalLink", entityPM.Tenant, authToken.Tenant);
+                
+                        ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+                        ExternalLinkService service = new ExternalLinkService(MyContext, entityPM.Tenant);
+                        service.Create(entityPM);
+				
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ExternalLink", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            { 
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+
+        public HttpResponseMessage Put(ExternalLinkPM entityPM)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("ExternalLink", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ExternalLink", entityPM.Tenant, authToken.Tenant);
+
+                        string entityName = "ExternalLink" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "ExternalLinkPM" + entityPM.Id + entityPM.Tenant;
+                        if (CacheManager.CacheWrapper.Get(entityName) != null)
+                        {
+                            CacheManager.CacheWrapper.Invalidate(entityName);
+                        }
+                        if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                        {
+                            CacheManager.CacheWrapper.Invalidate(entityPmName);
+                        }
+                
+                        ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+                        ExternalLinkService service = new ExternalLinkService(MyContext, entityPM.Tenant);
+ 
+                        service.Update(entityPM);
+
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ExternalLink", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
+
+
+                        scope.Complete();
+                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            { 
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+        // DELETE api/<controller>/5
+        public void Delete(int id)
+        {
+        }
+	    
+
+
 		
+          
+			
+			 
+		  
+        
+
+		
+			 		
       
     }
 }

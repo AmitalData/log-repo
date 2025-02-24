@@ -12,6 +12,7 @@ import { DWFilterSettings } from './Components/DWQueryBuilder/DWFilterSettings';
 //import { DWAskUserFiltersComponent } from './Components/DWQueryBuilder/DWAskUserFiltersComponent'; 
 
 import { ProductTypeGeneralTabComponent } from './Components/ProductType/EditTabs/ProductTypeGeneralTabComponent';
+import { ExternalLinkComponent } from './Components/ExternalLink/ExternalLinkComponent';
 
 
 
@@ -29,6 +30,7 @@ export const Components =
         DWFilterSettings,
         //DWAskUserFiltersComponent
         ProductTypeGeneralTabComponent,
+        ExternalLinkComponent,
     ];
 
 export class ModuleDeclarations {
@@ -48,8 +50,7 @@ export class ModuleDeclarations {
             case "DWFilterSettings": { myResult = DWFilterSettings; break; }
             //case "DWAskUserFiltersComponent": { myResult = DWAskUserFiltersComponent; break; }
             case "ProductTypeGeneralTabComponent": { myResult = ProductTypeGeneralTabComponent; break; }
-                
-                
+            case "ExternalLinkComponent": { myResult = ExternalLinkComponent; break; }                                
         }
 
         return myResult;
