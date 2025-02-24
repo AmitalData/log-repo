@@ -1223,7 +1223,11 @@ namespace WebFreight.Web.Helpers
                         dataProvider = logitudeReportsWebService.LoadAccountingAgingDataProvider(filters, reportFliter.tenant);
                         break;
                     }
-
+                case "NAGER":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadAccountingNewAgingDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
                 case "OSBC":
                     {
                         dataProvider = logitudeReportsWebService.LoadOpenShipmentsByCustomerDataProvider(filters, reportFliter, reportFliter.tenant);
@@ -1746,7 +1750,12 @@ namespace WebFreight.Web.Helpers
 
                         break;
                     }
+                case "NAGER":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.NewAccountingAgingDataProvider";
 
+                        break;
+                    }
                 case "OSBC":
                     {
                         dataProviderName = "WebFreight.Web.DataProviders.OpenShipmentsByCustomerDataProvider";
@@ -2451,8 +2460,18 @@ namespace WebFreight.Web.Helpers
 
                             break;
                         }
+                case "NAGER":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(NewAccountingAgingDataProvider));
+                        NewAccountingAgingDataProvider reportDataProvider = (NewAccountingAgingDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.Logo = stimulReportDataProviderDetails.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "NAGER", Name = "NewAccountingAgingDataProvider", BusinessObjectValue = reportDataProvider };
 
-                    case "LTRP":
+                        break;
+                    }
+                case "LTRP":
                         {
                             XmlSerializer serializer = new XmlSerializer(typeof(LedgerTransactionsDataProvider));
                             LedgerTransactionsDataProvider reportDataProvider = (LedgerTransactionsDataProvider)serializer.Deserialize(memorystream);
@@ -3002,7 +3021,7 @@ namespace WebFreight.Web.Helpers
                     case "CSSR":
                     case "LOCR":
                     case "SRQR":
-
+                    case "NAGER":
                         return true;
 
                     default:
