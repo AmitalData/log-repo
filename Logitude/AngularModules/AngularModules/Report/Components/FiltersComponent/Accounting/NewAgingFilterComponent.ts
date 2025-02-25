@@ -17,6 +17,7 @@ import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList'
 import { GLAccountListService } from '../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { ChartOfAccountListService } from '../../../../Accounting/Services/StandardLists/ChartOfAccountListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { Operators } from 'Accounting/DataContracts/Operators';
 
 @Component({
 
@@ -30,16 +31,19 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
     isReady: boolean = false;
     IsSalesmanRestricted: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
-    public ChartOfAccountTypeFilterItems: ApiQueryFilters;
-    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public TenantPM: TenantPM = SessionLocator.TenantPM;
     private CurrentSession = SessionLocator.SelectedSession;
     gLAccountListService: GLAccountListService = new GLAccountListService();
     chartOfAccountListService: ChartOfAccountListService = new ChartOfAccountListService();
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+    public Name: string;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+    private loggedUser: any;
+    public RunReportTitle: string = 'Run Report';
+    public IsSchedulerReport: boolean = false;
+
+
     constructor(public entityListService: EntityListService) {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -53,43 +57,23 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
     }
 
     private InitComponent() {
-        this.InitFilters();
-
-        this.SetMonthFilterDefaults();
+        this.InitSalesmanFilters();
 
     }
 
-    private SetMonthFilterDefaults() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.entityListService.getSingle(this.TenantPM.Id.toString(), "FullAccountingSetting").then((res: any) => {
-            this.CurrentSession.StopBusyIndicator();
-            res.subscribe(myResponse => {
-                if (myResponse != null) {
-                    var res = myResponse.Result;
-                    this.FullAccountingSetting = res;
-
-                }
-            })
-        });
-    }
-
-    private InitFilters() {
+    private InitSalesmanFilters() {
         this.SalesmanFilterItems = new ApiQueryFilters();
         this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
 
-        this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
-        // this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
     }
 
     private GetResources() {
         this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { this.isReady = true; });
     }
-    private loggedUser: any;
+
     GetSalesmanFeature() {
         var salesmanAging = FeatureLocator.HasFeaturePermession("GLAccount", "SalesmanAging");
         var isSalesmanRestrictionsEnabled = !!salesmanAging;
-        console.log("[Salesman Aging]", salesmanAging);
-
         this.loggedUser = SessionLocator.LoggedUserPM;
         if (this.loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
             this.IsSalesmanRestricted = true;
@@ -98,21 +82,21 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
     }
 
 
-    public Name: string;
+
 
     ngOnInit() {
         this.SetUIProperties();
     }
 
     SetUIProperties() {
-        this.UIProperties.SetRequired("AgingForDate", "GLAccount", true);
+        this.UIProperties.SetRequired("AgingForDate", "GLAccount", AppTool.IsNullOrEmpty(this.AgingForDate));
 
         if (this.IsSalesmanRestricted) {
             this.UIProperties.SetRequired("Salesman", "GLAccount", true);
             this.UIProperties.SetEnabled("Salesman", "GLAccount", false);
         }
         else {
-            if (this.filterSelectedValue == "filter_vendor") {
+            if (this.customerOrVendorFilterSelected == "filter_vendor") {
                 this.UIProperties.SetEnabled("Salesman", "GLAccount", false);
                 this.UIProperties.SetEnabled("Collector", "GLAccount", false);
             } else {
@@ -126,38 +110,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
 
     }
 
-    //#region Filters
 
-    //row 1
-    private agingForDate: Date = new Date();
-    public get AgingForDate() { return this.agingForDate; }
-    public set AgingForDate(value: Date) {
-        if (this.agingForDate != value) {
-            this.agingForDate = value;
-
-            this.ValidationErrorsList = [];
-            this.ValidateDate();
-        }
-    }
-
-    private customer: string;
-    public get Customer() { return this.customer; }
-    public set Customer(value: string) {
-        if (this.customer != value) {
-            this.customer = value;
-
-            if (value) {
-                this.ChartOfAccountsId_Dummy = null;
-                this.IsCategoryDisabled = true;
-            }
-            else
-                this.IsCategoryDisabled = false;
-
-            this.SetUIProperties();
-            this.SetGLAccountChartOfAccountSecurityLevel();
-
-        }
-    }
     private securityLevel: any;
     SetGLAccountChartOfAccountSecurityLevel() {
         this.gLAccountListService.getSingle(this.Customer).subscribe((response: ServiceResponse) => {
@@ -171,6 +124,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
             }
         });
     }
+
     private _ChartOfAccountsTypeCode: string = "3";
     public get ChartOfAccountsTypeCode(): string {
         return this._ChartOfAccountsTypeCode;
@@ -189,7 +143,6 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         }
     }
 
-
     private _ChartOfAccountsId: string = null;
     public get ChartOfAccountsId_Dummy(): string {
         return this._ChartOfAccountsId;
@@ -197,24 +150,6 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
     public set ChartOfAccountsId_Dummy(v: string) {
         this._ChartOfAccountsId = v;
     }
-
-
-
-    ValidateDate() {
-        if (this.AgingForDate) {
-
-            this.UIProperties.SetValidity("AgingForDate", "GLAccount", true, "valid");
-            this.UIProperties.SetRequired("AgingForDate", "GLAccount", false);
-            return true;
-
-        }
-        return true;
-    }
-
-
-
-
-    //row 2
 
     private collector: string;
     public get Collector() { return this.collector; }
@@ -232,7 +167,6 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         }
     }
 
-    //row 3
 
     private category1: string;
     public get Category1() { return this.category1; }
@@ -267,7 +201,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         }
     }
 
-    //row 4
+
     private category5: string;
     public get Category5() { return this.category5; }
     public set Category5(value: string) {
@@ -308,68 +242,228 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         }
     }
 
-    //#endregion
+    private currencyId: string = null;
+    get CurrencyId() { return this.currencyId; }
+    set CurrencyId(value: string) {
+        if (this.currencyId != value) {
+            this.currencyId = value;
+
+
+        }
+    }
+
+    private agingForDate: Date = new Date();
+    public get AgingForDate() { return this.agingForDate; }
+    public set AgingForDate(value: Date) {
+        if (this.agingForDate != value) {
+            this.agingForDate = value;
+
+            this.ValidationErrorsList = [];
+            this.ValidateDate();
+        }
+        this.UIProperties.SetRequired("AgingForDate", "GLAccount", AppTool.IsNullOrEmpty(this.AgingForDate));
+
+    }
+    private obligo: number;
+    public get Obligo() { return this.obligo; }
+    public set Obligo(newValue: number) { if (this.obligo != newValue) { this.obligo = newValue; } }
+
+    private customer: string;
+    public get Customer() { return this.customer; }
+    public set Customer(value: string) {
+        if (this.customer != value) {
+            this.customer = value;
+
+            if (value) {
+                this.ChartOfAccountsId_Dummy = null;
+                this.IsCategoryDisabled = true;
+            }
+            else
+                this.IsCategoryDisabled = false;
+
+            this.SetUIProperties();
+            this.SetGLAccountChartOfAccountSecurityLevel();
+
+        }
+    }
+    SetRunReportTitle() {
+        if (this.isReady) {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        }
+    }
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) {
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+
+
+
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "ChartOfAccountsId":
+                    this.ChartOfAccountsId_Dummy = queryFilterItem.FieldValue;
+                    break;
+                case "ChartOfAccountsTypeCode":
+                    this.ChartOfAccountsTypeCode = queryFilterItem.FieldValue;
+                    break;
+                case "ToBalanceFilterValue": {
+
+                    this.balanceFilterSelectedValue == "filter_DebtBetween"
+                    this.toBalance = queryFilterItem.FieldValue;
+                    break;
+                }
+                case "FromBalanceFilterValue":
+                    {
+                        this.balanceFilterSelectedValue == "filter_DebtBetween"
+                        this.FromBalance = queryFilterItem.FieldValue;
+                        break;
+                    }
+                case "ToBalance":
+                    this.ToBalance = queryFilterItem.FieldValue;
+                    break;
+                case "BalanceFilterValue":
+                    this.balance = queryFilterItem.FieldValue;
+                    break;
+                case "BalanceFilter":
+                    this.balanceFilterSelectedValue = "filter_" + queryFilterItem.FieldValue;
+                    break;
+                case "CurrencyOriginalLocalValue":
+                    this.currencyFilterSelectedValue = queryFilterItem.FieldValue;
+                    break;
+
+                case "GroupByDate":
+                    this.DateFilterSelectedValue = queryFilterItem.FieldValue;
+                    break;
+                case "AgingForDate":
+                    this.AgingForDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "Detailed":
+                    this.CurrenciesDetailed = queryFilterItem.FieldValue;
+                    break;
+                case "SalesmanId":
+                    this.Salesman = queryFilterItem.FieldValue;
+                    break;
+                case "CollectorId":
+                    this.Collector = queryFilterItem.FieldValue;
+                    break;
+                case "GLAccountType": {
+                    this.customerOrVendorFilterSelected = queryFilterItem.FieldValue == "3" ? "filter_vendor" : "filter_customer";
+                    this.AccountTypeCode = queryFilterItem.FieldValue;
+                    break;
+                }
+
+                case "CustomerId":
+                    this.Customer = queryFilterItem.FieldValue;
+                    break;
+
+                case "CategoryIndex": {
+                    if (queryFilterItem.FieldValue) {
+                        this.SelectedCategory = `Category ${queryFilterItem.FieldValue.slice(-1)}`;
+                    }
+                    break;
+                }
+                case "CategoryValue": {
+                    this.DataContext[this.SelectedCategory?.replace(' ', '')] = queryFilterItem.FieldValue;
+                    break;
+                }
+
+
+            }
+
+
+
+        }
+    }
+
     private errors: string[];
     RunButtonClicked() {
         this.SetUIProperties();
 
-        this.errors = [];
-        var categoryValue = null;
-        var categoryIndex = null;
+
+       
         this.ValidationErrorsList = [];
 
-        if (!this.AgingForDate) { this.errors.push("Aging for date field is requierd"); }
+
         this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
 
 
-        if (this.errors.length == 0) {
-
-
-            if (this.SelectedCategory) {
-                categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
-
-                if (categoryIndex)
-                    categoryValue = this.DataContext[categoryIndex]; // select the value from the context
-            }
-
-            var myFilterItems: QueryFilterItem[] = [];
-            myFilterItems.push(new QueryFilterItem("AgingForDate", this.AgingForDate, "Date"));
-            myFilterItems.push(new QueryFilterItem("GLAccountType", this.AccountTypeCode));
-            myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
-            myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
-
-            myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
-
-            myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
-
-            myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); 
-            myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
-            myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
-            myFilterItems.push(new QueryFilterItem("CurrencyOriginalLocalValue", this.currencyFilterSelectedValue));
-
-            myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
-            myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
-
-            if (this.balanceFilterSelectedValue == "filter_DebtBetween") {
-                myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.fromBalance, "decimal"));
-                myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.toBalance, "decimal"));
-            }
-
-            myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
-            myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccountsId_Dummy));
-
-
+        if (this.ValidateSelectedFilters()) {
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
-            myReportFliter.QueryFilterItemLists = myFilterItems;
+            myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
 
             this.RunReportEvent.emit(myReportFliter);
 
         } else {
             this.ValidationErrorsList = this.errors;
         }
+    }
+    GetQueryFilterItems() {
+        var categoryValue = null;
+        var categoryIndex = null;
+        if (this.SelectedCategory) {
+            categoryIndex = this.SelectedCategory.replace(' ', '');
+
+            if (categoryIndex)
+                categoryValue = this.DataContext[categoryIndex];
+        }
+
+        var myFilterItems: QueryFilterItem[] = [];
+        myFilterItems.push(new QueryFilterItem("AgingForDate", this.AgingForDate, "Date"));
+        myFilterItems.push(new QueryFilterItem("GLAccountType", this.AccountTypeCode));
+        myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
+        myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
+        myFilterItems.push(new QueryFilterItem("CurrencyId", this.CurrencyId, "string"));
+        myFilterItems.push(new QueryFilterItem("Obligo",this.Obligo, "string"));
+        myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
+        myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
+        myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex));
+        myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
+        myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
+        myFilterItems.push(new QueryFilterItem("CurrencyOriginalLocalValue", this.currencyFilterSelectedValue));
+        myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
+        myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
+        if (this.balanceFilterSelectedValue == "filter_DebtBetween") {
+            myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.fromBalance, "decimal"));
+            myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.toBalance, "decimal"));
+        }
+        myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
+        myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccountsId_Dummy));
+        myFilterItems.push(new QueryFilterItem("SortField", this.SelectedSortTypeItem.Code));
+
+        return myFilterItems
+
+    }
+    ValidateSelectedFilters() {
+        this.errors = [];
+        if (!this.AgingForDate) { this.errors.push("Aging for date field is requierd"); }
+
+        this.ValidationErrorsList = this.errors;
+
+        return this.errors.length == 0;
+
+    }
+    ValidateDate() {
+        if (this.AgingForDate) {
+
+            this.UIProperties.SetValidity("AgingForDate", "GLAccount", true, "valid");
+            this.UIProperties.SetRequired("AgingForDate", "GLAccount", false);
+            return true;
+
+        }
+        return true;
     }
 
     private CheckGLAccountChartOfAccountSecurityLevel() {
@@ -407,32 +501,25 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         else return true;
     }
 
+    SortTypeChanged(dir) {
+        this.SelectedSortTypeCode = dir.Code;
+        this.SelectedSortTypeItem = dir;
+    }
 
-    //#region Category fields
-    IsCategoryDisabled: boolean = false;
-    CategoriesList: string[] = [
-        'Category 1',
-        'Category 2',
-        'Category 3',
-        'Category 4',
-        'Category 5'
-    ];
     SelectedCategory: string;
-    SelectedItemChanged(item) {
+    SelectedCategoryChanged(item) {
         this.SelectedCategory = item;
     }
-    //#endregion
 
-    //#region Filter Methods
-    public filterSelectedValue: string = 'filter_customer';
+    public customerOrVendorFilterSelected: string = 'filter_customer';
     public AccountTypeCode: string = '2';
-    FilterItemClicked(itemValue: string) {
-        if (this.filterSelectedValue != itemValue) {
-            this.filterSelectedValue = itemValue;
-            this.FilterChanged();
+    FilterCustomerOrVendorClicked(itemValue: string) {
+        if (this.customerOrVendorFilterSelected != itemValue) {
+            this.customerOrVendorFilterSelected = itemValue;
+            this.FilterCustomerOrVendorChanged();
         }
     }
-    FilterChanged() {
+    FilterCustomerOrVendorChanged() {
 
         this.Customer = null;
         this.Salesman = null;
@@ -442,7 +529,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetRequired("ChartOfAccountsId", "GLAccount", false);
 
 
-        switch (this.filterSelectedValue) {
+        switch (this.customerOrVendorFilterSelected) {
             case 'filter_customer':
                 this.AccountTypeCode = '2';
                 this.ChartOfAccountsTypeCode = '3';
@@ -459,8 +546,19 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         this.ValidateDate();
 
     }
-    //#endregion
+    CurrencyFilterClicked(itemValue: string) {
+        if (this.currencyFilterSelectedValue != itemValue) {
+            this.currencyFilterSelectedValue = itemValue;
+        }
+    }
 
+
+    public DateFilterSelectedValue: string = 'filter_Due';
+    DateFilterItemClicked(itemValue: string) {
+        if (this.DateFilterSelectedValue != itemValue) {
+            this.DateFilterSelectedValue = itemValue;
+        }
+    }
     public balanceFilterSelectedValue: string = 'filter_Debtors';
     public currencyFilterSelectedValue: string = 'filter_OriginalCurr';
     BalanceFilterItemClicked(itemValue: string) {
@@ -489,18 +587,32 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
 
     }
 
-    CurrencyFilterClicked(itemValue: string) {
-        if (this.currencyFilterSelectedValue != itemValue) {
-            this.currencyFilterSelectedValue = itemValue;
-        }
-    }
+    IsCategoryDisabled: boolean = false;
+    CategoriesList: string[] = [
+        'Category 1',
+        'Category 2',
+        'Category 3',
+        'Category 4',
+        'Category 5'
+    ];
+    operatorsList =
+        [
+            { Code: Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") + " 0" },
+            { Code: Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") + " 0" },
+            { Code: Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") + " 0" }
+        ];
+    SelectedSortTypeItem = { Code: "balance", EnglishName: "Balance", LocalName: "יתרה בעו''ש" };
+    SelectedSortTypeCode: string = "balance";
+    SelectedSortDirectionCode: string = "Ascending";
 
-    // Filter Methods
-    public DateFilterSelectedValue: string = 'filter_Due';
-    DateFilterItemClicked(itemValue: string) {
-        if (this.DateFilterSelectedValue != itemValue) {
-            this.DateFilterSelectedValue = itemValue;
-        }
-    }
+    SortTypes = [
+        { Code: "balance", EnglishName: "Balance", LocalName: "יתרה בעו''ש" },
+        { Code: "customer", EnglishName: "Customer", LocalName: "לקוח" },
+        { Code: "TotalToCollect", EnglishName: "Total To Collect", LocalName: "סה''כ לגביה" },
+        { Code: "Obligo", EnglishName: "Obligo", LocalName: "אובליגו" },
+        { Code: "CreditUsed", EnglishName: "Credit Used", LocalName: "ע/ח מהמסגרת" },
+    ];
+
+
 
 }

@@ -53,7 +53,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private NewAccountingAgingDataProvider SetAccountingAgingDataLine(NewAccountingAgingDataProvider dataProvider)
         {
             List<NewAgingPeriod> AgingDataLine = GetAccountingAgingDataLineByFilter();
-            dataProvider.AgingPeriods = AgingDataLine;
+            FilterByObligo(GetFilterValue<string>("Obligo"), AgingDataLine);
+            FilterByBalance(GetFilterValue<string>("BalanceFilter"), AgingDataLine);
+
+            dataProvider.AgingPeriods = SortAccountingAgingDataLines(AgingDataLine); 
+           
             return dataProvider;
          }
 
@@ -83,6 +87,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     command.Parameters.AddWithValue("@CategoryValue", GetFilterValue<string>("CategoryValue"));
                     command.Parameters.AddWithValue("@CurrencyFilterSelectedValue", GetFilterValue<string>("CurrencyOriginalLocalValue"));
                     command.Parameters.AddWithValue("@CurrencyId", GetFilterValue<string>("CurrencyId"));
+                    command.Parameters.AddWithValue("@Tenant", tenant);
 
                     using (var reader = command.ExecuteReader())
                     {
@@ -98,12 +103,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 AccountDisplayNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
                                 BalanceInLocalCurrency = reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : null,
                                 CreditLimit = reader["CreditLimit"] != DBNull.Value ? (decimal?)reader["CreditLimit"] : null,
-                                InsuredCreditLimit = reader["InsuredCreditLimit "] != DBNull.Value ? (double?)reader["InsuredCreditLimit "] : null,
-                                AccountingBalance = reader[ "AccountingBalance "] != DBNull.Value ? (decimal?)reader["AccountingBalance "] : null,
-                                TotalOpenShipments = reader[ "TotalOpenShipments "] != DBNull.Value ? (decimal?)reader["TotalOpenShipments "] : null,
-                                TotalFutureOpenCheques = reader["TotFutureOpenChequesInLocalCur "] != DBNull.Value ? (decimal?)reader["TotFutureOpenChequesInLocalCur "] : null,
-                                ExternalTransactionsTotal= reader["ExternalTransactionsTotal "] != DBNull.Value ? (decimal?)reader["ExternalTransactionsTotal "] : null,
-                                TotalLocal= reader["BalanceInLocalCurrency "] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency "] : null,
+                                InsuredCreditLimit = reader["InsuredCreditLimit"] != DBNull.Value ? (double?)reader["InsuredCreditLimit"] : null,
+                               // AccountingBalance = reader[ "AccountingBalance"] != DBNull.Value ? (decimal?)reader["AccountingBalance"] : null,
+                                TotalOpenShipments = reader[ "TotalOpenShipments"] != DBNull.Value ? (decimal?)reader["TotalOpenShipments"] : null,
+                                TotalFutureOpenCheques = reader["TotFutureOpenChequesInLocalCur"] != DBNull.Value ? (decimal?)reader["TotFutureOpenChequesInLocalCur"] : null,
+                               ExternalTransactionsTotal= reader["ExternalTransactionsTotal"] != DBNull.Value ? (decimal?)reader["ExternalTransactionsTotal"] : null,
+                                TotalLocal= reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : null,
                             };
                             results.Add(result);
                         }
@@ -120,6 +125,92 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
         }
 
+
+        private void FilterByObligo(string obligoOperator, List<NewAgingPeriod> agingDataLine)
+        {
+            switch (obligoOperator)
+            {
+                case "GreaterThan":
+                    agingDataLine = agingDataLine.Where(line => line.Obligo > 0).ToList();
+                    break;
+                case "LessThan":
+                    agingDataLine = agingDataLine.Where(line => line.Obligo < 0).ToList();
+                    break;
+                case "NotEqual":
+                    agingDataLine = agingDataLine.Where(line => line.Obligo != 0).ToList();
+                    break;
+                default:
+                    break;
+            }
+        }
+        private void FilterByBalance(string balanceFilter, List<NewAgingPeriod> agingDataLine)
+        {
+           
+        }
+
+        private List<NewAgingPeriod> SortAccountingAgingDataLines(List<NewAgingPeriod> agingDataLine)
+        {
+            string sortField = GetFilterValue<string>("SortField");
+            string sortDirection = GetFilterValue<string>("SortDirection");
+
+            if (sortField == "balance")
+               return SortByBalance(sortDirection,agingDataLine);
+            else if (sortField == "customer")
+                return SortByCustoemrName(sortDirection, agingDataLine);
+            else if (sortField == "TotalToCollect")
+                return  SortByTotalToCollectAmount(sortDirection, agingDataLine);
+            else if (sortField == "Obligo")
+                return SortByObligoField(sortDirection, agingDataLine);
+            else if (sortField == "CreditUsed")
+                return SortByUsedCreditAmount(sortDirection, agingDataLine);
+            else
+                return DefaultSort(agingDataLine);
+        }
+
+        private List<NewAgingPeriod> DefaultSort(List<NewAgingPeriod> agingDataLine)
+        {
+            return agingDataLine.OrderBy(d => d.AccountEnglishName).ToList();
+        }
+
+        private List<NewAgingPeriod> SortByUsedCreditAmount(string sortDirection, List<NewAgingPeriod> agingDataLine)
+        {
+            if (sortDirection == "Descending")
+                return agingDataLine.OrderByDescending(d => d.CreditUsed).ToList();
+            else
+                return agingDataLine.OrderBy(d => d.CreditUsed).ToList();
+        }
+
+        private List<NewAgingPeriod> SortByObligoField(string sortDirection, List<NewAgingPeriod> agingDataLine)
+        {
+            if (sortDirection == "Descending")
+                return agingDataLine.OrderByDescending(d => d.Obligo).ToList();
+            else
+                return agingDataLine.OrderBy(d => d.Obligo).ToList();
+        }
+
+        private List<NewAgingPeriod> SortByTotalToCollectAmount(string sortDirection, List<NewAgingPeriod> agingDataLine)
+        {
+            if (sortDirection == "Descending")
+                return agingDataLine.OrderByDescending(d => d.TotalToCollect).ToList();
+            else
+                return agingDataLine.OrderBy(d => d.TotalToCollect).ToList();
+        }
+
+        private List<NewAgingPeriod> SortByCustoemrName(string sortDirection, List<NewAgingPeriod> agingDataLine)
+        {
+            if (sortDirection == "Descending")
+                return agingDataLine.OrderByDescending(d => d.AccountEnglishName).ToList();
+            else
+                return agingDataLine.OrderBy(d => d.AccountEnglishName).ToList();
+        }
+
+        private List<NewAgingPeriod> SortByBalance(string sortDirection, List<NewAgingPeriod> agingDataLine)
+        {
+            if (sortDirection == "Descending")
+                return agingDataLine.OrderByDescending(d => d.AccountingBalance).ToList();
+            else
+                return agingDataLine.OrderBy(d => d.AccountingBalance).ToList();
+        }
         private static string GetConnection(int tenant)
         {
             GlobalDB currentDb;
