@@ -38,8 +38,15 @@ export class PreferenceMenuComponent implements OnInit {
       this.showSetings = data;
     });
   }
+ 
+  updateBackgroundColor(event: Event, index: number): void {
+    this.preferences[index].BackgroundColor = (event.target as HTMLInputElement).value;
+  }
 
-
+  updateTextColor(event: Event, index: number): void {
+    this.preferences[index].TextColor = (event.target as HTMLInputElement).value;
+  }
+  
   createDefaultPreference(level: number): CB_Preference {
     return {
       Id: '',
