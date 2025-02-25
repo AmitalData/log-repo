@@ -589,7 +589,7 @@ namespace WebFreight.Web.Security
                     if (authToken == null || !authToken.APIToken || forceAPIFeaturesCheck)
                     {
                         ContactRepository contactrep = new ContactRepository(tenant);
-                        Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
+                        Contact contact = contactrep.GetSingleContactByEmail(email, tenant,true);
 
                         if (contact != null)
                         {
