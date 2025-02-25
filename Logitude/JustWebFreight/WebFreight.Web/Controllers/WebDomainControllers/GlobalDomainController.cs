@@ -694,7 +694,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied,
                         CustomerURL = entityPM.CustomerURL,
                         IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid,
-                    };
+						MinutsTimeOutSession = entityPM.MinutsTimeOutSession,
+
+					};
 
                     if (entityPM.PaymentFailure)
                     {
@@ -945,9 +947,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public bool MainAdditionalPackageApplied { get; set; }
         public bool IsContainerTrackingPrepaid { get; set; }
         public string CustomerURL { get; set; }
+		public int? MinutsTimeOutSession { get; set; }
 
 
-        private List<string> packagesCodes_PK;
+		private List<string> packagesCodes_PK;
         public List<string> PackagesCodes_PK
         {
             get
