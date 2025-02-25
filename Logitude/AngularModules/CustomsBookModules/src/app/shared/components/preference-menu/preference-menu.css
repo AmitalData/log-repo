@@ -7,8 +7,12 @@
   direction: rtl;
   background-color: var(--grey);
   position: absolute;
-  left: 9px;
-  top: 9px;
+  right: 11px;
+  top: 11px;
+}
+
+.logoSettings {
+  width: 23px;
 }
 
 table {
@@ -78,4 +82,3 @@ td img {
 .fa-save {
   color: black;
 }
-
