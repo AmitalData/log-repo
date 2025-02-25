@@ -1,14 +1,19 @@
-﻿using Logitude.Accounting.BL.DataContract;
+﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
+using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Journal = Logitude.Accounting.Data.EntityPOCOs.Journal;
+using JournalLine = Logitude.Accounting.Data.EntityPOCOs.JournalLine;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -163,6 +168,77 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return interestTransaction;
         }
+
+
+        public DateTime GetAccountingDate(InterestTransaction interestTransaction, int tenant)
+        {
+            if (interestTransaction == null)
+            {
+                return DateTime.MinValue;
+            }
+
+            // Default the accounting date to the interest value date.
+            var accountingDate = interestTransaction.InterestValueDate;
+            switch (interestTransaction.AccountingEntityCode)
+            {
+                case "1":
+                case "10":
+                case "12":
+                    accountingDate = GetJournalAccountingDate(interestTransaction, tenant, accountingDate);
+                    break;
+
+                case "2":
+                    accountingDate = GetARInvoiceAccountingDate(interestTransaction, tenant, accountingDate);
+                    break;
+
+                case "3":
+                    accountingDate = GetARPaymentAccountingDate(interestTransaction, tenant, accountingDate);
+                    break;
+
+                default:
+                    // Keep the default interest value date if the code doesn't match.
+                    break;
+            }
+
+            return accountingDate;
+        }
+
+
+        private DateTime GetJournalAccountingDate(InterestTransaction interestTransaction, int tenant, DateTime fallbackDate)
+        {
+            var journalLineRepository = new JournalLineRepository(tenant);
+            var journalLine = journalLineRepository.GetSingleJournalLine(
+                interestTransaction.EntityId,
+                interestTransaction.OriginalEntityLineNumber,
+                tenant
+            );
+
+            if (journalLine != null)
+            {
+                return journalLine.AccountingDate;
+            }
+
+            var journalRepository = new JournalRepository(tenant);
+            var journal = journalRepository.GetSingle(interestTransaction.EntityId, tenant);
+            return journal?.AccountingDate ?? fallbackDate;
+        }
+
+
+        private DateTime GetARInvoiceAccountingDate(InterestTransaction interestTransaction, int tenant, DateTime fallbackDate)
+        {
+            var invoiceRepository = new ARInvoiceRepository(tenant);
+            var invoice = invoiceRepository.GetSingleARInvoice(interestTransaction.EntityId, tenant);
+            return invoice?.InvoiceDate ?? fallbackDate;
+        }
+
+
+        private DateTime GetARPaymentAccountingDate(InterestTransaction interestTransaction, int tenant, DateTime fallbackDate)
+        {
+            var paymentRepository = new ARPaymentRepository(tenant);
+            var payment = paymentRepository.GetSingleARPayment(interestTransaction.EntityId, tenant);
+            return payment?.RegisterDate ?? fallbackDate;
+        }
+
 
 
     }
