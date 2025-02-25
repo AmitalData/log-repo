@@ -11681,7 +11681,16 @@
         ObjectFieldName="&quot;CountryName&quot;"
         ColumnWidth="150" />
     </QueryColumns>
-    <QueryFilters />
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;All Cards&quot;"
+        PredefinedValue="&quot;CO&quot;"
+        ObjectFieldName="&quot;PartnerTypeId&quot;"
+        IsPredefined="true"
+        Operator="&quot;NotEqual&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
   </Query>
   <Screen
     Name="&quot;CardHeaderScreen&quot;"
