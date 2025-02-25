@@ -11,6 +11,7 @@ using System.Linq;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Unifreight.Data.AmitalModel.Repsitories;
+using System.Threading;
 
 namespace CustomsWorkerRole
 {
@@ -79,6 +80,8 @@ namespace CustomsWorkerRole
                     syncRecordQuery.UpdateStatus(syncRecordsInQueueList, SyncRecordStatus.InQueue);
 
                     Unlock();
+
+                    Thread.Sleep(100);
                 }
             }
             catch (DbUpdateException e) when (e.Message.Contains("SyncRecordsCCUTableWR") && e.Message.Contains("GeneralLock"))

@@ -148,8 +148,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             List<SyncRecord> records = query.ToList();
             int recordsCounts = records.Count();
-            for (int i = 0; i < recordsCounts; i++)
-                records.ElementAt(i).IsSync = SyncRecordStatus.InProcess;
+
+            UpdateStatus(records, SyncRecordStatus.InProcess);
 
             return records;
         }
