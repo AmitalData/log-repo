@@ -34,6 +34,7 @@ using System.Globalization;
 using System.Configuration;
 using NPOI.HSSF.UserModel;
 using static System.Net.Mime.MediaTypeNames;
+using Logitude.BL.Resolvers;
 
 namespace WebFreight.Web.Helpers
 {
@@ -1257,16 +1258,16 @@ namespace WebFreight.Web.Helpers
                                       ? column.ObjectFieldListLabelTextCodeCode
                                      : column.ObjectFieldFullNameTextCodeCode;
 
-
-                        if (!string.IsNullOrEmpty(column.DisplayText))
+                        bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                        if (text != null)
                         {
-
-                            text = column.DisplayText;
+                             text = TextCodesTranslator.TranslateText(text, 0, showLocals);
                         }
-                        else if (!string.IsNullOrEmpty(column.ObjectFieldFieldLableTextCodeDefaultText))
+                        if (string.IsNullOrEmpty(text) &&!string.IsNullOrEmpty(column.ObjectFieldFieldLableTextCodeDefaultText))
                         {
-                            text = column.ObjectFieldFieldLableTextCodeDefaultText;
+                             text = column.ObjectFieldFieldLableTextCodeDefaultText;
                         }
+                        
 
 
                         text = text != null ? text : "";
