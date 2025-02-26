@@ -6759,8 +6759,8 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;General.MC.Others.ExternalLinks&quot;"
-      DefaultText="&quot;ExternalLinks&quot;"
+      Code="&quot;General.MC.Others.ExternalLink&quot;"
+      DefaultText="&quot;External Links&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
@@ -9225,8 +9225,8 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;General.MC.Others.ExternalLink&quot;"
-      FeatureTypeCode="&quot;MC&quot;"
+      Code="&quot;ExternalLink&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.General.MC.Others.ExternalLink&quot;"
       FeatureDefaultText="&quot;External Links&quot;"
       IsPackagable="false"
