@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ExternalLinkPM } from 'Common/EntityPMs/ExternalLinkPM';
 import { ExternalLinkPMService } from 'Common/Services/StandardPMs/ExternalLinkPMService';
+import { LogitudeWindowTemplateComponent } from 'Controls/Windows/LogitudeWindow';
 import { UIProperties } from 'Infrastructure/Components/LogitudeComponents/UIProperties';
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
@@ -12,10 +13,33 @@ import { Observable } from 'rxjs';
     selector: 'app-external-link',
     templateUrl: './ExternalLinkComponent.html',
     styles: [`
-            .data-row {
-                width: 200px;
-            }
-        `]
+        .view-container {
+            padding: 15px;
+        }
+        
+        .data-row {
+            width: 200px;
+        }
+
+        BooleanFilter {
+            width: 71px;
+            display: block;
+            margin: 14px 0px;
+        }
+
+        .button-wrapper {
+            direction: ltr;
+            position: absolute;
+            bottom: 16px;
+            left: 23px;
+        }
+
+        .Button {
+            display: inline-block;
+            width: 50px;
+            margin: 0 5px;
+        }
+    `]
 })
 export class ExternalLinkComponent {
     externalLinkPM: ExternalLinkPM = new ExternalLinkPM();
@@ -30,6 +54,12 @@ export class ExternalLinkComponent {
 
         if (entityArgs.EntityPM)
             this.initExistsData(entityArgs.EntityPM);
+
+        if (!SessionLocator.SelectedSession.CurrentEditComponent) {
+            (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).logWindow.Height = 350;
+            (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).logWindow.Width = 450;
+            (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).SetWindowSize();
+        }
     }
 
     async initObjectTable() {
