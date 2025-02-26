@@ -27,36 +27,36 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         QueryId, 
-	         QueryCode, 
 	         ObjectFieldId, 
 	         IndexOrder, 
 	         ColumnWidth, 
 	         UserId, 
-	         ObjectFieldCode,	      }
+	         ObjectFieldCode, 
+	         QueryCode,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
 	         Id, 
 	         Tenant, 
 	         QueryId, 
-	         QueryCode, 
 	         ObjectFieldId, 
 	         IndexOrder, 
 	         ColumnWidth, 
 	         UserId, 
-	         ObjectFieldCode,	      }
+	         ObjectFieldCode, 
+	         QueryCode,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(QueryColumnPM entityPM, POCO.QueryColumn entityPOCO)
         {
 			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryId)) { entityPOCO.QueryId = entityPM.QueryId;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryCode)) { entityPOCO.QueryCode = entityPM.QueryCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldId)) { entityPOCO.ObjectFieldId = entityPM.ObjectFieldId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IndexOrder)) { entityPOCO.IndexOrder = entityPM.IndexOrder;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ColumnWidth)) { entityPOCO.ColumnWidth = entityPM.ColumnWidth;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UserId)) { entityPOCO.UserId = entityPM.UserId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldCode)) { entityPOCO.ObjectFieldCode = entityPM.ObjectFieldCode;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryCode)) { entityPOCO.QueryCode = entityPM.QueryCode;}
 					}
 		public void POCOToPM(QueryColumnPM entityPM, POCO.QueryColumn entityPOCO)
         {
@@ -71,10 +71,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueryId))
             {
 					entityPM.QueryId = entityPOCO.QueryId;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueryCode))
-            {
-					entityPM.QueryCode = entityPOCO.QueryCode;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectFieldId))
             {
@@ -96,6 +92,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.ObjectFieldCode = entityPOCO.ObjectFieldCode;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueryCode))
+            {
+					entityPM.QueryCode = entityPOCO.QueryCode;
+            }
 		}
 		public void PMToOldPM(QueryColumnPM entityPM, QueryColumnPM oldEntityPM)
         {
@@ -107,10 +107,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryId))
             {
                 oldEntityPM.QueryId = entityPM.QueryId;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryCode))
-            {
-                oldEntityPM.QueryCode = entityPM.QueryCode;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldId))
             {
@@ -131,6 +127,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldCode))
             {
                 oldEntityPM.ObjectFieldCode = entityPM.ObjectFieldCode;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryCode))
+            {
+                oldEntityPM.QueryCode = entityPM.QueryCode;
             }
 					}
 		public void POCOToList(POCO.QueryColumn entityPOCO, QueryColumnList entityList)

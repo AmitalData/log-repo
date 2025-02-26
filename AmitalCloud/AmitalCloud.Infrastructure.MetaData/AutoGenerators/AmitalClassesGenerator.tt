@@ -54,6 +54,7 @@ GenerateAllLists("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.
 GenerateAllUpdateServices("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Application/EntityUpdateServices","AmitalCloudContext",namespaces);
 GenerateAllQueryServices("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Application/EntityQueryServices","AmitalCloudContext",namespaces);
 GenerateAllListQueryServices("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Application/EntityListQueryServices","AmitalCloudContext",namespaces);
+GenerateAllMappingClasss("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Data/EntityDataMappings",namespaces); 
 
 
 

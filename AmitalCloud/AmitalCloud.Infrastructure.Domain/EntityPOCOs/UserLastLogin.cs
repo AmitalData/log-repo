@@ -20,8 +20,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	{
 		
         [Key]
+        [ForeignKey("User")]
         [Column("Id")]
 	    public string Id { get; set; }
+	      
+        public virtual User User { get; set; }
         [Column("ComputerId")]
 	    public string ComputerId { get; set; }
         [Column("LoginDateTime")]
@@ -30,10 +33,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("WorkEnvironment")]
 	    public string WorkEnvironment { get; set; }
-        [Column("User")]
-	    public string User { get; set; }
         [Column("IP")]
 	    public string IP { get; set; }
+        [Column("Computerusername")]
+	    public string Computerusername { get; set; }
     }
 }
 	 

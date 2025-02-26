@@ -26,13 +26,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Prefix).HasColumnName("Prefix").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Prefix).HasColumnName("Prefix").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.LastValue).HasColumnName("LastValue").IsRequired();
 
-            this.Property(t => t.CounterId).HasColumnName("CounterId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CounterId).HasColumnName("CounterId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.BranchCounterCode).HasColumnName("BranchCounterCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.BranchCounterCode).HasColumnName("BranchCounterCode").IsRequired().HasMaxLength(5).IsUnicode(false);
         }
     }
 }

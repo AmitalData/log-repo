@@ -56,11 +56,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string RuleNotificationTypeCode { get; set; }
 	      
         public virtual RuleNotificationType RuleNotificationType { get; set; }
-        [ForeignKey("ObjectField")]
         [Column("TriggerFieldId")]
 	    public string TriggerFieldId { get; set; }
-	      
-        public virtual ObjectField ObjectField { get; set; }
         [Column("ActiveForNew")]
 	    public bool ActiveForNew { get; set; }
         [Column("ActiveForUpdate")]
@@ -71,6 +68,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool AdvancedCondition { get; set; }
         [Column("TriggerFieldCode")]
 	    public string TriggerFieldCode { get; set; }
+		public virtual ICollection<ObjectTableRuleField> ObjectTableRuleFields { get; set; }
+		public virtual ICollection<RuleConditionField> RuleConditionFields { get; set; }
     }
 }
 	 

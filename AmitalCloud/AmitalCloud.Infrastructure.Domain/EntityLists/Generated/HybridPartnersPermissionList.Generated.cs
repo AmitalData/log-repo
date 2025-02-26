@@ -25,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public HybridPartnersPermissionList(POCO.HybridPartnersPermission entity) : base()
        {
           HybridPartnerId  = entity.HybridPartnerId;
-          AllowedByHybridPartner  = entity.AllowedByHybridPartner;
+          AllowedByHybridPartnerId  = entity.AllowedByHybridPartnerId;
           InActive  = entity.InActive;
        }
        #endregion Constructors
@@ -34,8 +34,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [Key]
        [DataMember]
        public string HybridPartnerId  { get; set; }
+
+       [Key]
        [DataMember]
-       public string AllowedByHybridPartner  { get; set; }
+       public string AllowedByHybridPartnerId  { get; set; }
        [DataMember]
        public bool InActive  { get; set; }
          #endregion Properties

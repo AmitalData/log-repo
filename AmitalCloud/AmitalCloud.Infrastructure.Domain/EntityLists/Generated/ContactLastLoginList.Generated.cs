@@ -28,7 +28,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           ComputerId  = entity.ComputerId;
           LoginDateTime  = entity.LoginDateTime;
           Tenant  = entity.Tenant;
-          Contact  = entity.Contact;
        }
        #endregion Constructors
        #region Properties
@@ -42,8 +41,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime? LoginDateTime  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
-       [DataMember]
-       public string Contact  { get; set; }
          #endregion Properties
    }
 

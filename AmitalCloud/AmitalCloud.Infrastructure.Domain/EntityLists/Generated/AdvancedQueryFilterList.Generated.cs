@@ -25,7 +25,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public AdvancedQueryFilterList(POCO.AdvancedQueryFilter entity) : base()
        {
           Id  = entity.Id;
-          QueryCode  = entity.QueryCode;
           Tenant  = entity.Tenant;
           QueryId  = entity.QueryId;
           ObjectFieldId  = entity.ObjectFieldId;
@@ -34,9 +33,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           PredefinedValue2  = entity.PredefinedValue2;
           Operator  = entity.Operator;
           IndexOrder  = entity.IndexOrder;
-          CustomPredefined  = entity.CustomPredefined;
           UserId  = entity.UserId;
           ObjectFieldCode  = entity.ObjectFieldCode;
+          QueryCode  = entity.QueryCode;
+          CustomPredefined  = entity.CustomPredefined;
        }
        #endregion Constructors
        #region Properties
@@ -44,8 +44,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [Key]
        [DataMember]
        public string Id  { get; set; }
-       [DataMember]
-       public string QueryCode  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
@@ -63,11 +61,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public int IndexOrder  { get; set; }
        [DataMember]
-       public bool CustomPredefined  { get; set; }
-       [DataMember]
        public string UserId  { get; set; }
        [DataMember]
        public string ObjectFieldCode  { get; set; }
+       [DataMember]
+       public string QueryCode  { get; set; }
+       [DataMember]
+       public bool CustomPredefined  { get; set; }
          #endregion Properties
    }
 

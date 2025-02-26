@@ -30,6 +30,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Value { get; set; }
         [Column("IsMultipleChoice")]
 	    public bool IsMultipleChoice { get; set; }
+        [Column("Automaticlastupdatedate")]
+	    public DateTime? Automaticlastupdatedate { get; set; }
     }
 }
 	 

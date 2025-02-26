@@ -28,6 +28,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("LastNumber")]
 	    public int LastNumber { get; set; }
+        [Column("DropRowid")]
+	    public string DropRowid { get; set; }
     }
 }
 	 

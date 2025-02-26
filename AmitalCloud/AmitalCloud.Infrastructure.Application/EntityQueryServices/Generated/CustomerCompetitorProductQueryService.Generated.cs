@@ -28,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    {
         public CustomerCompetitorProductQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
         public CustomerCompetitorProductQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerCompetitorProduct>(context),new CustomerCompetitorProductDataMapping()) {}
-		public  CustomerCompetitorProductPM GetSingle(string customerid, string competitorid, string producttypecode,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerCompetitorProductKeys<string>(){ CustomerId = customerid, CompetitorId = competitorid, ProductTypeCode = producttypecode }, getComposition, getFromCache);
-	    protected override IEntityKeyFields<POCO.CustomerCompetitorProduct,string> GetKeys(POCO.CustomerCompetitorProduct entityPOCO) => new CustomerCompetitorProductKeys<string>() { CustomerId = entityPOCO.CustomerId, CompetitorId = entityPOCO.CompetitorId, ProductTypeCode = entityPOCO.ProductTypeCode,  };
+		public  CustomerCompetitorProductPM GetSingle(string producttypecode, string customerid, string competitorid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerCompetitorProductKeys<string>(){ ProductTypeCode = producttypecode, CustomerId = customerid, CompetitorId = competitorid }, getComposition, getFromCache);
+	    protected override IEntityKeyFields<POCO.CustomerCompetitorProduct,string> GetKeys(POCO.CustomerCompetitorProduct entityPOCO) => new CustomerCompetitorProductKeys<string>() { ProductTypeCode = entityPOCO.ProductTypeCode, CustomerId = entityPOCO.CustomerId, CompetitorId = entityPOCO.CompetitorId,  };
    }
 }

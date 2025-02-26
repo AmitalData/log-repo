@@ -33,8 +33,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_loginDateTime = entity.LoginDateTime;
 		_tenant = entity.Tenant;
 		_workEnvironment = entity.WorkEnvironment;
-		_user = entity.User;
 		_iP = entity.IP;
+		_computerusername = entity.Computerusername;
    }
    #endregion Constructors
    #region Properties
@@ -119,22 +119,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _user ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string User  
-	   {
-	     get { return _user; }
-		 set
-		 {
-		   if(_user != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="User",OldValue=_user,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _user=value;
-		   }
-		 }
-	   }
 	  private string _iP ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -148,6 +132,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IP",OldValue=_iP,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _iP=value;
+		   }
+		 }
+	   }
+	  private string _computerusername ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Computerusername  
+	   {
+	     get { return _computerusername; }
+		 set
+		 {
+		   if(_computerusername != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Computerusername",OldValue=_computerusername,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _computerusername=value;
 		   }
 		 }
 	   }

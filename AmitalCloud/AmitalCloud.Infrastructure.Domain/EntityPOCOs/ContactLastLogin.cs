@@ -20,16 +20,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	{
 		
         [Key]
+        [ForeignKey("Contact")]
         [Column("Id")]
 	    public string Id { get; set; }
+	      
+        public virtual Contact Contact { get; set; }
         [Column("ComputerId")]
 	    public string ComputerId { get; set; }
         [Column("LoginDateTime")]
 	    public DateTime? LoginDateTime { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [Column("Contact")]
-	    public string Contact { get; set; }
     }
 }
 	 

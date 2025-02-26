@@ -22,21 +22,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(7).IsUnicode(false);
 
-            this.Property(t => t.EnglishName).HasColumnName("EnglishName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.EnglishName).HasColumnName("EnglishName").IsRequired().HasMaxLength(60).IsUnicode(false);
 
-            this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(60).IsUnicode(true);
 
             this.Property(t => t.InActive).HasColumnName("InActive").IsRequired();
 
-            this.Property(t => t.CustomsMetaDataCode).HasColumnName("CustomsMetaDataCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Format).HasColumnName("Format").IsRequired().HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.Format).HasColumnName("Format").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CustomsMetaDataCode).HasColumnName("CustomsMetaDataCode").IsRequired().HasMaxLength(6).IsUnicode(true);
         }
     }
 }

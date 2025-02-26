@@ -18,19 +18,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
         public CustomerCompetitorProductKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
         public override void Initialize(IEnumerable<KeyValuePair<string, string>> paramList)
         {
+			ProductTypeCode = (string)Convert.ChangeType((paramList.Single(t => t.Key == "ProductTypeCode").Value), typeof(string));
 			CustomerId = (string)Convert.ChangeType((paramList.Single(t => t.Key == "CustomerId").Value), typeof(string));
 			CompetitorId = (string)Convert.ChangeType((paramList.Single(t => t.Key == "CompetitorId").Value), typeof(string));
-			ProductTypeCode = (string)Convert.ChangeType((paramList.Single(t => t.Key == "ProductTypeCode").Value), typeof(string));
         }
-   	  public string CustomerId  { get; set; }
+   	  public string ProductTypeCode  { get; set; }
+	    			   
+	  public string CustomerId  { get; set; }
 	    			   
 	  public string CompetitorId  { get; set; }
 	    			   
-	  public string ProductTypeCode  { get; set; }
-	    			   
-	  public override T GetFullKey() =>   (T)Convert.ChangeType(CustomerId.ToString()+'_'+CompetitorId.ToString()+'_'+ProductTypeCode.ToString(),typeof(T)) ;           
+	  public override T GetFullKey() =>   (T)Convert.ChangeType(ProductTypeCode.ToString()+'_'+CustomerId.ToString()+'_'+CompetitorId.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CustomerCompetitorProductsPM";
-	  public override Expression<Func<EntityPOCOs.CustomerCompetitorProduct, bool>> Predicate => a => a.CustomerId == CustomerId && a.CompetitorId == CompetitorId && a.ProductTypeCode == ProductTypeCode;
+	  public override Expression<Func<EntityPOCOs.CustomerCompetitorProduct, bool>> Predicate => a => a.ProductTypeCode == ProductTypeCode && a.CustomerId == CustomerId && a.CompetitorId == CompetitorId;
    }
 }
 	 

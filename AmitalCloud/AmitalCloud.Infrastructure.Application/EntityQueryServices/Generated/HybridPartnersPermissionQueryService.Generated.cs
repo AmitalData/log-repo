@@ -28,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    {
         public HybridPartnersPermissionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
         public HybridPartnersPermissionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HybridPartnersPermission>(context),new HybridPartnersPermissionDataMapping()) {}
-		public  HybridPartnersPermissionPM GetSingle(string hybridpartnerid,bool getComposition, bool getFromCache) => base.GetSingle(new HybridPartnersPermissionKeys<string>(){ HybridPartnerId = hybridpartnerid }, getComposition, getFromCache);
-	    protected override IEntityKeyFields<POCO.HybridPartnersPermission,string> GetKeys(POCO.HybridPartnersPermission entityPOCO) => new HybridPartnersPermissionKeys<string>() { HybridPartnerId = entityPOCO.HybridPartnerId,  };
+		public  HybridPartnersPermissionPM GetSingle(string hybridpartnerid, string allowedbyhybridpartnerid,bool getComposition, bool getFromCache) => base.GetSingle(new HybridPartnersPermissionKeys<string>(){ HybridPartnerId = hybridpartnerid, AllowedByHybridPartnerId = allowedbyhybridpartnerid }, getComposition, getFromCache);
+	    protected override IEntityKeyFields<POCO.HybridPartnersPermission,string> GetKeys(POCO.HybridPartnersPermission entityPOCO) => new HybridPartnersPermissionKeys<string>() { HybridPartnerId = entityPOCO.HybridPartnerId, AllowedByHybridPartnerId = entityPOCO.AllowedByHybridPartnerId,  };
    }
 }

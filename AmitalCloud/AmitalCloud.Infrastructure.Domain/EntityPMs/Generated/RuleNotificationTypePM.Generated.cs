@@ -31,6 +31,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
+		objectTableRuleFields = entity.ObjectTableRuleFields != null ? entity.ObjectTableRuleFields.Select(a=>new ObjectTableRuleFieldPM(a)).ToList() : null;
+		objectTableRules = entity.ObjectTableRules != null ? entity.ObjectTableRules.Select(a=>new ObjectTableRulePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -83,6 +85,68 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<ObjectTableRuleFieldPM> objectTableRuleFields;
+	 
+		     
+	   [Include]
+	   [Association("ObjectTableRuleFieldRuleNotificationType", "Code","Rulenotificationtypecode")]
+	   [DataMember]
+	   public virtual List<ObjectTableRuleFieldPM> ObjectTableRuleFields  
+	   {
+	        get
+             {
+                 if (objectTableRuleFields == null)
+                 {
+                     objectTableRuleFields = new List<ObjectTableRuleFieldPM>();
+                 }
+                 return objectTableRuleFields;
+              }
+             set { objectTableRuleFields = value; }
+	    }
+	   private List<ObjectTableRuleFieldPM>  deletedObjectTableRuleFields;
+	   public virtual List<ObjectTableRuleFieldPM> DeletedObjectTableRuleFields  
+	   {
+	        get
+             {
+                 if ( deletedObjectTableRuleFields == null)
+                 {
+                      deletedObjectTableRuleFields = new List<ObjectTableRuleFieldPM>();
+                 }
+                 return  deletedObjectTableRuleFields;
+              }
+             set {  deletedObjectTableRuleFields = value; }
+	    }
+	   private List<ObjectTableRulePM> objectTableRules;
+	 
+		     
+	   [Include]
+	   [Association("ObjectTableRuleRuleNotificationType", "Code","Rulenotificationtypecode")]
+	   [DataMember]
+	   public virtual List<ObjectTableRulePM> ObjectTableRules  
+	   {
+	        get
+             {
+                 if (objectTableRules == null)
+                 {
+                     objectTableRules = new List<ObjectTableRulePM>();
+                 }
+                 return objectTableRules;
+              }
+             set { objectTableRules = value; }
+	    }
+	   private List<ObjectTableRulePM>  deletedObjectTableRules;
+	   public virtual List<ObjectTableRulePM> DeletedObjectTableRules  
+	   {
+	        get
+             {
+                 if ( deletedObjectTableRules == null)
+                 {
+                      deletedObjectTableRules = new List<ObjectTableRulePM>();
+                 }
+                 return  deletedObjectTableRules;
+              }
+             set {  deletedObjectTableRules = value; }
+	    }
 	 }
 #endregion Properties
 }

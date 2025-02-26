@@ -30,8 +30,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         InActive, 
-	         CustomsMetaDataCode, 
-	         Format,	      }
+	         Format, 
+	         CustomsMetaDataCode,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -41,8 +41,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         EnglishName, 
 	         LocalName, 
 	         InActive, 
-	         CustomsMetaDataCode, 
-	         Format,	      }
+	         Format, 
+	         CustomsMetaDataCode,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(DocumentsMetaDataTypePM entityPM, POCO.DocumentsMetaDataType entityPOCO)
@@ -52,8 +52,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName)) { entityPOCO.EnglishName = entityPM.EnglishName;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName)) { entityPOCO.LocalName = entityPM.LocalName;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive)) { entityPOCO.InActive = entityPM.InActive;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsMetaDataCode)) { entityPOCO.CustomsMetaDataCode = entityPM.CustomsMetaDataCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Format)) { entityPOCO.Format = entityPM.Format;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsMetaDataCode)) { entityPOCO.CustomsMetaDataCode = entityPM.CustomsMetaDataCode;}
 					}
 		public void POCOToPM(DocumentsMetaDataTypePM entityPM, POCO.DocumentsMetaDataType entityPOCO)
         {
@@ -81,13 +81,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.InActive = entityPOCO.InActive;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsMetaDataCode))
-            {
-					entityPM.CustomsMetaDataCode = entityPOCO.CustomsMetaDataCode;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Format))
             {
 					entityPM.Format = entityPOCO.Format;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsMetaDataCode))
+            {
+					entityPM.CustomsMetaDataCode = entityPOCO.CustomsMetaDataCode;
             }
 		}
 		public void PMToOldPM(DocumentsMetaDataTypePM entityPM, DocumentsMetaDataTypePM oldEntityPM)
@@ -113,13 +113,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.InActive = entityPM.InActive;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsMetaDataCode))
-            {
-                oldEntityPM.CustomsMetaDataCode = entityPM.CustomsMetaDataCode;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Format))
             {
                 oldEntityPM.Format = entityPM.Format;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsMetaDataCode))
+            {
+                oldEntityPM.CustomsMetaDataCode = entityPM.CustomsMetaDataCode;
             }
 					}
 		public void POCOToList(POCO.DocumentsMetaDataType entityPOCO, DocumentsMetaDataTypeList entityList)
@@ -142,6 +142,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LocalName)) //T4 find type == nText 
+            {
+                entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CustomsMetaDataCode)) //T4 find type == nText 
+            {
+                entityPM.CustomsMetaDataCode = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomsMetaDataCode));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

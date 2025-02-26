@@ -40,11 +40,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("TranslateDate")]
 	    public DateTime? TranslateDate { get; set; }
-        [ForeignKey("TranslatedByUser")]
+        [ForeignKey("User")]
         [Column("TranslatedByUserId")]
 	    public string TranslatedByUserId { get; set; }
 	      
-        public virtual User TranslatedByUser { get; set; }
+        public virtual User User { get; set; }
         [Column("UpdateDateGMT")]
 	    public DateTime? UpdateDateGMT { get; set; }
         [Column("TextCodeCode")]

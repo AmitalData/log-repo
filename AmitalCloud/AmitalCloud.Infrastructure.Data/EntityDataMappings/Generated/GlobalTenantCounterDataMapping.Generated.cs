@@ -35,8 +35,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(GlobalTenantCounterPM entityPM, POCO.GlobalTenantCounter entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Id)) { entityPOCO.Id = entityPM.Id;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumber)) { entityPOCO.LastNumber = entityPM.LastNumber;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumber)) { entityPOCO.LastNumber = entityPM.LastNumber;}
 					}
 		public void POCOToPM(GlobalTenantCounterPM entityPM, POCO.GlobalTenantCounter entityPOCO)
         {
@@ -52,11 +51,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		public void PMToOldPM(GlobalTenantCounterPM entityPM, GlobalTenantCounterPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Id))
-            {
-                oldEntityPM.Id = entityPM.Id;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumber))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumber))
             {
                 oldEntityPM.LastNumber = entityPM.LastNumber;
             }

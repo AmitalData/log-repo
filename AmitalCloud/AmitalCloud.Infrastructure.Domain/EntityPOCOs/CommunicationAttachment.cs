@@ -24,11 +24,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [ForeignKey("CommunicationLog")]
         [Column("CommunicationLogId")]
 	    public string CommunicationLogId { get; set; }
-	      
-        public virtual CommunicationLog CommunicationLog { get; set; }
         [ForeignKey("Document")]
         [Column("DocumentId")]
 	    public string DocumentId { get; set; }

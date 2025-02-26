@@ -24,11 +24,11 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CommunicationLogStepQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CommunicationLogStep,CommunicationLogStepKeys<int>,CommunicationLogStepPM,CommunicationLogStepList,int>
+   public partial class CommunicationLogStepQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CommunicationLogStep,CommunicationLogStepKeys<string>,CommunicationLogStepPM,CommunicationLogStepList,string>
    {
         public CommunicationLogStepQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
         public CommunicationLogStepQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CommunicationLogStep>(context),new CommunicationLogStepDataMapping()) {}
-		public  CommunicationLogStepPM GetSingle(string communicationlogid, int stepnumber,bool getComposition, bool getFromCache) => base.GetSingle(new CommunicationLogStepKeys<int>(){ CommunicationLogId = communicationlogid, StepNumber = stepnumber }, getComposition, getFromCache);
-	    protected override IEntityKeyFields<POCO.CommunicationLogStep,int> GetKeys(POCO.CommunicationLogStep entityPOCO) => new CommunicationLogStepKeys<int>() { CommunicationLogId = entityPOCO.CommunicationLogId, StepNumber = entityPOCO.StepNumber,  };
+		public  CommunicationLogStepPM GetSingle(int stepnumber, string communicationlogid,bool getComposition, bool getFromCache) => base.GetSingle(new CommunicationLogStepKeys<string>(){ StepNumber = stepnumber, CommunicationLogId = communicationlogid }, getComposition, getFromCache);
+	    protected override IEntityKeyFields<POCO.CommunicationLogStep,string> GetKeys(POCO.CommunicationLogStep entityPOCO) => new CommunicationLogStepKeys<string>() { StepNumber = entityPOCO.StepNumber, CommunicationLogId = entityPOCO.CommunicationLogId,  };
    }
 }

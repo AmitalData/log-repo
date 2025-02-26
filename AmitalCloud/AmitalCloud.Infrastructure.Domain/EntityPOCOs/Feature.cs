@@ -22,8 +22,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Key]
         [Column("Id")]
 	    public string Id { get; set; }
-        [Column("FeatureUniqeCode")]
-	    public string FeatureUniqeCode { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("Code")]
@@ -33,11 +31,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string ObjectTableId { get; set; }
 	      
         public virtual ObjectTable ObjectTable { get; set; }
-        [ForeignKey("NameTextCode")]
         [Column("NameTextCodeId")]
 	    public string NameTextCodeId { get; set; }
-	      
-        public virtual TextCode NameTextCode { get; set; }
         [ForeignKey("FeatureType")]
         [Column("FeatureTypeCode")]
 	    public string FeatureTypeCode { get; set; }
@@ -53,8 +48,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool IsCoreFeature { get; set; }
         [Column("ToggleCode")]
 	    public string ToggleCode { get; set; }
+        [Column("FeatureUniqeCode")]
+	    public string FeatureUniqeCode { get; set; }
         [Column("NameTextCodeCode")]
 	    public string NameTextCodeCode { get; set; }
+		public virtual ICollection<ObjectTableHelperControl> ObjectTableHelperControls { get; set; }
     }
 }
 	 

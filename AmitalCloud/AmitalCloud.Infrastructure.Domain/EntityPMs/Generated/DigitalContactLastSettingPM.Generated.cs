@@ -30,6 +30,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
+		_contactId = entity.ContactId;
 		_objectTableId = entity.ObjectTableId;
 		_filterName = entity.FilterName;
 		_filterCode = entity.FilterCode;
@@ -67,6 +68,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _tenant=value;
+		   }
+		 }
+	   }
+	  private string _contactId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactId  
+	   {
+	     get { return _contactId; }
+		 set
+		 {
+		   if(_contactId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactId",OldValue=_contactId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _contactId=value;
 		   }
 		 }
 	   }

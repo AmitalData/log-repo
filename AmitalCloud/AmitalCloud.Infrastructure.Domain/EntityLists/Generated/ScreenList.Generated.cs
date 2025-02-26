@@ -32,8 +32,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           Tenant  = entity.Tenant;
           IsReadOnly  = entity.IsReadOnly;
           Name  = entity.Name;
-          Type  = entity.Type;
+          Querysection  = entity.Querysection;
           Inactive  = entity.Inactive;
+          Type  = entity.Type;
           SortedByFieldCode  = entity.SortedByFieldCode;
           SortedType  = entity.SortedType;
           SearchFields  = entity.SearchFields;
@@ -61,9 +62,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string Name  { get; set; }
        [DataMember]
-       public string Type  { get; set; }
+       public string Querysection  { get; set; }
        [DataMember]
        public bool Inactive  { get; set; }
+       [DataMember]
+       public string Type  { get; set; }
        [DataMember]
        public string SortedByFieldCode  { get; set; }
        [DataMember]

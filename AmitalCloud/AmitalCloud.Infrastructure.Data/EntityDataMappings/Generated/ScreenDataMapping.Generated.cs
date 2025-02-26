@@ -32,8 +32,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Tenant, 
 	         IsReadOnly, 
 	         Name, 
-	         Type, 
+	         Querysection, 
 	         Inactive, 
+	         Type, 
 	         SortedByFieldCode, 
 	         SortedType, 
 	         SearchFields, 
@@ -50,8 +51,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Tenant, 
 	         IsReadOnly, 
 	         Name, 
-	         Type, 
+	         Querysection, 
 	         Inactive, 
+	         Type, 
 	         SortedByFieldCode, 
 	         SortedType, 
 	         SearchFields, 
@@ -68,8 +70,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReadOnly)) { entityPOCO.IsReadOnly = entityPM.IsReadOnly;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name)) { entityPOCO.Name = entityPM.Name;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Type)) { entityPOCO.Type = entityPM.Type;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Querysection)) { entityPOCO.Querysection = entityPM.Querysection;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive)) { entityPOCO.Inactive = entityPM.Inactive;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Type)) { entityPOCO.Type = entityPM.Type;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortedByFieldCode)) { entityPOCO.SortedByFieldCode = entityPM.SortedByFieldCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortedType)) { entityPOCO.SortedType = entityPM.SortedType;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields)) { entityPOCO.SearchFields = entityPM.SearchFields;}
@@ -111,13 +114,17 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.Name = entityPOCO.Name;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Type))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Querysection))
             {
-					entityPM.Type = entityPOCO.Type;
+					entityPM.Querysection = entityPOCO.Querysection;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
             {
 					entityPM.Inactive = entityPOCO.Inactive;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Type))
+            {
+					entityPM.Type = entityPOCO.Type;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SortedByFieldCode))
             {
@@ -171,13 +178,17 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.Name = entityPM.Name;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Type))
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Querysection))
             {
-                oldEntityPM.Type = entityPM.Type;
+                oldEntityPM.Querysection = entityPM.Querysection;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Type))
+            {
+                oldEntityPM.Type = entityPM.Type;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SortedByFieldCode))
             {
@@ -220,6 +231,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Name)) //T4 find type == nText 
+            {
+                entityPM.Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Name));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

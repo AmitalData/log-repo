@@ -27,8 +27,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string DocumentTypeId { get; set; }
 	      
         public virtual DocumentType DocumentType { get; set; }
+        [ForeignKey("DocumentsMetaDataType")]
         [Column("DocumentsMetaDataTypeId")]
 	    public string DocumentsMetaDataTypeId { get; set; }
+	      
+        public virtual DocumentsMetaDataType DocumentsMetaDataType { get; set; }
         [Column("Mandatory")]
 	    public bool Mandatory { get; set; }
         [Column("Tenant")]

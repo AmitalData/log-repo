@@ -24,39 +24,45 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         Id, 
+	         DropVersion, 
 	         Date, 
 	         VersionNumber, 
 	         Tenant, 
 	         VersionDocumentId, 
 	         PrivateLabelId, 
+	         Dbmigrationslastscript, 
+	         Id, 
 	         IsNew,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         Id, 
+	         DropVersion, 
 	         Date, 
 	         VersionNumber, 
 	         Tenant, 
 	         VersionDocumentId, 
 	         PrivateLabelId, 
+	         Dbmigrationslastscript, 
+	         Id, 
 	         IsNew,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(TermsofUsePM entityPM, POCO.TermsofUse entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Date)) { entityPOCO.Date = entityPM.Date;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropVersion)) { entityPOCO.DropVersion = entityPM.DropVersion;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Date)) { entityPOCO.Date = entityPM.Date;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VersionNumber)) { entityPOCO.VersionNumber = entityPM.VersionNumber;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VersionDocumentId)) { entityPOCO.VersionDocumentId = entityPM.VersionDocumentId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrivateLabelId)) { entityPOCO.PrivateLabelId = entityPM.PrivateLabelId;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Dbmigrationslastscript)) { entityPOCO.Dbmigrationslastscript = entityPM.Dbmigrationslastscript;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNew)) { entityPOCO.IsNew = entityPM.IsNew;}
 					}
 		public void POCOToPM(TermsofUsePM entityPM, POCO.TermsofUse entityPOCO)
         {
-			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropVersion))
             {
-					entityPM.Id = entityPOCO.Id;
+					entityPM.DropVersion = entityPOCO.DropVersion;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Date))
             {
@@ -78,6 +84,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.PrivateLabelId = entityPOCO.PrivateLabelId;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Dbmigrationslastscript))
+            {
+					entityPM.Dbmigrationslastscript = entityPOCO.Dbmigrationslastscript;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsNew))
             {
 					entityPM.IsNew = entityPOCO.IsNew;
@@ -86,7 +100,11 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		public void PMToOldPM(TermsofUsePM entityPM, TermsofUsePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Date))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropVersion))
+            {
+                oldEntityPM.DropVersion = entityPM.DropVersion;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Date))
             {
                 oldEntityPM.Date = entityPM.Date;
             }
@@ -105,6 +123,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrivateLabelId))
             {
                 oldEntityPM.PrivateLabelId = entityPM.PrivateLabelId;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Dbmigrationslastscript))
+            {
+                oldEntityPM.Dbmigrationslastscript = entityPM.Dbmigrationslastscript;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsNew))
             {

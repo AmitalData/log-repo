@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
@@ -32,11 +32,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.IsRequired).HasColumnName("IsRequired").IsRequired();
 
-            this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.UpdateDateGMT).HasColumnName("UpdateDateGMT").IsRequired();
+
+            this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode").IsRequired().HasMaxLength(200).IsUnicode(false);
         }
     }
 }

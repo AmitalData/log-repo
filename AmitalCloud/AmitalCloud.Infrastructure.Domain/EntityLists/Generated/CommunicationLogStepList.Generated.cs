@@ -24,8 +24,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public CommunicationLogStepList() : base() {}
        public CommunicationLogStepList(POCO.CommunicationLogStep entity) : base()
        {
-          CommunicationLogId  = entity.CommunicationLogId;
           StepNumber  = entity.StepNumber;
+          CommunicationLogId  = entity.CommunicationLogId;
           Tenant  = entity.Tenant;
           Name  = entity.Name;
           Retries  = entity.Retries;
@@ -41,11 +41,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [Key]
        [DataMember]
-       public string CommunicationLogId  { get; set; }
+       public int StepNumber  { get; set; }
 
        [Key]
        [DataMember]
-       public int StepNumber  { get; set; }
+       public string CommunicationLogId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]

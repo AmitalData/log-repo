@@ -45,7 +45,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_queryGroupCode = entity.QueryGroupCode;
 		_querygroup = entity.QueryGroup !=null ? new QueryGroupPM(entity.QueryGroup) : null;
 			_nameTextCodeId = entity.NameTextCodeId;
-		_defaultSortDirection = entity.DefaultSortDirection;
+		_nametextcode = entity.NameTextCode !=null ? new TextCodePM(entity.NameTextCode) : null;
+			_defaultSortDirection = entity.DefaultSortDirection;
 		_defaultSortColumn = entity.DefaultSortColumn;
 		_spotlightDataTemplate = entity.SpotlightDataTemplate;
 		_internal = entity.Internal;
@@ -337,6 +338,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TextCodePM _nametextcode;
+		[Include]
+        [DataMember]
+        public virtual TextCodePM NameTextCode 
+		{ 
+		get { return _nametextcode; } 
+		set { _nametextcode = value; }
+		}
 	  private string _defaultSortDirection ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

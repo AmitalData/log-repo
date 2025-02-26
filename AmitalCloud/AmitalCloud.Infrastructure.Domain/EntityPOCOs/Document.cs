@@ -47,6 +47,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool IsEncrypted { get; set; }
         [Column("MarkForDelete")]
 	    public bool? MarkForDelete { get; set; }
+		public virtual ICollection<CommunicationAttachment> CommunicationAttachments { get; set; }
+		public virtual ICollection<CommunicationLog> CommunicationLogs_Documentid { get; set; }
+		public virtual ICollection<CommunicationLog> CommunicationLogs_Responsedocumentid { get; set; }
+		public virtual ICollection<CommunicationLogStep> CommunicationLogSteps { get; set; }
+		public virtual ICollection<DocumentOut> DocumentOuts { get; set; }
+		public virtual ICollection<FilingInboxAttachment> FilingInboxAttachments { get; set; }
+		public virtual ICollection<ImageLibrary> ImageLibrarys { get; set; }
+		//public virtual ICollection<OceanInsightsStatuses> OceanInsightsStatusess { get; set; }
+		public virtual ICollection<QuoteTemplate> QuoteTemplates_Footerdocid { get; set; }
+		public virtual ICollection<QuoteTemplate> QuoteTemplates_Headerdocid { get; set; }
+		public virtual ICollection<QuoteTemplateSection> QuoteTemplateSections { get; set; }
+		public virtual ICollection<Report> Reports { get; set; }
+		public virtual ICollection<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
+		public virtual ICollection<TaskSchedulerHistory> TaskSchedulerHistorys { get; set; }
     }
 }
 	 

@@ -39,10 +39,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool IsReadOnly { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
-        [Column("Type")]
-	    public string Type { get; set; }
+        [Column("Querysection")]
+	    public string Querysection { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("Type")]
+	    public string Type { get; set; }
         [Column("SortedByFieldCode")]
 	    public string SortedByFieldCode { get; set; }
         [Column("SortedType")]

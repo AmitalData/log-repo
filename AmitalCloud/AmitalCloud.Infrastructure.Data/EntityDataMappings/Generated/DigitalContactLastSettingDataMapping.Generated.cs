@@ -26,8 +26,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         Contact, 
-	         ObjectTable, 
+	         ContactId, 
+	         ObjectTableId, 
 	         FilterName, 
 	         FilterCode, 
 	         IsChecked,	      }
@@ -36,8 +36,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         Contact, 
-	         ObjectTable, 
+	         ContactId, 
+	         ObjectTableId, 
 	         FilterName, 
 	         FilterCode, 
 	         IsChecked,	      }
@@ -46,8 +46,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	    public void PMToPOCO(DigitalContactLastSettingPM entityPM, POCO.DigitalContactLastSetting entityPOCO)
         {
 			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
-							//if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Contact)) { entityPOCO.Contact = entityPM.Contact;}
-							//if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectTable)) { entityPOCO.ObjectTable = entityPM.ObjectTable;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId)) { entityPOCO.ContactId = entityPM.ContactId;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectTableId)) { entityPOCO.ObjectTableId = entityPM.ObjectTableId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FilterName)) { entityPOCO.FilterName = entityPM.FilterName;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FilterCode)) { entityPOCO.FilterCode = entityPM.FilterCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsChecked)) { entityPOCO.IsChecked = entityPM.IsChecked;}
@@ -62,13 +62,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.Tenant = entityPOCO.Tenant;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Contact))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContactId))
             {
-					//entityPM.Contact = entityPOCO.Contact;
+					entityPM.ContactId = entityPOCO.ContactId;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectTable))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectTableId))
             {
-					//entityPM.ObjectTable = entityPOCO.ObjectTable;
+					entityPM.ObjectTableId = entityPOCO.ObjectTableId;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FilterName))
             {
@@ -90,13 +90,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Contact))
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId))
             {
-                //oldEntityPM.Contact = entityPM.Contact;
+                oldEntityPM.ContactId = entityPM.ContactId;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectTable))
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectTableId))
             {
-                //oldEntityPM.ObjectTable = entityPM.ObjectTable;
+                oldEntityPM.ObjectTableId = entityPM.ObjectTableId;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FilterName))
             {
@@ -131,6 +131,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FilterName)) //T4 find type == nText 
+            {
+                entityPM.FilterName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FilterName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

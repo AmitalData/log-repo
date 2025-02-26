@@ -22,20 +22,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Key]
         [Column("Id")]
 	    public string Id { get; set; }
-        [Column("QueryCode")]
-	    public string QueryCode { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [ForeignKey("Query")]
         [Column("QueryId")]
 	    public string QueryId { get; set; }
-	      
-        public virtual Query Query { get; set; }
-        [ForeignKey("ObjectField")]
         [Column("ObjectFieldId")]
 	    public string ObjectFieldId { get; set; }
-	      
-        public virtual ObjectField ObjectField { get; set; }
         [Column("IsPredefined")]
 	    public bool IsPredefined { get; set; }
         [Column("PredefinedValue")]
@@ -46,8 +38,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Operator { get; set; }
         [Column("IndexOrder")]
 	    public int IndexOrder { get; set; }
-        [Column("CustomPredefined")]
-	    public bool CustomPredefined { get; set; }
         [ForeignKey("User")]
         [Column("UserId")]
 	    public string UserId { get; set; }
@@ -55,6 +45,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public virtual User User { get; set; }
         [Column("ObjectFieldCode")]
 	    public string ObjectFieldCode { get; set; }
+        [Column("QueryCode")]
+	    public string QueryCode { get; set; }
+        [Column("CustomPredefined")]
+	    public bool CustomPredefined { get; set; }
     }
 }
 	 

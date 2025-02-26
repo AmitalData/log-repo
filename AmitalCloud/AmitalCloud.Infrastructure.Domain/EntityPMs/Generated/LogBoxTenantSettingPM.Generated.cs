@@ -32,8 +32,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isDocumentsArchive = entity.IsDocumentsArchive;
 		_customerTenantShareImportFile = entity.CustomerTenantShareImportFile;
 		_logBoxAdminUserId = entity.LogBoxAdminUserId;
-		_logboxadminuser = entity.LogBoxAdminUser !=null ? new ContactPM(entity.LogBoxAdminUser) : null;
-			_documentShareAsDefault = entity.DocumentShareAsDefault;
+		_documentShareAsDefault = entity.DocumentShareAsDefault;
 		_stockTypeCode = entity.StockTypeCode;
 		_autoArchiveOnInvoice = entity.AutoArchiveOnInvoice;
 		_showTaxAmountWarning = entity.ShowTaxAmountWarning;
@@ -106,14 +105,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private ContactPM _logboxadminuser;
-		[Include]
-        [DataMember]
-        public virtual ContactPM LogBoxAdminUser 
-		{ 
-		get { return _logboxadminuser; } 
-		set { _logboxadminuser = value; }
-		}
 	  private bool _documentShareAsDefault ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

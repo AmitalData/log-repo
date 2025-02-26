@@ -69,17 +69,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private DateTime? _lastUpdateDate ;
+	  private DateTime _lastUpdateDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime? LastUpdateDate  
+       public DateTime LastUpdateDate  
 	   {
 	     get { return _lastUpdateDate; }
 		 set
 		 {
 		   if(_lastUpdateDate != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastUpdateDate",OldValue=_lastUpdateDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastUpdateDate",OldValue=_lastUpdateDate,NewValue=value,PropertyType="DateTime"};
 		    NotifyPropertyChanged(values);
 		   _lastUpdateDate=value;
 		   }

@@ -24,22 +24,46 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public GeneralLockList() : base() {}
        public GeneralLockList(POCO.GeneralLock entity) : base()
        {
-          GeneralKey  = entity.GeneralKey;
+          DropCdropGeneralkey  = entity.DropCdropGeneralkey;
           Tenant  = entity.Tenant;
           CreatedAt  = entity.CreatedAt;
+          GeneralKey  = entity.GeneralKey;
+          Searchfields  = entity.Searchfields;
+          Entityid1  = entity.Entityid1;
+          Objecttableid1  = entity.Objecttableid1;
+          Entityid2  = entity.Entityid2;
+          Objecttableid2  = entity.Objecttableid2;
+          Userid  = entity.Userid;
+          Sessionid  = entity.Sessionid;
        }
        #endregion Constructors
        #region Properties
-   
-       [Key]
-       [DataMember]
-       public string GeneralKey  { get; set; }
+          [DataMember]
+       public string DropCdropGeneralkey  { get; set; }
 
        [Key]
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
        public DateTime CreatedAt  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string GeneralKey  { get; set; }
+       [DataMember]
+       public string Searchfields  { get; set; }
+       [DataMember]
+       public string Entityid1  { get; set; }
+       [DataMember]
+       public string Objecttableid1  { get; set; }
+       [DataMember]
+       public string Entityid2  { get; set; }
+       [DataMember]
+       public string Objecttableid2  { get; set; }
+       [DataMember]
+       public string Userid  { get; set; }
+       [DataMember]
+       public string Sessionid  { get; set; }
          #endregion Properties
    }
 

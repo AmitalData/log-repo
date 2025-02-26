@@ -56,6 +56,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool IsAll { get; set; }
         [Column("LastLoginDate")]
 	    public DateTime? LastLoginDate { get; set; }
+		public virtual ICollection<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
+		public virtual ICollection<CardContactProduct> CardContactProducts { get; set; }
     }
 }
 	 

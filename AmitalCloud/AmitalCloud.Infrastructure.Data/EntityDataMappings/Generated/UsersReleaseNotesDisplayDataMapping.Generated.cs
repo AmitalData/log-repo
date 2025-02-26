@@ -26,22 +26,19 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         UserId, 
-	         User,	      }
+	         UserId,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
 	         Id, 
 	         Tenant, 
-	         UserId, 
-	         User,	      }
+	         UserId,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(UsersReleaseNotesDisplayPM entityPM, POCO.UsersReleaseNotesDisplay entityPOCO)
         {
 			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UserId)) { entityPOCO.UserId = entityPM.UserId;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.User)) { entityPOCO.User = entityPM.User;}
 					}
 		public void POCOToPM(UsersReleaseNotesDisplayPM entityPM, POCO.UsersReleaseNotesDisplay entityPOCO)
         {
@@ -57,10 +54,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.UserId = entityPOCO.UserId;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.User))
-            {
-					entityPM.User = entityPOCO.User;
-            }
 		}
 		public void PMToOldPM(UsersReleaseNotesDisplayPM entityPM, UsersReleaseNotesDisplayPM oldEntityPM)
         {
@@ -72,10 +65,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UserId))
             {
                 oldEntityPM.UserId = entityPM.UserId;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.User))
-            {
-                oldEntityPM.User = entityPM.User;
             }
 					}
 		public void POCOToList(POCO.UsersReleaseNotesDisplay entityPOCO, UsersReleaseNotesDisplayList entityList)

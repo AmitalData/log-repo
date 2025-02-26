@@ -25,7 +25,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public FeatureList(POCO.Feature entity) : base()
        {
           Id  = entity.Id;
-          FeatureUniqeCode  = entity.FeatureUniqeCode;
           Tenant  = entity.Tenant;
           Code  = entity.Code;
           ObjectTableId  = entity.ObjectTableId;
@@ -36,6 +35,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           IsOld  = entity.IsOld;
           IsCoreFeature  = entity.IsCoreFeature;
           ToggleCode  = entity.ToggleCode;
+          FeatureUniqeCode  = entity.FeatureUniqeCode;
           NameTextCodeCode  = entity.NameTextCodeCode;
        }
        #endregion Constructors
@@ -44,8 +44,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [Key]
        [DataMember]
        public string Id  { get; set; }
-       [DataMember]
-       public string FeatureUniqeCode  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
@@ -66,6 +64,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsCoreFeature  { get; set; }
        [DataMember]
        public string ToggleCode  { get; set; }
+       [DataMember]
+       public string FeatureUniqeCode  { get; set; }
        [DataMember]
        public string NameTextCodeCode  { get; set; }
          #endregion Properties

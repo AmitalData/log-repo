@@ -28,20 +28,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int Column { get; set; }
         [Column("Row")]
 	    public int Row { get; set; }
-        [ForeignKey("Screen")]
         [Column("ScreenId")]
 	    public string ScreenId { get; set; }
-	      
-        public virtual Screen Screen { get; set; }
-        [Column("ScreenCode")]
-	    public string ScreenCode { get; set; }
-        [ForeignKey("ObjectField")]
         [Column("ObjectFieldId")]
 	    public string ObjectFieldId { get; set; }
-	      
-        public virtual ObjectField ObjectField { get; set; }
         [Column("ObjectFieldCode")]
 	    public string ObjectFieldCode { get; set; }
+        [Column("ScreenCode")]
+	    public string ScreenCode { get; set; }
         [Column("SectionNumber")]
 	    public int? SectionNumber { get; set; }
     }

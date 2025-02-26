@@ -30,8 +30,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           EnglishName  = entity.EnglishName;
           LocalName  = entity.LocalName;
           InActive  = entity.InActive;
-          CustomsMetaDataCode  = entity.CustomsMetaDataCode;
           Format  = entity.Format;
+          CustomsMetaDataCode  = entity.CustomsMetaDataCode;
        }
        #endregion Constructors
        #region Properties
@@ -50,9 +50,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public bool InActive  { get; set; }
        [DataMember]
-       public string CustomsMetaDataCode  { get; set; }
-       [DataMember]
        public string Format  { get; set; }
+       [DataMember]
+       public string CustomsMetaDataCode  { get; set; }
          #endregion Properties
    }
 

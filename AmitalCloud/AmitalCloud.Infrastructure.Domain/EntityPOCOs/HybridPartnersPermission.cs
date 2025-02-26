@@ -21,13 +21,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	        new const bool hasTenant = false;  
 		
         [Key]
-        [ForeignKey("HybridPartner")]
         [Column("HybridPartnerId")]
 	    public string HybridPartnerId { get; set; }
+     [Key]
+        [ForeignKey("HybridPartner")]
+        [Column("AllowedByHybridPartnerId")]
+	    public string AllowedByHybridPartnerId { get; set; }
 	      
         public virtual HybridPartner HybridPartner { get; set; }
-        [Column("AllowedByHybridPartner")]
-	    public string AllowedByHybridPartner { get; set; }
         [Column("InActive")]
 	    public bool InActive { get; set; }
     }

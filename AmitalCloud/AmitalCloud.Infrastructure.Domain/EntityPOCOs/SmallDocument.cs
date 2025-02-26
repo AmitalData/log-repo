@@ -26,6 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("Content")]
 	    public string Content { get; set; }
+		public virtual ICollection<Document> Documents { get; set; }
     }
 }
 	 

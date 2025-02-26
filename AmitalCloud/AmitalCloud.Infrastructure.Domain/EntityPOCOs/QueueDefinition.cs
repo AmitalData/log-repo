@@ -27,6 +27,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Name { get; set; }
         [Column("DuplicateMessagesAutoRemove")]
 	    public bool DuplicateMessagesAutoRemove { get; set; }
+		public virtual ICollection<QueueMessageMoreDetails> QueueMessageMoreDetailss { get; set; }
+		public virtual ICollection<QueueMessage> QueueMessages { get; set; }
     }
 }
 	 

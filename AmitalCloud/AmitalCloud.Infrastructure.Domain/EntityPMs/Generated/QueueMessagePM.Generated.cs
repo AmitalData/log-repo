@@ -29,27 +29,28 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public QueueMessagePM(POCO.QueueMessage entity) : base()
    {
 		_id = entity.Id;
-		_tenant = entity.Tenant;
 		_queueDefinitionCode = entity.QueueDefinitionCode;
-		_createDateTime = entity.CreateDateTime;
+		_queuedefinition = entity.QueueDefinition !=null ? new QueueDefinitionPM(entity.QueueDefinition) : null;
+			_createDateTime = entity.CreateDateTime;
 		_status = entity.Status;
 		_messageBody = entity.MessageBody;
 		_nextRunDateTime = entity.NextRunDateTime;
 		_processingDateTime = entity.ProcessingDateTime;
 		_completeDateTime = entity.CompleteDateTime;
 		_retryNumber = entity.RetryNumber;
+		_tenant = entity.Tenant;
 		_hashCode = entity.HashCode;
-		_queueDefinition = entity.QueueDefinition;
 		_tenantPriority = entity.TenantPriority;
 		_interfaceTypeCode = entity.InterfaceTypeCode;
-		_useRabbitMQ = entity.UseRabbitMQ;
 		_queueCodeRabbit = entity.QueueCodeRabbit;
+		_useRabbitMQ = entity.UseRabbitMQ;
 		_haveRabbitMQ = entity.HaveRabbitMQ;
-		_entityCode = entity.EntityCode;
-		_entityId = entity.EntityId;
 		_rabbitMQCreateDate = entity.RabbitMQCreateDate;
 		_rabbitMQRetryNumber = entity.RabbitMQRetryNumber;
 		_rabbitMQErrMess = entity.RabbitMQErrMess;
+		_entityCode = entity.EntityCode;
+		_entityId = entity.EntityId;
+		_dropRowid = entity.DropRowid;
    }
    #endregion Constructors
    #region Properties
@@ -70,22 +71,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private int _tenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public override int Tenant  
-	   {
-	     get { return _tenant; }
-		 set
-		 {
-		   if(_tenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _tenant=value;
-		   }
-		 }
-	   }
 	  private string _queueDefinitionCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -102,6 +87,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QueueDefinitionPM _queuedefinition;
+		[Include]
+        [DataMember]
+        public virtual QueueDefinitionPM QueueDefinition 
+		{ 
+		get { return _queuedefinition; } 
+		set { _queuedefinition = value; }
+		}
 	  private DateTime _createDateTime ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -214,6 +207,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private int _tenant ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public override int Tenant  
+	   {
+	     get { return _tenant; }
+		 set
+		 {
+		   if(_tenant != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _tenant=value;
+		   }
+		 }
+	   }
 	  private string _hashCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -227,22 +236,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HashCode",OldValue=_hashCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _hashCode=value;
-		   }
-		 }
-	   }
-	  private string _queueDefinition ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string QueueDefinition  
-	   {
-	     get { return _queueDefinition; }
-		 set
-		 {
-		   if(_queueDefinition != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueueDefinition",OldValue=_queueDefinition,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _queueDefinition=value;
 		   }
 		 }
 	   }
@@ -278,22 +271,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _useRabbitMQ ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UseRabbitMQ  
-	   {
-	     get { return _useRabbitMQ; }
-		 set
-		 {
-		   if(_useRabbitMQ != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UseRabbitMQ",OldValue=_useRabbitMQ,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _useRabbitMQ=value;
-		   }
-		 }
-	   }
 	  private string _queueCodeRabbit ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -310,19 +287,83 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _haveRabbitMQ ;
+	  private bool _useRabbitMQ ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string HaveRabbitMQ  
+       public bool UseRabbitMQ  
+	   {
+	     get { return _useRabbitMQ; }
+		 set
+		 {
+		   if(_useRabbitMQ != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UseRabbitMQ",OldValue=_useRabbitMQ,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _useRabbitMQ=value;
+		   }
+		 }
+	   }
+	  private bool _haveRabbitMQ ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool HaveRabbitMQ  
 	   {
 	     get { return _haveRabbitMQ; }
 		 set
 		 {
 		   if(_haveRabbitMQ != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HaveRabbitMQ",OldValue=_haveRabbitMQ,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HaveRabbitMQ",OldValue=_haveRabbitMQ,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _haveRabbitMQ=value;
+		   }
+		 }
+	   }
+	  private DateTime? _rabbitMQCreateDate ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? RabbitMQCreateDate  
+	   {
+	     get { return _rabbitMQCreateDate; }
+		 set
+		 {
+		   if(_rabbitMQCreateDate != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RabbitMQCreateDate",OldValue=_rabbitMQCreateDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   _rabbitMQCreateDate=value;
+		   }
+		 }
+	   }
+	  private int _rabbitMQRetryNumber ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int RabbitMQRetryNumber  
+	   {
+	     get { return _rabbitMQRetryNumber; }
+		 set
+		 {
+		   if(_rabbitMQRetryNumber != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RabbitMQRetryNumber",OldValue=_rabbitMQRetryNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _rabbitMQRetryNumber=value;
+		   }
+		 }
+	   }
+	  private string _rabbitMQErrMess ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RabbitMQErrMess  
+	   {
+	     get { return _rabbitMQErrMess; }
+		 set
+		 {
+		   if(_rabbitMQErrMess != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RabbitMQErrMess",OldValue=_rabbitMQErrMess,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _rabbitMQErrMess=value;
 		   }
 		 }
 	   }
@@ -358,51 +399,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private DateTime _rabbitMQCreateDate ;
+	  private string _dropRowid ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime RabbitMQCreateDate  
+       public string DropRowid  
 	   {
-	     get { return _rabbitMQCreateDate; }
+	     get { return _dropRowid; }
 		 set
 		 {
-		   if(_rabbitMQCreateDate != value)
+		   if(_dropRowid != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RabbitMQCreateDate",OldValue=_rabbitMQCreateDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropRowid",OldValue=_dropRowid,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _rabbitMQCreateDate=value;
-		   }
-		 }
-	   }
-	  private int _rabbitMQRetryNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int RabbitMQRetryNumber  
-	   {
-	     get { return _rabbitMQRetryNumber; }
-		 set
-		 {
-		   if(_rabbitMQRetryNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RabbitMQRetryNumber",OldValue=_rabbitMQRetryNumber,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _rabbitMQRetryNumber=value;
-		   }
-		 }
-	   }
-	  private string _rabbitMQErrMess ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RabbitMQErrMess  
-	   {
-	     get { return _rabbitMQErrMess; }
-		 set
-		 {
-		   if(_rabbitMQErrMess != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RabbitMQErrMess",OldValue=_rabbitMQErrMess,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _rabbitMQErrMess=value;
+		   _dropRowid=value;
 		   }
 		 }
 	   }

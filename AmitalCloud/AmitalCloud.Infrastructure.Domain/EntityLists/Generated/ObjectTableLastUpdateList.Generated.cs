@@ -29,8 +29,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           LastUpdateDate  = entity.LastUpdateDate;
           UpdatedByUserId  = entity.UpdatedByUserId;
           ObjectTableId  = entity.ObjectTableId;
-          UpdatedByUser  = entity.UpdatedByUser;
-          ObjectTable  = entity.ObjectTable;
        }
        #endregion Constructors
        #region Properties
@@ -46,10 +44,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string UpdatedByUserId  { get; set; }
        [DataMember]
        public string ObjectTableId  { get; set; }
-       [DataMember]
-       public string UpdatedByUser  { get; set; }
-       [DataMember]
-       public string ObjectTable  { get; set; }
          #endregion Properties
    }
 

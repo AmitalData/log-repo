@@ -413,6 +413,7 @@
     <Compile Include="EntityDataMappings\EntityPartnerDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityStatusTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EventRemarkDataMapping.cs" />
     <Compile Include="EntityDataMappings\EventTypeCategoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\EventTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FailedLoginLogDataMapping.cs" />
@@ -625,6 +626,7 @@
     <Compile Include="EntityDataMappings\Generated\EntityPartnerDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityStatusTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EventRemarkDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EventTypeCategoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EventTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FailedLoginLogDataMapping.Generated.cs" />

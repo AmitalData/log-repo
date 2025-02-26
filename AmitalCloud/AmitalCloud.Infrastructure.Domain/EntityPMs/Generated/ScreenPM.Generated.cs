@@ -36,8 +36,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_isReadOnly = entity.IsReadOnly;
 		_name = entity.Name;
-		_type = entity.Type;
+		_querysection = entity.Querysection;
 		_inactive = entity.Inactive;
+		_type = entity.Type;
 		_sortedByFieldCode = entity.SortedByFieldCode;
 		_sortedType = entity.SortedType;
 		_searchFields = entity.SearchFields;
@@ -175,19 +176,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _type ;
+	  private string _querysection ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Type  
+       public string Querysection  
 	   {
-	     get { return _type; }
+	     get { return _querysection; }
 		 set
 		 {
-		   if(_type != value)
+		   if(_querysection != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Type",OldValue=_type,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Querysection",OldValue=_querysection,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _type=value;
+		   _querysection=value;
 		   }
 		 }
 	   }
@@ -204,6 +205,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Inactive",OldValue=_inactive,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _inactive=value;
+		   }
+		 }
+	   }
+	  private string _type ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Type  
+	   {
+	     get { return _type; }
+		 set
+		 {
+		   if(_type != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Type",OldValue=_type,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _type=value;
 		   }
 		 }
 	   }

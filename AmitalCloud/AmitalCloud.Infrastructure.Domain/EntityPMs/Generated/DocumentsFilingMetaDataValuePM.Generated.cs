@@ -31,8 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_documentsFilingId = entity.DocumentsFilingId;
-		_documentsfiling = entity.DocumentsFiling !=null ? new DocumentsFilingPM(entity.DocumentsFiling) : null;
-			_documentsMetaDataTypeId = entity.DocumentsMetaDataTypeId;
+		_documentsMetaDataTypeId = entity.DocumentsMetaDataTypeId;
 		_documentsmetadatatype = entity.DocumentsMetaDataType !=null ? new DocumentsMetaDataTypePM(entity.DocumentsMetaDataType) : null;
 			_metaDataValue = entity.MetaDataValue;
    }
@@ -87,14 +86,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private DocumentsFilingPM _documentsfiling;
-		[Include]
-        [DataMember]
-        public virtual DocumentsFilingPM DocumentsFiling 
-		{ 
-		get { return _documentsfiling; } 
-		set { _documentsfiling = value; }
-		}
 	  private string _documentsMetaDataTypeId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -26,20 +26,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
-        [Column("CreatedByUser")]
-	    public string CreatedByUser { get; set; }
+        [ForeignKey("CreatedByUser")]
+        [Column("CreatedByUserId")]
+	    public string CreatedByUserId { get; set; }
+	      
+        public virtual User CreatedByUser { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
-        [ForeignKey("EventTypeId")]
-        [Column("EventType")]
-	    public EventType EventType { get; set; }
+        [ForeignKey("EventType")]
+        [Column("EventTypeId")]
+	    public string EventTypeId { get; set; }
 	      
-        public virtual string EventTypeId { get; set; }
-        [ForeignKey("PartnerTypeId")]
-        [Column("PartnerType")]
-	    public string PartnerType { get; set; }
+        public virtual EventType EventType { get; set; }
+        [ForeignKey("PartnerType")]
+        [Column("PartnerTypeId")]
+	    public string PartnerTypeId { get; set; }
 	      
-        public virtual string PartnerTypeId { get; set; }
+        public virtual PartnerType PartnerType { get; set; }
         [Column("IsChoose")]
 	    public bool IsChoose { get; set; }
     }

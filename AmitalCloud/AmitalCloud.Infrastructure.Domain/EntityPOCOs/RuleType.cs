@@ -27,6 +27,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Name { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+		public virtual ICollection<ObjectTableRule> ObjectTableRules { get; set; }
     }
 }
 	 

@@ -20,13 +20,29 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
         { 
 				this.ToTable("GeneralLocks");
 		
-		    this.HasKey(t => new { t.GeneralKey, t.Tenant });
+		    this.HasKey(t => new { t.Tenant, t.GeneralKey });
 	 
-            this.Property(t => t.GeneralKey).HasColumnName("GeneralKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DropCdropGeneralkey).HasColumnName("DropCdropGeneralkey").IsRequired().HasMaxLength(128).IsUnicode(true);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired().HasDatabaseGeneratedOption(null);
 
             this.Property(t => t.CreatedAt).HasColumnName("CreatedAt").IsRequired();
+
+            this.Property(t => t.GeneralKey).HasColumnName("GeneralKey").IsRequired().HasMaxLength(128).IsUnicode(false);
+
+            this.Property(t => t.Searchfields).HasColumnName("Searchfields").IsRequired().HasMaxLength(-1).IsUnicode(true);
+
+            this.Property(t => t.Entityid1).HasColumnName("Entityid1").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Objecttableid1).HasColumnName("Objecttableid1").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Entityid2).HasColumnName("Entityid2").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Objecttableid2).HasColumnName("Objecttableid2").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Userid).HasColumnName("Userid").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Sessionid).HasColumnName("Sessionid").IsRequired().HasMaxLength(100).IsUnicode(true);
         }
     }
 }

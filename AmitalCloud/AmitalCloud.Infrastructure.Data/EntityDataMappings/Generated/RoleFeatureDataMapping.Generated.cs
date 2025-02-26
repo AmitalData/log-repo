@@ -30,8 +30,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         FeatureId, 
 	         FeatureAccessLevelCode, 
 	         IsDeleted, 
-	         FeatureUniqeCode, 
-	         Feature,	      }
+	         FeatureUniqeCode,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -41,8 +40,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         FeatureId, 
 	         FeatureAccessLevelCode, 
 	         IsDeleted, 
-	         FeatureUniqeCode, 
-	         Feature,	      }
+	         FeatureUniqeCode,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(RoleFeaturePM entityPM, POCO.RoleFeature entityPOCO)
@@ -53,7 +51,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureAccessLevelCode)) { entityPOCO.FeatureAccessLevelCode = entityPM.FeatureAccessLevelCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDeleted)) { entityPOCO.IsDeleted = entityPM.IsDeleted;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureUniqeCode)) { entityPOCO.FeatureUniqeCode = entityPM.FeatureUniqeCode;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Feature)) { entityPOCO.Feature = entityPM.Feature;}
 					}
 		public void POCOToPM(RoleFeaturePM entityPM, POCO.RoleFeature entityPOCO)
         {
@@ -85,10 +82,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.FeatureUniqeCode = entityPOCO.FeatureUniqeCode;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Feature))
-            {
-					entityPM.Feature = entityPOCO.Feature;
-            }
 		}
 		public void PMToOldPM(RoleFeaturePM entityPM, RoleFeaturePM oldEntityPM)
         {
@@ -116,10 +109,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureUniqeCode))
             {
                 oldEntityPM.FeatureUniqeCode = entityPM.FeatureUniqeCode;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Feature))
-            {
-                oldEntityPM.Feature = entityPM.Feature;
             }
 					}
 		public void POCOToList(POCO.RoleFeature entityPOCO, RoleFeatureList entityList)

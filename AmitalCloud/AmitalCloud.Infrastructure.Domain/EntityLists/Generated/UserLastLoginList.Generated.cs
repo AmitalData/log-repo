@@ -29,8 +29,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           LoginDateTime  = entity.LoginDateTime;
           Tenant  = entity.Tenant;
           WorkEnvironment  = entity.WorkEnvironment;
-          User  = entity.User;
           IP  = entity.IP;
+          Computerusername  = entity.Computerusername;
        }
        #endregion Constructors
        #region Properties
@@ -47,9 +47,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string WorkEnvironment  { get; set; }
        [DataMember]
-       public string User  { get; set; }
-       [DataMember]
        public string IP  { get; set; }
+       [DataMember]
+       public string Computerusername  { get; set; }
          #endregion Properties
    }
 

@@ -46,13 +46,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("TEU")]
-	    public decimal? TEU { get; set; }
+	    public int? TEU { get; set; }
         [Column("NumberOfShipments")]
 	    public int? NumberOfShipments { get; set; }
         [Column("ChargeableWeight")]
-	    public decimal? ChargeableWeight { get; set; }
+	    public int? ChargeableWeight { get; set; }
         [Column("Revenue")]
-	    public decimal? Revenue { get; set; }
+	    public int? Revenue { get; set; }
     }
 }
 	 

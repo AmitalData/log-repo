@@ -34,34 +34,39 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_entityId = entity.EntityId;
 		_createDate = entity.CreateDate;
 		_createByUserId = entity.CreateByUserId;
-		_createbyuser = entity.CreateByUser !=null ? new UserPM(entity.CreateByUser) : null;
-			_automationConditionFieldsXml = entity.AutomationConditionFieldsXml;
 		_checkStartDate = entity.CheckStartDate;
 		_doneDate = entity.DoneDate;
 		_hasExecutedRecord = entity.HasExecutedRecord;
+		_automationConditionFieldsXml = entity.AutomationConditionFieldsXml;
 		_changesFieldsXml = entity.ChangesFieldsXml;
 		_changesAutomationFieldsXml = entity.ChangesAutomationFieldsXml;
 		_setAutomationSsucceedXml = entity.SetAutomationSsucceedXml;
 		_emailAutomationSsucceedXml = entity.EmailAutomationSsucceedXml;
 		_setAutomationFailedXml = entity.SetAutomationFailedXml;
 		_emailAutomationFailedXml = entity.EmailAutomationFailedXml;
+		_executionTime = entity.ExecutionTime;
 		_followUpAutomationFailedXml = entity.FollowUpAutomationFailedXml;
 		_setSLAAutomationFailedXml = entity.SetSLAAutomationFailedXml;
 		_followUpAutomationSsucceedXml = entity.FollowUpAutomationSsucceedXml;
 		_setSLAAutomationSsucceedXml = entity.SetSLAAutomationSsucceedXml;
 		_queuedTaskAutomationFailedXml = entity.QueuedTaskAutomationFailedXml;
 		_queuedTaskAutomationSsucceedXml = entity.QueuedTaskAutomationSsucceedXml;
+		_dropSendinterfacefailedxml = entity.DropSendinterfacefailedxml;
+		_dropSendinterfacessucceedxml = entity.DropSendinterfacessucceedxml;
+		_dropSenddocumentfailedxml = entity.DropSenddocumentfailedxml;
+		_dropSenddocumentssucceedxml = entity.DropSenddocumentssucceedxml;
+		_dropCreatetaskfailedxml = entity.DropCreatetaskfailedxml;
+		_dropCreatetaskssucceedxml = entity.DropCreatetaskssucceedxml;
 		_sendInterfaceAutomationFailedXml = entity.SendInterfaceAutomationFailedXml;
 		_sendInterfaceAutomationSsucceedXml = entity.SendInterfaceAutomationSsucceedXml;
 		_sendDocumentAutomationFailedXml = entity.SendDocumentAutomationFailedXml;
 		_sendDocumentAutomationSsucceedXml = entity.SendDocumentAutomationSsucceedXml;
-		_createTaskAutomationFailedXml = entity.CreateTaskAutomationFailedXml;
-		_createTaskAutomationSsucceedXml = entity.CreateTaskAutomationSsucceedXml;
 		_onUpdateDocumentAutomationFailedXml = entity.OnUpdateDocumentAutomationFailedXml;
 		_onUpdateDocumentAutomationSsucceedXml = entity.OnUpdateDocumentAutomationSsucceedXml;
+		_createTaskAutomationFailedXml = entity.CreateTaskAutomationFailedXml;
+		_createTaskAutomationSsucceedXml = entity.CreateTaskAutomationSsucceedXml;
 		_eventAutomationFailedXml = entity.EventAutomationFailedXml;
 		_eventAutomationSsucceedXml = entity.EventAutomationSsucceedXml;
-		_executionTime = entity.ExecutionTime;
    }
    #endregion Constructors
    #region Properties
@@ -162,30 +167,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private UserPM _createbyuser;
-		[Include]
-        [DataMember]
-        public virtual UserPM CreateByUser 
-		{ 
-		get { return _createbyuser; } 
-		set { _createbyuser = value; }
-		}
-	  private string _automationConditionFieldsXml ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AutomationConditionFieldsXml  
-	   {
-	     get { return _automationConditionFieldsXml; }
-		 set
-		 {
-		   if(_automationConditionFieldsXml != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutomationConditionFieldsXml",OldValue=_automationConditionFieldsXml,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _automationConditionFieldsXml=value;
-		   }
-		 }
-	   }
 	  private DateTime? _checkStartDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -231,6 +212,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HasExecutedRecord",OldValue=_hasExecutedRecord,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _hasExecutedRecord=value;
+		   }
+		 }
+	   }
+	  private string _automationConditionFieldsXml ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AutomationConditionFieldsXml  
+	   {
+	     get { return _automationConditionFieldsXml; }
+		 set
+		 {
+		   if(_automationConditionFieldsXml != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutomationConditionFieldsXml",OldValue=_automationConditionFieldsXml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _automationConditionFieldsXml=value;
 		   }
 		 }
 	   }
@@ -330,6 +327,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private int _executionTime ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ExecutionTime  
+	   {
+	     get { return _executionTime; }
+		 set
+		 {
+		   if(_executionTime != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExecutionTime",OldValue=_executionTime,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _executionTime=value;
+		   }
+		 }
+	   }
 	  private string _followUpAutomationFailedXml ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -426,6 +439,102 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _dropSendinterfacefailedxml ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DropSendinterfacefailedxml  
+	   {
+	     get { return _dropSendinterfacefailedxml; }
+		 set
+		 {
+		   if(_dropSendinterfacefailedxml != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropSendinterfacefailedxml",OldValue=_dropSendinterfacefailedxml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dropSendinterfacefailedxml=value;
+		   }
+		 }
+	   }
+	  private string _dropSendinterfacessucceedxml ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DropSendinterfacessucceedxml  
+	   {
+	     get { return _dropSendinterfacessucceedxml; }
+		 set
+		 {
+		   if(_dropSendinterfacessucceedxml != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropSendinterfacessucceedxml",OldValue=_dropSendinterfacessucceedxml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dropSendinterfacessucceedxml=value;
+		   }
+		 }
+	   }
+	  private string _dropSenddocumentfailedxml ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DropSenddocumentfailedxml  
+	   {
+	     get { return _dropSenddocumentfailedxml; }
+		 set
+		 {
+		   if(_dropSenddocumentfailedxml != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropSenddocumentfailedxml",OldValue=_dropSenddocumentfailedxml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dropSenddocumentfailedxml=value;
+		   }
+		 }
+	   }
+	  private string _dropSenddocumentssucceedxml ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DropSenddocumentssucceedxml  
+	   {
+	     get { return _dropSenddocumentssucceedxml; }
+		 set
+		 {
+		   if(_dropSenddocumentssucceedxml != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropSenddocumentssucceedxml",OldValue=_dropSenddocumentssucceedxml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dropSenddocumentssucceedxml=value;
+		   }
+		 }
+	   }
+	  private string _dropCreatetaskfailedxml ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DropCreatetaskfailedxml  
+	   {
+	     get { return _dropCreatetaskfailedxml; }
+		 set
+		 {
+		   if(_dropCreatetaskfailedxml != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropCreatetaskfailedxml",OldValue=_dropCreatetaskfailedxml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dropCreatetaskfailedxml=value;
+		   }
+		 }
+	   }
+	  private string _dropCreatetaskssucceedxml ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DropCreatetaskssucceedxml  
+	   {
+	     get { return _dropCreatetaskssucceedxml; }
+		 set
+		 {
+		   if(_dropCreatetaskssucceedxml != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropCreatetaskssucceedxml",OldValue=_dropCreatetaskssucceedxml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dropCreatetaskssucceedxml=value;
+		   }
+		 }
+	   }
 	  private string _sendInterfaceAutomationFailedXml ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -490,38 +599,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _createTaskAutomationFailedXml ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreateTaskAutomationFailedXml  
-	   {
-	     get { return _createTaskAutomationFailedXml; }
-		 set
-		 {
-		   if(_createTaskAutomationFailedXml != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateTaskAutomationFailedXml",OldValue=_createTaskAutomationFailedXml,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createTaskAutomationFailedXml=value;
-		   }
-		 }
-	   }
-	  private string _createTaskAutomationSsucceedXml ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreateTaskAutomationSsucceedXml  
-	   {
-	     get { return _createTaskAutomationSsucceedXml; }
-		 set
-		 {
-		   if(_createTaskAutomationSsucceedXml != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateTaskAutomationSsucceedXml",OldValue=_createTaskAutomationSsucceedXml,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createTaskAutomationSsucceedXml=value;
-		   }
-		 }
-	   }
 	  private string _onUpdateDocumentAutomationFailedXml ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -554,6 +631,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _createTaskAutomationFailedXml ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreateTaskAutomationFailedXml  
+	   {
+	     get { return _createTaskAutomationFailedXml; }
+		 set
+		 {
+		   if(_createTaskAutomationFailedXml != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateTaskAutomationFailedXml",OldValue=_createTaskAutomationFailedXml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _createTaskAutomationFailedXml=value;
+		   }
+		 }
+	   }
+	  private string _createTaskAutomationSsucceedXml ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreateTaskAutomationSsucceedXml  
+	   {
+	     get { return _createTaskAutomationSsucceedXml; }
+		 set
+		 {
+		   if(_createTaskAutomationSsucceedXml != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateTaskAutomationSsucceedXml",OldValue=_createTaskAutomationSsucceedXml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _createTaskAutomationSsucceedXml=value;
+		   }
+		 }
+	   }
 	  private string _eventAutomationFailedXml ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -583,22 +692,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EventAutomationSsucceedXml",OldValue=_eventAutomationSsucceedXml,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _eventAutomationSsucceedXml=value;
-		   }
-		 }
-	   }
-	  private int _executionTime ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int ExecutionTime  
-	   {
-	     get { return _executionTime; }
-		 set
-		 {
-		   if(_executionTime != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExecutionTime",OldValue=_executionTime,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _executionTime=value;
 		   }
 		 }
 	   }

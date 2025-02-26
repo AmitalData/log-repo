@@ -24,18 +24,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [ForeignKey("Query")]
         [Column("QueryId")]
 	    public string QueryId { get; set; }
-	      
-        public virtual Query Query { get; set; }
-        [Column("QueryCode")]
-	    public string QueryCode { get; set; }
-        [ForeignKey("ObjectField")]
         [Column("ObjectFieldId")]
 	    public string ObjectFieldId { get; set; }
-	      
-        public virtual ObjectField ObjectField { get; set; }
         [Column("IndexOrder")]
 	    public int IndexOrder { get; set; }
         [Column("ColumnWidth")]
@@ -47,6 +39,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public virtual User User { get; set; }
         [Column("ObjectFieldCode")]
 	    public string ObjectFieldCode { get; set; }
+        [Column("QueryCode")]
+	    public string QueryCode { get; set; }
     }
 }
 	 

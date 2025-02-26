@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
@@ -30,11 +30,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.EditableFields).HasColumnName("EditableFields").IsRequired();
 
-            this.Property(t => t.DocumentTemplateId).HasColumnName("DocumentTemplateId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DocumentTemplateId).HasColumnName("DocumentTemplateId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.EmailTemplateId).HasColumnName("EmailTemplateId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.EmailTemplateId).HasColumnName("EmailTemplateId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.XamlDocumentId).HasColumnName("XamlDocumentId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.XamlDocumentId).HasColumnName("XamlDocumentId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.NeedsRebuild).HasColumnName("NeedsRebuild").IsRequired();
 
@@ -42,9 +42,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.IssuedDate).HasColumnName("IssuedDate").IsRequired();
 
-            this.Property(t => t.IssuedByUserId).HasColumnName("IssuedByUserId").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.DocumentsFiling).HasColumnName("DocumentsFiling").IsRequired();
+            this.Property(t => t.IssuedByUserId).HasColumnName("IssuedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

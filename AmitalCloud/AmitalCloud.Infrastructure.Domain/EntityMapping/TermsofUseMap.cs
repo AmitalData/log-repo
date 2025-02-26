@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
+            this.Property(t => t.DropVersion).HasColumnName("DropVersion").IsRequired();
 
             this.Property(t => t.Date).HasColumnName("Date").IsRequired();
 
@@ -30,9 +30,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.VersionDocumentId).HasColumnName("VersionDocumentId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Dbmigrationslastscript).HasColumnName("Dbmigrationslastscript").IsRequired();
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
 
             this.Property(t => t.IsNew).HasColumnName("IsNew").IsRequired();
         }

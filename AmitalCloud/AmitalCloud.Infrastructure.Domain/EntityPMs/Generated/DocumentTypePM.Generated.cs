@@ -77,7 +77,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isDocIn = entity.IsDocIn;
 		_isInland = entity.IsInland;
 		documentTypeCustomFields = entity.DocumentTypeCustomFields != null ? entity.DocumentTypeCustomFields.Select(a=>new DocumentTypeCustomFieldPM(a)).ToList() : null;
-		//documentTypeTemplates = entity.DocumentTypeTemplates != null ? entity.DocumentTypeTemplates.Select(a=>new DocumentTypeTemplatePM(a)).ToList() : null;
+		documentTypeTemplates = entity.DocumentTypeTemplates != null ? entity.DocumentTypeTemplates.Select(a=>new DocumentTypeTemplatePM(a)).ToList() : null;
 		_addedManually = entity.AddedManually;
 		_onSendPopulateDateFieldName = entity.OnSendPopulateDateFieldName;
 		_onUploadPopulateDateFieldName = entity.OnUploadPopulateDateFieldName;
@@ -889,6 +889,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 	    }
 	   private List<DocumentTypeTemplatePM> documentTypeTemplates;
 	 
+		     
+	   [Include]
+	   [Association("DocumentTypesDocumentTypeTemplate", "Id","DocumentTypeId")]
 	   [DataMember]
 	   public virtual List<DocumentTypeTemplatePM> DocumentTypeTemplates  
 	   {

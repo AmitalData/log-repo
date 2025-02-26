@@ -28,33 +28,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public ContactLoginLogPM() : base() {} 
    public ContactLoginLogPM(POCO.ContactLoginLog entity) : base()
    {
-		_id = entity.Id;
+		_cdropId = entity.CdropId;
 		_tenant = entity.Tenant;
-		_iP = entity.IP;
-		_browser = entity.Browser;
+		_cdropIp = entity.CdropIp;
+		_cdropBrowser = entity.CdropBrowser;
 		_contactId = entity.ContactId;
 		_gMTDateTime = entity.GMTDateTime;
 		_localDateTime = entity.LocalDateTime;
+		_cdropComputerid = entity.CdropComputerid;
+		_cdropContactagent = entity.CdropContactagent;
+		_cdropVia = entity.CdropVia;
+		_id = entity.Id;
+		_iP = entity.IP;
+		_browser = entity.Browser;
 		_computerId = entity.ComputerId;
 		_contactAgent = entity.ContactAgent;
 		_via = entity.Via;
    }
    #endregion Constructors
    #region Properties
-   	  private string _id ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+   	  private string _cdropId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Id  
+       public string CdropId  
 	   {
-	     get { return _id; }
+	     get { return _cdropId; }
 		 set
 		 {
-		   if(_id != value)
+		   if(_cdropId != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropId",OldValue=_cdropId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _id=value;
+		   _cdropId=value;
 		   }
 		 }
 	   }
@@ -74,35 +79,35 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _iP ;
+	  private string _cdropIp ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string IP  
+       public string CdropIp  
 	   {
-	     get { return _iP; }
+	     get { return _cdropIp; }
 		 set
 		 {
-		   if(_iP != value)
+		   if(_cdropIp != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IP",OldValue=_iP,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropIp",OldValue=_cdropIp,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _iP=value;
+		   _cdropIp=value;
 		   }
 		 }
 	   }
-	  private string _browser ;
+	  private string _cdropBrowser ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Browser  
+       public string CdropBrowser  
 	   {
-	     get { return _browser; }
+	     get { return _cdropBrowser; }
 		 set
 		 {
-		   if(_browser != value)
+		   if(_cdropBrowser != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Browser",OldValue=_browser,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropBrowser",OldValue=_cdropBrowser,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _browser=value;
+		   _cdropBrowser=value;
 		   }
 		 }
 	   }
@@ -151,6 +156,103 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalDateTime",OldValue=_localDateTime,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _localDateTime=value;
+		   }
+		 }
+	   }
+	  private string _cdropComputerid ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CdropComputerid  
+	   {
+	     get { return _cdropComputerid; }
+		 set
+		 {
+		   if(_cdropComputerid != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropComputerid",OldValue=_cdropComputerid,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cdropComputerid=value;
+		   }
+		 }
+	   }
+	  private string _cdropContactagent ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CdropContactagent  
+	   {
+	     get { return _cdropContactagent; }
+		 set
+		 {
+		   if(_cdropContactagent != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropContactagent",OldValue=_cdropContactagent,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cdropContactagent=value;
+		   }
+		 }
+	   }
+	  private string _cdropVia ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CdropVia  
+	   {
+	     get { return _cdropVia; }
+		 set
+		 {
+		   if(_cdropVia != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropVia",OldValue=_cdropVia,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cdropVia=value;
+		   }
+		 }
+	   }
+	  private string _id ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	     get { return _id; }
+		 set
+		 {
+		   if(_id != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _id=value;
+		   }
+		 }
+	   }
+	  private string _iP ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IP  
+	   {
+	     get { return _iP; }
+		 set
+		 {
+		   if(_iP != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IP",OldValue=_iP,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _iP=value;
+		   }
+		 }
+	   }
+	  private string _browser ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Browser  
+	   {
+	     get { return _browser; }
+		 set
+		 {
+		   if(_browser != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Browser",OldValue=_browser,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _browser=value;
 		   }
 		 }
 	   }

@@ -40,8 +40,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool IsDeleted { get; set; }
         [Column("FeatureUniqeCode")]
 	    public string FeatureUniqeCode { get; set; }
-        [Column("Feature")]
-	    public string Feature { get; set; }
     }
 }
 	 

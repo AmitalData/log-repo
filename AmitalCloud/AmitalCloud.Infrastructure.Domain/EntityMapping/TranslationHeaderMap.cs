@@ -22,9 +22,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Code });
 	 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Description).HasColumnName("Description").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Description).HasColumnName("Description").IsRequired().HasMaxLength(500).IsUnicode(true);
         }
     }
 }

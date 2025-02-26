@@ -31,7 +31,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           FeatureAccessLevelCode  = entity.FeatureAccessLevelCode;
           IsDeleted  = entity.IsDeleted;
           FeatureUniqeCode  = entity.FeatureUniqeCode;
-          Feature  = entity.Feature;
        }
        #endregion Constructors
        #region Properties
@@ -51,8 +50,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsDeleted  { get; set; }
        [DataMember]
        public string FeatureUniqeCode  { get; set; }
-       [DataMember]
-       public string Feature  { get; set; }
          #endregion Properties
    }
 

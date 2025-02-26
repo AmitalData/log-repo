@@ -33,10 +33,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_column = entity.Column;
 		_row = entity.Row;
 		_screenId = entity.ScreenId;
-		_screen = entity.Screen !=null ? new ScreenPM(entity.Screen) : null;
-			_screenCode = entity.ScreenCode;
 		_objectFieldId = entity.ObjectFieldId;
 		_objectFieldCode = entity.ObjectFieldCode;
+		_screenCode = entity.ScreenCode;
 		_sectionNumber = entity.SectionNumber;
    }
    #endregion Constructors
@@ -122,30 +121,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private ScreenPM _screen;
-		[Include]
-        [DataMember]
-        public virtual ScreenPM Screen 
-		{ 
-		get { return _screen; } 
-		set { _screen = value; }
-		}
-	  private string _screenCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ScreenCode  
-	   {
-	     get { return _screenCode; }
-		 set
-		 {
-		   if(_screenCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ScreenCode",OldValue=_screenCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _screenCode=value;
-		   }
-		 }
-	   }
 	  private string _objectFieldId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -175,6 +150,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldCode",OldValue=_objectFieldCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _objectFieldCode=value;
+		   }
+		 }
+	   }
+	  private string _screenCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ScreenCode  
+	   {
+	     get { return _screenCode; }
+		 set
+		 {
+		   if(_screenCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ScreenCode",OldValue=_screenCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _screenCode=value;
 		   }
 		 }
 	   }

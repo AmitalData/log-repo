@@ -10,7 +10,11 @@ using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using System.Threading.Tasks;
+using System;
+using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
@@ -34,11 +38,14 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
         public EventRemarkUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
         public EventRemarkUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.EventRemark,string> GetKeys(EventRemarkPM entityPM) => new EventRemarkKeys<string>() { Id = entityPM.Id };
-protected override void FillDefaultValuesOnCreate(EventRemarkPM entityPM)
+		protected override void FillDefaultValuesOnCreate(EventRemarkPM entityPM)
 		{
+			entityPM.Id = IdCounter.GetNumber("EventRemark", entityPM.Tenant); 
+			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+			entityPM.CreatedByUserId = GetLoggedUserid(entityPM.Tenant);
 		}
 		protected override void FillDefaultValuesOnUpdate(EventRemarkPM entityPM)
-		{
-		}
+        {       
+           		}
 	}
 }

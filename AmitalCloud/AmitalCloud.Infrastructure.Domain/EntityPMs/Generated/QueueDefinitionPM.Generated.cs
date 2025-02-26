@@ -31,6 +31,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_duplicateMessagesAutoRemove = entity.DuplicateMessagesAutoRemove;
+		queueMessageMoreDetailss = entity.QueueMessageMoreDetailss != null ? entity.QueueMessageMoreDetailss.Select(a=>new QueueMessageMoreDetailsPM(a)).ToList() : null;
+		queueMessages = entity.QueueMessages != null ? entity.QueueMessages.Select(a=>new QueueMessagePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -83,6 +85,68 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<QueueMessageMoreDetailsPM> queueMessageMoreDetailss;
+	 
+		     
+	   [Include]
+	   [Association("QueueMessageMoreDetailsQueueDefinition", "Code","Queuedefinitioncode")]
+	   [DataMember]
+	   public virtual List<QueueMessageMoreDetailsPM> QueueMessageMoreDetailss  
+	   {
+	        get
+             {
+                 if (queueMessageMoreDetailss == null)
+                 {
+                     queueMessageMoreDetailss = new List<QueueMessageMoreDetailsPM>();
+                 }
+                 return queueMessageMoreDetailss;
+              }
+             set { queueMessageMoreDetailss = value; }
+	    }
+	   private List<QueueMessageMoreDetailsPM>  deletedQueueMessageMoreDetailss;
+	   public virtual List<QueueMessageMoreDetailsPM> DeletedQueueMessageMoreDetailss  
+	   {
+	        get
+             {
+                 if ( deletedQueueMessageMoreDetailss == null)
+                 {
+                      deletedQueueMessageMoreDetailss = new List<QueueMessageMoreDetailsPM>();
+                 }
+                 return  deletedQueueMessageMoreDetailss;
+              }
+             set {  deletedQueueMessageMoreDetailss = value; }
+	    }
+	   private List<QueueMessagePM> queueMessages;
+	 
+		     
+	   [Include]
+	   [Association("QueueMessageQueueDefinition", "Code","Queuedefinitioncode")]
+	   [DataMember]
+	   public virtual List<QueueMessagePM> QueueMessages  
+	   {
+	        get
+             {
+                 if (queueMessages == null)
+                 {
+                     queueMessages = new List<QueueMessagePM>();
+                 }
+                 return queueMessages;
+              }
+             set { queueMessages = value; }
+	    }
+	   private List<QueueMessagePM>  deletedQueueMessages;
+	   public virtual List<QueueMessagePM> DeletedQueueMessages  
+	   {
+	        get
+             {
+                 if ( deletedQueueMessages == null)
+                 {
+                      deletedQueueMessages = new List<QueueMessagePM>();
+                 }
+                 return  deletedQueueMessages;
+              }
+             set {  deletedQueueMessages = value; }
+	    }
 	 }
 #endregion Properties
 }

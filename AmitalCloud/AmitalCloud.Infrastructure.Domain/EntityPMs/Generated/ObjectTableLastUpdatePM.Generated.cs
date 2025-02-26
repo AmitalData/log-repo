@@ -33,8 +33,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_lastUpdateDate = entity.LastUpdateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_objectTableId = entity.ObjectTableId;
-		_updatedByUser = entity.UpdatedByUser;
-		_objectTable = entity.ObjectTable;
    }
    #endregion Constructors
    #region Properties
@@ -116,38 +114,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableId",OldValue=_objectTableId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _objectTableId=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUser ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUser  
-	   {
-	     get { return _updatedByUser; }
-		 set
-		 {
-		   if(_updatedByUser != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUser",OldValue=_updatedByUser,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUser=value;
-		   }
-		 }
-	   }
-	  private string _objectTable ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTable  
-	   {
-	     get { return _objectTable; }
-		 set
-		 {
-		   if(_objectTable != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTable",OldValue=_objectTable,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTable=value;
 		   }
 		 }
 	   }

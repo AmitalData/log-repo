@@ -15,15 +15,15 @@ using AmitalCloud.Infrastructure.Data.Context ;
 using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
-    public partial class CommunicationLogStepListQueryService  : BaseEntityListQueryService<CommunicationLogStepList,POCO.CommunicationLogStep,  CommunicationLogStepKeys<int>,int>
+    public partial class CommunicationLogStepListQueryService  : BaseEntityListQueryService<CommunicationLogStepList,POCO.CommunicationLogStep,  CommunicationLogStepKeys<string>,string>
     {
 	    protected override System.Data.Entity.IDbSet<POCO.CommunicationLogStep> contextEntity => (context as IAmitalCloudContext).CommunicationLogSteps;
 		public CommunicationLogStepListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
-        public CommunicationLogStepList GetSingle(string communicationlogid, int stepnumber)
+        public CommunicationLogStepList GetSingle(int stepnumber, string communicationlogid)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;
-				paramList.Append(new KeyValuePair<string, string>("communicationlogid", communicationlogid.ToString()));
-		 		paramList.Append(new KeyValuePair<string, string>("stepnumber", stepnumber.ToString()));
+				paramList.Append(new KeyValuePair<string, string>("stepnumber", stepnumber.ToString()));
+		 		paramList.Append(new KeyValuePair<string, string>("communicationlogid", communicationlogid.ToString()));
 		 			return GetSingle(paramList) ; 
 		}
     }

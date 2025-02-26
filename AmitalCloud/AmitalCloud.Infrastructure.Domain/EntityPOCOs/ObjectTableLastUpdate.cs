@@ -26,14 +26,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("LastUpdateDate")]
 	    public DateTime LastUpdateDate { get; set; }
+        [ForeignKey("User")]
         [Column("UpdatedByUserId")]
 	    public string UpdatedByUserId { get; set; }
+	      
+        public virtual User User { get; set; }
+        [ForeignKey("ObjectTable")]
         [Column("ObjectTableId")]
 	    public string ObjectTableId { get; set; }
-        [Column("UpdatedByUser")]
-	    public string UpdatedByUser { get; set; }
-        [Column("ObjectTable")]
-	    public string ObjectTable { get; set; }
+	      
+        public virtual ObjectTable ObjectTable { get; set; }
     }
 }
 	 

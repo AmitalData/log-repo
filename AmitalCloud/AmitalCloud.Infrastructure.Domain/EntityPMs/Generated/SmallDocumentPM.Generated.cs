@@ -31,6 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_content = entity.Content;
+		documents = entity.Documents != null ? entity.Documents.Select(a=>new DocumentPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -83,6 +84,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<DocumentPM> documents;
+	 
+		     
+	   [Include]
+	   [Association("DocumentSmallDocument", "Id","Smalldocumentid")]
+	   [DataMember]
+	   public virtual List<DocumentPM> Documents  
+	   {
+	        get
+             {
+                 if (documents == null)
+                 {
+                     documents = new List<DocumentPM>();
+                 }
+                 return documents;
+              }
+             set { documents = value; }
+	    }
+	   private List<DocumentPM>  deletedDocuments;
+	   public virtual List<DocumentPM> DeletedDocuments  
+	   {
+	        get
+             {
+                 if ( deletedDocuments == null)
+                 {
+                      deletedDocuments = new List<DocumentPM>();
+                 }
+                 return  deletedDocuments;
+              }
+             set {  deletedDocuments = value; }
+	    }
 	 }
 #endregion Properties
 }

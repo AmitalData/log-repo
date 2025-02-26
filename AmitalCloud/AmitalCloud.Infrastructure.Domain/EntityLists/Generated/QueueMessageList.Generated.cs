@@ -25,7 +25,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public QueueMessageList(POCO.QueueMessage entity) : base()
        {
           Id  = entity.Id;
-          Tenant  = entity.Tenant;
           QueueDefinitionCode  = entity.QueueDefinitionCode;
           CreateDateTime  = entity.CreateDateTime;
           Status  = entity.Status;
@@ -34,18 +33,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           ProcessingDateTime  = entity.ProcessingDateTime;
           CompleteDateTime  = entity.CompleteDateTime;
           RetryNumber  = entity.RetryNumber;
+          Tenant  = entity.Tenant;
           HashCode  = entity.HashCode;
-          QueueDefinition  = entity.QueueDefinition;
           TenantPriority  = entity.TenantPriority;
           InterfaceTypeCode  = entity.InterfaceTypeCode;
-          UseRabbitMQ  = entity.UseRabbitMQ;
           QueueCodeRabbit  = entity.QueueCodeRabbit;
+          UseRabbitMQ  = entity.UseRabbitMQ;
           HaveRabbitMQ  = entity.HaveRabbitMQ;
-          EntityCode  = entity.EntityCode;
-          EntityId  = entity.EntityId;
           RabbitMQCreateDate  = entity.RabbitMQCreateDate;
           RabbitMQRetryNumber  = entity.RabbitMQRetryNumber;
           RabbitMQErrMess  = entity.RabbitMQErrMess;
+          EntityCode  = entity.EntityCode;
+          EntityId  = entity.EntityId;
+          DropRowid  = entity.DropRowid;
        }
        #endregion Constructors
        #region Properties
@@ -53,8 +53,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [Key]
        [DataMember]
        public string Id  { get; set; }
-       [DataMember]
-       public int Tenant  { get; set; }
        [DataMember]
        public string QueueDefinitionCode  { get; set; }
        [DataMember]
@@ -72,29 +70,31 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public int RetryNumber  { get; set; }
        [DataMember]
-       public string HashCode  { get; set; }
+       public int Tenant  { get; set; }
        [DataMember]
-       public string QueueDefinition  { get; set; }
+       public string HashCode  { get; set; }
        [DataMember]
        public int? TenantPriority  { get; set; }
        [DataMember]
        public string InterfaceTypeCode  { get; set; }
        [DataMember]
-       public string UseRabbitMQ  { get; set; }
-       [DataMember]
        public string QueueCodeRabbit  { get; set; }
        [DataMember]
-       public string HaveRabbitMQ  { get; set; }
+       public bool UseRabbitMQ  { get; set; }
+       [DataMember]
+       public bool HaveRabbitMQ  { get; set; }
+       [DataMember]
+       public DateTime? RabbitMQCreateDate  { get; set; }
+       [DataMember]
+       public int RabbitMQRetryNumber  { get; set; }
+       [DataMember]
+       public string RabbitMQErrMess  { get; set; }
        [DataMember]
        public string EntityCode  { get; set; }
        [DataMember]
        public string EntityId  { get; set; }
        [DataMember]
-       public DateTime RabbitMQCreateDate  { get; set; }
-       [DataMember]
-       public int RabbitMQRetryNumber  { get; set; }
-       [DataMember]
-       public string RabbitMQErrMess  { get; set; }
+       public string DropRowid  { get; set; }
          #endregion Properties
    }
 

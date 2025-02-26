@@ -30,8 +30,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Code, 
 	         ObjectTableId, 
 	         FeatureId, 
-	         FeatureUniqeCode, 
-	         Feature,	      }
+	         FeatureUniqeCode,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -41,8 +40,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Code, 
 	         ObjectTableId, 
 	         FeatureId, 
-	         FeatureUniqeCode, 
-	         Feature,	      }
+	         FeatureUniqeCode,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ObjectTableHelperControlPM entityPM, POCO.ObjectTableHelperControl entityPOCO)
@@ -53,7 +51,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectTableId)) { entityPOCO.ObjectTableId = entityPM.ObjectTableId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureId)) { entityPOCO.FeatureId = entityPM.FeatureId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureUniqeCode)) { entityPOCO.FeatureUniqeCode = entityPM.FeatureUniqeCode;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Feature)) { entityPOCO.Feature = entityPM.Feature;}
 					}
 		public void POCOToPM(ObjectTableHelperControlPM entityPM, POCO.ObjectTableHelperControl entityPOCO)
         {
@@ -85,10 +82,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.FeatureUniqeCode = entityPOCO.FeatureUniqeCode;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Feature))
-            {
-					entityPM.Feature = entityPOCO.Feature;
-            }
 		}
 		public void PMToOldPM(ObjectTableHelperControlPM entityPM, ObjectTableHelperControlPM oldEntityPM)
         {
@@ -116,10 +109,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureUniqeCode))
             {
                 oldEntityPM.FeatureUniqeCode = entityPM.FeatureUniqeCode;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Feature))
-            {
-                oldEntityPM.Feature = entityPM.Feature;
             }
 					}
 		public void POCOToList(POCO.ObjectTableHelperControl entityPOCO, ObjectTableHelperControlList entityList)

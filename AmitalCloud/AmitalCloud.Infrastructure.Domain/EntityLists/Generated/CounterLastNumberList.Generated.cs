@@ -28,6 +28,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           TableName  = entity.TableName;
           Tenant  = entity.Tenant;
           LastNumber  = entity.LastNumber;
+          DropRowid  = entity.DropRowid;
        }
        #endregion Constructors
        #region Properties
@@ -41,6 +42,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public int LastNumber  { get; set; }
+       [DataMember]
+       public string DropRowid  { get; set; }
          #endregion Properties
    }
 

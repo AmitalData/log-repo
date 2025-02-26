@@ -19,12 +19,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
         public override void Initialize(IEnumerable<KeyValuePair<string, string>> paramList)
         {
 			HybridPartnerId = (string)Convert.ChangeType((paramList.Single(t => t.Key == "HybridPartnerId").Value), typeof(string));
+			AllowedByHybridPartnerId = (string)Convert.ChangeType((paramList.Single(t => t.Key == "AllowedByHybridPartnerId").Value), typeof(string));
         }
    	  public string HybridPartnerId  { get; set; }
 	    			   
-	  public override T GetFullKey() =>   (T)Convert.ChangeType(HybridPartnerId.ToString(),typeof(T)) ;           
+	  public string AllowedByHybridPartnerId  { get; set; }
+	    			   
+	  public override T GetFullKey() =>   (T)Convert.ChangeType(HybridPartnerId.ToString()+'_'+AllowedByHybridPartnerId.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "HybridPartnersPermissionsPM";
-	  public override Expression<Func<EntityPOCOs.HybridPartnersPermission, bool>> Predicate => a => a.HybridPartnerId == HybridPartnerId;
+	  public override Expression<Func<EntityPOCOs.HybridPartnersPermission, bool>> Predicate => a => a.HybridPartnerId == HybridPartnerId && a.AllowedByHybridPartnerId == AllowedByHybridPartnerId;
    }
 }
 	 

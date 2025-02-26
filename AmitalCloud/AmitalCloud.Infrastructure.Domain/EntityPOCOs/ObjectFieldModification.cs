@@ -30,15 +30,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int MinLength { get; set; }
         [Column("IsRequired")]
 	    public bool IsRequired { get; set; }
-        [ForeignKey("ObjectField")]
         [Column("ObjectFieldId")]
 	    public string ObjectFieldId { get; set; }
-	      
-        public virtual ObjectField ObjectField { get; set; }
-        [Column("ObjectFieldCode")]
-	    public string ObjectFieldCode { get; set; }
         [Column("UpdateDateGMT")]
 	    public DateTime? UpdateDateGMT { get; set; }
+        [Column("ObjectFieldCode")]
+	    public string ObjectFieldCode { get; set; }
     }
 }
 	 

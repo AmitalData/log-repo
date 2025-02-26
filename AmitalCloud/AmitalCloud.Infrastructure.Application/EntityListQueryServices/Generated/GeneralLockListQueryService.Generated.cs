@@ -15,15 +15,15 @@ using AmitalCloud.Infrastructure.Data.Context ;
 using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
-    public partial class GeneralLockListQueryService  : BaseEntityListQueryService<GeneralLockList,POCO.GeneralLock,  GeneralLockKeys<int>,int>
+    public partial class GeneralLockListQueryService  : BaseEntityListQueryService<GeneralLockList,POCO.GeneralLock,  GeneralLockKeys<string>,string>
     {
 	    protected override System.Data.Entity.IDbSet<POCO.GeneralLock> contextEntity => (context as IAmitalCloudContext).GeneralLocks;
 		public GeneralLockListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
-        public GeneralLockList GetSingle(string generalkey, int tenant)
+        public GeneralLockList GetSingle(int tenant, string generalkey)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;
-				paramList.Append(new KeyValuePair<string, string>("generalkey", generalkey.ToString()));
-		 		paramList.Append(new KeyValuePair<string, string>("tenant", tenant.ToString()));
+				paramList.Append(new KeyValuePair<string, string>("tenant", tenant.ToString()));
+		 		paramList.Append(new KeyValuePair<string, string>("generalkey", generalkey.ToString()));
 		 			return GetSingle(paramList) ; 
 		}
     }

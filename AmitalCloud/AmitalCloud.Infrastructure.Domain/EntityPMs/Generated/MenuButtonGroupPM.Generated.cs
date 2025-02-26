@@ -33,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_menuButtonGroupType = entity.MenuButtonGroupType;
 		_objectTableId = entity.ObjectTableId;
-		//_menuButtons = entity.MenuButtons;
+		menuButtons = entity.MenuButtons != null ? entity.MenuButtons.Select(a=>new MenuButtonPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -122,7 +122,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 	 
 		     
 	   [Include]
-	   [Association("AmazedSaint.Elastic.Lib.ElasticObject", "AmazedSaint.Elastic.Lib.ElasticObject","AmazedSaint.Elastic.Lib.ElasticObject")]
+	   [Association("MenuButtonMenuButtonGroup", "Id","Menubuttongroupid")]
 	   [DataMember]
 	   public virtual List<MenuButtonPM> MenuButtons  
 	   {

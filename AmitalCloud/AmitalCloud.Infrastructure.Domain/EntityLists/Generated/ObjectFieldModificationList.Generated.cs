@@ -30,8 +30,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           MinLength  = entity.MinLength;
           IsRequired  = entity.IsRequired;
           ObjectFieldId  = entity.ObjectFieldId;
-          ObjectFieldCode  = entity.ObjectFieldCode;
           UpdateDateGMT  = entity.UpdateDateGMT;
+          ObjectFieldCode  = entity.ObjectFieldCode;
        }
        #endregion Constructors
        #region Properties
@@ -50,9 +50,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string ObjectFieldId  { get; set; }
        [DataMember]
-       public string ObjectFieldCode  { get; set; }
-       [DataMember]
        public DateTime? UpdateDateGMT  { get; set; }
+       [DataMember]
+       public string ObjectFieldCode  { get; set; }
          #endregion Properties
    }
 

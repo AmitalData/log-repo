@@ -25,6 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Code { get; set; }
         [Column("Description")]
 	    public string Description { get; set; }
+		public virtual ICollection<Translation> Translations { get; set; }
     }
 }
 	 

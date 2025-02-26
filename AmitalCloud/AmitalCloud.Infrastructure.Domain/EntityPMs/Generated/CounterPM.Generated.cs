@@ -36,6 +36,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_objecttable = entity.ObjectTable !=null ? new ObjectTablePM(entity.ObjectTable) : null;
 			_changedByUserId = entity.ChangedByUserId;
 		_changedDate = entity.ChangedDate;
+		counterDefinitions = entity.CounterDefinitions != null ? entity.CounterDefinitions.Select(a=>new CounterDefinitionPM(a)).ToList() : null;
+		counterStats = entity.CounterStats != null ? entity.CounterStats.Select(a=>new CounterStatPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -160,6 +162,68 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<CounterDefinitionPM> counterDefinitions;
+	 
+		     
+	   [Include]
+	   [Association("CounterDefinitionCounter", "Id","Counterid")]
+	   [DataMember]
+	   public virtual List<CounterDefinitionPM> CounterDefinitions  
+	   {
+	        get
+             {
+                 if (counterDefinitions == null)
+                 {
+                     counterDefinitions = new List<CounterDefinitionPM>();
+                 }
+                 return counterDefinitions;
+              }
+             set { counterDefinitions = value; }
+	    }
+	   private List<CounterDefinitionPM>  deletedCounterDefinitions;
+	   public virtual List<CounterDefinitionPM> DeletedCounterDefinitions  
+	   {
+	        get
+             {
+                 if ( deletedCounterDefinitions == null)
+                 {
+                      deletedCounterDefinitions = new List<CounterDefinitionPM>();
+                 }
+                 return  deletedCounterDefinitions;
+              }
+             set {  deletedCounterDefinitions = value; }
+	    }
+	   private List<CounterStatPM> counterStats;
+	 
+		     
+	   [Include]
+	   [Association("CounterStatCounter", "Id","Counterid")]
+	   [DataMember]
+	   public virtual List<CounterStatPM> CounterStats  
+	   {
+	        get
+             {
+                 if (counterStats == null)
+                 {
+                     counterStats = new List<CounterStatPM>();
+                 }
+                 return counterStats;
+              }
+             set { counterStats = value; }
+	    }
+	   private List<CounterStatPM>  deletedCounterStats;
+	   public virtual List<CounterStatPM> DeletedCounterStats  
+	   {
+	        get
+             {
+                 if ( deletedCounterStats == null)
+                 {
+                      deletedCounterStats = new List<CounterStatPM>();
+                 }
+                 return  deletedCounterStats;
+              }
+             set {  deletedCounterStats = value; }
+	    }
 	 }
 #endregion Properties
 }

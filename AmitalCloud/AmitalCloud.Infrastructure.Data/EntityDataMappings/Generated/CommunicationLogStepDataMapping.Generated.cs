@@ -24,8 +24,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         CommunicationLogId, 
 	         StepNumber, 
+	         CommunicationLogId, 
 	         Tenant, 
 	         Name, 
 	         Retries, 
@@ -38,8 +38,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         CommunicationLogId, 
 	         StepNumber, 
+	         CommunicationLogId, 
 	         Tenant, 
 	         Name, 
 	         Retries, 
@@ -65,13 +65,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 					}
 		public void POCOToPM(CommunicationLogStepPM entityPM, POCO.CommunicationLogStep entityPOCO)
         {
-			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommunicationLogId))
-            {
-					entityPM.CommunicationLogId = entityPOCO.CommunicationLogId;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StepNumber))
+			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StepNumber))
             {
 					entityPM.StepNumber = entityPOCO.StepNumber;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommunicationLogId))
+            {
+					entityPM.CommunicationLogId = entityPOCO.CommunicationLogId;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
@@ -170,6 +170,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Name)) //T4 find type == nText 
+            {
+                entityPM.Name = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Name));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Log)) //T4 find type == nText 
+            {
+                entityPM.Log = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Log));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

@@ -19,9 +19,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
     public class UserPermittedProduct : BaseEntity
 	{
 		
-        [Key]
-        [Column("Id")]
-	    public string Id { get; set; }
+           [Column("CdropId")]
+	    public string CdropId { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [ForeignKey("User")]
@@ -34,6 +33,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string ProductTypeCode { get; set; }
 	      
         public virtual ProductType ProductType { get; set; }
+     [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
     }
 }
 	 

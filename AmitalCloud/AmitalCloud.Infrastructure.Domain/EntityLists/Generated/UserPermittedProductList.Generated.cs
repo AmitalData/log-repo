@@ -24,23 +24,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public UserPermittedProductList() : base() {}
        public UserPermittedProductList(POCO.UserPermittedProduct entity) : base()
        {
-          Id  = entity.Id;
+          CdropId  = entity.CdropId;
           Tenant  = entity.Tenant;
           UserId  = entity.UserId;
           ProductTypeCode  = entity.ProductTypeCode;
+          Id  = entity.Id;
        }
        #endregion Constructors
        #region Properties
-   
-       [Key]
-       [DataMember]
-       public string Id  { get; set; }
+          [DataMember]
+       public string CdropId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
        public string UserId  { get; set; }
        [DataMember]
        public string ProductTypeCode  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
          #endregion Properties
    }
 

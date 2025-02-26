@@ -33,20 +33,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_objectTableId = entity.ObjectTableId;
 		_controlPath = entity.ControlPath;
 		_tabNameTextCodeId = entity.TabNameTextCodeId;
-		_tabnametextcode = entity.TabNameTextCode !=null ? new TextCodePM(entity.TabNameTextCode) : null;
-			_indexOrder = entity.IndexOrder;
+		_indexOrder = entity.IndexOrder;
 		_code = entity.Code;
 		_featureId = entity.FeatureId;
-		_tabNameTextCodeCode = entity.TabNameTextCodeCode;
-		_featureUniqeCode = entity.FeatureUniqeCode;
-		_feature = entity.Feature;
-		_tabModification = entity.TabModification;
 		_htmlComponentName = entity.HtmlComponentName;
 		_htmlComponentUrl = entity.HtmlComponentUrl;
+		_tabNameTextCodeCode = entity.TabNameTextCodeCode;
+		_featureUniqeCode = entity.FeatureUniqeCode;
 		_type = entity.Type;
 		_screenCode = entity.ScreenCode;
 		_originalTabCode = entity.OriginalTabCode;
 		_hideTabNameInScreen = entity.HideTabNameInScreen;
+		_islocked = entity.Islocked;
    }
    #endregion Constructors
    #region Properties
@@ -131,14 +129,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private TextCodePM _tabnametextcode;
-		[Include]
-        [DataMember]
-        public virtual TextCodePM TabNameTextCode 
-		{ 
-		get { return _tabnametextcode; } 
-		set { _tabnametextcode = value; }
-		}
 	  private int _indexOrder ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -187,70 +177,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _tabNameTextCodeCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TabNameTextCodeCode  
-	   {
-	     get { return _tabNameTextCodeCode; }
-		 set
-		 {
-		   if(_tabNameTextCodeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TabNameTextCodeCode",OldValue=_tabNameTextCodeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _tabNameTextCodeCode=value;
-		   }
-		 }
-	   }
-	  private string _featureUniqeCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FeatureUniqeCode  
-	   {
-	     get { return _featureUniqeCode; }
-		 set
-		 {
-		   if(_featureUniqeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FeatureUniqeCode",OldValue=_featureUniqeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _featureUniqeCode=value;
-		   }
-		 }
-	   }
-	  private string _feature ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Feature  
-	   {
-	     get { return _feature; }
-		 set
-		 {
-		   if(_feature != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Feature",OldValue=_feature,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _feature=value;
-		   }
-		 }
-	   }
-	  private string _tabModification ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TabModification  
-	   {
-	     get { return _tabModification; }
-		 set
-		 {
-		   if(_tabModification != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TabModification",OldValue=_tabModification,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _tabModification=value;
-		   }
-		 }
-	   }
 	  private string _htmlComponentName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -280,6 +206,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HtmlComponentUrl",OldValue=_htmlComponentUrl,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _htmlComponentUrl=value;
+		   }
+		 }
+	   }
+	  private string _tabNameTextCodeCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TabNameTextCodeCode  
+	   {
+	     get { return _tabNameTextCodeCode; }
+		 set
+		 {
+		   if(_tabNameTextCodeCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TabNameTextCodeCode",OldValue=_tabNameTextCodeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _tabNameTextCodeCode=value;
+		   }
+		 }
+	   }
+	  private string _featureUniqeCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FeatureUniqeCode  
+	   {
+	     get { return _featureUniqeCode; }
+		 set
+		 {
+		   if(_featureUniqeCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FeatureUniqeCode",OldValue=_featureUniqeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _featureUniqeCode=value;
 		   }
 		 }
 	   }
@@ -344,6 +302,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HideTabNameInScreen",OldValue=_hideTabNameInScreen,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _hideTabNameInScreen=value;
+		   }
+		 }
+	   }
+	  private bool _islocked ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Islocked  
+	   {
+	     get { return _islocked; }
+		 set
+		 {
+		   if(_islocked != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Islocked",OldValue=_islocked,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _islocked=value;
 		   }
 		 }
 	   }

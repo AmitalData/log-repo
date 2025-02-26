@@ -35,7 +35,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           IsBlobExist  = entity.IsBlobExist;
           IssuedDate  = entity.IssuedDate;
           IssuedByUserId  = entity.IssuedByUserId;
-          DocumentsFiling  = entity.DocumentsFiling;
        }
        #endregion Constructors
        #region Properties
@@ -63,8 +62,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime? IssuedDate  { get; set; }
        [DataMember]
        public string IssuedByUserId  { get; set; }
-       [DataMember]
-       public string DocumentsFiling  { get; set; }
          #endregion Properties
    }
 

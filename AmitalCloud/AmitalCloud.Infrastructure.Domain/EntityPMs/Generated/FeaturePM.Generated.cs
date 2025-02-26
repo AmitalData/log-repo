@@ -29,20 +29,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public FeaturePM(POCO.Feature entity) : base()
    {
 		_id = entity.Id;
-		_featureUniqeCode = entity.FeatureUniqeCode;
 		_tenant = entity.Tenant;
 		_code = entity.Code;
 		_objectTableId = entity.ObjectTableId;
 		_nameTextCodeId = entity.NameTextCodeId;
-		_nametextcode = entity.NameTextCode !=null ? new TextCodePM(entity.NameTextCode) : null;
-			_featureTypeCode = entity.FeatureTypeCode;
+		_featureTypeCode = entity.FeatureTypeCode;
 		_featuretype = entity.FeatureType !=null ? new FeatureTypePM(entity.FeatureType) : null;
 			_packagable = entity.Packagable;
 		_isBusinessUnitEnabled = entity.IsBusinessUnitEnabled;
 		_isOld = entity.IsOld;
 		_isCoreFeature = entity.IsCoreFeature;
 		_toggleCode = entity.ToggleCode;
+		_featureUniqeCode = entity.FeatureUniqeCode;
 		_nameTextCodeCode = entity.NameTextCodeCode;
+		objectTableHelperControls = entity.ObjectTableHelperControls != null ? entity.ObjectTableHelperControls.Select(a=>new ObjectTableHelperControlPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -60,22 +60,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _id=value;
-		   }
-		 }
-	   }
-	  private string _featureUniqeCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FeatureUniqeCode  
-	   {
-	     get { return _featureUniqeCode; }
-		 set
-		 {
-		   if(_featureUniqeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FeatureUniqeCode",OldValue=_featureUniqeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _featureUniqeCode=value;
 		   }
 		 }
 	   }
@@ -143,14 +127,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private TextCodePM _nametextcode;
-		[Include]
-        [DataMember]
-        public virtual TextCodePM NameTextCode 
-		{ 
-		get { return _nametextcode; } 
-		set { _nametextcode = value; }
-		}
 	  private string _featureTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -255,6 +231,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _featureUniqeCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FeatureUniqeCode  
+	   {
+	     get { return _featureUniqeCode; }
+		 set
+		 {
+		   if(_featureUniqeCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FeatureUniqeCode",OldValue=_featureUniqeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _featureUniqeCode=value;
+		   }
+		 }
+	   }
 	  private string _nameTextCodeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -271,6 +263,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<ObjectTableHelperControlPM> objectTableHelperControls;
+	 
+		     
+	   [Include]
+	   [Association("ObjectTableHelperControlFeature", "Id","Featureid")]
+	   [DataMember]
+	   public virtual List<ObjectTableHelperControlPM> ObjectTableHelperControls  
+	   {
+	        get
+             {
+                 if (objectTableHelperControls == null)
+                 {
+                     objectTableHelperControls = new List<ObjectTableHelperControlPM>();
+                 }
+                 return objectTableHelperControls;
+              }
+             set { objectTableHelperControls = value; }
+	    }
+	   private List<ObjectTableHelperControlPM>  deletedObjectTableHelperControls;
+	   public virtual List<ObjectTableHelperControlPM> DeletedObjectTableHelperControls  
+	   {
+	        get
+             {
+                 if ( deletedObjectTableHelperControls == null)
+                 {
+                      deletedObjectTableHelperControls = new List<ObjectTableHelperControlPM>();
+                 }
+                 return  deletedObjectTableHelperControls;
+              }
+             set {  deletedObjectTableHelperControls = value; }
+	    }
 	 }
 #endregion Properties
 }

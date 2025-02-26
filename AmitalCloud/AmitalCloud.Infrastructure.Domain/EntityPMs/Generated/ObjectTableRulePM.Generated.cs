@@ -49,6 +49,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_internal = entity.Internal;
 		_advancedCondition = entity.AdvancedCondition;
 		_triggerFieldCode = entity.TriggerFieldCode;
+		objectTableRuleFields = entity.ObjectTableRuleFields != null ? entity.ObjectTableRuleFields.Select(a=>new ObjectTableRuleFieldPM(a)).ToList() : null;
+		ruleConditionFields = entity.RuleConditionFields != null ? entity.RuleConditionFields.Select(a=>new RuleConditionFieldPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -365,6 +367,68 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<ObjectTableRuleFieldPM> objectTableRuleFields;
+	 
+		     
+	   [Include]
+	   [Association("ObjectTableRuleFieldObjectTableRule", "Id","Objecttableruleid")]
+	   [DataMember]
+	   public virtual List<ObjectTableRuleFieldPM> ObjectTableRuleFields  
+	   {
+	        get
+             {
+                 if (objectTableRuleFields == null)
+                 {
+                     objectTableRuleFields = new List<ObjectTableRuleFieldPM>();
+                 }
+                 return objectTableRuleFields;
+              }
+             set { objectTableRuleFields = value; }
+	    }
+	   private List<ObjectTableRuleFieldPM>  deletedObjectTableRuleFields;
+	   public virtual List<ObjectTableRuleFieldPM> DeletedObjectTableRuleFields  
+	   {
+	        get
+             {
+                 if ( deletedObjectTableRuleFields == null)
+                 {
+                      deletedObjectTableRuleFields = new List<ObjectTableRuleFieldPM>();
+                 }
+                 return  deletedObjectTableRuleFields;
+              }
+             set {  deletedObjectTableRuleFields = value; }
+	    }
+	   private List<RuleConditionFieldPM> ruleConditionFields;
+	 
+		     
+	   [Include]
+	   [Association("RuleConditionFieldObjectTableRule", "Id","Objecttableruleid")]
+	   [DataMember]
+	   public virtual List<RuleConditionFieldPM> RuleConditionFields  
+	   {
+	        get
+             {
+                 if (ruleConditionFields == null)
+                 {
+                     ruleConditionFields = new List<RuleConditionFieldPM>();
+                 }
+                 return ruleConditionFields;
+              }
+             set { ruleConditionFields = value; }
+	    }
+	   private List<RuleConditionFieldPM>  deletedRuleConditionFields;
+	   public virtual List<RuleConditionFieldPM> DeletedRuleConditionFields  
+	   {
+	        get
+             {
+                 if ( deletedRuleConditionFields == null)
+                 {
+                      deletedRuleConditionFields = new List<RuleConditionFieldPM>();
+                 }
+                 return  deletedRuleConditionFields;
+              }
+             set {  deletedRuleConditionFields = value; }
+	    }
 	 }
 #endregion Properties
 }
