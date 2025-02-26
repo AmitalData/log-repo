@@ -133,28 +133,21 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         }
 
 
-        public bool IsMulti(string AccountId, int Tenant)
+      public bool IsMulti(string AccountId, int Tenant)
         {
             try
             {
                 accountingContext = AccountingContext.GetContext(Tenant);
-                GLAccount glaccount = (from a in accountingContext.GLAccounts
-                                       where a.Id == AccountId && a.Tenant == Tenant
-                                       select new GLAccount()
-                                       {
-                                           IsMultiCurrency = a.IsMultiCurrency,
-                                       }).FirstOrDefault();
-                bool isMultiCurrency = false;
-                if (glaccount != null && glaccount.IsMultiCurrency.HasValue)
-                {
-                    isMultiCurrency = glaccount.IsMultiCurrency.Value;
-                }
+                var isMultiCurrency = accountingContext.GLAccounts
+                    .Where(a => a.Id == AccountId && a.Tenant == Tenant)
+                    .Select(a => a.IsMultiCurrency)
+                    .FirstOrDefault();
 
-                return isMultiCurrency;
+                return isMultiCurrency ?? false;
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("An error occurred while checking if the account is multi-currency. ", ex);
             }
         }
     }
