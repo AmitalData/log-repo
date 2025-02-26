@@ -1,7 +1,7 @@
 <div class="preferenceBox">
   <div class="preference-icon" style="width: 20px; height: 20px; cursor:pointer; position: relative;" title="">
-    <a><img class="logoSettings" src="assets/images/settings.png" alt="{{settingsColors}}"
-        (click)="showSettingsClick()" [ngStyle]="{ 'opacity': showSetings ? '1' : '0.5' }" /></a>
+    <a><img class="logoSettings" src="assets/images/settings.png" alt="{{settingsColors}}" (click)="showSettingsClick()"
+        [ngStyle]="{ 'opacity': showSetings ? '1' : '0.5' }" /></a>
   </div>
   <div class="preference-menu" *ngIf="showSetings">
     <table>
@@ -14,10 +14,33 @@
         <tr *ngFor="let item of tableData.hierarchyLevels">
           <td>{{ item.label }}</td>
           <td>
-            <input type="color" [(ngModel)]="preferences[item.level-1].BackgroundColor" (input)="updateBackgroundColor($event,item.level-1)" />
+            <!--<input type="color" [(ngModel)]="preferences[item.level-1].BackgroundColor" (input)="updateBackgroundColor($event,item.level-1)" />-->
+            <div class="row">
+              <div class="col-md-6">
+
+                <input class="inputBox" [cpWidth]="'210px'" [cpHeight]="'auto'"
+                       [style.background]="preferences[item.level-1].BackgroundColor"
+                       [(colorPicker)]="preferences[item.level-1].BackgroundColor" [cpOKButton]="true"
+                       [cpOKButtonText]="'Select'" [cpCancelButton]="true" [cpCancelButtonText]="'Cancel'"
+                       [cpDisableInput]="false" [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'"
+                       [cpPresetColors]="presetValues" [cpAddColorButton]="true"
+                       (input)="updateBackgroundColor($event,item.level-1)" />
+              </div>
+            </div>
           </td>
           <td>
-            <input type="color" [(ngModel)]="preferences[item.level-1].TextColor" (input)="updateTextColor($event,item.level-1)"/>
+            <!--<input type="color" [(ngModel)]="preferences[item.level-1].TextColor" (input)="updateTextColor($event,item.level-1)" />-->
+
+            <div class="row">
+              <div class="col-md-6">
+                <input class="inputBox" [cpWidth]="'210px'" [cpHeight]="'auto'"
+                       [style.background]="preferences[item.level-1].TextColor"
+                       [(colorPicker)]="preferences[item.level-1].TextColor" [cpOKButton]="true" [cpOKButtonText]="'Select'"
+                       [cpCancelButton]="true" [cpCancelButtonText]="'Cancel'" [cpDisableInput]="false"
+                       [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'" [cpPresetColors]="presetValues"
+                       [cpAddColorButton]="true" (input)="updateTextColor($event,item.level-1)" />
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>
