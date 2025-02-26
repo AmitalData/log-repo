@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.CommonDataModel
 {

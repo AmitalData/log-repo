@@ -5,6 +5,7 @@ using Logitude.BL.ShipmentsModel.EntityLists;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Syncfusion.XlsIO.Implementation.XmlSerialization.Constants;
 using System;
