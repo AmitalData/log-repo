@@ -71,6 +71,7 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'BankAccount'"
+                                                            [QueryFilterItems]="BankAccountFilter"
                                                             [DisplayMemberPath]="BankName"
                                                             (SelectedItemChanged)="BankAccount = $event"
                                                             [HideColumns]="true">

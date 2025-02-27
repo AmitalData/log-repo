@@ -299,9 +299,38 @@ namespace Logitude.BL.Helpers
             return context.Database.Connection.ConnectionString;
         }
 
-      
-        
-        
+
+        public void RetrySignature(string documentId, int tenant)
+        {
+             
+
+            try
+            {
+                DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
+                DocumentOutPM documentOutPM = documentOutQuery.GetSinglePM(documentId, tenant);
+                if (documentOutPM != null)
+                {
+
+                    IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+                    FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
+                    DocumentHelper DocumentHelper = new DocumentHelper();
+                    if (accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) && !string.IsNullOrEmpty(accountingSettings.HSMaddress) && !string.IsNullOrEmpty(accountingSettings.HSMtoken))
+                        Sign(documentOutPM.Id, tenant, accountingSettings);
+
+                }
+            }
+           
+            catch (Exception ex)
+            {
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "ProccessHSMSign-MarkExportSignTaskAsDone", "", null);
+
+
+            }
+        }
+
+
 
         public void StartSignPDFInvoice(ARInvoice invocie, int tenant, ARInvoiceRepository repository,string contactEmail, FullAccountingSettingPM accountingSettings)
         {
@@ -402,6 +431,48 @@ namespace Logitude.BL.Helpers
          //   this.SendEmailAlert("libby@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " );
             this.SendToEmailContact(contactEmail, invocie, document, DocumentFilingId, repository, invocie.Tenant, accountingSettings);
 
+        }
+        public void SendSignInterestInvoices(string[] selectedList ,int tenant)
+        {
+
+            ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+            ARInvoiceRepository repository = new ARInvoiceRepository();
+            DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+            DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
+            DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+            DocumentOutCopyQuery DocumentOutCopyQuery = new DocumentOutCopyQuery(tenant);
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
+
+
+            List<string> failedItems = new List<string>();
+            try
+            {
+                foreach (var item in selectedList)
+                {
+                    try
+                    {
+                        ARInvoice invocie = repository.GetSingleARInvoice(item, tenant);
+                        DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invocie?.Id, tenant).FirstOrDefault();
+                        DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings?.Id, tenant, "999G");
+                        Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
+                        string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie?.BillToId, tenant);
+                        if (!string.IsNullOrEmpty(contactEmail))
+                            this.SendToEmailContact(contactEmail, invocie, document, myDocumentFilings?.Id, repository, tenant, accountingSettings);
+                    }
+                    catch (Exception ex)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"SendSignInterestInvoices  ARInvoiceId :{item}   , Err:{ex} ");
+                        failedItems.Add(item);
+                    }
+                 }
+             }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+                    
         }
         private void CreateEvent(string eventCode,ARInvoice arinvocie, string Notes = null)
         {

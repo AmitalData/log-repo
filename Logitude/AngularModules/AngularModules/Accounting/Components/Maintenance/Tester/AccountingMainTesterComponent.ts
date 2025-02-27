@@ -1178,7 +1178,15 @@ Line3
         this.PostOp(opr, str, () => { });
     }
 
-
+    ButtonLoadInterestDefinitions_Click() {
+        let opr = "ButtonLoadInterestDefinitions_Click";
+        let str: string =
+            `Please insert page  //Tenant=1071
+Line2
+Line3
+`;
+        this.PostOp(opr, str, () => { });
+    }
 
     ButtonLoadChargeTypes_Click() {
         let opr = "ButtonLoadChargeTypes_Click";

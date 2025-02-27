@@ -318,19 +318,25 @@ namespace Logitude.Accounting.BL.InterestService
                 string documentOutId = null;
                 string email = Email;
                 bool IsPrinted = false;
-
+                ARInvoice aRInvoice = null;
                 DocumentOut doucmentOut = null;
                 if (commonContext == null)
                 {
                     commonContext = CommonDataContext.GetContext((tenant != null ? (int)tenant : 0));
                 }
-
+                if (invoiceContext == null)
+                {
+                    invoiceContext = InvoiceContext.GetContext((tenant != null ? (int)tenant : 0));
+                }
+                
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery((int)tenant);
                 string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant(DocumentCode, (int)tenant);
 
 
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery((int)tenant);
+                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery((int)tenant);
 
+                aRInvoice = aRInvoiceQuery.GetSingleARInvoice(SelectId, (int)tenant);
 
                 doucmentOut = (from a in commonContext.DocumentOuts
                                join docFile in commonContext.DocumentsFilings on a.Id equals docFile.Id
@@ -343,31 +349,24 @@ namespace Logitude.Accounting.BL.InterestService
 
                     documentOutId = doucmentOut.Id;
                     tenant = doucmentOut.Tenant;
+                    bool notGetCopy = false;
 
                     DocumentOutCopy copy = GetDocumentCopyByCode(commonContext, (int)tenant, documentOutId, DocumentCode);
-
-
-                    if (copy!=null && doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId))
+                    if (aRInvoice != null)
                     {
-                        bool print999G1copy = true;
-
-                        ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery((int)tenant);
-                        var aRInvoice = aRInvoiceQuery.GetSingleARInvoice(SelectId, (int)tenant);
-
-                        if (aRInvoice != null)
+                        string signStatus = aRInvoice.IsSigned;
+                        if (signStatus == "1" || signStatus == "3" || signStatus == "4")
                         {
-                            string signStatus = aRInvoice.IsSigned;
-                            if (signStatus == "1" || signStatus == "3" || signStatus == "4")
-                            {
-                                print999G1copy = false;  // print current 'copy' value, i. e. with DocumentCode
-                            }
+                            notGetCopy = true;
                         }
-                        
-                        if (print999G1copy)
-                        {
-                            copy = GetDocumentCopyByCode(commonContext, (int)tenant, documentOutId, "999G1");
-                        }
+                        if (signStatus == "2")
+                            return false;
                     }
+
+                    if (copy != null && doucmentOut.DocumentsFiling.DocumentType.LimitedPrintCopyId == copy.DocumentTypeCopyId && !string.IsNullOrEmpty(copy.LastPrintedByUserId) && ((DocumentCode != "999G" && doucmentOut.DocumentsFiling.DocumentType.IsDocumentOneTimePrintLimited) || (DocumentCode == "999G" && !notGetCopy)))
+                    {
+                        copy = GetDocumentCopyByCode(commonContext, (int)tenant, documentOutId, "999G1");
+                     }
                     if (copy == null)
                     {
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug("No valid document copy found for printing.");

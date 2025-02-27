@@ -341,7 +341,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //Sum
                 if (item.LocalAmountDebit != 0)
                 {
-                    if (item.LocalAmountDebit > 0)
+                    if (item.LocalAmountDebit >= 0)
                     {
                         string LocalAmountDebit = Format(item.LocalAmountDebit); //Math.Abs(item.LocalAmountDebit).ToString().Replace(".", string.Empty);
                         if (LocalAmountDebit.Length > 14) { LocalAmountDebit = LocalAmountDebit.Substring(0, 14); }
@@ -357,7 +357,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 else
                 {
-                    if (item.LocalAmountCredit > 0)
+                    if (item.LocalAmountCredit >= 0)
                     {
                         var LocalAmountCredit = Format(item.LocalAmountCredit); // Math.Abs(item.LocalAmountCredit).ToString().Replace(".", string.Empty);
                         if (LocalAmountCredit.Length > 14) { LocalAmountCredit = LocalAmountCredit.Substring(0, 14); }
@@ -375,7 +375,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //ForeignSum
                 if (item.LocalAmountDebit != 0)
                 {
-                    if (item.ForeignAmountDebit > 0)
+                    if (item.ForeignAmountDebit >= 0)
                     {
                         string ForeignAmountDebit = Format(item.ForeignAmountDebit);// Math.Abs(item.ForeignAmountDebit).ToString().Replace(".", string.Empty);
                         if (ForeignAmountDebit.Length > 14) { ForeignAmountDebit = ForeignAmountDebit.Substring(0, 14); }
@@ -390,7 +390,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    if (item.ForeignAmountCredit > 0)
+                    if (item.ForeignAmountCredit >= 0)
                     {
                         string ForeignAmountCredit = Format(item.ForeignAmountCredit); //  Math.Abs(item.ForeignAmountCredit).ToString().Replace(".", string.Empty);
                         if (ForeignAmountCredit.Length > 14) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 14); }
@@ -480,7 +480,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
-            b110Data = b110Data.Where(d => includedGLAccounts.Contains(d.GLAccountId)).ToList();
+            HashSet<string> includedGLAccountsHash = new HashSet<string>(includedGLAccounts);    
+            b110Data = b110Data.Where(d => includedGLAccountsHash.Contains(d.GLAccountId)).ToList();
 
             List<CardList> cardLists = GetCardsByGLAccountIds(includedGLAccounts.Where(d => d != null).ToList(), tenant);
             List<AddressList> addreses = addressQuery.GetAddressesByCardIds(cardLists.Select(d => d.Id).ToList(), tenant);
@@ -1153,7 +1154,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         C100SumBeforeDiscount = a + "-" + AmountBFDiscount.PadLeft(14, '0');
                     }
-                    else if (item.TotalDocumentsAmountBeforeDiscount > 0)
+                    else if (item.TotalDocumentsAmountBeforeDiscount >= 0)
                     {
                         C100SumBeforeDiscount = a + "+" + AmountBFDiscount.PadLeft(14, '0');
                     }
@@ -1167,7 +1168,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         C100SumAfterDiscount = a + "-" + AmountAFDiscount.PadLeft(14, '0');
                     }
-                    else if (item.TotalDocumentsAmountAfterDiscount > 0)
+                    else if (item.TotalDocumentsAmountAfterDiscount >= 0)
                     {
                         C100SumAfterDiscount = a + "+" + AmountAFDiscount.PadLeft(14, '0');
                     }
@@ -1190,7 +1191,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             C100VatSum = a + "-" + vatAmount.PadLeft(14, '0');
 
                         }
-                        else if (item.VatAmount > 0)
+                        else if (item.VatAmount >= 0)
                         {
                             C100VatSum = a + "+" + vatAmount.PadLeft(14, '0');
                         }
@@ -1205,7 +1206,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (DocumentAmountAndVATAmount != null)
                 {
-                    if (item.DocumentAmountAndVATAmount > 0)
+                    if (item.DocumentAmountAndVATAmount >= 0)
                     {
                         C100SumIncludeVat = a + "+";
                         if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
@@ -1364,7 +1365,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             if (unitPrice.Length > 14) { unitPrice = unitPrice.Substring(0, 14); }
                             D110UnitPrice += unitPrice.PadLeft(14, '0');
                         }
-                        else if (UnitPrice > 0)
+                        else if (UnitPrice >= 0)
                         {
                             D110UnitPrice = a + "+";
                             if (unitPrice.Length > 14) { unitPrice = unitPrice.Substring(0, 14); }
@@ -1379,7 +1380,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (LocalCurrencyAmount.Length > 14) { LocalCurrencyAmount = LocalCurrencyAmount.Substring(0, 14); }
 
 
-                        if (line.LocalCurrencyAmount > 0)
+                        if (line.LocalCurrencyAmount >= 0)
                         {
                             D110Sum = a + "+";
                             D110Sum += LocalCurrencyAmount.PadLeft(14, '0');
@@ -1617,7 +1618,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         C100SumBeforeDiscount = a + "-" + AmountBFDiscount.PadLeft(14, '0');
 
                     }
-                    else if (item.TotalDocumentsAmountBeforeDiscount > 0)
+                    else if (item.TotalDocumentsAmountBeforeDiscount >= 0)
                     {
                         C100SumBeforeDiscount = a + "+" + AmountBFDiscount.PadLeft(14, '0');
                     }
@@ -1635,7 +1636,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         C100SumAfterDiscount = a + "-" + AmountAFDiscount.PadLeft(14, '0');
                     }
-                    else if (item.TotalDocumentsAmountAfterDiscount > 0)
+                    else if (item.TotalDocumentsAmountAfterDiscount >= 0)
                     {
                         C100SumAfterDiscount = a + "+" + AmountAFDiscount.PadLeft(14, '0');
                     }
@@ -1655,7 +1656,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             C100VatSum = a + "-" + vatAmount.PadLeft(14, '0');
                         }
-                        else if (item.VatAmount > 0)
+                        else if (item.VatAmount >= 0)
                         {
                             C100VatSum = a + "+" + vatAmount.PadLeft(14, '0');
                         }
@@ -1666,7 +1667,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (DocumentAmountAndVATAmount != null)
                 {
-                    if (item.DocumentAmountAndVATAmount > 0)
+                    if (item.DocumentAmountAndVATAmount >= 0)
                     {
                         C100SumIncludeVat = a + "+";
                         if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
@@ -1789,7 +1790,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         string LocalCurrencyAmount = Format((decimal)line.LocalCurrencyAmount); //  Math.Abs((decimal) line.LocalCurrencyAmount).ToString().Replace(".", string.Empty);
                         if (LocalCurrencyAmount.Length > 15) { LocalCurrencyAmount = LocalCurrencyAmount.Substring(0, 15); }
 
-                        if (line.LocalCurrencyAmount > 0)
+                        if (line.LocalCurrencyAmount >= 0)
                         {
                             D110UnitPrice = a + "+";
                             D110UnitPrice += LocalCurrencyAmount.PadLeft(14, '0');
@@ -1815,7 +1816,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         }
 
-                        else if (line.LocalCurrencyAmount > 0)
+                        else if (line.LocalCurrencyAmount >= 0)
                         {
                             D110Sum = a + "+";
                             D110Sum += LocalCurrencyAmount.PadLeft(14, '0');
@@ -2051,7 +2052,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (DocumentAmountAndVATAmount != null)
                 {
-                    if (item.DocumentAmountAndVATAmount > 0)
+                    if (item.DocumentAmountAndVATAmount >= 0)
                     {
                         C100SumIncludeVat = a + "+";
                         if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
@@ -2614,7 +2615,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (DocumentAmountAndVATAmount != null)
                 {
-                    if (item.DocumentAmountAndVATAmount > 0)
+                    if (item.DocumentAmountAndVATAmount >= 0)
                     {
                         C100SumIncludeVat = a + "+";
                         if (DocumentAmountAndVATAmount.Length > 14) { DocumentAmountAndVATAmount = DocumentAmountAndVATAmount.Substring(0, 14); }
@@ -3215,12 +3216,12 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> exceptedGLAccounts = new List<string>();
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
             exceptedGLAccounts = gLAccountQueryService.GetGLAccountsWithoutLedgerTransactions(zeroVlauesGLAccounts, openFormatReport, tenant);
-
-            result = result.Where(d => !exceptedGLAccounts.Contains(d.GLAccountId)).ToList();
+            var exceptedGLAccountsSet = new HashSet<string>(exceptedGLAccounts);  
+            result = result.Where(d => !exceptedGLAccountsSet.Contains(d.GLAccountId)).ToList();
             List<string> includedGLAccounts = new List<string>();
             if (includedGLAccounts != null)
             {
-                includedGLAccounts = result.Select(d => d.GLAccountId).ToList();
+                includedGLAccounts = result.Select(d => d.GLAccountId).Distinct().ToList();
             }
 
             return includedGLAccounts;
@@ -3274,6 +3275,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             // prepare file string
             string file = string.Join(Environment.NewLine, lines);
+
 
             // create document
             int tenant = openFormatReport.Tenant;

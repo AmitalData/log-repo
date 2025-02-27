@@ -41,6 +41,7 @@ export class JournalList {
 	DueDate: Date;
 	CurrencyId: string;
 	SecurityLevel: number;
+	IsExternalEntity: boolean;
 	
 }
  

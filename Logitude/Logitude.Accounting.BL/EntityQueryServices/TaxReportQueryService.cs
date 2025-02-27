@@ -202,7 +202,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                           select new TaxReportLineForErrors
                                           {
                                               Line = line.Line,
-                                              JournalNumber = journal.JournalNumber
+                                              JournalNumber = journal.JournalNumber,
+                                              JournalId = journal.Id,
                                           });
 
             bool hasOutputReconciledLines = outputReconciledLinesQ.Any();
@@ -225,7 +226,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                          select new TaxReportLineForErrors
                                          {
                                              Line = line.Line,
-                                             JournalNumber = journal.JournalNumber
+                                             JournalNumber = journal.JournalNumber,
+                                             JournalId = journal.Id,
                                          });
 
             bool hasInputReconciledLines = inputReconciledLinesQ.Any();
@@ -302,6 +304,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     {
         public int Line { get; set; }
         public string JournalNumber { get; set; }
+        public string JournalId { get; set; }
+
     }
 
 
