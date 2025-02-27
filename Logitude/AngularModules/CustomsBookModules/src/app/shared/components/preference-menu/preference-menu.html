@@ -17,14 +17,14 @@
             <!--<input type="color" [(ngModel)]="preferences[item.level-1].BackgroundColor" (input)="updateBackgroundColor($event,item.level-1)" />-->
             <div class="row">
               <div class="col-md-6">
-
                 <input class="inputBox" [cpWidth]="'210px'" [cpHeight]="'auto'"
-                       [style.background]="preferences[item.level-1].BackgroundColor"
-                       [(colorPicker)]="preferences[item.level-1].BackgroundColor" [cpOKButton]="true"
-                       [cpOKButtonText]="'Select'" [cpCancelButton]="true" [cpCancelButtonText]="'Cancel'"
-                       [cpDisableInput]="false" [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'"
-                       [cpPresetColors]="presetValues" [cpAddColorButton]="true"
-                       (input)="updateBackgroundColor($event,item.level-1)" />
+                  [style.background]="preferences[item.level-1].BackgroundColor"
+                  [(colorPicker)]="preferences[item.level-1].BackgroundColor" [cpOKButton]="true"
+                  [cpCancelButton]="true" [cpOKButtonText]="''" [cpCancelButtonText]="''"
+                  [cpOKButtonClass]="'buttonBoxColorsPicker'" [cpCancelButtonClass]="'buttonBoxColorsPickerCancel'"
+                  [cpDisableInput]="false" [cpAlphaChannel]="'disabled'" [cpOKButtonText]="''" [cpOutputFormat]="'hex'"
+                  [cpPresetColors]="presetValues" [cpAddColorButton]="true"
+                  (input)="updateBackgroundColor($event,item.level-1)" />
               </div>
             </div>
           </td>
@@ -34,11 +34,14 @@
             <div class="row">
               <div class="col-md-6">
                 <input class="inputBox" [cpWidth]="'210px'" [cpHeight]="'auto'"
-                       [style.background]="preferences[item.level-1].TextColor"
-                       [(colorPicker)]="preferences[item.level-1].TextColor" [cpOKButton]="true" [cpOKButtonText]="'Select'"
-                       [cpCancelButton]="true" [cpCancelButtonText]="'Cancel'" [cpDisableInput]="false"
-                       [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'" [cpPresetColors]="presetValues"
-                       [cpAddColorButton]="true" (input)="updateTextColor($event,item.level-1)" />
+                  [style.background]="preferences[item.level-1].TextColor"
+                  [(colorPicker)]="preferences[item.level-1].TextColor" 
+                  [cpOKButton]="true"
+                  [cpCancelButton]="true" [cpOKButtonText]="''" [cpCancelButtonText]="''"
+                  [cpOKButtonClass]="'buttonBoxColorsPicker'" [cpCancelButtonClass]="'buttonBoxColorsPickerCancel'"
+                  [cpDisableInput]="false"
+                  [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'" [cpPresetColors]="presetValues"
+                  [cpAddColorButton]="true" (input)="updateTextColor($event,item.level-1)" />
               </div>
             </div>
           </td>

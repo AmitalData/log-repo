@@ -83,7 +83,7 @@ td img {
   color: black;
 }
 
-.inputBox{
+.inputBox {
   cursor: pointer;
   max-width: 60px;
   margin-bottom: 16px;
@@ -92,6 +92,46 @@ td img {
 
 ::ng-deep .color-picker .cp-remove-color-button-class {
   display: none !important;
+}
+
+::ng-deep .color-picker .button-area {
+  display: flex !important;
+  justify-content: space-between !important;
+  padding: 16px 16px !important;
+}
+
+::ng-deep .buttonBoxColorsPicker::before {
+  content: "\f00c";
+  /* FontAwesome check icon (✔) */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+::ng-deep .buttonBoxColorsPickerCancel::before {
+  content: "\f00d";
+  /* FontAwesome times icon (✖) */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+::ng-deep.buttonBoxColorsPickerCancel {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent !important;
+  border: none !important;
+}
+
+::ng-deep .buttonBoxColorsPicker {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent !important;
+  border: none !important;
 }
 
 .cmyk-text {
