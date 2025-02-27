@@ -137,6 +137,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(AccountId))
+                    throw new ArgumentException("AccountId cannot be null or empty.", nameof(AccountId));
+
+                if (Tenant <= 0)
+                    throw new ArgumentException("Invalid Tenant ID.", nameof(Tenant));
+
+
                 accountingContext = AccountingContext.GetContext(Tenant);
                 var isMultiCurrency = accountingContext.GLAccounts
                     .Where(a => a.Id == AccountId && a.Tenant == Tenant)

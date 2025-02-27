@@ -388,14 +388,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (tenantPOCO.AccountingActivated && setVoided)
             {
-                IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+                IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalQueryServiceExt;
                 JournalPM journalPM = journalQuery.GetJournalByAccountingEntityIdAndCode(entityPM.Id, "4", entityPM.Tenant);
 
                 if (journalPM != null)
                 {
                     CheckJournalInactiveAccounts(entityPM, journalPM);
 
-                    var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
+                    var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalVoidUpdateServiceExt;
                     AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.APInvoiceVoid, journalPM.Id);
                     journalUpdate.Update(journalPM, new StornoOverrideM()
                     {
@@ -426,7 +426,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private static bool CheckInactiveGLAccounts(APInvoicePM entityPM, List<string> accountIds)
         {
-            IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IGLAccountQueryServiceExt;
             bool hasInactiveGLAccounts = gLAccountQueryServiceExt.CheckInactiveGLAccounts(accountIds, entityPM.Tenant);
             return hasInactiveGLAccounts;
         }
@@ -798,7 +798,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private GLAccountPM GetGLAccountForLine(APInvoiceLinePM line)
         {
-            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IGLAccountQueryServiceExt;
             GLAccountPM glaAccount = glAccountQuery.GetGLAccountByInternalNumber(line.DebitAccount, tenant);
             return glaAccount;
         }
@@ -1064,7 +1064,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         foreach (APInvoiceLinePM item in apInvoiceLines_DebitError)
                         {
                             ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
-                            string myChargesTypeName = myChargesType != null ? myChargesType.EnglishName : "";
+                            string myChargesTypeName = myChargesType != null ? myChargesType.EnglishName : string.Empty;
                             myError = string.IsNullOrEmpty(myError) ? myChargesTypeName + linesError : myError + "," + myChargesTypeName + linesError;
                         }
                     }
@@ -1086,7 +1086,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         if (FieldIsEmpty(g.ExternalVATCard))
                         {
                             VatType lineVatType = initializer.AllVatTypes.Where(d => d.Id == g.VatTypeId).FirstOrDefault();
-                            var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : "";
+                            var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : string.Empty;
                             isReady = false;
                             vatError = lineVatTypeName + " VAT External Id is missing";
                             myError = string.IsNullOrEmpty(myError) ? vatError : myError + "," + vatError;
@@ -1431,7 +1431,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                         if (payablesId != null && payablesId.Count > 0)
                         {
-                            string payableToBeDeletedIds = "";
+                            string payableToBeDeletedIds = string.Empty;
                             foreach (var id in payablesId)
                             {
                                 payableToBeDeletedIds += "'" + id + "',";
@@ -1968,7 +1968,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region SearchField
         public void BuildSearchFields()
         {
-            string mySearchFields = "";
+            string mySearchFields = string.Empty;
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.InvoiceNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.VATNumber);
@@ -2180,7 +2180,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                         select new JournalLinePM()
                                                         {
                                                             Tenant = tenant,
-                                                            ActionCode = "2",
+                                                            ActionCode = AccountingActionCodes.Debit,
                                                             ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                                                             JournalId = journal.Id,
                                                             DebitAccountId = d.ChargeTypeGLAccountId,
@@ -2201,7 +2201,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     journalDebitLines.AddRange(journalLines);
                     journal.JournalLines.AddRange(journalLines);
-                    var totalDebitLines = journal.JournalLines.Where(d => d.ActionCode == "2").Sum(d => d.LocalAmount);
+                    var totalDebitLines = journal.JournalLines.Where(d => d.ActionCode == AccountingActionCodes.Debit).Sum(d => d.LocalAmount);
                     // [Vats]
                     //List<APInvoiceTotalVAT> APInvoiceTotalVATs = new List<APInvoiceTotalVAT>();
 
@@ -2216,24 +2216,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     decimal localForVAT = 0m;
                     foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
-                        //     Moved into aPInvoiceTotalVATQuery.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent()
-                        //     vat.LocalVatAmountWithVatRecognized = Math.Round((vat.VatRecognizedPercentage != null) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount, 2);
 
                         journalLine = new JournalLinePM()
                         {
                             Tenant = tenant,
-                            ActionCode = "2",
+                            ActionCode = AccountingActionCodes.Debit,
                             ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                             JournalId = journal.Id,
-                            DebitAccountId = accountingSettings != null ? accountingSettings.VATInputsGLAccountId : "",
+                            DebitAccountId = accountingSettings != null ? accountingSettings.VATInputsGLAccountId : string.Empty,
                             Line = ++counter,
                             DocumentDate = theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
-                            LocalAmount = vat.LocalVatAmountWithVatRecognized,// vat.VatRecognizedPercentage != null ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,
+                            LocalAmount = vat.LocalVatAmountWithVatRecognized,
                             CurrencyId = theEntityPm.InvoiceCurrencyId,
                             ForeignAmount = (vat.LocalVatAmountWithVatRecognized / (decimal)entityPM.InvoiceCurrencyExchangeRate),
-                            ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
+                            ExchangeRate = (decimal?)theEntityPm.InvoiceCurrencyExchangeRate??1m,
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
@@ -2249,7 +2247,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     if (differentCurrencies && localForVAT != 0m) // Adding total local VAT to local currency credit line
                     {
                         string tenantCurrencyId = tenantPOCO.CurrencyId;
-                        int index = journal.JournalLines.FindIndex(ln => ln.ActionCode == "1" && ln.CurrencyId == tenantCurrencyId);
+                        int index = journal.JournalLines.FindIndex(ln => ln.ActionCode == AccountingActionCodes.Credit && ln.CurrencyId == tenantCurrencyId);
                         if (index != -1) // local currency credit line exists
                         {
                             journal.JournalLines[index].LocalAmount += localForVAT;
@@ -2261,7 +2259,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             journalLine.Tenant = tenant;
                             journalLine.JournalId = journal.Id;
                             journalLine.Line = ++counter;
-                            journalLine.ActionCode = "1";
+                            journalLine.ActionCode = AccountingActionCodes.Credit;
                             journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
                             journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
                             journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
@@ -2280,7 +2278,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             journal.JournalLines.Add(journalLine);
                         }
                     }
-                    var journalCreditAmount = journal.JournalLines.Where(d => d.ActionCode == "1").FirstOrDefault().LocalAmount;
+                    var journalCreditAmount = journal.JournalLines.Where(d => d.ActionCode == AccountingActionCodes.Credit).FirstOrDefault().LocalAmount;
                     var difference = journalCreditAmount - totalDebitLines;
 
                     if (Math.Abs(difference) <= (decimal)0.06)
@@ -2290,7 +2288,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
 
 
-                    IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
+                    IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalUpdateServiceExt;
                     AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceApprove);
                     journalUpdate.Update(journal);
                 }
@@ -2302,7 +2300,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.Tenant = tenant;
             journalLine.JournalId = journalId;
             journalLine.Line = lineNo;
-            journalLine.ActionCode = "1";
+            journalLine.ActionCode = AccountingActionCodes.Credit;
             journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
             journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
             journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
@@ -2313,7 +2311,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
             journalLine.Notes = theEntityPm.InternalNotes;
             journalLine.CreditAccountId = glAccountId;
-            //journalLine.CreditControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
+            
             journalLine.DebitAccountId = SetDebitAccountForSingleLineAPInvoice(theEntityPm);
             journalLine.ChangeSetOp = ChangeSetOperation.Insert;
             return journalLine;
@@ -2321,7 +2319,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
         {
-            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IAccountingEntityJournalUpdateServiceExt;
             service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
@@ -2336,7 +2334,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private static GLAccountPM GetGLAccountById(string glaccountId, int tenant)
         {
-            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IGLAccountQueryServiceExt;
             GLAccountPM glaAccount = glAccountQuery.GetSingleGLAccountPM(glaccountId, tenant);
             return glaAccount;
         }
@@ -2347,7 +2345,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             Card card = cardRep.GetSingleCard(cardId, tenant);
             if (card != null)
             {
-                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IGLAccountQueryServiceExt;
                 glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
             }
 
@@ -2357,7 +2355,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private FullAccountingSettingPM getFullAccountingSettings(int tenant)
         {
             FullAccountingSettingPM accountingSettings;
-            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IFullAccountingSettingQueryServiceExt;
             accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
             return accountingSettings;
         }

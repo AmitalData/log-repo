@@ -189,11 +189,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 				   temp.IsGeneralInvoice = MyEntityPM.IsGeneralInvoice;
 				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;
 				   temp.Id = MyEntityPM.Id;
-				if(MyEntityPM.InvoiceLines != null && MyEntityPM.InvoiceLines.Count > 0)
-				{
-					 APInvoiceLineQueryService APInvoiceLineService10 = new APInvoiceLineQueryService(Tenant);
-					 temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMapping(MyEntityPM.InvoiceLines,Tenant,ComputingPartnerName);
-				}
+					if(MyEntityPM.InvoiceLines?.Any() == true)
+					{
+						 APInvoiceLineQueryService APInvoiceLineService10 = new APInvoiceLineQueryService(Tenant);
+						 temp.InvoiceLines = APInvoiceLineService10.APInvoiceLineDataMapping(MyEntityPM.InvoiceLines,Tenant,ComputingPartnerName);
+					}
 
 							 
 				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;
@@ -201,7 +201,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 				   temp.EntityReference = MyEntityPM.MainEntityReference;
                    temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
 				   temp.VendorGLAccount = MyEntityPM.VendorGLAccountId;
-				if(MyEntityPM.TotalVATs != null && MyEntityPM.TotalVATs.Count > 0)
+				if(MyEntityPM.TotalVATs?.Any() == true)
 				{
 					 APInvoiceTotalVATQueryService APInvoiceTotalVATService10 = new APInvoiceTotalVATQueryService(Tenant);
 					 temp.TotalVATs = APInvoiceTotalVATService10.APInvoiceTotalVATDataMapping(MyEntityPM.TotalVATs,Tenant,ComputingPartnerName);
@@ -250,20 +250,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 					      temp.NewConcurrencyGUID = Guid.NewGuid().ToString(); 
 						
 					}
-                    
-					if(!IsUpdate)
-					{							
+
+					if (!IsUpdate)
+					{
 						temp.Tenant = MyEntity.Tenant;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.InternalNumber = MyEntity.InternalNumber;
 
-										}  
+					}  
 
 					
 					VendorQueryService VendorVendorService = new VendorQueryService(Tenant);
@@ -285,22 +280,17 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 						} 
 
 					}
-			
-					
-                    
-					if(!IsUpdate)
-					{							
+
+
+
+					if (!IsUpdate)
+					{
 						temp.VATNumber = MyEntity.VATNumber;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.InvoiceNumber = MyEntity.InvoiceNumber;
 
-										}  
+					}  
 
 					
 					CurrencyQueryService InvoiceCurrencyCurrencyService = new CurrencyQueryService(Tenant);
@@ -335,25 +325,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 					if (!IsUpdate)
 					{
-					    temp.InvoiceDate = MyEntity.InvoiceDate;
-
-                                        }
+						temp.InvoiceDate = MyEntity.InvoiceDate;
 
 
-
-                    if (!IsUpdate)
-                    {
-                        temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
-
-                                        }
+						temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
 
 
-
-                    if (!IsUpdate)
-					{							
 						temp.AccountingDate = MyEntity.AccountingDate;
 
-										}  
+					}  
 
 					
 					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
@@ -375,22 +355,17 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 						} 
 
 					}
-			
-					
-                    
-					if(!IsUpdate)
-					{							
+
+
+
+					if (!IsUpdate)
+					{
 						temp.DueDate = MyEntity.DueDate;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.ExchangeRateDate = MyEntity.ExchangeRateDate;
 
-										}  
+					}  
 
 					
 					CurrencyQueryService LocalCurrencyCurrencyService = new CurrencyQueryService(Tenant);
@@ -412,38 +387,23 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 						} 
 
 					}
-			
-					
-                    
-					if(!IsUpdate)
-					{							
+
+
+
+					if (!IsUpdate)
+					{
 						temp.InternalNotes = MyEntity.InternalNotes;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.SubTotalInLocalCurrency = MyEntity.SubTotalInLocalCurrency;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.SubTotalInInvoiceCurrency = MyEntity.SubTotalInInvoiceCurrency;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
 
-										}  
+					}  
 
 					
 					APInvoiceStatusQueryService StatusAPInvoiceStatusService = new APInvoiceStatusQueryService(Tenant);
@@ -486,22 +446,16 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 						} 
 
 					}
-			
-					
-                    
-					if(!IsUpdate)
-					{							
+
+
+
+					if (!IsUpdate)
+					{
 						temp.ProfitCurrencyExchangeRate = MyEntity.ProfitCurrencyExchangeRate;
 
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.AmountInProfitCurrency = MyEntity.AmountInProfitCurrency;
 
-										}  
+					}  
 
 					
 					UserQueryService UpdatedByUserUserService = new UserQueryService(Tenant);
@@ -530,39 +484,24 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 					{							
 						temp.UpdateDate = MyEntity.UpdateDate;
 
-										}  
+										}
 
-					
-                    
-					if(!IsUpdate)
-					{							
+
+
+					if (!IsUpdate)
+					{
 						temp.AmountDue = MyEntity.AmountDue;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.AmountDueInLocalCurrency = MyEntity.AmountDueInLocalCurrency;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.AmountDueInProfitCurrency = MyEntity.AmountDueInProfitCurrency;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.RefundAmount = MyEntity.RefundAmount;
 
-										}  
+					}  
 
 					
 					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
@@ -584,54 +523,29 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 						} 
 
 					}
-			
-					
-                    
-					if(!IsUpdate)
-					{							
+
+
+
+					if (!IsUpdate)
+					{
 						temp.HouseNumber = MyEntity.HouseNumber;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.MasterNumber = MyEntity.MasterNumber;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.Description = MyEntity.Description;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.AccountingExternalCode = MyEntity.AccountingExternalCode;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.CreditAccount = MyEntity.CreditAccount;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.PaymentTermExternalId = MyEntity.PaymentTermExternalId;
 
-										}  
+					}  
 
 					
 					APInvoiceTransferStatusQueryService TransferStatusAPInvoiceTransferStatusService = new APInvoiceTransferStatusQueryService(Tenant);
@@ -682,30 +596,20 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 						} 
 
 					}
-			
-					
-                    
-					if(!IsUpdate)
-					{							
+
+
+
+					if (!IsUpdate)
+					{
 						temp.IsExternalEntity = MyEntity.IsExternalEntity;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.IsGeneralInvoice = MyEntity.IsGeneralInvoice;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
 
-										}  
+					}  
 
 					
 					if(string.IsNullOrEmpty(temp.Id))
@@ -725,8 +629,13 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 						
 					}
 
-					bool differentCurrencies = false;
-					if(MyEntity.InvoiceLines != null && MyEntity.InvoiceLines.Count > 0)
+					//bool differentCurrencies = false;
+					bool differentCurrencies = MyEntity.InvoiceLines?
+							.Select(line => line.ForiegnCurrency.Code??String.Empty)
+							.Distinct()
+							.Count() > 1;
+
+					if (MyEntity.InvoiceLines?.Any() == true)
 					{
 						APInvoiceLineQueryService APInvoiceLineService11 = new APInvoiceLineQueryService(Tenant);
 						  
@@ -736,46 +645,25 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 					 
 						}  
-
-						List<string> currencies = MyEntity.InvoiceLines.Select(line => line.ForiegnCurrency.Code).Distinct().ToList();
-						if (currencies != null && currencies.Count > 1)
-						{ 
-							differentCurrencies = true;
-						}
 						
 					}
 
-								 
-                    
-					if(!IsUpdate)
-					{							
+
+
+					if (!IsUpdate)
+					{
 						temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.MainEntityReference = MyEntity.EntityReference;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
-					{							
 						temp.VendorGLAccountId = MyEntity.VendorGLAccount;
 
-										}
+					}
 
 					if (!String.IsNullOrEmpty(MyEntity.VendorGLAccount) && differentCurrencies) 
 					{
@@ -788,7 +676,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 					}
 
 
-                    if (MyEntity.TotalVATs != null && MyEntity.TotalVATs.Count > 0)
+                    if (MyEntity.TotalVATs?.Any() == true)
 					{
 						APInvoiceTotalVATQueryService APInvoiceTotalVATService11 = new APInvoiceTotalVATQueryService(Tenant);
 						  

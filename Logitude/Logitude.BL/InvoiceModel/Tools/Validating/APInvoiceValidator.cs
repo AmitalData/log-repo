@@ -775,15 +775,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException("Wrong Invoice Total Amount");
                 }
 
-                bool differentCurrencies = false;
-                if (entityPM.IsExternalEntity && entityPM.InvoiceLines != null && entityPM.InvoiceLines.Count > 1)
-                {
-                    List<string> currencies = entityPM.InvoiceLines.Select(line => line.ForiegnCurrencyCode).Distinct().ToList();
-                    if (currencies != null && currencies.Count > 1)
-                    {
-                        differentCurrencies = true;
-                    }
-                }
+                bool differentCurrencies =  entityPM.IsExternalEntity && entityPM.InvoiceLines != null && entityPM.InvoiceLines
+                    .Select(line => line.ForiegnCurrencyCode ?? String.Empty)
+                    .Distinct().Count() > 1;
+
                 if ((!entityPM.IsExternalEntity || differentCurrencies) && entityPM.AmountInLocalCurrency != Amount_Local)
                 {
                     throw new ApplicationException("Wrong Invoice Total Local Amount");
