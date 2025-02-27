@@ -17,7 +17,7 @@
             <div class="row">
               <div class="col-md-6">
                 <input class="inputBox" [cpWidth]="'210px'" [cpHeight]="'auto'"
-                  [style.background]="preferences[item.level-1].BackgroundColor"
+                  [ngStyle]="{'background-color': preferences[item.level-1]?.BackgroundColor}"
                   [(colorPicker)]="preferences[item.level-1].BackgroundColor" [cpOKButton]="true"
                   [cpCancelButton]="true" [cpOKButtonText]="''" [cpCancelButtonText]="''"
                   [cpOKButtonClass]="'buttonBoxColorsPicker'" [cpCancelButtonClass]="'buttonBoxColorsPickerCancel'"
@@ -31,12 +31,10 @@
             <div class="row">
               <div class="col-md-6">
                 <input class="inputBox" [cpWidth]="'210px'" [cpHeight]="'auto'"
-                  [style.background]="preferences[item.level-1].TextColor"
-                  [(colorPicker)]="preferences[item.level-1].TextColor" 
-                  [cpOKButton]="true"
-                  [cpCancelButton]="true" [cpOKButtonText]="''" [cpCancelButtonText]="''"
-                  [cpOKButtonClass]="'buttonBoxColorsPicker'" [cpCancelButtonClass]="'buttonBoxColorsPickerCancel'"
-                  [cpDisableInput]="false"
+                  [ngStyle]="{'background-color': preferences[item.level-1].TextColor}"
+                  [(colorPicker)]="preferences[item.level-1].TextColor" [cpOKButton]="true" [cpCancelButton]="true"
+                  [cpOKButtonText]="''" [cpCancelButtonText]="''" [cpOKButtonClass]="'buttonBoxColorsPicker'"
+                  [cpCancelButtonClass]="'buttonBoxColorsPickerCancel'" [cpDisableInput]="false"
                   [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'hex'" [cpPresetColors]="presetValues"
                   [cpAddColorButton]="true" (input)="updateTextColor($event,item.level-1)" />
               </div>

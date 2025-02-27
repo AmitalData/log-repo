@@ -87,7 +87,13 @@ td img {
   cursor: pointer;
   max-width: 60px;
   margin-bottom: 16px;
+  padding: 2px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
 
+.inputBox:hover {
+  border-color: #007bff;
 }
 
 ::ng-deep .color-picker .cp-remove-color-button-class {
@@ -136,10 +142,8 @@ td img {
 
 .cmyk-text {
   float: left;
-
   width: 72px;
   height: 72px;
-
   font-weight: bolder;
   line-height: 72px;
   text-align: center;
@@ -150,12 +154,17 @@ td img {
   width: 100px;
   height: 25px;
   margin: 16px auto;
-
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 4px;
 }
 
+.color-box:hover {
+  transform: scale(1.05);
+} 
 .change-me {
   cursor: pointer;
-  font-size: 30px;
+  font-size: 1.6rem;
   font-weight: bolder;
+  transition: color 0.3s ease;
 }
