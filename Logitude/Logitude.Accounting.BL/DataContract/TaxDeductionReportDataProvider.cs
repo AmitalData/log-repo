@@ -127,8 +127,8 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<TaxDeductionReportLine> transactionDeductionLines;
             List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
-            bool isTXD = FeatureToggleHelper.HasFeatureToggle("TXD", Tenant);
-            if (isTXD)
+
+            if (FeatureToggleHelper.HasFeatureToggle("TXD", Tenant))  
             { 
                 transactionDeductionLines = FillTaxDeductionReportUsingDebitLedgerTransactions(); 
             }
@@ -306,26 +306,21 @@ namespace Logitude.Accounting.BL.DataContract
             return transactions;
         }
 
-        private List<LedgerTransaction> GetDebitTransactionsBySQL()
-        {
-            string wh = setting.TaxWithholdingGLAccountId;
-            List<LedgerTransaction> rv = new List<LedgerTransaction>();
-            rv = SelectUsingSQL(wh, startDate, endDate);
-            return rv;
-        }
-
         public List<LedgerTransaction> GetDebitTransactions()
         {
-            List<LedgerTransaction> transactions = GetDebitTransactionsBySQL();
-           // List<string> journalIds = transactions.Select(d => d.JournalId).ToList();
-           // journalLines = GetJournalLinesByJournalds(journalIds);
+            string wh = setting.TaxWithholdingGLAccountId;
+            List<LedgerTransaction> transactions = SelectUsingSQL(wh, startDate, endDate);
 
-            List<string> accountsIds = transactions.Where(d => d.AccountId != null).Select(d => d.AccountId).Distinct().ToList();
+            List<string> accountsIds = transactions
+                .Where(d => d.AccountId != null)
+                .Select(d => d.AccountId)
+                .Distinct()
+                .ToList();
 
             transactionsVendors = GetVendorsByAccountsIds(accountsIds);
-            
             return transactions;
         }
+
 
         private List<string> FilterOffClients(List<string> accountsIds_1)
         {
@@ -519,6 +514,7 @@ namespace Logitude.Accounting.BL.DataContract
 
         }
         List<GLAccountList> transactionsGLAccounts;
+
         FullAccountingSettingPM setting;
         List<LedgerTransaction> createdLines;
         public List<TaxDeductionReportLine> FillTaxDeductionReportUsingLedgerTransactions()
@@ -562,84 +558,76 @@ namespace Logitude.Accounting.BL.DataContract
             return lines;
         }
 
-
         public List<TaxDeductionReportLine> FillTaxDeductionReportUsingDebitLedgerTransactions()
         {
-            List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
-
-            List<LedgerTransaction> debitTransactions = GetDebitTransactions();  // by debit acc=vendor, opposite bank or tax withholding
-
-
-            List<GLAccountList> debitTransactionsGLAccounts = GetTransactionsGLAccounts(debitTransactions);  // vendor accounts
-            //List<GLAccountCurrency> debitAccountCurrencies = GetGLAccountCurrenciesForAccounts(debitTransactionsGLAccounts);
-            //List<GLAccountList> mainDebitGLAccounts = GetGLAccountsByIds(accountCurrencies.Select(d => d.MainGLAccountId).ToList());
-            //List<GLAccountList> debiteTransactions_OppositGLAccounts = GetTransactionsOppositeGLAccounts(debitTransactions); //  bank or tax withholding accounts
-            //List<LedgerTransaction> oppositeTransactions = GetOppositeTransactions(debitTransactions);
-
-
-
+            var lines = new List<TaxDeductionReportLine>();
+            var debitTransactions = GetDebitTransactions();  // by debit acc=vendor, opposite bank or tax withholding
+            transactionsGLAccounts = GetTransactionsGLAccounts(debitTransactions);  // vendor accounts
 
             var groupedDebitTransactions = debitTransactions
                 .GroupBy(t => new { t.AccountId, t.JournalId, t.Reference1 })
                 .Select(g => new
                 {
-                    Key = g.Key,
+                    g.Key.AccountId,
+                    g.Key.JournalId,
+                    g.Key.Reference1,
                     Transactions = g.ToList()
                 })
                 .ToList();
 
-
             createdLines = new List<LedgerTransaction>();
+
             foreach (var group in groupedDebitTransactions)
             {
-                string vendorAccountId = group.Key.AccountId;
-                string journalId = group.Key.JournalId;
-                string reference1 = group.Key.Reference1;
+                if (CheckIfDebitLineCreated(group.AccountId, group.JournalId, group.Reference1))
+                    continue;
 
-                bool LineCreated = CheckIfDebitLineCreated(vendorAccountId, journalId, reference1);
-                if (!LineCreated)
+                var firstTransaction = group.Transactions.First();
+                UpdateCreatedLinesList(firstTransaction);
+
+                var taxDeductionReportLine = new TaxDeductionReportLine
                 {
-                    TaxDeductionReportLine taxDeductionReportLine = new TaxDeductionReportLine();
+                    VendorId = GetVendorIdFromDebitLine(firstTransaction),
+                    MonthOfRegisterDate = firstTransaction.AccountingDate.Month
+                };
 
-                    // General data
-                    LedgerTransaction firstTransaction = group.Transactions.FirstOrDefault();
-                    UpdateCreatedLinesList(firstTransaction);
-                    taxDeductionReportLine.VendorId = GetVendorIdFromDebitLine(firstTransaction);
-                    taxDeductionReportLine.MonthOfRegisterDate = firstTransaction.AccountingDate.Month;
+                var whTransactions = group.Transactions
+                    .Where(tr => tr.OppositeAccountId == setting.TaxWithholdingGLAccountId)
+                    .ToList();
 
-                    // Amounts
-                    List<LedgerTransaction> groupTransactions = group.Transactions;
-                    if (groupTransactions.Any(tr => tr.OppositeAccountId == setting.TaxWithholdingGLAccountId))
-                    {
-                        List<LedgerTransaction> whTransactions = groupTransactions.Where(tr => tr.OppositeAccountId == setting.TaxWithholdingGLAccountId).ToList();
-                        taxDeductionReportLine.TaxDeductionLocalAmount = Math.Round(whTransactions.Sum(tr => tr.LocalAmountDebit), 0);
+                var bankTransactions = group.Transactions
+                    .Where(tr => tr.OppositeAccountId != setting.TaxWithholdingGLAccountId)
+                    .ToList();
 
-                        if (groupTransactions.Any(tr => tr.OppositeAccountId != setting.TaxWithholdingGLAccountId))
-                        {
-                            List<LedgerTransaction> bankTransactions = groupTransactions.Where(tr => tr.OppositeAccountId != setting.TaxWithholdingGLAccountId).ToList();
-                            taxDeductionReportLine.AmountInLocalCurrency = Math.Round((double)bankTransactions.Sum(tr => tr.LocalAmountDebit), 0);
-                            taxDeductionReportLine.TaxDeductionPercentage = taxDeductionReportLine.TaxDeductionLocalAmount == 0 || taxDeductionReportLine.AmountInLocalCurrency == 0 || taxDeductionReportLine.AmountInLocalCurrency == null
-                                     ? 0
-                                     : (int?)Math.Round((taxDeductionReportLine.TaxDeductionLocalAmount ?? 0 / (decimal)taxDeductionReportLine.AmountInLocalCurrency) * 100, 2);
-                        }
-                        else // No bank transactions, all transactions are tax withholding, so the percentage is 100%
-                        {
-                            taxDeductionReportLine.AmountInLocalCurrency = 0;
-                            taxDeductionReportLine.TaxDeductionPercentage = 100;
-                        }
-                    }
-                    else // No tax withholding transactions, so the percentage is 0%
-                    {
-                        taxDeductionReportLine.AmountInLocalCurrency = Math.Round((double)groupTransactions.Sum(tr => tr.LocalAmountDebit), 0);
-                        taxDeductionReportLine.TaxDeductionLocalAmount = 0;
-                        taxDeductionReportLine.TaxDeductionPercentage = 0;
-                    }
+                taxDeductionReportLine.TaxDeductionLocalAmount = Math.Round(whTransactions.Sum(tr => tr.LocalAmountDebit), 0);
 
-                    GLAccountList vendorAccount = debitTransactionsGLAccounts.Where(d => d.Id == firstTransaction.OppositeAccountId).FirstOrDefault();
-                    taxDeductionReportLine.DeductionType = vendorAccount != null ? vendorAccount.DeductionFileTypeCode : null;
-                    if (taxDeductionReportLine.VendorId != null) lines.Add(taxDeductionReportLine);
+                if (bankTransactions.Any())
+                {
+                    taxDeductionReportLine.AmountInLocalCurrency = Math.Round((double)bankTransactions.Sum(tr => tr.LocalAmountDebit), 0);
+                    taxDeductionReportLine.TaxDeductionPercentage = taxDeductionReportLine.TaxDeductionLocalAmount == 0 || taxDeductionReportLine.AmountInLocalCurrency == 0
+                        ? 0
+                        : (int?)Math.Round((taxDeductionReportLine.TaxDeductionLocalAmount ?? 0 / (decimal)taxDeductionReportLine.AmountInLocalCurrency) * 100, 2);
                 }
+                else
+                {
+                    taxDeductionReportLine.AmountInLocalCurrency = 0;
+                    taxDeductionReportLine.TaxDeductionPercentage = 100;
+                }
+
+                if (!whTransactions.Any())
+                {
+                    taxDeductionReportLine.AmountInLocalCurrency = Math.Round((double)group.Transactions.Sum(tr => tr.LocalAmountDebit), 0);
+                    taxDeductionReportLine.TaxDeductionLocalAmount = 0;
+                    taxDeductionReportLine.TaxDeductionPercentage = 0;
+                }
+
+                var vendorAccount = transactionsGLAccounts.FirstOrDefault(d => d.Id == firstTransaction.OppositeAccountId);
+                taxDeductionReportLine.DeductionType = vendorAccount?.DeductionFileTypeCode;
+
+                if (taxDeductionReportLine.VendorId != null)
+                    lines.Add(taxDeductionReportLine);
             }
+
             return lines;
         }
 
@@ -771,7 +759,12 @@ namespace Logitude.Accounting.BL.DataContract
             if (taxDeductionPerVendorReportParameters != null &&!string.IsNullOrWhiteSpace(taxDeductionPerVendorReportParameters.CardId)) {
                 vendors = vendors.Where(x => x.Id == taxDeductionPerVendorReportParameters.CardId).ToList();
             }
-            gLAccounts = gLAccounts.Concat(transactionsOppositGLAccounts).Concat(transactionsGLAccounts).Concat(mainGLAccounts).ToList();
+            gLAccounts = (gLAccounts ?? new List<GLAccountList>())
+                            .Concat(transactionsOppositGLAccounts ?? new List<GLAccountList>())
+                            .Concat(transactionsGLAccounts ?? new List<GLAccountList>())
+                            .Concat(mainGLAccounts ?? new List<GLAccountList>())
+                            .Distinct()
+                            .ToList();
             if (taxDeductionPerVendorReportParameters != null && taxDeductionPerVendorReportParameters.VendorId != null)
             {
                 groupeddeductionLines = groupeddeductionLines.Where(d => d.VendorId == taxDeductionPerVendorReportParameters.VendorId).ToList();
