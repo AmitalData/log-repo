@@ -36,6 +36,8 @@ using System.Runtime.Remoting.Contexts;
 using Logitude.Accounting.Data.Enums;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.Customs.BL.EntityQueryServices;
+using System.Windows.Forms;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -172,8 +174,8 @@ namespace Logitude.Accounting.BL.Utils
                         ActivationBalanceCalculation(myGLAccountId, gLAccountPM, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant, gLAccountQueryService);
                     }
                 }
-
-                _ResponseText = $"Good: {_MyResult.SuccessAccountLineCount},  Bad: {_MyResult.BadAccountLineCount}, \n  Lines: \n{String.Join("\n", _MyResult.ErrorRowList.ToArray())}";
+                
+                _ResponseText = $"Good: {_MyResult.SuccessAccountLineCount},  Bad: {_MyResult.BadAccountLineCount}, \n  Details: {_MyResult.MadeListText} \n{String.Join("\n", _MyResult.ErrorRowList.ToArray())}";
 
             }
 
@@ -589,14 +591,14 @@ namespace Logitude.Accounting.BL.Utils
                                 .Where(intTrans => intTrans.GLAccountId == gLAccountId
                                                    && !intTrans.IsClosed
                                                    && intTrans.InterestValueDate >= interestActivationDate)   //  ***** >= interestActivationDate
-                                // Condition only matched for codes 1, 10, or 12
-                            from j in myJournalRepository.GetAll(_Tenant)
+                                                                                                              // Condition only matched for codes 1, 10, or 12
+                            from j in context.Journals.Where(r => r.Tenant == _Tenant)
                                 .Where(jrec => (intTrans.AccountingEntityCode == "1"
                                              || intTrans.AccountingEntityCode == "10"
                                              || intTrans.AccountingEntityCode == "12")
                                     && jrec.Id == intTrans.EntityId)
                                 .DefaultIfEmpty() // if code not matched or no journal found, j is null
-                            from jl in myJournalLineRepository.GetAll(_Tenant)
+                            from jl in context.JournalLines.Where(r => r.Tenant == _Tenant)
                                 .Where(jlrec => (intTrans.AccountingEntityCode == "1"
                                               || intTrans.AccountingEntityCode == "10"
                                               || intTrans.AccountingEntityCode == "12")
