@@ -2113,5 +2113,15 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;IsSendSFTP&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CustomsRequestsSheet.Features.IsSendSFTP&quot;"
+      FeatureDefaultText="&quot;Is Send SFTP&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>
