@@ -51,6 +51,9 @@ using System.Data.Common;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Utils;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.CommonDataModel.APIDataContract;
+using GLAccountPM = Logitude.Accounting.Def.EntityPMs.GLAccountPM;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -385,14 +388,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (tenantPOCO.AccountingActivated && setVoided)
             {
-                IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+                IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalQueryServiceExt;
                 JournalPM journalPM = journalQuery.GetJournalByAccountingEntityIdAndCode(entityPM.Id, "4", entityPM.Tenant);
 
                 if (journalPM != null)
                 {
                     CheckJournalInactiveAccounts(entityPM, journalPM);
 
-                    var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
+                    var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalVoidUpdateServiceExt;
                     AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.APInvoiceVoid, journalPM.Id);
                     journalUpdate.Update(journalPM, new StornoOverrideM()
                     {
@@ -423,7 +426,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private static bool CheckInactiveGLAccounts(APInvoicePM entityPM, List<string> accountIds)
         {
-            IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IGLAccountQueryServiceExt;
             bool hasInactiveGLAccounts = gLAccountQueryServiceExt.CheckInactiveGLAccounts(accountIds, entityPM.Tenant);
             return hasInactiveGLAccounts;
         }
@@ -795,7 +798,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private GLAccountPM GetGLAccountForLine(APInvoiceLinePM line)
         {
-            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IGLAccountQueryServiceExt;
             GLAccountPM glaAccount = glAccountQuery.GetGLAccountByInternalNumber(line.DebitAccount, tenant);
             return glaAccount;
         }
@@ -1061,7 +1064,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         foreach (APInvoiceLinePM item in apInvoiceLines_DebitError)
                         {
                             ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
-                            string myChargesTypeName = myChargesType != null ? myChargesType.EnglishName : "";
+                            string myChargesTypeName = myChargesType != null ? myChargesType.EnglishName : string.Empty;
                             myError = string.IsNullOrEmpty(myError) ? myChargesTypeName + linesError : myError + "," + myChargesTypeName + linesError;
                         }
                     }
@@ -1083,7 +1086,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         if (FieldIsEmpty(g.ExternalVATCard))
                         {
                             VatType lineVatType = initializer.AllVatTypes.Where(d => d.Id == g.VatTypeId).FirstOrDefault();
-                            var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : "";
+                            var lineVatTypeName = lineVatType != null ? lineVatType.EnglishName : string.Empty;
                             isReady = false;
                             vatError = lineVatTypeName + " VAT External Id is missing";
                             myError = string.IsNullOrEmpty(myError) ? vatError : myError + "," + vatError;
@@ -1428,7 +1431,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                         if (payablesId != null && payablesId.Count > 0)
                         {
-                            string payableToBeDeletedIds = "";
+                            string payableToBeDeletedIds = string.Empty;
                             foreach (var id in payablesId)
                             {
                                 payableToBeDeletedIds += "'" + id + "',";
@@ -1965,7 +1968,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region SearchField
         public void BuildSearchFields()
         {
-            string mySearchFields = "";
+            string mySearchFields = string.Empty;
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.InvoiceNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.VATNumber);
@@ -2126,34 +2129,48 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     // Insert Journal Lines 
                     // [Credit-Vendor]
-                    GLAccountPM glAccount = GetInvoiceGLAccount(theEntityPm);
+
+                    bool differentCurrencies = false;
+                    List<string> currencies = new List<string>();
+                    if (theEntityPm.IsExternalEntity && theEntityPm.InvoiceLines != null && theEntityPm.InvoiceLines != null && theEntityPm.InvoiceLines.Count > 1)
+                    {
+                        currencies = theEntityPm.InvoiceLines.Select(line => line.ForiegnCurrencyId).Distinct().ToList();
+                        if (currencies != null && currencies.Count > 1)
+                        {
+                            differentCurrencies = true;
+                        }
+                    }
+                    int counter = 0;
+                    Accounting.Def.EntityPMs.GLAccountPM glAccount = GetInvoiceGLAccount(theEntityPm);
                     JournalLinePM journalLine = new JournalLinePM();
-                    journalLine.Tenant = tenant;
-                    journalLine.JournalId = journal.Id;
-                    journalLine.Line = 1;
-                    journalLine.ActionCode = "1";
-                    journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
-                    journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
-                    journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
-                    journalLine.DueDate = theEntityPm.DueDate.Value;
-                    journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
-                    journalLine.CurrencyId = theEntityPm.InvoiceCurrencyId;
-                    journalLine.ForeignAmount = (decimal)theEntityPm.AmountInInvoiceCurrency;
-                    journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate;
-                    journalLine.Reference1 = theEntityPm.InvoiceNumber;
-                    journalLine.Reference2 = theEntityPm.MainEntityReference;
-                    journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
-                    journalLine.Notes = theEntityPm.InternalNotes;
-                    journalLine.CreditAccountId = glAccount.Id;
-                    //journalLine.CreditControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
-                    journalLine.DebitAccountId = SetDebitAccountForSingleLineAPInvoice(theEntityPm);
+                    if (!differentCurrencies)
+                    {
+                        journalLine = CreateJournalLinePM(theEntityPm, ++counter, journal.Id, glAccount.Id);
 
-                    journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                    journal.JournalLines.Add(journalLine);
+                        journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
+                        journalLine.CurrencyId = theEntityPm.InvoiceCurrencyId;
+                        journalLine.ForeignAmount = (decimal)theEntityPm.AmountInInvoiceCurrency;
+                        journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate;
 
+                        journal.JournalLines.Add(journalLine);
+                    }
+                    else 
+                    {
+                        foreach (var curr in currencies)
+                        {
+                            journalLine = CreateJournalLinePM(theEntityPm, ++counter, journal.Id, glAccount.Id);
+
+                            journalLine.LocalAmount = (decimal)theEntityPm.InvoiceLines.Where(ln => ln.ForiegnCurrencyId == curr).Sum(ln => ln.LocalCurrencyAmount); 
+                            journalLine.CurrencyId = curr;
+                            journalLine.ForeignAmount = (decimal)theEntityPm.InvoiceLines.Where(ln => ln.ForiegnCurrencyId == curr).Sum(ln => ln.ForiegnCurrencyAmount);
+                            journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceLines.Where(ln => ln.ForiegnCurrencyId == curr).FirstOrDefault().ForiegnExchangeRate;
+
+                            journal.JournalLines.Add(journalLine);
+                        }
+                    }
                     // [Debit]
                     journalLine = new JournalLinePM();
-                    int counter = 1;
+
                     List<JournalLinePM> journalDebitLines = new List<JournalLinePM>();
                     // theEntityPm.InvoiceLines.ToList().ForEach(d => { d.LocalCurrencyAmount = ((d.VatRecognizedPercentage == null) ? d.LocalCurrencyAmount : (d.LocalCurrencyAmount + ((1 - d.VatRecognizedPercentage) * Math.Round((double)((d.VatPercentage / 100) * d.LocalCurrencyAmount), 2)))); });
 
@@ -2163,7 +2180,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                         select new JournalLinePM()
                                                         {
                                                             Tenant = tenant,
-                                                            ActionCode = "2",
+                                                            ActionCode = AccountingActionCodes.Debit,
                                                             ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                                                             JournalId = journal.Id,
                                                             DebitAccountId = d.ChargeTypeGLAccountId,
@@ -2184,7 +2201,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     journalDebitLines.AddRange(journalLines);
                     journal.JournalLines.AddRange(journalLines);
-                    var totalDebitLines = journal.JournalLines.Where(d => d.ActionCode == "2").Sum(d => d.LocalAmount);
+                    var totalDebitLines = journal.JournalLines.Where(d => d.ActionCode == AccountingActionCodes.Debit).Sum(d => d.LocalAmount);
                     // [Vats]
                     //List<APInvoiceTotalVAT> APInvoiceTotalVATs = new List<APInvoiceTotalVAT>();
 
@@ -2196,40 +2213,72 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     // Accounting settings 
                     FullAccountingSettingPM accountingSettings = getFullAccountingSettings(theEntityPm.Tenant);
-
+                    decimal localForVAT = 0m;
                     foreach (APInvoiceTotalVATPM vat in totalVats)
                     {
-                        //     Moved into aPInvoiceTotalVATQuery.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent()
-                        //     vat.LocalVatAmountWithVatRecognized = Math.Round((vat.VatRecognizedPercentage != null) ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount, 2);
 
                         journalLine = new JournalLinePM()
                         {
                             Tenant = tenant,
-                            ActionCode = "2",
+                            ActionCode = AccountingActionCodes.Debit,
                             ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                             JournalId = journal.Id,
-                            DebitAccountId = accountingSettings != null ? accountingSettings.VATInputsGLAccountId : "",
+                            DebitAccountId = accountingSettings != null ? accountingSettings.VATInputsGLAccountId : string.Empty,
                             Line = ++counter,
                             DocumentDate = theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
-                            LocalAmount = vat.LocalVatAmountWithVatRecognized,// vat.VatRecognizedPercentage != null ? (((decimal)vat.VatRecognizedPercentage / 100) * (decimal)vat.LocalVATAmount) : (decimal)vat.LocalVATAmount,
+                            LocalAmount = vat.LocalVatAmountWithVatRecognized,
                             CurrencyId = theEntityPm.InvoiceCurrencyId,
                             ForeignAmount = (vat.LocalVatAmountWithVatRecognized / (decimal)entityPM.InvoiceCurrencyExchangeRate),
-                            ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
+                            ExchangeRate = (decimal?)theEntityPm.InvoiceCurrencyExchangeRate??1m,
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
                             Notes = theEntityPm.InternalNotes,
                             CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
+                        localForVAT += journalLine.LocalAmount;
                         totalDebitLines = totalDebitLines + journalLine.LocalAmount;
 
                         journalDebitLines.Add(journalLine);
                         journal.JournalLines.Add(journalLine);
                     }
-
-                    var journalCreditAmount = journal.JournalLines.Where(d => d.ActionCode == "1").FirstOrDefault().LocalAmount;
+                    if (differentCurrencies && localForVAT != 0m) // Adding total local VAT to local currency credit line
+                    {
+                        string tenantCurrencyId = tenantPOCO.CurrencyId;
+                        int index = journal.JournalLines.FindIndex(ln => ln.ActionCode == AccountingActionCodes.Credit && ln.CurrencyId == tenantCurrencyId);
+                        if (index != -1) // local currency credit line exists
+                        {
+                            journal.JournalLines[index].LocalAmount += localForVAT;
+                            journal.JournalLines[index].ForeignAmount += localForVAT;
+                        }
+                        else // creating local currency credit line
+                        {
+                            journalLine = new JournalLinePM();
+                            journalLine.Tenant = tenant;
+                            journalLine.JournalId = journal.Id;
+                            journalLine.Line = ++counter;
+                            journalLine.ActionCode = AccountingActionCodes.Credit;
+                            journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
+                            journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
+                            journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
+                            journalLine.DueDate = theEntityPm.DueDate.Value;
+                            journalLine.LocalAmount = localForVAT;
+                            journalLine.CurrencyId = tenantCurrencyId;
+                            journalLine.ForeignAmount = localForVAT;
+                            journalLine.ExchangeRate = 1;
+                            journalLine.Reference1 = theEntityPm.InvoiceNumber;
+                            journalLine.Reference2 = theEntityPm.MainEntityReference;
+                            journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
+                            journalLine.Notes = theEntityPm.InternalNotes;
+                            journalLine.CreditAccountId = glAccount.Id;
+                            journalLine.DebitAccountId = SetDebitAccountForSingleLineAPInvoice(theEntityPm);
+                            journalLine.ChangeSetOp = ChangeSetOperation.Insert;
+                            journal.JournalLines.Add(journalLine);
+                        }
+                    }
+                    var journalCreditAmount = journal.JournalLines.Where(d => d.ActionCode == AccountingActionCodes.Credit).FirstOrDefault().LocalAmount;
                     var difference = journalCreditAmount - totalDebitLines;
 
                     if (Math.Abs(difference) <= (decimal)0.06)
@@ -2239,15 +2288,38 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
 
 
-                    IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
+                    IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IJournalUpdateServiceExt;
                     AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.APInvoiceApprove);
                     journalUpdate.Update(journal);
                 }
             }
         }
+        private JournalLinePM CreateJournalLinePM(APInvoicePM theEntityPm, int lineNo, string journalId, string glAccountId)
+        {
+            JournalLinePM journalLine = new JournalLinePM();
+            journalLine.Tenant = tenant;
+            journalLine.JournalId = journalId;
+            journalLine.Line = lineNo;
+            journalLine.ActionCode = AccountingActionCodes.Credit;
+            journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
+            journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
+            journalLine.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
+            journalLine.DueDate = theEntityPm.DueDate.Value;
+
+            journalLine.Reference1 = theEntityPm.InvoiceNumber;
+            journalLine.Reference2 = theEntityPm.MainEntityReference;
+            journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
+            journalLine.Notes = theEntityPm.InternalNotes;
+            journalLine.CreditAccountId = glAccountId;
+            
+            journalLine.DebitAccountId = SetDebitAccountForSingleLineAPInvoice(theEntityPm);
+            journalLine.ChangeSetOp = ChangeSetOperation.Insert;
+            return journalLine;
+        }
+
         private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
         {
-            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride(string.Empty, 1)) as IAccountingEntityJournalUpdateServiceExt;
             service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
@@ -2262,7 +2334,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private static GLAccountPM GetGLAccountById(string glaccountId, int tenant)
         {
-            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IGLAccountQueryServiceExt;
             GLAccountPM glaAccount = glAccountQuery.GetSingleGLAccountPM(glaccountId, tenant);
             return glaAccount;
         }
@@ -2273,7 +2345,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             Card card = cardRep.GetSingleCard(cardId, tenant);
             if (card != null)
             {
-                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IGLAccountQueryServiceExt;
                 glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
             }
 
@@ -2283,7 +2355,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private FullAccountingSettingPM getFullAccountingSettings(int tenant)
         {
             FullAccountingSettingPM accountingSettings;
-            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride(string.Empty, 1)) as IFullAccountingSettingQueryServiceExt;
             accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
             return accountingSettings;
         }
