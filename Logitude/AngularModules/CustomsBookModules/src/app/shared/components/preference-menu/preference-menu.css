@@ -7,8 +7,12 @@
   direction: rtl;
   background-color: var(--grey);
   position: absolute;
-  left: 9px;
-  top: 9px;
+  right: 11px;
+  top: 11px;
+}
+
+.logoSettings {
+  width: 23px;
 }
 
 table {
@@ -79,3 +83,39 @@ td img {
   color: black;
 }
 
+.inputBox{
+  cursor: pointer;
+  max-width: 60px;
+  margin-bottom: 16px;
+
+}
+
+::ng-deep .color-picker .cp-remove-color-button-class {
+  display: none !important;
+}
+
+.cmyk-text {
+  float: left;
+
+  width: 72px;
+  height: 72px;
+
+  font-weight: bolder;
+  line-height: 72px;
+  text-align: center;
+  text-shadow: 1px 1px 2px #bbb;
+}
+
+.color-box {
+  width: 100px;
+  height: 25px;
+  margin: 16px auto;
+
+  cursor: pointer;
+}
+
+.change-me {
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: bolder;
+}

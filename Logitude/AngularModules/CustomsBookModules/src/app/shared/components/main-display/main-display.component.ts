@@ -469,6 +469,7 @@ export class MainDisplayComponent implements OnInit {
 		this.filterPopupService.toggleFilterPopup(false);
 		// this.data = this.fullData;
 		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;
+		if(this.IsDiscountCodes && this.originalDataByIsDiscountCodes?.length == 0) this.GetAllCustomsBookMainView();
 		this.toggleVisibility(false, this.data);
 		this.preferencesService.showSettingsClick(false);
 	}
