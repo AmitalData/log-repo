@@ -26,6 +26,10 @@ export class AppHeaderComponent {
 
 	ngOnInit(): void {
 		this.selected = this.headerService.getSearchState();
+		
+		this.headerService.IsDiscountCodes.subscribe((value) => {
+			this.IsDiscountCodes = value;
+		});
 	}
 
 	selectState = (state: string) => {
