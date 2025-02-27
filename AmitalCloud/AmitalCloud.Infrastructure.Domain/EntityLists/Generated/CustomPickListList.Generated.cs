@@ -29,6 +29,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           Code  = entity.Code;
           Value  = entity.Value;
           IsMultipleChoice  = entity.IsMultipleChoice;
+          Automaticlastupdatedate  = entity.Automaticlastupdatedate;
        }
        #endregion Constructors
        #region Properties
@@ -44,6 +45,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Value  { get; set; }
        [DataMember]
        public bool IsMultipleChoice  { get; set; }
+       [DataMember]
+       public DateTime? Automaticlastupdatedate  { get; set; }
          #endregion Properties
    }
 

@@ -24,6 +24,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [ForeignKey("Contact")]
+        [Column("ContactId")]
+	    public string ContactId { get; set; }
+	      
+        public virtual Contact Contact { get; set; }
         [ForeignKey("ObjectTable")]
         [Column("ObjectTableId")]
 	    public string ObjectTableId { get; set; }

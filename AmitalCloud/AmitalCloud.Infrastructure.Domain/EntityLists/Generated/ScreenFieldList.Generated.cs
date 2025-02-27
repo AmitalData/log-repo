@@ -29,9 +29,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           Column  = entity.Column;
           Row  = entity.Row;
           ScreenId  = entity.ScreenId;
-          ScreenCode  = entity.ScreenCode;
           ObjectFieldId  = entity.ObjectFieldId;
           ObjectFieldCode  = entity.ObjectFieldCode;
+          ScreenCode  = entity.ScreenCode;
           SectionNumber  = entity.SectionNumber;
        }
        #endregion Constructors
@@ -49,11 +49,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string ScreenId  { get; set; }
        [DataMember]
-       public string ScreenCode  { get; set; }
-       [DataMember]
        public string ObjectFieldId  { get; set; }
        [DataMember]
        public string ObjectFieldCode  { get; set; }
+       [DataMember]
+       public string ScreenCode  { get; set; }
        [DataMember]
        public int? SectionNumber  { get; set; }
          #endregion Properties

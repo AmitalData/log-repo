@@ -28,7 +28,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Tenant, 
 	         Code, 
 	         Value, 
-	         IsMultipleChoice,	      }
+	         IsMultipleChoice, 
+	         Automaticlastupdatedate,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -36,7 +37,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Tenant, 
 	         Code, 
 	         Value, 
-	         IsMultipleChoice,	      }
+	         IsMultipleChoice, 
+	         Automaticlastupdatedate,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(CustomPickListPM entityPM, POCO.CustomPickList entityPOCO)
@@ -45,6 +47,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code)) { entityPOCO.Code = entityPM.Code;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Value)) { entityPOCO.Value = entityPM.Value;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMultipleChoice)) { entityPOCO.IsMultipleChoice = entityPM.IsMultipleChoice;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Automaticlastupdatedate)) { entityPOCO.Automaticlastupdatedate = entityPM.Automaticlastupdatedate;}
 					}
 		public void POCOToPM(CustomPickListPM entityPM, POCO.CustomPickList entityPOCO)
         {
@@ -68,6 +71,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.IsMultipleChoice = entityPOCO.IsMultipleChoice;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Automaticlastupdatedate))
+            {
+					entityPM.Automaticlastupdatedate = entityPOCO.Automaticlastupdatedate;
+            }
 		}
 		public void PMToOldPM(CustomPickListPM entityPM, CustomPickListPM oldEntityPM)
         {
@@ -87,6 +94,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMultipleChoice))
             {
                 oldEntityPM.IsMultipleChoice = entityPM.IsMultipleChoice;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Automaticlastupdatedate))
+            {
+                oldEntityPM.Automaticlastupdatedate = entityPM.Automaticlastupdatedate;
             }
 					}
 		public void POCOToList(POCO.CustomPickList entityPOCO, CustomPickListList entityList)
@@ -109,6 +120,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Code)) //T4 find type == nText 
+            {
+                entityPM.Code = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Code));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Value)) //T4 find type == nText 
+            {
+                entityPM.Value = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Value));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

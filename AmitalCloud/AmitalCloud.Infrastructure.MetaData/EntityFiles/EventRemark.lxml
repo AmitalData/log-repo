@@ -57,7 +57,7 @@
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
   TenantZeroData="false"
-  IsMetadataOnlyTable="true"
+  IsMetadataOnlyTable="false"
   Code1="&quot;52d5&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"

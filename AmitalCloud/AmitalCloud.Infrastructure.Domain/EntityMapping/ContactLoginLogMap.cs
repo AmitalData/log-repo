@@ -22,25 +22,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropId).HasColumnName("CdropId").IsRequired().HasMaxLength(128).IsUnicode(true);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.IP).HasColumnName("IP").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropIp).HasColumnName("CdropIp").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.Browser).HasColumnName("Browser").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropBrowser).HasColumnName("CdropBrowser").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.ContactId).HasColumnName("ContactId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ContactId).HasColumnName("ContactId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.GMTDateTime).HasColumnName("GMTDateTime").IsRequired();
 
             this.Property(t => t.LocalDateTime).HasColumnName("LocalDateTime").IsRequired();
 
-            this.Property(t => t.ComputerId).HasColumnName("ComputerId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropComputerid).HasColumnName("CdropComputerid").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.ContactAgent).HasColumnName("ContactAgent").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropContactagent).HasColumnName("CdropContactagent").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.Via).HasColumnName("Via").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropVia).HasColumnName("CdropVia").IsRequired().HasMaxLength(-1).IsUnicode(true);
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IP).HasColumnName("IP").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Browser).HasColumnName("Browser").IsRequired().HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.ComputerId).HasColumnName("ComputerId").IsRequired().HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.ContactAgent).HasColumnName("ContactAgent").IsRequired().HasMaxLength(400).IsUnicode(true);
+
+            this.Property(t => t.Via).HasColumnName("Via").IsRequired().HasMaxLength(20).IsUnicode(false);
         }
     }
 }

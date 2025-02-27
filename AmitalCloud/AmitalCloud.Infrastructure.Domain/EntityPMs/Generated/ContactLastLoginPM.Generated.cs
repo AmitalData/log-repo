@@ -32,7 +32,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_computerId = entity.ComputerId;
 		_loginDateTime = entity.LoginDateTime;
 		_tenant = entity.Tenant;
-		_contact = entity.Contact;
    }
    #endregion Constructors
    #region Properties
@@ -98,22 +97,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _tenant=value;
-		   }
-		 }
-	   }
-	  private string _contact ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Contact  
-	   {
-	     get { return _contact; }
-		 set
-		 {
-		   if(_contact != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Contact",OldValue=_contact,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _contact=value;
 		   }
 		 }
 	   }

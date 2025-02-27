@@ -28,6 +28,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Extension { get; set; }
         [Column("Size")]
 	    public double Size { get; set; }
+		public virtual ICollection<Card> Cards { get; set; }
+		public virtual ICollection<Contact> Contacts { get; set; }
+		public virtual ICollection<HybridPartner> HybridPartners_Logoid { get; set; }
+		public virtual ICollection<HybridPartner> HybridPartners_Smalllogoid { get; set; }
+		public virtual ICollection<QuoteTemplateSetting> QuoteTemplateSettings_Pagefooterarea1imagedetailid { get; set; }
+		public virtual ICollection<QuoteTemplateSetting> QuoteTemplateSettings_Pagefooterarea2imagedetailid { get; set; }
+		public virtual ICollection<QuoteTemplateSetting> QuoteTemplateSettings_Pagefooterarea3imagedetailid { get; set; }
+		public virtual ICollection<QuoteTemplateSetting> QuoteTemplateSettings_Pageheaderarea1imagedetailid { get; set; }
+		public virtual ICollection<QuoteTemplateSetting> QuoteTemplateSettings_Pageheaderarea2imagedetailid { get; set; }
+		public virtual ICollection<QuoteTemplateSetting> QuoteTemplateSettings_Pageheaderarea3imagedetailid { get; set; }
     }
 }
 	 

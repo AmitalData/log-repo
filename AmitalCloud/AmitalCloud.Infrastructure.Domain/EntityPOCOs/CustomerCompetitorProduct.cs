@@ -20,6 +20,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	{
 		
         [Key]
+        [ForeignKey("ProductType")]
+        [Column("ProductTypeCode")]
+	    public string ProductTypeCode { get; set; }
+	      
+        public virtual ProductType ProductType { get; set; }
+     [Key]
         [ForeignKey("Customer")]
         [Column("CustomerId")]
 	    public string CustomerId { get; set; }
@@ -31,12 +37,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string CompetitorId { get; set; }
 	      
         public virtual Competitor Competitor { get; set; }
-     [Key]
-        [ForeignKey("ProductType")]
-        [Column("ProductTypeCode")]
-	    public string ProductTypeCode { get; set; }
-	      
-        public virtual ProductType ProductType { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
     }

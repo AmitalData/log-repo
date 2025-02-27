@@ -24,16 +24,16 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
+	         ProductTypeCode, 
 	         CustomerId, 
 	         CompetitorId, 
-	         ProductTypeCode, 
 	         Tenant,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
+	         ProductTypeCode, 
 	         CustomerId, 
 	         CompetitorId, 
-	         ProductTypeCode, 
 	         Tenant,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -43,17 +43,17 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 					}
 		public void POCOToPM(CustomerCompetitorProductPM entityPM, POCO.CustomerCompetitorProduct entityPOCO)
         {
-			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerId))
+			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProductTypeCode))
+            {
+					entityPM.ProductTypeCode = entityPOCO.ProductTypeCode;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerId))
             {
 					entityPM.CustomerId = entityPOCO.CustomerId;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CompetitorId))
             {
 					entityPM.CompetitorId = entityPOCO.CompetitorId;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProductTypeCode))
-            {
-					entityPM.ProductTypeCode = entityPOCO.ProductTypeCode;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {

@@ -19,10 +19,11 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
     {
 	    protected override System.Data.Entity.IDbSet<POCO.HybridPartnersPermission> contextEntity => (context as IAmitalCloudContext).HybridPartnersPermissions;
 		public HybridPartnersPermissionListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
-        public HybridPartnersPermissionList GetSingle(string hybridpartnerid)
+        public HybridPartnersPermissionList GetSingle(string hybridpartnerid, string allowedbyhybridpartnerid)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;
 				paramList.Append(new KeyValuePair<string, string>("hybridpartnerid", hybridpartnerid.ToString()));
+		 		paramList.Append(new KeyValuePair<string, string>("allowedbyhybridpartnerid", allowedbyhybridpartnerid.ToString()));
 		 			return GetSingle(paramList) ; 
 		}
     }

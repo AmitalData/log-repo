@@ -26,19 +26,22 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		     None,  
 	         Id, 
 	         TableName, 
-	         LastIdNumber,	      }
+	         LastIdNumber, 
+	         Rowid,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
 	         Id, 
 	         TableName, 
-	         LastIdNumber,	      }
+	         LastIdNumber, 
+	         Rowid,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(DBIdCounterPM entityPM, POCO.DBIdCounter entityPOCO)
         {
 			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TableName)) { entityPOCO.TableName = entityPM.TableName;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastIdNumber)) { entityPOCO.LastIdNumber = entityPM.LastIdNumber;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Rowid)) { entityPOCO.Rowid = entityPM.Rowid;}
 					}
 		public void POCOToPM(DBIdCounterPM entityPM, POCO.DBIdCounter entityPOCO)
         {
@@ -54,6 +57,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.LastIdNumber = entityPOCO.LastIdNumber;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Rowid))
+            {
+					entityPM.Rowid = entityPOCO.Rowid;
+            }
 		}
 		public void PMToOldPM(DBIdCounterPM entityPM, DBIdCounterPM oldEntityPM)
         {
@@ -65,6 +72,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastIdNumber))
             {
                 oldEntityPM.LastIdNumber = entityPM.LastIdNumber;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Rowid))
+            {
+                oldEntityPM.Rowid = entityPM.Rowid;
             }
 					}
 		public void POCOToList(POCO.DBIdCounter entityPOCO, DBIdCounterList entityList)
@@ -87,6 +98,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.TableName)) //T4 find type == nText 
+            {
+                entityPM.TableName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.TableName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

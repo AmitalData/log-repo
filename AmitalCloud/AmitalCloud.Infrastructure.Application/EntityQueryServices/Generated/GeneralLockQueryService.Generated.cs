@@ -24,11 +24,11 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class GeneralLockQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.GeneralLock,GeneralLockKeys<int>,GeneralLockPM,GeneralLockList,int>
+   public partial class GeneralLockQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.GeneralLock,GeneralLockKeys<string>,GeneralLockPM,GeneralLockList,string>
    {
         public GeneralLockQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
         public GeneralLockQueryService(IAmitalCloudContext context) : base(new Repository<POCO.GeneralLock>(context),new GeneralLockDataMapping()) {}
-		public  GeneralLockPM GetSingle(string generalkey, int tenant,bool getComposition, bool getFromCache) => base.GetSingle(new GeneralLockKeys<int>(){ GeneralKey = generalkey, Tenant = tenant }, getComposition, getFromCache);
-	    protected override IEntityKeyFields<POCO.GeneralLock,int> GetKeys(POCO.GeneralLock entityPOCO) => new GeneralLockKeys<int>() { GeneralKey = entityPOCO.GeneralKey, Tenant = entityPOCO.Tenant,  };
+		public  GeneralLockPM GetSingle(int tenant, string generalkey,bool getComposition, bool getFromCache) => base.GetSingle(new GeneralLockKeys<string>(){ Tenant = tenant, GeneralKey = generalkey }, getComposition, getFromCache);
+	    protected override IEntityKeyFields<POCO.GeneralLock,string> GetKeys(POCO.GeneralLock entityPOCO) => new GeneralLockKeys<string>() { Tenant = entityPOCO.Tenant, GeneralKey = entityPOCO.GeneralKey,  };
    }
 }

@@ -19,19 +19,28 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
     public class ReportGroup : BaseEntity
 	{
 		
-        [Key]
-        [Column("Id")]
-	    public string Id { get; set; }
+           [Column("DropCdropId")]
+	    public string DropCdropId { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [Column("DropCdropCode")]
+	    public string DropCdropCode { get; set; }
+        [Column("DropCdropEnglishname")]
+	    public string DropCdropEnglishname { get; set; }
+        [Column("DropCdropLocalname")]
+	    public string DropCdropLocalname { get; set; }
+        [Column("OrderNumber")]
+	    public int OrderNumber { get; set; }
+     [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
         [Column("Code")]
 	    public string Code { get; set; }
         [Column("EnglishName")]
 	    public string EnglishName { get; set; }
         [Column("LocalName")]
 	    public string LocalName { get; set; }
-        [Column("OrderNumber")]
-	    public int OrderNumber { get; set; }
+		public virtual ICollection<Report> Reports { get; set; }
     }
 }
 	 

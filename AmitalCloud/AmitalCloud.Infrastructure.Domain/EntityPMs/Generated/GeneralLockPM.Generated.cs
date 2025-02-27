@@ -28,26 +28,34 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public GeneralLockPM() : base() {} 
    public GeneralLockPM(POCO.GeneralLock entity) : base()
    {
-		_generalKey = entity.GeneralKey;
+		_dropCdropGeneralkey = entity.DropCdropGeneralkey;
 		_tenant = entity.Tenant;
 		_createdAt = entity.CreatedAt;
+		_generalKey = entity.GeneralKey;
+		_searchfields = entity.Searchfields;
+		_entityid1 = entity.Entityid1;
+		_objecttableid1 = entity.Objecttableid1;
+		_entityid2 = entity.Entityid2;
+		_objecttableid2 = entity.Objecttableid2;
+		_objecttableid2objecttable = entity.Objecttableid2ObjectTable !=null ? new ObjectTablePM(entity.Objecttableid2ObjectTable) : null;
+			_userid = entity.Userid;
+		_sessionid = entity.Sessionid;
    }
    #endregion Constructors
    #region Properties
-   	  private string _generalKey ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+   	  private string _dropCdropGeneralkey ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string GeneralKey  
+       public string DropCdropGeneralkey  
 	   {
-	     get { return _generalKey; }
+	     get { return _dropCdropGeneralkey; }
 		 set
 		 {
-		   if(_generalKey != value)
+		   if(_dropCdropGeneralkey != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GeneralKey",OldValue=_generalKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropCdropGeneralkey",OldValue=_dropCdropGeneralkey,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _generalKey=value;
+		   _dropCdropGeneralkey=value;
 		   }
 		 }
 	   }
@@ -81,6 +89,143 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedAt",OldValue=_createdAt,NewValue=value,PropertyType="DateTime"};
 		    NotifyPropertyChanged(values);
 		   _createdAt=value;
+		   }
+		 }
+	   }
+	  private string _generalKey ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GeneralKey  
+	   {
+	     get { return _generalKey; }
+		 set
+		 {
+		   if(_generalKey != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GeneralKey",OldValue=_generalKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _generalKey=value;
+		   }
+		 }
+	   }
+	  private string _searchfields ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Searchfields  
+	   {
+	     get { return _searchfields; }
+		 set
+		 {
+		   if(_searchfields != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Searchfields",OldValue=_searchfields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _searchfields=value;
+		   }
+		 }
+	   }
+	  private string _entityid1 ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Entityid1  
+	   {
+	     get { return _entityid1; }
+		 set
+		 {
+		   if(_entityid1 != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Entityid1",OldValue=_entityid1,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _entityid1=value;
+		   }
+		 }
+	   }
+	  private string _objecttableid1 ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Objecttableid1  
+	   {
+	     get { return _objecttableid1; }
+		 set
+		 {
+		   if(_objecttableid1 != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Objecttableid1",OldValue=_objecttableid1,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objecttableid1=value;
+		   }
+		 }
+	   }
+	  private string _entityid2 ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Entityid2  
+	   {
+	     get { return _entityid2; }
+		 set
+		 {
+		   if(_entityid2 != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Entityid2",OldValue=_entityid2,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _entityid2=value;
+		   }
+		 }
+	   }
+	  private string _objecttableid2 ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Objecttableid2  
+	   {
+	     get { return _objecttableid2; }
+		 set
+		 {
+		   if(_objecttableid2 != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Objecttableid2",OldValue=_objecttableid2,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objecttableid2=value;
+		   }
+		 }
+	   }
+		private ObjectTablePM _objecttableid2objecttable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM Objecttableid2ObjectTable 
+		{ 
+		get { return _objecttableid2objecttable; } 
+		set { _objecttableid2objecttable = value; }
+		}
+	  private string _userid ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Userid  
+	   {
+	     get { return _userid; }
+		 set
+		 {
+		   if(_userid != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Userid",OldValue=_userid,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _userid=value;
+		   }
+		 }
+	   }
+	  private string _sessionid ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Sessionid  
+	   {
+	     get { return _sessionid; }
+		 set
+		 {
+		   if(_sessionid != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Sessionid",OldValue=_sessionid,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _sessionid=value;
 		   }
 		 }
 	   }

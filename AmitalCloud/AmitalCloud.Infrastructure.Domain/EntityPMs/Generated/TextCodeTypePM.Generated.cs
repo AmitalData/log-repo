@@ -30,6 +30,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_code = entity.Code;
 		_name = entity.Name;
+		textCodes = entity.TextCodes != null ? entity.TextCodes.Select(a=>new TextCodePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -66,6 +67,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<TextCodePM> textCodes;
+	 
+		     
+	   [Include]
+	   [Association("TextCodeTextCodeType", "Code","Textcodetypecode")]
+	   [DataMember]
+	   public virtual List<TextCodePM> TextCodes  
+	   {
+	        get
+             {
+                 if (textCodes == null)
+                 {
+                     textCodes = new List<TextCodePM>();
+                 }
+                 return textCodes;
+              }
+             set { textCodes = value; }
+	    }
+	   private List<TextCodePM>  deletedTextCodes;
+	   public virtual List<TextCodePM> DeletedTextCodes  
+	   {
+	        get
+             {
+                 if ( deletedTextCodes == null)
+                 {
+                      deletedTextCodes = new List<TextCodePM>();
+                 }
+                 return  deletedTextCodes;
+              }
+             set {  deletedTextCodes = value; }
+	    }
 	 }
 #endregion Properties
 }

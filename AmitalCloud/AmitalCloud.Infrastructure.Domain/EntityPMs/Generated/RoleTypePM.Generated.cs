@@ -31,6 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
+		roles = entity.Roles != null ? entity.Roles.Select(a=>new RolePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -83,6 +84,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<RolePM> roles;
+	 
+		     
+	   [Include]
+	   [Association("RoleRoleType", "Code","Roletypecode")]
+	   [DataMember]
+	   public virtual List<RolePM> Roles  
+	   {
+	        get
+             {
+                 if (roles == null)
+                 {
+                     roles = new List<RolePM>();
+                 }
+                 return roles;
+              }
+             set { roles = value; }
+	    }
+	   private List<RolePM>  deletedRoles;
+	   public virtual List<RolePM> DeletedRoles  
+	   {
+	        get
+             {
+                 if ( deletedRoles == null)
+                 {
+                      deletedRoles = new List<RolePM>();
+                 }
+                 return  deletedRoles;
+              }
+             set {  deletedRoles = value; }
+	    }
 	 }
 #endregion Properties
 }

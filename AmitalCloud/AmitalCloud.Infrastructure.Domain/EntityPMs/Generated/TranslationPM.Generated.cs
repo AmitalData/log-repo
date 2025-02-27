@@ -32,13 +32,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_translationHeaderCode = entity.TranslationHeaderCode;
 		_translationheader = entity.TranslationHeader !=null ? new TranslationHeaderPM(entity.TranslationHeader) : null;
 			_textCodeId = entity.TextCodeId;
-		_translatedText = entity.TranslatedText;
+		_textcode = entity.TextCode !=null ? new TextCodePM(entity.TextCode) : null;
+			_translatedText = entity.TranslatedText;
 		_translatedTextPlural = entity.TranslatedTextPlural;
 		_tenant = entity.Tenant;
 		_translateDate = entity.TranslateDate;
 		_translatedByUserId = entity.TranslatedByUserId;
-		_translatedbyuser = entity.TranslatedByUser !=null ? new UserPM(entity.TranslatedByUser) : null;
-			_updateDateGMT = entity.UpdateDateGMT;
+		_updateDateGMT = entity.UpdateDateGMT;
 		_textCodeCode = entity.TextCodeCode;
    }
    #endregion Constructors
@@ -100,6 +100,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TextCodePM _textcode;
+		[Include]
+        [DataMember]
+        public virtual TextCodePM TextCode 
+		{ 
+		get { return _textcode; } 
+		set { _textcode = value; }
+		}
 	  private string _translatedText ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -180,14 +188,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private UserPM _translatedbyuser;
-		[Include]
-        [DataMember]
-        public virtual UserPM TranslatedByUser 
-		{ 
-		get { return _translatedbyuser; } 
-		set { _translatedbyuser = value; }
-		}
 	  private DateTime? _updateDateGMT ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

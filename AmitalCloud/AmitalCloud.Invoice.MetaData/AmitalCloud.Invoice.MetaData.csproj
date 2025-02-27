@@ -186,7 +186,6 @@
     <None Include="DBTables\ConfirmationNumberDefault.dxml" />
     <None Include="DBTables\ConfirmationNumberStatus.dxml" />
     <None Include="DBTables\CreditCardType.dxml" />
-    <None Include="DBTables\ExternalSystemsMissingTranslation.dxml" />
     <None Include="DBTables\ExternalSystemsSyncStatus.dxml" />
     <None Include="DBTables\ExternalSystemsTablesCode.dxml" />
     <None Include="DBTables\QuickbooksSyncRequestTicket.dxml" />

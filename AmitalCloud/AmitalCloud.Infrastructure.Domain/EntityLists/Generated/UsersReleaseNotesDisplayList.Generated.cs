@@ -27,7 +27,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           Id  = entity.Id;
           Tenant  = entity.Tenant;
           UserId  = entity.UserId;
-          User  = entity.User;
        }
        #endregion Constructors
        #region Properties
@@ -39,8 +38,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public string UserId  { get; set; }
-       [DataMember]
-       public string User  { get; set; }
          #endregion Properties
    }
 

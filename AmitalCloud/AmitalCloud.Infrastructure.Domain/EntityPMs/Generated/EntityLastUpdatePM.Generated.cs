@@ -33,8 +33,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_entityId = entity.EntityId;
 		_objectTableId = entity.ObjectTableId;
 		_updatedByUserId = entity.UpdatedByUserId;
-		_updatedbyuser = entity.UpdatedByUser !=null ? new UserPM(entity.UpdatedByUser) : null;
-			_updateDate = entity.UpdateDate;
+		_updateDate = entity.UpdateDate;
 		_entityGUID = entity.EntityGUID;
    }
    #endregion Constructors
@@ -120,14 +119,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private UserPM _updatedbyuser;
-		[Include]
-        [DataMember]
-        public virtual UserPM UpdatedByUser 
-		{ 
-		get { return _updatedbyuser; } 
-		set { _updatedbyuser = value; }
-		}
 	  private DateTime _updateDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

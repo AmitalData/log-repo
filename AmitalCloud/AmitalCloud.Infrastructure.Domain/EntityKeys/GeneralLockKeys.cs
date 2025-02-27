@@ -18,16 +18,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
         public GeneralLockKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
         public override void Initialize(IEnumerable<KeyValuePair<string, string>> paramList)
         {
-			GeneralKey = (string)Convert.ChangeType((paramList.Single(t => t.Key == "GeneralKey").Value), typeof(string));
 			Tenant = (int)Convert.ChangeType((paramList.Single(t => t.Key == "Tenant").Value), typeof(int));
+			GeneralKey = (string)Convert.ChangeType((paramList.Single(t => t.Key == "GeneralKey").Value), typeof(string));
         }
-   	  public string GeneralKey  { get; set; }
+   	  public int Tenant  { get; set; }
 	    			   
-	  public int Tenant  { get; set; }
+	  public string GeneralKey  { get; set; }
 	    			   
-	  public override T GetFullKey() =>   (T)Convert.ChangeType(GeneralKey.ToString()+'_'+Tenant.ToString(),typeof(T)) ;           
+	  public override T GetFullKey() =>   (T)Convert.ChangeType(Tenant.ToString()+'_'+GeneralKey.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "GeneralLocksPM";
-	  public override Expression<Func<EntityPOCOs.GeneralLock, bool>> Predicate => a => a.GeneralKey == GeneralKey && a.Tenant == Tenant;
+	  public override Expression<Func<EntityPOCOs.GeneralLock, bool>> Predicate => a => a.Tenant == Tenant && a.GeneralKey == GeneralKey;
    }
 }
 	 

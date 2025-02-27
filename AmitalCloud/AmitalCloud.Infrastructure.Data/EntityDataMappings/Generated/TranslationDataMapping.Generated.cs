@@ -165,6 +165,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 return;
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.TranslatedText)) //T4 find type == nText 
+            {
+                entityPM.TranslatedText = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.TranslatedText));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.TranslatedTextPlural)) //T4 find type == nText 
+            {
+                entityPM.TranslatedTextPlural = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.TranslatedTextPlural));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)

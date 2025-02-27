@@ -30,11 +30,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool IsDocumentsArchive { get; set; }
         [Column("CustomerTenantShareImportFile")]
 	    public bool CustomerTenantShareImportFile { get; set; }
-        [ForeignKey("LogBoxAdminUser")]
+        [ForeignKey("Contact")]
         [Column("LogBoxAdminUserId")]
 	    public string LogBoxAdminUserId { get; set; }
 	      
-        public virtual Contact LogBoxAdminUser { get; set; }
+        public virtual Contact Contact { get; set; }
         [Column("DocumentShareAsDefault")]
 	    public bool DocumentShareAsDefault { get; set; }
         [Column("StockTypeCode")]

@@ -45,6 +45,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isInlandDomestic = entity.IsInlandDomestic;
 		_isAll = entity.IsAll;
 		_lastLoginDate = entity.LastLoginDate;
+		cardContactAdditionalServices = entity.CardContactAdditionalServices != null ? entity.CardContactAdditionalServices.Select(a=>new CardContactAdditionalServicePM(a)).ToList() : null;
+		cardContactProducts = entity.CardContactProducts != null ? entity.CardContactProducts.Select(a=>new CardContactProductPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -305,6 +307,68 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<CardContactAdditionalServicePM> cardContactAdditionalServices;
+	 
+		     
+	   [Include]
+	   [Association("CardContactAdditionalServiceCardContact", "Id","Cardcontactid")]
+	   [DataMember]
+	   public virtual List<CardContactAdditionalServicePM> CardContactAdditionalServices  
+	   {
+	        get
+             {
+                 if (cardContactAdditionalServices == null)
+                 {
+                     cardContactAdditionalServices = new List<CardContactAdditionalServicePM>();
+                 }
+                 return cardContactAdditionalServices;
+              }
+             set { cardContactAdditionalServices = value; }
+	    }
+	   private List<CardContactAdditionalServicePM>  deletedCardContactAdditionalServices;
+	   public virtual List<CardContactAdditionalServicePM> DeletedCardContactAdditionalServices  
+	   {
+	        get
+             {
+                 if ( deletedCardContactAdditionalServices == null)
+                 {
+                      deletedCardContactAdditionalServices = new List<CardContactAdditionalServicePM>();
+                 }
+                 return  deletedCardContactAdditionalServices;
+              }
+             set {  deletedCardContactAdditionalServices = value; }
+	    }
+	   private List<CardContactProductPM> cardContactProducts;
+	 
+		     
+	   [Include]
+	   [Association("CardContactProductCardContact", "Id","Cardcontactid")]
+	   [DataMember]
+	   public virtual List<CardContactProductPM> CardContactProducts  
+	   {
+	        get
+             {
+                 if (cardContactProducts == null)
+                 {
+                     cardContactProducts = new List<CardContactProductPM>();
+                 }
+                 return cardContactProducts;
+              }
+             set { cardContactProducts = value; }
+	    }
+	   private List<CardContactProductPM>  deletedCardContactProducts;
+	   public virtual List<CardContactProductPM> DeletedCardContactProducts  
+	   {
+	        get
+             {
+                 if ( deletedCardContactProducts == null)
+                 {
+                      deletedCardContactProducts = new List<CardContactProductPM>();
+                 }
+                 return  deletedCardContactProducts;
+              }
+             set {  deletedCardContactProducts = value; }
+	    }
 	 }
 #endregion Properties
 }

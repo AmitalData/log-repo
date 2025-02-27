@@ -29,9 +29,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Column, 
 	         Row, 
 	         ScreenId, 
-	         ScreenCode, 
 	         ObjectFieldId, 
 	         ObjectFieldCode, 
+	         ScreenCode, 
 	         SectionNumber,	      }
 	      public enum PMPropertyNames
           { 
@@ -41,9 +41,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Column, 
 	         Row, 
 	         ScreenId, 
-	         ScreenCode, 
 	         ObjectFieldId, 
 	         ObjectFieldCode, 
+	         ScreenCode, 
 	         SectionNumber,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -53,9 +53,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Column)) { entityPOCO.Column = entityPM.Column;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Row)) { entityPOCO.Row = entityPM.Row;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ScreenId)) { entityPOCO.ScreenId = entityPM.ScreenId;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ScreenCode)) { entityPOCO.ScreenCode = entityPM.ScreenCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldId)) { entityPOCO.ObjectFieldId = entityPM.ObjectFieldId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldCode)) { entityPOCO.ObjectFieldCode = entityPM.ObjectFieldCode;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ScreenCode)) { entityPOCO.ScreenCode = entityPM.ScreenCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SectionNumber)) { entityPOCO.SectionNumber = entityPM.SectionNumber;}
 					}
 		public void POCOToPM(ScreenFieldPM entityPM, POCO.ScreenField entityPOCO)
@@ -80,10 +80,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.ScreenId = entityPOCO.ScreenId;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ScreenCode))
-            {
-					entityPM.ScreenCode = entityPOCO.ScreenCode;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectFieldId))
             {
 					entityPM.ObjectFieldId = entityPOCO.ObjectFieldId;
@@ -91,6 +87,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectFieldCode))
             {
 					entityPM.ObjectFieldCode = entityPOCO.ObjectFieldCode;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ScreenCode))
+            {
+					entityPM.ScreenCode = entityPOCO.ScreenCode;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SectionNumber))
             {
@@ -116,10 +116,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.ScreenId = entityPM.ScreenId;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ScreenCode))
-            {
-                oldEntityPM.ScreenCode = entityPM.ScreenCode;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldId))
             {
                 oldEntityPM.ObjectFieldId = entityPM.ObjectFieldId;
@@ -127,6 +123,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldCode))
             {
                 oldEntityPM.ObjectFieldCode = entityPM.ObjectFieldCode;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ScreenCode))
+            {
+                oldEntityPM.ScreenCode = entityPM.ScreenCode;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SectionNumber))
             {

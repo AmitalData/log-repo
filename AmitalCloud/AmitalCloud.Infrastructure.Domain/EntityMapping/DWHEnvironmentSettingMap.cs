@@ -24,7 +24,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
 
-            this.Property(t => t.FactCodes).HasColumnName("FactCodes").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.FactCodes).HasColumnName("FactCodes").IsRequired().HasMaxLength(200).IsUnicode(false);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("ObjectTableId")]
 	    public string ObjectTableId { get; set; }
         [Column("LastUpdateDate")]
-	    public DateTime? LastUpdateDate { get; set; }
+	    public DateTime LastUpdateDate { get; set; }
         [Column("HasAutomation")]
 	    public bool HasAutomation { get; set; }
     }

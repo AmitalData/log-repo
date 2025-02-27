@@ -19,14 +19,39 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
     public class GeneralLock : BaseEntity
 	{
 		
-        [Key]
-        [Column("GeneralKey")]
-	    public string GeneralKey { get; set; }
+           [Column("DropCdropGeneralkey")]
+	    public string DropCdropGeneralkey { get; set; }
      [Key]
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("CreatedAt")]
 	    public DateTime CreatedAt { get; set; }
+     [Key]
+        [Column("GeneralKey")]
+	    public string GeneralKey { get; set; }
+        [Column("Searchfields")]
+	    public string Searchfields { get; set; }
+        [Column("Entityid1")]
+	    public string Entityid1 { get; set; }
+        [ForeignKey("ObjectTable")]
+        [Column("Objecttableid1")]
+	    public string Objecttableid1 { get; set; }
+	      
+        public virtual ObjectTable ObjectTable { get; set; }
+        [Column("Entityid2")]
+	    public string Entityid2 { get; set; }
+        [ForeignKey("Objecttableid2ObjectTable")]
+        [Column("Objecttableid2")]
+	    public string Objecttableid2 { get; set; }
+	      
+        public virtual ObjectTable Objecttableid2ObjectTable { get; set; }
+        [ForeignKey("User")]
+        [Column("Userid")]
+	    public string Userid { get; set; }
+	      
+        public virtual User User { get; set; }
+        [Column("Sessionid")]
+	    public string Sessionid { get; set; }
     }
 }
 	 

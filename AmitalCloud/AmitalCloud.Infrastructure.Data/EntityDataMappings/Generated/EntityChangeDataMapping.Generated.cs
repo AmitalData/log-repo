@@ -30,33 +30,39 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         EntityId, 
 	         CreateDate, 
 	         CreateByUserId, 
-	         AutomationConditionFieldsXml, 
 	         CheckStartDate, 
 	         DoneDate, 
 	         HasExecutedRecord, 
+	         AutomationConditionFieldsXml, 
 	         ChangesFieldsXml, 
 	         ChangesAutomationFieldsXml, 
 	         SetAutomationSsucceedXml, 
 	         EmailAutomationSsucceedXml, 
 	         SetAutomationFailedXml, 
 	         EmailAutomationFailedXml, 
+	         ExecutionTime, 
 	         FollowUpAutomationFailedXml, 
 	         SetSLAAutomationFailedXml, 
 	         FollowUpAutomationSsucceedXml, 
 	         SetSLAAutomationSsucceedXml, 
 	         QueuedTaskAutomationFailedXml, 
 	         QueuedTaskAutomationSsucceedXml, 
+	         DropSendinterfacefailedxml, 
+	         DropSendinterfacessucceedxml, 
+	         DropSenddocumentfailedxml, 
+	         DropSenddocumentssucceedxml, 
+	         DropCreatetaskfailedxml, 
+	         DropCreatetaskssucceedxml, 
 	         SendInterfaceAutomationFailedXml, 
 	         SendInterfaceAutomationSsucceedXml, 
 	         SendDocumentAutomationFailedXml, 
 	         SendDocumentAutomationSsucceedXml, 
-	         CreateTaskAutomationFailedXml, 
-	         CreateTaskAutomationSsucceedXml, 
 	         OnUpdateDocumentAutomationFailedXml, 
 	         OnUpdateDocumentAutomationSsucceedXml, 
+	         CreateTaskAutomationFailedXml, 
+	         CreateTaskAutomationSsucceedXml, 
 	         EventAutomationFailedXml, 
-	         EventAutomationSsucceedXml, 
-	         ExecutionTime,	      }
+	         EventAutomationSsucceedXml,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -66,33 +72,39 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         EntityId, 
 	         CreateDate, 
 	         CreateByUserId, 
-	         AutomationConditionFieldsXml, 
 	         CheckStartDate, 
 	         DoneDate, 
 	         HasExecutedRecord, 
+	         AutomationConditionFieldsXml, 
 	         ChangesFieldsXml, 
 	         ChangesAutomationFieldsXml, 
 	         SetAutomationSsucceedXml, 
 	         EmailAutomationSsucceedXml, 
 	         SetAutomationFailedXml, 
 	         EmailAutomationFailedXml, 
+	         ExecutionTime, 
 	         FollowUpAutomationFailedXml, 
 	         SetSLAAutomationFailedXml, 
 	         FollowUpAutomationSsucceedXml, 
 	         SetSLAAutomationSsucceedXml, 
 	         QueuedTaskAutomationFailedXml, 
 	         QueuedTaskAutomationSsucceedXml, 
+	         DropSendinterfacefailedxml, 
+	         DropSendinterfacessucceedxml, 
+	         DropSenddocumentfailedxml, 
+	         DropSenddocumentssucceedxml, 
+	         DropCreatetaskfailedxml, 
+	         DropCreatetaskssucceedxml, 
 	         SendInterfaceAutomationFailedXml, 
 	         SendInterfaceAutomationSsucceedXml, 
 	         SendDocumentAutomationFailedXml, 
 	         SendDocumentAutomationSsucceedXml, 
-	         CreateTaskAutomationFailedXml, 
-	         CreateTaskAutomationSsucceedXml, 
 	         OnUpdateDocumentAutomationFailedXml, 
 	         OnUpdateDocumentAutomationSsucceedXml, 
+	         CreateTaskAutomationFailedXml, 
+	         CreateTaskAutomationSsucceedXml, 
 	         EventAutomationFailedXml, 
-	         EventAutomationSsucceedXml, 
-	         ExecutionTime,	      }
+	         EventAutomationSsucceedXml,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(EntityChangePM entityPM, POCO.EntityChange entityPOCO)
@@ -102,33 +114,39 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityId)) { entityPOCO.EntityId = entityPM.EntityId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate)) { entityPOCO.CreateDate = entityPM.CreateDate;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateByUserId)) { entityPOCO.CreateByUserId = entityPM.CreateByUserId;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutomationConditionFieldsXml)) { entityPOCO.AutomationConditionFieldsXml = entityPM.AutomationConditionFieldsXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CheckStartDate)) { entityPOCO.CheckStartDate = entityPM.CheckStartDate;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DoneDate)) { entityPOCO.DoneDate = entityPM.DoneDate;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HasExecutedRecord)) { entityPOCO.HasExecutedRecord = entityPM.HasExecutedRecord;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutomationConditionFieldsXml)) { entityPOCO.AutomationConditionFieldsXml = entityPM.AutomationConditionFieldsXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangesFieldsXml)) { entityPOCO.ChangesFieldsXml = entityPM.ChangesFieldsXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangesAutomationFieldsXml)) { entityPOCO.ChangesAutomationFieldsXml = entityPM.ChangesAutomationFieldsXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SetAutomationSsucceedXml)) { entityPOCO.SetAutomationSsucceedXml = entityPM.SetAutomationSsucceedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EmailAutomationSsucceedXml)) { entityPOCO.EmailAutomationSsucceedXml = entityPM.EmailAutomationSsucceedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SetAutomationFailedXml)) { entityPOCO.SetAutomationFailedXml = entityPM.SetAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EmailAutomationFailedXml)) { entityPOCO.EmailAutomationFailedXml = entityPM.EmailAutomationFailedXml;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExecutionTime)) { entityPOCO.ExecutionTime = entityPM.ExecutionTime;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FollowUpAutomationFailedXml)) { entityPOCO.FollowUpAutomationFailedXml = entityPM.FollowUpAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SetSLAAutomationFailedXml)) { entityPOCO.SetSLAAutomationFailedXml = entityPM.SetSLAAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FollowUpAutomationSsucceedXml)) { entityPOCO.FollowUpAutomationSsucceedXml = entityPM.FollowUpAutomationSsucceedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SetSLAAutomationSsucceedXml)) { entityPOCO.SetSLAAutomationSsucceedXml = entityPM.SetSLAAutomationSsucceedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueuedTaskAutomationFailedXml)) { entityPOCO.QueuedTaskAutomationFailedXml = entityPM.QueuedTaskAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueuedTaskAutomationSsucceedXml)) { entityPOCO.QueuedTaskAutomationSsucceedXml = entityPM.QueuedTaskAutomationSsucceedXml;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropSendinterfacefailedxml)) { entityPOCO.DropSendinterfacefailedxml = entityPM.DropSendinterfacefailedxml;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropSendinterfacessucceedxml)) { entityPOCO.DropSendinterfacessucceedxml = entityPM.DropSendinterfacessucceedxml;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropSenddocumentfailedxml)) { entityPOCO.DropSenddocumentfailedxml = entityPM.DropSenddocumentfailedxml;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropSenddocumentssucceedxml)) { entityPOCO.DropSenddocumentssucceedxml = entityPM.DropSenddocumentssucceedxml;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropCreatetaskfailedxml)) { entityPOCO.DropCreatetaskfailedxml = entityPM.DropCreatetaskfailedxml;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropCreatetaskssucceedxml)) { entityPOCO.DropCreatetaskssucceedxml = entityPM.DropCreatetaskssucceedxml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SendInterfaceAutomationFailedXml)) { entityPOCO.SendInterfaceAutomationFailedXml = entityPM.SendInterfaceAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SendInterfaceAutomationSsucceedXml)) { entityPOCO.SendInterfaceAutomationSsucceedXml = entityPM.SendInterfaceAutomationSsucceedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SendDocumentAutomationFailedXml)) { entityPOCO.SendDocumentAutomationFailedXml = entityPM.SendDocumentAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SendDocumentAutomationSsucceedXml)) { entityPOCO.SendDocumentAutomationSsucceedXml = entityPM.SendDocumentAutomationSsucceedXml;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateTaskAutomationFailedXml)) { entityPOCO.CreateTaskAutomationFailedXml = entityPM.CreateTaskAutomationFailedXml;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateTaskAutomationSsucceedXml)) { entityPOCO.CreateTaskAutomationSsucceedXml = entityPM.CreateTaskAutomationSsucceedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnUpdateDocumentAutomationFailedXml)) { entityPOCO.OnUpdateDocumentAutomationFailedXml = entityPM.OnUpdateDocumentAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnUpdateDocumentAutomationSsucceedXml)) { entityPOCO.OnUpdateDocumentAutomationSsucceedXml = entityPM.OnUpdateDocumentAutomationSsucceedXml;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateTaskAutomationFailedXml)) { entityPOCO.CreateTaskAutomationFailedXml = entityPM.CreateTaskAutomationFailedXml;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateTaskAutomationSsucceedXml)) { entityPOCO.CreateTaskAutomationSsucceedXml = entityPM.CreateTaskAutomationSsucceedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EventAutomationFailedXml)) { entityPOCO.EventAutomationFailedXml = entityPM.EventAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EventAutomationSsucceedXml)) { entityPOCO.EventAutomationSsucceedXml = entityPM.EventAutomationSsucceedXml;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExecutionTime)) { entityPOCO.ExecutionTime = entityPM.ExecutionTime;}
 					}
 		public void POCOToPM(EntityChangePM entityPM, POCO.EntityChange entityPOCO)
         {
@@ -156,10 +174,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.CreateByUserId = entityPOCO.CreateByUserId;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutomationConditionFieldsXml))
-            {
-					entityPM.AutomationConditionFieldsXml = entityPOCO.AutomationConditionFieldsXml;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CheckStartDate))
             {
 					entityPM.CheckStartDate = entityPOCO.CheckStartDate;
@@ -171,6 +185,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HasExecutedRecord))
             {
 					entityPM.HasExecutedRecord = entityPOCO.HasExecutedRecord;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutomationConditionFieldsXml))
+            {
+					entityPM.AutomationConditionFieldsXml = entityPOCO.AutomationConditionFieldsXml;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChangesFieldsXml))
             {
@@ -196,6 +214,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.EmailAutomationFailedXml = entityPOCO.EmailAutomationFailedXml;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExecutionTime))
+            {
+					entityPM.ExecutionTime = entityPOCO.ExecutionTime;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FollowUpAutomationFailedXml))
             {
 					entityPM.FollowUpAutomationFailedXml = entityPOCO.FollowUpAutomationFailedXml;
@@ -220,6 +242,30 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.QueuedTaskAutomationSsucceedXml = entityPOCO.QueuedTaskAutomationSsucceedXml;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropSendinterfacefailedxml))
+            {
+					entityPM.DropSendinterfacefailedxml = entityPOCO.DropSendinterfacefailedxml;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropSendinterfacessucceedxml))
+            {
+					entityPM.DropSendinterfacessucceedxml = entityPOCO.DropSendinterfacessucceedxml;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropSenddocumentfailedxml))
+            {
+					entityPM.DropSenddocumentfailedxml = entityPOCO.DropSenddocumentfailedxml;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropSenddocumentssucceedxml))
+            {
+					entityPM.DropSenddocumentssucceedxml = entityPOCO.DropSenddocumentssucceedxml;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropCreatetaskfailedxml))
+            {
+					entityPM.DropCreatetaskfailedxml = entityPOCO.DropCreatetaskfailedxml;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropCreatetaskssucceedxml))
+            {
+					entityPM.DropCreatetaskssucceedxml = entityPOCO.DropCreatetaskssucceedxml;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SendInterfaceAutomationFailedXml))
             {
 					entityPM.SendInterfaceAutomationFailedXml = entityPOCO.SendInterfaceAutomationFailedXml;
@@ -236,14 +282,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.SendDocumentAutomationSsucceedXml = entityPOCO.SendDocumentAutomationSsucceedXml;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateTaskAutomationFailedXml))
-            {
-					entityPM.CreateTaskAutomationFailedXml = entityPOCO.CreateTaskAutomationFailedXml;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateTaskAutomationSsucceedXml))
-            {
-					entityPM.CreateTaskAutomationSsucceedXml = entityPOCO.CreateTaskAutomationSsucceedXml;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OnUpdateDocumentAutomationFailedXml))
             {
 					entityPM.OnUpdateDocumentAutomationFailedXml = entityPOCO.OnUpdateDocumentAutomationFailedXml;
@@ -252,6 +290,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.OnUpdateDocumentAutomationSsucceedXml = entityPOCO.OnUpdateDocumentAutomationSsucceedXml;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateTaskAutomationFailedXml))
+            {
+					entityPM.CreateTaskAutomationFailedXml = entityPOCO.CreateTaskAutomationFailedXml;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateTaskAutomationSsucceedXml))
+            {
+					entityPM.CreateTaskAutomationSsucceedXml = entityPOCO.CreateTaskAutomationSsucceedXml;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EventAutomationFailedXml))
             {
 					entityPM.EventAutomationFailedXml = entityPOCO.EventAutomationFailedXml;
@@ -259,10 +305,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EventAutomationSsucceedXml))
             {
 					entityPM.EventAutomationSsucceedXml = entityPOCO.EventAutomationSsucceedXml;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExecutionTime))
-            {
-					entityPM.ExecutionTime = entityPOCO.ExecutionTime;
             }
 		}
 		public void PMToOldPM(EntityChangePM entityPM, EntityChangePM oldEntityPM)
@@ -288,10 +330,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.CreateByUserId = entityPM.CreateByUserId;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutomationConditionFieldsXml))
-            {
-                oldEntityPM.AutomationConditionFieldsXml = entityPM.AutomationConditionFieldsXml;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CheckStartDate))
             {
                 oldEntityPM.CheckStartDate = entityPM.CheckStartDate;
@@ -303,6 +341,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HasExecutedRecord))
             {
                 oldEntityPM.HasExecutedRecord = entityPM.HasExecutedRecord;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutomationConditionFieldsXml))
+            {
+                oldEntityPM.AutomationConditionFieldsXml = entityPM.AutomationConditionFieldsXml;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangesFieldsXml))
             {
@@ -328,6 +370,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.EmailAutomationFailedXml = entityPM.EmailAutomationFailedXml;
             }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExecutionTime))
+            {
+                oldEntityPM.ExecutionTime = entityPM.ExecutionTime;
+            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FollowUpAutomationFailedXml))
             {
                 oldEntityPM.FollowUpAutomationFailedXml = entityPM.FollowUpAutomationFailedXml;
@@ -352,6 +398,30 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.QueuedTaskAutomationSsucceedXml = entityPM.QueuedTaskAutomationSsucceedXml;
             }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropSendinterfacefailedxml))
+            {
+                oldEntityPM.DropSendinterfacefailedxml = entityPM.DropSendinterfacefailedxml;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropSendinterfacessucceedxml))
+            {
+                oldEntityPM.DropSendinterfacessucceedxml = entityPM.DropSendinterfacessucceedxml;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropSenddocumentfailedxml))
+            {
+                oldEntityPM.DropSenddocumentfailedxml = entityPM.DropSenddocumentfailedxml;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropSenddocumentssucceedxml))
+            {
+                oldEntityPM.DropSenddocumentssucceedxml = entityPM.DropSenddocumentssucceedxml;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropCreatetaskfailedxml))
+            {
+                oldEntityPM.DropCreatetaskfailedxml = entityPM.DropCreatetaskfailedxml;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropCreatetaskssucceedxml))
+            {
+                oldEntityPM.DropCreatetaskssucceedxml = entityPM.DropCreatetaskssucceedxml;
+            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SendInterfaceAutomationFailedXml))
             {
                 oldEntityPM.SendInterfaceAutomationFailedXml = entityPM.SendInterfaceAutomationFailedXml;
@@ -368,14 +438,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.SendDocumentAutomationSsucceedXml = entityPM.SendDocumentAutomationSsucceedXml;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateTaskAutomationFailedXml))
-            {
-                oldEntityPM.CreateTaskAutomationFailedXml = entityPM.CreateTaskAutomationFailedXml;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateTaskAutomationSsucceedXml))
-            {
-                oldEntityPM.CreateTaskAutomationSsucceedXml = entityPM.CreateTaskAutomationSsucceedXml;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnUpdateDocumentAutomationFailedXml))
             {
                 oldEntityPM.OnUpdateDocumentAutomationFailedXml = entityPM.OnUpdateDocumentAutomationFailedXml;
@@ -384,6 +446,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.OnUpdateDocumentAutomationSsucceedXml = entityPM.OnUpdateDocumentAutomationSsucceedXml;
             }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateTaskAutomationFailedXml))
+            {
+                oldEntityPM.CreateTaskAutomationFailedXml = entityPM.CreateTaskAutomationFailedXml;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateTaskAutomationSsucceedXml))
+            {
+                oldEntityPM.CreateTaskAutomationSsucceedXml = entityPM.CreateTaskAutomationSsucceedXml;
+            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EventAutomationFailedXml))
             {
                 oldEntityPM.EventAutomationFailedXml = entityPM.EventAutomationFailedXml;
@@ -391,10 +461,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EventAutomationSsucceedXml))
             {
                 oldEntityPM.EventAutomationSsucceedXml = entityPM.EventAutomationSsucceedXml;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExecutionTime))
-            {
-                oldEntityPM.ExecutionTime = entityPM.ExecutionTime;
             }
 					}
 		public void POCOToList(POCO.EntityChange entityPOCO, EntityChangeList entityList)
@@ -417,6 +483,122 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.AutomationConditionFieldsXml)) //T4 find type == nText 
+            {
+                entityPM.AutomationConditionFieldsXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.AutomationConditionFieldsXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ChangesFieldsXml)) //T4 find type == nText 
+            {
+                entityPM.ChangesFieldsXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ChangesFieldsXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ChangesAutomationFieldsXml)) //T4 find type == nText 
+            {
+                entityPM.ChangesAutomationFieldsXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ChangesAutomationFieldsXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SetAutomationSsucceedXml)) //T4 find type == nText 
+            {
+                entityPM.SetAutomationSsucceedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SetAutomationSsucceedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.EmailAutomationSsucceedXml)) //T4 find type == nText 
+            {
+                entityPM.EmailAutomationSsucceedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.EmailAutomationSsucceedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SetAutomationFailedXml)) //T4 find type == nText 
+            {
+                entityPM.SetAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SetAutomationFailedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.EmailAutomationFailedXml)) //T4 find type == nText 
+            {
+                entityPM.EmailAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.EmailAutomationFailedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FollowUpAutomationFailedXml)) //T4 find type == nText 
+            {
+                entityPM.FollowUpAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FollowUpAutomationFailedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SetSLAAutomationFailedXml)) //T4 find type == nText 
+            {
+                entityPM.SetSLAAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SetSLAAutomationFailedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FollowUpAutomationSsucceedXml)) //T4 find type == nText 
+            {
+                entityPM.FollowUpAutomationSsucceedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FollowUpAutomationSsucceedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SetSLAAutomationSsucceedXml)) //T4 find type == nText 
+            {
+                entityPM.SetSLAAutomationSsucceedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SetSLAAutomationSsucceedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.QueuedTaskAutomationFailedXml)) //T4 find type == nText 
+            {
+                entityPM.QueuedTaskAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.QueuedTaskAutomationFailedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.QueuedTaskAutomationSsucceedXml)) //T4 find type == nText 
+            {
+                entityPM.QueuedTaskAutomationSsucceedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.QueuedTaskAutomationSsucceedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DropSendinterfacefailedxml)) //T4 find type == nText 
+            {
+                entityPM.DropSendinterfacefailedxml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DropSendinterfacefailedxml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DropSendinterfacessucceedxml)) //T4 find type == nText 
+            {
+                entityPM.DropSendinterfacessucceedxml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DropSendinterfacessucceedxml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DropSenddocumentfailedxml)) //T4 find type == nText 
+            {
+                entityPM.DropSenddocumentfailedxml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DropSenddocumentfailedxml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DropSenddocumentssucceedxml)) //T4 find type == nText 
+            {
+                entityPM.DropSenddocumentssucceedxml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DropSenddocumentssucceedxml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DropCreatetaskfailedxml)) //T4 find type == nText 
+            {
+                entityPM.DropCreatetaskfailedxml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DropCreatetaskfailedxml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DropCreatetaskssucceedxml)) //T4 find type == nText 
+            {
+                entityPM.DropCreatetaskssucceedxml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DropCreatetaskssucceedxml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SendInterfaceAutomationFailedXml)) //T4 find type == nText 
+            {
+                entityPM.SendInterfaceAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SendInterfaceAutomationFailedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SendInterfaceAutomationSsucceedXml)) //T4 find type == nText 
+            {
+                entityPM.SendInterfaceAutomationSsucceedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SendInterfaceAutomationSsucceedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SendDocumentAutomationFailedXml)) //T4 find type == nText 
+            {
+                entityPM.SendDocumentAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SendDocumentAutomationFailedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SendDocumentAutomationSsucceedXml)) //T4 find type == nText 
+            {
+                entityPM.SendDocumentAutomationSsucceedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SendDocumentAutomationSsucceedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.OnUpdateDocumentAutomationFailedXml)) //T4 find type == nText 
+            {
+                entityPM.OnUpdateDocumentAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.OnUpdateDocumentAutomationFailedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.OnUpdateDocumentAutomationSsucceedXml)) //T4 find type == nText 
+            {
+                entityPM.OnUpdateDocumentAutomationSsucceedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.OnUpdateDocumentAutomationSsucceedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CreateTaskAutomationFailedXml)) //T4 find type == nText 
+            {
+                entityPM.CreateTaskAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CreateTaskAutomationFailedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CreateTaskAutomationSsucceedXml)) //T4 find type == nText 
+            {
+                entityPM.CreateTaskAutomationSsucceedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CreateTaskAutomationSsucceedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.EventAutomationFailedXml)) //T4 find type == nText 
+            {
+                entityPM.EventAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.EventAutomationFailedXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.EventAutomationSsucceedXml)) //T4 find type == nText 
+            {
+                entityPM.EventAutomationSsucceedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.EventAutomationSsucceedXml));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

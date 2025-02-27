@@ -30,6 +30,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_code = entity.Code;
 		_description = entity.Description;
+		translations = entity.Translations != null ? entity.Translations.Select(a=>new TranslationPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -66,6 +67,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<TranslationPM> translations;
+	 
+		     
+	   [Include]
+	   [Association("TranslationTranslationHeader", "Code","Translationheadercode")]
+	   [DataMember]
+	   public virtual List<TranslationPM> Translations  
+	   {
+	        get
+             {
+                 if (translations == null)
+                 {
+                     translations = new List<TranslationPM>();
+                 }
+                 return translations;
+              }
+             set { translations = value; }
+	    }
+	   private List<TranslationPM>  deletedTranslations;
+	   public virtual List<TranslationPM> DeletedTranslations  
+	   {
+	        get
+             {
+                 if ( deletedTranslations == null)
+                 {
+                      deletedTranslations = new List<TranslationPM>();
+                 }
+                 return  deletedTranslations;
+              }
+             set {  deletedTranslations = value; }
+	    }
 	 }
 #endregion Properties
 }

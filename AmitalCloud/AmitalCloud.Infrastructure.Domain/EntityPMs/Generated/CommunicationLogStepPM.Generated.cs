@@ -28,8 +28,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public CommunicationLogStepPM() : base() {} 
    public CommunicationLogStepPM(POCO.CommunicationLogStep entity) : base()
    {
-		_communicationLogId = entity.CommunicationLogId;
 		_stepNumber = entity.StepNumber;
+		_communicationLogId = entity.CommunicationLogId;
 		_tenant = entity.Tenant;
 		_name = entity.Name;
 		_retries = entity.Retries;
@@ -43,24 +43,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    }
    #endregion Constructors
    #region Properties
-   	  private string _communicationLogId ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CommunicationLogId  
-	   {
-	     get { return _communicationLogId; }
-		 set
-		 {
-		   if(_communicationLogId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommunicationLogId",OldValue=_communicationLogId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _communicationLogId=value;
-		   }
-		 }
-	   }
-	  private int _stepNumber ;
+   	  private int _stepNumber ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -74,6 +57,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StepNumber",OldValue=_stepNumber,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _stepNumber=value;
+		   }
+		 }
+	   }
+	  private string _communicationLogId ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CommunicationLogId  
+	   {
+	     get { return _communicationLogId; }
+		 set
+		 {
+		   if(_communicationLogId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommunicationLogId",OldValue=_communicationLogId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _communicationLogId=value;
 		   }
 		 }
 	   }

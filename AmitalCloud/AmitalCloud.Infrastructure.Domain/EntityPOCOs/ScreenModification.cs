@@ -24,11 +24,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [ForeignKey("Screen")]
         [Column("ScreenId")]
 	    public string ScreenId { get; set; }
-	      
-        public virtual Screen Screen { get; set; }
         [Column("NumberOfRows")]
 	    public int NumberOfRows { get; set; }
         [Column("NumberOfColumns")]

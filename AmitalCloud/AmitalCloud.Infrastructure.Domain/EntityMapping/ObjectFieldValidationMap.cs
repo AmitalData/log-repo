@@ -22,23 +22,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.ValidationExpression).HasColumnName("ValidationExpression").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ValidationExpression).HasColumnName("ValidationExpression").IsRequired().HasMaxLength(250).IsUnicode(false);
 
-            this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage").IsRequired().HasMaxLength(250).IsUnicode(false);
 
-            this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ValidationOrder).HasColumnName("ValidationOrder").IsRequired();
 
-            this.Property(t => t.Condition).HasColumnName("Condition").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Condition).HasColumnName("Condition").IsRequired().HasMaxLength(250).IsUnicode(false);
 
-            this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode").IsRequired().HasMaxLength(200).IsUnicode(false);
         }
     }
 }

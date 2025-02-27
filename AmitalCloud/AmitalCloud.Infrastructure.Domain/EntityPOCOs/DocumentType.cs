@@ -129,6 +129,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("IsInland")]
 	    public bool IsInland { get; set; }
 		public virtual ICollection<DocumentTypeCustomField> DocumentTypeCustomFields { get; set; }
+		public virtual ICollection<DocumentTypeTemplate> DocumentTypeTemplates { get; set; }
         [Column("AddedManually")]
 	    public bool AddedManually { get; set; }
         [Column("OnSendPopulateDateFieldName")]

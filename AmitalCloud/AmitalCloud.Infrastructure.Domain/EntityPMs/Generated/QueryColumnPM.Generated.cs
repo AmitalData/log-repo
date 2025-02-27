@@ -31,12 +31,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_queryId = entity.QueryId;
-		_queryCode = entity.QueryCode;
 		_objectFieldId = entity.ObjectFieldId;
 		_indexOrder = entity.IndexOrder;
 		_columnWidth = entity.ColumnWidth;
 		_userId = entity.UserId;
 		_objectFieldCode = entity.ObjectFieldCode;
+		_queryCode = entity.QueryCode;
    }
    #endregion Constructors
    #region Properties
@@ -86,22 +86,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueryId",OldValue=_queryId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _queryId=value;
-		   }
-		 }
-	   }
-	  private string _queryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string QueryCode  
-	   {
-	     get { return _queryCode; }
-		 set
-		 {
-		   if(_queryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueryCode",OldValue=_queryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _queryCode=value;
 		   }
 		 }
 	   }
@@ -182,6 +166,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldCode",OldValue=_objectFieldCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _objectFieldCode=value;
+		   }
+		 }
+	   }
+	  private string _queryCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string QueryCode  
+	   {
+	     get { return _queryCode; }
+		 set
+		 {
+		   if(_queryCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueryCode",OldValue=_queryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _queryCode=value;
 		   }
 		 }
 	   }

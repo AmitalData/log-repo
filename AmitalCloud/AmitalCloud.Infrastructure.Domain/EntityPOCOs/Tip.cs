@@ -26,11 +26,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("VisibilityDefaultValue")]
 	    public bool VisibilityDefaultValue { get; set; }
-        [ForeignKey("TextCode")]
         [Column("ShortTextCode")]
 	    public string ShortTextCode { get; set; }
-	      
-        public virtual TextCode TextCode { get; set; }
         [ForeignKey("ObjectTable")]
         [Column("ObjectTableId")]
 	    public string ObjectTableId { get; set; }
@@ -38,6 +35,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public virtual ObjectTable ObjectTable { get; set; }
         [Column("ShortTextCodeCode")]
 	    public string ShortTextCodeCode { get; set; }
+		public virtual ICollection<ObjectTable> ObjectTables { get; set; }
     }
 }
 	 

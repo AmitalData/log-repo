@@ -19,12 +19,12 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
     {
 	    protected override System.Data.Entity.IDbSet<POCO.CustomerCompetitorProduct> contextEntity => (context as IAmitalCloudContext).CustomerCompetitorProducts;
 		public CustomerCompetitorProductListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
-        public CustomerCompetitorProductList GetSingle(string customerid, string competitorid, string producttypecode)
+        public CustomerCompetitorProductList GetSingle(string producttypecode, string customerid, string competitorid)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;
-				paramList.Append(new KeyValuePair<string, string>("customerid", customerid.ToString()));
+				paramList.Append(new KeyValuePair<string, string>("producttypecode", producttypecode.ToString()));
+		 		paramList.Append(new KeyValuePair<string, string>("customerid", customerid.ToString()));
 		 		paramList.Append(new KeyValuePair<string, string>("competitorid", competitorid.ToString()));
-		 		paramList.Append(new KeyValuePair<string, string>("producttypecode", producttypecode.ToString()));
 		 			return GetSingle(paramList) ; 
 		}
     }

@@ -34,8 +34,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         NeedsRebuild, 
 	         IsBlobExist, 
 	         IssuedDate, 
-	         IssuedByUserId, 
-	         DocumentsFiling,	      }
+	         IssuedByUserId,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -49,8 +48,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         NeedsRebuild, 
 	         IsBlobExist, 
 	         IssuedDate, 
-	         IssuedByUserId, 
-	         DocumentsFiling,	      }
+	         IssuedByUserId,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(DocumentOutPM entityPM, POCO.DocumentOut entityPOCO)
@@ -65,7 +63,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsBlobExist)) { entityPOCO.IsBlobExist = entityPM.IsBlobExist;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IssuedDate)) { entityPOCO.IssuedDate = entityPM.IssuedDate;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IssuedByUserId)) { entityPOCO.IssuedByUserId = entityPM.IssuedByUserId;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentsFiling)) { entityPOCO.DocumentsFiling = entityPM.DocumentsFiling;}
 					}
 		public void POCOToPM(DocumentOutPM entityPM, POCO.DocumentOut entityPOCO)
         {
@@ -113,10 +110,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.IssuedByUserId = entityPOCO.IssuedByUserId;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentsFiling))
-            {
-					entityPM.DocumentsFiling = entityPOCO.DocumentsFiling;
-            }
 		}
 		public void PMToOldPM(DocumentOutPM entityPM, DocumentOutPM oldEntityPM)
         {
@@ -160,10 +153,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IssuedByUserId))
             {
                 oldEntityPM.IssuedByUserId = entityPM.IssuedByUserId;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentsFiling))
-            {
-                oldEntityPM.DocumentsFiling = entityPM.DocumentsFiling;
             }
 					}
 		public void POCOToList(POCO.DocumentOut entityPOCO, DocumentOutList entityList)

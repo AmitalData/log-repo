@@ -34,8 +34,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_englishName = entity.EnglishName;
 		_localName = entity.LocalName;
 		_inActive = entity.InActive;
-		_customsMetaDataCode = entity.CustomsMetaDataCode;
 		_format = entity.Format;
+		_customsMetaDataCode = entity.CustomsMetaDataCode;
+		documentsFilingMetaDataValues = entity.DocumentsFilingMetaDataValues != null ? entity.DocumentsFilingMetaDataValues.Select(a=>new DocumentsFilingMetaDataValuePM(a)).ToList() : null;
+		documentTypeMetaDatas = entity.DocumentTypeMetaDatas != null ? entity.DocumentTypeMetaDatas.Select(a=>new DocumentTypeMetaDataPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -136,22 +138,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _customsMetaDataCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomsMetaDataCode  
-	   {
-	     get { return _customsMetaDataCode; }
-		 set
-		 {
-		   if(_customsMetaDataCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsMetaDataCode",OldValue=_customsMetaDataCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customsMetaDataCode=value;
-		   }
-		 }
-	   }
 	  private string _format ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -168,6 +154,84 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _customsMetaDataCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsMetaDataCode  
+	   {
+	     get { return _customsMetaDataCode; }
+		 set
+		 {
+		   if(_customsMetaDataCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsMetaDataCode",OldValue=_customsMetaDataCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _customsMetaDataCode=value;
+		   }
+		 }
+	   }
+	   private List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValues;
+	 
+		     
+	   [Include]
+	   [Association("DocumentsFilingMetaDataValueDocumentsMetaDataType", "Id","Documentsmetadatatypeid")]
+	   [DataMember]
+	   public virtual List<DocumentsFilingMetaDataValuePM> DocumentsFilingMetaDataValues  
+	   {
+	        get
+             {
+                 if (documentsFilingMetaDataValues == null)
+                 {
+                     documentsFilingMetaDataValues = new List<DocumentsFilingMetaDataValuePM>();
+                 }
+                 return documentsFilingMetaDataValues;
+              }
+             set { documentsFilingMetaDataValues = value; }
+	    }
+	   private List<DocumentsFilingMetaDataValuePM>  deletedDocumentsFilingMetaDataValues;
+	   public virtual List<DocumentsFilingMetaDataValuePM> DeletedDocumentsFilingMetaDataValues  
+	   {
+	        get
+             {
+                 if ( deletedDocumentsFilingMetaDataValues == null)
+                 {
+                      deletedDocumentsFilingMetaDataValues = new List<DocumentsFilingMetaDataValuePM>();
+                 }
+                 return  deletedDocumentsFilingMetaDataValues;
+              }
+             set {  deletedDocumentsFilingMetaDataValues = value; }
+	    }
+	   private List<DocumentTypeMetaDataPM> documentTypeMetaDatas;
+	 
+		     
+	   [Include]
+	   [Association("DocumentTypeMetaDataDocumentsMetaDataType", "Id","Documentsmetadatatypeid")]
+	   [DataMember]
+	   public virtual List<DocumentTypeMetaDataPM> DocumentTypeMetaDatas  
+	   {
+	        get
+             {
+                 if (documentTypeMetaDatas == null)
+                 {
+                     documentTypeMetaDatas = new List<DocumentTypeMetaDataPM>();
+                 }
+                 return documentTypeMetaDatas;
+              }
+             set { documentTypeMetaDatas = value; }
+	    }
+	   private List<DocumentTypeMetaDataPM>  deletedDocumentTypeMetaDatas;
+	   public virtual List<DocumentTypeMetaDataPM> DeletedDocumentTypeMetaDatas  
+	   {
+	        get
+             {
+                 if ( deletedDocumentTypeMetaDatas == null)
+                 {
+                      deletedDocumentTypeMetaDatas = new List<DocumentTypeMetaDataPM>();
+                 }
+                 return  deletedDocumentTypeMetaDatas;
+              }
+             set {  deletedDocumentTypeMetaDatas = value; }
+	    }
 	 }
 #endregion Properties
 }

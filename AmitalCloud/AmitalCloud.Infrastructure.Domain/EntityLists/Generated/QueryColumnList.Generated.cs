@@ -27,12 +27,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           Id  = entity.Id;
           Tenant  = entity.Tenant;
           QueryId  = entity.QueryId;
-          QueryCode  = entity.QueryCode;
           ObjectFieldId  = entity.ObjectFieldId;
           IndexOrder  = entity.IndexOrder;
           ColumnWidth  = entity.ColumnWidth;
           UserId  = entity.UserId;
           ObjectFieldCode  = entity.ObjectFieldCode;
+          QueryCode  = entity.QueryCode;
        }
        #endregion Constructors
        #region Properties
@@ -45,8 +45,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string QueryId  { get; set; }
        [DataMember]
-       public string QueryCode  { get; set; }
-       [DataMember]
        public string ObjectFieldId  { get; set; }
        [DataMember]
        public int IndexOrder  { get; set; }
@@ -56,6 +54,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string UserId  { get; set; }
        [DataMember]
        public string ObjectFieldCode  { get; set; }
+       [DataMember]
+       public string QueryCode  { get; set; }
          #endregion Properties
    }
 

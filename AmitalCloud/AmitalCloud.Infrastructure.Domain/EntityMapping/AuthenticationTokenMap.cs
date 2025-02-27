@@ -22,25 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Token });
 	 
-            this.Property(t => t.Token).HasColumnName("Token").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Token).HasColumnName("Token").IsRequired().HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(70).IsUnicode(false);
 
-            this.Property(t => t.Password).HasColumnName("Password").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Password).HasColumnName("Password").IsRequired().HasMaxLength(60).IsUnicode(false);
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 
             this.Property(t => t.APIToken).HasColumnName("APIToken").IsRequired();
 
-            this.Property(t => t.APICredentialID).HasColumnName("APICredentialID").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.APICredentialID).HasColumnName("APICredentialID").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.ClientType).HasColumnName("ClientType").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ClientType).HasColumnName("ClientType").IsRequired().HasMaxLength(70).IsUnicode(false);
 
             this.Property(t => t.InActive).HasColumnName("InActive").IsRequired();
 
-            this.Property(t => t.InActiveReason).HasColumnName("InActiveReason").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.InActiveReason).HasColumnName("InActiveReason").IsRequired().HasMaxLength(250).IsUnicode(false);
 
             this.Property(t => t.ExpirationDate).HasColumnName("ExpirationDate").IsRequired();
 

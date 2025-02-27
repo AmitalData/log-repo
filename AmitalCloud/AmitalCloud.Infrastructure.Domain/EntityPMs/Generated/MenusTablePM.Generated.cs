@@ -44,7 +44,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_htmlView = entity.HtmlView;
 		_featureUniqeCode = entity.FeatureUniqeCode;
 		_querySection = entity.QuerySection;
-		_feature = entity.Feature;
    }
    #endregion Constructors
    #region Properties
@@ -286,22 +285,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuerySection",OldValue=_querySection,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _querySection=value;
-		   }
-		 }
-	   }
-	  private string _feature ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Feature  
-	   {
-	     get { return _feature; }
-		 set
-		 {
-		   if(_feature != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Feature",OldValue=_feature,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _feature=value;
 		   }
 		 }
 	   }

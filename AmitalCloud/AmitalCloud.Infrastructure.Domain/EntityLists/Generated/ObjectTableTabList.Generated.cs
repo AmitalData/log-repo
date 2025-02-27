@@ -32,16 +32,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           IndexOrder  = entity.IndexOrder;
           Code  = entity.Code;
           FeatureId  = entity.FeatureId;
-          TabNameTextCodeCode  = entity.TabNameTextCodeCode;
-          FeatureUniqeCode  = entity.FeatureUniqeCode;
-          Feature  = entity.Feature;
-          TabModification  = entity.TabModification;
           HtmlComponentName  = entity.HtmlComponentName;
           HtmlComponentUrl  = entity.HtmlComponentUrl;
+          TabNameTextCodeCode  = entity.TabNameTextCodeCode;
+          FeatureUniqeCode  = entity.FeatureUniqeCode;
           Type  = entity.Type;
           ScreenCode  = entity.ScreenCode;
           OriginalTabCode  = entity.OriginalTabCode;
           HideTabNameInScreen  = entity.HideTabNameInScreen;
+          Islocked  = entity.Islocked;
        }
        #endregion Constructors
        #region Properties
@@ -64,17 +63,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string FeatureId  { get; set; }
        [DataMember]
-       public string TabNameTextCodeCode  { get; set; }
-       [DataMember]
-       public string FeatureUniqeCode  { get; set; }
-       [DataMember]
-       public string Feature  { get; set; }
-       [DataMember]
-       public string TabModification  { get; set; }
-       [DataMember]
        public string HtmlComponentName  { get; set; }
        [DataMember]
        public string HtmlComponentUrl  { get; set; }
+       [DataMember]
+       public string TabNameTextCodeCode  { get; set; }
+       [DataMember]
+       public string FeatureUniqeCode  { get; set; }
        [DataMember]
        public string Type  { get; set; }
        [DataMember]
@@ -83,6 +78,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string OriginalTabCode  { get; set; }
        [DataMember]
        public bool HideTabNameInScreen  { get; set; }
+       [DataMember]
+       public bool Islocked  { get; set; }
          #endregion Properties
    }
 

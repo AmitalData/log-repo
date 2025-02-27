@@ -25,7 +25,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           { 
 		     None,  
 	         Id, 
-	         Tenant, 
 	         QueueDefinitionCode, 
 	         CreateDateTime, 
 	         Status, 
@@ -34,23 +33,23 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         ProcessingDateTime, 
 	         CompleteDateTime, 
 	         RetryNumber, 
+	         Tenant, 
 	         HashCode, 
-	         QueueDefinition, 
 	         TenantPriority, 
 	         InterfaceTypeCode, 
-	         UseRabbitMQ, 
 	         QueueCodeRabbit, 
+	         UseRabbitMQ, 
 	         HaveRabbitMQ, 
-	         EntityCode, 
-	         EntityId, 
 	         RabbitMQCreateDate, 
 	         RabbitMQRetryNumber, 
-	         RabbitMQErrMess,	      }
+	         RabbitMQErrMess, 
+	         EntityCode, 
+	         EntityId, 
+	         DropRowid,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
 	         Id, 
-	         Tenant, 
 	         QueueDefinitionCode, 
 	         CreateDateTime, 
 	         Status, 
@@ -59,24 +58,24 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         ProcessingDateTime, 
 	         CompleteDateTime, 
 	         RetryNumber, 
+	         Tenant, 
 	         HashCode, 
-	         QueueDefinition, 
 	         TenantPriority, 
 	         InterfaceTypeCode, 
-	         UseRabbitMQ, 
 	         QueueCodeRabbit, 
+	         UseRabbitMQ, 
 	         HaveRabbitMQ, 
-	         EntityCode, 
-	         EntityId, 
 	         RabbitMQCreateDate, 
 	         RabbitMQRetryNumber, 
-	         RabbitMQErrMess,	      }
+	         RabbitMQErrMess, 
+	         EntityCode, 
+	         EntityId, 
+	         DropRowid,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(QueueMessagePM entityPM, POCO.QueueMessage entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueDefinitionCode)) { entityPOCO.QueueDefinitionCode = entityPM.QueueDefinitionCode;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueDefinitionCode)) { entityPOCO.QueueDefinitionCode = entityPM.QueueDefinitionCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDateTime)) { entityPOCO.CreateDateTime = entityPM.CreateDateTime;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Status)) { entityPOCO.Status = entityPM.Status;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MessageBody)) { entityPOCO.MessageBody = entityPM.MessageBody;}
@@ -84,28 +83,25 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessingDateTime)) { entityPOCO.ProcessingDateTime = entityPM.ProcessingDateTime;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompleteDateTime)) { entityPOCO.CompleteDateTime = entityPM.CompleteDateTime;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RetryNumber)) { entityPOCO.RetryNumber = entityPM.RetryNumber;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HashCode)) { entityPOCO.HashCode = entityPM.HashCode;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueDefinition)) { entityPOCO.QueueDefinition = entityPM.QueueDefinition;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TenantPriority)) { entityPOCO.TenantPriority = entityPM.TenantPriority;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterfaceTypeCode)) { entityPOCO.InterfaceTypeCode = entityPM.InterfaceTypeCode;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseRabbitMQ)) { entityPOCO.UseRabbitMQ = entityPM.UseRabbitMQ;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueCodeRabbit)) { entityPOCO.QueueCodeRabbit = entityPM.QueueCodeRabbit;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseRabbitMQ)) { entityPOCO.UseRabbitMQ = entityPM.UseRabbitMQ;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HaveRabbitMQ)) { entityPOCO.HaveRabbitMQ = entityPM.HaveRabbitMQ;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityCode)) { entityPOCO.EntityCode = entityPM.EntityCode;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityId)) { entityPOCO.EntityId = entityPM.EntityId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitMQCreateDate)) { entityPOCO.RabbitMQCreateDate = entityPM.RabbitMQCreateDate;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitMQRetryNumber)) { entityPOCO.RabbitMQRetryNumber = entityPM.RabbitMQRetryNumber;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitMQErrMess)) { entityPOCO.RabbitMQErrMess = entityPM.RabbitMQErrMess;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityCode)) { entityPOCO.EntityCode = entityPM.EntityCode;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityId)) { entityPOCO.EntityId = entityPM.EntityId;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropRowid)) { entityPOCO.DropRowid = entityPM.DropRowid;}
 					}
 		public void POCOToPM(QueueMessagePM entityPM, POCO.QueueMessage entityPOCO)
         {
 			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
             {
 					entityPM.Id = entityPOCO.Id;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
-            {
-					entityPM.Tenant = entityPOCO.Tenant;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueueDefinitionCode))
             {
@@ -139,13 +135,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.RetryNumber = entityPOCO.RetryNumber;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HashCode))
             {
 					entityPM.HashCode = entityPOCO.HashCode;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueueDefinition))
-            {
-					entityPM.QueueDefinition = entityPOCO.QueueDefinition;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TenantPriority))
             {
@@ -155,25 +151,17 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.InterfaceTypeCode = entityPOCO.InterfaceTypeCode;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UseRabbitMQ))
-            {
-					entityPM.UseRabbitMQ = entityPOCO.UseRabbitMQ;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueueCodeRabbit))
             {
 					entityPM.QueueCodeRabbit = entityPOCO.QueueCodeRabbit;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UseRabbitMQ))
+            {
+					entityPM.UseRabbitMQ = entityPOCO.UseRabbitMQ;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HaveRabbitMQ))
             {
 					entityPM.HaveRabbitMQ = entityPOCO.HaveRabbitMQ;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityCode))
-            {
-					entityPM.EntityCode = entityPOCO.EntityCode;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityId))
-            {
-					entityPM.EntityId = entityPOCO.EntityId;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RabbitMQCreateDate))
             {
@@ -187,15 +175,23 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.RabbitMQErrMess = entityPOCO.RabbitMQErrMess;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityCode))
+            {
+					entityPM.EntityCode = entityPOCO.EntityCode;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EntityId))
+            {
+					entityPM.EntityId = entityPOCO.EntityId;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropRowid))
+            {
+					entityPM.DropRowid = entityPOCO.DropRowid;
+            }
 		}
 		public void PMToOldPM(QueueMessagePM entityPM, QueueMessagePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
-            {
-                oldEntityPM.Tenant = entityPM.Tenant;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueDefinitionCode))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueDefinitionCode))
             {
                 oldEntityPM.QueueDefinitionCode = entityPM.QueueDefinitionCode;
             }
@@ -227,13 +223,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.RetryNumber = entityPM.RetryNumber;
             }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HashCode))
             {
                 oldEntityPM.HashCode = entityPM.HashCode;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueDefinition))
-            {
-                oldEntityPM.QueueDefinition = entityPM.QueueDefinition;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TenantPriority))
             {
@@ -243,25 +239,17 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.InterfaceTypeCode = entityPM.InterfaceTypeCode;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseRabbitMQ))
-            {
-                oldEntityPM.UseRabbitMQ = entityPM.UseRabbitMQ;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueCodeRabbit))
             {
                 oldEntityPM.QueueCodeRabbit = entityPM.QueueCodeRabbit;
             }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UseRabbitMQ))
+            {
+                oldEntityPM.UseRabbitMQ = entityPM.UseRabbitMQ;
+            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HaveRabbitMQ))
             {
                 oldEntityPM.HaveRabbitMQ = entityPM.HaveRabbitMQ;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityCode))
-            {
-                oldEntityPM.EntityCode = entityPM.EntityCode;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityId))
-            {
-                oldEntityPM.EntityId = entityPM.EntityId;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitMQCreateDate))
             {
@@ -274,6 +262,18 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RabbitMQErrMess))
             {
                 oldEntityPM.RabbitMQErrMess = entityPM.RabbitMQErrMess;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityCode))
+            {
+                oldEntityPM.EntityCode = entityPM.EntityCode;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityId))
+            {
+                oldEntityPM.EntityId = entityPM.EntityId;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropRowid))
+            {
+                oldEntityPM.DropRowid = entityPM.DropRowid;
             }
 					}
 		public void POCOToList(POCO.QueueMessage entityPOCO, QueueMessageList entityList)
@@ -296,6 +296,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.HashCode)) //T4 find type == nText 
+            {
+                entityPM.HashCode = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.HashCode));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

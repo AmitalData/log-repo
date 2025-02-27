@@ -24,9 +24,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public CustomerCompetitorProductList() : base() {}
        public CustomerCompetitorProductList(POCO.CustomerCompetitorProduct entity) : base()
        {
+          ProductTypeCode  = entity.ProductTypeCode;
           CustomerId  = entity.CustomerId;
           CompetitorId  = entity.CompetitorId;
-          ProductTypeCode  = entity.ProductTypeCode;
           Tenant  = entity.Tenant;
        }
        #endregion Constructors
@@ -34,15 +34,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    
        [Key]
        [DataMember]
+       public string ProductTypeCode  { get; set; }
+
+       [Key]
+       [DataMember]
        public string CustomerId  { get; set; }
 
        [Key]
        [DataMember]
        public string CompetitorId  { get; set; }
-
-       [Key]
-       [DataMember]
-       public string ProductTypeCode  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
          #endregion Properties

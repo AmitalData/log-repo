@@ -38,7 +38,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           HtmlView  = entity.HtmlView;
           FeatureUniqeCode  = entity.FeatureUniqeCode;
           QuerySection  = entity.QuerySection;
-          Feature  = entity.Feature;
        }
        #endregion Constructors
        #region Properties
@@ -72,8 +71,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string FeatureUniqeCode  { get; set; }
        [DataMember]
        public string QuerySection  { get; set; }
-       [DataMember]
-       public string Feature  { get; set; }
          #endregion Properties
    }
 

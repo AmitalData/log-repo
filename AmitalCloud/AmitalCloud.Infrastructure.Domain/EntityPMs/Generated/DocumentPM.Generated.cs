@@ -41,6 +41,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 			_calculatedFileName = entity.CalculatedFileName;
 		_isEncrypted = entity.IsEncrypted;
 		_markForDelete = entity.MarkForDelete;
+		communicationAttachments = entity.CommunicationAttachments != null ? entity.CommunicationAttachments.Select(a=>new CommunicationAttachmentPM(a)).ToList() : null;
+		communicationLogs_Documentid = entity.CommunicationLogs_Documentid != null ? entity.CommunicationLogs_Documentid.Select(a=>new CommunicationLogPM(a)).ToList() : null;
+		communicationLogs_Responsedocumentid = entity.CommunicationLogs_Responsedocumentid != null ? entity.CommunicationLogs_Responsedocumentid.Select(a=>new CommunicationLogPM(a)).ToList() : null;
+		communicationLogSteps = entity.CommunicationLogSteps != null ? entity.CommunicationLogSteps.Select(a=>new CommunicationLogStepPM(a)).ToList() : null;
+		documentOuts = entity.DocumentOuts != null ? entity.DocumentOuts.Select(a=>new DocumentOutPM(a)).ToList() : null;
+		filingInboxAttachments = entity.FilingInboxAttachments != null ? entity.FilingInboxAttachments.Select(a=>new FilingInboxAttachmentPM(a)).ToList() : null;
+		imageLibrarys = entity.ImageLibrarys != null ? entity.ImageLibrarys.Select(a=>new ImageLibraryPM(a)).ToList() : null;
+		//oceanInsightsStatusess = entity.OceanInsightsStatusess != null ? entity.OceanInsightsStatusess.Select(a=>new OceanInsightsStatusesPM(a)).ToList() : null;
+		quoteTemplates_Footerdocid = entity.QuoteTemplates_Footerdocid != null ? entity.QuoteTemplates_Footerdocid.Select(a=>new QuoteTemplatePM(a)).ToList() : null;
+		quoteTemplates_Headerdocid = entity.QuoteTemplates_Headerdocid != null ? entity.QuoteTemplates_Headerdocid.Select(a=>new QuoteTemplatePM(a)).ToList() : null;
+		quoteTemplateSections = entity.QuoteTemplateSections != null ? entity.QuoteTemplateSections.Select(a=>new QuoteTemplateSectionPM(a)).ToList() : null;
+		reports = entity.Reports != null ? entity.Reports.Select(a=>new ReportPM(a)).ToList() : null;
+		reportsTemplatesVersions = entity.ReportsTemplatesVersions != null ? entity.ReportsTemplatesVersions.Select(a=>new ReportsTemplatesVersionPM(a)).ToList() : null;
+		taskSchedulerHistorys = entity.TaskSchedulerHistorys != null ? entity.TaskSchedulerHistorys.Select(a=>new TaskSchedulerHistoryPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -245,6 +259,440 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<CommunicationAttachmentPM> communicationAttachments;
+	 
+		     
+	   [Include]
+	   [Association("CommunicationAttachmentDocument", "Id","Documentid")]
+	   [DataMember]
+	   public virtual List<CommunicationAttachmentPM> CommunicationAttachments  
+	   {
+	        get
+             {
+                 if (communicationAttachments == null)
+                 {
+                     communicationAttachments = new List<CommunicationAttachmentPM>();
+                 }
+                 return communicationAttachments;
+              }
+             set { communicationAttachments = value; }
+	    }
+	   private List<CommunicationAttachmentPM>  deletedCommunicationAttachments;
+	   public virtual List<CommunicationAttachmentPM> DeletedCommunicationAttachments  
+	   {
+	        get
+             {
+                 if ( deletedCommunicationAttachments == null)
+                 {
+                      deletedCommunicationAttachments = new List<CommunicationAttachmentPM>();
+                 }
+                 return  deletedCommunicationAttachments;
+              }
+             set {  deletedCommunicationAttachments = value; }
+	    }
+	   private List<CommunicationLogPM> communicationLogs_Documentid;
+	 
+		     
+	   [Include]
+	   [Association("CommunicationLogDocument", "Id","Documentid")]
+	   [DataMember]
+	   public virtual List<CommunicationLogPM> CommunicationLogs_Documentid  
+	   {
+	        get
+             {
+                 if (communicationLogs_Documentid == null)
+                 {
+                     communicationLogs_Documentid = new List<CommunicationLogPM>();
+                 }
+                 return communicationLogs_Documentid;
+              }
+             set { communicationLogs_Documentid = value; }
+	    }
+	   private List<CommunicationLogPM>  deletedCommunicationLogs_Documentid;
+	   public virtual List<CommunicationLogPM> DeletedCommunicationLogs_Documentid  
+	   {
+	        get
+             {
+                 if ( deletedCommunicationLogs_Documentid == null)
+                 {
+                      deletedCommunicationLogs_Documentid = new List<CommunicationLogPM>();
+                 }
+                 return  deletedCommunicationLogs_Documentid;
+              }
+             set {  deletedCommunicationLogs_Documentid = value; }
+	    }
+	   private List<CommunicationLogPM> communicationLogs_Responsedocumentid;
+	 
+		     
+	   [Include]
+	   [Association("CommunicationLogDocument", "Id","Responsedocumentid")]
+	   [DataMember]
+	   public virtual List<CommunicationLogPM> CommunicationLogs_Responsedocumentid  
+	   {
+	        get
+             {
+                 if (communicationLogs_Responsedocumentid == null)
+                 {
+                     communicationLogs_Responsedocumentid = new List<CommunicationLogPM>();
+                 }
+                 return communicationLogs_Responsedocumentid;
+              }
+             set { communicationLogs_Responsedocumentid = value; }
+	    }
+	   private List<CommunicationLogPM>  deletedCommunicationLogs_Responsedocumentid;
+	   public virtual List<CommunicationLogPM> DeletedCommunicationLogs_Responsedocumentid  
+	   {
+	        get
+             {
+                 if ( deletedCommunicationLogs_Responsedocumentid == null)
+                 {
+                      deletedCommunicationLogs_Responsedocumentid = new List<CommunicationLogPM>();
+                 }
+                 return  deletedCommunicationLogs_Responsedocumentid;
+              }
+             set {  deletedCommunicationLogs_Responsedocumentid = value; }
+	    }
+	   private List<CommunicationLogStepPM> communicationLogSteps;
+	 
+		     
+	   [Include]
+	   [Association("CommunicationLogStepDocument", "Id","Documentid")]
+	   [DataMember]
+	   public virtual List<CommunicationLogStepPM> CommunicationLogSteps  
+	   {
+	        get
+             {
+                 if (communicationLogSteps == null)
+                 {
+                     communicationLogSteps = new List<CommunicationLogStepPM>();
+                 }
+                 return communicationLogSteps;
+              }
+             set { communicationLogSteps = value; }
+	    }
+	   private List<CommunicationLogStepPM>  deletedCommunicationLogSteps;
+	   public virtual List<CommunicationLogStepPM> DeletedCommunicationLogSteps  
+	   {
+	        get
+             {
+                 if ( deletedCommunicationLogSteps == null)
+                 {
+                      deletedCommunicationLogSteps = new List<CommunicationLogStepPM>();
+                 }
+                 return  deletedCommunicationLogSteps;
+              }
+             set {  deletedCommunicationLogSteps = value; }
+	    }
+	   private List<DocumentOutPM> documentOuts;
+	 
+		     
+	   [Include]
+	   [Association("DocumentOutDocument", "Id","Xamldocumentid")]
+	   [DataMember]
+	   public virtual List<DocumentOutPM> DocumentOuts  
+	   {
+	        get
+             {
+                 if (documentOuts == null)
+                 {
+                     documentOuts = new List<DocumentOutPM>();
+                 }
+                 return documentOuts;
+              }
+             set { documentOuts = value; }
+	    }
+	   private List<DocumentOutPM>  deletedDocumentOuts;
+	   public virtual List<DocumentOutPM> DeletedDocumentOuts  
+	   {
+	        get
+             {
+                 if ( deletedDocumentOuts == null)
+                 {
+                      deletedDocumentOuts = new List<DocumentOutPM>();
+                 }
+                 return  deletedDocumentOuts;
+              }
+             set {  deletedDocumentOuts = value; }
+	    }
+	   private List<FilingInboxAttachmentPM> filingInboxAttachments;
+	 
+		     
+	   [Include]
+	   [Association("FilingInboxAttachmentDocument", "Id","Documentid")]
+	   [DataMember]
+	   public virtual List<FilingInboxAttachmentPM> FilingInboxAttachments  
+	   {
+	        get
+             {
+                 if (filingInboxAttachments == null)
+                 {
+                     filingInboxAttachments = new List<FilingInboxAttachmentPM>();
+                 }
+                 return filingInboxAttachments;
+              }
+             set { filingInboxAttachments = value; }
+	    }
+	   private List<FilingInboxAttachmentPM>  deletedFilingInboxAttachments;
+	   public virtual List<FilingInboxAttachmentPM> DeletedFilingInboxAttachments  
+	   {
+	        get
+             {
+                 if ( deletedFilingInboxAttachments == null)
+                 {
+                      deletedFilingInboxAttachments = new List<FilingInboxAttachmentPM>();
+                 }
+                 return  deletedFilingInboxAttachments;
+              }
+             set {  deletedFilingInboxAttachments = value; }
+	    }
+	   private List<ImageLibraryPM> imageLibrarys;
+	 
+		     
+	   [Include]
+	   [Association("ImageLibraryDocument", "Id","Documentid")]
+	   [DataMember]
+	   public virtual List<ImageLibraryPM> ImageLibrarys  
+	   {
+	        get
+             {
+                 if (imageLibrarys == null)
+                 {
+                     imageLibrarys = new List<ImageLibraryPM>();
+                 }
+                 return imageLibrarys;
+              }
+             set { imageLibrarys = value; }
+	    }
+	   private List<ImageLibraryPM>  deletedImageLibrarys;
+	   public virtual List<ImageLibraryPM> DeletedImageLibrarys  
+	   {
+	        get
+             {
+                 if ( deletedImageLibrarys == null)
+                 {
+                      deletedImageLibrarys = new List<ImageLibraryPM>();
+                 }
+                 return  deletedImageLibrarys;
+              }
+             set {  deletedImageLibrarys = value; }
+	    }
+	   //private List<OceanInsightsStatusesPM> oceanInsightsStatusess;
+	 
+		     
+	   //[Include]
+	   //[Association("OceanInsightsStatusesDocument", "Id","Contentdocumentid")]
+	   //[DataMember]
+	   //public virtual List<OceanInsightsStatusesPM> OceanInsightsStatusess  
+	   //{
+	   //     get
+    //         {
+    //             if (oceanInsightsStatusess == null)
+    //             {
+    //                 oceanInsightsStatusess = new List<OceanInsightsStatusesPM>();
+    //             }
+    //             return oceanInsightsStatusess;
+    //          }
+    //         set { oceanInsightsStatusess = value; }
+	   // }
+	   //private List<OceanInsightsStatusesPM>  deletedOceanInsightsStatusess;
+	   //public virtual List<OceanInsightsStatusesPM> DeletedOceanInsightsStatusess  
+	   //{
+	   //     get
+    //         {
+    //             if ( deletedOceanInsightsStatusess == null)
+    //             {
+    //                  deletedOceanInsightsStatusess = new List<OceanInsightsStatusesPM>();
+    //             }
+    //             return  deletedOceanInsightsStatusess;
+    //          }
+    //         set {  deletedOceanInsightsStatusess = value; }
+	   // }
+	   private List<QuoteTemplatePM> quoteTemplates_Footerdocid;
+	 
+		     
+	   [Include]
+	   [Association("QuoteTemplateDocument", "Id","Footerdocid")]
+	   [DataMember]
+	   public virtual List<QuoteTemplatePM> QuoteTemplates_Footerdocid  
+	   {
+	        get
+             {
+                 if (quoteTemplates_Footerdocid == null)
+                 {
+                     quoteTemplates_Footerdocid = new List<QuoteTemplatePM>();
+                 }
+                 return quoteTemplates_Footerdocid;
+              }
+             set { quoteTemplates_Footerdocid = value; }
+	    }
+	   private List<QuoteTemplatePM>  deletedQuoteTemplates_Footerdocid;
+	   public virtual List<QuoteTemplatePM> DeletedQuoteTemplates_Footerdocid  
+	   {
+	        get
+             {
+                 if ( deletedQuoteTemplates_Footerdocid == null)
+                 {
+                      deletedQuoteTemplates_Footerdocid = new List<QuoteTemplatePM>();
+                 }
+                 return  deletedQuoteTemplates_Footerdocid;
+              }
+             set {  deletedQuoteTemplates_Footerdocid = value; }
+	    }
+	   private List<QuoteTemplatePM> quoteTemplates_Headerdocid;
+	 
+		     
+	   [Include]
+	   [Association("QuoteTemplateDocument", "Id","Headerdocid")]
+	   [DataMember]
+	   public virtual List<QuoteTemplatePM> QuoteTemplates_Headerdocid  
+	   {
+	        get
+             {
+                 if (quoteTemplates_Headerdocid == null)
+                 {
+                     quoteTemplates_Headerdocid = new List<QuoteTemplatePM>();
+                 }
+                 return quoteTemplates_Headerdocid;
+              }
+             set { quoteTemplates_Headerdocid = value; }
+	    }
+	   private List<QuoteTemplatePM>  deletedQuoteTemplates_Headerdocid;
+	   public virtual List<QuoteTemplatePM> DeletedQuoteTemplates_Headerdocid  
+	   {
+	        get
+             {
+                 if ( deletedQuoteTemplates_Headerdocid == null)
+                 {
+                      deletedQuoteTemplates_Headerdocid = new List<QuoteTemplatePM>();
+                 }
+                 return  deletedQuoteTemplates_Headerdocid;
+              }
+             set {  deletedQuoteTemplates_Headerdocid = value; }
+	    }
+	   private List<QuoteTemplateSectionPM> quoteTemplateSections;
+	 
+		     
+	   [Include]
+	   [Association("QuoteTemplateSectionDocument", "Id","Sectiondocid")]
+	   [DataMember]
+	   public virtual List<QuoteTemplateSectionPM> QuoteTemplateSections  
+	   {
+	        get
+             {
+                 if (quoteTemplateSections == null)
+                 {
+                     quoteTemplateSections = new List<QuoteTemplateSectionPM>();
+                 }
+                 return quoteTemplateSections;
+              }
+             set { quoteTemplateSections = value; }
+	    }
+	   private List<QuoteTemplateSectionPM>  deletedQuoteTemplateSections;
+	   public virtual List<QuoteTemplateSectionPM> DeletedQuoteTemplateSections  
+	   {
+	        get
+             {
+                 if ( deletedQuoteTemplateSections == null)
+                 {
+                      deletedQuoteTemplateSections = new List<QuoteTemplateSectionPM>();
+                 }
+                 return  deletedQuoteTemplateSections;
+              }
+             set {  deletedQuoteTemplateSections = value; }
+	    }
+	   private List<ReportPM> reports;
+	 
+		     
+	   [Include]
+	   [Association("ReportDocument", "Id","Reportdocumentid")]
+	   [DataMember]
+	   public virtual List<ReportPM> Reports  
+	   {
+	        get
+             {
+                 if (reports == null)
+                 {
+                     reports = new List<ReportPM>();
+                 }
+                 return reports;
+              }
+             set { reports = value; }
+	    }
+	   private List<ReportPM>  deletedReports;
+	   public virtual List<ReportPM> DeletedReports  
+	   {
+	        get
+             {
+                 if ( deletedReports == null)
+                 {
+                      deletedReports = new List<ReportPM>();
+                 }
+                 return  deletedReports;
+              }
+             set {  deletedReports = value; }
+	    }
+	   private List<ReportsTemplatesVersionPM> reportsTemplatesVersions;
+	 
+		     
+	   [Include]
+	   [Association("ReportsTemplatesVersionDocument", "Id","Reportdocumentid")]
+	   [DataMember]
+	   public virtual List<ReportsTemplatesVersionPM> ReportsTemplatesVersions  
+	   {
+	        get
+             {
+                 if (reportsTemplatesVersions == null)
+                 {
+                     reportsTemplatesVersions = new List<ReportsTemplatesVersionPM>();
+                 }
+                 return reportsTemplatesVersions;
+              }
+             set { reportsTemplatesVersions = value; }
+	    }
+	   private List<ReportsTemplatesVersionPM>  deletedReportsTemplatesVersions;
+	   public virtual List<ReportsTemplatesVersionPM> DeletedReportsTemplatesVersions  
+	   {
+	        get
+             {
+                 if ( deletedReportsTemplatesVersions == null)
+                 {
+                      deletedReportsTemplatesVersions = new List<ReportsTemplatesVersionPM>();
+                 }
+                 return  deletedReportsTemplatesVersions;
+              }
+             set {  deletedReportsTemplatesVersions = value; }
+	    }
+	   private List<TaskSchedulerHistoryPM> taskSchedulerHistorys;
+	 
+		     
+	   [Include]
+	   [Association("TaskSchedulerHistoryDocument", "Id","Logdocumentid")]
+	   [DataMember]
+	   public virtual List<TaskSchedulerHistoryPM> TaskSchedulerHistorys  
+	   {
+	        get
+             {
+                 if (taskSchedulerHistorys == null)
+                 {
+                     taskSchedulerHistorys = new List<TaskSchedulerHistoryPM>();
+                 }
+                 return taskSchedulerHistorys;
+              }
+             set { taskSchedulerHistorys = value; }
+	    }
+	   private List<TaskSchedulerHistoryPM>  deletedTaskSchedulerHistorys;
+	   public virtual List<TaskSchedulerHistoryPM> DeletedTaskSchedulerHistorys  
+	   {
+	        get
+             {
+                 if ( deletedTaskSchedulerHistorys == null)
+                 {
+                      deletedTaskSchedulerHistorys = new List<TaskSchedulerHistoryPM>();
+                 }
+                 return  deletedTaskSchedulerHistorys;
+              }
+             set {  deletedTaskSchedulerHistorys = value; }
+	    }
 	 }
 #endregion Properties
 }

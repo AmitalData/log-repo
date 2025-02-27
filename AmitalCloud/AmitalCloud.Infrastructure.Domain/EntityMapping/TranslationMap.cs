@@ -22,25 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.TranslationHeaderCode).HasColumnName("TranslationHeaderCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TranslationHeaderCode).HasColumnName("TranslationHeaderCode").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.TextCodeId).HasColumnName("TextCodeId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TextCodeId).HasColumnName("TextCodeId").IsRequired().HasMaxLength(30).IsUnicode(false);
 
-            this.Property(t => t.TranslatedText).HasColumnName("TranslatedText").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TranslatedText).HasColumnName("TranslatedText").IsRequired().HasMaxLength(500).IsUnicode(true);
 
-            this.Property(t => t.TranslatedTextPlural).HasColumnName("TranslatedTextPlural").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TranslatedTextPlural).HasColumnName("TranslatedTextPlural").IsRequired().HasMaxLength(500).IsUnicode(true);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
             this.Property(t => t.TranslateDate).HasColumnName("TranslateDate").IsRequired();
 
-            this.Property(t => t.TranslatedByUserId).HasColumnName("TranslatedByUserId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TranslatedByUserId).HasColumnName("TranslatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.UpdateDateGMT).HasColumnName("UpdateDateGMT").IsRequired();
 
-            this.Property(t => t.TextCodeCode).HasColumnName("TextCodeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TextCodeCode).HasColumnName("TextCodeCode").IsRequired().HasMaxLength(100).IsUnicode(false);
         }
     }
 }

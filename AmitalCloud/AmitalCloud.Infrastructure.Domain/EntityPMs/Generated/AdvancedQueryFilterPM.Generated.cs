@@ -29,21 +29,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public AdvancedQueryFilterPM(POCO.AdvancedQueryFilter entity) : base()
    {
 		_id = entity.Id;
-		_queryCode = entity.QueryCode;
 		_tenant = entity.Tenant;
 		_queryId = entity.QueryId;
-		_query = entity.Query !=null ? new QueryPM(entity.Query) : null;
-			_objectFieldId = entity.ObjectFieldId;
-		_objectfield = entity.ObjectField !=null ? new ObjectFieldPM(entity.ObjectField) : null;
-			_isPredefined = entity.IsPredefined;
+		_objectFieldId = entity.ObjectFieldId;
+		_isPredefined = entity.IsPredefined;
 		_predefinedValue = entity.PredefinedValue;
 		_predefinedValue2 = entity.PredefinedValue2;
 		_operator = entity.Operator;
 		_indexOrder = entity.IndexOrder;
-		_customPredefined = entity.CustomPredefined;
 		_userId = entity.UserId;
 		_user = entity.User !=null ? new UserPM(entity.User) : null;
 			_objectFieldCode = entity.ObjectFieldCode;
+		_queryCode = entity.QueryCode;
+		_customPredefined = entity.CustomPredefined;
    }
    #endregion Constructors
    #region Properties
@@ -61,22 +59,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _id=value;
-		   }
-		 }
-	   }
-	  private string _queryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string QueryCode  
-	   {
-	     get { return _queryCode; }
-		 set
-		 {
-		   if(_queryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueryCode",OldValue=_queryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _queryCode=value;
 		   }
 		 }
 	   }
@@ -112,14 +94,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private QueryPM _query;
-		[Include]
-        [DataMember]
-        public virtual QueryPM Query 
-		{ 
-		get { return _query; } 
-		set { _query = value; }
-		}
 	  private string _objectFieldId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -136,14 +110,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private ObjectFieldPM _objectfield;
-		[Include]
-        [DataMember]
-        public virtual ObjectFieldPM ObjectField 
-		{ 
-		get { return _objectfield; } 
-		set { _objectfield = value; }
-		}
 	  private bool _isPredefined ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -224,22 +190,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _customPredefined ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool CustomPredefined  
-	   {
-	     get { return _customPredefined; }
-		 set
-		 {
-		   if(_customPredefined != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomPredefined",OldValue=_customPredefined,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _customPredefined=value;
-		   }
-		 }
-	   }
 	  private string _userId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -277,6 +227,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldCode",OldValue=_objectFieldCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _objectFieldCode=value;
+		   }
+		 }
+	   }
+	  private string _queryCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string QueryCode  
+	   {
+	     get { return _queryCode; }
+		 set
+		 {
+		   if(_queryCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueryCode",OldValue=_queryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _queryCode=value;
+		   }
+		 }
+	   }
+	  private bool _customPredefined ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool CustomPredefined  
+	   {
+	     get { return _customPredefined; }
+		 set
+		 {
+		   if(_customPredefined != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomPredefined",OldValue=_customPredefined,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _customPredefined=value;
 		   }
 		 }
 	   }

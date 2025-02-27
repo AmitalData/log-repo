@@ -184,7 +184,6 @@
     <None Include="EntityFiles\AutoCreated\EntityLastActivityType.lxml" />
     <None Include="EntityFiles\AutoCreated\EntityLastUpdate.lxml" />
     <None Include="EntityFiles\AutoCreated\EntityPartner.lxml" />
-    <None Include="EntityFiles\AutoCreated\EventRemark.lxml" />
     <None Include="EntityFiles\AutoCreated\FailedLoginLog.lxml" />
     <None Include="EntityFiles\AutoCreated\FailedTokenLog.lxml" />
     <None Include="EntityFiles\AutoCreated\Feature.lxml" />

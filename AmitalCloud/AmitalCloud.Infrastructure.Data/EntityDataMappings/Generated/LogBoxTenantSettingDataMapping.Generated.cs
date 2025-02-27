@@ -32,8 +32,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         StockTypeCode, 
 	         AutoArchiveOnInvoice, 
 	         ShowTaxAmountWarning, 
-	         AutoArchiveOnPODExport, 
-	         Tenant,	      }
+	         AutoArchiveOnPODExport,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -45,8 +44,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         StockTypeCode, 
 	         AutoArchiveOnInvoice, 
 	         ShowTaxAmountWarning, 
-	         AutoArchiveOnPODExport, 
-	         Tenant,	      }
+	         AutoArchiveOnPODExport,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(LogBoxTenantSettingPM entityPM, POCO.LogBoxTenantSetting entityPOCO)
@@ -59,7 +57,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoArchiveOnInvoice)) { entityPOCO.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShowTaxAmountWarning)) { entityPOCO.ShowTaxAmountWarning = entityPM.ShowTaxAmountWarning;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoArchiveOnPODExport)) { entityPOCO.AutoArchiveOnPODExport = entityPM.AutoArchiveOnPODExport;}
-							//if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
 					}
 		public void POCOToPM(LogBoxTenantSettingPM entityPM, POCO.LogBoxTenantSetting entityPOCO)
         {
@@ -99,10 +96,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.AutoArchiveOnPODExport = entityPOCO.AutoArchiveOnPODExport;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
-            {
-					//entityPM.Tenant = entityPOCO.Tenant;
-            }
 		}
 		public void PMToOldPM(LogBoxTenantSettingPM entityPM, LogBoxTenantSettingPM oldEntityPM)
         {
@@ -138,10 +131,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoArchiveOnPODExport))
             {
                 oldEntityPM.AutoArchiveOnPODExport = entityPM.AutoArchiveOnPODExport;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
-            {
-                oldEntityPM.Tenant = entityPM.Tenant;
             }
 					}
 		public void POCOToList(POCO.LogBoxTenantSetting entityPOCO, LogBoxTenantSettingList entityList)

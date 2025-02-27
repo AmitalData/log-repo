@@ -22,7 +22,7 @@ using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CommunicationLogStepUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CommunicationLogStep,CommunicationLogStepPM,IEntityPM,CommunicationLogStepList,int>
+   public partial class CommunicationLogStepUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CommunicationLogStep,CommunicationLogStepPM,IEntityPM,CommunicationLogStepList,string>
    {
    			
         public CommunicationLogStepUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
@@ -33,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
         }
         public CommunicationLogStepUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
         public CommunicationLogStepUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
-		protected override IEntityKeyFields<POCO.CommunicationLogStep,int> GetKeys(CommunicationLogStepPM entityPM) => new CommunicationLogStepKeys<int>() { CommunicationLogId = entityPM.CommunicationLogId, StepNumber = entityPM.StepNumber };
+		protected override IEntityKeyFields<POCO.CommunicationLogStep,string> GetKeys(CommunicationLogStepPM entityPM) => new CommunicationLogStepKeys<string>() { StepNumber = entityPM.StepNumber, CommunicationLogId = entityPM.CommunicationLogId };
 protected override void FillDefaultValuesOnCreate(CommunicationLogStepPM entityPM)
 		{
 		}

@@ -24,30 +24,36 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public TermsofUseList() : base() {}
        public TermsofUseList(POCO.TermsofUse entity) : base()
        {
-          Id  = entity.Id;
+          DropVersion  = entity.DropVersion;
           Date  = entity.Date;
           VersionNumber  = entity.VersionNumber;
           Tenant  = entity.Tenant;
           VersionDocumentId  = entity.VersionDocumentId;
           PrivateLabelId  = entity.PrivateLabelId;
+          Dbmigrationslastscript  = entity.Dbmigrationslastscript;
+          Id  = entity.Id;
           IsNew  = entity.IsNew;
        }
        #endregion Constructors
        #region Properties
-   
-       [Key]
-       [DataMember]
-       public int Id  { get; set; }
+          [DataMember]
+       public int? DropVersion  { get; set; }
        [DataMember]
        public DateTime Date  { get; set; }
        [DataMember]
-       public int VersionNumber  { get; set; }
+       public int? VersionNumber  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
        public string VersionDocumentId  { get; set; }
        [DataMember]
        public string PrivateLabelId  { get; set; }
+       [DataMember]
+       public int? Dbmigrationslastscript  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int Id  { get; set; }
        [DataMember]
        public bool IsNew  { get; set; }
          #endregion Properties

@@ -33,6 +33,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_value = entity.Value;
 		_isMultipleChoice = entity.IsMultipleChoice;
+		_automaticlastupdatedate = entity.Automaticlastupdatedate;
    }
    #endregion Constructors
    #region Properties
@@ -114,6 +115,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsMultipleChoice",OldValue=_isMultipleChoice,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isMultipleChoice=value;
+		   }
+		 }
+	   }
+	  private DateTime? _automaticlastupdatedate ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? Automaticlastupdatedate  
+	   {
+	     get { return _automaticlastupdatedate; }
+		 set
+		 {
+		   if(_automaticlastupdatedate != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Automaticlastupdatedate",OldValue=_automaticlastupdatedate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   _automaticlastupdatedate=value;
 		   }
 		 }
 	   }

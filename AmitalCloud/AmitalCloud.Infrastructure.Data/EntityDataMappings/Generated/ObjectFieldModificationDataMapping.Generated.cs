@@ -30,8 +30,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         MinLength, 
 	         IsRequired, 
 	         ObjectFieldId, 
-	         ObjectFieldCode, 
-	         UpdateDateGMT,	      }
+	         UpdateDateGMT, 
+	         ObjectFieldCode,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -41,8 +41,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         MinLength, 
 	         IsRequired, 
 	         ObjectFieldId, 
-	         ObjectFieldCode, 
-	         UpdateDateGMT,	      }
+	         UpdateDateGMT, 
+	         ObjectFieldCode,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ObjectFieldModificationPM entityPM, POCO.ObjectFieldModification entityPOCO)
@@ -52,8 +52,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinLength)) { entityPOCO.MinLength = entityPM.MinLength;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRequired)) { entityPOCO.IsRequired = entityPM.IsRequired;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldId)) { entityPOCO.ObjectFieldId = entityPM.ObjectFieldId;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldCode)) { entityPOCO.ObjectFieldCode = entityPM.ObjectFieldCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDateGMT)) { entityPOCO.UpdateDateGMT = entityPM.UpdateDateGMT;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldCode)) { entityPOCO.ObjectFieldCode = entityPM.ObjectFieldCode;}
 					}
 		public void POCOToPM(ObjectFieldModificationPM entityPM, POCO.ObjectFieldModification entityPOCO)
         {
@@ -81,13 +81,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.ObjectFieldId = entityPOCO.ObjectFieldId;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectFieldCode))
-            {
-					entityPM.ObjectFieldCode = entityPOCO.ObjectFieldCode;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdateDateGMT))
             {
 					entityPM.UpdateDateGMT = entityPOCO.UpdateDateGMT;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectFieldCode))
+            {
+					entityPM.ObjectFieldCode = entityPOCO.ObjectFieldCode;
             }
 		}
 		public void PMToOldPM(ObjectFieldModificationPM entityPM, ObjectFieldModificationPM oldEntityPM)
@@ -113,13 +113,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.ObjectFieldId = entityPM.ObjectFieldId;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldCode))
-            {
-                oldEntityPM.ObjectFieldCode = entityPM.ObjectFieldCode;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDateGMT))
             {
                 oldEntityPM.UpdateDateGMT = entityPM.UpdateDateGMT;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldCode))
+            {
+                oldEntityPM.ObjectFieldCode = entityPM.ObjectFieldCode;
             }
 					}
 		public void POCOToList(POCO.ObjectFieldModification entityPOCO, ObjectFieldModificationList entityList)

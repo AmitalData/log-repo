@@ -28,11 +28,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.CustomerTenantShareImportFile).HasColumnName("CustomerTenantShareImportFile").IsRequired();
 
-            this.Property(t => t.LogBoxAdminUserId).HasColumnName("LogBoxAdminUserId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.LogBoxAdminUserId).HasColumnName("LogBoxAdminUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.DocumentShareAsDefault).HasColumnName("DocumentShareAsDefault").IsRequired();
 
-            this.Property(t => t.StockTypeCode).HasColumnName("StockTypeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.StockTypeCode).HasColumnName("StockTypeCode").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.AutoArchiveOnInvoice).HasColumnName("AutoArchiveOnInvoice").IsRequired();
 

@@ -22,21 +22,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired();
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 
-            this.Property(t => t.CreatedByUser).HasColumnName("CreatedByUser").IsRequired();
+            this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsRequired();
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-            //this.Property(t => t.EventType).HasColumnName("EventType").IsRequired();
+            this.Property(t => t.EventTypeId).HasColumnName("EventTypeId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.PartnerType).HasColumnName("PartnerType").IsRequired();
+            this.Property(t => t.PartnerTypeId).HasColumnName("PartnerTypeId").HasMaxLength(2).IsFixedLength();
 
-            this.Property(t => t.IsChoose).HasColumnName("IsChoose").IsRequired();
+            this.Property(t => t.IsChoose).HasColumnName("IsChoose");
         }
     }
 }

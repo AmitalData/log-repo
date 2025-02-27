@@ -18,16 +18,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
         public CommunicationLogStepKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
         public override void Initialize(IEnumerable<KeyValuePair<string, string>> paramList)
         {
-			CommunicationLogId = (string)Convert.ChangeType((paramList.Single(t => t.Key == "CommunicationLogId").Value), typeof(string));
 			StepNumber = (int)Convert.ChangeType((paramList.Single(t => t.Key == "StepNumber").Value), typeof(int));
+			CommunicationLogId = (string)Convert.ChangeType((paramList.Single(t => t.Key == "CommunicationLogId").Value), typeof(string));
         }
-   	  public string CommunicationLogId  { get; set; }
+   	  public int StepNumber  { get; set; }
 	    			   
-	  public int StepNumber  { get; set; }
+	  public string CommunicationLogId  { get; set; }
 	    			   
-	  public override T GetFullKey() =>   (T)Convert.ChangeType(CommunicationLogId.ToString()+'_'+StepNumber.ToString(),typeof(T)) ;           
+	  public override T GetFullKey() =>   (T)Convert.ChangeType(StepNumber.ToString()+'_'+CommunicationLogId.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CommunicationLogStepsPM";
-	  public override Expression<Func<EntityPOCOs.CommunicationLogStep, bool>> Predicate => a => a.CommunicationLogId == CommunicationLogId && a.StepNumber == StepNumber;
+	  public override Expression<Func<EntityPOCOs.CommunicationLogStep, bool>> Predicate => a => a.StepNumber == StepNumber && a.CommunicationLogId == CommunicationLogId;
    }
 }
 	 

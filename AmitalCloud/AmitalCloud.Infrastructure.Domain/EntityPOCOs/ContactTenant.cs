@@ -33,6 +33,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string ContactId { get; set; }
 	      
         public virtual Contact Contact { get; set; }
+		public virtual ICollection<Restriction> Restrictions { get; set; }
     }
 }
 	 

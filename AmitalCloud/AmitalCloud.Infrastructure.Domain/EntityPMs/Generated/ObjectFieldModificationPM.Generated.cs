@@ -34,8 +34,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_minLength = entity.MinLength;
 		_isRequired = entity.IsRequired;
 		_objectFieldId = entity.ObjectFieldId;
-		_objectFieldCode = entity.ObjectFieldCode;
 		_updateDateGMT = entity.UpdateDateGMT;
+		_objectFieldCode = entity.ObjectFieldCode;
    }
    #endregion Constructors
    #region Properties
@@ -136,22 +136,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _objectFieldCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectFieldCode  
-	   {
-	     get { return _objectFieldCode; }
-		 set
-		 {
-		   if(_objectFieldCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldCode",OldValue=_objectFieldCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectFieldCode=value;
-		   }
-		 }
-	   }
 	  private DateTime? _updateDateGMT ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -165,6 +149,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDateGMT",OldValue=_updateDateGMT,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _updateDateGMT=value;
+		   }
+		 }
+	   }
+	  private string _objectFieldCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectFieldCode  
+	   {
+	     get { return _objectFieldCode; }
+		 set
+		 {
+		   if(_objectFieldCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldCode",OldValue=_objectFieldCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectFieldCode=value;
 		   }
 		 }
 	   }

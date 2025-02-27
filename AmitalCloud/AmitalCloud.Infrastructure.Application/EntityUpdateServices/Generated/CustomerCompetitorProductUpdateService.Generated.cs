@@ -33,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
         }
         public CustomerCompetitorProductUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
         public CustomerCompetitorProductUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
-		protected override IEntityKeyFields<POCO.CustomerCompetitorProduct,string> GetKeys(CustomerCompetitorProductPM entityPM) => new CustomerCompetitorProductKeys<string>() { CustomerId = entityPM.CustomerId, CompetitorId = entityPM.CompetitorId, ProductTypeCode = entityPM.ProductTypeCode };
+		protected override IEntityKeyFields<POCO.CustomerCompetitorProduct,string> GetKeys(CustomerCompetitorProductPM entityPM) => new CustomerCompetitorProductKeys<string>() { ProductTypeCode = entityPM.ProductTypeCode, CustomerId = entityPM.CustomerId, CompetitorId = entityPM.CompetitorId };
 protected override void FillDefaultValuesOnCreate(CustomerCompetitorProductPM entityPM)
 		{
 		}

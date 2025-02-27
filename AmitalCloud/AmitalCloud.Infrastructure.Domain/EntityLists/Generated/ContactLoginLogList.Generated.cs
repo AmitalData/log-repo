@@ -24,35 +24,53 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public ContactLoginLogList() : base() {}
        public ContactLoginLogList(POCO.ContactLoginLog entity) : base()
        {
-          Id  = entity.Id;
+          CdropId  = entity.CdropId;
           Tenant  = entity.Tenant;
-          IP  = entity.IP;
-          Browser  = entity.Browser;
+          CdropIp  = entity.CdropIp;
+          CdropBrowser  = entity.CdropBrowser;
           ContactId  = entity.ContactId;
           GMTDateTime  = entity.GMTDateTime;
           LocalDateTime  = entity.LocalDateTime;
+          CdropComputerid  = entity.CdropComputerid;
+          CdropContactagent  = entity.CdropContactagent;
+          CdropVia  = entity.CdropVia;
+          Id  = entity.Id;
+          IP  = entity.IP;
+          Browser  = entity.Browser;
           ComputerId  = entity.ComputerId;
           ContactAgent  = entity.ContactAgent;
           Via  = entity.Via;
        }
        #endregion Constructors
        #region Properties
-   
-       [Key]
-       [DataMember]
-       public string Id  { get; set; }
+          [DataMember]
+       public string CdropId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public string IP  { get; set; }
+       public string CdropIp  { get; set; }
        [DataMember]
-       public string Browser  { get; set; }
+       public string CdropBrowser  { get; set; }
        [DataMember]
        public string ContactId  { get; set; }
        [DataMember]
        public DateTime? GMTDateTime  { get; set; }
        [DataMember]
        public DateTime? LocalDateTime  { get; set; }
+       [DataMember]
+       public string CdropComputerid  { get; set; }
+       [DataMember]
+       public string CdropContactagent  { get; set; }
+       [DataMember]
+       public string CdropVia  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public string IP  { get; set; }
+       [DataMember]
+       public string Browser  { get; set; }
        [DataMember]
        public string ComputerId  { get; set; }
        [DataMember]

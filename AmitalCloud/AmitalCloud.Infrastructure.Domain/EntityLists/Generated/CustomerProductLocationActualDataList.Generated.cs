@@ -60,13 +60,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public decimal? TEU  { get; set; }
+       public int? TEU  { get; set; }
        [DataMember]
        public int? NumberOfShipments  { get; set; }
        [DataMember]
-       public decimal? ChargeableWeight  { get; set; }
+       public int? ChargeableWeight  { get; set; }
        [DataMember]
-       public decimal? Revenue  { get; set; }
+       public int? Revenue  { get; set; }
          #endregion Properties
    }
 

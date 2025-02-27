@@ -22,7 +22,7 @@ using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class GeneralLockUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.GeneralLock,GeneralLockPM,IEntityPM,GeneralLockList,int>
+   public partial class GeneralLockUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.GeneralLock,GeneralLockPM,IEntityPM,GeneralLockList,string>
    {
    			
         public GeneralLockUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
@@ -33,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
         }
         public GeneralLockUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
         public GeneralLockUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
-		protected override IEntityKeyFields<POCO.GeneralLock,int> GetKeys(GeneralLockPM entityPM) => new GeneralLockKeys<int>() { GeneralKey = entityPM.GeneralKey, Tenant = entityPM.Tenant };
+		protected override IEntityKeyFields<POCO.GeneralLock,string> GetKeys(GeneralLockPM entityPM) => new GeneralLockKeys<string>() { Tenant = entityPM.Tenant, GeneralKey = entityPM.GeneralKey };
 protected override void FillDefaultValuesOnCreate(GeneralLockPM entityPM)
 		{
 		}

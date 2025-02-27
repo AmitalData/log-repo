@@ -293,6 +293,7 @@
     <Compile Include="EntityListQueryServices\Generated\EntityPartnerListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityStatusTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\EventRemarkListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EventTypeCategoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EventTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FailedLoginLogListQueryService.Generated.cs" />
@@ -694,6 +695,7 @@
     <Compile Include="EntityQueryServices\Generated\EntityPartnerQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityStatusTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EventRemarkQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EventTypeCategoryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EventTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FailedLoginLogQueryService.Generated.cs" />
@@ -1100,6 +1102,7 @@
     <Compile Include="EntityUpdateServices\Generated\EntityPartnerUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityStatusTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\EventRemarkUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EventTypeCategoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EventTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FailedLoginLogUpdateService.Generated.cs" />

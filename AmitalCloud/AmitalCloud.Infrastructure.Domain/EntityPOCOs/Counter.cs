@@ -40,6 +40,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public virtual User User { get; set; }
         [Column("ChangedDate")]
 	    public DateTime? ChangedDate { get; set; }
+		public virtual ICollection<CounterDefinition> CounterDefinitions { get; set; }
+		public virtual ICollection<CounterStat> CounterStats { get; set; }
     }
 }
 	 

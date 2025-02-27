@@ -32,6 +32,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_extension = entity.Extension;
 		_size = entity.Size;
+		cards = entity.Cards != null ? entity.Cards.Select(a=>new CardPM(a)).ToList() : null;
+		contacts = entity.Contacts != null ? entity.Contacts.Select(a=>new ContactPM(a)).ToList() : null;
+		hybridPartners_Logoid = entity.HybridPartners_Logoid != null ? entity.HybridPartners_Logoid.Select(a=>new HybridPartnerPM(a)).ToList() : null;
+		hybridPartners_Smalllogoid = entity.HybridPartners_Smalllogoid != null ? entity.HybridPartners_Smalllogoid.Select(a=>new HybridPartnerPM(a)).ToList() : null;
+		quoteTemplateSettings_Pagefooterarea1imagedetailid = entity.QuoteTemplateSettings_Pagefooterarea1imagedetailid != null ? entity.QuoteTemplateSettings_Pagefooterarea1imagedetailid.Select(a=>new QuoteTemplateSettingPM(a)).ToList() : null;
+		quoteTemplateSettings_Pagefooterarea2imagedetailid = entity.QuoteTemplateSettings_Pagefooterarea2imagedetailid != null ? entity.QuoteTemplateSettings_Pagefooterarea2imagedetailid.Select(a=>new QuoteTemplateSettingPM(a)).ToList() : null;
+		quoteTemplateSettings_Pagefooterarea3imagedetailid = entity.QuoteTemplateSettings_Pagefooterarea3imagedetailid != null ? entity.QuoteTemplateSettings_Pagefooterarea3imagedetailid.Select(a=>new QuoteTemplateSettingPM(a)).ToList() : null;
+		quoteTemplateSettings_Pageheaderarea1imagedetailid = entity.QuoteTemplateSettings_Pageheaderarea1imagedetailid != null ? entity.QuoteTemplateSettings_Pageheaderarea1imagedetailid.Select(a=>new QuoteTemplateSettingPM(a)).ToList() : null;
+		quoteTemplateSettings_Pageheaderarea2imagedetailid = entity.QuoteTemplateSettings_Pageheaderarea2imagedetailid != null ? entity.QuoteTemplateSettings_Pageheaderarea2imagedetailid.Select(a=>new QuoteTemplateSettingPM(a)).ToList() : null;
+		quoteTemplateSettings_Pageheaderarea3imagedetailid = entity.QuoteTemplateSettings_Pageheaderarea3imagedetailid != null ? entity.QuoteTemplateSettings_Pageheaderarea3imagedetailid.Select(a=>new QuoteTemplateSettingPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -100,6 +110,316 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<CardPM> cards;
+	 
+		     
+	   [Include]
+	   [Association("CardImageDetail", "Id","Imagedetailid")]
+	   [DataMember]
+	   public virtual List<CardPM> Cards  
+	   {
+	        get
+             {
+                 if (cards == null)
+                 {
+                     cards = new List<CardPM>();
+                 }
+                 return cards;
+              }
+             set { cards = value; }
+	    }
+	   private List<CardPM>  deletedCards;
+	   public virtual List<CardPM> DeletedCards  
+	   {
+	        get
+             {
+                 if ( deletedCards == null)
+                 {
+                      deletedCards = new List<CardPM>();
+                 }
+                 return  deletedCards;
+              }
+             set {  deletedCards = value; }
+	    }
+	   private List<ContactPM> contacts;
+	 
+		     
+	   [Include]
+	   [Association("ContactImageDetail", "Id","Imagedetailid")]
+	   [DataMember]
+	   public virtual List<ContactPM> Contacts  
+	   {
+	        get
+             {
+                 if (contacts == null)
+                 {
+                     contacts = new List<ContactPM>();
+                 }
+                 return contacts;
+              }
+             set { contacts = value; }
+	    }
+	   private List<ContactPM>  deletedContacts;
+	   public virtual List<ContactPM> DeletedContacts  
+	   {
+	        get
+             {
+                 if ( deletedContacts == null)
+                 {
+                      deletedContacts = new List<ContactPM>();
+                 }
+                 return  deletedContacts;
+              }
+             set {  deletedContacts = value; }
+	    }
+	   private List<HybridPartnerPM> hybridPartners_Logoid;
+	 
+		     
+	   [Include]
+	   [Association("HybridPartnerImageDetail", "Id","Logoid")]
+	   [DataMember]
+	   public virtual List<HybridPartnerPM> HybridPartners_Logoid  
+	   {
+	        get
+             {
+                 if (hybridPartners_Logoid == null)
+                 {
+                     hybridPartners_Logoid = new List<HybridPartnerPM>();
+                 }
+                 return hybridPartners_Logoid;
+              }
+             set { hybridPartners_Logoid = value; }
+	    }
+	   private List<HybridPartnerPM>  deletedHybridPartners_Logoid;
+	   public virtual List<HybridPartnerPM> DeletedHybridPartners_Logoid  
+	   {
+	        get
+             {
+                 if ( deletedHybridPartners_Logoid == null)
+                 {
+                      deletedHybridPartners_Logoid = new List<HybridPartnerPM>();
+                 }
+                 return  deletedHybridPartners_Logoid;
+              }
+             set {  deletedHybridPartners_Logoid = value; }
+	    }
+	   private List<HybridPartnerPM> hybridPartners_Smalllogoid;
+	 
+		     
+	   [Include]
+	   [Association("HybridPartnerImageDetail", "Id","Smalllogoid")]
+	   [DataMember]
+	   public virtual List<HybridPartnerPM> HybridPartners_Smalllogoid  
+	   {
+	        get
+             {
+                 if (hybridPartners_Smalllogoid == null)
+                 {
+                     hybridPartners_Smalllogoid = new List<HybridPartnerPM>();
+                 }
+                 return hybridPartners_Smalllogoid;
+              }
+             set { hybridPartners_Smalllogoid = value; }
+	    }
+	   private List<HybridPartnerPM>  deletedHybridPartners_Smalllogoid;
+	   public virtual List<HybridPartnerPM> DeletedHybridPartners_Smalllogoid  
+	   {
+	        get
+             {
+                 if ( deletedHybridPartners_Smalllogoid == null)
+                 {
+                      deletedHybridPartners_Smalllogoid = new List<HybridPartnerPM>();
+                 }
+                 return  deletedHybridPartners_Smalllogoid;
+              }
+             set {  deletedHybridPartners_Smalllogoid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM> quoteTemplateSettings_Pagefooterarea1imagedetailid;
+	 
+		     
+	   [Include]
+	   [Association("QuoteTemplateSettingImageDetail", "Id","Pagefooterarea1imagedetailid")]
+	   [DataMember]
+	   public virtual List<QuoteTemplateSettingPM> QuoteTemplateSettings_Pagefooterarea1imagedetailid  
+	   {
+	        get
+             {
+                 if (quoteTemplateSettings_Pagefooterarea1imagedetailid == null)
+                 {
+                     quoteTemplateSettings_Pagefooterarea1imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return quoteTemplateSettings_Pagefooterarea1imagedetailid;
+              }
+             set { quoteTemplateSettings_Pagefooterarea1imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM>  deletedQuoteTemplateSettings_Pagefooterarea1imagedetailid;
+	   public virtual List<QuoteTemplateSettingPM> DeletedQuoteTemplateSettings_Pagefooterarea1imagedetailid  
+	   {
+	        get
+             {
+                 if ( deletedQuoteTemplateSettings_Pagefooterarea1imagedetailid == null)
+                 {
+                      deletedQuoteTemplateSettings_Pagefooterarea1imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return  deletedQuoteTemplateSettings_Pagefooterarea1imagedetailid;
+              }
+             set {  deletedQuoteTemplateSettings_Pagefooterarea1imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM> quoteTemplateSettings_Pagefooterarea2imagedetailid;
+	 
+		     
+	   [Include]
+	   [Association("QuoteTemplateSettingImageDetail", "Id","Pagefooterarea2imagedetailid")]
+	   [DataMember]
+	   public virtual List<QuoteTemplateSettingPM> QuoteTemplateSettings_Pagefooterarea2imagedetailid  
+	   {
+	        get
+             {
+                 if (quoteTemplateSettings_Pagefooterarea2imagedetailid == null)
+                 {
+                     quoteTemplateSettings_Pagefooterarea2imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return quoteTemplateSettings_Pagefooterarea2imagedetailid;
+              }
+             set { quoteTemplateSettings_Pagefooterarea2imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM>  deletedQuoteTemplateSettings_Pagefooterarea2imagedetailid;
+	   public virtual List<QuoteTemplateSettingPM> DeletedQuoteTemplateSettings_Pagefooterarea2imagedetailid  
+	   {
+	        get
+             {
+                 if ( deletedQuoteTemplateSettings_Pagefooterarea2imagedetailid == null)
+                 {
+                      deletedQuoteTemplateSettings_Pagefooterarea2imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return  deletedQuoteTemplateSettings_Pagefooterarea2imagedetailid;
+              }
+             set {  deletedQuoteTemplateSettings_Pagefooterarea2imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM> quoteTemplateSettings_Pagefooterarea3imagedetailid;
+	 
+		     
+	   [Include]
+	   [Association("QuoteTemplateSettingImageDetail", "Id","Pagefooterarea3imagedetailid")]
+	   [DataMember]
+	   public virtual List<QuoteTemplateSettingPM> QuoteTemplateSettings_Pagefooterarea3imagedetailid  
+	   {
+	        get
+             {
+                 if (quoteTemplateSettings_Pagefooterarea3imagedetailid == null)
+                 {
+                     quoteTemplateSettings_Pagefooterarea3imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return quoteTemplateSettings_Pagefooterarea3imagedetailid;
+              }
+             set { quoteTemplateSettings_Pagefooterarea3imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM>  deletedQuoteTemplateSettings_Pagefooterarea3imagedetailid;
+	   public virtual List<QuoteTemplateSettingPM> DeletedQuoteTemplateSettings_Pagefooterarea3imagedetailid  
+	   {
+	        get
+             {
+                 if ( deletedQuoteTemplateSettings_Pagefooterarea3imagedetailid == null)
+                 {
+                      deletedQuoteTemplateSettings_Pagefooterarea3imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return  deletedQuoteTemplateSettings_Pagefooterarea3imagedetailid;
+              }
+             set {  deletedQuoteTemplateSettings_Pagefooterarea3imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM> quoteTemplateSettings_Pageheaderarea1imagedetailid;
+	 
+		     
+	   [Include]
+	   [Association("QuoteTemplateSettingImageDetail", "Id","Pageheaderarea1imagedetailid")]
+	   [DataMember]
+	   public virtual List<QuoteTemplateSettingPM> QuoteTemplateSettings_Pageheaderarea1imagedetailid  
+	   {
+	        get
+             {
+                 if (quoteTemplateSettings_Pageheaderarea1imagedetailid == null)
+                 {
+                     quoteTemplateSettings_Pageheaderarea1imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return quoteTemplateSettings_Pageheaderarea1imagedetailid;
+              }
+             set { quoteTemplateSettings_Pageheaderarea1imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM>  deletedQuoteTemplateSettings_Pageheaderarea1imagedetailid;
+	   public virtual List<QuoteTemplateSettingPM> DeletedQuoteTemplateSettings_Pageheaderarea1imagedetailid  
+	   {
+	        get
+             {
+                 if ( deletedQuoteTemplateSettings_Pageheaderarea1imagedetailid == null)
+                 {
+                      deletedQuoteTemplateSettings_Pageheaderarea1imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return  deletedQuoteTemplateSettings_Pageheaderarea1imagedetailid;
+              }
+             set {  deletedQuoteTemplateSettings_Pageheaderarea1imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM> quoteTemplateSettings_Pageheaderarea2imagedetailid;
+	 
+		     
+	   [Include]
+	   [Association("QuoteTemplateSettingImageDetail", "Id","Pageheaderarea2imagedetailid")]
+	   [DataMember]
+	   public virtual List<QuoteTemplateSettingPM> QuoteTemplateSettings_Pageheaderarea2imagedetailid  
+	   {
+	        get
+             {
+                 if (quoteTemplateSettings_Pageheaderarea2imagedetailid == null)
+                 {
+                     quoteTemplateSettings_Pageheaderarea2imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return quoteTemplateSettings_Pageheaderarea2imagedetailid;
+              }
+             set { quoteTemplateSettings_Pageheaderarea2imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM>  deletedQuoteTemplateSettings_Pageheaderarea2imagedetailid;
+	   public virtual List<QuoteTemplateSettingPM> DeletedQuoteTemplateSettings_Pageheaderarea2imagedetailid  
+	   {
+	        get
+             {
+                 if ( deletedQuoteTemplateSettings_Pageheaderarea2imagedetailid == null)
+                 {
+                      deletedQuoteTemplateSettings_Pageheaderarea2imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return  deletedQuoteTemplateSettings_Pageheaderarea2imagedetailid;
+              }
+             set {  deletedQuoteTemplateSettings_Pageheaderarea2imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM> quoteTemplateSettings_Pageheaderarea3imagedetailid;
+	 
+		     
+	   [Include]
+	   [Association("QuoteTemplateSettingImageDetail", "Id","Pageheaderarea3imagedetailid")]
+	   [DataMember]
+	   public virtual List<QuoteTemplateSettingPM> QuoteTemplateSettings_Pageheaderarea3imagedetailid  
+	   {
+	        get
+             {
+                 if (quoteTemplateSettings_Pageheaderarea3imagedetailid == null)
+                 {
+                     quoteTemplateSettings_Pageheaderarea3imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return quoteTemplateSettings_Pageheaderarea3imagedetailid;
+              }
+             set { quoteTemplateSettings_Pageheaderarea3imagedetailid = value; }
+	    }
+	   private List<QuoteTemplateSettingPM>  deletedQuoteTemplateSettings_Pageheaderarea3imagedetailid;
+	   public virtual List<QuoteTemplateSettingPM> DeletedQuoteTemplateSettings_Pageheaderarea3imagedetailid  
+	   {
+	        get
+             {
+                 if ( deletedQuoteTemplateSettings_Pageheaderarea3imagedetailid == null)
+                 {
+                      deletedQuoteTemplateSettings_Pageheaderarea3imagedetailid = new List<QuoteTemplateSettingPM>();
+                 }
+                 return  deletedQuoteTemplateSettings_Pageheaderarea3imagedetailid;
+              }
+             set {  deletedQuoteTemplateSettings_Pageheaderarea3imagedetailid = value; }
+	    }
 	 }
 #endregion Properties
 }

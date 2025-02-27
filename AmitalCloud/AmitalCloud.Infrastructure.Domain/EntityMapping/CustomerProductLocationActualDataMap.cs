@@ -32,25 +32,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.CustomerId, t.ProductTypeCode, t.Month, t.Year, t.CountryId });
 	 
-            this.Property(t => t.CustomerId).HasColumnName("CustomerId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CustomerId).HasColumnName("CustomerId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.ProductTypeCode).HasColumnName("ProductTypeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ProductTypeCode).HasColumnName("ProductTypeCode").IsRequired().HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.Month).HasColumnName("Month").IsRequired().HasDatabaseGeneratedOption(null);
 
             this.Property(t => t.Year).HasColumnName("Year").IsRequired().HasDatabaseGeneratedOption(null);
 
-            this.Property(t => t.CountryId).HasColumnName("CountryId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CountryId).HasColumnName("CountryId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.TEU).HasColumnName("TEU").IsRequired().HasPrecision(0, 0);
+            this.Property(t => t.TEU).HasColumnName("TEU").IsRequired();
 
             this.Property(t => t.NumberOfShipments).HasColumnName("NumberOfShipments").IsRequired();
 
-            this.Property(t => t.ChargeableWeight).HasColumnName("ChargeableWeight").IsRequired().HasPrecision(0, 0);
+            this.Property(t => t.ChargeableWeight).HasColumnName("ChargeableWeight").IsRequired();
 
-            this.Property(t => t.Revenue).HasColumnName("Revenue").IsRequired().HasPrecision(0, 0);
+            this.Property(t => t.Revenue).HasColumnName("Revenue").IsRequired();
         }
     }
 }

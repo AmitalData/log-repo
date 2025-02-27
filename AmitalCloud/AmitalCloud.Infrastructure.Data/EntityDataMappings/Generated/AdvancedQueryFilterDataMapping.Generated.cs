@@ -25,7 +25,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           { 
 		     None,  
 	         Id, 
-	         QueryCode, 
 	         Tenant, 
 	         QueryId, 
 	         ObjectFieldId, 
@@ -34,14 +33,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         PredefinedValue2, 
 	         Operator, 
 	         IndexOrder, 
-	         CustomPredefined, 
 	         UserId, 
-	         ObjectFieldCode,	      }
+	         ObjectFieldCode, 
+	         QueryCode, 
+	         CustomPredefined,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
 	         Id, 
-	         QueryCode, 
 	         Tenant, 
 	         QueryId, 
 	         ObjectFieldId, 
@@ -50,15 +49,15 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         PredefinedValue2, 
 	         Operator, 
 	         IndexOrder, 
-	         CustomPredefined, 
 	         UserId, 
-	         ObjectFieldCode,	      }
+	         ObjectFieldCode, 
+	         QueryCode, 
+	         CustomPredefined,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(AdvancedQueryFilterPM entityPM, POCO.AdvancedQueryFilter entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryCode)) { entityPOCO.QueryCode = entityPM.QueryCode;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryId)) { entityPOCO.QueryId = entityPM.QueryId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldId)) { entityPOCO.ObjectFieldId = entityPM.ObjectFieldId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPredefined)) { entityPOCO.IsPredefined = entityPM.IsPredefined;}
@@ -66,19 +65,16 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PredefinedValue2)) { entityPOCO.PredefinedValue2 = entityPM.PredefinedValue2;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Operator)) { entityPOCO.Operator = entityPM.Operator;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IndexOrder)) { entityPOCO.IndexOrder = entityPM.IndexOrder;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomPredefined)) { entityPOCO.CustomPredefined = entityPM.CustomPredefined;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UserId)) { entityPOCO.UserId = entityPM.UserId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldCode)) { entityPOCO.ObjectFieldCode = entityPM.ObjectFieldCode;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryCode)) { entityPOCO.QueryCode = entityPM.QueryCode;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomPredefined)) { entityPOCO.CustomPredefined = entityPM.CustomPredefined;}
 					}
 		public void POCOToPM(AdvancedQueryFilterPM entityPM, POCO.AdvancedQueryFilter entityPOCO)
         {
 			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
             {
 					entityPM.Id = entityPOCO.Id;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueryCode))
-            {
-					entityPM.QueryCode = entityPOCO.QueryCode;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
@@ -112,10 +108,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.IndexOrder = entityPOCO.IndexOrder;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomPredefined))
-            {
-					entityPM.CustomPredefined = entityPOCO.CustomPredefined;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UserId))
             {
 					entityPM.UserId = entityPOCO.UserId;
@@ -124,15 +116,19 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.ObjectFieldCode = entityPOCO.ObjectFieldCode;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QueryCode))
+            {
+					entityPM.QueryCode = entityPOCO.QueryCode;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomPredefined))
+            {
+					entityPM.CustomPredefined = entityPOCO.CustomPredefined;
+            }
 		}
 		public void PMToOldPM(AdvancedQueryFilterPM entityPM, AdvancedQueryFilterPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryCode))
-            {
-                oldEntityPM.QueryCode = entityPM.QueryCode;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
             }
@@ -164,10 +160,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.IndexOrder = entityPM.IndexOrder;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomPredefined))
-            {
-                oldEntityPM.CustomPredefined = entityPM.CustomPredefined;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UserId))
             {
                 oldEntityPM.UserId = entityPM.UserId;
@@ -175,6 +167,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ObjectFieldCode))
             {
                 oldEntityPM.ObjectFieldCode = entityPM.ObjectFieldCode;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueryCode))
+            {
+                oldEntityPM.QueryCode = entityPM.QueryCode;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomPredefined))
+            {
+                oldEntityPM.CustomPredefined = entityPM.CustomPredefined;
             }
 					}
 		public void POCOToList(POCO.AdvancedQueryFilter entityPOCO, AdvancedQueryFilterList entityList)
@@ -197,6 +197,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.PredefinedValue)) //T4 find type == nText 
+            {
+                entityPM.PredefinedValue = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PredefinedValue));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.PredefinedValue2)) //T4 find type == nText 
+            {
+                entityPM.PredefinedValue2 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PredefinedValue2));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

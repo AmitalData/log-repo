@@ -22,15 +22,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(100).IsUnicode(true);
 
-            this.Property(t => t.Value).HasColumnName("Value").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Value).HasColumnName("Value").IsRequired().HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.IsMultipleChoice).HasColumnName("IsMultipleChoice").IsRequired();
+
+            this.Property(t => t.Automaticlastupdatedate).HasColumnName("Automaticlastupdatedate").IsRequired();
         }
     }
 }

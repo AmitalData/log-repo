@@ -31,29 +31,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public virtual ObjectTable ObjectTable { get; set; }
         [Column("ControlPath")]
 	    public string ControlPath { get; set; }
-        [ForeignKey("TabNameTextCode")]
         [Column("TabNameTextCodeId")]
 	    public string TabNameTextCodeId { get; set; }
-	      
-        public virtual TextCode TabNameTextCode { get; set; }
         [Column("IndexOrder")]
 	    public int IndexOrder { get; set; }
         [Column("Code")]
 	    public string Code { get; set; }
         [Column("FeatureId")]
 	    public string FeatureId { get; set; }
-        [Column("TabNameTextCodeCode")]
-	    public string TabNameTextCodeCode { get; set; }
-        [Column("FeatureUniqeCode")]
-	    public string FeatureUniqeCode { get; set; }
-        [Column("Feature")]
-	    public string Feature { get; set; }
-        [Column("TabModification")]
-	    public string TabModification { get; set; }
         [Column("HtmlComponentName")]
 	    public string HtmlComponentName { get; set; }
         [Column("HtmlComponentUrl")]
 	    public string HtmlComponentUrl { get; set; }
+        [Column("TabNameTextCodeCode")]
+	    public string TabNameTextCodeCode { get; set; }
+        [Column("FeatureUniqeCode")]
+	    public string FeatureUniqeCode { get; set; }
         [Column("Type")]
 	    public string Type { get; set; }
         [Column("ScreenCode")]
@@ -62,6 +55,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string OriginalTabCode { get; set; }
         [Column("HideTabNameInScreen")]
 	    public bool HideTabNameInScreen { get; set; }
+        [Column("Islocked")]
+	    public bool Islocked { get; set; }
     }
 }
 	 

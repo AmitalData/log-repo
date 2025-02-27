@@ -22,31 +22,31 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Condition).HasColumnName("Condition").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Condition).HasColumnName("Condition").IsRequired().HasMaxLength(250).IsUnicode(false);
 
             this.Property(t => t.SystemLevel).HasColumnName("SystemLevel").IsRequired();
 
-            this.Property(t => t.RuleCode).HasColumnName("RuleCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.RuleCode).HasColumnName("RuleCode").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.OutputMessage).HasColumnName("OutputMessage").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.OutputMessage).HasColumnName("OutputMessage").IsRequired().HasMaxLength(250).IsUnicode(false);
 
-            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(80).IsUnicode(true);
 
             this.Property(t => t.InActive).HasColumnName("InActive").IsRequired();
 
-            this.Property(t => t.RuleTypeCode).HasColumnName("RuleTypeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.RuleTypeCode).HasColumnName("RuleTypeCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.TriggerTypeCode).HasColumnName("TriggerTypeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TriggerTypeCode).HasColumnName("TriggerTypeCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.RuleNotificationTypeCode).HasColumnName("RuleNotificationTypeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.RuleNotificationTypeCode).HasColumnName("RuleNotificationTypeCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.TriggerFieldId).HasColumnName("TriggerFieldId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TriggerFieldId).HasColumnName("TriggerFieldId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ActiveForNew).HasColumnName("ActiveForNew").IsRequired();
 
@@ -56,7 +56,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.AdvancedCondition).HasColumnName("AdvancedCondition").IsRequired();
 
-            this.Property(t => t.TriggerFieldCode).HasColumnName("TriggerFieldCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TriggerFieldCode).HasColumnName("TriggerFieldCode").IsRequired().HasMaxLength(200).IsUnicode(false);
         }
     }
 }

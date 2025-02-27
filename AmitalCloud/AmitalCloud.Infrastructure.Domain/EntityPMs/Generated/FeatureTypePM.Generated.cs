@@ -31,6 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
+		features = entity.Features != null ? entity.Features.Select(a=>new FeaturePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -83,6 +84,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<FeaturePM> features;
+	 
+		     
+	   [Include]
+	   [Association("FeatureFeatureType", "Code","Featuretypecode")]
+	   [DataMember]
+	   public virtual List<FeaturePM> Features  
+	   {
+	        get
+             {
+                 if (features == null)
+                 {
+                     features = new List<FeaturePM>();
+                 }
+                 return features;
+              }
+             set { features = value; }
+	    }
+	   private List<FeaturePM>  deletedFeatures;
+	   public virtual List<FeaturePM> DeletedFeatures  
+	   {
+	        get
+             {
+                 if ( deletedFeatures == null)
+                 {
+                      deletedFeatures = new List<FeaturePM>();
+                 }
+                 return  deletedFeatures;
+              }
+             set {  deletedFeatures = value; }
+	    }
 	 }
 #endregion Properties
 }

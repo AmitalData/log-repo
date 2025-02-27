@@ -22,17 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DropCdropId).HasColumnName("DropCdropId").IsRequired().HasMaxLength(128).IsUnicode(true);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DropCdropCode).HasColumnName("DropCdropCode").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.EnglishName).HasColumnName("EnglishName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DropCdropEnglishname).HasColumnName("DropCdropEnglishname").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DropCdropLocalname).HasColumnName("DropCdropLocalname").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
             this.Property(t => t.OrderNumber).HasColumnName("OrderNumber").IsRequired();
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.EnglishName).HasColumnName("EnglishName").IsRequired().HasMaxLength(80).IsUnicode(true);
+
+            this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(40).IsUnicode(true);
         }
     }
 }

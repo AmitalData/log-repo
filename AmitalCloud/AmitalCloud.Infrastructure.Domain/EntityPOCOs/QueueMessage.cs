@@ -22,10 +22,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Key]
         [Column("Id")]
 	    public string Id { get; set; }
-        [Column("Tenant")]
-	    public int Tenant { get; set; }
+        [ForeignKey("QueueDefinition")]
         [Column("QueueDefinitionCode")]
 	    public string QueueDefinitionCode { get; set; }
+	      
+        public virtual QueueDefinition QueueDefinition { get; set; }
         [Column("CreateDateTime")]
 	    public DateTime CreateDateTime { get; set; }
         [Column("Status")]
@@ -40,30 +41,32 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public DateTime? CompleteDateTime { get; set; }
         [Column("RetryNumber")]
 	    public int RetryNumber { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
         [Column("HashCode")]
 	    public string HashCode { get; set; }
-        [Column("QueueDefinition")]
-	    public string QueueDefinition { get; set; }
         [Column("TenantPriority")]
 	    public int? TenantPriority { get; set; }
         [Column("InterfaceTypeCode")]
 	    public string InterfaceTypeCode { get; set; }
-        [Column("UseRabbitMQ")]
-	    public string UseRabbitMQ { get; set; }
         [Column("QueueCodeRabbit")]
 	    public string QueueCodeRabbit { get; set; }
+        [Column("UseRabbitMQ")]
+	    public bool UseRabbitMQ { get; set; }
         [Column("HaveRabbitMQ")]
-	    public string HaveRabbitMQ { get; set; }
-        [Column("EntityCode")]
-	    public string EntityCode { get; set; }
-        [Column("EntityId")]
-	    public string EntityId { get; set; }
+	    public bool HaveRabbitMQ { get; set; }
         [Column("RabbitMQCreateDate")]
-	    public DateTime RabbitMQCreateDate { get; set; }
+	    public DateTime? RabbitMQCreateDate { get; set; }
         [Column("RabbitMQRetryNumber")]
 	    public int RabbitMQRetryNumber { get; set; }
         [Column("RabbitMQErrMess")]
 	    public string RabbitMQErrMess { get; set; }
+        [Column("EntityCode")]
+	    public string EntityCode { get; set; }
+        [Column("EntityId")]
+	    public string EntityId { get; set; }
+        [Column("DropRowid")]
+	    public string DropRowid { get; set; }
     }
 }
 	 

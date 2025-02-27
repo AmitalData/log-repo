@@ -31,11 +31,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string ObjectTableId { get; set; }
 	      
         public virtual ObjectTable ObjectTable { get; set; }
-        [ForeignKey("UpdatedByUser")]
+        [ForeignKey("User")]
         [Column("UpdatedByUserId")]
 	    public string UpdatedByUserId { get; set; }
 	      
-        public virtual User UpdatedByUser { get; set; }
+        public virtual User User { get; set; }
         [Column("UpdateDate")]
 	    public DateTime UpdateDate { get; set; }
         [Column("EntityGUID")]

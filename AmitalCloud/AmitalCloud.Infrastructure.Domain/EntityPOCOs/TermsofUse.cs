@@ -19,21 +19,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
     public class TermsofUse : BaseEntity
 	{
 		
-        [Key]
-        [Column("Id")]
-	    public int Id { get; set; }
+           [Column("DropVersion")]
+	    public int? DropVersion { get; set; }
         [Column("Date")]
 	    public DateTime Date { get; set; }
         [Column("VersionNumber")]
-	    public int VersionNumber { get; set; }
+	    public int? VersionNumber { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("VersionDocumentId")]
 	    public string VersionDocumentId { get; set; }
         [Column("PrivateLabelId")]
 	    public string PrivateLabelId { get; set; }
+        [Column("Dbmigrationslastscript")]
+	    public int? Dbmigrationslastscript { get; set; }
+     [Key]
+        [Column("Id")]
+	    public int Id { get; set; }
         [Column("IsNew")]
 	    public bool IsNew { get; set; }
+		public virtual ICollection<TermsofUseSignature> TermsofUseSignatures { get; set; }
     }
 }
 	 

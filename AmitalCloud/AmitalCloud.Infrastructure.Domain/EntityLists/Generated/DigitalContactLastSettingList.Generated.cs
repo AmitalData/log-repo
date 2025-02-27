@@ -26,6 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        {
           Id  = entity.Id;
           Tenant  = entity.Tenant;
+          ContactId  = entity.ContactId;
           ObjectTableId  = entity.ObjectTableId;
           FilterName  = entity.FilterName;
           FilterCode  = entity.FilterCode;
@@ -39,6 +40,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string Id  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+       [DataMember]
+       public string ContactId  { get; set; }
        [DataMember]
        public string ObjectTableId  { get; set; }
        [DataMember]

@@ -37,8 +37,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Code, 
 	         HtmlView, 
 	         FeatureUniqeCode, 
-	         QuerySection, 
-	         Feature,	      }
+	         QuerySection,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -55,8 +54,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Code, 
 	         HtmlView, 
 	         FeatureUniqeCode, 
-	         QuerySection, 
-	         Feature,	      }
+	         QuerySection,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(MenusTablePM entityPM, POCO.MenusTable entityPOCO)
@@ -74,7 +72,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HtmlView)) { entityPOCO.HtmlView = entityPM.HtmlView;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureUniqeCode)) { entityPOCO.FeatureUniqeCode = entityPM.FeatureUniqeCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuerySection)) { entityPOCO.QuerySection = entityPM.QuerySection;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Feature)) { entityPOCO.Feature = entityPM.Feature;}
 					}
 		public void POCOToPM(MenusTablePM entityPM, POCO.MenusTable entityPOCO)
         {
@@ -134,10 +131,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.QuerySection = entityPOCO.QuerySection;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Feature))
-            {
-					entityPM.Feature = entityPOCO.Feature;
-            }
 		}
 		public void PMToOldPM(MenusTablePM entityPM, MenusTablePM oldEntityPM)
         {
@@ -194,10 +187,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.QuerySection = entityPM.QuerySection;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Feature))
-            {
-                oldEntityPM.Feature = entityPM.Feature;
-            }
 					}
 		public void POCOToList(POCO.MenusTable entityPOCO, MenusTableList entityList)
         {
@@ -219,6 +208,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.UserControlName)) //T4 find type == nText 
+            {
+                entityPM.UserControlName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.UserControlName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

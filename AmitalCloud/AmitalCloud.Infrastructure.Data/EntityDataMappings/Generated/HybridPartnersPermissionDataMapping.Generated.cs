@@ -16,7 +16,6 @@ using AmitalCloud.Infrastructure.Domain.Enums;
 using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 {
@@ -25,42 +24,30 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         HybridPartner, 
-	         AllowedByHybridPartner, 
+	         HybridPartnerId, 
+	         AllowedByHybridPartnerId, 
 	         InActive,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         HybridPartner, 
-	         AllowedByHybridPartner, 
+	         HybridPartnerId, 
+	         AllowedByHybridPartnerId, 
 	         InActive,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
-        public void PMToPOCO(HybridPartnersPermissionPM entityPM, POCO.HybridPartnersPermission entityPOCO)
+	    public void PMToPOCO(HybridPartnersPermissionPM entityPM, POCO.HybridPartnersPermission entityPOCO)
         {
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HybridPartner))
-            {
-                new HybridPartnerDataMapping().PMToPOCO(entityPM.HybridPartner, entityPOCO.HybridPartner);
-                //entityPOCO.HybridPartner = entityPM.HybridPartner;
-            }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowedByHybridPartner))
-            {
-                entityPOCO.AllowedByHybridPartner = entityPM.AllowedByHybridPartner;
-            }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
-            {
-                entityPOCO.InActive = entityPM.InActive;
-            }
-        }
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive)) { entityPOCO.InActive = entityPM.InActive;}
+					}
 		public void POCOToPM(HybridPartnersPermissionPM entityPM, POCO.HybridPartnersPermission entityPOCO)
         {
-			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HybridPartner))
+			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HybridPartnerId))
             {
-					entityPM.HybridPartner = new HybridPartnerPM(entityPOCO.HybridPartner);
+					entityPM.HybridPartnerId = entityPOCO.HybridPartnerId;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AllowedByHybridPartner))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AllowedByHybridPartnerId))
             {
-					entityPM.AllowedByHybridPartner = entityPOCO.AllowedByHybridPartner;
+					entityPM.AllowedByHybridPartnerId = entityPOCO.AllowedByHybridPartnerId;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InActive))
             {
@@ -70,15 +57,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		public void PMToOldPM(HybridPartnersPermissionPM entityPM, HybridPartnersPermissionPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HybridPartner))
-            {
-                oldEntityPM.HybridPartner = entityPM.HybridPartner;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowedByHybridPartner))
-            {
-                oldEntityPM.AllowedByHybridPartner = entityPM.AllowedByHybridPartner;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
             {
                 oldEntityPM.InActive = entityPM.InActive;
             }

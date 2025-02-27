@@ -30,11 +30,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string ValidationExpression { get; set; }
         [Column("ErrorMessage")]
 	    public string ErrorMessage { get; set; }
-        [ForeignKey("ObjectField")]
         [Column("ObjectFieldId")]
 	    public string ObjectFieldId { get; set; }
-	      
-        public virtual ObjectField ObjectField { get; set; }
         [Column("ValidationOrder")]
 	    public int ValidationOrder { get; set; }
         [Column("Condition")]

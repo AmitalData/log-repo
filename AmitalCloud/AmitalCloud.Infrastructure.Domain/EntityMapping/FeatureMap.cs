@@ -22,19 +22,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(120).IsUnicode(false);
 
-            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.NameTextCodeId).HasColumnName("NameTextCodeId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.NameTextCodeId).HasColumnName("NameTextCodeId").IsRequired().HasMaxLength(30).IsUnicode(false);
 
-            this.Property(t => t.FeatureTypeCode).HasColumnName("FeatureTypeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.FeatureTypeCode).HasColumnName("FeatureTypeCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.Packagable).HasColumnName("Packagable").IsRequired();
 
@@ -44,9 +42,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.IsCoreFeature).HasColumnName("IsCoreFeature").IsRequired();
 
-            this.Property(t => t.ToggleCode).HasColumnName("ToggleCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ToggleCode).HasColumnName("ToggleCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.NameTextCodeCode).HasColumnName("NameTextCodeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode").IsRequired().HasMaxLength(120).IsUnicode(false);
+
+            this.Property(t => t.NameTextCodeCode).HasColumnName("NameTextCodeCode").IsRequired().HasMaxLength(200).IsUnicode(true);
         }
     }
 }

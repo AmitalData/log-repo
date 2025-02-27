@@ -32,10 +32,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string LocalName { get; set; }
         [Column("InActive")]
 	    public bool InActive { get; set; }
-        [Column("CustomsMetaDataCode")]
-	    public string CustomsMetaDataCode { get; set; }
         [Column("Format")]
 	    public string Format { get; set; }
+        [Column("CustomsMetaDataCode")]
+	    public string CustomsMetaDataCode { get; set; }
+		public virtual ICollection<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues { get; set; }
+		public virtual ICollection<DocumentTypeMetaData> DocumentTypeMetaDatas { get; set; }
     }
 }
 	 

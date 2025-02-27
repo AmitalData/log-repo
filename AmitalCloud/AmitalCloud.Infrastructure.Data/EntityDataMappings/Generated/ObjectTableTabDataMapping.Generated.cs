@@ -32,16 +32,15 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         IndexOrder, 
 	         Code, 
 	         FeatureId, 
-	         TabNameTextCodeCode, 
-	         FeatureUniqeCode, 
-	         Feature, 
-	         TabModification, 
 	         HtmlComponentName, 
 	         HtmlComponentUrl, 
+	         TabNameTextCodeCode, 
+	         FeatureUniqeCode, 
 	         Type, 
 	         ScreenCode, 
 	         OriginalTabCode, 
-	         HideTabNameInScreen,	      }
+	         HideTabNameInScreen, 
+	         Islocked,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -53,16 +52,15 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         IndexOrder, 
 	         Code, 
 	         FeatureId, 
-	         TabNameTextCodeCode, 
-	         FeatureUniqeCode, 
-	         Feature, 
-	         TabModification, 
 	         HtmlComponentName, 
 	         HtmlComponentUrl, 
+	         TabNameTextCodeCode, 
+	         FeatureUniqeCode, 
 	         Type, 
 	         ScreenCode, 
 	         OriginalTabCode, 
-	         HideTabNameInScreen,	      }
+	         HideTabNameInScreen, 
+	         Islocked,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ObjectTableTabPM entityPM, POCO.ObjectTableTab entityPOCO)
@@ -74,16 +72,15 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IndexOrder)) { entityPOCO.IndexOrder = entityPM.IndexOrder;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code)) { entityPOCO.Code = entityPM.Code;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureId)) { entityPOCO.FeatureId = entityPM.FeatureId;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TabNameTextCodeCode)) { entityPOCO.TabNameTextCodeCode = entityPM.TabNameTextCodeCode;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureUniqeCode)) { entityPOCO.FeatureUniqeCode = entityPM.FeatureUniqeCode;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Feature)) { entityPOCO.Feature = entityPM.Feature;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TabModification)) { entityPOCO.TabModification = entityPM.TabModification;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HtmlComponentName)) { entityPOCO.HtmlComponentName = entityPM.HtmlComponentName;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HtmlComponentUrl)) { entityPOCO.HtmlComponentUrl = entityPM.HtmlComponentUrl;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TabNameTextCodeCode)) { entityPOCO.TabNameTextCodeCode = entityPM.TabNameTextCodeCode;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureUniqeCode)) { entityPOCO.FeatureUniqeCode = entityPM.FeatureUniqeCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Type)) { entityPOCO.Type = entityPM.Type;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ScreenCode)) { entityPOCO.ScreenCode = entityPM.ScreenCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginalTabCode)) { entityPOCO.OriginalTabCode = entityPM.OriginalTabCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HideTabNameInScreen)) { entityPOCO.HideTabNameInScreen = entityPM.HideTabNameInScreen;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Islocked)) { entityPOCO.Islocked = entityPM.Islocked;}
 					}
 		public void POCOToPM(ObjectTableTabPM entityPM, POCO.ObjectTableTab entityPOCO)
         {
@@ -119,22 +116,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.FeatureId = entityPOCO.FeatureId;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TabNameTextCodeCode))
-            {
-					entityPM.TabNameTextCodeCode = entityPOCO.TabNameTextCodeCode;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FeatureUniqeCode))
-            {
-					entityPM.FeatureUniqeCode = entityPOCO.FeatureUniqeCode;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Feature))
-            {
-					entityPM.Feature = entityPOCO.Feature;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TabModification))
-            {
-					entityPM.TabModification = entityPOCO.TabModification;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HtmlComponentName))
             {
 					entityPM.HtmlComponentName = entityPOCO.HtmlComponentName;
@@ -142,6 +123,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HtmlComponentUrl))
             {
 					entityPM.HtmlComponentUrl = entityPOCO.HtmlComponentUrl;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TabNameTextCodeCode))
+            {
+					entityPM.TabNameTextCodeCode = entityPOCO.TabNameTextCodeCode;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FeatureUniqeCode))
+            {
+					entityPM.FeatureUniqeCode = entityPOCO.FeatureUniqeCode;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Type))
             {
@@ -158,6 +147,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HideTabNameInScreen))
             {
 					entityPM.HideTabNameInScreen = entityPOCO.HideTabNameInScreen;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Islocked))
+            {
+					entityPM.Islocked = entityPOCO.Islocked;
             }
 		}
 		public void PMToOldPM(ObjectTableTabPM entityPM, ObjectTableTabPM oldEntityPM)
@@ -191,22 +184,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.FeatureId = entityPM.FeatureId;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TabNameTextCodeCode))
-            {
-                oldEntityPM.TabNameTextCodeCode = entityPM.TabNameTextCodeCode;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureUniqeCode))
-            {
-                oldEntityPM.FeatureUniqeCode = entityPM.FeatureUniqeCode;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Feature))
-            {
-                oldEntityPM.Feature = entityPM.Feature;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TabModification))
-            {
-                oldEntityPM.TabModification = entityPM.TabModification;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HtmlComponentName))
             {
                 oldEntityPM.HtmlComponentName = entityPM.HtmlComponentName;
@@ -214,6 +191,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HtmlComponentUrl))
             {
                 oldEntityPM.HtmlComponentUrl = entityPM.HtmlComponentUrl;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TabNameTextCodeCode))
+            {
+                oldEntityPM.TabNameTextCodeCode = entityPM.TabNameTextCodeCode;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FeatureUniqeCode))
+            {
+                oldEntityPM.FeatureUniqeCode = entityPM.FeatureUniqeCode;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Type))
             {
@@ -230,6 +215,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HideTabNameInScreen))
             {
                 oldEntityPM.HideTabNameInScreen = entityPM.HideTabNameInScreen;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Islocked))
+            {
+                oldEntityPM.Islocked = entityPM.Islocked;
             }
 					}
 		public void POCOToList(POCO.ObjectTableTab entityPOCO, ObjectTableTabList entityList)

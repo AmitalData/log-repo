@@ -198,6 +198,46 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 return;
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.Field1)) //T4 find type == nText 
+            {
+                entityPM.Field1 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field1));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Field2)) //T4 find type == nText 
+            {
+                entityPM.Field2 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field2));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Field3)) //T4 find type == nText 
+            {
+                entityPM.Field3 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field3));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Field4)) //T4 find type == nText 
+            {
+                entityPM.Field4 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field4));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Field5)) //T4 find type == nText 
+            {
+                entityPM.Field5 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field5));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Field6)) //T4 find type == nText 
+            {
+                entityPM.Field6 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field6));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Field7)) //T4 find type == nText 
+            {
+                entityPM.Field7 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field7));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Field8)) //T4 find type == nText 
+            {
+                entityPM.Field8 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field8));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Field9)) //T4 find type == nText 
+            {
+                entityPM.Field9 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field9));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Field10)) //T4 find type == nText 
+            {
+                entityPM.Field10 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Field10));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)

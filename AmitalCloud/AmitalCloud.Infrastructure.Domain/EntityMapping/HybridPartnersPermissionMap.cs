@@ -20,11 +20,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
         { 
 				this.ToTable("HybridPartnersPermissions");
 		
-		    this.HasKey(t => new { t.HybridPartnerId });
+		    this.HasKey(t => new { t.HybridPartnerId, t.AllowedByHybridPartnerId });
 	 
-            this.Property(t => t.HybridPartnerId).HasColumnName("HybridPartnerId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.HybridPartnerId).HasColumnName("HybridPartnerId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.AllowedByHybridPartner).HasColumnName("AllowedByHybridPartner").IsRequired();
+            this.Property(t => t.AllowedByHybridPartnerId).HasColumnName("AllowedByHybridPartnerId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.InActive).HasColumnName("InActive").IsRequired();
         }

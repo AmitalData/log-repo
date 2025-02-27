@@ -29,8 +29,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         LoginDateTime, 
 	         Tenant, 
 	         WorkEnvironment, 
-	         User, 
-	         IP,	      }
+	         IP, 
+	         Computerusername,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -39,8 +39,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         LoginDateTime, 
 	         Tenant, 
 	         WorkEnvironment, 
-	         User, 
-	         IP,	      }
+	         IP, 
+	         Computerusername,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(UserLastLoginPM entityPM, POCO.UserLastLogin entityPOCO)
@@ -49,8 +49,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LoginDateTime)) { entityPOCO.LoginDateTime = entityPM.LoginDateTime;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WorkEnvironment)) { entityPOCO.WorkEnvironment = entityPM.WorkEnvironment;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.User)) { entityPOCO.User = entityPM.User;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IP)) { entityPOCO.IP = entityPM.IP;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Computerusername)) { entityPOCO.Computerusername = entityPM.Computerusername;}
 					}
 		public void POCOToPM(UserLastLoginPM entityPM, POCO.UserLastLogin entityPOCO)
         {
@@ -74,13 +74,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.WorkEnvironment = entityPOCO.WorkEnvironment;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.User))
-            {
-					entityPM.User = entityPOCO.User;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IP))
             {
 					entityPM.IP = entityPOCO.IP;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Computerusername))
+            {
+					entityPM.Computerusername = entityPOCO.Computerusername;
             }
 		}
 		public void PMToOldPM(UserLastLoginPM entityPM, UserLastLoginPM oldEntityPM)
@@ -102,13 +102,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.WorkEnvironment = entityPM.WorkEnvironment;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.User))
-            {
-                oldEntityPM.User = entityPM.User;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IP))
             {
                 oldEntityPM.IP = entityPM.IP;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Computerusername))
+            {
+                oldEntityPM.Computerusername = entityPM.Computerusername;
             }
 					}
 		public void POCOToList(POCO.UserLastLogin entityPOCO, UserLastLoginList entityList)
@@ -131,6 +131,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Computerusername)) //T4 find type == nText 
+            {
+                entityPM.Computerusername = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Computerusername));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

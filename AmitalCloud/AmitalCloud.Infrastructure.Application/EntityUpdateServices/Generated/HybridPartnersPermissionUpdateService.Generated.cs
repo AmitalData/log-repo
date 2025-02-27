@@ -33,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
         }
         public HybridPartnersPermissionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
         public HybridPartnersPermissionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
-		protected override IEntityKeyFields<POCO.HybridPartnersPermission,string> GetKeys(HybridPartnersPermissionPM entityPM) => new HybridPartnersPermissionKeys<string>() { HybridPartnerId = entityPM.HybridPartnerId };
+		protected override IEntityKeyFields<POCO.HybridPartnersPermission,string> GetKeys(HybridPartnersPermissionPM entityPM) => new HybridPartnersPermissionKeys<string>() { HybridPartnerId = entityPM.HybridPartnerId, AllowedByHybridPartnerId = entityPM.AllowedByHybridPartnerId };
 protected override void FillDefaultValuesOnCreate(HybridPartnersPermissionPM entityPM)
 		{
 		}

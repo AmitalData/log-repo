@@ -27,16 +27,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Id, 
 	         ComputerId, 
 	         LoginDateTime, 
-	         Tenant, 
-	         Contact,	      }
+	         Tenant,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
 	         Id, 
 	         ComputerId, 
 	         LoginDateTime, 
-	         Tenant, 
-	         Contact,	      }
+	         Tenant,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ContactLastLoginPM entityPM, POCO.ContactLastLogin entityPOCO)
@@ -44,7 +42,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComputerId)) { entityPOCO.ComputerId = entityPM.ComputerId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LoginDateTime)) { entityPOCO.LoginDateTime = entityPM.LoginDateTime;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Contact)) { entityPOCO.Contact = entityPM.Contact;}
 					}
 		public void POCOToPM(ContactLastLoginPM entityPM, POCO.ContactLastLogin entityPOCO)
         {
@@ -64,10 +61,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.Tenant = entityPOCO.Tenant;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Contact))
-            {
-					entityPM.Contact = entityPOCO.Contact;
-            }
 		}
 		public void PMToOldPM(ContactLastLoginPM entityPM, ContactLastLoginPM oldEntityPM)
         {
@@ -83,10 +76,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Contact))
-            {
-                oldEntityPM.Contact = entityPM.Contact;
             }
 					}
 		public void POCOToList(POCO.ContactLastLogin entityPOCO, ContactLastLoginList entityList)

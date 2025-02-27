@@ -29,9 +29,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public HybridPartnersPermissionPM(POCO.HybridPartnersPermission entity) : base()
    {
 		_hybridPartnerId = entity.HybridPartnerId;
+		_allowedByHybridPartnerId = entity.AllowedByHybridPartnerId;
 		_hybridpartner = entity.HybridPartner !=null ? new HybridPartnerPM(entity.HybridPartner) : null;
-			_allowedByHybridPartner = entity.AllowedByHybridPartner;
-		_inActive = entity.InActive;
+			_inActive = entity.InActive;
    }
    #endregion Constructors
    #region Properties
@@ -52,6 +52,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _allowedByHybridPartnerId ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AllowedByHybridPartnerId  
+	   {
+	     get { return _allowedByHybridPartnerId; }
+		 set
+		 {
+		   if(_allowedByHybridPartnerId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowedByHybridPartnerId",OldValue=_allowedByHybridPartnerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _allowedByHybridPartnerId=value;
+		   }
+		 }
+	   }
 		private HybridPartnerPM _hybridpartner;
 		[Include]
         [DataMember]
@@ -60,22 +77,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _hybridpartner; } 
 		set { _hybridpartner = value; }
 		}
-	  private string _allowedByHybridPartner ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AllowedByHybridPartner  
-	   {
-	     get { return _allowedByHybridPartner; }
-		 set
-		 {
-		   if(_allowedByHybridPartner != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowedByHybridPartner",OldValue=_allowedByHybridPartner,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _allowedByHybridPartner=value;
-		   }
-		 }
-	   }
 	  private bool _inActive ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

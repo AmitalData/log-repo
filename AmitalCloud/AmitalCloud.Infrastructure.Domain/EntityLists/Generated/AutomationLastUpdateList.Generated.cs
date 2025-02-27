@@ -40,7 +40,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string ObjectTableId  { get; set; }
        [DataMember]
-       public DateTime? LastUpdateDate  { get; set; }
+       public DateTime LastUpdateDate  { get; set; }
        [DataMember]
        public bool HasAutomation  { get; set; }
          #endregion Properties

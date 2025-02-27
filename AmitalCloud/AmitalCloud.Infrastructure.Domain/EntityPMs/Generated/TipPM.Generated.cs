@@ -32,9 +32,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_visibilityDefaultValue = entity.VisibilityDefaultValue;
 		_shortTextCode = entity.ShortTextCode;
-		_textcode = entity.TextCode !=null ? new TextCodePM(entity.TextCode) : null;
-			_objectTableId = entity.ObjectTableId;
+		_objectTableId = entity.ObjectTableId;
 		_shortTextCodeCode = entity.ShortTextCodeCode;
+		objectTables = entity.ObjectTables != null ? entity.ObjectTables.Select(a=>new ObjectTablePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -103,14 +103,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private TextCodePM _textcode;
-		[Include]
-        [DataMember]
-        public virtual TextCodePM TextCode 
-		{ 
-		get { return _textcode; } 
-		set { _textcode = value; }
-		}
 	  private string _objectTableId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -143,6 +135,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<ObjectTablePM> objectTables;
+	 
+		     
+	   [Include]
+	   [Association("ObjectTableTip", "Code","Maintipcode")]
+	   [DataMember]
+	   public virtual List<ObjectTablePM> ObjectTables  
+	   {
+	        get
+             {
+                 if (objectTables == null)
+                 {
+                     objectTables = new List<ObjectTablePM>();
+                 }
+                 return objectTables;
+              }
+             set { objectTables = value; }
+	    }
+	   private List<ObjectTablePM>  deletedObjectTables;
+	   public virtual List<ObjectTablePM> DeletedObjectTables  
+	   {
+	        get
+             {
+                 if ( deletedObjectTables == null)
+                 {
+                      deletedObjectTables = new List<ObjectTablePM>();
+                 }
+                 return  deletedObjectTables;
+              }
+             set {  deletedObjectTables = value; }
+	    }
 	 }
 #endregion Properties
 }

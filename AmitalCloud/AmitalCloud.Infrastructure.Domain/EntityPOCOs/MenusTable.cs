@@ -57,8 +57,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string FeatureUniqeCode { get; set; }
         [Column("QuerySection")]
 	    public string QuerySection { get; set; }
-        [Column("Feature")]
-	    public string Feature { get; set; }
     }
 }
 	 

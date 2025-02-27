@@ -236,7 +236,6 @@
     <None Include="DBTables\ShipmentsModel\InsideShipmentPackage.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRABookingStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRABookingTransStatus.dxml" />
-    <None Include="DBTables\ShipmentsModel\INTTRADocumentType.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRASIStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRAStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\LogitudeOceanInsightsRequest.dxml" />

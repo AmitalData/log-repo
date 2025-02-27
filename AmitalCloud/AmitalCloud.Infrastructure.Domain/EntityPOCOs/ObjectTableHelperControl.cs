@@ -33,12 +33,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string ObjectTableId { get; set; }
 	      
         public virtual ObjectTable ObjectTable { get; set; }
+        [ForeignKey("Feature")]
         [Column("FeatureId")]
 	    public string FeatureId { get; set; }
+	      
+        public virtual Feature Feature { get; set; }
         [Column("FeatureUniqeCode")]
 	    public string FeatureUniqeCode { get; set; }
-        [Column("Feature")]
-	    public string Feature { get; set; }
     }
 }
 	 
