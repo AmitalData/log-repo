@@ -36,15 +36,13 @@ export class ARPaymentChequeOperationsService {
     }
 
     GetCountOpenChequesByBankAccount(tenant: number, bankId: string, bankBranch: string, bankAccount: string){
-        var url = this._apiUrl + '/GetCountOpenChequesByBankAccount'+
-        `?Tenant=${tenant}&bankId=${bankId}&bankBranch=${bankBranch}&bankAccount=${bankAccount}`;
-        ;
+        const url = this._apiUrl + '/GetCountOpenChequesByBankAccount' +
+        `?Tenant=${tenant}&bankId=${encodeURIComponent(bankId)}&bankBranch=${encodeURIComponent(bankBranch)}&bankAccount=${encodeURIComponent(bankAccount)}`;
         return defer(() => {
             return this._http
                 .get(url, ServiceHelper.GetHttpHeaders())
                 .pipe(map(response => {
-                    var result = response;
-                    return result;
+                   return response
                 }), catchError(ServiceHelper.HandleServiceError));
         });
     }

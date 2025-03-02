@@ -215,10 +215,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
-        public List<ARPaymentChequePM> GetOpenChequesByBankAccount(string bankId,string bankBranch, string bankAccount, int tenant)
+        public  int GetOpenChequesByBankAccount(string bankId,string bankBranch, string bankAccount, int tenant)
         {
-            List<ARPaymentChequePM> paymentCheques = (from a in context.ARPaymentCheques
-                                                      where a.BankAccount == bankAccount && a.BankId == bankId && a.BankBranch == bankBranch && a.Tenant == tenant && (a.StatusCode == "2" || a.StatusCode  == "3") && a.ValueDate>new DateTime()
+            return (from a in context.ARPaymentCheques
+                                                      where a.BankAccount == bankAccount && a.BankId == bankId && a.BankBranch == bankBranch && a.Tenant == tenant && (a.StatusCode == "2" || a.StatusCode == "3") && a.ValueDate > DateTime.Now
                                                       select new ARPaymentChequePM()
                                                       {
                                                           Id = a.Id,
@@ -233,15 +233,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                           BankId = a.BankId,
                                                           BankBranch = a.BankBranch,
                                                           BankAccount = a.BankAccount,
-                                                          StatusName = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.EnglishName : "",
-                                                          PaymentId=a.PaymentId,
-                                                         ExchangeRate = a.ExchangeRate,
+                                                          StatusName = a.ARPaymentChequeStatus != null? a.ARPaymentChequeStatus.EnglishName : "",
+                                                          PaymentId = a.PaymentId,
+                                                          ExchangeRate = a.ExchangeRate,
                                                           StatusCode = a.StatusCode,
                                                           CurrencyId = a.CurrencyId,
 
 
-                                                      }).ToList();
-            return paymentCheques;
+                                                      }).Count();
         }
 
         public List<ARPaymentChequePM> GetOpenChequesByBankAccountInThePast(string bankId, string bankBranch, string bankAccount, int tenant,DateTime valueDate)

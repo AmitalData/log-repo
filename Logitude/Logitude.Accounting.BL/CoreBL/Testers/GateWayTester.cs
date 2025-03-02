@@ -46,7 +46,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     break;
                 case "_ButtonUpdateRedeemedChecksFIX_Click":
                     {
-                        return _ButtonUpdateRedeemedChecksFIX_Click(tenant, _TextBoxParam);
+                        return ButtonUpdateRedeemedChecksFIX_Click(tenant, _TextBoxParam);
                     }
                     break;
                 case "_ButtonReverseTrans_Click":
@@ -1297,7 +1297,7 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             return gateWayTesterResult;
         }
 
-        GateWayTesterResult _ButtonUpdateRedeemedChecksFIX_Click(int tenant, string _TextBoxParam)
+        GateWayTesterResult ButtonUpdateRedeemedChecksFIX_Click(int tenant, string _TextBoxParam)
         {
             var gateWayTesterResult = new GateWayTesterResult();
 
@@ -1305,12 +1305,11 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             try
             {
 
-
-                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(_TextBoxParam);
-                var FutureOpenChequesBatch = new FutureOpenChequesBatch();
-
-                FutureOpenChequesBatch.RedeemOpenChequesByFactoringBank(param.MyDate, param.MyTenant);
-
+                if (_TextBoxParam != null) {
+                    var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(_TextBoxParam);
+                    var FutureOpenChequesBatch = new FutureOpenChequesBatch();
+                    FutureOpenChequesBatch.RedeemOpenChequesByFactoringBank(param.MyDate, param.MyTenant);
+                 }
 
                 gateWayTesterResult.JsonOut = "OK";
 

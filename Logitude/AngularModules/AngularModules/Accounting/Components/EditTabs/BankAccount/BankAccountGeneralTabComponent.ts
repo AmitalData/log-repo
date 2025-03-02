@@ -211,7 +211,7 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
     }
     get FactoringBank() { return this.EntityPM.FactoringBank; }
     set FactoringBank(value: boolean) {
-        if (this.EntityPM.FactoringBank != value) {
+        if (this.EntityPM.FactoringBank  !==  value) {
             this.EntityPM.FactoringBank = value;
         }
     }

@@ -71,7 +71,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 ARPaymentChequeQueryService arPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
-                var count = arPaymentChequeQueryService.GetOpenChequesByBankAccount(bankId,bankBranch,bankAccount,tenant).Count();
+                var count = arPaymentChequeQueryService.GetOpenChequesByBankAccount(bankId, bankBranch, bankAccount, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, count);
             }
 

@@ -377,9 +377,9 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
 
     }
-    _ButtonUpdateRedeemedChecksFIX_Click() {
-        let opr = "_ButtonUpdateRedeemedChecksFIX_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -0), MyGLAccId: "" };
+    ButtonUpdateRedeemedChecksFIX_Click() {
+        const opr = "_ButtonUpdateRedeemedChecksFIX_Click";
+        const obj = { MyTenant: SessionLocator.Tenant, MyDate: new Date(), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
 
     }

@@ -123,36 +123,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         public void CreateActivateOrDeactivateFactoringBankEvent(BankAccountPM entityPM, ContactPM loggedContact, string eventNotes)
         {
-            if (entityPM.FactoringBank == true)
-            {
-                EventTracerArgs eventTracerArgs0 = new EventTracerArgs()
-                {
+            var eventTypeCode = (entityPM.FactoringBank.HasValue && entityPM.FactoringBank.Value )? "FBAC" : "FBDA";
+                       
+            EventTracerArgs eventTracerArgs0 = new EventTracerArgs()
+             {
                     EntityId = entityPM.Id,
                     Tenant = entityPM.Tenant,
                     UserId = loggedContact.Id,
                     ObjectTableName = "BankAccount",
                     IsAddedManually = false,
-                    EventTypeCode = "FBAC",
+                    EventTypeCode = eventTypeCode,
                     Notes = eventNotes,
 
-                };
-                AddEventToList(GetNewTraceEvent(eventTracerArgs0));
-            }
-            else
-            {
-                EventTracerArgs eventTracerArgs1 = new EventTracerArgs()
-                {
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    UserId = loggedContact.Id,
-                    ObjectTableName = "BankAccount",
-                    IsAddedManually = false,
-                    EventTypeCode = "FBDA",
-                    Notes = eventNotes,
-
-                };
-                AddEventToList(GetNewTraceEvent(eventTracerArgs1));
-            }
+              };
+            AddEventToList(GetNewTraceEvent(eventTracerArgs0));
+           
 
         }
         public virtual void InsertTraceEvents()

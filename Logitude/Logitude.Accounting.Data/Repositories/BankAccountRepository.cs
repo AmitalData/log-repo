@@ -34,13 +34,12 @@ namespace Logitude.Accounting.Data.Repositories
 
         public List<BankAccount> GetFactoringBankAccounts(int tenant)
         {
-            List<BankAccount> entities;
-
-            entities = (from a in context.BankAccounts.Include("BankCode")
-                      where a.Inactive==false && a.FactoringBank==true && a.Tenant == tenant
-                        select a).ToList();
-
-            return entities;
+            return context.BankAccounts
+                          .Include(x => x.BankCode)
+                          .Where(a => !a.Inactive.HasValue || !a.Inactive.Value)
+                          .Where(a => a.FactoringBank.HasValue && a.FactoringBank.Value)
+                          .Where(a => a.Tenant == tenant)
+                          .ToList();
         }
         public BankAccount GetBankAccountByNumber(string number, int tenant)
         {
