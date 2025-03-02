@@ -38,6 +38,9 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Idle")]
 	    public bool Idle { get; set; }
+     [Key]
+        [Column("ObjectTable")]
+	    public string ObjectTable { get; set; }
     }
 }
 	 

@@ -13,6 +13,7 @@ export class TenantIdleStatusList {
 	CreateDate: Date;
 	UpdateDate: Date;
 	SearchFields: string;
+	ObjectTable: string;
 	
 }
  

@@ -46,7 +46,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string id, string objecttable)
         {
 		  try
             {
@@ -58,7 +58,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 TenantIdleStatusQueryService tenantIdleStatusQuery = new TenantIdleStatusQueryService(MyContext);
 				tenantIdleStatusQuery.InitializeSettings();
-                TenantIdleStatusPM tenantIdleStatusPM = tenantIdleStatusQuery.GetSingle(id,true,false);
+                TenantIdleStatusPM tenantIdleStatusPM = tenantIdleStatusQuery.GetSingle(id, objecttable,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
