@@ -469,7 +469,7 @@ export class MainDisplayComponent implements OnInit {
 		this.filterPopupService.toggleFilterPopup(false);
 		// this.data = this.fullData;
 		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;
-		if(this.IsDiscountCodes && this.originalDataByIsDiscountCodes?.length == 0) this.GetAllCustomsBookMainView();
+		if (this.IsDiscountCodes && this.originalDataByIsDiscountCodes?.length == 0) this.GetAllCustomsBookMainView();
 		this.toggleVisibility(false, this.data);
 		this.preferencesService.showSettingsClick(false);
 	}
@@ -583,12 +583,14 @@ export class MainEntity {
 	CB_TariffList: CB_TariffList[];
 	CB_RequirementComputedDataList: CB_RequirementComputedDataList[];
 	CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[];
+	Mekach: Mekach[];
 
-	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[], CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[]) {
+	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[], CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[], Mekach: Mekach[]) {
 		this.CB_CustomsItemComputedDataList = CB_CustomsItemComputedDataList;
 		this.CB_TariffList = CB_TariffList;
 		this.CB_RequirementComputedDataList = CB_RequirementComputedDataList;
 		this.CustomItemClassifGuidanceResult = CustomItemClassifGuidanceResult;
+		this.Mekach = Mekach;
 	}
 }
 
@@ -734,3 +736,12 @@ export class ClassifGuidanceAttached {
 	attachedCustomsItemID: number;
 }
 
+export class Mekach {
+	mekachNumber: string; // מס מק"ת/מק"ח
+	attachedMekahFile: string; // קובץ מצורף (נתיב לקובץ)
+	validityDate: Date; // בתוקף מיום
+	changeDescription: string; // דברי הסבר
+	CustomsItemID: number;
+	validToDate: Date; // תאריך מערכת
+	LanguageType?:number;
+}
