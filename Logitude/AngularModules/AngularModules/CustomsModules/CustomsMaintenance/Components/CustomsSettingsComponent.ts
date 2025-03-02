@@ -199,7 +199,7 @@ export class CustomsSettingsComponent
     }
 
     set IsUnifreightCertificateActivatedEnabled(val: boolean) {
-        this.UIProperties.SetEnabled("UnifreightCertificateActivated", this.ObjectTableName, val);
+        // this.UIProperties.SetEnabled("UnifreightCertificateActivated", this.ObjectTableName, val);
     }
 
 
