@@ -226,9 +226,9 @@ namespace Logitude.Accounting.BL.DataContract
                         }
                     }
                 }
-                catch (SqlException e)
+                catch (SqlException ex)
                 {
-                    MessageBox.Show("Error accessing database: { 0}", e.Message);
+                    throw ex;
                 }
                 finally
                 {
@@ -309,6 +309,9 @@ namespace Logitude.Accounting.BL.DataContract
         public List<LedgerTransaction> GetDebitTransactions()
         {
             string wh = setting.TaxWithholdingGLAccountId;
+            if (String.IsNullOrEmpty(wh))
+                throw new ApplicationException("Withholding Account not defined in Full Accounting Settings");
+
             List<LedgerTransaction> transactions = SelectUsingSQL(wh, startDate, endDate);
 
             List<string> accountsIds = transactions
