@@ -442,6 +442,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
         myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccountsId_Dummy));
         myFilterItems.push(new QueryFilterItem("SortField", this.SelectedSortTypeItem.Code));
+        myFilterItems.push(new QueryFilterItem("SortDirection", this.SelectedSortDirectionCode));
 
         return myFilterItems
 

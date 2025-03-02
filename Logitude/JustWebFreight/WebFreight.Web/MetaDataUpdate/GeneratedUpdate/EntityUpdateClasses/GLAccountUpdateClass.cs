@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "9da5880daf405baad6fbc72122aec6f3";
+		public const string HashString = "3d07d4d08f6f8b21a0e63585b979fe57";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14538,6 +14538,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOCancelSelectedRecoConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedRecoConfirm", DefaultText = "The process of canceling the adjustments to the marked lines will be performed in the background and will last several minutes during which time it will not be possible to stop the process, do you approve?",LocalDefaultText = @"תהליך ביטול ההתאמות לשורות שסומנו יבוצע ברקע וימשך מספר דקות בזמן זה לא ניתן יהיה לעצור את התהליך, האם אתה מאשר?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountONoSelectedItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSelectedItems", DefaultText = "No Selected Items",LocalDefaultText = @"לא נבחרו התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLaccountOBalanceDiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.BalanceDiffersFrom", DefaultText = "Balance differs from",LocalDefaultText = @"יתרה שונה מ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

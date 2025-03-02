@@ -183,7 +183,7 @@
                                 <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.BalanceInHebrew'"
                                     [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
                             </td>
-                            <td style="width: 230px" [attr.colspan]="IsSalesmanRestricted ? '2' : '1'">
+                            <td style="width: 330px" [attr.colspan]="IsSalesmanRestricted ? '2' : '1'">
                                 <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                     <li float-start id="filter_All" (click)="BalanceFilterItemClicked('filter_All')"
                                         style="height: 22px;width: 50px;"
@@ -204,6 +204,12 @@
                                         [class.SelectedFilter]="balanceFilterSelectedValue === 'filter_DebtBetween'">
                                         {{ 'GLaccount.O.DebtBetween' | TextCodeTranslationPipe }}
                                     </li>
+                                    <li float-start id="filter_BalanceDiffersFrom0"
+                                    (click)="BalanceFilterItemClicked('filter_BalanceDiffersFrom0')"
+                                    style="height: 22px;width: 90px;"
+                                    [class.SelectedFilter]="balanceFilterSelectedValue === 'filter_BalanceDiffersFrom0'">
+                                    {{ 'GLaccount.O.BalanceDiffersFrom' | TextCodeTranslationPipe }}+0
+                                </li>
                                 </ul>
                             </td>
                             <td colspan="2" style="width:380px"

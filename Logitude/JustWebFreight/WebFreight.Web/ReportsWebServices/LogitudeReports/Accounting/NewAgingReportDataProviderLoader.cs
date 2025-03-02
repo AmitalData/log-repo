@@ -6,6 +6,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
+using NPOI.SS.Formula.Functions;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -95,20 +96,33 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                         {
                             NewAgingPeriod result = new NewAgingPeriod
                             {
-                                SalesmanId = reader["SalesmanUserId"] != DBNull.Value ? (string)reader["SalesmanUserId"] :null,
-                                CollectorId = reader["CollectorId"] != DBNull.Value ? (string)reader["CollectorId"] : null,
-                                CurrencyId = reader["CurrencyId"] != DBNull.Value ? (string)reader["CurrencyId"] : null,
+                                
                                 AccountEnglishName = reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
                                 AccountLocalName = reader["LocalName"] != DBNull.Value ? (string)reader["LocalName"] : null,
-                                AccountDisplayNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
-                                BalanceInLocalCurrency = reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : null,
-                                CreditLimit = reader["CreditLimit"] != DBNull.Value ? (decimal?)reader["CreditLimit"] : null,
-                                InsuredCreditLimit = reader["InsuredCreditLimit"] != DBNull.Value ? (double?)reader["InsuredCreditLimit"] : null,
-                               // AccountingBalance = reader[ "AccountingBalance"] != DBNull.Value ? (decimal?)reader["AccountingBalance"] : null,
-                                TotalOpenShipments = reader[ "TotalOpenShipments"] != DBNull.Value ? (decimal?)reader["TotalOpenShipments"] : null,
-                                TotalFutureOpenCheques = reader["TotFutureOpenChequesInLocalCur"] != DBNull.Value ? (decimal?)reader["TotFutureOpenChequesInLocalCur"] : null,
-                               ExternalTransactionsTotal= reader["ExternalTransactionsTotal"] != DBNull.Value ? (decimal?)reader["ExternalTransactionsTotal"] : null,
-                                TotalLocal= reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : null,
+                               AccountDisplayNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
+                                BalanceInLocalCurrency = reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : 0,
+                                CreditLimit = reader["CreditLimit"] != DBNull.Value ? (decimal?)Convert.ToDecimal(reader["CreditLimit"]) : 0,
+                                InsuredCreditLimit = reader["InsuredCreditLimit"] != DBNull.Value ? (decimal?)reader["InsuredCreditLimit"] : 0,
+                                TotalOpenShipments = reader[ "TotalOpenShipments"] != DBNull.Value ? (decimal?)reader["TotalOpenShipments"] : 0,
+                              TotalFutureOpenCheques = reader["TotFutureOpenChequesInLocalCur"] != DBNull.Value ? (decimal?)reader["TotFutureOpenChequesInLocalCur"] : 0,
+                               ExternalTransactionsTotal= reader["ExternalTransactionsTotal"] != DBNull.Value ? (decimal?)reader["ExternalTransactionsTotal"] : 0,
+                                TotalLocal= reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : 0,
+                                AccountingBalance= reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : 0,
+                               AccountSalesmanName = reader["AccountSalesmanName"] != DBNull.Value ? (string)reader["AccountSalesmanName"] : null,
+                              AccountSalesmanLocalName = reader["AccountSalesmanLocalName"] != DBNull.Value ? (string)reader["AccountSalesmanLocalName"] : null,
+                               AccountCollectorName = reader["AccountCollectorName"] != DBNull.Value ? (string)reader["AccountCollectorName"] : null,
+                                AccountCollectorLocalName = reader["AccountCollectorLocalName"] != DBNull.Value ? (string)reader["AccountCollectorLocalName"] : null,
+                              AccountCurrencyCode = reader["AccountCurrencyCode"] != DBNull.Value ? (string)reader["AccountCurrencyCode"] : null,
+                               Minus30Days = reader["Minus30Days"] != DBNull.Value ? (decimal?)reader["Minus30Days"] : 0,
+                                  Minus60Days = reader["Minus60Days"] != DBNull.Value ? (decimal?)reader["Minus60Days"] : 0,
+                              Minus90Days = reader["Minus90Days"] != DBNull.Value ? (decimal?)reader["Minus90Days"] : 0,
+                                  Minus120Days = reader["Minus120Days"] != DBNull.Value ? (decimal?)reader["Minus120Days"] : 0,
+                                Minus150Days = reader["Minus150Days"] != DBNull.Value ? (decimal?)reader["Minus150Days"] : 0,
+                                Minus180Days = reader["Minus180Days"] != DBNull.Value ? (decimal?)reader["Minus180Days"] : 0,
+                                 Past = reader["Past"] != DBNull.Value ? (decimal?)reader["Past"] : 0,
+                                Plus30Days = reader["Plus30Days"] != DBNull.Value ? (decimal?)reader["Plus30Days"] : 0,
+                                Plus60Days = reader["Plus60Days"] != DBNull.Value ? (decimal?)reader["Plus60Days"] : 0,
+                                  Plus90Days = reader["Plus90Days"] != DBNull.Value ? (decimal?)reader["Plus90Days"] : 0,                             
                             };
                             results.Add(result);
                         }
@@ -145,7 +159,54 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
         private void FilterByBalance(string balanceFilter, List<NewAgingPeriod> agingDataLine)
         {
-           
+            var ToBalanceFilterValue=GetFilterValue<decimal>("ToBalanceFilterValue");
+            var FromBalanceFilterValue = GetFilterValue<decimal>("FromBalanceFilterValue");
+
+            switch (balanceFilter)
+            {
+               
+                case "Debtors":
+                    agingDataLine = agingDataLine.Where(line =>
+                (line.Minus180Days ?? 0) +
+                (line.Minus150Days ?? 0) +
+                (line.Minus120Days ?? 0) +
+                (line.Minus90Days ?? 0) +
+                (line.Minus60Days ?? 0) +
+                (line.Minus30Days ?? 0) +
+                (line.Past ?? 0) > 0).ToList();
+                    break;
+                case "DebtBetween":
+                 agingDataLine = agingDataLine.Where(line => (
+                (line.Minus180Days ?? 0) +
+                (line.Minus150Days ?? 0) +
+                (line.Minus120Days ?? 0) +
+                (line.Minus90Days ?? 0) +
+                (line.Minus60Days ?? 0) +
+                (line.Minus30Days ?? 0) +
+                (line.Past ?? 0) > FromBalanceFilterValue) &&
+                (
+                (line.Minus180Days ?? 0) +
+                (line.Minus150Days ?? 0) +
+                (line.Minus120Days ?? 0) +
+                (line.Minus90Days ?? 0) +
+                (line.Minus60Days ?? 0) +
+                (line.Minus30Days ?? 0) +
+                (line.Past ?? 0) < ToBalanceFilterValue)).ToList();
+                    break;
+                case "BalanceDiffersFrom0":
+                    agingDataLine = agingDataLine.Where(line =>
+               (line.Minus180Days ?? 0) +
+               (line.Minus150Days ?? 0) +
+               (line.Minus120Days ?? 0) +
+               (line.Minus90Days ?? 0) +
+               (line.Minus60Days ?? 0) +
+               (line.Minus30Days ?? 0) +
+               (line.Past ?? 0) != 0).ToList();
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         private List<NewAgingPeriod> SortAccountingAgingDataLines(List<NewAgingPeriod> agingDataLine)
