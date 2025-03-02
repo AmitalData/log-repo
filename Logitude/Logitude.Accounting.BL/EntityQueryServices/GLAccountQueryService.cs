@@ -690,30 +690,23 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<GLAccountCurrencyBalance> GetCurrencyBalances(GLAccountPM gLAccountPM, DateTime revaluationDate, int tenant)
         {
-            DateTime revDate = revaluationDate.Date;
-            List<GLAccountCurrencyBalance> rvList = new List<GLAccountCurrencyBalance>();
-            if (gLAccountPM != null)
+            if (gLAccountPM == null)
             {
-                rvList = GetCurrencyBalancesById(gLAccountPM.Id, revDate, tenant);
+                return new List<GLAccountCurrencyBalance>();
             }
-            return rvList;
+            return GetCurrencyBalancesById(gLAccountPM.Id, revaluationDate.Date, tenant);
         }
 
 
-        public Decimal GetTotalLocalBalance(string gLAccountId, DateTime revaluationDate, int tenant)
+
+        public decimal GetTotalLocalBalance(string gLAccountId, DateTime revaluationDate, int tenant)
         {
-            Decimal rv = 0m;
-            DateTime revDate = revaluationDate.Date;
-            List<GLAccountCurrencyBalance> bList = new List<GLAccountCurrencyBalance>();
-            if (!String.IsNullOrEmpty(gLAccountId))
+            if (string.IsNullOrEmpty(gLAccountId))
             {
-                bList = GetCurrencyBalancesById(gLAccountId, revDate, tenant);
-                foreach (var item in bList)
-                {
-                    rv += item.LocalAmount??0m;
-                }
+                return 0m;
             }
-            return rv;
+            return GetCurrencyBalancesById(gLAccountId, revaluationDate.Date, tenant)
+            .Sum(item => item.LocalAmount ?? 0m);
         }
 
         private static DateTime GetDate(DateTime revaluationDate)

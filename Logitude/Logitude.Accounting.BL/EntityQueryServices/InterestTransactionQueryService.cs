@@ -10,6 +10,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Logitude.Accounting.Data.Enums;
 using System.Text;
 using System.Threading.Tasks;
 using Journal = Logitude.Accounting.Data.EntityPOCOs.Journal;
@@ -170,41 +171,34 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
+
+
+        private static readonly Dictionary<string, Func<InterestTransaction, int, DateTime, DateTime>> accountingDateResolvers =
+            new Dictionary<string, Func<InterestTransaction, int, DateTime, DateTime>>
+            {
+                { AccountingEntityValues.Journal, (tx, tenant, fallback) => GetJournalAccountingDate(tx, tenant, fallback) },
+                { AccountingEntityValues.Adjustment, (tx, tenant, fallback) => GetJournalAccountingDate(tx, tenant, fallback) },
+                { AccountingEntityValues.BankAdjustment, (tx, tenant, fallback) => GetJournalAccountingDate(tx, tenant, fallback) },
+                { AccountingEntityValues.ARInvoice, (tx, tenant, fallback) => GetARInvoiceAccountingDate(tx, tenant, fallback) },
+                { AccountingEntityValues.ARPayment, (tx, tenant, fallback) => GetARPaymentAccountingDate(tx, tenant, fallback) }
+            };
+
+
         public DateTime GetAccountingDate(InterestTransaction interestTransaction, int tenant)
         {
             if (interestTransaction == null)
             {
                 return DateTime.MinValue;
             }
-
-            // Default the accounting date to the interest value date.
             var accountingDate = interestTransaction.InterestValueDate;
-            switch (interestTransaction.AccountingEntityCode)
+            if (accountingDateResolvers.TryGetValue(interestTransaction.AccountingEntityCode, out var resolver))
             {
-                case "1":
-                case "10":
-                case "12":
-                    accountingDate = GetJournalAccountingDate(interestTransaction, tenant, accountingDate);
-                    break;
-
-                case "2":
-                    accountingDate = GetARInvoiceAccountingDate(interestTransaction, tenant, accountingDate);
-                    break;
-
-                case "3":
-                    accountingDate = GetARPaymentAccountingDate(interestTransaction, tenant, accountingDate);
-                    break;
-
-                default:
-                    // Keep the default interest value date if the code doesn't match.
-                    break;
+                return resolver(interestTransaction, tenant, accountingDate);
             }
-
             return accountingDate;
         }
 
-
-        private DateTime GetJournalAccountingDate(InterestTransaction interestTransaction, int tenant, DateTime fallbackDate)
+        private static DateTime GetJournalAccountingDate(InterestTransaction interestTransaction, int tenant, DateTime fallbackDate)
         {
             var journalLineRepository = new JournalLineRepository(tenant);
             var journalLine = journalLineRepository.GetSingleJournalLine(
@@ -224,7 +218,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
-        private DateTime GetARInvoiceAccountingDate(InterestTransaction interestTransaction, int tenant, DateTime fallbackDate)
+        private static DateTime GetARInvoiceAccountingDate(InterestTransaction interestTransaction, int tenant, DateTime fallbackDate)
         {
             var invoiceRepository = new ARInvoiceRepository(tenant);
             var invoice = invoiceRepository.GetSingleARInvoice(interestTransaction.EntityId, tenant);
@@ -232,7 +226,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
-        private DateTime GetARPaymentAccountingDate(InterestTransaction interestTransaction, int tenant, DateTime fallbackDate)
+        private static DateTime GetARPaymentAccountingDate(InterestTransaction interestTransaction, int tenant, DateTime fallbackDate)
         {
             var paymentRepository = new ARPaymentRepository(tenant);
             var payment = paymentRepository.GetSingleARPayment(interestTransaction.EntityId, tenant);
