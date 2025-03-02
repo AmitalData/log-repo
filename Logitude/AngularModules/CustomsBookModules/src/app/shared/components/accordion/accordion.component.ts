@@ -249,8 +249,7 @@ export class AccordionComponent implements OnInit {
 
   // 
   buildDataMekach(customsItemId: number, validToDate: string, languageType: number) {
-    // this.isLoadingMekach = true;
-    this.isLoadingMekach = false;
+    this.isLoadingMekach = true;
     this.MainEntity.Mekach = [
       {
         mekachNumber: "123",
@@ -272,6 +271,7 @@ export class AccordionComponent implements OnInit {
       }
     ];
     this.tableData5.data = this.MainEntity.Mekach;
+    this.isLoadingMekach = false;
     // this.API_MainService.GetMekach(customsItemId, tenant).subscribe(
     //   (data: any) => {
     //     const result: Mekach[] = data?.body?.CustomItemClassifGuidanceList;
