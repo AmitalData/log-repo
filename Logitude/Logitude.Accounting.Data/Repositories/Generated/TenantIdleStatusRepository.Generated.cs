@@ -36,7 +36,7 @@ namespace Logitude.Accounting.Data.Repositories
 		 
 		
 
-		public  TenantIdleStatus GetSingle(string id, string objecttable, int tenant)
+		public POCO.TenantIdleStatus GetSingle(string id, string objecttable, int tenant)
         {
             return (from a in context.TenantIdleStatuses
                     where a.Id == id && a.ObjectTable == objecttable && a.Tenant == tenant

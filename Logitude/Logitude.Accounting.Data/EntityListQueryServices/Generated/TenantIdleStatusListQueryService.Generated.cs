@@ -146,7 +146,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public TenantIdleStatusList GetSingle(string id, string objecttable)
         {
 
-            IQueryable<TenantIdleStatus> TenantIdleStatusQuery = (from a in context.TenantIdleStatuses
+            IQueryable<POCO.TenantIdleStatus> TenantIdleStatusQuery = (from a in context.TenantIdleStatuses
                                                        where a.Id == id && a.ObjectTable == objecttable
                                                        select a);
 
