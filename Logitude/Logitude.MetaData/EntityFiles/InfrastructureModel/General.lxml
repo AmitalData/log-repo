@@ -6756,9 +6756,10 @@
       Code="&quot;General.O.ReportInProcess&quot;"
       DefaultText="&quot;The report was created successfully and will be built in a background process.&quot;"
       LocalDefaultText="&quot;הדוח נוצר בהצלחה ויבנה בתהליך רקע&quot;"
+
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-  </AdditionalTextCodes>
+   </AdditionalTextCodes>
 
   <AdditionalFeatures>
     <Feature
