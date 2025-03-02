@@ -48,9 +48,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             mapping = new TenantIdleStatusDataMapping();
         }
 		 
-		public  TenantIdleStatusPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  TenantIdleStatusPM GetSingle(string id, string objecttable,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new TenantIdleStatusKeys(){ Id = id };
+             EntityKeys = new TenantIdleStatusKeys(){ Id = id, ObjectTable = objecttable };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(TenantIdleStatus entityPOCO)
         {
-            TenantIdleStatusKeys entityKeys = new TenantIdleStatusKeys() { Id = entityPOCO.Id,  };
+            TenantIdleStatusKeys entityKeys = new TenantIdleStatusKeys() { Id = entityPOCO.Id, ObjectTable = entityPOCO.ObjectTable,  };
             return entityKeys;
         }
      
