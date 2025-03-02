@@ -11,6 +11,7 @@ using System.Linq;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Unifreight.Data.AmitalModel.Repsitories;
+using System.Configuration;
 
 namespace CustomsWorkerRole
 {
@@ -26,7 +27,16 @@ namespace CustomsWorkerRole
                 DevLog.Instance.WriteDebug("SyncRecordsCCUTableWR start run (WorkOnce)");
 
                 isFirstTime = false;
-                Scheduler(SendSyncRecoredToUnifreightQueue, 30000, "SendSyncRecoredToUnifreightQueue");
+
+                double sendSyncRecoredToUnifreightQueueInterval = 30000;
+                if (double.TryParse(ConfigurationManager.AppSettings["sendSyncRecoredToUnifreightQueueInterval"], out double configuredInterval))
+                    sendSyncRecoredToUnifreightQueueInterval = configuredInterval;
+                Scheduler(SendSyncRecoredToUnifreightQueue, sendSyncRecoredToUnifreightQueueInterval, "SendSyncRecoredToUnifreightQueue");
+
+                double returnToQueueInterval = 600000;
+                if (double.TryParse(ConfigurationManager.AppSettings["ReturnToQueueInterval"], out double configuredInterval2))
+                    returnToQueueInterval = configuredInterval2;
+                Scheduler(ReturnToQueue, returnToQueueInterval, "ReturnToQueue");
             }
         }
 
@@ -190,6 +200,27 @@ namespace CustomsWorkerRole
 
             if (tablesName.Length > 0)
                 UnifreightQueueService.Insert(tenant, priority, queueName, subjectCloseTables, storageFolder, actionCloseTables, tableName, tablesName);
+        }
+
+        public void ReturnToQueue()
+        {
+            DevLog.Instance.WriteDebug("ReturnToQueue start run");
+
+            SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
+            List<SyncRecord> records = new SyncRecordQuery().GetNeedToReturnToQueue();
+
+            if (records == null || records.Count == 0)
+            {
+                DevLog.Instance.WriteDebug("ReturnToQueue, records count: 0");
+                return;
+            }
+
+            DevLog.Instance.WriteDebug("ReturnToQueue, records count: " + records.Count);
+            DevLog.Instance.WriteTrace("ReturnToQueue, records: " + string.Join(", ", records));
+
+            syncRecordQuery.UpdateStatus(records, SyncRecordStatus.New);
+
+            DevLog.Instance.WriteDebug("ReturnToQueue finish");
         }
     }
 }

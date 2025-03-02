@@ -5,6 +5,7 @@ using System;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using NLog;
 using NetCommonHelper.Logger;
+using System.Data.Entity;
 
 namespace Unifreight.Data.AmitalModel.Repsitories
 {
@@ -163,6 +164,29 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
 
             context.SaveChanges();
+        }
+
+        public List<SyncRecord> GetNeedToReturnToQueue()
+        {
+            DateTime yesterday = DateTime.Now.AddDays(-1);
+            DateTime halfHourBefore = DateTime.Now.AddMinutes(-30);
+
+            int inQueue = context.SyncRecord.Count(syncRecord =>
+                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday);
+
+            DevLog.Instance.WriteDebug($"SyncRecord, GetNeedToReturnToQueue, in queue: {inQueue}");
+
+            if (inQueue > 200)
+                return new List<SyncRecord>();
+
+            var q = context.SyncRecord.Where(syncRecord =>
+                syncRecord.IsSync > SyncRecordStatus.New && syncRecord.IsSync < SyncRecordStatus.SyncedAndUpdated &&
+                syncRecord.CreateDate > yesterday && syncRecord.CreateDate < DbFunctions.AddMinutes(DateTime.Now, -30)).Take(100);
+
+            System.Diagnostics.Debug.Print($"*************** SyncRecord, GetNeedToReturnToQueue query {q}");
+            List<SyncRecord> records = q.ToList();
+
+            return records;
         }
     }
 
