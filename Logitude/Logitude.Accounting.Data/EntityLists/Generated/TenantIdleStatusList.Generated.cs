@@ -31,6 +31,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime UpdateDate  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string ObjectTable  { get; set; }
    }
 
 }

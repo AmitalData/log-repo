@@ -35,10 +35,11 @@ namespace Logitude.Accounting.Data.Repositories
 
 		 
 		
-		public  POCO.TenantIdleStatus GetSingle(string id, int tenant)
+
+		public  TenantIdleStatus GetSingle(string id, string objecttable, int tenant)
         {
             return (from a in context.TenantIdleStatuses
-                    where a.Id == id && a.Tenant == tenant
+                    where a.Id == id && a.ObjectTable == objecttable && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -53,7 +54,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             TenantIdleStatusKeys keys = entityKeys as TenantIdleStatusKeys;
             return (from a in context.TenantIdleStatuses
-                    where a.Id == keys.Id
+                    where a.Id == keys.Id && a.ObjectTable == keys.ObjectTable
                     select a).FirstOrDefault();
         }
 		 		                 
