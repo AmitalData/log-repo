@@ -3,6 +3,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using RtfPipe;
 using System;
+using System.Collections.Generic;
 using UnifreightIIG.Common.CustomItemMekachServiceReference;
 
 
@@ -13,38 +14,33 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(CB_NG_8318_CustomItemMekachOut customResponse, CustomItemMekachRequestParams requestParams)
         {
 
+            this.MyResponseData = new CustomItemMekachResponseData();
             if (customResponse?.CIMekachOut == null)
             {
-                this.MyResponseData = new CustomItemMekachResponseData();
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
                 this.MyResponseData.UserMessage = "לא התקבלו פרטי תדפיסי חקיקה";
                 return;
             }
-            //string rtf = customResponse.CIMekachOut?.;
 
-            //this.MyResponseData = new CustomItemMekachResponseData()
-            //{
-            //    mekachNumber = customResponse.CIMekachOut.mekachNumber,
-            //    changeDescription = customResponse.CIMekachOut.,
-            //    validityDate = customResponse.CIMekachOut.validityDate,
-            //    attachedMekahFile = customResponse.CIMekachOut.attachedMekah
-
-
-            //};
-                //classificationGuidanceTypeName = customResponse.ClassifGuidanceDetailsOut.GeneraClassifGuidanceDetailsOut.classificationGuidanceTypeName,
-
-            //if (customResponse.CIMekachOut?.atta != null)
-            //{
-            //    foreach (var item in customResponse.CIMekachOut.ClassifGuidanceAttachedCI)
-            //    {
-            //        MyResponseData.classifGuidanceAttached.Add(new ClassifGuidanceAttached()
-            //        {
-            //            fullClassification = item.fullClassification,
-            //            attachedCustomsItemID = item.attachedCustomsItemID
-            //        });
-            //    }
-            //}
+            this.MyResponseData = new CustomItemMekachResponseData
+            {
+                CustomItemMekachDataList = new List<CustomItemMekachData>()
+            };
+            if (customResponse.CIMekachOut?.Length > 0) 
+            { 
+                foreach (var item in customResponse.CIMekachOut)
+                {
+                    this.MyResponseData.CustomItemMekachDataList.Add(new CustomItemMekachData
+                    {
+                        mekachNumber = item.mekachNumber,
+                        changeDescription = item.changeDescription,
+                        validityDate = item.validityDate,
+                        //attachedMekahFile = item.attachedMekahFile
+                    });
+                }
+            }
+      
 
 
             this.MyResponseData.Succeeded = true;

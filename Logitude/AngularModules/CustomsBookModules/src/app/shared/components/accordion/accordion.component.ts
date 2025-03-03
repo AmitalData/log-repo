@@ -246,6 +246,7 @@ export class AccordionComponent implements OnInit {
     ];
     this.tableData5.data = this.MainEntity.Mekach;
     this.isLoadingMekach = false;
+    
     this.API_MainService.GetMekachDetails(customsItemId, SessionInfo.LoggedUserTenant).subscribe(
       (data: any) => {
           console.log(data);

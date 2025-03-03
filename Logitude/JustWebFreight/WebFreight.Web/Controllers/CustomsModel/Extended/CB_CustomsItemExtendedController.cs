@@ -327,9 +327,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         {
             try
             {
-                //string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
 
                 CustomItemMekachRequestParams requestParamsData = new CustomItemMekachRequestParams()
@@ -338,7 +338,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     Tenant = tenant,
                     validToDate = DateTime.Now,
                     languageType = 1
-
                 };
                 DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService messagingService = new DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService();
                 CustomItemMekachResponseData responseData = messagingService.Send(requestParamsData);
