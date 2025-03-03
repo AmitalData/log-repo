@@ -1,5 +1,6 @@
 ﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +28,32 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public FTPDetail GetSingleFTPDetail(string id, int tenant)
-        {
-            return (from d in context.FTPDetails where d.Id == id && d.Tenant == tenant select d).FirstOrDefault();
-        }
+        public FTPDetail GetSingleFTPDetail(string id, int tenant, bool getFromCache = false)
+		{
+			string entityName = "FTPDetail" + id + tenant;
+			FTPDetail detail = new FTPDetail();
 
-        public IQueryable<FTPDetail> GetFTPDetails(int tenant)
+			if (getFromCache)
+			{
+				detail = CacheManager.GetOrInsertNewObject(entityName, () =>
+				{
+					return context.FTPDetails
+						.Where(d => d.Id == id && d.Tenant == tenant).FirstOrDefault();	
+				});
+			}
+			else
+			{
+				detail = context.FTPDetails
+					.Where(d => d.Id == id && d.Tenant == tenant).FirstOrDefault();
+				
+					
+			}
+
+			return detail;
+
+		}
+
+		public IQueryable<FTPDetail> GetFTPDetails(int tenant)
         {
             return (from d in context.FTPDetails where d.Tenant == tenant select d);
         }
