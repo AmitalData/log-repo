@@ -737,11 +737,10 @@ export class ClassifGuidanceAttached {
 }
 
 export class Mekach {
-	mekachNumber: string; // מס מק"ת/מק"ח
+	mekachNumber: number; // מס מק"ת/מק"ח
 	attachedMekahFile: string; // קובץ מצורף (נתיב לקובץ)
 	validityDate: Date; // בתוקף מיום
 	changeDescription: string; // דברי הסבר
-	CustomsItemID: number;
-	validToDate: Date; // תאריך מערכת
-	LanguageType?:number;
+	customsItemId?: number;
+	tenant?: number;
 }

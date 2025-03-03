@@ -136,17 +136,6 @@ export class AccordionComponent implements OnInit {
       data: []
     };
 
-
-    // create new table:
-    // by  class Mekach {
-    //   mekachNumber: string; // מס מק"ת/מק"ח
-    //   attachedMekahFile: string; // קובץ מצורף (נתיב לקובץ)
-    //   validityDate: Date; // בתוקף מיום
-    //   changeDescription: string; // דברי הסבר
-    //   CustomsItemID: number;
-    //   validToDate: Date; // תאריך מערכת
-    //   LanguageType?:number;
-    // }
     this.tableData5 = {
       columns: [
         { key: 'mekachNumber', displayName: 'מס מק"ת/מק"ח', dataType: 'string', visible: true },
@@ -251,39 +240,26 @@ export class AccordionComponent implements OnInit {
   buildDataMekach(customsItemId: number, validToDate: string, languageType: number) {
     this.isLoadingMekach = true;
     this.MainEntity.Mekach = [
-      {
-        mekachNumber: "123",
-        attachedMekahFile: "file",
-        validityDate: new Date(),
-        changeDescription: "description",
-        CustomsItemID: customsItemId,
-        validToDate: new Date(),
-        LanguageType: 1
-      },
-      {
-        mekachNumber: "456",
-        attachedMekahFile: "file",
-        validityDate: new Date(),
-        changeDescription: "description",
-        CustomsItemID: customsItemId,
-        validToDate: new Date(),
-        LanguageType: 1
-      }
+      { mekachNumber: 296, attachedMekahFile: "file1", validityDate: new Date(), changeDescription: "description1" },
+      { mekachNumber: 123, attachedMekahFile: "file2", validityDate: new Date(), changeDescription: "description2" }
+      
     ];
     this.tableData5.data = this.MainEntity.Mekach;
     this.isLoadingMekach = false;
-    // this.API_MainService.GetMekach(customsItemId, tenant).subscribe(
-    //   (data: any) => {
-    //     const result: Mekach[] = data?.body?.CustomItemClassifGuidanceList;
-    //     if (!result) return;;
-    //     this.MainEntity.Mekach = result;
-    //     this.tableData5.data = this.MainEntity.CustomItemClassifGuidanceResult;
-    // this.isLoadingMekach = false;
+    this.API_MainService.GetMekachDetails(customsItemId, SessionInfo.LoggedUserTenant).subscribe(
+      (data: any) => {
+          console.log(data);
+          
+        // const result: Mekach[] = data?.body?.CustomItemClassifGuidanceList;
+        // if (!result) return;;
+        // this.MainEntity.Mekach = result;
+        // this.tableData5.data = this.MainEntity.CustomItemClassifGuidanceResult;
+        // this.isLoadingMekach = false;
 
-    //   },
-    //   (error) => {
-    //     console.log(error.message);
-    //   }
-    // );
+      },
+      (error) => {
+        console.log(error.message);
+      }
+    );
   }
 }
