@@ -177,5 +177,7 @@ namespace Unifreight.BL.EntityQueryServices
             repository.Remove(records);
             repository.SubmitChanges();
         }
+
+        public List<SyncRecord> GetNeedToReturnToQueue() => repository.GetNeedToReturnToQueue();
     }
 }

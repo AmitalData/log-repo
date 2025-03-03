@@ -11,11 +11,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Web;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.Models;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Unifreight.Data.AmitalModel.Repsitories;
+using WebFreight.Web.GlobalModel;
 using WebFreight.Web.WcfApi;
 
 namespace AmitalTestConsoleApp
@@ -38,12 +40,13 @@ namespace AmitalTestConsoleApp
             //string tableName = "GGGQ";
             //string itemUpdate =  fileNo;
             //bool isCloseTable = false;
-            
+
             GetRecordJson("e7c36fc9-902c-4c0a-9646-fd54afb7df9d");
             GetSyncData("167981194");
 
             //CreateNewRecord(tenant, fileNo, tableName, isCloseTable);
             //WRSendTaskToQueueMessage();
+            //ReturnToQueue();
             //Envelope task = GetTaskFromQueue(tenant);
             //List<EntityRecord> dataSync = APIGetSyncData(tenant, itemUpdate);
             //APIMarkSyncFinished(tenant, itemUpdate, dataSync);
@@ -148,6 +151,12 @@ namespace AmitalTestConsoleApp
             new ExternalTasksQueueWcfService().MarkTaskAsDone(communicationLogId, tenant, 4);
         }
 
+        private static void ReturnToQueue()
+        {
+            Console.WriteLine("Start Return To Queue");
+            new SyncRecordsCCUTableWR().ReturnToQueue();
+        }
+
         public static void LoadLogitudeSettings()
         {
             LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
@@ -194,7 +203,13 @@ namespace AmitalTestConsoleApp
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
             //InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
-            CacheManager.CacheWrapper = new MockCacheWrapper();
+            Dictionary<int, string> globalDBs = new Dictionary<int, string>();
+            List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
+            foreach (var item in globalTenants)
+            {
+                globalDBs.Add(item.Id, item.GlobalDBId);
+            }
+            CacheManager.CacheWrapper = new CacheWrapper(HttpRuntime.Cache, globalDBs);
         }
     }
 }
