@@ -5,6 +5,7 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
+using AccountingEntityValues = Logitude.Accounting.Data.Enums.AccountingEntityValues;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -719,33 +721,85 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return transactions;
         }
 
+        private static readonly Dictionary<string, Func<LedgerTransaction, Journal, int, string, string>> referenceTypeResolvers =
+           new Dictionary<string, Func<LedgerTransaction, Journal, int, string, string>>
+           {
+                { AccountingEntityValues.ARInvoice, (lt, jr, tenant, fallback) => OpenFormatDocumentTypes.TaxInvoice },
+                { AccountingEntityValues.ARPayment, (lt, jr, tenant, fallback) => OpenFormatDocumentTypes.Receipt },
+                { AccountingEntityValues.Journal, (lt, jr, tenant, fallback) => GetJournalReferenceType(lt, jr, tenant, fallback) },
+                { AccountingEntityValues.ChequeDeposit, (lt, jr, tenant, fallback) => GetDepositReferenceType(jr, tenant, fallback) },
+                { AccountingEntityValues.CashDeposit, (lt, jr, tenant, fallback) => GetDepositReferenceType(jr, tenant, fallback) },
+          };
+
+        private static string GetJournalReferenceType(LedgerTransaction lt, Journal jr, int tenant, string fallback)
+        {
+            if (jr == null)
+            {
+                return fallback;
+            }
+            var paymentMarkers = new HashSet<string>{ "PAYMENT:", "PAY:", "CHQ:" };
+            return !String.IsNullOrEmpty(jr.ExternalSystem) && paymentMarkers.Any(pm => lt.Notes.Contains(pm))
+                        ? OpenFormatDocumentTypes.AgentInvoice
+                        : fallback;
+        }
+
+
+        private static string GetDepositReferenceType(Journal jr, int tenant, string fallback)
+        {
+            if (jr == null)
+            {
+                return fallback;
+            }
+
+            return jr.StatusCode == JournalStatuses.Voided
+                        ? OpenFormatDocumentTypes.CashOut
+                        : OpenFormatDocumentTypes.BankDeposit;
+        }
+
+        public string ResolveReferenceType(LedgerTransaction lt, Journal jr, int tenant, string fallback)
+        {
+            if (referenceTypeResolvers.TryGetValue(jr.AccountingEntityCode, out var dateResolver))
+            {
+                return dateResolver(lt, jr, tenant, fallback);
+            }
+            return fallback;
+        }
+
         private IQueryable<B100Data> GettransactionsQuery(DateTime fromDate, DateTime toDate, int tenant)
         {
-            return (from a in context.LedgerTransactions
-                    join g in context.GLAccounts on a.AccountId equals g.Id
-                    join j in context.Journals on a.JournalId equals j.Id
 
-                    where ((a.AccountingDate >= fromDate && a.AccountingDate <= toDate)) && a.Tenant == tenant
+            return (from lt in context.LedgerTransactions
+                    join g in context.GLAccounts on lt.AccountId equals g.Id
+                    join j in context.Journals on lt.JournalId equals j.Id
+                    join cancelledj in context.Journals on j.OriginalJournalId equals cancelledj.Id into cancelledjJoin
+                    from cancelledj in cancelledjJoin.DefaultIfEmpty() // Left outer join
+                    where ((lt.AccountingDate >= fromDate && lt.AccountingDate <= toDate)) && lt.Tenant == tenant
                     select new B100Data()
                     {
-                        AccountingDate = a.AccountingDate,
-                        DocumentDate = a.DocumentDate,
+                        AccountingDate = lt.AccountingDate,
+                        DocumentDate = lt.DocumentDate,
                         AccountingEntityCode = j.AccountingEntityCode,
                         AccountingEntityReference = j.AccountingEntityReference,
-                        ForeignAmountCredit = a.ForeignAmountCredit,
-                        ForeignAmountDebit = a.ForeignAmountDebit,
+                        AccountingEntityReferenceType = ResolveReferenceType(
+                                                lt,
+                                                cancelledj ?? j,
+                                                tenant,
+                                                OpenFormatDocumentTypes.Fallback
+                                            ),
+                        ForeignAmountCredit = lt.ForeignAmountCredit,
+                        ForeignAmountDebit = lt.ForeignAmountDebit,
                         GLAccountDisplayNumber = g.DisplayNumber,
-                        LocalAmountCredit = a.LocalAmountCredit,
-                        LocalAmountDebit = a.LocalAmountDebit,
-                        CreateDate = a.CreateDate,
-                        CurrencyId = a.CurrencyId,
+                        LocalAmountCredit = lt.LocalAmountCredit,
+                        LocalAmountDebit = lt.LocalAmountDebit,
+                        CreateDate = lt.CreateDate,
+                        CurrencyId = lt.CurrencyId,
                         CreatedByUser = j.CreatedByUserId,
-                        JournalLineNumber = a.JournalLineNumber,
+                        JournalLineNumber = lt.JournalLineNumber,
                         JournalNumber = j.JournalNumber,
-                        Notes = a.Notes,
-                        Reference2 = a.Reference2,
-                        LedgerTransactionId = a.Id,
-                        OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
+                        Notes = lt.Notes,
+                        Reference2 = lt.Reference2,
+                        LedgerTransactionId = lt.Id,
+                        OppositGLAccount = lt.OppositeAccount != null ? lt.OppositeAccount.DisplayNumber : null,
                     });
         }
 
