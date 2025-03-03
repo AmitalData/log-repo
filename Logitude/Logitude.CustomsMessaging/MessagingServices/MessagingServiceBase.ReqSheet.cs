@@ -896,7 +896,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 		private string SendFileToSFTP(int tenant,byte[] filedata, string fileName, out string MessageOut)
 		{			
 			var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
-			CustomsPartnerFtpPM pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, "MECHES", "MECHES", CustomsPartnerFtpDetails.TypeCode_Out);
+			CustomsPartnerFtpPM pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, "Customs", "Customs", CustomsPartnerFtpDetails.TypeCode_Out);
 			
             string serverjobID = string.Empty;
 			MessageOut = string.Empty;

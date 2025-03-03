@@ -867,16 +867,18 @@ namespace Logitude.Server.Tools.FTP
 					p_status = "-1";
 					return;
 				}
-				sftp = new nsoftware.IPWorksSSH.Sftp();
-				sftp.Firewall.Port = v_port;
+				sftp = new nsoftware.IPWorksSSH.Sftp()
+				{
+					Firewall = { Port = v_port },
+					SSHAuthMode = nsoftware.IPWorksSSH.SftpSSHAuthModes.amPublicKey,
+					SSHHost = p_host,
+					SSHUser = p_user,
+					SSHCert = new Certificate(CertStoreTypes.cstPPKFile, p_privateKeyPath, "", "*"),
+					RemotePath = p_directory,
+					RuntimeLicense = "31484E42414431535542323031393130323552413153554241544A353234353800000000000000003135554732304250000058415852315432434D5233410000"
+				};
 				sftp.OnSSHServerAuthentication += new nsoftware.IPWorksSSH.Sftp.OnSSHServerAuthenticationHandler(sftp_OnSSHServerAuthentication);
 				sftp.OnSSHStatus += new nsoftware.IPWorksSSH.Sftp.OnSSHStatusHandler(sftp_OnSSHStatus);
-				sftp.SSHAuthMode = nsoftware.IPWorksSSH.SftpSSHAuthModes.amPublicKey;
-				sftp.SSHHost = p_host;
-				sftp.SSHUser = p_user;
-				sftp.SSHCert = new Certificate(CertStoreTypes.cstPPKFile, p_privateKeyPath, "", "*");
-				sftp.RemotePath = p_directory;
-				sftp.RuntimeLicense = "31484E42414431535542323031393130323552413153554241544A353234353800000000000000003135554732304250000058415852315432434D5233410000";
 
 				sftp.SSHLogon(p_host, v_sshport);
 				p_message = "Successfully connected to Host:'" + p_host + "' ,User:'" + p_user;
@@ -888,8 +890,7 @@ namespace Logitude.Server.Tools.FTP
 			catch (Exception ex)
 			{
 				p_status = "-1";
-				p_message = "Failed to perform 'Logon' to Host:'" + p_host + "' ,User:'" + p_user;
-				p_message += "', directory:'" + sftp.RemotePath + "'";
+				p_message = $"Successfully connected to Host: '{p_host}', User: '{p_user}', Directory: '{sftp.RemotePath}'";
 				p_message += Environment.NewLine + ex.Message;
 				if (ex.InnerException != null)
 					p_message += Environment.NewLine + p_message;
