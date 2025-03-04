@@ -1578,11 +1578,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             var up = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
                             up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
-                            //JournalRepository journalRepository = new JournalRepository(_JournalPM.Tenant);
-                            //Journal Journal = journalRepository.GetSingle(_JournalPM.Id, _JournalPM.Tenant);
-                            //Journal.StatusCode = "4";
-                            //journalRepository.Update(Journal);
-                            //journalRepository.SubmitChanges();
                             scope.Complete();
                         }
                     }
