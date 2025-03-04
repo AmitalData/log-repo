@@ -1570,10 +1570,26 @@ namespace Logitude.Accounting.BL.CoreBL
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError(" usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + ex);
-                if (_JournalPM?.StatusCode == ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString() && !_JournalPM.IsLedgerCreated)
+                if (_JournalPM?.StatusCode == "6" && !_JournalPM.IsLedgerCreated)
                 {
-                    var up = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
-                    up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
+                    try
+                    {
+                        using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Suppress))
+                        {
+                            var up = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
+                            up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
+                            //JournalRepository journalRepository = new JournalRepository(_JournalPM.Tenant);
+                            //Journal Journal = journalRepository.GetSingle(_JournalPM.Id, _JournalPM.Tenant);
+                            //Journal.StatusCode = "4";
+                            //journalRepository.Update(Journal);
+                            //journalRepository.SubmitChanges();
+                            scope.Complete();
+                        }
+                    }
+                    catch (Exception updateEx)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("Failed to update journal status in exception handling. JournalId: " + _JournalPM?.Id + " Err:" + updateEx);
+                    }
                 }
             }
             finally
