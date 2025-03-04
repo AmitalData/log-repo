@@ -89,6 +89,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                 syncRecord.CreateDate > yesterday
             );
 
+            logger.WriteTrace($"SyncRecord, GetUnsyncAndMarkAsInProcess query {recordsQurey}");
+            
             List<SyncRecord> records = recordsQurey.ToList();
 
             foreach (SyncRecord syncRecord in records)
@@ -99,9 +101,13 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             context.SaveChanges();
 
-            IEnumerable<SyncRecord> q = records.GroupBy(record => new { record.Entname, record.KeyVal, record.TrigAction })
-                .Select(group => group.FirstOrDefault());
+            IEnumerable<SyncRecord> q = records
+                .GroupBy(record => new { record.Entname, record.KeyVal, record.TrigAction })
+                .Select(group => group.OrderByDescending(record => record.CreateDate).FirstOrDefault())
+                .OrderBy(record => record.CreateDate);
             List<SyncRecord> groupRecord = q.ToList();
+
+            logger.WriteTrace($"SyncRecord, GetUnsyncAndMarkAsInProcess groupRecord {System.Text.Json.JsonSerializer.Serialize(groupRecord)}");
 
             return groupRecord;
         }
