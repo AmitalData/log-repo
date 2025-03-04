@@ -84,14 +84,11 @@ using Logitude.DashboardModule.BL;
 
 
 
-
-
-
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class FTPDetailUpdateClass
    {  		
-		public const string HashString = "451dd4d799e2b7fdeeb81aeffdf37d05";
+		public const string HashString = "8f4e6a73489ecbccd7ffd21f4a40ebd5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,13 +122,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "FTP Detail",
-			      				    Code =  "a319",
+			      				    Code =  "98e5",
 			      				    Name =  "FTPDetail",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
