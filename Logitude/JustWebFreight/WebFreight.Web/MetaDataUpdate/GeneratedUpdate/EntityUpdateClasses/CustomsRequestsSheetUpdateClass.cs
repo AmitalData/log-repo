@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsRequestsSheetUpdateClass
    {  		
-		public const string HashString = "ca5e06cd14eebae0bbd346652c12bb79";
+		public const string HashString = "6048d2644fc3dcfa50f25358bee94db6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1815,15 +1815,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable CustomsRequestsSheetObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsRequestsSheet" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature CustomsRequestsSheetFeature_IsSendSFTP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsSendSFTP", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsRequestsSheetObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsRequestsSheet.Features.IsSendSFTP", NameTextCodeDefaultText = @"Is Send SFTP" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsRequestsSheetObjectTable);
-
-   
+	    {     
 	    
 		}
 
