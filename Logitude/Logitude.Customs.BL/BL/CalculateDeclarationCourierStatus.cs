@@ -871,12 +871,10 @@ namespace Logitude.Customs.BL.BL
             }
 
             ConsignmentPackageRepository consignmentPackageRepository = new ConsignmentPackageRepository(declarationPM.Tenant);
-            List<ConsignmentPackage> listConPackages = consignmentPackageRepository.GetConsignmentPackagesFilterByMeasureQualifierCode(declarationPM.Id);
-
-            var sumGross = listConPackages.Sum(c => c.GrossMassMeasure);
+            decimal? sumGross = consignmentPackageRepository.GetConsignmentPackagesFilterByMeasureQualifierCode(declarationPM.Id);
 
 
-            if (sumGross < defaultAmount)
+			if (sumGross < defaultAmount)
             {
                 if (declarationPending904PM != null && declarationPending904PM.Status == "A")
                 {
