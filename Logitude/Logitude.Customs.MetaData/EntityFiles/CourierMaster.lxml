@@ -5774,6 +5774,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CourierMasterPaymentStatusCd&quot;"
     ListPropertyPath="&quot;CourierMasterPaymentStatusCd&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6806,5 +6807,15 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SendPaymentOn900Close&quot;"
+      FeatureTypeCode="&quot; שליחת תשלום בסגירת PENDING גביה&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.SendPaymentOn900Close&quot;"
+      FeatureDefaultText="&quot;SendPaymentOn900Close&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false"
+      ToggleCode="&quot;ACT&quot;" />
   </AdditionalFeatures>
 </entity>
