@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class FTPDetailUpdateClass
    {  		
-		public const string HashString = "8f4e6a73489ecbccd7ffd21f4a40ebd5";
+		public const string HashString = "451dd4d799e2b7fdeeb81aeffdf37d05";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -122,13 +122,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity = false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "FTP Detail",
-			      				    Code =  "98e5",
+			      				    Code = "a319",
 			      				    Name =  "FTPDetail",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
