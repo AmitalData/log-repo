@@ -26,6 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        {
           DataBaseNumber  = entity.DataBaseNumber;
           LastBackupDate  = entity.LastBackupDate;
+          Rowid  = entity.Rowid;
        }
        #endregion Constructors
        #region Properties
@@ -35,6 +36,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public int DataBaseNumber  { get; set; }
        [DataMember]
        public DateTime? LastBackupDate  { get; set; }
+       [DataMember]
+       public string Rowid  { get; set; }
          #endregion Properties
    }
 

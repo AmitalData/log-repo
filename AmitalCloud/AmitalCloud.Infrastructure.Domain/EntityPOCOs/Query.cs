@@ -26,8 +26,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("Code")]
 	    public string Code { get; set; }
-        [Column("UniqueCode")]
-	    public string UniqueCode { get; set; }
         [ForeignKey("User")]
         [Column("UserId")]
 	    public string UserId { get; set; }
@@ -44,8 +42,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool TenantLevel { get; set; }
         [Column("OriginalQueryId")]
 	    public string OriginalQueryId { get; set; }
-        [Column("OriginalQueryCode")]
-	    public string OriginalQueryCode { get; set; }
         [Column("QuerySection")]
 	    public string QuerySection { get; set; }
         [Column("IndexOrder")]
@@ -59,11 +55,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string QueryGroupCode { get; set; }
 	      
         public virtual QueryGroup QueryGroup { get; set; }
-        [ForeignKey("NameTextCode")]
         [Column("NameTextCodeId")]
 	    public string NameTextCodeId { get; set; }
-	      
-        public virtual TextCode NameTextCode { get; set; }
         [Column("DefaultSortDirection")]
 	    public string DefaultSortDirection { get; set; }
         [Column("DefaultSortColumn")]
@@ -92,13 +85,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool SharedWithAll { get; set; }
         [Column("SharedWithSpecificUsers")]
 	    public bool SharedWithSpecificUsers { get; set; }
-        [ForeignKey("SharedByUser")]
+        [ForeignKey("SharedByUserIdUser")]
         [Column("SharedByUserId")]
 	    public string SharedByUserId { get; set; }
 	      
-        public virtual User SharedByUser { get; set; }
+        public virtual User SharedByUserIdUser { get; set; }
         [Column("SpotlightModeActivated")]
 	    public bool SpotlightModeActivated { get; set; }
+        [Column("UniqueCode")]
+	    public string UniqueCode { get; set; }
+        [Column("OriginalQueryCode")]
+	    public string OriginalQueryCode { get; set; }
         [Column("NameTextCodeCode")]
 	    public string NameTextCodeCode { get; set; }
         [Column("FeatureUniqeCode")]
@@ -107,12 +104,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool IsViewOnly { get; set; }
         [Column("IsDefault")]
 	    public bool IsDefault { get; set; }
-        [Column("Feature")]
-	    public string Feature { get; set; }
-        [Column("OriginalQuery")]
-	    public string OriginalQuery { get; set; }
-        [Column("CopiedQueries")]
-	    public string CopiedQueries { get; set; }
     }
 }
 	 

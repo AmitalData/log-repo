@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class GlobalDBQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.GlobalDB,GlobalDBKeys<string>,GlobalDBPM,GlobalDBList,string>
+   public partial class GlobalDBQueryService: BaseEntityQueryService<IGlobalContext,POCO.GlobalDB,GlobalDBKeys<string>,GlobalDBPM,GlobalDBList,string>
    {
-        public GlobalDBQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public GlobalDBQueryService(IAmitalCloudContext context) : base(new Repository<POCO.GlobalDB>(context),new GlobalDBDataMapping()) {}
+        public GlobalDBQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public GlobalDBQueryService(IGlobalContext context) : base(new Repository<POCO.GlobalDB>(context),new GlobalDBDataMapping()) {}
 		public  GlobalDBPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new GlobalDBKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.GlobalDB,string> GetKeys(POCO.GlobalDB entityPOCO) => new GlobalDBKeys<string>() { Id = entityPOCO.Id,  };
    }

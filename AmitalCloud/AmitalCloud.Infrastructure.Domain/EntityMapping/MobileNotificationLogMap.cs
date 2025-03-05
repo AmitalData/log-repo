@@ -22,23 +22,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(70).IsUnicode(false);
 
-            this.Property(t => t.NotificationMessage).HasColumnName("NotificationMessage").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.NotificationMessage).HasColumnName("NotificationMessage").IsRequired().HasMaxLength(500).IsUnicode(true);
 
-            this.Property(t => t.EntityId).HasColumnName("EntityId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.EntityId).HasColumnName("EntityId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Exception).HasColumnName("Exception").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Exception).HasColumnName("Exception").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.Log).HasColumnName("Log").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Log).HasColumnName("Log").IsRequired().HasMaxLength(-1).IsUnicode(false);
 
-            this.Property(t => t.IOSStatus).HasColumnName("IOSStatus").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.IOSStatus).HasColumnName("IOSStatus").IsRequired().HasMaxLength(1).IsUnicode(false);
 
-            this.Property(t => t.AndroidStatus).HasColumnName("AndroidStatus").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AndroidStatus).HasColumnName("AndroidStatus").IsRequired().HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.NumberOfRetriesIOS).HasColumnName("NumberOfRetriesIOS").IsRequired();
 
@@ -54,11 +54,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.IsDelete).HasColumnName("IsDelete").IsRequired();
 
-            this.Property(t => t.NotificationMessageIOS).HasColumnName("NotificationMessageIOS").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.NotificationMessageIOS).HasColumnName("NotificationMessageIOS").IsRequired().HasMaxLength(500).IsUnicode(true);
 
-            this.Property(t => t.NotificationMessageAndroid).HasColumnName("NotificationMessageAndroid").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.NotificationMessageAndroid).HasColumnName("NotificationMessageAndroid").IsRequired().HasMaxLength(500).IsUnicode(true);
 
-            this.Property(t => t.XML).HasColumnName("XML").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.XML).HasColumnName("XML").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
             this.Property(t => t.DoneDate).HasColumnName("DoneDate").IsRequired();
 

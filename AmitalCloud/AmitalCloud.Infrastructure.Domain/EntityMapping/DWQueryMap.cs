@@ -18,23 +18,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public DWQueryMap()
         { 
-				this.ToTable("DWQuerys");
+				this.ToTable("dwqueries");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropId).HasColumnName("CdropId").IsRequired().HasMaxLength(128).IsUnicode(true);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.SQLString).HasColumnName("SQLString").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SQLString).HasColumnName("SQLString").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.UpdateByUserId).HasColumnName("UpdateByUserId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.UpdateByUserId).HasColumnName("UpdateByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CreatedDate).HasColumnName("CreatedDate").IsRequired();
 
             this.Property(t => t.UpdatedDate).HasColumnName("UpdatedDate").IsRequired();
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

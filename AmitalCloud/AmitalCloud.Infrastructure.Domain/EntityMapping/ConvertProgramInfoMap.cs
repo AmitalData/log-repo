@@ -18,17 +18,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public ConvertProgramInfoMap()
         { 
-				this.ToTable("ConvertProgramInfos");
+				this.ToTable("ConvertProgramInfoes");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.MethodName).HasColumnName("MethodName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.MethodName).HasColumnName("MethodName").IsRequired().HasMaxLength(65).IsUnicode(false);
 
             this.Property(t => t.IsApplied).HasColumnName("IsApplied").IsRequired();
 
-            this.Property(t => t.GlobalDBId).HasColumnName("GlobalDBId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.GlobalDBId).HasColumnName("GlobalDBId").IsRequired().HasMaxLength(15).IsUnicode(true);
         }
     }
 }

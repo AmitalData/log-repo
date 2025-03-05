@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class DWHBuildStatusListQueryService  : BaseEntityListQueryService<DWHBuildStatusList,POCO.DWHBuildStatus,  DWHBuildStatusKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.DWHBuildStatus> contextEntity => (context as IAmitalCloudContext).DWHBuildStatuss;
+	    protected override System.Data.Entity.IDbSet<POCO.DWHBuildStatus> contextEntity => (context as IAmitalCloudContext).DWHBuildStatus;
 		public DWHBuildStatusListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public DWHBuildStatusList GetSingle(string id)
 		{

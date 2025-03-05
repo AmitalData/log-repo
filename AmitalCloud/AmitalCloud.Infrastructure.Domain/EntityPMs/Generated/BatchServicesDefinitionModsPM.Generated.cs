@@ -28,27 +28,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public BatchServicesDefinitionModsPM() : base() {} 
    public BatchServicesDefinitionModsPM(POCO.BatchServicesDefinitionMods entity) : base()
    {
-		_code = entity.Code;
+		_cdropCode = entity.CdropCode;
 		_inActive = entity.InActive;
 		_numberOfThreads = entity.NumberOfThreads;
-		_batchServicesDefinition = entity.BatchServicesDefinition;
-   }
+		_code = entity.Code;
+		_batchservicesdefinition = entity.BatchServicesDefinition !=null ? new BatchServicesDefinitionPM(entity.BatchServicesDefinition) : null;
+	   }
    #endregion Constructors
    #region Properties
-   	  private string _code ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+   	  private string _cdropCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Code  
+       public string CdropCode  
 	   {
-	     get { return _code; }
+	     get { return _cdropCode; }
 		 set
 		 {
-		   if(_code != value)
+		   if(_cdropCode != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=_code,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropCode",OldValue=_cdropCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _code=value;
+		   _cdropCode=value;
 		   }
 		 }
 	   }
@@ -84,22 +84,31 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _batchServicesDefinition ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	  private string _code ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string BatchServicesDefinition  
+       public string Code  
 	   {
-	     get { return _batchServicesDefinition; }
+	     get { return _code; }
 		 set
 		 {
-		   if(_batchServicesDefinition != value)
+		   if(_code != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BatchServicesDefinition",OldValue=_batchServicesDefinition,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=_code,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _batchServicesDefinition=value;
+		   _code=value;
 		   }
 		 }
 	   }
+		private BatchServicesDefinitionPM _batchservicesdefinition;
+		[Include]
+        [DataMember]
+        public virtual BatchServicesDefinitionPM BatchServicesDefinition 
+		{ 
+		get { return _batchservicesdefinition; } 
+		set { _batchservicesdefinition = value; }
+		}
 	 }
 #endregion Properties
 }

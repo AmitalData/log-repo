@@ -24,20 +24,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DWQueryList() : base() {}
        public DWQueryList(POCO.DWQuery entity) : base()
        {
-          Id  = entity.Id;
+          CdropId  = entity.CdropId;
           Tenant  = entity.Tenant;
           SQLString  = entity.SQLString;
           CreatedByUserId  = entity.CreatedByUserId;
           UpdateByUserId  = entity.UpdateByUserId;
           CreatedDate  = entity.CreatedDate;
           UpdatedDate  = entity.UpdatedDate;
+          Id  = entity.Id;
        }
        #endregion Constructors
        #region Properties
-   
-       [Key]
-       [DataMember]
-       public string Id  { get; set; }
+          [DataMember]
+       public string CdropId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
@@ -50,6 +49,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime CreatedDate  { get; set; }
        [DataMember]
        public DateTime UpdatedDate  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
          #endregion Properties
    }
 

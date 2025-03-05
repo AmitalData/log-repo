@@ -39,11 +39,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string DocumentTypeCopyId { get; set; }
 	      
         public virtual DocumentTypeCopy DocumentTypeCopy { get; set; }
-        [ForeignKey("LastPrintedByUser")]
+        [ForeignKey("User")]
         [Column("LastPrintedByUserId")]
 	    public string LastPrintedByUserId { get; set; }
 	      
-        public virtual User LastPrintedByUser { get; set; }
+        public virtual User User { get; set; }
         [Column("LastPrintDate")]
 	    public DateTime? LastPrintDate { get; set; }
     }

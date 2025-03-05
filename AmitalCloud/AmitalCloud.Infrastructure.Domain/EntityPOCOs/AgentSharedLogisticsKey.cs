@@ -20,23 +20,33 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	{
 	        new const bool hasTenant = false;  
 		
-        [Key]
-        [Column("SharedKey")]
-	    public string SharedKey { get; set; }
+           [Column("CdropSharedkey")]
+	    public string CdropSharedkey { get; set; }
         [Column("Agent1Tenant")]
 	    public int Agent1Tenant { get; set; }
         [Column("Agent2Tenant")]
 	    public int Agent2Tenant { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
-        [Column("CreatedByUserEmail")]
-	    public string CreatedByUserEmail { get; set; }
-        [Column("ApprovedByUserEmail")]
-	    public string ApprovedByUserEmail { get; set; }
+        [Column("CdropCreatedbyuseremail")]
+	    public string CdropCreatedbyuseremail { get; set; }
+        [Column("CdropApprovedbyuseremail")]
+	    public string CdropApprovedbyuseremail { get; set; }
         [Column("ApproveDate")]
 	    public DateTime? ApproveDate { get; set; }
         [Column("InactiveDate")]
 	    public DateTime? InactiveDate { get; set; }
+        [Column("CdropInactivebyuseremail")]
+	    public string CdropInactivebyuseremail { get; set; }
+        [Column("CdropStatuscode")]
+	    public string CdropStatuscode { get; set; }
+     [Key]
+        [Column("SharedKey")]
+	    public string SharedKey { get; set; }
+        [Column("CreatedByUserEmail")]
+	    public string CreatedByUserEmail { get; set; }
+        [Column("ApprovedByUserEmail")]
+	    public string ApprovedByUserEmail { get; set; }
         [Column("InactiveByUserEmail")]
 	    public string InactiveByUserEmail { get; set; }
         [Column("StatusCode")]

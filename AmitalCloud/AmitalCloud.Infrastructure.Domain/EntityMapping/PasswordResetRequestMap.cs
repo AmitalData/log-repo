@@ -22,9 +22,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.RequestNumber });
 	 
-            this.Property(t => t.RequestNumber).HasColumnName("RequestNumber").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.RequestNumber).HasColumnName("RequestNumber").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(70).IsUnicode(false);
 
             this.Property(t => t.IsDone).HasColumnName("IsDone").IsRequired();
 
@@ -36,9 +36,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 
-            this.Property(t => t.VerificationCode).HasColumnName("VerificationCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.VerificationCode).HasColumnName("VerificationCode").IsRequired().HasMaxLength(5).IsUnicode(false);
 
-            this.Property(t => t.Type).HasColumnName("Type").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Type).HasColumnName("Type").IsRequired().HasMaxLength(20).IsUnicode(false);
         }
     }
 }

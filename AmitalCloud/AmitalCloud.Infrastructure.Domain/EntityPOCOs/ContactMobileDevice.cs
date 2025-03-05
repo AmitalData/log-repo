@@ -23,8 +23,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Key]
         [Column("DeviceId")]
 	    public string DeviceId { get; set; }
-        [Column("NotificationUniqueKey")]
-	    public string NotificationUniqueKey { get; set; }
         [Column("Email")]
 	    public string Email { get; set; }
         [Column("Platform")]
@@ -39,6 +37,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public DateTime UpdateDate { get; set; }
         [Column("IsSignOut")]
 	    public bool IsSignOut { get; set; }
+        [Column("NotificationUniqueKey")]
+	    public string NotificationUniqueKey { get; set; }
         [Column("AppVersion")]
 	    public string AppVersion { get; set; }
     }

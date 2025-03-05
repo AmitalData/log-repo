@@ -32,8 +32,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_userId = entity.UserId;
 		_queryId = entity.QueryId;
-		_query = entity.Query !=null ? new QueryPM(entity.Query) : null;
-			_queryCode = entity.QueryCode;
+		_queryCode = entity.QueryCode;
    }
    #endregion Constructors
    #region Properties
@@ -102,14 +101,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private QueryPM _query;
-		[Include]
-        [DataMember]
-        public virtual QueryPM Query 
-		{ 
-		get { return _query; } 
-		set { _query = value; }
-		}
 	  private string _queryCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

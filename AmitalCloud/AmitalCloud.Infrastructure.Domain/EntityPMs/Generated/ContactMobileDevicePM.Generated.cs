@@ -29,7 +29,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public ContactMobileDevicePM(POCO.ContactMobileDevice entity) : base()
    {
 		_deviceId = entity.DeviceId;
-		_notificationUniqueKey = entity.NotificationUniqueKey;
 		_email = entity.Email;
 		_platform = entity.Platform;
 		_version = entity.Version;
@@ -37,6 +36,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_createDate = entity.CreateDate;
 		_updateDate = entity.UpdateDate;
 		_isSignOut = entity.IsSignOut;
+		_notificationUniqueKey = entity.NotificationUniqueKey;
 		_appVersion = entity.AppVersion;
    }
    #endregion Constructors
@@ -55,22 +55,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeviceId",OldValue=_deviceId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _deviceId=value;
-		   }
-		 }
-	   }
-	  private string _notificationUniqueKey ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string NotificationUniqueKey  
-	   {
-	     get { return _notificationUniqueKey; }
-		 set
-		 {
-		   if(_notificationUniqueKey != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NotificationUniqueKey",OldValue=_notificationUniqueKey,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _notificationUniqueKey=value;
 		   }
 		 }
 	   }
@@ -183,6 +167,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSignOut",OldValue=_isSignOut,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isSignOut=value;
+		   }
+		 }
+	   }
+	  private string _notificationUniqueKey ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NotificationUniqueKey  
+	   {
+	     get { return _notificationUniqueKey; }
+		 set
+		 {
+		   if(_notificationUniqueKey != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NotificationUniqueKey",OldValue=_notificationUniqueKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _notificationUniqueKey=value;
 		   }
 		 }
 	   }

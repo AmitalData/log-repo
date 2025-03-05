@@ -29,8 +29,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public MonitorServiceLastUpdatePM(POCO.MonitorServiceLastUpdate entity) : base()
    {
 		_code = entity.Code;
-		_name = entity.Name;
+		_cdropName = entity.CdropName;
 		_lastUpdate = entity.LastUpdate;
+		_cdropSearchfields = entity.CdropSearchfields;
+		_name = entity.Name;
 		_searchFields = entity.SearchFields;
    }
    #endregion Constructors
@@ -52,19 +54,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _name ;
+	  private string _cdropName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Name  
+       public string CdropName  
 	   {
-	     get { return _name; }
+	     get { return _cdropName; }
 		 set
 		 {
-		   if(_name != value)
+		   if(_cdropName != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Name",OldValue=_name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropName",OldValue=_cdropName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _name=value;
+		   _cdropName=value;
 		   }
 		 }
 	   }
@@ -81,6 +83,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastUpdate",OldValue=_lastUpdate,NewValue=value,PropertyType="DateTime"};
 		    NotifyPropertyChanged(values);
 		   _lastUpdate=value;
+		   }
+		 }
+	   }
+	  private string _cdropSearchfields ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CdropSearchfields  
+	   {
+	     get { return _cdropSearchfields; }
+		 set
+		 {
+		   if(_cdropSearchfields != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropSearchfields",OldValue=_cdropSearchfields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cdropSearchfields=value;
+		   }
+		 }
+	   }
+	  private string _name ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Name  
+	   {
+	     get { return _name; }
+		 set
+		 {
+		   if(_name != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Name",OldValue=_name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _name=value;
 		   }
 		 }
 	   }

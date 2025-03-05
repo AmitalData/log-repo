@@ -30,10 +30,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Version, 
 	         IsActive, 
 	         TTY, 
-	         computed, 
 	         PrivateLabelId, 
-	         LastUpdateDate, 
-	         TenantManagement,	      }
+	         LastUpdateDate,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -43,10 +41,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Version, 
 	         IsActive, 
 	         TTY, 
-	         computed, 
 	         PrivateLabelId, 
-	         LastUpdateDate, 
-	         TenantManagement,	      }
+	         LastUpdateDate,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(GlobalTenantPM entityPM, POCO.GlobalTenant entityPOCO)
@@ -56,10 +52,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Version)) { entityPOCO.Version = entityPM.Version;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsActive)) { entityPOCO.IsActive = entityPM.IsActive;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TTY)) { entityPOCO.TTY = entityPM.TTY;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.computed)) { entityPOCO.computed = entityPM.computed;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrivateLabelId)) { entityPOCO.PrivateLabelId = entityPM.PrivateLabelId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUpdateDate)) { entityPOCO.LastUpdateDate = entityPM.LastUpdateDate;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TenantManagement)) { entityPOCO.TenantManagement = entityPM.TenantManagement;}
 					}
 		public void POCOToPM(GlobalTenantPM entityPM, POCO.GlobalTenant entityPOCO)
         {
@@ -87,10 +81,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.TTY = entityPOCO.TTY;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.computed))
-            {
-					entityPM.computed = entityPOCO.computed;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrivateLabelId))
             {
 					entityPM.PrivateLabelId = entityPOCO.PrivateLabelId;
@@ -98,10 +88,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastUpdateDate))
             {
 					entityPM.LastUpdateDate = entityPOCO.LastUpdateDate;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TenantManagement))
-            {
-					entityPM.TenantManagement = entityPOCO.TenantManagement;
             }
 		}
 		public void PMToOldPM(GlobalTenantPM entityPM, GlobalTenantPM oldEntityPM)
@@ -127,10 +113,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.TTY = entityPM.TTY;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.computed))
-            {
-                oldEntityPM.computed = entityPM.computed;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrivateLabelId))
             {
                 oldEntityPM.PrivateLabelId = entityPM.PrivateLabelId;
@@ -138,10 +120,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUpdateDate))
             {
                 oldEntityPM.LastUpdateDate = entityPM.LastUpdateDate;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TenantManagement))
-            {
-                oldEntityPM.TenantManagement = entityPM.TenantManagement;
             }
 					}
 		public void POCOToList(POCO.GlobalTenant entityPOCO, GlobalTenantList entityList)
@@ -164,6 +142,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.GlobalDBId)) //T4 find type == nText 
+            {
+                entityPM.GlobalDBId = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.GlobalDBId));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CompanyName)) //T4 find type == nText 
+            {
+                entityPM.CompanyName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CompanyName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

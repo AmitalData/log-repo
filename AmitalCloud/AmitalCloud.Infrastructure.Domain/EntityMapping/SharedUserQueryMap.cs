@@ -18,19 +18,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public SharedUserQueryMap()
         { 
-				this.ToTable("SharedUserQuerys");
+				this.ToTable("shareduserqueries");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.UserId).HasColumnName("UserId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.UserId).HasColumnName("UserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.QueryId).HasColumnName("QueryId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QueryId).HasColumnName("QueryId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.QueryCode).HasColumnName("QueryCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QueryCode).HasColumnName("QueryCode").IsRequired().HasMaxLength(200).IsUnicode(false);
         }
     }
 }

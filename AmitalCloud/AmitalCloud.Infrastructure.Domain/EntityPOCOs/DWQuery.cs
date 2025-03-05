@@ -19,21 +19,32 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
     public class DWQuery : BaseEntity
 	{
 		
-        [Key]
-        [Column("Id")]
-	    public string Id { get; set; }
+           [Column("CdropId")]
+	    public string CdropId { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("SQLString")]
 	    public string SQLString { get; set; }
+        [ForeignKey("User")]
         [Column("CreatedByUserId")]
 	    public string CreatedByUserId { get; set; }
+	      
+        public virtual User User { get; set; }
+        [ForeignKey("UpdateByUserIdUser")]
         [Column("UpdateByUserId")]
 	    public string UpdateByUserId { get; set; }
+	      
+        public virtual User UpdateByUserIdUser { get; set; }
         [Column("CreatedDate")]
 	    public DateTime CreatedDate { get; set; }
         [Column("UpdatedDate")]
 	    public DateTime UpdatedDate { get; set; }
+     [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+		public virtual ICollection<BIReport> BIReports { get; set; }
+		public virtual ICollection<DWQueryColumn> DWQueryColumns { get; set; }
+		public virtual ICollection<DWQueryFilter> DWQueryFilters { get; set; }
     }
 }
 	 

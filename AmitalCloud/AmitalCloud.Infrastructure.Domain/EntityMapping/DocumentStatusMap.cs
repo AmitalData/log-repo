@@ -18,15 +18,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public DocumentStatusMap()
         { 
-				this.ToTable("DocumentStatuss");
+				this.ToTable("DocumentStatus");
 		
 		    this.HasKey(t => new { t.Code });
 	 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired();
 
-            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DropCdropName).HasColumnName("DropCdropName").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DropCdropSearchfields).HasColumnName("DropCdropSearchfields").IsRequired().HasMaxLength(-1).IsUnicode(true);
+
+            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(80).IsUnicode(true);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsRequired().HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

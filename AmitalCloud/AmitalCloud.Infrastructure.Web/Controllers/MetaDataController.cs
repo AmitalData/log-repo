@@ -182,18 +182,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         [WebGet(UriTemplate = "getalltransportmodes/{tenant}/{dummy}")]
         public List<TransportModePM> GetAllTransportModes(int tenant, string dummy)
         => new TransportModeQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetMulti(a => true, "").ToList();
-        [WebInvoke(
-             UriTemplate = "api/ngMetaData/textcodetranslations",
-             RequestFormat = WebMessageFormat.Json,
-             ResponseFormat = WebMessageFormat.Json,
-             Method = "GET"
-         )]
-        public List<FieldsTranslationsPM> GetAllTextCodeTranslations(int tenant, string textcodetranslations)
-        {
-            tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-            return  new FieldsTranslationsQueryService(tenant).GetMulti(a => a.Tenant == tenant && a.TranslationLanguageCode == "EN", "").ToList();
 
-        }
         [OperationContract]
         [WebGet(UriTemplate = "customsinterfacesettingpm/{InterfaceId}")]
         public CustomsInterfaceSettingPM GetCustomsInterfaceSettingPM(int InterfaceId)

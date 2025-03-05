@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class TipsVisibilityListQueryService  : BaseEntityListQueryService<TipsVisibilityList,POCO.TipsVisibility,  TipsVisibilityKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.TipsVisibility> contextEntity => (context as IAmitalCloudContext).TipsVisibilitys;
+	    protected override System.Data.Entity.IDbSet<POCO.TipsVisibility> contextEntity => (context as IAmitalCloudContext).tipsvisibilities;
 		public TipsVisibilityListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public TipsVisibilityList GetSingle(string id)
 		{

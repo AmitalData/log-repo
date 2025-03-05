@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class DocumentStatusListQueryService  : BaseEntityListQueryService<DocumentStatusList,POCO.DocumentStatus,  DocumentStatusKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.DocumentStatus> contextEntity => (context as IAmitalCloudContext).DocumentStatuss;
+	    protected override System.Data.Entity.IDbSet<POCO.DocumentStatus> contextEntity => (context as IAmitalCloudContext).DocumentStatus;
 		public DocumentStatusListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public DocumentStatusList GetSingle(string code)
 		{

@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class FormCustomFieldListQueryService  : BaseEntityListQueryService<FormCustomFieldList,POCO.FormCustomField,  FormCustomFieldKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.FormCustomField> contextEntity => (context as IAmitalCloudContext).FormCustomFields;
+	    protected override System.Data.Entity.IDbSet<POCO.FormCustomField> contextEntity => (context as IAmitalCloudContext).FormCustomFields1;
 		public FormCustomFieldListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public FormCustomFieldList GetSingle(string id)
 		{

@@ -22,19 +22,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(70).IsUnicode(false);
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 
-            this.Property(t => t.CurrentPassword).HasColumnName("CurrentPassword").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CurrentPassword).HasColumnName("CurrentPassword").IsRequired().HasMaxLength(60).IsUnicode(false);
 
-            this.Property(t => t.EnteredPassword).HasColumnName("EnteredPassword").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.EnteredPassword).HasColumnName("EnteredPassword").IsRequired().HasMaxLength(60).IsUnicode(false);
 
-            this.Property(t => t.log).HasColumnName("log").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.log).HasColumnName("log").IsRequired().HasMaxLength(500).IsUnicode(false);
 
-            this.Property(t => t.IP).HasColumnName("IP").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.IP).HasColumnName("IP").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

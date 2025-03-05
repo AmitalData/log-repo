@@ -23,7 +23,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
    	  public int DataBaseNumber  { get; set; }
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(DataBaseNumber.ToString(),typeof(T)) ;           
-      public override string GetEntityPMName() => "DataBasePropertysPM";
+      public override string GetEntityPMName() => "databasepropertiesPM";
 	  public override Expression<Func<EntityPOCOs.DataBaseProperty, bool>> Predicate => a => a.DataBaseNumber == DataBaseNumber;
    }
 }

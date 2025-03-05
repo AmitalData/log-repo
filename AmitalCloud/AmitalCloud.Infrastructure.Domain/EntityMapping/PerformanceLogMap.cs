@@ -22,25 +22,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.LogDateTimeGMT).HasColumnName("LogDateTimeGMT").IsRequired();
 
             this.Property(t => t.LogDateTimeLocal).HasColumnName("LogDateTimeLocal").IsRequired();
 
-            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.ModelName).HasColumnName("ModelName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ModelName).HasColumnName("ModelName").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.MethodName).HasColumnName("MethodName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.MethodName).HasColumnName("MethodName").IsRequired().HasMaxLength(65).IsUnicode(false);
 
             this.Property(t => t.MonitoringService).HasColumnName("MonitoringService").IsRequired();
 
             this.Property(t => t.ExecutionTime).HasColumnName("ExecutionTime").IsRequired();
 
-            this.Property(t => t.UserIP).HasColumnName("UserIP").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.UserIP).HasColumnName("UserIP").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.MethodParameters).HasColumnName("MethodParameters").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.MethodParameters).HasColumnName("MethodParameters").IsRequired().HasMaxLength(500).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 

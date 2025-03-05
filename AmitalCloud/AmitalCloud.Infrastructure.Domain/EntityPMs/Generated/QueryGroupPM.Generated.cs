@@ -31,6 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_indexOrder = entity.IndexOrder;
+		querys = entity.Querys != null ? entity.Querys.Select(a=>new QueryPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -83,6 +84,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<QueryPM> querys;
+	 
+		     
+	   [Include]
+	   [Association("QueryQueryGroup", "Code","Querygroupcode")]
+	   [DataMember]
+	   public virtual List<QueryPM> Querys  
+	   {
+	        get
+             {
+                 if (querys == null)
+                 {
+                     querys = new List<QueryPM>();
+                 }
+                 return querys;
+              }
+             set { querys = value; }
+	    }
+	   private List<QueryPM>  deletedQuerys;
+	   public virtual List<QueryPM> DeletedQuerys  
+	   {
+	        get
+             {
+                 if ( deletedQuerys == null)
+                 {
+                      deletedQuerys = new List<QueryPM>();
+                 }
+                 return  deletedQuerys;
+              }
+             set {  deletedQuerys = value; }
+	    }
 	 }
 #endregion Properties
 }

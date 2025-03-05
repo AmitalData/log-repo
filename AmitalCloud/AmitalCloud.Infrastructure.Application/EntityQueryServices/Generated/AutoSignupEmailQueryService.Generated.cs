@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AutoSignupEmailQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AutoSignupEmail,AutoSignupEmailKeys<string>,AutoSignupEmailPM,AutoSignupEmailList,string>
+   public partial class AutoSignupEmailQueryService: BaseEntityQueryService<IGlobalContext,POCO.AutoSignupEmail,AutoSignupEmailKeys<string>,AutoSignupEmailPM,AutoSignupEmailList,string>
    {
-        public AutoSignupEmailQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AutoSignupEmailQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AutoSignupEmail>(context),new AutoSignupEmailDataMapping()) {}
+        public AutoSignupEmailQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public AutoSignupEmailQueryService(IGlobalContext context) : base(new Repository<POCO.AutoSignupEmail>(context),new AutoSignupEmailDataMapping()) {}
 		public  AutoSignupEmailPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AutoSignupEmailKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AutoSignupEmail,string> GetKeys(POCO.AutoSignupEmail entityPOCO) => new AutoSignupEmailKeys<string>() { Id = entityPOCO.Id,  };
    }

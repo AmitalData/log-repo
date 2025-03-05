@@ -29,11 +29,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string UserId { get; set; }
 	      
         public virtual User User { get; set; }
-        [ForeignKey("Query")]
         [Column("QueryId")]
 	    public string QueryId { get; set; }
-	      
-        public virtual Query Query { get; set; }
         [Column("QueryCode")]
 	    public string QueryCode { get; set; }
     }

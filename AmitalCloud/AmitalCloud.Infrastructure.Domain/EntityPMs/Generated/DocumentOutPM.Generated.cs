@@ -41,6 +41,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_issuedDate = entity.IssuedDate;
 		_issuedByUserId = entity.IssuedByUserId;
 		communicationLogs = entity.CommunicationLogs != null ? entity.CommunicationLogs.Select(a=>new CommunicationLogPM(a)).ToList() : null;
+		documentOutCopys = entity.DocumentOutCopys != null ? entity.DocumentOutCopys.Select(a=>new DocumentOutCopyPM(a)).ToList() : null;
 		followUps = entity.FollowUps != null ? entity.FollowUps.Select(a=>new FollowUpPM(a)).ToList() : null;
    }
    #endregion Constructors
@@ -260,6 +261,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
                  return  deletedCommunicationLogs;
               }
              set {  deletedCommunicationLogs = value; }
+	    }
+	   private List<DocumentOutCopyPM> documentOutCopys;
+	 
+		     
+	   [Include]
+	   [Association("DocumentOutCopyDocumentOut", "Id","Documentoutid")]
+	   [DataMember]
+	   public virtual List<DocumentOutCopyPM> DocumentOutCopys  
+	   {
+	        get
+             {
+                 if (documentOutCopys == null)
+                 {
+                     documentOutCopys = new List<DocumentOutCopyPM>();
+                 }
+                 return documentOutCopys;
+              }
+             set { documentOutCopys = value; }
+	    }
+	   private List<DocumentOutCopyPM>  deletedDocumentOutCopys;
+	   public virtual List<DocumentOutCopyPM> DeletedDocumentOutCopys  
+	   {
+	        get
+             {
+                 if ( deletedDocumentOutCopys == null)
+                 {
+                      deletedDocumentOutCopys = new List<DocumentOutCopyPM>();
+                 }
+                 return  deletedDocumentOutCopys;
+              }
+             set {  deletedDocumentOutCopys = value; }
 	    }
 	   private List<FollowUpPM> followUps;
 	 

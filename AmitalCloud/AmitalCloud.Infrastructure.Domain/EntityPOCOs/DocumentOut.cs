@@ -52,6 +52,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	      
         public virtual User User { get; set; }
 		public virtual ICollection<CommunicationLog> CommunicationLogs { get; set; }
+		public virtual ICollection<DocumentOutCopy> DocumentOutCopys { get; set; }
 		public virtual ICollection<FollowUp> FollowUps { get; set; }
     }
 }

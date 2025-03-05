@@ -18,17 +18,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public TipsVisibilityMap()
         { 
-				this.ToTable("TipsVisibilitys");
+				this.ToTable("tipsvisibilities");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.UserId).HasColumnName("UserId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.UserId).HasColumnName("UserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.TipCode).HasColumnName("TipCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TipCode).HasColumnName("TipCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.IsVisible).HasColumnName("IsVisible").IsRequired();
         }

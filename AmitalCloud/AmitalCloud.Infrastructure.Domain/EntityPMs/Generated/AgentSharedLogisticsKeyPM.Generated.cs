@@ -28,33 +28,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public AgentSharedLogisticsKeyPM() : base() {} 
    public AgentSharedLogisticsKeyPM(POCO.AgentSharedLogisticsKey entity) : base()
    {
-		_sharedKey = entity.SharedKey;
+		_cdropSharedkey = entity.CdropSharedkey;
 		_agent1Tenant = entity.Agent1Tenant;
 		_agent2Tenant = entity.Agent2Tenant;
 		_createDate = entity.CreateDate;
-		_createdByUserEmail = entity.CreatedByUserEmail;
-		_approvedByUserEmail = entity.ApprovedByUserEmail;
+		_cdropCreatedbyuseremail = entity.CdropCreatedbyuseremail;
+		_cdropApprovedbyuseremail = entity.CdropApprovedbyuseremail;
 		_approveDate = entity.ApproveDate;
 		_inactiveDate = entity.InactiveDate;
+		_cdropInactivebyuseremail = entity.CdropInactivebyuseremail;
+		_cdropStatuscode = entity.CdropStatuscode;
+		_sharedKey = entity.SharedKey;
+		_createdByUserEmail = entity.CreatedByUserEmail;
+		_approvedByUserEmail = entity.ApprovedByUserEmail;
 		_inactiveByUserEmail = entity.InactiveByUserEmail;
 		_statusCode = entity.StatusCode;
    }
    #endregion Constructors
    #region Properties
-   	  private string _sharedKey ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+   	  private string _cdropSharedkey ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string SharedKey  
+       public string CdropSharedkey  
 	   {
-	     get { return _sharedKey; }
+	     get { return _cdropSharedkey; }
 		 set
 		 {
-		   if(_sharedKey != value)
+		   if(_cdropSharedkey != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SharedKey",OldValue=_sharedKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropSharedkey",OldValue=_cdropSharedkey,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _sharedKey=value;
+		   _cdropSharedkey=value;
 		   }
 		 }
 	   }
@@ -106,35 +110,35 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _createdByUserEmail ;
+	  private string _cdropCreatedbyuseremail ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CreatedByUserEmail  
+       public string CdropCreatedbyuseremail  
 	   {
-	     get { return _createdByUserEmail; }
+	     get { return _cdropCreatedbyuseremail; }
 		 set
 		 {
-		   if(_createdByUserEmail != value)
+		   if(_cdropCreatedbyuseremail != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserEmail",OldValue=_createdByUserEmail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropCreatedbyuseremail",OldValue=_cdropCreatedbyuseremail,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _createdByUserEmail=value;
+		   _cdropCreatedbyuseremail=value;
 		   }
 		 }
 	   }
-	  private string _approvedByUserEmail ;
+	  private string _cdropApprovedbyuseremail ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ApprovedByUserEmail  
+       public string CdropApprovedbyuseremail  
 	   {
-	     get { return _approvedByUserEmail; }
+	     get { return _cdropApprovedbyuseremail; }
 		 set
 		 {
-		   if(_approvedByUserEmail != value)
+		   if(_cdropApprovedbyuseremail != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApprovedByUserEmail",OldValue=_approvedByUserEmail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropApprovedbyuseremail",OldValue=_cdropApprovedbyuseremail,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _approvedByUserEmail=value;
+		   _cdropApprovedbyuseremail=value;
 		   }
 		 }
 	   }
@@ -167,6 +171,87 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InactiveDate",OldValue=_inactiveDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _inactiveDate=value;
+		   }
+		 }
+	   }
+	  private string _cdropInactivebyuseremail ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CdropInactivebyuseremail  
+	   {
+	     get { return _cdropInactivebyuseremail; }
+		 set
+		 {
+		   if(_cdropInactivebyuseremail != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropInactivebyuseremail",OldValue=_cdropInactivebyuseremail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cdropInactivebyuseremail=value;
+		   }
+		 }
+	   }
+	  private string _cdropStatuscode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CdropStatuscode  
+	   {
+	     get { return _cdropStatuscode; }
+		 set
+		 {
+		   if(_cdropStatuscode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropStatuscode",OldValue=_cdropStatuscode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cdropStatuscode=value;
+		   }
+		 }
+	   }
+	  private string _sharedKey ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SharedKey  
+	   {
+	     get { return _sharedKey; }
+		 set
+		 {
+		   if(_sharedKey != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SharedKey",OldValue=_sharedKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _sharedKey=value;
+		   }
+		 }
+	   }
+	  private string _createdByUserEmail ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserEmail  
+	   {
+	     get { return _createdByUserEmail; }
+		 set
+		 {
+		   if(_createdByUserEmail != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserEmail",OldValue=_createdByUserEmail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _createdByUserEmail=value;
+		   }
+		 }
+	   }
+	  private string _approvedByUserEmail ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ApprovedByUserEmail  
+	   {
+	     get { return _approvedByUserEmail; }
+		 set
+		 {
+		   if(_approvedByUserEmail != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApprovedByUserEmail",OldValue=_approvedByUserEmail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _approvedByUserEmail=value;
 		   }
 		 }
 	   }

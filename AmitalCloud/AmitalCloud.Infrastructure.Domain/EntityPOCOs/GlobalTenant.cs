@@ -36,17 +36,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool IsActive { get; set; }
         [Column("TTY")]
 	    public string TTY { get; set; }
-        [Column("computed")]
-	    public string computed { get; set; }
-        [ForeignKey("TenantManagmentPrivateLabel")]
+        [ForeignKey("TenantManagmentPrivateLabels")]
         [Column("PrivateLabelId")]
 	    public string PrivateLabelId { get; set; }
 	      
-        public virtual TenantManagmentPrivateLabels TenantManagmentPrivateLabel { get; set; }
+        public virtual TenantManagmentPrivateLabels TenantManagmentPrivateLabels { get; set; }
         [Column("LastUpdateDate")]
 	    public DateTime? LastUpdateDate { get; set; }
-        [Column("TenantManagement")]
-	    public string TenantManagement { get; set; }
-    }
+		public virtual ICollection<GlobalContact> GlobalContacts { get; set; }
+		//public virtual ICollection<TenantManagement> TenantManagements { get; set; }
+	}
 }
 	 

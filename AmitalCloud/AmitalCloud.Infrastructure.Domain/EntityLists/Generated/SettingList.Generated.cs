@@ -27,10 +27,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           Id  = entity.Id;
           LogitudeURL  = entity.LogitudeURL;
           ChampURL  = entity.ChampURL;
-          ChampTestAPIURL  = entity.ChampTestAPIURL;
-          ChampTestAPIPassword  = entity.ChampTestAPIPassword;
-          ChampProdAPIURL  = entity.ChampProdAPIURL;
-          ChampProdAPIPassword  = entity.ChampProdAPIPassword;
           DeploymentStage  = entity.DeploymentStage;
           ChampEnv  = entity.ChampEnv;
           CustomerCareIP  = entity.CustomerCareIP;
@@ -63,28 +59,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           StorageServiceMode  = entity.StorageServiceMode;
           IsUpgradingChamp  = entity.IsUpgradingChamp;
           HtmlVersion  = entity.HtmlVersion;
+          DropQboconsumerkey  = entity.DropQboconsumerkey;
+          DropQboapptoken  = entity.DropQboapptoken;
+          DropQboconsumersecretkey  = entity.DropQboconsumersecretkey;
           AndroidAppLink  = entity.AndroidAppLink;
           IOSAppLink  = entity.IOSAppLink;
           AndroidPodAppMinimumVersion  = entity.AndroidPodAppMinimumVersion;
           IOSPodAppMinimumVersion  = entity.IOSPodAppMinimumVersion;
           MinimumOutlookVersion  = entity.MinimumOutlookVersion;
           SameUserLoginEnabled  = entity.SameUserLoginEnabled;
+          LayoutDirection  = entity.LayoutDirection;
           DropboxAppKey  = entity.DropboxAppKey;
           DropboxAppSecret  = entity.DropboxAppSecret;
           ABMProductId  = entity.ABMProductId;
-          LayoutDirection  = entity.LayoutDirection;
           AzureFolderName  = entity.AzureFolderName;
           SignAppVersion  = entity.SignAppVersion;
           DocumentFilingEmailDomain  = entity.DocumentFilingEmailDomain;
-          System2RedirectFraction  = entity.System2RedirectFraction;
           ReportsRunUsingWR  = entity.ReportsRunUsingWR;
+          System2RedirectFraction  = entity.System2RedirectFraction;
           SMSServiceUserId  = entity.SMSServiceUserId;
           SMSServiceAuthToken  = entity.SMSServiceAuthToken;
           SMSServicePhoneNumber  = entity.SMSServicePhoneNumber;
           INTTRAProdFTPHost  = entity.INTTRAProdFTPHost;
           INTTRATestFTPHost  = entity.INTTRATestFTPHost;
           OceanInsightsToken  = entity.OceanInsightsToken;
+          DropIsfullbuilddwrunning  = entity.DropIsfullbuilddwrunning;
+          DropIsincrementaldwrunning  = entity.DropIsincrementaldwrunning;
           EmailSendingQuota  = entity.EmailSendingQuota;
+          DropDwnextruntime  = entity.DropDwnextruntime;
+          ChampTestAPIURL  = entity.ChampTestAPIURL;
+          ChampTestAPIPassword  = entity.ChampTestAPIPassword;
+          ChampProdAPIURL  = entity.ChampProdAPIURL;
+          ChampProdAPIPassword  = entity.ChampProdAPIPassword;
           ReleaseNotesURL  = entity.ReleaseNotesURL;
           CPUIntensiveWebServicesURL  = entity.CPUIntensiveWebServicesURL;
           QBOOAuthDefault  = entity.QBOOAuthDefault;
@@ -96,23 +102,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           OITenantNumber  = entity.OITenantNumber;
           AmitalCloudEnvironmentURL  = entity.AmitalCloudEnvironmentURL;
           AmitalCloudLogitudeTenantPrimaryKey  = entity.AmitalCloudLogitudeTenantPrimaryKey;
+          Mainversion  = entity.Mainversion;
           PrivateKey  = entity.PrivateKey;
           AmitalTaxesUrl  = entity.AmitalTaxesUrl;
           TaxesRediractUrl  = entity.TaxesRediractUrl;
           AmitalApiAddress  = entity.AmitalApiAddress;
           AmitalApiXFunctionsKey  = entity.AmitalApiXFunctionsKey;
+          TempStorageConnection  = entity.TempStorageConnection;
           ReleaseDateString  = entity.ReleaseDateString;
           AzurePrincipalSecretKey  = entity.AzurePrincipalSecretKey;
-          DNSIPAddress  = entity.DNSIPAddress;
           DNSZone  = entity.DNSZone;
+          DNSIPAddress  = entity.DNSIPAddress;
           QboBaseUrl  = entity.QboBaseUrl;
           QboEnvironment  = entity.QboEnvironment;
           WorkflowStorageAccountName  = entity.WorkflowStorageAccountName;
           WorkflowStorageAccountKey  = entity.WorkflowStorageAccountKey;
           WindWardSettings  = entity.WindWardSettings;
-          LogitudeIISURL  = entity.LogitudeIISURL;
           ExportUrl  = entity.ExportUrl;
-          TempStorageConnection  = entity.TempStorageConnection;
+          LogitudeIISURL  = entity.LogitudeIISURL;
+          DropAmitaltenant  = entity.DropAmitaltenant;
        }
        #endregion Constructors
        #region Properties
@@ -124,14 +132,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string LogitudeURL  { get; set; }
        [DataMember]
        public string ChampURL  { get; set; }
-       [DataMember]
-       public string ChampTestAPIURL  { get; set; }
-       [DataMember]
-       public string ChampTestAPIPassword  { get; set; }
-       [DataMember]
-       public string ChampProdAPIURL  { get; set; }
-       [DataMember]
-       public string ChampProdAPIPassword  { get; set; }
        [DataMember]
        public string DeploymentStage  { get; set; }
        [DataMember]
@@ -197,6 +197,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string HtmlVersion  { get; set; }
        [DataMember]
+       public string DropQboconsumerkey  { get; set; }
+       [DataMember]
+       public string DropQboapptoken  { get; set; }
+       [DataMember]
+       public string DropQboconsumersecretkey  { get; set; }
+       [DataMember]
        public string AndroidAppLink  { get; set; }
        [DataMember]
        public string IOSAppLink  { get; set; }
@@ -209,13 +215,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public bool SameUserLoginEnabled  { get; set; }
        [DataMember]
+       public string LayoutDirection  { get; set; }
+       [DataMember]
        public string DropboxAppKey  { get; set; }
        [DataMember]
        public string DropboxAppSecret  { get; set; }
        [DataMember]
        public string ABMProductId  { get; set; }
-       [DataMember]
-       public string LayoutDirection  { get; set; }
        [DataMember]
        public string AzureFolderName  { get; set; }
        [DataMember]
@@ -223,9 +229,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string DocumentFilingEmailDomain  { get; set; }
        [DataMember]
-       public int System2RedirectFraction  { get; set; }
-       [DataMember]
        public bool ReportsRunUsingWR  { get; set; }
+       [DataMember]
+       public int System2RedirectFraction  { get; set; }
        [DataMember]
        public string SMSServiceUserId  { get; set; }
        [DataMember]
@@ -239,7 +245,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string OceanInsightsToken  { get; set; }
        [DataMember]
+       public bool? DropIsfullbuilddwrunning  { get; set; }
+       [DataMember]
+       public bool? DropIsincrementaldwrunning  { get; set; }
+       [DataMember]
        public int EmailSendingQuota  { get; set; }
+       [DataMember]
+       public DateTime? DropDwnextruntime  { get; set; }
+       [DataMember]
+       public string ChampTestAPIURL  { get; set; }
+       [DataMember]
+       public string ChampTestAPIPassword  { get; set; }
+       [DataMember]
+       public string ChampProdAPIURL  { get; set; }
+       [DataMember]
+       public string ChampProdAPIPassword  { get; set; }
        [DataMember]
        public string ReleaseNotesURL  { get; set; }
        [DataMember]
@@ -263,6 +283,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string AmitalCloudLogitudeTenantPrimaryKey  { get; set; }
        [DataMember]
+       public string Mainversion  { get; set; }
+       [DataMember]
        public string PrivateKey  { get; set; }
        [DataMember]
        public string AmitalTaxesUrl  { get; set; }
@@ -273,13 +295,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string AmitalApiXFunctionsKey  { get; set; }
        [DataMember]
+       public string TempStorageConnection  { get; set; }
+       [DataMember]
        public string ReleaseDateString  { get; set; }
        [DataMember]
        public string AzurePrincipalSecretKey  { get; set; }
        [DataMember]
-       public string DNSIPAddress  { get; set; }
-       [DataMember]
        public string DNSZone  { get; set; }
+       [DataMember]
+       public string DNSIPAddress  { get; set; }
        [DataMember]
        public string QboBaseUrl  { get; set; }
        [DataMember]
@@ -291,11 +315,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string WindWardSettings  { get; set; }
        [DataMember]
-       public string LogitudeIISURL  { get; set; }
-       [DataMember]
        public string ExportUrl  { get; set; }
        [DataMember]
-       public string TempStorageConnection  { get; set; }
+       public string LogitudeIISURL  { get; set; }
+       [DataMember]
+       public int? DropAmitaltenant  { get; set; }
          #endregion Properties
    }
 

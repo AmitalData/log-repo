@@ -14,7 +14,7 @@ namespace AmitalCloud.Infrastructure.Domain.BaseClasses
         protected string dbms;
         protected const bool hasTenant = true;
         public static bool HasTenant => hasTenant;
-        [Column("SearchFields")]
-        public string SearchFields { get; set; }
+        //[Column("SearchFields")]
+        //public string SearchFields { get; set; }
     }
 }

@@ -22,9 +22,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Email });
 	 
-            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(70).IsUnicode(false);
 
-            this.Property(t => t.Password).HasColumnName("Password").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Password).HasColumnName("Password").IsRequired().HasMaxLength(60).IsUnicode(false);
 
             this.Property(t => t.MustChangePassword).HasColumnName("MustChangePassword").IsRequired();
 
@@ -62,7 +62,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.PasswordExpirationDate).HasColumnName("PasswordExpirationDate").IsRequired();
 
-            this.Property(t => t.CaptchaKey).HasColumnName("CaptchaKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CaptchaKey).HasColumnName("CaptchaKey").IsRequired().HasMaxLength(40).IsUnicode(false);
         }
     }
 }

@@ -197,7 +197,7 @@ namespace AmitalCloud.Shipment.Data.Context
             modelBuilder.Configurations.Add(new DocumentTypeTemplateMap());
             modelBuilder.Configurations.Add(new DueTypeMap());
             modelBuilder.Configurations.Add(new EntityDateMap());
-            modelBuilder.Configurations.Add(new EntityLastActivityMap());
+            //modelBuilder.Configurations.Add(new EntityLastActivityMap());
             modelBuilder.Configurations.Add(new EntityLastActivityTypeMap());
             modelBuilder.Configurations.Add(new EntityLastUpdateMap());
             modelBuilder.Configurations.Add(new EntityStatuMap());

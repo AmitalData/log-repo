@@ -20,15 +20,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	{
 	        new const bool hasTenant = false;  
 		
-        [Key]
-        [Column("Code")]
-	    public string Code { get; set; }
+           [Column("CdropCode")]
+	    public string CdropCode { get; set; }
         [Column("InActive")]
 	    public bool InActive { get; set; }
         [Column("NumberOfThreads")]
 	    public int? NumberOfThreads { get; set; }
-        [Column("BatchServicesDefinition")]
-	    public string BatchServicesDefinition { get; set; }
+     [Key]
+        [ForeignKey("BatchServicesDefinition")]
+        [Column("Code")]
+	    public string Code { get; set; }
+	      
+        public virtual BatchServicesDefinition BatchServicesDefinition { get; set; }
     }
 }
 	 

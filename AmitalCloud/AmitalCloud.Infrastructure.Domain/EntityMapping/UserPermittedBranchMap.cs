@@ -18,17 +18,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public UserPermittedBranchMap()
         { 
-				this.ToTable("UserPermittedBranchs");
+				this.ToTable("UserPermittedBranches");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropId).HasColumnName("CdropId").IsRequired().HasMaxLength(128).IsUnicode(true);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.UserId).HasColumnName("UserId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.UserId).HasColumnName("UserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.BranchId).HasColumnName("BranchId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.BranchId).HasColumnName("BranchId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

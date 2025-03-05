@@ -22,15 +22,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Module).HasColumnName("Module").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Module).HasColumnName("Module").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.Activity).HasColumnName("Activity").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Activity).HasColumnName("Activity").IsRequired().HasMaxLength(150).IsUnicode(false);
 
-            this.Property(t => t.ContactId).HasColumnName("ContactId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ContactId).HasColumnName("ContactId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.LogDateTime).HasColumnName("LogDateTime").IsRequired();
 
@@ -38,11 +38,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.IsSharedLogisticsContact).HasColumnName("IsSharedLogisticsContact").IsRequired();
 
-            this.Property(t => t.CardId).HasColumnName("CardId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CardId).HasColumnName("CardId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.PartnerTypeId).HasColumnName("PartnerTypeId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.PartnerTypeId).HasColumnName("PartnerTypeId").IsRequired().HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.Via).HasColumnName("Via").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Via).HasColumnName("Via").IsRequired().HasMaxLength(20).IsUnicode(false);
         }
     }
 }

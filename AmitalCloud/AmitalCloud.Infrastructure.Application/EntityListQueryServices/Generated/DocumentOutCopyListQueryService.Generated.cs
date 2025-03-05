@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class DocumentOutCopyListQueryService  : BaseEntityListQueryService<DocumentOutCopyList,POCO.DocumentOutCopy,  DocumentOutCopyKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.DocumentOutCopy> contextEntity => (context as IAmitalCloudContext).DocumentOutCopys;
+	    protected override System.Data.Entity.IDbSet<POCO.DocumentOutCopy> contextEntity => (context as IAmitalCloudContext).documentoutcopies;
 		public DocumentOutCopyListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public DocumentOutCopyList GetSingle(string id)
 		{

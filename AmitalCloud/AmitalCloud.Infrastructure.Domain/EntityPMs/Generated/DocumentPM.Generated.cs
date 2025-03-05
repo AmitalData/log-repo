@@ -45,6 +45,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		communicationLogs_Documentid = entity.CommunicationLogs_Documentid != null ? entity.CommunicationLogs_Documentid.Select(a=>new CommunicationLogPM(a)).ToList() : null;
 		communicationLogs_Responsedocumentid = entity.CommunicationLogs_Responsedocumentid != null ? entity.CommunicationLogs_Responsedocumentid.Select(a=>new CommunicationLogPM(a)).ToList() : null;
 		communicationLogSteps = entity.CommunicationLogSteps != null ? entity.CommunicationLogSteps.Select(a=>new CommunicationLogStepPM(a)).ToList() : null;
+		documentOutCopys = entity.DocumentOutCopys != null ? entity.DocumentOutCopys.Select(a=>new DocumentOutCopyPM(a)).ToList() : null;
 		documentOuts = entity.DocumentOuts != null ? entity.DocumentOuts.Select(a=>new DocumentOutPM(a)).ToList() : null;
 		filingInboxAttachments = entity.FilingInboxAttachments != null ? entity.FilingInboxAttachments.Select(a=>new FilingInboxAttachmentPM(a)).ToList() : null;
 		imageLibrarys = entity.ImageLibrarys != null ? entity.ImageLibrarys.Select(a=>new ImageLibraryPM(a)).ToList() : null;
@@ -382,6 +383,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
                  return  deletedCommunicationLogSteps;
               }
              set {  deletedCommunicationLogSteps = value; }
+	    }
+	   private List<DocumentOutCopyPM> documentOutCopys;
+	 
+		     
+	   [Include]
+	   [Association("DocumentOutCopyDocument", "Id","Documentid")]
+	   [DataMember]
+	   public virtual List<DocumentOutCopyPM> DocumentOutCopys  
+	   {
+	        get
+             {
+                 if (documentOutCopys == null)
+                 {
+                     documentOutCopys = new List<DocumentOutCopyPM>();
+                 }
+                 return documentOutCopys;
+              }
+             set { documentOutCopys = value; }
+	    }
+	   private List<DocumentOutCopyPM>  deletedDocumentOutCopys;
+	   public virtual List<DocumentOutCopyPM> DeletedDocumentOutCopys  
+	   {
+	        get
+             {
+                 if ( deletedDocumentOutCopys == null)
+                 {
+                      deletedDocumentOutCopys = new List<DocumentOutCopyPM>();
+                 }
+                 return  deletedDocumentOutCopys;
+              }
+             set {  deletedDocumentOutCopys = value; }
 	    }
 	   private List<DocumentOutPM> documentOuts;
 	 
