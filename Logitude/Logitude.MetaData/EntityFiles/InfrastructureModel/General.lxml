@@ -6082,8 +6082,7 @@
       Code="&quot;General.MC.Others.DocumentsMetadataTypes&quot;"
       DefaultText="&quot;Documents Metadata Types&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
-      IsSpellChecked="false" />
-  </AdditionalTextCodes>
+      IsSpellChecked="false" />  
     <TextCode
       Code="&quot;General.O.DollarRateUpdated&quot;"
       DefaultText="&quot;The dollar exchange rate was last updated on&quot;"
@@ -6096,7 +6095,6 @@
       LocalDefaultText="&quot;דוח חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-   </AdditionalTextCodes>
     <TextCode
       Code="&quot;General.O.ReportInProcess&quot;"
       DefaultText="&quot;The report was created successfully and will be built in a background process.&quot;"
