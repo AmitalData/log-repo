@@ -67,19 +67,16 @@ namespace Logitude.Customs.BL.BL
                 && declarationCourierStatusPM.CourierDeclarationStatusCode == "R"
                 && declarationCourierStatusPM.DocumentStatusCode == "V")
             {
-                if (declaration == null)
-                {
-                    declaration = declarationRepo.GetSingle(
-                        declarationCourierStatusPM.DeclarationId,
-                        declarationCourierStatusPM.Tenant);
-                }
+
+                declaration = declarationRepo.GetSingle(
+                    declarationCourierStatusPM.DeclarationId,
+                    declarationCourierStatusPM.Tenant);
+
 
                 bool hasActivePending = false;
                 if (declaration != null)
                 {
-                    var pendings = declarationPendingRepo
-                        .GetDeclarationPendingsByDeclarationId(declaration.Id, declarationCourierStatusPM.Tenant);
-                    hasActivePending = pendings.Any(x => x.Status == "A");
+                    hasActivePending = declarationPendingRepo.HasPendingWithStatus(declaration.Id, declarationCourierStatusPM.Tenant,"A");
                 }
 
                 if (declaration != null &&
