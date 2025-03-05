@@ -739,6 +739,26 @@ export class CargoTrackingShipmentPM {
     public set CargoTrackingPublicShowEvents(newValue: boolean) { if (this.cargoTrackingPublicShowEvents != newValue) { this.cargoTrackingPublicShowEvents = newValue; this.MarkAsDirty("CargoTrackingPublicShowEvents"); } }
        
 	 
+    private lockerAddress: string;
+    public get LockerAddress() { return this.lockerAddress; }
+    public set LockerAddress(newValue: string) { if (this.lockerAddress != newValue) { this.lockerAddress = newValue; this.MarkAsDirty("LockerAddress"); } }
+       
+	 
+    private lockerCity: string;
+    public get LockerCity() { return this.lockerCity; }
+    public set LockerCity(newValue: string) { if (this.lockerCity != newValue) { this.lockerCity = newValue; this.MarkAsDirty("LockerCity"); } }
+       
+	 
+    private lockerName: string;
+    public get LockerName() { return this.lockerName; }
+    public set LockerName(newValue: string) { if (this.lockerName != newValue) { this.lockerName = newValue; this.MarkAsDirty("LockerName"); } }
+       
+	 
+    private lockerCode: string;
+    public get LockerCode() { return this.lockerCode; }
+    public set LockerCode(newValue: string) { if (this.lockerCode != newValue) { this.lockerCode = newValue; this.MarkAsDirty("LockerCode"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingShipmentPM;
 		

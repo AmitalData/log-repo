@@ -57,7 +57,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "ChargeableWeightUnitCode",
                 "ExceptionDate",
                 "ExceptionDescription",
-                "IsOperationalClosed"
+                "IsOperationalClosed",
+                "LockerAddress",
+                "LockerCity",
+                "LockerCode",
+                "LockerName"
+
             };
         public List<string> fields = new List<string>
             {
