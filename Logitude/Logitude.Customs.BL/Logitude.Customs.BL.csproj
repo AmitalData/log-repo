@@ -329,6 +329,7 @@
   <ItemGroup>
     <Compile Include="AmitalContextUtil.cs" />
     <Compile Include="AzureSearch\CustomsBookAzureSearchService.cs" />
+    <Compile Include="BL\AutomatedCustomsMessagingService.cs" />
     <Compile Include="BL\AutoPaymentService.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
     <Compile Include="BL\CheckHealthService.cs" />

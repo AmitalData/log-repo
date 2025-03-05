@@ -1653,6 +1653,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string courierMasterPaymentStatusCd ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierMasterPaymentStatusCd  
+	   {
+	    
+	     get
+		{
+		   return courierMasterPaymentStatusCd;
+		 }
+		 set
+		 {
+		   if(courierMasterPaymentStatusCd != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierMasterPaymentStatusCd",OldValue=courierMasterPaymentStatusCd,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierMasterPaymentStatusCd=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
