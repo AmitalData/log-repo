@@ -642,7 +642,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
 
-
             //CurrencyQuery currencyQuery = new CurrencyQuery(entityPM.Tenant);
             //if (entityPM.ConnectedItems != null)
             //{
@@ -2757,8 +2756,38 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new Exception("File is empty");
             }
         }
-
-
+        public (DateTime? MarkDate, bool WasNull) SetIsMark(string glaccountId, int tenant)
+        {
+            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
+            var glaccount = gLAccountQuery.GetSingle(glaccountId, true, false);
+            bool wasNull = false;
+            if (glaccount != null && (glaccount.MarkDate == null || (DateTime.UtcNow - glaccount.MarkDate.Value).TotalHours > 1))
+            {
+                var dtValue = new DateTime();
+                DateTime.TryParse( DateTime.Now.ToString(),out dtValue);
+                glaccount.MarkDate = dtValue;
+                glaccount.ChangeSetOp = ChangeSetOperation.Update;
+                wasNull = true;
+               Update(glaccount, true);
+            }
+            return (glaccount?.MarkDate, wasNull);
+        }
+        public bool UndoMark(string glaccountId, int tenant)
+        {
+            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
+            var glaccount = gLAccountQuery.GetSingle(glaccountId, true, false);
+            if (glaccount != null)
+            {
+              
+                    glaccount.MarkDate = null;
+                    glaccount.ChangeSetOp = ChangeSetOperation.Update;
+                    Update(glaccount, true);
+                    return true;
+           
+              
+            }
+            return false;
+        }
 
         public void UpdateGLAccountWithAdditionalData(string glaccountId, int tenant, string excludeCardId = null, string excludeContactId = null, string includeContactId = null)
         {

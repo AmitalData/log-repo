@@ -87,6 +87,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
              DateFormat,
 			 PaymentTerms,
              ContactId,
+            MarkDate
         }
 
 
@@ -249,6 +250,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             DateFormat,
             ContactId,
 	         ContactName,
+            MarkDate
         }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -584,7 +586,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPOCO.ContactId = entityPM.ContactId;
             }
-
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MarkDate))
+            {
+                entityPOCO.MarkDate = entityPM.MarkDate;
+            }
             BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -913,6 +918,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.ContactId = entityPOCO.ContactId;
             }
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.MarkDate))
+            {
+                entityPM.MarkDate = entityPOCO.MarkDate;
+            }
 
         }
 
@@ -1238,7 +1247,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.ContactId = entityPM.ContactId;
             }
-			
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MarkDate))
+            {
+                oldEntityPM.MarkDate = entityPM.MarkDate;
+            }
+
         }
 
 	    public void EncodeBase64NVARCHARFields(GLAccountPM entityPM)
