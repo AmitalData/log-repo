@@ -274,7 +274,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         }
     }
     SetUIProperties_ExchangeRate() {
-        var isEnabled: boolean = true;
+        var isEnabled: boolean = false;
 
         if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
             if (this.InvoiceCurrencyId) {

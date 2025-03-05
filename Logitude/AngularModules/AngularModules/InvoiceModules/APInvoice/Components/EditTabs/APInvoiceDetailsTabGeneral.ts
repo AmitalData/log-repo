@@ -37,6 +37,7 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { isThisTypeNode } from 'typescript';
 declare var window: any;
 
 @Component({
@@ -282,22 +283,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     public RateIsEnabled: boolean = false;
     SetUIProperties_ExchangeRate() {
-        var isEnabled: boolean = true;
-
-        if (this.IsScreenEnabled) {
-            if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
-                if (this.InvoiceCurrencyId) {
-                    if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
-                        if (this.EntityPM.InvoicePayments.length == 0) {
-                            isEnabled = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        this.RateIsEnabled = isEnabled;
-        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isEnabled);
+       
+        this.RateIsEnabled = this.IsScreenEnabled;
+        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, this.IsScreenEnabled);
     }
 
 
