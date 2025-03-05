@@ -21,8 +21,8 @@ import { TotangoService } from '../../Services/WebServices/TotangoService';
 import { CachedDataManager } from '../../Utilities/CachedDataManager';
 import { LastFilterClass } from '../../Utilities/LastFilterClass';
 import { EditTabComponent } from './EditTabComponent';
-import { Subscription, TeardownLogic } from 'rxjs';//itzik
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { Subscription, TeardownLogic, firstValueFrom } from 'rxjs';import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+cator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
 import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
@@ -1696,8 +1696,10 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             }
 
             this.SaveStart.emit(this.EntityPM);
-            if(this.ObjectTableName=="BankAccount"){
-                if (this.EntityPM.OldEntityPM?.factoringBank != this.EntityPM.FactoringBank) {
+            if(this.ObjectTableName === "BankAccount"){
+                const oldFactoringBank = this.EntityPM.OldEntityPM?.factoringBank;
+                const newFactoringBank = this.EntityPM.FactoringBank;
+                 if (oldFactoringBank !== newFactoringBank) {
 
                    const canContinue = await this.CheckOpenCheques(this.EntityPM);
                    if (!canContinue) {
@@ -1914,31 +1916,37 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     }
     arPaymentChequeOperationsService: ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService()
 
-async CheckOpenCheques(entityPM: any): Promise<boolean> {
-    this.CurrentSession.StartBusyIndicator("Check cheques");
-    return new Promise<boolean>((resolve) => {
-        this.arPaymentChequeOperationsService.GetCountOpenChequesByBankAccount(entityPM.Tenant, entityPM.BankCode, entityPM.BranchNumber, entityPM.AccountNumber).subscribe((result: any) => {
-            if (result > 0) {
-                this.StopBusyIndicator();
 
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Width = 450;
-                confirmWindow.Height = 190;
-                var message=entityPM.FactoringBank? "BankAccounts.O.AutoRedeemed":"BankAccounts.O.NotAutoRedeemed";
-                confirmWindow.Show(TextCodeTranslator.Translate("BankAccounts.O.CountFutureChecks").replace("%X", result)+" ,"+TextCodeTranslator.Translate(message))
-                
-                confirmWindow.WindowClosed.subscribe(() => {
-                    if (confirmWindow.Yes) {
-                        resolve(true);
-                    } else {
-                        resolve(false);
-                    }
-                });
-            } else {
-                resolve(true);
-            }
-        });
-    });
+    
+async CheckOpenCheques(entityPM: any): Promise<boolean> {
+   try {
+    this.CurrentSession.StartBusyIndicator("Check cheques");
+    const result = await firstValueFrom(
+        this.arPaymentChequeOperationsService.GetCountOpenChequesByBankAccount(
+            entityPM.Tenant, entityPM.BankCode, entityPM.BranchNumber, entityPM.AccountNumber
+        )
+    );
+    if (result > 0) {
+        this.StopBusyIndicator();
+        const confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        const messageKey = entityPM.FactoringBank ? "BankAccounts.O.AutoRedeemed" : "BankAccounts.O.NotAutoRedeemed";
+        const message = `${TextCodeTranslator.Translate("BankAccounts.O.CountFutureChecks").replace("%X", result)}, ${TextCodeTranslator.Translate(messageKey)}`;
+        confirmWindow.Show(message);
+        return new Promise<boolean>((resolve) => {
+            confirmWindow.WindowClosed.subscribe(() => {
+                resolve(confirmWindow.Yes);
+            });
+         });
+        }   
+       return true;
+   }
+   catch (error) {
+       console.error("Error checking open cheques:", error);
+       return false;
+
+   }
 }
     public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
     SaveDraftVersion(isClosing: boolean) {

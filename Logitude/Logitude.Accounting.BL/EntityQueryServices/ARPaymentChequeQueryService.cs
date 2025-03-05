@@ -1,4 +1,6 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
@@ -217,60 +219,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public  int GetOpenChequesByBankAccount(string bankId,string bankBranch, string bankAccount, int tenant)
         {
-            return (from a in context.ARPaymentCheques
-                                                      where a.BankAccount == bankAccount && a.BankId == bankId && a.BankBranch == bankBranch && a.Tenant == tenant && (a.StatusCode == "2" || a.StatusCode == "3") && a.ValueDate > DateTime.Now
-                                                      select new ARPaymentChequePM()
-                                                      {
-                                                          Id = a.Id,
-                                                          Tenant = a.Tenant,
-                                                          CurrencyCode = a.Currency.Code,
-                                                          SearchFields = a.SearchFields,
-                                                          LineNumber = a.LineNumber,
-                                                          ChequeNumber = a.ChequeNumber,
-                                                          ValueDate = a.ValueDate,
-                                                          LocalAmount = a.LocalAmount,
-                                                          ForeignAmount = a.ForeignAmount,
-                                                          BankId = a.BankId,
-                                                          BankBranch = a.BankBranch,
-                                                          BankAccount = a.BankAccount,
-                                                          StatusName = a.ARPaymentChequeStatus != null? a.ARPaymentChequeStatus.EnglishName : "",
-                                                          PaymentId = a.PaymentId,
-                                                          ExchangeRate = a.ExchangeRate,
-                                                          StatusCode = a.StatusCode,
-                                                          CurrencyId = a.CurrencyId,
 
-
-                                                      }).Count();
+            ARPaymentChequeRepository aRPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
+           return aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, bankBranch, bankAccount, tenant).Where(a=>a.ValueDate> DateTime.Now).Count();
+         
         }
 
         public List<ARPaymentChequePM> GetOpenChequesByBankAccountInThePast(string bankId, string bankBranch, string bankAccount, int tenant,DateTime valueDate)
         {
-            List<ARPaymentChequePM> paymentCheques = (from a in context.ARPaymentCheques
-                                                      where a.BankAccount == bankAccount && a.BankId == bankId && a.BankBranch == bankBranch && a.Tenant == tenant && (a.StatusCode == "2" || a.StatusCode == "3") && a.ValueDate <= valueDate
-                                                    select new ARPaymentChequePM()
-                                                    {
-                                                        Id = a.Id,
-                                                        Tenant = a.Tenant,
-                                                        CurrencyCode = a.Currency.Code,
-                                                        SearchFields = a.SearchFields,
-                                                        LineNumber = a.LineNumber,
-                                                        ChequeNumber = a.ChequeNumber,
-                                                        ValueDate = a.ValueDate,
-                                                        LocalAmount = a.LocalAmount,
-                                                        ForeignAmount = a.ForeignAmount,
-                                                        BankId = a.BankId,
-                                                        BankBranch = a.BankBranch,
-                                                        BankAccount = a.BankAccount,
-                                                        StatusName = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.EnglishName : "",
-                                                        PaymentId=a.PaymentId,
-                                                        ExchangeRate = a.ExchangeRate,
-                                                        StatusCode = a.StatusCode,
-                                                        CurrencyId = a.CurrencyId,
-
-
-                                                    }).ToList();
-            return paymentCheques;
-        }
+            ARPaymentChequeRepository aRPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
+            var cheques = aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, bankBranch, bankAccount, tenant).Where(a => a.ValueDate <= valueDate).ToList();
+            return cheques.Select(rec => GetEntityPM(rec)).ToList();
+         }
     }
 }
 
