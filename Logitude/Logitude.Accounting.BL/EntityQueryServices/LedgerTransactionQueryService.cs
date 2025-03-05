@@ -16,6 +16,7 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 using AccountingEntityValues = Logitude.Accounting.Data.Enums.AccountingEntityValues;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -768,72 +769,103 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         private IQueryable<B100Data> GettransactionsQuery(DateTime fromDate, DateTime toDate, int tenant)
         {
 
-            return (from lt in context.LedgerTransactions
+            var preQuery =
+                (from lt in context.LedgerTransactions
                     join g in context.GLAccounts on lt.AccountId equals g.Id
                     join j in context.Journals on lt.JournalId equals j.Id
                     join cancelledj in context.Journals on j.OriginalJournalId equals cancelledj.Id into cancelledjJoin
                     from cancelledj in cancelledjJoin.DefaultIfEmpty() // Left outer join
                     where ((lt.AccountingDate >= fromDate && lt.AccountingDate <= toDate)) && lt.Tenant == tenant
-                    select new B100Data()
+                    select new
                     {
-                        AccountingDate = lt.AccountingDate,
-                        DocumentDate = lt.DocumentDate,
-                        AccountingEntityCode = j.AccountingEntityCode,
-                        AccountingEntityReference = j.AccountingEntityReference,
+                        LedgerTransaction = lt,
+                        Journal = j,
+                        CancelledJournal = cancelledj,
+                        GLAccount = g
+                    })
+                    .ToList() // materialize into memory - EF bug workaround (placing ResolveReferenceType in the LINQ-to-Entities query causes an exception)
+                    .Select(x => new B100Data
+                    {
+                        AccountingDate = x.LedgerTransaction.AccountingDate,
+                        DocumentDate = x.LedgerTransaction.DocumentDate,
+                        AccountingEntityCode = x.Journal.AccountingEntityCode,
+                        AccountingEntityReference = x.Journal.AccountingEntityReference,
                         AccountingEntityReferenceType = ResolveReferenceType(
-                                                lt,
-                                                cancelledj ?? j,
+                                                x.LedgerTransaction,
+                                                x.CancelledJournal ?? x.Journal,
                                                 tenant,
                                                 OpenFormatDocumentTypes.Fallback
                                             ),
-                        ForeignAmountCredit = lt.ForeignAmountCredit,
-                        ForeignAmountDebit = lt.ForeignAmountDebit,
-                        GLAccountDisplayNumber = g.DisplayNumber,
-                        LocalAmountCredit = lt.LocalAmountCredit,
-                        LocalAmountDebit = lt.LocalAmountDebit,
-                        CreateDate = lt.CreateDate,
-                        CurrencyId = lt.CurrencyId,
-                        CreatedByUser = j.CreatedByUserId,
-                        JournalLineNumber = lt.JournalLineNumber,
-                        JournalNumber = j.JournalNumber,
-                        Notes = lt.Notes,
-                        Reference2 = lt.Reference2,
-                        LedgerTransactionId = lt.Id,
-                        OppositGLAccount = lt.OppositeAccount != null ? lt.OppositeAccount.DisplayNumber : null,
+                        ForeignAmountCredit = x.LedgerTransaction.ForeignAmountCredit,
+                        ForeignAmountDebit = x.LedgerTransaction.ForeignAmountDebit,
+                        GLAccountDisplayNumber = x.GLAccount.DisplayNumber,
+                        LocalAmountCredit = x.LedgerTransaction.LocalAmountCredit,
+                        LocalAmountDebit = x.LedgerTransaction.LocalAmountDebit,
+                        CreateDate = x.LedgerTransaction.CreateDate,
+                        CurrencyId = x.LedgerTransaction.CurrencyId,
+                        CreatedByUser = x.Journal.CreatedByUserId,
+                        JournalLineNumber = x.LedgerTransaction.JournalLineNumber,
+                        JournalNumber = x.Journal.JournalNumber,
+                        Notes = x.LedgerTransaction.Notes,
+                        Reference2 = x.LedgerTransaction.Reference2,
+                        LedgerTransactionId = x.LedgerTransaction.Id,
+                        OppositGLAccount = x.LedgerTransaction.OppositeAccount != null ? x.LedgerTransaction.OppositeAccount.DisplayNumber : null,
                     });
+            var result = preQuery.AsQueryable();
+            return result;
         }
 
         private IQueryable<B100Data> GettransactionsQueryWithValidateFirsDate(DateTime firstDayOfFromDate, DateTime fromDate, DateTime toDate, int tenant)
         {
-            return (from a in context.LedgerTransactions
-                    join g in context.GLAccounts on a.AccountId equals g.Id
-                    join j in context.Journals on a.JournalId equals j.Id
-                    join f in context.FullAccountingSettings on a.Tenant equals f.Tenant
-                    where ((a.AccountingDate >= fromDate && a.AccountingDate <= toDate))
-                        && a.Tenant == tenant
-                        && (DbFunctions.TruncateTime(a.AccountingDate) != firstDayOfFromDate || (DbFunctions.TruncateTime(a.AccountingDate) == firstDayOfFromDate 
+            var preQuery = 
+                (from lt in context.LedgerTransactions
+                    join g in context.GLAccounts on lt.AccountId equals g.Id
+                    join j in context.Journals on lt.JournalId equals j.Id
+                    join cancelledj in context.Journals on j.OriginalJournalId equals cancelledj.Id into cancelledjJoin
+                    from cancelledj in cancelledjJoin.DefaultIfEmpty() // Left outer join
+                    join f in context.FullAccountingSettings on lt.Tenant equals f.Tenant
+                    where ((lt.AccountingDate >= fromDate && lt.AccountingDate <= toDate))
+                        && lt.Tenant == tenant
+                        && (DbFunctions.TruncateTime(lt.AccountingDate) != firstDayOfFromDate || (DbFunctions.TruncateTime(lt.AccountingDate) == firstDayOfFromDate 
                                 && !(j.AccountingEntityCode == AccountingEntityValues.YearTransfer & (g.ChartOfAccountsTypeCode == "1" || g.ChartOfAccountsTypeCode == "2" || g.Id == f.RevenueExpenseGLAccountId))))
-                    select new B100Data()
+
+                    select new
                     {
-                        AccountingDate = a.AccountingDate,
-                        DocumentDate = a.DocumentDate,
-                        AccountingEntityCode = j.AccountingEntityCode,
-                        AccountingEntityReference = j.AccountingEntityReference,
-                        ForeignAmountCredit = a.ForeignAmountCredit,
-                        ForeignAmountDebit = a.ForeignAmountDebit,
-                        GLAccountDisplayNumber = g.DisplayNumber,
-                        LocalAmountCredit = a.LocalAmountCredit,
-                        LocalAmountDebit = a.LocalAmountDebit,
-                        CreateDate = a.CreateDate,
-                        CurrencyId = a.CurrencyId,
-                        CreatedByUser = j.CreatedByUserId,
-                        JournalLineNumber = a.JournalLineNumber,
-                        JournalNumber = j.JournalNumber,
-                        Notes = a.Notes,
-                        Reference2 = a.Reference2,
-                        LedgerTransactionId = a.Id,
-                        OppositGLAccount = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
+                        LedgerTransaction = lt,
+                        Journal = j,
+                        CancelledJournal = cancelledj,
+                        GLAccount = g
+                    })
+                    .ToList() // materialize into memory - EF bug workaround (placing ResolveReferenceType in the LINQ-to-Entities query causes an exception)
+                    .Select(x => new B100Data
+                    {
+                        AccountingDate = x.LedgerTransaction.AccountingDate,
+                        DocumentDate = x.LedgerTransaction.DocumentDate,
+                        AccountingEntityCode = x.Journal.AccountingEntityCode,
+                        AccountingEntityReference = x.Journal.AccountingEntityReference,
+                        AccountingEntityReferenceType = ResolveReferenceType(
+                                                x.LedgerTransaction,
+                                                x.CancelledJournal ?? x.Journal,
+                                                tenant,
+                                                OpenFormatDocumentTypes.Fallback
+                                            ),
+                        ForeignAmountCredit = x.LedgerTransaction.ForeignAmountCredit,
+                        ForeignAmountDebit = x.LedgerTransaction.ForeignAmountDebit,
+                        GLAccountDisplayNumber = x.GLAccount.DisplayNumber,
+                        LocalAmountCredit = x.LedgerTransaction.LocalAmountCredit,
+                        LocalAmountDebit = x.LedgerTransaction.LocalAmountDebit,
+                        CreateDate = x.LedgerTransaction.CreateDate,
+                        CurrencyId = x.LedgerTransaction.CurrencyId,
+                        CreatedByUser = x.Journal.CreatedByUserId,
+                        JournalLineNumber = x.LedgerTransaction.JournalLineNumber,
+                        JournalNumber = x.Journal.JournalNumber,
+                        Notes = x.LedgerTransaction.Notes,
+                        Reference2 = x.LedgerTransaction.Reference2,
+                        LedgerTransactionId = x.LedgerTransaction.Id,
+                        OppositGLAccount = x.LedgerTransaction.OppositeAccount != null ? x.LedgerTransaction.OppositeAccount.DisplayNumber : null,
                     });
+            var result = preQuery.AsQueryable();
+            return result;
         }
 
         public List<LedgerTransactionPM> GetTransactionBySourceEntity(string entityId,string sourceTypeCode, int tenant)
