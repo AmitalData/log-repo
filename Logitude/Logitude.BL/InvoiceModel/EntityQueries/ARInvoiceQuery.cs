@@ -2173,7 +2173,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 {
                     entityPM.BillToName = myBillTo.EnglishName;
                     entityPM.BillToLocalName = myBillTo.LocalName;
-                    entityPM.BillToDisplayNumber = myBillTo.BillToDisplayNumber;
+                    entityPM.BillToDisplayNumber = myBillTo.GLAccountDisplayNumber;
                     entityPM.BillToCode = myBillTo.Code;
                     entityPM.BillToPartnerTypeId = myBillTo.PartnerTypeId;
                     entityPM.IsBillToAllowConsolidation = myBillTo.EnableConsolidationInvoices;
@@ -2463,7 +2463,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              Tenant = entity.Tenant,
                              BillToName = entity.BillTo.EnglishName,
                              BillToLocalName = entity.BillTo.LocalName,
-                             BillToDisplayNumber = entity.BillTo.BillToDisplayNumber,
+                             BillToDisplayNumber = entity.BillTo.GLAccountDisplayNumber,
                              BillToCity = entity.BillTo == null ? "" : entity.BillTo.CityName,
                              BillToCountry = entity.BillTo == null ? "" : entity.BillTo.CountryName,
                              BillToCode = entity.BillTo.Code,
