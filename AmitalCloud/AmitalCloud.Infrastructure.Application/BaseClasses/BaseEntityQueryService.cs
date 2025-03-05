@@ -123,9 +123,9 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             return entityPMs;
         }
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate)
-        => Repository.GetMulti(predicate).Select(a=> NewPMEntity(a)).ToList();
+        => Repository.GetMulti<TEntityPM>(predicate);
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, string include)
-        => Repository.GetMulti(predicate,include).Select(a => NewPMEntity(a)).ToList();
+        => Repository.GetMulti<TEntityPM>(predicate,include);
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TEntityPM>> select)
         => Repository.GetMulti(predicate,select);
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TEntityPM>> select, string include)
@@ -135,7 +135,5 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             => Repository.GetMulti(predicate, select);
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TResult>> select, string include)
         => Repository.GetMulti(predicate, select, include);
-        internal TEntityPM NewPMEntity(TEntityPOCO entity)
-        => (TEntityPM)typeof(TEntityPM).GetConstructor(new Type[] { typeof(TEntityPOCO) }).Invoke(new object[] { entity });
     }
 }
