@@ -637,15 +637,17 @@ namespace Logitude.Accounting.BL.DataContract
 
                     if (bankTransactions.Any())
                     {
-                        taxDeductionReportLine.AmountInLocalCurrency = Math.Round((double)bankTransactions.Sum(tr => tr.LocalAmountCredit), 0);
+                        taxDeductionReportLine.AmountInLocalCurrency = ((double)(taxDeductionReportLine.TaxDeductionLocalAmount??0)) + Math.Round((double)bankTransactions.Sum(tr => tr.LocalAmountCredit), 0);
                         taxDeductionReportLine.TaxDeductionPercentage = taxDeductionReportLine.TaxDeductionLocalAmount == 0 || taxDeductionReportLine.AmountInLocalCurrency == 0
                             ? 0
                             : (int?)Math.Round(((taxDeductionReportLine.TaxDeductionLocalAmount ?? 0) / (decimal)taxDeductionReportLine.AmountInLocalCurrency) * 100, 2);
                     }
                     else
                     {
-                        taxDeductionReportLine.AmountInLocalCurrency = 0;
-                        taxDeductionReportLine.TaxDeductionPercentage = 100;
+                        taxDeductionReportLine.AmountInLocalCurrency = (double)(taxDeductionReportLine.TaxDeductionLocalAmount ?? 0);
+                        taxDeductionReportLine.TaxDeductionPercentage = taxDeductionReportLine.TaxDeductionLocalAmount == 0 || taxDeductionReportLine.AmountInLocalCurrency == 0
+                            ? 0
+                            : 100;
                     }
                 }
                 else
