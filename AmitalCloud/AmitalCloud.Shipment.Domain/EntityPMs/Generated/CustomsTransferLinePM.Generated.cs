@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,19 +26,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class CustomsTransferLinePM : BaseEntityPM   {
    #region Constructors
    public CustomsTransferLinePM() : base() {} 
-   public CustomsTransferLinePM(CustomsTransferLine entity) : base()
+   public CustomsTransferLinePM(POCO.CustomsTransferLine entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_customsTransferHeaderId = entity.CustomsTransferHeaderId;
-		_shipmentId = entity.ShipmentId;
+		_customstransferheader = entity.CustomsTransferHeader !=null ? new CustomsTransferHeaderPM(entity.CustomsTransferHeader) : null;
+			_shipmentId = entity.ShipmentId;
 		_shipmentNumber = entity.ShipmentNumber;
-		_arrivalDate = default;
-		_shipper = default;
-		_consignee = default;
-		_status = default;
-		_hasError = default;
-		_errorText = default;
    }
    #endregion Constructors
    #region Properties
@@ -89,6 +86,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CustomsTransferHeaderPM _customstransferheader;
+		[Include]
+        [DataMember]
+        public virtual CustomsTransferHeaderPM CustomsTransferHeader 
+		{ 
+		get { return _customstransferheader; } 
+		set { _customstransferheader = value; }
+		}
 	  private string _shipmentId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -118,102 +123,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentNumber",OldValue=_shipmentNumber,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _shipmentNumber=value;
-		   }
-		 }
-	   }
-	  private DateTime _arrivalDate ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime ArrivalDate  
-	   {
-	     get { return _arrivalDate; }
-		 set
-		 {
-		   if(_arrivalDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ArrivalDate",OldValue=_arrivalDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _arrivalDate=value;
-		   }
-		 }
-	   }
-	  private string _shipper ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Shipper  
-	   {
-	     get { return _shipper; }
-		 set
-		 {
-		   if(_shipper != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Shipper",OldValue=_shipper,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipper=value;
-		   }
-		 }
-	   }
-	  private string _consignee ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Consignee  
-	   {
-	     get { return _consignee; }
-		 set
-		 {
-		   if(_consignee != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Consignee",OldValue=_consignee,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _consignee=value;
-		   }
-		 }
-	   }
-	  private string _status ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Status  
-	   {
-	     get { return _status; }
-		 set
-		 {
-		   if(_status != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Status",OldValue=_status,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _status=value;
-		   }
-		 }
-	   }
-	  private bool _hasError ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool HasError  
-	   {
-	     get { return _hasError; }
-		 set
-		 {
-		   if(_hasError != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HasError",OldValue=_hasError,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _hasError=value;
-		   }
-		 }
-	   }
-	  private string _errorText ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ErrorText  
-	   {
-	     get { return _errorText; }
-		 set
-		 {
-		   if(_errorText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ErrorText",OldValue=_errorText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _errorText=value;
 		   }
 		 }
 	   }

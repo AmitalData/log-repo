@@ -175,11 +175,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("IsMultiPackage")]
 	    public bool IsMultiPackage { get; set; }
      [Key]
-        [ForeignKey("GlobalTenant")]
+        //[ForeignKey("GlobalTenant")]
         [Column("Id")]
 	    public int Id { get; set; }
 	      
-        public virtual GlobalTenant GlobalTenant { get; set; }
+        //public virtual GlobalTenant GlobalTenant { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
         [Column("PackageCode")]

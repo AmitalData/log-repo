@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class SharedLogisticsSettingPM : BaseEntityPM   {
    #region Constructors
    public SharedLogisticsSettingPM() : base() {} 
-   public SharedLogisticsSettingPM(SharedLogisticsSetting entity) : base()
+   public SharedLogisticsSettingPM(POCO.SharedLogisticsSetting entity) : base()
    {
 		_tenant = entity.Tenant;
 		_isAgentShared = entity.IsAgentShared;

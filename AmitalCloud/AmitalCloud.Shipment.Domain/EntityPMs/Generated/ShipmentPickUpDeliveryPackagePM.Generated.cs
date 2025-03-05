@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,12 +26,13 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentPickUpDeliveryPackagePM : BaseEntityPM   {
    #region Constructors
    public ShipmentPickUpDeliveryPackagePM() : base() {} 
-   public ShipmentPickUpDeliveryPackagePM(ShipmentPickUpDeliveryPackage entity) : base()
+   public ShipmentPickUpDeliveryPackagePM(POCO.ShipmentPickUpDeliveryPackage entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_shipmentPickUpDeliveryId = entity.ShipmentPickUpDeliveryId;
-		_originalShipmentPackageId = entity.OriginalShipmentPackageId;
+		_shipmentpickupdelivery = entity.ShipmentPickUpDelivery !=null ? new ShipmentPickUpDeliveryPM(entity.ShipmentPickUpDelivery) : null;
+			_originalShipmentPackageId = entity.OriginalShipmentPackageId;
 		_isMultiHarmonize = entity.IsMultiHarmonize;
 		_make = entity.Make;
 		_model = entity.Model;
@@ -49,11 +52,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_height = entity.Height;
 		_length = entity.Length;
 		_shipperSeal = entity.ShipperSeal;
-		_packageTypeName = default;
-		_packageTypeTEU = default;
-		pickUpDeliveryPackageHarmonizes = default;
 		_containerEntityId = entity.ContainerEntityId;
-		_changeSet = default;
    }
    #endregion Constructors
    #region Properties
@@ -106,6 +105,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPickUpDeliveryPM _shipmentpickupdelivery;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPickUpDeliveryPM ShipmentPickUpDelivery 
+		{ 
+		get { return _shipmentpickupdelivery; } 
+		set { _shipmentpickupdelivery = value; }
+		}
 	  private string _originalShipmentPackageId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -426,38 +433,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _packageTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeName  
-	   {
-	     get { return _packageTypeName; }
-		 set
-		 {
-		   if(_packageTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeName",OldValue=_packageTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeName=value;
-		   }
-		 }
-	   }
-	  private double _packageTypeTEU ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double PackageTypeTEU  
-	   {
-	     get { return _packageTypeTEU; }
-		 set
-		 {
-		   if(_packageTypeTEU != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeTEU",OldValue=_packageTypeTEU,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeTEU=value;
-		   }
-		 }
-	   }
 	   private List<PickUpDeliveryPackageHarmonizePM> pickUpDeliveryPackageHarmonizes;
 	    
        [Composition]
@@ -504,22 +479,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerEntityId",OldValue=_containerEntityId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _containerEntityId=value;
-		   }
-		 }
-	   }
-	  private string _changeSet ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSet  
-	   {
-	     get { return _changeSet; }
-		 set
-		 {
-		   if(_changeSet != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSet",OldValue=_changeSet,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSet=value;
 		   }
 		 }
 	   }

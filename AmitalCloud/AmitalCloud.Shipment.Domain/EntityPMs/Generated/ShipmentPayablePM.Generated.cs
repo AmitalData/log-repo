@@ -6,6 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.ServiceModel.DomainServices.Server;
@@ -13,8 +14,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +27,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentPayablePM :  ChildEntitiesCustomFieldPM   {
    #region Constructors
    public ShipmentPayablePM() : base() {} 
-   public ShipmentPayablePM(ShipmentPayable entity) : base()
+   public ShipmentPayablePM(POCO.ShipmentPayable entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -33,14 +35,16 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_expectedAmount = entity.ExpectedAmount;
 		_expectedAmountLocal = entity.ExpectedAmountLocal;
 		_updateByUserId = entity.UpdateByUserId;
-		_updateDate = entity.UpdateDate;
+		_updatebyuser = entity.UpdateByUser !=null ? new UserPM(entity.UpdateByUser) : null;
+			_updateDate = entity.UpdateDate;
 		_valueDate = entity.ValueDate;
 		_minAmount = entity.MinAmount;
 		_maxAmount = entity.MaxAmount;
 		_expectedAmountInProfitCurrency = entity.ExpectedAmountInProfitCurrency;
 		_profitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate;
 		_shipmentPayableParentId = entity.ShipmentPayableParentId;
-		_isEditedByUser = entity.IsEditedByUser;
+		_shipmentpayableparent = entity.ShipmentPayableParent !=null ? new ShipmentPayablePM(entity.ShipmentPayableParent) : null;
+			_isEditedByUser = entity.IsEditedByUser;
 		_accountedAmount = entity.AccountedAmount;
 		_accountedAmountInLocalCurrency = entity.AccountedAmountInLocalCurrency;
 		_accountedAmountInProfitCurrency = entity.AccountedAmountInProfitCurrency;
@@ -48,59 +52,51 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_openAmountInLocalCurrency = entity.OpenAmountInLocalCurrency;
 		_openAmountInProfitCurrency = entity.OpenAmountInProfitCurrency;
 		_shipmentPayableAmountTypeCode = entity.ShipmentPayableAmountTypeCode;
-		_createDate = entity.CreateDate;
+		_shipmentpayableamounttype = entity.ShipmentPayableAmountType !=null ? new ShipmentPayableAmountTypePM(entity.ShipmentPayableAmountType) : null;
+			_createDate = entity.CreateDate;
 		_createdByUserId = entity.CreatedByUserId;
-		_correctionAmount = entity.CorrectionAmount;
+		_createdbyuser = entity.CreatedByUser !=null ? new UserPM(entity.CreatedByUser) : null;
+			_correctionAmount = entity.CorrectionAmount;
 		_correctionByUserId = entity.CorrectionByUserId;
-		_correctionNote = entity.CorrectionNote;
+		_correctionbyuser = entity.CorrectionByUser !=null ? new UserPM(entity.CorrectionByUser) : null;
+			_correctionNote = entity.CorrectionNote;
 		_correctionDate = entity.CorrectionDate;
 		_isFromQuote = entity.IsFromQuote;
 		_quoteChargeId = entity.QuoteChargeId;
 		_isChargeBySteps = entity.IsChargeBySteps;
-		_quoteCostMinPrice = default;
-		_childShipmentPayables = default;
 		_iATACodeId = entity.IATACodeId;
-		_prepaidCollectId = entity.PrepaidCollectId;
-		_aWBPrint = entity.AWBPrint;
+		_iatacode = entity.IATACode !=null ? new IATACodePM(entity.IATACode) : null;
+			_prepaidCollectId = entity.PrepaidCollectId;
+		_prepaidcollect = entity.PrepaidCollect !=null ? new PrepaidCollectPM(entity.PrepaidCollect) : null;
+			_aWBPrint = entity.AWBPrint;
 		_dueTypeCode = entity.DueTypeCode;
-		_shipmentPayableLineStatusCode = entity.ShipmentPayableLineStatusCode;
-		_measurementId = entity.MeasurementId;
-		_quantity = entity.Quantity;
+		_duetype = entity.DueType !=null ? new DueTypePM(entity.DueType) : null;
+			_shipmentPayableLineStatusCode = entity.ShipmentPayableLineStatusCode;
+		_shipmentpayablelinestatus = entity.ShipmentPayableLineStatus !=null ? new ShipmentPayableLineStatusPM(entity.ShipmentPayableLineStatus) : null;
+			_measurementId = entity.MeasurementId;
+		_measurement = entity.Measurement !=null ? new MeasurementPM(entity.Measurement) : null;
+			_quantity = entity.Quantity;
 		_rate = entity.Rate;
 		_currencyId = entity.CurrencyId;
-		_unitPrice = entity.UnitPrice;
+		_currency = entity.Currency !=null ? new CurrencyPM(entity.Currency) : null;
+			_unitPrice = entity.UnitPrice;
 		_notes = entity.Notes;
 		_chargesTypeId = entity.ChargesTypeId;
-		_vendorId = entity.VendorId;
-		_chargesTypeCode = default;
-		_chargesTypeName = default;
-		_chargesGroupCode = default;
-		_shipmentPayableLineStatusName = default;
-		_measurementCode = default;
-		_measurementShortName = default;
-		_currencyCode = default;
-		_dueTypeName = default;
-		_vendorName = default;
-		_shipmentPayableAmountTypeName = default;
-		_viewOrder = default;
-		_vatTypeId = entity.VatTypeId;
-		_changeSetOp = default;
-		_childChangeOp = default;
-		_shipmentNumber = default;
-		_isBackToBack = entity.IsBackToBack;
+		_chargestype = entity.ChargesType !=null ? new ChargesTypePM(entity.ChargesType) : null;
+			_vendorId = entity.VendorId;
+		_vendorcard = entity.VendorCard !=null ? new CardPM(entity.VendorCard) : null;
+			_vatTypeId = entity.VatTypeId;
+		_vattype = entity.VatType !=null ? new VatTypePM(entity.VatType) : null;
+			_isBackToBack = entity.IsBackToBack;
 		_receivableId = entity.ReceivableId;
 		_quoteCostMinAmount = entity.QuoteCostMinAmount;
 		_quoteCostMaxAmount = entity.QuoteCostMaxAmount;
-		_uOMPercentage = default;
 		_tariffId = entity.TariffId;
 		_tariffNumber = entity.TariffNumber;
 		_tariffVersion = entity.TariffVersion;
-		_payablesDisconnectedFromTariff = default;
 		_tariffLineId = entity.TariffLineId;
 		_vatAmountLocal = entity.VatAmountLocal;
 		_vatAmountProfit = entity.VatAmountProfit;
-		_createdByUserName = default;
-		_updateByUserName = default;
 		_proratedAmountInLocalCurrency = entity.ProratedAmountInLocalCurrency;
 		_proratedAmountInProfitCurrency = entity.ProratedAmountInProfitCurrency;
 		_isCustomsChargesTariff = entity.IsCustomsChargesTariff;
@@ -204,6 +200,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _updatebyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM UpdateByUser 
+		{ 
+		get { return _updatebyuser; } 
+		set { _updatebyuser = value; }
+		}
 	  private DateTime? _updateDate ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -316,6 +320,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPayablePM _shipmentpayableparent;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPayablePM ShipmentPayableParent 
+		{ 
+		get { return _shipmentpayableparent; } 
+		set { _shipmentpayableparent = value; }
+		}
 	  private bool _isEditedByUser ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -444,6 +456,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPayableAmountTypePM _shipmentpayableamounttype;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPayableAmountTypePM ShipmentPayableAmountType 
+		{ 
+		get { return _shipmentpayableamounttype; } 
+		set { _shipmentpayableamounttype = value; }
+		}
 	  private DateTime? _createDate ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -476,6 +496,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _createdbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM CreatedByUser 
+		{ 
+		get { return _createdbyuser; } 
+		set { _createdbyuser = value; }
+		}
 	  private double? _correctionAmount ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -508,6 +536,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _correctionbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM CorrectionByUser 
+		{ 
+		get { return _correctionbyuser; } 
+		set { _correctionbyuser = value; }
+		}
 	  private string _correctionNote ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -588,38 +624,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private double? _quoteCostMinPrice ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double? QuoteCostMinPrice  
-	   {
-	     get { return _quoteCostMinPrice; }
-		 set
-		 {
-		   if(_quoteCostMinPrice != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteCostMinPrice",OldValue=_quoteCostMinPrice,NewValue=value,PropertyType="double?"};
-		    NotifyPropertyChanged(values);
-		   _quoteCostMinPrice=value;
-		   }
-		 }
-	   }
-	  private string _childShipmentPayables ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChildShipmentPayables  
-	   {
-	     get { return _childShipmentPayables; }
-		 set
-		 {
-		   if(_childShipmentPayables != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChildShipmentPayables",OldValue=_childShipmentPayables,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _childShipmentPayables=value;
-		   }
-		 }
-	   }
 	  private string _iATACodeId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -636,6 +640,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private IATACodePM _iatacode;
+		[Include]
+        [DataMember]
+        public virtual IATACodePM IATACode 
+		{ 
+		get { return _iatacode; } 
+		set { _iatacode = value; }
+		}
 	  private string _prepaidCollectId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -652,6 +664,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PrepaidCollectPM _prepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM PrepaidCollect 
+		{ 
+		get { return _prepaidcollect; } 
+		set { _prepaidcollect = value; }
+		}
 	  private bool _aWBPrint ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -684,6 +704,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DueTypePM _duetype;
+		[Include]
+        [DataMember]
+        public virtual DueTypePM DueType 
+		{ 
+		get { return _duetype; } 
+		set { _duetype = value; }
+		}
 	  private string _shipmentPayableLineStatusCode ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -700,6 +728,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPayableLineStatusPM _shipmentpayablelinestatus;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPayableLineStatusPM ShipmentPayableLineStatus 
+		{ 
+		get { return _shipmentpayablelinestatus; } 
+		set { _shipmentpayablelinestatus = value; }
+		}
 	  private string _measurementId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -716,6 +752,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private MeasurementPM _measurement;
+		[Include]
+        [DataMember]
+        public virtual MeasurementPM Measurement 
+		{ 
+		get { return _measurement; } 
+		set { _measurement = value; }
+		}
 	  private double? _quantity ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -764,6 +808,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _currency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM Currency 
+		{ 
+		get { return _currency; } 
+		set { _currency = value; }
+		}
 	  private double? _unitPrice ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -812,6 +864,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ChargesTypePM _chargestype;
+		[Include]
+        [DataMember]
+        public virtual ChargesTypePM ChargesType 
+		{ 
+		get { return _chargestype; } 
+		set { _chargestype = value; }
+		}
 	  private string _vendorId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -828,182 +888,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _chargesTypeCode ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargesTypeCode  
-	   {
-	     get { return _chargesTypeCode; }
-		 set
-		 {
-		   if(_chargesTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeCode",OldValue=_chargesTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _chargesTypeCode=value;
-		   }
-		 }
-	   }
-	  private string _chargesTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargesTypeName  
-	   {
-	     get { return _chargesTypeName; }
-		 set
-		 {
-		   if(_chargesTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeName",OldValue=_chargesTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _chargesTypeName=value;
-		   }
-		 }
-	   }
-	  private string _chargesGroupCode ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargesGroupCode  
-	   {
-	     get { return _chargesGroupCode; }
-		 set
-		 {
-		   if(_chargesGroupCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesGroupCode",OldValue=_chargesGroupCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _chargesGroupCode=value;
-		   }
-		 }
-	   }
-	  private string _shipmentPayableLineStatusName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentPayableLineStatusName  
-	   {
-	     get { return _shipmentPayableLineStatusName; }
-		 set
-		 {
-		   if(_shipmentPayableLineStatusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentPayableLineStatusName",OldValue=_shipmentPayableLineStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentPayableLineStatusName=value;
-		   }
-		 }
-	   }
-	  private string _measurementCode ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MeasurementCode  
-	   {
-	     get { return _measurementCode; }
-		 set
-		 {
-		   if(_measurementCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasurementCode",OldValue=_measurementCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _measurementCode=value;
-		   }
-		 }
-	   }
-	  private string _measurementShortName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MeasurementShortName  
-	   {
-	     get { return _measurementShortName; }
-		 set
-		 {
-		   if(_measurementShortName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasurementShortName",OldValue=_measurementShortName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _measurementShortName=value;
-		   }
-		 }
-	   }
-	  private string _currencyCode ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CurrencyCode  
-	   {
-	     get { return _currencyCode; }
-		 set
-		 {
-		   if(_currencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=_currencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _currencyCode=value;
-		   }
-		 }
-	   }
-	  private string _dueTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DueTypeName  
-	   {
-	     get { return _dueTypeName; }
-		 set
-		 {
-		   if(_dueTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DueTypeName",OldValue=_dueTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dueTypeName=value;
-		   }
-		 }
-	   }
-	  private string _vendorName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VendorName  
-	   {
-	     get { return _vendorName; }
-		 set
-		 {
-		   if(_vendorName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorName",OldValue=_vendorName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vendorName=value;
-		   }
-		 }
-	   }
-	  private string _shipmentPayableAmountTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentPayableAmountTypeName  
-	   {
-	     get { return _shipmentPayableAmountTypeName; }
-		 set
-		 {
-		   if(_shipmentPayableAmountTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentPayableAmountTypeName",OldValue=_shipmentPayableAmountTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentPayableAmountTypeName=value;
-		   }
-		 }
-	   }
-	  private int _viewOrder ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int ViewOrder  
-	   {
-	     get { return _viewOrder; }
-		 set
-		 {
-		   if(_viewOrder != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ViewOrder",OldValue=_viewOrder,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _viewOrder=value;
-		   }
-		 }
-	   }
+		private CardPM _vendorcard;
+		[Include]
+        [DataMember]
+        public virtual CardPM VendorCard 
+		{ 
+		get { return _vendorcard; } 
+		set { _vendorcard = value; }
+		}
 	  private string _vatTypeId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1020,54 +912,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _changeSetOp ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSetOp  
-	   {
-	     get { return _changeSetOp; }
-		 set
-		 {
-		   if(_changeSetOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSetOp",OldValue=_changeSetOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSetOp=value;
-		   }
-		 }
-	   }
-	  private string _childChangeOp ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChildChangeOp  
-	   {
-	     get { return _childChangeOp; }
-		 set
-		 {
-		   if(_childChangeOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChildChangeOp",OldValue=_childChangeOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _childChangeOp=value;
-		   }
-		 }
-	   }
-	  private string _shipmentNumber ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentNumber  
-	   {
-	     get { return _shipmentNumber; }
-		 set
-		 {
-		   if(_shipmentNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentNumber",OldValue=_shipmentNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentNumber=value;
-		   }
-		 }
-	   }
+		private VatTypePM _vattype;
+		[Include]
+        [DataMember]
+        public virtual VatTypePM VatType 
+		{ 
+		get { return _vattype; } 
+		set { _vattype = value; }
+		}
 	  private bool _isBackToBack ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1132,22 +984,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _uOMPercentage ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UOMPercentage  
-	   {
-	     get { return _uOMPercentage; }
-		 set
-		 {
-		   if(_uOMPercentage != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UOMPercentage",OldValue=_uOMPercentage,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _uOMPercentage=value;
-		   }
-		 }
-	   }
 	  private string _tariffId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1196,22 +1032,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _payablesDisconnectedFromTariff ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool PayablesDisconnectedFromTariff  
-	   {
-	     get { return _payablesDisconnectedFromTariff; }
-		 set
-		 {
-		   if(_payablesDisconnectedFromTariff != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PayablesDisconnectedFromTariff",OldValue=_payablesDisconnectedFromTariff,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _payablesDisconnectedFromTariff=value;
-		   }
-		 }
-	   }
 	  private string _tariffLineId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1257,38 +1077,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatAmountProfit",OldValue=_vatAmountProfit,NewValue=value,PropertyType="double?"};
 		    NotifyPropertyChanged(values);
 		   _vatAmountProfit=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updateByUserName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdateByUserName  
-	   {
-	     get { return _updateByUserName; }
-		 set
-		 {
-		   if(_updateByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateByUserName",OldValue=_updateByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updateByUserName=value;
 		   }
 		 }
 	   }

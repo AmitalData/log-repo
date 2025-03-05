@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
@@ -22,7 +22,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
    {
        #region Constructors
        public INTTRABookingTransStatusList() : base() {}
-       public INTTRABookingTransStatusList(INTTRABookingTransStatus entity) : base()
+       public INTTRABookingTransStatusList(POCO.INTTRABookingTransStatus entity) : base()
        {
           Code  = entity.Code;
           Name  = entity.Name;

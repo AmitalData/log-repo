@@ -23,6 +23,7 @@ import { TenantLoginPolicyPMService } from '../../../../Common/Services/Standard
 import { TenantLoginPolicyPM } from '../../../../Common/EntityPMs/TenantLoginPolicyPM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { TraceEventExtendedPMService } from 'Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
 @Component({
 
     selector: 'TenantManagementGeneralTabComponent',
@@ -464,7 +465,9 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.tenantLoginPolicyPMService.update(this.tenantLoginPolicyPM).subscribe((response: any) => {
                 //this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.IsTenantLoginPolicyPMChanged = false;
-
+                
+                const notes = `keep loged user change from ${!this.tenantLoginPolicyPM.KeepUserLoggedIn} to ${this.tenantLoginPolicyPM.KeepUserLoggedIn}`;
+                new TraceEventExtendedPMService().CreateTraceEvent(0, this.EntityPM.Id.toString(), "TenantManagement", "CRMG",  SessionLocator.LoggedUserPM.Email, notes).subscribe();
             });
         }
     }

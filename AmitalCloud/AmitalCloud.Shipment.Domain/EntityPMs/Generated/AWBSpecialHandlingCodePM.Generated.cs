@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class AWBSpecialHandlingCodePM : BaseEntityPM   {
    #region Constructors
    public AWBSpecialHandlingCodePM() : base() {} 
-   public AWBSpecialHandlingCodePM(AWBSpecialHandlingCode entity) : base()
+   public AWBSpecialHandlingCodePM(POCO.AWBSpecialHandlingCode entity) : base()
    {
 		_id = entity.Id;
 		_code = entity.Code;
@@ -33,7 +35,8 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_isIATA = entity.IsIATA;
 		_inActive = entity.InActive;
 		_airlineId = entity.AirlineId;
-   }
+		_airline = entity.Airline !=null ? new CardPM(entity.Airline) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -149,6 +152,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _airline;
+		[Include]
+        [DataMember]
+        public virtual CardPM Airline 
+		{ 
+		get { return _airline; } 
+		set { _airline = value; }
+		}
 	 }
 #endregion Properties
 }

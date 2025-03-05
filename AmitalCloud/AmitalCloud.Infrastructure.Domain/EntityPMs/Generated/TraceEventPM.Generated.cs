@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TraceEventPM : BaseEntityPM   {
    #region Constructors
    public TraceEventPM() : base() {} 
-   public TraceEventPM(TraceEvent entity) : base()
+   public TraceEventPM(POCO.TraceEvent entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -40,20 +42,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_eventDateTime = entity.EventDateTime;
 		_logDateTime = entity.LogDateTime;
 		_userId = entity.UserId;
-		_location = entity.Location;
-		_entityNumber = default;
-		_eventTypeEnglishName = default;
-		_eventTypeLocalName = default;
-		_contactEnglishFirstName = default;
-		_shortView = default;
-		_isManualEntry = default;
-		_eventTypeCode = default;
-		_eventTypeCategoryCode = default;
-		_isAgentView = default;
-		_isCustomerView = default;
+		_user = entity.User !=null ? new UserPM(entity.User) : null;
+			_location = entity.Location;
 		_childEntityId = entity.ChildEntityId;
 		_childObjectTableId = entity.ChildObjectTableId;
-   }
+		_childobjecttable = entity.ChildObjectTable !=null ? new ObjectTablePM(entity.ChildObjectTable) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -281,6 +275,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _user;
+		[Include]
+        [DataMember]
+        public virtual UserPM User 
+		{ 
+		get { return _user; } 
+		set { _user = value; }
+		}
 	  private string _location ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -294,166 +296,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Location",OldValue=_location,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _location=value;
-		   }
-		 }
-	   }
-	  private string _entityNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EntityNumber  
-	   {
-	     get { return _entityNumber; }
-		 set
-		 {
-		   if(_entityNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityNumber",OldValue=_entityNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _entityNumber=value;
-		   }
-		 }
-	   }
-	  private string _eventTypeEnglishName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EventTypeEnglishName  
-	   {
-	     get { return _eventTypeEnglishName; }
-		 set
-		 {
-		   if(_eventTypeEnglishName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EventTypeEnglishName",OldValue=_eventTypeEnglishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _eventTypeEnglishName=value;
-		   }
-		 }
-	   }
-	  private string _eventTypeLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EventTypeLocalName  
-	   {
-	     get { return _eventTypeLocalName; }
-		 set
-		 {
-		   if(_eventTypeLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EventTypeLocalName",OldValue=_eventTypeLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _eventTypeLocalName=value;
-		   }
-		 }
-	   }
-	  private string _contactEnglishFirstName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContactEnglishFirstName  
-	   {
-	     get { return _contactEnglishFirstName; }
-		 set
-		 {
-		   if(_contactEnglishFirstName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactEnglishFirstName",OldValue=_contactEnglishFirstName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _contactEnglishFirstName=value;
-		   }
-		 }
-	   }
-	  private bool _shortView ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool ShortView  
-	   {
-	     get { return _shortView; }
-		 set
-		 {
-		   if(_shortView != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShortView",OldValue=_shortView,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _shortView=value;
-		   }
-		 }
-	   }
-	  private bool _isManualEntry ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsManualEntry  
-	   {
-	     get { return _isManualEntry; }
-		 set
-		 {
-		   if(_isManualEntry != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsManualEntry",OldValue=_isManualEntry,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isManualEntry=value;
-		   }
-		 }
-	   }
-	  private string _eventTypeCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EventTypeCode  
-	   {
-	     get { return _eventTypeCode; }
-		 set
-		 {
-		   if(_eventTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EventTypeCode",OldValue=_eventTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _eventTypeCode=value;
-		   }
-		 }
-	   }
-	  private string _eventTypeCategoryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EventTypeCategoryCode  
-	   {
-	     get { return _eventTypeCategoryCode; }
-		 set
-		 {
-		   if(_eventTypeCategoryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EventTypeCategoryCode",OldValue=_eventTypeCategoryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _eventTypeCategoryCode=value;
-		   }
-		 }
-	   }
-	  private bool _isAgentView ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAgentView  
-	   {
-	     get { return _isAgentView; }
-		 set
-		 {
-		   if(_isAgentView != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAgentView",OldValue=_isAgentView,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isAgentView=value;
-		   }
-		 }
-	   }
-	  private bool _isCustomerView ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsCustomerView  
-	   {
-	     get { return _isCustomerView; }
-		 set
-		 {
-		   if(_isCustomerView != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomerView",OldValue=_isCustomerView,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isCustomerView=value;
 		   }
 		 }
 	   }
@@ -489,6 +331,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTablePM _childobjecttable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM ChildObjectTable 
+		{ 
+		get { return _childobjecttable; } 
+		set { _childobjecttable = value; }
+		}
 	 }
 #endregion Properties
 }

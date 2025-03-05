@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    {
        #region Constructors
        public AdditionalServiceList() : base() {}
-       public AdditionalServiceList(AdditionalService entity) : base()
+       public AdditionalServiceList(POCO.AdditionalService entity) : base()
        {
           Id  = entity.Id;
           Tenant  = entity.Tenant;

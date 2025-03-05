@@ -16,12 +16,15 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-    public partial class Card : BaseEntity
+    public class Card : BaseEntity
 	{
 		
         [Key]
+        [ForeignKey("Customer")]
         [Column("Id")]
 	    public string Id { get; set; }
+	      
+        public virtual Customer Customer { get; set; }
         [Column("BankName")]
 	    public string BankName { get; set; }
         [Column("BankAddress")]
@@ -146,11 +149,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string CityName { get; set; }
         [Column("CountryName")]
 	    public string CountryName { get; set; }
+		public virtual ICollection<Address> Addresses { get; set; }
         [ForeignKey("UsoCFDI")]
         [Column("UsoCFDICode")]
 	    public string UsoCFDICode { get; set; }
 	      
         public virtual UsoCFDI UsoCFDI { get; set; }
+		public virtual ICollection<Contact> Contacts { get; set; }
         [Column("GLAccountId")]
 	    public string GLAccountId { get; set; }
         [Column("Address1")]
@@ -214,20 +219,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public virtual CustomerGroup ExportLocalCustomerGroup { get; set; }
         [Column("EORInumber")]
 	    public string EORInumber { get; set; }
-        [ForeignKey("DocumentTemplate")]
+        [ForeignKey("SingleInvoiceTemplate")]
         [Column("SingleInvoiceTemplateId")]
 	    public string SingleInvoiceTemplateId { get; set; }
 	      
-        public virtual DocumentTypeTemplate DocumentTemplate { get; set; }
-        [ForeignKey("DocumentTemplate")]
+        public virtual DocumentTypeTemplate SingleInvoiceTemplate { get; set; }
+        [ForeignKey("CustomsInvoiceTemplate")]
         [Column("CustomsInvoiceTemplateId")]
 	    public string CustomsInvoiceTemplateId { get; set; }
-        [ForeignKey("DocumentTemplate")]
+	      
+        public virtual DocumentTypeTemplate CustomsInvoiceTemplate { get; set; }
+        [ForeignKey("ConsolidationInvoiceTemplate")]
         [Column("ConsolidationInvoiceTemplateId")]
 	    public string ConsolidationInvoiceTemplateId { get; set; }
-        [ForeignKey("DocumentTemplate")]
+	      
+        public virtual DocumentTypeTemplate ConsolidationInvoiceTemplate { get; set; }
+        [ForeignKey("ManifestInvoiceTemplate")]
         [Column("ManifestInvoiceTemplateId")]
 	    public string ManifestInvoiceTemplateId { get; set; }
+	      
+        public virtual DocumentTypeTemplate ManifestInvoiceTemplate { get; set; }
         [Column("EmailForSendingSingArinvoice")]
 	    public string EmailForSendingSingArinvoice { get; set; }
         [Column("SendingInterestReport")]

@@ -15,11 +15,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [ForeignKey("Contact")]
         [Column("ContactId")]
         public string ContactId { get; set; }
+        [ForeignKey("ContactId")]
         public virtual Contact Contact { get; set; }
 
         [Column("ObjectTableId")]
-        [ForeignKey("ObjectTable")]
         public string ObjectTableId { get; set; }
+        [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }
 
         [Column("FilterName")]

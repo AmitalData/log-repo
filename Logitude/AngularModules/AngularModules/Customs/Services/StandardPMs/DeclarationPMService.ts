@@ -177,7 +177,7 @@ export class DeclarationPMService {
                  
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: DeclarationPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: DeclarationPM = this.MapJsonToEntityPM(pm, true, entityPM,true);
 								serviceResponse.Result = mappedResult;
 							}
 							 
@@ -200,7 +200,7 @@ export class DeclarationPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationPM = null, afterUpdate: boolean = false) {
 
          
         if (!entityPM) {
@@ -208,7 +208,8 @@ export class DeclarationPMService {
             entityPM = new DeclarationPM();
 			entityPM.DisableMarkAsDirty = true;
         }
-
+        if(afterUpdate)
+           entityPM.DisableMarkAsDirty = true;
 		var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);

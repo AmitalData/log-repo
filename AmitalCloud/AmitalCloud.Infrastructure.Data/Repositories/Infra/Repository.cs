@@ -72,7 +72,9 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public async Task<List<TEntity>> GetMultiAsync<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, int skip, int take) => await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToListAsync();
         public async Task<List<TResult>> GetMultiAsync<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, int skip, int take) => await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToListAsync();
-
+        public async Task<List<TEntity>> GetMultiAsync<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, string include, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
+            => orderByDirection == OrderByDirection.Ascending ? await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Include(include).OrderBy(orderBy).ToListAsync()
+            : await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Include(include).OrderByDescending(orderBy).ToListAsync();
         #endregion ASync Methods 
 
         #region Sync Methods 
@@ -182,6 +184,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
             => (orderByDirection == OrderByDirection.Ascending) ?
             _dbSet.Where(predicate).Select(select).OrderBy(orderBy).ToList() : _dbSet.Where(predicate).Select(select).OrderByDescending(orderBy).ToList();
+        public List<TResult> GetMulti<TResult,TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include, Expression<Func<TResult, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
+                    => (orderByDirection == OrderByDirection.Ascending) ?
+            _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Include(include).ToList() : _dbSet.Where(predicate).Select(select).OrderByDescending(orderBy).Include(include).ToList();
+
+
         public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
             => (orderByDirection == OrderByDirection.Ascending) ?
             _dbSet.Where(predicate).Select(select).OrderBy(orderBy).ToList() : _dbSet.Where(predicate).Select(select).OrderByDescending(orderBy).ToList();
@@ -354,12 +361,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             }
             return entity;
         }
-
-
-
-
-
-
         #endregion  Private Methods 
     }
 }

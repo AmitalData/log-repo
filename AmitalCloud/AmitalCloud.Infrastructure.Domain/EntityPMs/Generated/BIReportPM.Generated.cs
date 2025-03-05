@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class BIReportPM : BaseEntityPM   {
    #region Constructors
    public BIReportPM() : base() {} 
-   public BIReportPM(BIReport entity) : base()
+   public BIReportPM(POCO.BIReport entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -36,18 +38,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_name = entity.Name;
 		_description = entity.Description;
 		_dWQueryId = entity.DWQueryId;
-		_inactive = entity.Inactive;
+		_dwquery = entity.DWQuery !=null ? new DWQueryPM(entity.DWQuery) : null;
+			_inactive = entity.Inactive;
 		_typeCode = entity.TypeCode;
-		_aGGridOptionsXML = entity.AGGridOptionsXML;
+		_bireportstype = entity.BIReportsType !=null ? new BIReportsTypePM(entity.BIReportsType) : null;
+			_aGGridOptionsXML = entity.AGGridOptionsXML;
 		_bIReportFolderId = entity.BIReportFolderId;
-		_createdByUserName = default;
-		_updatedByUserName = default;
-		_lastRunDate = default;
-		_lastRunByUserName = default;
-		_factTableName = entity.FactTableName;
+		_bireportfolder = entity.BIReportFolder !=null ? new BIReportFolderPM(entity.BIReportFolder) : null;
+			_factTableName = entity.FactTableName;
 		_lastRunId = entity.LastRunId;
-		_availableForScheduling = default;
-   }
+		_lastrundetail = entity.LastRunDetail !=null ? new LastRunDetailPM(entity.LastRunDetail) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -211,6 +212,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DWQueryPM _dwquery;
+		[Include]
+        [DataMember]
+        public virtual DWQueryPM DWQuery 
+		{ 
+		get { return _dwquery; } 
+		set { _dwquery = value; }
+		}
 	  private bool _inactive ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -243,6 +252,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BIReportsTypePM _bireportstype;
+		[Include]
+        [DataMember]
+        public virtual BIReportsTypePM BIReportsType 
+		{ 
+		get { return _bireportstype; } 
+		set { _bireportstype = value; }
+		}
 	  private string _aGGridOptionsXML ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -275,70 +292,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
-		   }
-		 }
-	   }
-	  private DateTime? _lastRunDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? LastRunDate  
-	   {
-	     get { return _lastRunDate; }
-		 set
-		 {
-		   if(_lastRunDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunDate",OldValue=_lastRunDate,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   _lastRunDate=value;
-		   }
-		 }
-	   }
-	  private string _lastRunByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LastRunByUserName  
-	   {
-	     get { return _lastRunByUserName; }
-		 set
-		 {
-		   if(_lastRunByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunByUserName",OldValue=_lastRunByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _lastRunByUserName=value;
-		   }
-		 }
-	   }
+		private BIReportFolderPM _bireportfolder;
+		[Include]
+        [DataMember]
+        public virtual BIReportFolderPM BIReportFolder 
+		{ 
+		get { return _bireportfolder; } 
+		set { _bireportfolder = value; }
+		}
 	  private string _factTableName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -371,22 +332,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _availableForScheduling ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool AvailableForScheduling  
-	   {
-	     get { return _availableForScheduling; }
-		 set
-		 {
-		   if(_availableForScheduling != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailableForScheduling",OldValue=_availableForScheduling,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _availableForScheduling=value;
-		   }
-		 }
-	   }
+		private LastRunDetailPM _lastrundetail;
+		[Include]
+        [DataMember]
+        public virtual LastRunDetailPM LastRunDetail 
+		{ 
+		get { return _lastrundetail; } 
+		set { _lastrundetail = value; }
+		}
 	 }
 #endregion Properties
 }

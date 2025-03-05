@@ -94,6 +94,11 @@ export class CB_RequirementComputedDataPM {
     public set IsVoluntaryOrImporterOfTrust(newValue: boolean) { if (this.isVoluntaryOrImporterOfTrust != newValue) { this.isVoluntaryOrImporterOfTrust = newValue; this.MarkAsDirty("IsVoluntaryOrImporterOfTrust"); } }
        
 	 
+    private trNumber: number;
+    public get TrNumber() { return this.trNumber; }
+    public set TrNumber(newValue: number) { if (this.trNumber != newValue) { this.trNumber = newValue; this.MarkAsDirty("TrNumber"); } }
+       
+	 
 
     public OldEntityPM: CB_RequirementComputedDataPM;
 		

@@ -28,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Data.DataMapping
             objectTableTab.Type = objectTableTabPM.Type;
             objectTableTab.OriginalTabCode = objectTableTabPM.OriginalTabCode;
             objectTableTab.HideTabNameInScreen = objectTableTabPM.HideTabNameInScreen;
-            if (objectTableTabPM.HasTabModification) return;
+            //if (objectTableTabPM.HasTabModification) return;
 
             objectTableTab.IndexOrder = objectTableTabPM.IndexOrder;
 

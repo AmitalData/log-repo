@@ -37,7 +37,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
     ObjectTableName: string = "LedgerTransaction";
     public ReportsPreview: ReportsPreviewComponent;
-    public RunReportTitle: string;
+    public RunReportTitle: string = 'Run Report';
     public DataContext = this;
     public ValidationErrorsList: string[] = [];
     operatorsList =

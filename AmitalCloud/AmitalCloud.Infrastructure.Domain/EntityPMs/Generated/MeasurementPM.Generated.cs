@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class MeasurementPM : BaseEntityPM   {
    #region Constructors
    public MeasurementPM() : base() {} 
-   public MeasurementPM(Measurement entity) : base()
+   public MeasurementPM(POCO.Measurement entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -36,7 +38,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_localName = entity.LocalName;
 		_inActive = entity.InActive;
 		_searchFields = entity.SearchFields;
-		_partnerCode = default;
    }
    #endregion Constructors
    #region Properties
@@ -198,22 +199,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private string _partnerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerCode  
-	   {
-	     get { return _partnerCode; }
-		 set
-		 {
-		   if(_partnerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerCode=value;
 		   }
 		 }
 	   }

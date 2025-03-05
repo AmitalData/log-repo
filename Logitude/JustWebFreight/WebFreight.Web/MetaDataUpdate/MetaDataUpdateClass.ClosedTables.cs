@@ -48,11 +48,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             string enviroment = ConfigurationManager.AppSettings.Get(1);
 
-            if (enviroment == "azure app service")
-                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
-
-            else
-            {
+         
                 List<GlobalDB> dbList = null;
                 using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
                 {
@@ -72,7 +68,7 @@ namespace WebFreight.Web.MetaDataUpdate
                         LoadBaseTablesForConnection(db.DBConnection);
                     }
                 }
-            }
+          
         }
 
         private void LoadBaseTablesForConnection(string connectionStr)

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CardExternalAccountsByProductPM : BaseEntityPM   {
    #region Constructors
    public CardExternalAccountsByProductPM() : base() {} 
-   public CardExternalAccountsByProductPM(CardExternalAccountsByProduct entity) : base()
+   public CardExternalAccountsByProductPM(POCO.CardExternalAccountsByProduct entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -34,8 +36,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_cardId = entity.CardId;
 		_productTypeCode = entity.ProductTypeCode;
 		_updatedByUserId = entity.UpdatedByUserId;
-		_productTypeName = default;
-		_updatedByUserName = default;
    }
    #endregion Constructors
    #region Properties
@@ -165,38 +165,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserId",OldValue=_updatedByUserId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _updatedByUserId=value;
-		   }
-		 }
-	   }
-	  private string _productTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProductTypeName  
-	   {
-	     get { return _productTypeName; }
-		 set
-		 {
-		   if(_productTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProductTypeName",OldValue=_productTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _productTypeName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
 		   }
 		 }
 	   }

@@ -21,9 +21,17 @@
 <#+
 Dictionary<string,string> NamespacesDictionary;
 dynamic contextnamespacestring;
- 
+bool isPartial;  
+string filename;
 public void GenerateIContext(string sourceFolder,string destinationFolder,string contextname)
 {
+    filename = contextname;
+    isPartial = false;
+    if (contextname.Contains("."))
+    {
+        contextname = contextname.Split('.')[0];
+        isPartial = true;
+    }
  contextnamespacestring = GetContextNameSpace(destinationFolder);
  string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
  string sourceFilePath = Path.Combine(templateDirectory, sourceFolder);
@@ -44,7 +52,7 @@ using System.Data.Entity;
 
 namespace <#= contextnamespacestring #>
 {
-    public interface I<#= contextname #> : IContext
+    public partial interface I<#= contextname #> : IContext
     {
        <#+
 foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
@@ -53,56 +61,19 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 	GenerateIDbSet(file);
 }
 #>
-	    IDbSet<Counter> Counters { get; }
-        IDbSet<ObjectTableRule> ObjectTableRules { get; }
-        IDbSet<Query> Queries { get; }
-        IDbSet<TriggerType> TriggerTypes { get; }
-        IDbSet<ObjectFieldValidation> ObjectFieldValidations { get; }
-        IDbSet<RuleType> RuleTypes { get; }
-        IDbSet<QueryColumn> QueryColumns { get; }
-        IDbSet<ObjectFieldModification> ObjectFieldModifications { get; }
-        IDbSet<ObjectField> ObjectFieldsDbSet { get; }
-        IDbSet<ScreenField> ScreenFields { get; }
-        IDbSet<Screen> Screens { get; }
-        IDbSet<ScreenModification> ScreenModifications { get; }
-        IDbSet<AdvancedQueryFilter> AdvancedQueryFilters { get; }
-        IDbSet<ObjectTableLastUpdate> ObjectTableLastUpdates { get; }
-        IDbSet<ObjectTableType> ObjectTableTypes { get; }
-        IDbSet<QueryGroup> QueryGroups { get; }
-        IDbSet<RuleConditionField> RuleConditionFields { get; }
-        IDbSet<SharedUserQuery> SharedUserQueries { get; }
-        IDbSet<ObjectTableHelperControl> ObjectTableHelperControls { get; }
-        IDbSet<ObjectTableRuleField> ObjectTableRuleFields { get; }
-        IDbSet<ObjectTableTab> ObjectTableTabs { get; }
-        IDbSet<Translation> Translations { get; }
-        IDbSet<CustomPickList> CustomPickLists { get; }
-        IDbSet<BlobFile> BlobFiles { get; }
-        IDbSet<QueueDefinition> QueueDefinitions { get; }
-        IDbSet<Document> Documents { get; }
-        IDbSet<QueueMessage> QueueMessages { get; }
-        IDbSet<CounterLastNumber> CounterLastNumbers { get; }
-        IDbSet<CounterStat> CounterStats { get; }
-        IDbSet<PackageFeature> PackageFeatures { get; }
-        IDbSet<Feature> Features { get; }
-        IDbSet<RoleFeature> RoleFeatures { get; }
-        IDbSet<CardContact> CardContacts { get; }
-        IDbSet<UserLastLogin> UserLastLogins { get; }
-        IDbSet<ContactTenant> ContactTenants { get; }
-        IDbSet<ContactTenantRole> ContactTenantRoles { get; }
-        IDbSet<UserLoginLog> UserLoginLogs { get; }
+
+
+<#+ if (!isPartial){ #>
         IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
-        IDbSet<UserPermittedProduct> UserPermittedProducts { get; }
-        IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; }
-        IDbSet<DocumentsMetaDataType> DocumentsMetaDataTypes { get;  }
-        IDbSet<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues { get; }
-        IDbSet<CommunicationLogStep> CommunicationLogSteps { get; }
-        IDbSet<GeneralLock> GeneralLocks { get; }
+        IDbSet<ObjectField> ObjectFieldsDbSet { get; }
          void DetectChanges();
+<#+} #>
+
     }
 }
 <#+
 
-SaveContextOutput(destinationFolder+"/I"+contextname+".cs");
+SaveContextOutput(destinationFolder+"/I"+filename+".cs");
  
 }
 #>
@@ -184,6 +155,14 @@ public dynamic GetContextNameSpace(string destinationFolder)
 
 private void GenerateContext(string sourceFolder,string destinationFolder,string contextname)
 {
+    filename = contextname;
+    isPartial = false;
+    if (contextname.Contains("."))
+    {
+        contextname = contextname.Split('.')[0];
+        isPartial = true;
+    }
+
 	contextnamespacestring = GetContextNameSpace(destinationFolder);
  string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
  string sourceFilePath = Path.Combine(templateDirectory, sourceFolder);
@@ -214,8 +193,11 @@ using AmitalCloud.Infrastructure.Domain.Enums;
 
 namespace <#= contextnamespacestring #>
 {
-   public class <#= contextname #>: DbContextBase, I<#= contextname #>
+   public partial class <#= contextname #>: DbContextBase, I<#= contextname #>
     {
+
+<#+ if (!isPartial){ #>
+
     	private int _tenant;
         private <#= contextname #>()
         {
@@ -552,7 +534,7 @@ namespace <#= contextnamespacestring #>
         {
             base.Dispose(disposing);
         }
- 
+ <#+ } #>
 <#+
 
 foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
@@ -561,57 +543,18 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 	GenerateIDbSetForContext(file);
 }
 #>
-public IDbSet<Counter> Counters { get;set; }
-public IDbSet<ObjectTableRule> ObjectTableRules { get;set;}
-public IDbSet<Query> Queries { get;set;}
-public IDbSet<TriggerType> TriggerTypes { get;set; }
-public IDbSet<ObjectFieldValidation> ObjectFieldValidations { get;set; }
-public IDbSet<RuleType> RuleTypes { get;set; }
-public IDbSet<QueryColumn> QueryColumns { get;set; }
-public IDbSet<ObjectFieldModification> ObjectFieldModifications { get;set; }
-public IDbSet<ObjectField> ObjectFieldsDbSet { get;set; }
-public IDbSet<ScreenField> ScreenFields { get;set; }
-public IDbSet<Screen> Screens { get;set; }
-public IDbSet<ScreenModification> ScreenModifications { get;set; }
-public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters { get;set; }
-public IDbSet<ObjectTableLastUpdate> ObjectTableLastUpdates { get;set; }
-public IDbSet<ObjectTableType> ObjectTableTypes { get;set; }
-public IDbSet<QueryGroup> QueryGroups { get;set; }
-public IDbSet<RuleConditionField> RuleConditionFields { get;set; }
-public IDbSet<SharedUserQuery> SharedUserQueries { get;set; }
-public IDbSet<ObjectTableHelperControl> ObjectTableHelperControls { get;set; }
-public IDbSet<ObjectTableRuleField> ObjectTableRuleFields { get;set;  }
-public IDbSet<ObjectTableTab> ObjectTableTabs { get;set;  }
-public IDbSet<Translation> Translations { get;set; }
-public IDbSet<CustomPickList> CustomPickLists { get;set; }
-public IDbSet<BlobFile> BlobFiles { get;set; }
-public IDbSet<QueueDefinition> QueueDefinitions { get;set; }
-public IDbSet<QueueMessage> QueueMessages { get;set; }
-public IDbSet<Document> Documents { get;set; }
-public IDbSet<CounterLastNumber> CounterLastNumbers { get;set; }
-public IDbSet<CounterStat> CounterStats { get;set; }
-public IDbSet<PackageFeature> PackageFeatures { get;set; }
-public IDbSet<Feature> Features { get;set; }
-public IDbSet<RoleFeature> RoleFeatures { get;set; }
-public IDbSet<CardContact> CardContacts { get;set; }
-public IDbSet<UserLastLogin> UserLastLogins { get;set; }
-public IDbSet<ContactTenant> ContactTenants { get;set; }
-public IDbSet<ContactTenantRole> ContactTenantRoles { get;set; }
-public IDbSet<UserLoginLog> UserLoginLogs { get;set; }
+<#+ if (!isPartial){ #>
 public IDbSet<UserPermittedBranch> UserPermittedBranches { get;set; }
-public IDbSet<UserPermittedProduct> UserPermittedProducts { get;set; }
-public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get;set; }
-public IDbSet<DocumentsMetaDataType> DocumentsMetaDataTypes { get; set; }
-public IDbSet<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues { get; set; }
-public IDbSet<CommunicationLogStep> CommunicationLogSteps { get; set; }
-public IDbSet<GeneralLock> GeneralLocks { get; set ;}
+public IDbSet<ObjectField> ObjectFieldsDbSet { get;set; }
+
 public int Tenant => _tenant;
+<#+ } #>
  }
 }
 <#+     
 
 
-	SaveContextOutput(destinationFolder+"/"+contextname+".cs");
+	SaveContextOutput(destinationFolder+"/"+filename+".cs");
 }
 
 

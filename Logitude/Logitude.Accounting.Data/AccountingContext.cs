@@ -65,13 +65,12 @@ namespace Logitude.Accounting.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-		    //if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-      //      {
-      //          var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
-      //          config.Workarounds.DisableQuoting = true;
-      //          config.Workarounds.IgnoreSchemaName = true;
-                
-      //      }
+//		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+//            {
+//                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
+//                config.Workarounds.DisableQuoting = true;
+//                config.Workarounds.IgnoreSchemaName = true;
+//            }
             Database.SetInitializer<AccountingContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			
@@ -92,6 +91,14 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new ARPaymentChequeStatusMap());
 	
             modelBuilder.Configurations.Add(new ARPaymentsJournalMap());
+	
+            modelBuilder.Configurations.Add(new Aur_ItemMap());
+	
+            modelBuilder.Configurations.Add(new Aur_PaymentMap());
+	
+            modelBuilder.Configurations.Add(new Aur_PaymentItemMap());
+	
+            modelBuilder.Configurations.Add(new Aur_TimesheetMap());
 	
             modelBuilder.Configurations.Add(new AutomaticExternalRconcilMthodMap());
 	
@@ -279,6 +286,26 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<ARPaymentCheque>().Property(x => x.ForeignAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<ARPaymentCheque>().Property(x => x.ExchangeRate).HasPrecision(5, 3);
+				
+			modelBuilder.Entity<Aur_Item>().Property(x => x.PricePerUnit).HasPrecision(10, 2);
+				
+			modelBuilder.Entity<Aur_Item>().Property(x => x.Quantity).HasPrecision(10, 2);
+				
+			modelBuilder.Entity<Aur_Item>().Property(x => x.Discount).HasPrecision(10, 2);
+				
+			modelBuilder.Entity<Aur_Item>().Property(x => x.BaseAmount).HasPrecision(10, 2);
+				
+			modelBuilder.Entity<Aur_Item>().Property(x => x.Tax).HasPrecision(5, 2);
+				
+			modelBuilder.Entity<Aur_Item>().Property(x => x.ExtendedAmount).HasPrecision(10, 2);
+				
+			modelBuilder.Entity<Aur_PaymentItem>().Property(x => x.BaseAmount).HasPrecision(10, 2);
+				
+			modelBuilder.Entity<Aur_Timesheet>().Property(x => x.CompletedEffort).HasPrecision(10, 2);
+				
+			modelBuilder.Entity<Aur_Timesheet>().Property(x => x.BillableHours).HasPrecision(10, 2);
+				
+			modelBuilder.Entity<Aur_Timesheet>().Property(x => x.HourlyRate).HasPrecision(10, 2);
 				
 			modelBuilder.Entity<BankAccount>().Property(x => x.LastPageCloseBalance).HasPrecision(16, 2);
 				
@@ -785,6 +812,30 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<ARPaymentsJournal> ARPaymentsJournals 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Aur_Item> Aur_Items 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Aur_Payment> Aur_Payments 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Aur_PaymentItem> Aur_PaymentItems 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Aur_Timesheet> Aur_Timesheets 
 	 {
 	      get; set;
 	 

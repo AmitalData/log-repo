@@ -143,7 +143,7 @@ namespace AmitalCloud.Infrastructure.Data.Validators
 
         private static Translation GetSingleTranslation(string textCodeCode, int tenant, IRepository<Translation> translationRepository, Tenant myTenant)
         {
-            return translationRepository.GetMulti(d => d.Tenant == tenant && d.TextCode.Code == textCodeCode && (d.TranslationHeader.Description == myTenant.Language || d.TranslationHeaderCode == myTenant.Language)).FirstOrDefault();
+            return translationRepository.GetMulti(d => d.Tenant == tenant && d.TextCodeCode == textCodeCode && (d.TranslationHeader.Description == myTenant.Language || d.TranslationHeaderCode == myTenant.Language)).FirstOrDefault();
             //       GetSingleTranslation(tenant, textCodeCode, myTenant.Language);
         }
 

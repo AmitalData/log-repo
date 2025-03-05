@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,33 +26,32 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CommunicationLogPM : BaseEntityPM   {
    #region Constructors
    public CommunicationLogPM() : base() {} 
-   public CommunicationLogPM(CommunicationLog entity) : base()
+   public CommunicationLogPM(POCO.CommunicationLog entity) : base()
    {
 		_entityId = entity.EntityId;
 		_documentId = entity.DocumentId;
-		_exceptionMessage = entity.ExceptionMessage;
+		_document = entity.Document !=null ? new DocumentPM(entity.Document) : null;
+			_exceptionMessage = entity.ExceptionMessage;
 		_logs = entity.Logs;
 		_correlationID = entity.CorrelationID;
 		_messageLockId = entity.MessageLockId;
 		_replyToList = entity.ReplyToList;
 		_createdByUserId = entity.CreatedByUserId;
-		_createdByUserName = default;
 		_createDate = entity.CreateDate;
 		_subject = entity.Subject;
 		_doneDate = entity.DoneDate;
 		_inOut = entity.InOut;
 		_cC = entity.CC;
 		_documentOutId = entity.DocumentOutId;
-		_documentInId = default;
-		_to = entity.To;
+		_internaldocument = entity.InternalDocument !=null ? new DocumentOutPM(entity.InternalDocument) : null;
+			_to = entity.To;
 		_communicationStatusTypeCode = entity.CommunicationStatusTypeCode;
-		_communicationStatusTypeName = default;
-		_communicationLogTypeCode = entity.CommunicationLogTypeCode;
-		_communicationLogTypeName = default;
-		_retries = entity.Retries;
+		_communicationstatustype = entity.CommunicationStatusType !=null ? new CommunicationStatusTypePM(entity.CommunicationStatusType) : null;
+			_communicationLogTypeCode = entity.CommunicationLogTypeCode;
+		_communicationlogtype = entity.CommunicationLogType !=null ? new CommunicationLogTypePM(entity.CommunicationLogType) : null;
+			_retries = entity.Retries;
 		_bCC = entity.BCC;
 		_objectTableId = entity.ObjectTableId;
-		_objectTableName = default;
 		_from = entity.From;
 		_lastStatusDate = entity.LastStatusDate;
 		_entityReference = entity.EntityReference;
@@ -63,17 +64,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_nextTryDateTime = entity.NextTryDateTime;
 		_queueName = entity.QueueName;
 		_priority = entity.Priority;
-		_tenantName = default;
 		_aWBNumber = entity.AWBNumber;
 		_tenant = entity.Tenant;
-		_isWaiting = default;
-		_responseDocumentId = entity.ResponseDocumentId;
-		_childEntityId = entity.ChildEntityId;
+		_currenttenant = entity.CurrentTenant !=null ? new TenantPM(entity.CurrentTenant) : null;
+			_responseDocumentId = entity.ResponseDocumentId;
+		_responsedocument = entity.ResponseDocument !=null ? new DocumentPM(entity.ResponseDocument) : null;
+			_childEntityId = entity.ChildEntityId;
 		_childObjectTableId = entity.ChildObjectTableId;
 		_emailDeliveryError = entity.EmailDeliveryError;
 		_logSettings = entity.LogSettings;
-		_securityId = default;
-		_isBodySecured = default;
 		_uniqueNumber = entity.UniqueNumber;
 		_additionalFields = entity.AdditionalFields;
 		_wasAnalyzed = entity.WasAnalyzed;
@@ -113,6 +112,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentPM _document;
+		[Include]
+        [DataMember]
+        public virtual DocumentPM Document 
+		{ 
+		get { return _document; } 
+		set { _document = value; }
+		}
 	  private string _exceptionMessage ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -206,22 +213,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserId",OldValue=_createdByUserId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _createdByUserId=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
 		   }
 		 }
 	   }
@@ -321,22 +312,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _documentInId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DocumentInId  
-	   {
-	     get { return _documentInId; }
-		 set
-		 {
-		   if(_documentInId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentInId",OldValue=_documentInId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _documentInId=value;
-		   }
-		 }
-	   }
+		private DocumentOutPM _internaldocument;
+		[Include]
+        [DataMember]
+        public virtual DocumentOutPM InternalDocument 
+		{ 
+		get { return _internaldocument; } 
+		set { _internaldocument = value; }
+		}
 	  private string _to ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -369,22 +352,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _communicationStatusTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CommunicationStatusTypeName  
-	   {
-	     get { return _communicationStatusTypeName; }
-		 set
-		 {
-		   if(_communicationStatusTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommunicationStatusTypeName",OldValue=_communicationStatusTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _communicationStatusTypeName=value;
-		   }
-		 }
-	   }
+		private CommunicationStatusTypePM _communicationstatustype;
+		[Include]
+        [DataMember]
+        public virtual CommunicationStatusTypePM CommunicationStatusType 
+		{ 
+		get { return _communicationstatustype; } 
+		set { _communicationstatustype = value; }
+		}
 	  private string _communicationLogTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -401,22 +376,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _communicationLogTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CommunicationLogTypeName  
-	   {
-	     get { return _communicationLogTypeName; }
-		 set
-		 {
-		   if(_communicationLogTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommunicationLogTypeName",OldValue=_communicationLogTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _communicationLogTypeName=value;
-		   }
-		 }
-	   }
+		private CommunicationLogTypePM _communicationlogtype;
+		[Include]
+        [DataMember]
+        public virtual CommunicationLogTypePM CommunicationLogType 
+		{ 
+		get { return _communicationlogtype; } 
+		set { _communicationlogtype = value; }
+		}
 	  private int _retries ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -462,22 +429,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableId",OldValue=_objectTableId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _objectTableId=value;
-		   }
-		 }
-	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
 		   }
 		 }
 	   }
@@ -674,22 +625,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _tenantName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TenantName  
-	   {
-	     get { return _tenantName; }
-		 set
-		 {
-		   if(_tenantName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantName",OldValue=_tenantName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _tenantName=value;
-		   }
-		 }
-	   }
 	  private string _aWBNumber ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -722,22 +657,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isWaiting ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsWaiting  
-	   {
-	     get { return _isWaiting; }
-		 set
-		 {
-		   if(_isWaiting != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsWaiting",OldValue=_isWaiting,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isWaiting=value;
-		   }
-		 }
-	   }
+		private TenantPM _currenttenant;
+		[Include]
+        [DataMember]
+        public virtual TenantPM CurrentTenant 
+		{ 
+		get { return _currenttenant; } 
+		set { _currenttenant = value; }
+		}
 	  private string _responseDocumentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -754,6 +681,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentPM _responsedocument;
+		[Include]
+        [DataMember]
+        public virtual DocumentPM ResponseDocument 
+		{ 
+		get { return _responsedocument; } 
+		set { _responsedocument = value; }
+		}
 	  private string _childEntityId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -815,38 +750,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LogSettings",OldValue=_logSettings,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _logSettings=value;
-		   }
-		 }
-	   }
-	  private string _securityId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SecurityId  
-	   {
-	     get { return _securityId; }
-		 set
-		 {
-		   if(_securityId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecurityId",OldValue=_securityId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _securityId=value;
-		   }
-		 }
-	   }
-	  private bool _isBodySecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsBodySecured  
-	   {
-	     get { return _isBodySecured; }
-		 set
-		 {
-		   if(_isBodySecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsBodySecured",OldValue=_isBodySecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isBodySecured=value;
 		   }
 		 }
 	   }

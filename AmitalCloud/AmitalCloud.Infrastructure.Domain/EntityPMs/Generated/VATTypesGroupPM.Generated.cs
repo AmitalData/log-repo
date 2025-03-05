@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,13 +26,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class VATTypesGroupPM : BaseEntityPM   {
    #region Constructors
    public VATTypesGroupPM() : base() {} 
-   public VATTypesGroupPM(VATTypesGroup entity) : base()
+   public VATTypesGroupPM(POCO.VATTypesGroup entity) : base()
    {
 		_groupVATTypeId = entity.GroupVATTypeId;
-		_singleVATTypeId = entity.SingleVATTypeId;
-		_tenant = entity.Tenant;
-		_singleVATTypeName = default;
-		_singleVATTypePercentage = default;
+		_groupvattype = entity.GroupVATType !=null ? new VatTypePM(entity.GroupVATType) : null;
+			_singleVATTypeId = entity.SingleVATTypeId;
+		_singlevattype = entity.SingleVATType !=null ? new VatTypePM(entity.SingleVATType) : null;
+			_tenant = entity.Tenant;
    }
    #endregion Constructors
    #region Properties
@@ -51,6 +53,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VatTypePM _groupvattype;
+		[Include]
+        [DataMember]
+        public virtual VatTypePM GroupVATType 
+		{ 
+		get { return _groupvattype; } 
+		set { _groupvattype = value; }
+		}
 	  private string _singleVATTypeId ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -68,6 +78,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VatTypePM _singlevattype;
+		[Include]
+        [DataMember]
+        public virtual VatTypePM SingleVATType 
+		{ 
+		get { return _singlevattype; } 
+		set { _singlevattype = value; }
+		}
 	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -81,38 +99,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _tenant=value;
-		   }
-		 }
-	   }
-	  private string _singleVATTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SingleVATTypeName  
-	   {
-	     get { return _singleVATTypeName; }
-		 set
-		 {
-		   if(_singleVATTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SingleVATTypeName",OldValue=_singleVATTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _singleVATTypeName=value;
-		   }
-		 }
-	   }
-	  private double _singleVATTypePercentage ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double SingleVATTypePercentage  
-	   {
-	     get { return _singleVATTypePercentage; }
-		 set
-		 {
-		   if(_singleVATTypePercentage != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SingleVATTypePercentage",OldValue=_singleVATTypePercentage,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _singleVATTypePercentage=value;
 		   }
 		 }
 	   }

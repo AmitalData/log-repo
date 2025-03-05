@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FilterPopupService, FiltersSearch } from './service/filter-popup.service';
 import { NgClass, NgIf } from '@angular/common';
 import { SearchService } from '../page-top/service/top-page.service';
+import { HeaderService } from '../app-header/service/header.service';
 
 @Component({
 	selector: 'app-filter-popup',
@@ -16,8 +17,9 @@ export class FilterPopupComponent {
 	openPopup = false;
 	numberOfFilters = 0;
 	@Output() filterClick: EventEmitter<any> = new EventEmitter();
+	IsDiscountCodes: boolean = false;
 
-	constructor(private service: FilterPopupService, private searchService: SearchService) { }
+	constructor(private service: FilterPopupService, private searchService: SearchService, private headerService: HeaderService) { }
 
 	ngOnInit() {
 		this._initFilters = this.service.getFilters();
@@ -25,6 +27,12 @@ export class FilterPopupComponent {
 		this.service._showFilterPopup.subscribe((value) => {
 			this.openPopup = value;
 		});
+
+		this.service.isClearFilter.subscribe((value) => {
+			if(value) this.clearFilter();
+		});
+		
+		this.getByIsDiscountCodes();
 	}
 
 	clickFilterEvent() {
@@ -50,5 +58,11 @@ export class FilterPopupComponent {
 		this.openPopup = false;
 		if (this.searchService.GetSearchText()?.trim() === "") return;
 		this.filterClick.emit(this.service.getFilters());
+	}
+
+	getByIsDiscountCodes() {
+		this.headerService.IsDiscountCodes.subscribe((value) => {
+			this.IsDiscountCodes = value;
+		});
 	}
 }

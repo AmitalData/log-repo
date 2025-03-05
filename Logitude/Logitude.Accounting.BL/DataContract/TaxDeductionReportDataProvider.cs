@@ -230,8 +230,8 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<APPayment> payments = (from a in invoiceContext.APPayments.Include("VendorCard")
                                         where a.Tenant == Tenant
-                                         && (a.RegisterDate >= startDate && a.RegisterDate < endDate)
-                                         && !(a.AccountingCancelationDate != null && a.DontIncludeInDeductionReport == false && a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate)
+                                         && a.RegisterDate >= startDate && a.RegisterDate < endDate
+                                         && !(a.DontIncludeInDeductionReport == true || (a.AccountingCancelationDate != null  && (a.AccountingCancelationDate < startDate || a.AccountingCancelationDate >= endDate)))
                                          && (a.StatusCode == "VD" || a.StatusCode == "AD" || a.StatusCode == "CL" || a.StatusCode == "PR")
                                         select a).ToList();
             payments = getAPPaymentsWithGLAccountsAndVendor(payments);

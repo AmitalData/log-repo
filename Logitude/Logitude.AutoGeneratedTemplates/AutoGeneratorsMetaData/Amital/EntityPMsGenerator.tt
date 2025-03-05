@@ -42,7 +42,7 @@ public void GeneratePM(string xmlFilePath, string outputFilePath)
 
 	if (entity.IsMetadataOnlyTable.GetType() == typeof(string) && entity.IsMetadataOnlyTable == "true")
 	{
-		return;
+		//return;
 	}
 
 	WritePMMethod(entity);
@@ -154,6 +154,7 @@ private void WritePMMethod(dynamic entity)
 // </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 <#+ if(allowCustomFields){#>using AmitalCloud.Infrastructure.Domain.EntityPMs;<#= Environment.NewLine #><#+}#>
 using System.ServiceModel.DomainServices.Server;
@@ -161,8 +162,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using <#= NamespacesDictionary["domaininterfacesspacestring"] #>;
-using <#= NamespacesDictionary["pocosspacestring"] #>;
+using POCO = <#= NamespacesDictionary["pocosspacestring"] #>;
 <#+ if (!string.IsNullOrEmpty(usingStatements)) { #><#= usingStatements #><#+ } #>
 
 
@@ -175,7 +177,7 @@ namespace <#= pmnamespacestring #>
    {
    #region Constructors
    public <#=tableName #>PM() : base() {} 
-   public <#=tableName #>PM(<#=tableName #> entity) : base()
+   public <#=tableName #>PM(POCO.<#=tableName #> entity) : base()
    {
 <#+
  	foreach(var field in entity["field"])  
@@ -193,7 +195,7 @@ namespace <#= pmnamespacestring #>
 			   }
 			}
 		}
-	   string type = GetDataType(field);
+		string type = GetDataType(field);
 		string privatepropname = FirstCharacterToLower(field.FieldName.Trim('"'));
 		bool isCustom= false;
 		if(field.IsCustom.GetType() == typeof(string) && field.IsCustom == "true")
@@ -208,23 +210,45 @@ namespace <#= pmnamespacestring #>
              {
 			 	   if(type == "List")
 					{
+						if( field.IsComposition.GetType() == typeof(string))  
+						{ 
+							if(field.IsComposition == "true")
+							{
+								continue;
+							}
+						}
+					string multitablename = field.MultiTableName.ToString().Trim('"');
 #>
-		<#= privatepropname #> = default;
+		<#= privatepropname #> = entity.<#= field.FieldName.Trim('"') #> != null ? entity.<#= field.FieldName.Trim('"') #>.Select(a=>new <#= multitablename #>PM(a)).ToList() : null;
 <#+
+						continue;
 					}
 				   else
 					{
-
+						continue;
 #>
 		_<#= privatepropname #> = default;
 <#+
-				}
-                continue;
+					}
+
              }
          }
 #>
 		_<#= privatepropname #> = entity.<#= field.FieldName.Trim('"') #>;
 <#+
+
+
+if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyName.GetType() == typeof(string))
+{ 
+	
+	string keyvalue = field.NavigationPropertyName;
+	if(field.IsForeignKey == "true" && !addedProperties.Keys.Contains(keyvalue))
+	{
+	#>
+		_<#= GetPropertyName(field.NavigationPropertyName).ToLower () #> = entity.<#= GetPropertyName(field.NavigationPropertyName) #> !=null ? new <#= GetPropertyName(field.ForeignEntity) #>PM(entity.<#= GetPropertyName(field.NavigationPropertyName) #>) : null;
+	<#+
+	}
+}
 	   if(type == "List")
         {
 		    //WritePMList(field);
@@ -276,6 +300,13 @@ namespace <#= pmnamespacestring #>
            {
 				 if(!isCustom)
 				{
+					if( field.HasDataBaseField.GetType() == typeof(string))
+					{
+						if(field.HasDataBaseField == "false")
+						{
+						continue;	
+						}
+					}
 					  WritePMProperty(field);
 				}
 				else
@@ -408,8 +439,39 @@ else
 		   }
 		 }
 	   }
-<#+  }#>
+<#+  
+
+
+if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyName.GetType() == typeof(string))
+{ 
+	
+	string keyvalue = field.NavigationPropertyName;
+	if(field.IsForeignKey == "true" && !addedProperties.Keys.Contains(keyvalue))
+	{
+	      
+	      string value = field.ForeignEntity;
+	      addedProperties.Add(keyvalue,value);
+			WritePMRelated(field);
+
+	}
+}
+}#>
 <#+
+public void WritePMRelated(dynamic field)
+{
+#>
+		private <#= GetPropertyName(field.ForeignEntity) #>PM _<#= GetPropertyName(field.NavigationPropertyName).ToLower () #>;
+		[Include]
+        [DataMember]
+        public virtual <#= GetPropertyName(field.ForeignEntity) #>PM <#= GetPropertyName(field.NavigationPropertyName) #> 
+		{ 
+		get { return _<#= GetPropertyName(field.NavigationPropertyName).ToLower () #>; } 
+		set { _<#= GetPropertyName(field.NavigationPropertyName).ToLower () #> = value; }
+		}
+<#+
+}
+
+
 public void WriteSubEntityProperty(){
 #>
 	   private List<CustomChildEntity> customChildEntities;

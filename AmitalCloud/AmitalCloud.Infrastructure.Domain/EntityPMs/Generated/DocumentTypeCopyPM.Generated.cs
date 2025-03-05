@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class DocumentTypeCopyPM : BaseEntityPM   {
    #region Constructors
    public DocumentTypeCopyPM() : base() {} 
-   public DocumentTypeCopyPM(DocumentTypeCopy entity) : base()
+   public DocumentTypeCopyPM(POCO.DocumentTypeCopy entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -34,9 +36,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_indexOrder = entity.IndexOrder;
 		_isSelectedByDefault = entity.IsSelectedByDefault;
 		_inActive = entity.InActive;
-		_hasDocumentOutCopy = default;
-		_changeSetOp = default;
-		_isOriginal = default;
    }
    #endregion Constructors
    #region Properties
@@ -166,54 +165,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=_inActive,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _inActive=value;
-		   }
-		 }
-	   }
-	  private bool _hasDocumentOutCopy ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool HasDocumentOutCopy  
-	   {
-	     get { return _hasDocumentOutCopy; }
-		 set
-		 {
-		   if(_hasDocumentOutCopy != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HasDocumentOutCopy",OldValue=_hasDocumentOutCopy,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _hasDocumentOutCopy=value;
-		   }
-		 }
-	   }
-	  private string _changeSetOp ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSetOp  
-	   {
-	     get { return _changeSetOp; }
-		 set
-		 {
-		   if(_changeSetOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSetOp",OldValue=_changeSetOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSetOp=value;
-		   }
-		 }
-	   }
-	  private bool _isOriginal ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsOriginal  
-	   {
-	     get { return _isOriginal; }
-		 set
-		 {
-		   if(_isOriginal != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsOriginal",OldValue=_isOriginal,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isOriginal=value;
 		   }
 		 }
 	   }

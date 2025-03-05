@@ -21,6 +21,7 @@ namespace Unifreight.BL.EntityQueryServices
     public class SyncRecordQuery
     {
         SyncRecordRepository repository;
+        DevLog logger = DevLog.Instance;
 
         public SyncRecordQuery()
         {
@@ -30,6 +31,7 @@ namespace Unifreight.BL.EntityQueryServices
                 if (settings == null)
                     throw new Exception("No MSync connection string found");
 
+                logger.WriteDebug($"for up SyncRecordQuery Get first tenant from custsom.customssetting that have value in field UnfConnectionString, tenant: {settings.Tenant}, UnfConnectionString: {settings.UnfConnectionString}");
                 return settings.Tenant;
             });
             repository = new SyncRecordRepository(tenant);
@@ -175,5 +177,7 @@ namespace Unifreight.BL.EntityQueryServices
             repository.Remove(records);
             repository.SubmitChanges();
         }
+
+        public List<SyncRecord> GetNeedToReturnToQueue() => repository.GetNeedToReturnToQueue();
     }
 }

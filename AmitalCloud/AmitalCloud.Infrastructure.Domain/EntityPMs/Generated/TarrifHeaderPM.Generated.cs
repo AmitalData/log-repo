@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,26 +26,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TarrifHeaderPM : BaseEntityPM   {
    #region Constructors
    public TarrifHeaderPM() : base() {} 
-   public TarrifHeaderPM(TarrifHeader entity) : base()
+   public TarrifHeaderPM(POCO.TarrifHeader entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_cardId = entity.CardId;
 		_tarrifTypeCode = entity.TarrifTypeCode;
-		_fromDate = entity.FromDate;
+		_tarriftype = entity.TarrifType !=null ? new TarrifTypePM(entity.TarrifType) : null;
+			_fromDate = entity.FromDate;
 		_toDate = entity.ToDate;
 		_createDate = entity.CreateDate;
 		_inActive = entity.InActive;
 		_notes = entity.Notes;
 		_transitTimeNotes = entity.TransitTimeNotes;
-		_fromLocationCode = default;
-		_toLocationCode = default;
-		_fromLocationString = default;
-		_toLocationString = default;
-		fromLocationList = default;
-		toLocationList = default;
-		tarrifCharges = default;
-		tarrifFromToes = default;
+		fromLocationList = entity.FromLocationList != null ? entity.FromLocationList.Select(a=>new TarrifFromToPM(a)).ToList() : null;
+		toLocationList = entity.ToLocationList != null ? entity.ToLocationList.Select(a=>new TarrifFromToPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -112,6 +109,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TarrifTypePM _tarriftype;
+		[Include]
+        [DataMember]
+        public virtual TarrifTypePM TarrifType 
+		{ 
+		get { return _tarriftype; } 
+		set { _tarriftype = value; }
+		}
 	  private DateTime? _fromDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -205,70 +210,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransitTimeNotes",OldValue=_transitTimeNotes,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _transitTimeNotes=value;
-		   }
-		 }
-	   }
-	  private string _fromLocationCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FromLocationCode  
-	   {
-	     get { return _fromLocationCode; }
-		 set
-		 {
-		   if(_fromLocationCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromLocationCode",OldValue=_fromLocationCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fromLocationCode=value;
-		   }
-		 }
-	   }
-	  private string _toLocationCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ToLocationCode  
-	   {
-	     get { return _toLocationCode; }
-		 set
-		 {
-		   if(_toLocationCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToLocationCode",OldValue=_toLocationCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _toLocationCode=value;
-		   }
-		 }
-	   }
-	  private string _fromLocationString ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FromLocationString  
-	   {
-	     get { return _fromLocationString; }
-		 set
-		 {
-		   if(_fromLocationString != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromLocationString",OldValue=_fromLocationString,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fromLocationString=value;
-		   }
-		 }
-	   }
-	  private string _toLocationString ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ToLocationString  
-	   {
-	     get { return _toLocationString; }
-		 set
-		 {
-		   if(_toLocationString != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToLocationString",OldValue=_toLocationString,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _toLocationString=value;
 		   }
 		 }
 	   }

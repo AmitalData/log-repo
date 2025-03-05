@@ -81,7 +81,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
             if (!CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight)
             {
-                if (entityPM.IsDiamondDeclaration || entityPM.IsCourierDeclaration)
+                if ((entityPM.Direction =="E" || entityPM.IsAmendment!=true) && (entityPM.IsDiamondDeclaration || entityPM.IsCourierDeclaration))
                 {
                     DeclarationCounterQueryService declarationCounterQueryService = new DeclarationCounterQueryService(entityPM.Tenant);
                     var declarationCounter = declarationCounterQueryService.GetSingleByCustomFileNo(entityPM.CustomFileNo, entityPM.Tenant);

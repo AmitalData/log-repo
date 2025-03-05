@@ -193,8 +193,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                                                                ChargeableWeightInKG = shipment.ChargeableWeightInKG,
                                                                ChargeableWeight = shipment.ChargeableWeight,
                                                                ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode,
-                                                               IncotermName = shipment.IncotermName
-
+                                                               IncotermName = shipment.IncotermName,
+                                                              LockerAddress= shipment.LockerAddress,
+                                                              LockerCity = shipment.LockerCity,
+                                                               LockerCode = shipment.LockerCode,
+                                                               LockerName = shipment.LockerName
                                                            });
             return query;
         }
@@ -251,6 +254,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     IsOperationalClosed = shipment.IsOperationalClosed,
                     SecurityKey = shipment.SecurityKey,
                     CurrentMilestoneCode = shipment.CurrentMilestoneCode,
+                    LockerAddress = shipment.LockerAddress,
+                    LockerCity = shipment.LockerCity,
+                    LockerCode = shipment.LockerCode,
+                    LockerName = shipment.LockerName
 
                     //ForwardingShipmentNumber = shipment.ForwardingShipmentNumber,
 
@@ -761,6 +768,11 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 IsOperationalClosed = shipment.IsOperationalClosed,
                 SecurityKey = shipment.SecurityKey,
                 CurrentMilestoneCode = shipment.CurrentMilestoneCode,
+                LockerAddress = shipment.LockerAddress,
+                LockerCity = shipment.LockerCity,
+                LockerCode = shipment.LockerCode,
+                LockerName = shipment.LockerName
+
             });
         }
 

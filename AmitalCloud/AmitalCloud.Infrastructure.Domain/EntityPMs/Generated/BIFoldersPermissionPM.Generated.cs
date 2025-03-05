@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,13 +26,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class BIFoldersPermissionPM : BaseEntityPM   {
    #region Constructors
    public BIFoldersPermissionPM() : base() {} 
-   public BIFoldersPermissionPM(BIFoldersPermission entity) : base()
+   public BIFoldersPermissionPM(POCO.BIFoldersPermission entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_folderId = entity.FolderId;
-		_userId = entity.UserId;
-   }
+		_folder = entity.Folder !=null ? new BIReportFolderPM(entity.Folder) : null;
+			_userId = entity.UserId;
+		_user = entity.User !=null ? new UserPM(entity.User) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -82,6 +86,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BIReportFolderPM _folder;
+		[Include]
+        [DataMember]
+        public virtual BIReportFolderPM Folder 
+		{ 
+		get { return _folder; } 
+		set { _folder = value; }
+		}
 	  private string _userId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -98,6 +110,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _user;
+		[Include]
+        [DataMember]
+        public virtual UserPM User 
+		{ 
+		get { return _user; } 
+		set { _user = value; }
+		}
 	 }
 #endregion Properties
 }

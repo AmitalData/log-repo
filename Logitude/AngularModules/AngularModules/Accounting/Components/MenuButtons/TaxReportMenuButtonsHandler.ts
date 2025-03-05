@@ -62,7 +62,7 @@ export class TaxReportMenuButtonsHandler {
                             }
 
                         case "TRDL": {
-                            if (this.EntityPM.IsCancelled) {
+                            if (this.EntityPM.IsCancelled || this.EntityPM.IsEdited) {
                                 button.IsDisabled = true;
                             }
                             else {

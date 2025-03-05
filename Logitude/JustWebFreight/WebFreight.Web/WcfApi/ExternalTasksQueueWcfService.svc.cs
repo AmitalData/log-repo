@@ -34,6 +34,7 @@ using WebFreight.Web.WebServices;
 using System.Data.Entity.Infrastructure;
 using Logitude.Customs.Data.EntityPOCOs;
 using System.Windows.Media.Effects;
+using System.Diagnostics;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -49,6 +50,8 @@ namespace WebFreight.Web.WcfApi
 #if !tzuri_req
         public Response GetDataCFIRDEC( Dictionary<string, string> queryParams, int tenant)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             var response = new Response();
             try
             {
@@ -220,6 +223,9 @@ namespace WebFreight.Web.WcfApi
                     response.HasError = false;
                     //results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
                     //results.Add("sql_query", sqlQuery);
+                    stopwatch.Stop();
+                    double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
+                    if (log_level == "DEBUG") all_results.Add("ALL_SQL", elapsedSeconds.ToString());
                     response.Result = JsonConvert.SerializeObject(all_results);
                 }
                 return (response);
@@ -242,6 +248,8 @@ namespace WebFreight.Web.WcfApi
 
         void get_table_lines(string id,string sqlQuery,ref Dictionary<string, string> results, SqlConnection connection,string log_level)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             List<List<string>> all_lines = new List<List<string>>();
             using (var cmd = new SqlCommand(sqlQuery, connection))
             {
@@ -265,7 +273,12 @@ namespace WebFreight.Web.WcfApi
 
                 }
             }
-            if (log_level == "DEBUG") results.Add($"{id}_SQL", sqlQuery);
+            if (log_level == "DEBUG")
+            {
+                stopwatch.Stop();
+                double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
+                results.Add($"{id}_SQL", $"{elapsedSeconds.ToString()}:{sqlQuery}");
+            }
             results.Add(id, JsonConvert.SerializeObject(all_lines));
             
             return;

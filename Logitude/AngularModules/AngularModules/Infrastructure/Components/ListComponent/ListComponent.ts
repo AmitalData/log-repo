@@ -3656,6 +3656,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                 str = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
             }
 
+            if (this.ObjectTableName == "TaxDeductionReport") {
+                str = TextCodeTranslator.Translate("General.O.NewReport");
+            }
             if (this.ObjectTableName == 'Shipment') {
                 var args = new NewEntityArgs();
                 args.QueryNameTextCode = AppTool.IsNullOrEmpty(this.SelectedQuery) ? null : this.SelectedQuery.QuerySection;

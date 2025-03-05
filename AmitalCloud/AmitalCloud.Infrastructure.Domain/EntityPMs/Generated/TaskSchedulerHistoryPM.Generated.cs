@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TaskSchedulerHistoryPM : BaseEntityPM   {
    #region Constructors
    public TaskSchedulerHistoryPM() : base() {} 
-   public TaskSchedulerHistoryPM(TaskSchedulerHistory entity) : base()
+   public TaskSchedulerHistoryPM(POCO.TaskSchedulerHistory entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -32,14 +34,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_endDateTime = entity.EndDateTime;
 		_runResult = entity.RunResult;
 		_taskId = entity.TaskId;
-		_isError = entity.IsError;
+		_taskscheduler = entity.TaskScheduler !=null ? new TasksSchedulerPM(entity.TaskScheduler) : null;
+			_isError = entity.IsError;
 		_startDateTimeUTC = entity.StartDateTimeUTC;
 		_endDateTimeUTC = entity.EndDateTimeUTC;
 		_logFirstLine = entity.LogFirstLine;
 		_logType = entity.LogType;
-		_duration = default;
 		_logDocumentId = entity.LogDocumentId;
-   }
+		_logdocument = entity.LogDocument !=null ? new DocumentPM(entity.LogDocument) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -139,6 +142,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TasksSchedulerPM _taskscheduler;
+		[Include]
+        [DataMember]
+        public virtual TasksSchedulerPM TaskScheduler 
+		{ 
+		get { return _taskscheduler; } 
+		set { _taskscheduler = value; }
+		}
 	  private bool _isError ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -219,22 +230,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private int _duration ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int Duration  
-	   {
-	     get { return _duration; }
-		 set
-		 {
-		   if(_duration != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Duration",OldValue=_duration,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _duration=value;
-		   }
-		 }
-	   }
 	  private string _logDocumentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -251,6 +246,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentPM _logdocument;
+		[Include]
+        [DataMember]
+        public virtual DocumentPM LogDocument 
+		{ 
+		get { return _logdocument; } 
+		set { _logdocument = value; }
+		}
 	 }
 #endregion Properties
 }

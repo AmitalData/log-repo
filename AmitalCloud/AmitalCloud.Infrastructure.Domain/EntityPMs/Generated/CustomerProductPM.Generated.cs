@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomerProductPM : BaseEntityPM   {
    #region Constructors
    public CustomerProductPM() : base() {} 
-   public CustomerProductPM(CustomerProduct entity) : base()
+   public CustomerProductPM(POCO.CustomerProduct entity) : base()
    {
 		_tenant = entity.Tenant;
 		_notesRightToLeft = entity.NotesRightToLeft;
@@ -41,11 +43,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_commitmentRevenue = entity.CommitmentRevenue;
 		_lastShipmentDate = entity.LastShipmentDate;
 		_prepaidCollectId = entity.PrepaidCollectId;
-		_customerName = default;
-		_productTypeName = default;
-		_prepaidCollectName = default;
-		productLocations = default;
-   }
+		_prepaidcollect = entity.PrepaidCollect !=null ? new PrepaidCollectPM(entity.PrepaidCollect) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private int _tenant ;
@@ -290,54 +289,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _customerName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerName  
-	   {
-	     get { return _customerName; }
-		 set
-		 {
-		   if(_customerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=_customerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerName=value;
-		   }
-		 }
-	   }
-	  private string _productTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProductTypeName  
-	   {
-	     get { return _productTypeName; }
-		 set
-		 {
-		   if(_productTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProductTypeName",OldValue=_productTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _productTypeName=value;
-		   }
-		 }
-	   }
-	  private string _prepaidCollectName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PrepaidCollectName  
-	   {
-	     get { return _prepaidCollectName; }
-		 set
-		 {
-		   if(_prepaidCollectName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrepaidCollectName",OldValue=_prepaidCollectName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _prepaidCollectName=value;
-		   }
-		 }
-	   }
+		private PrepaidCollectPM _prepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM PrepaidCollect 
+		{ 
+		get { return _prepaidcollect; } 
+		set { _prepaidcollect = value; }
+		}
 	   private List<CustomerProductLocationPM> productLocations;
 	    
        [Composition]

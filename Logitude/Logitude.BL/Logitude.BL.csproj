@@ -846,6 +846,7 @@
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
     <Compile Include="GlobalModel\Tools\EntityService\TenantHybridPartnerService.cs" />
     <Compile Include="Helpers\AmitalCloudActivityLog.cs" />
+    <Compile Include="GlobalModel\Tools\TraceEvents\TenantManagementTraceEventNotes.cs" />
     <Compile Include="Helpers\AddManualTraceEventsHelper.cs" />
     <Compile Include="Helpers\APICaller.cs" />
     <Compile Include="Helpers\BaseClasses\BaseInstance.cs" />

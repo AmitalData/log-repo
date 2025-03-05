@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class DocumentFilingBackupSettingPM : BaseEntityPM   {
    #region Constructors
    public DocumentFilingBackupSettingPM() : base() {} 
-   public DocumentFilingBackupSettingPM(DocumentFilingBackupSetting entity) : base()
+   public DocumentFilingBackupSettingPM(POCO.DocumentFilingBackupSetting entity) : base()
    {
 		_tenant = entity.Tenant;
 		_activationDate = entity.ActivationDate;
 		_deactivationDate = entity.DeactivationDate;
 		_isActive = entity.IsActive;
 		_fTPDetailId = entity.FTPDetailId;
-   }
+		_id = entity.Id !=null ? new FTPDetailPM(entity.Id) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private int _tenant ;
@@ -115,6 +118,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FTPDetailPM _id;
+		[Include]
+        [DataMember]
+        public virtual FTPDetailPM Id 
+		{ 
+		get { return _id; } 
+		set { _id = value; }
+		}
 	 }
 #endregion Properties
 }

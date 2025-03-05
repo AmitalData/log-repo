@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class APILogsPM : BaseEntityPM   {
    #region Constructors
    public APILogsPM() : base() {} 
-   public APILogsPM(APILogs entity) : base()
+   public APILogsPM(POCO.APILogs entity) : base()
    {
 		_tenant = entity.Tenant;
 		_batchNumber = entity.BatchNumber;
@@ -49,12 +51,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_searchFields = entity.SearchFields;
 		_lastExceptionMessage = entity.LastExceptionMessage;
 		_correlationId = entity.CorrelationId;
-		_statusName = default;
-		_objectTableName = default;
-		_diagnosticLog = default;
-		_requestData = default;
-		_responseData = default;
-		_exceptionsMessage = default;
    }
    #endregion Constructors
    #region Properties
@@ -424,102 +420,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CorrelationId",OldValue=_correlationId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _correlationId=value;
-		   }
-		 }
-	   }
-	  private string _statusName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	     get { return _statusName; }
-		 set
-		 {
-		   if(_statusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusName=value;
-		   }
-		 }
-	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
-		   }
-		 }
-	   }
-	  private string _diagnosticLog ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DiagnosticLog  
-	   {
-	     get { return _diagnosticLog; }
-		 set
-		 {
-		   if(_diagnosticLog != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DiagnosticLog",OldValue=_diagnosticLog,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _diagnosticLog=value;
-		   }
-		 }
-	   }
-	  private string _requestData ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RequestData  
-	   {
-	     get { return _requestData; }
-		 set
-		 {
-		   if(_requestData != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestData",OldValue=_requestData,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _requestData=value;
-		   }
-		 }
-	   }
-	  private string _responseData ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ResponseData  
-	   {
-	     get { return _responseData; }
-		 set
-		 {
-		   if(_responseData != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ResponseData",OldValue=_responseData,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _responseData=value;
-		   }
-		 }
-	   }
-	  private string _exceptionsMessage ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExceptionsMessage  
-	   {
-	     get { return _exceptionsMessage; }
-		 set
-		 {
-		   if(_exceptionsMessage != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExceptionsMessage",OldValue=_exceptionsMessage,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _exceptionsMessage=value;
 		   }
 		 }
 	   }

@@ -116,12 +116,17 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     GetReportFilterMainCustomerFieldName() {
-        const mainCustomerName = this.ReportFilterConmponent.GetMainCustomerFieldName();
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.GetMainCustomerFieldName === 'function') { 
+        const mainCustomerName = this.ReportFilterConmponent.GetMainCustomerFieldName()
         return mainCustomerName;
+        }
+        return null
     }
 
     IsPartnersChanged(SelectedTab) {
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.IsPartnersChanged === 'function') 
         return this.ReportFilterConmponent.IsPartnersChanged(SelectedTab);
+       return false;
     }
 
     GetReportTemplateId() {
@@ -199,12 +204,16 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     ValidateSelectedFilters() {
-        return this.ReportFilterConmponent.ValidateSelectedFilters();
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.ValidateSelectedFilters === 'function') {
+            return this.ReportFilterConmponent.ValidateSelectedFilters();
+        }
+        return true;
     }
 
     PrepareContactList() {
         this.CleanPartnersObslist();
-        this.ReportFilterConmponent.PrepareContactList();
+        if (this.ReportFilterConmponent && typeof this.ReportFilterConmponent.PrepareContactList === 'function') 
+          this.ReportFilterConmponent.PrepareContactList();
     }
 
     LoadReportFilterComponent() {
@@ -231,7 +240,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
                             if (this.IsSchedulerReport) {
                                 //this.CurrentSession.ResizeCurrentWindow(1050);
                             }
-                            //SessionLocator.HomeComponent.IsReportPanelVisible = true;
 
                             this.GenerateReport(s, false);
                         }
@@ -531,9 +539,15 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
 
             if (!myResponse.HasError) {
-                
+                var messageWindow = new MessageWindow();
+                messageWindow.ShowSuccessIcon = true;
+
+                messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
                 SessionLocator.HomeComponent.IsReportPanelVisible = true;
                 SessionLocator.HomeComponent.CurrentReportId = myResponse.Result.ReportKey;
+                SessionLocator.HomeComponent.isPinned = true;
+
+                this.BackButtonClicked()
                 this.ReportFliter = myResponse.Result;
                 this.StopBusyIndicator();
                 

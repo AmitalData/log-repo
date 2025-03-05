@@ -42,7 +42,7 @@
   ClientModuleName="&quot;Shipment&quot;"
   ServerModuleName="&quot;ShipmentsModel&quot;"
   NoViewController="true"
-  NoPMController="false"
+  NoPMController="true"
   NoTS="false"
   NoDefaultFeatures="false"
   HasCompactSearch="false"

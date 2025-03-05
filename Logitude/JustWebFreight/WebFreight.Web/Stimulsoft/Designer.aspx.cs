@@ -120,7 +120,7 @@ namespace WebFreight.Web.Stimulsoft
                     }
                     #endregion
 
-                    ReFillBusinessObjects(report.Dictionary.BusinessObjects, processType, tenant, reportTemplateId);
+                    ReFillBusinessObjects(report.Dictionary.BusinessObjects, tenant, reportTemplateId, templateId);
 
                     LogitudeStiWebDesigner.Report = report;
                 }
@@ -143,23 +143,39 @@ namespace WebFreight.Web.Stimulsoft
             }
         }
 
-        private void ReFillBusinessObjects(StiBusinessObjectsCollection bo, string processType, int tenant, string reportTemplateId)
+        private void ReFillBusinessObjects(StiBusinessObjectsCollection bo, int tenant, string reportTemplateId, string templateId)
         {
-            if (processType == "ReportPreview" || bo == null || tenant == null || string.IsNullOrEmpty(reportTemplateId))
-                return;
-            
-            ReportsTemplatesVersionQuery reportsTemplatesVersionQuery = new ReportsTemplatesVersionQuery(tenant);
-            ReportsTemplatesVersionPM reportsTemplatesVersionPM = reportsTemplatesVersionQuery.GetLastReportsTemplatesVersionPMByReportsTemplateId(reportTemplateId, tenant);
-            if(reportsTemplatesVersionPM == null)
+            string code = "";
+            string dpName = "";
+            ReportHelper reportHelper = new ReportHelper();
+
+            if (bo == null || tenant == null)
                 return;
 
-            string code = new ReportQuery(tenant).GetReportCodeById(reportsTemplatesVersionPM.ReportId, tenant);
-            if (string.IsNullOrEmpty(code))
-                return;
-            
-            ReportHelper reportHelper = new ReportHelper();
-            new List<ISlvLeaf>();
-            string dpName = reportHelper.GetDataProviderName(code);
+            if (!string.IsNullOrEmpty(reportTemplateId))
+            {
+                ReportsTemplatesVersionPM reportsTemplatesVersionPM = new ReportsTemplatesVersionQuery(tenant).GetLastReportsTemplatesVersionPMByReportsTemplateId(reportTemplateId, tenant);
+                if (reportsTemplatesVersionPM == null)
+                    return;
+
+                code = new ReportQuery(tenant).GetReportCodeById(reportsTemplatesVersionPM.ReportId, tenant);
+                if (string.IsNullOrEmpty(code))
+                    return;
+
+                dpName = reportHelper.GetDataProviderName(code);
+            }
+            else if (!string.IsNullOrEmpty(templateId))
+            {
+                DocumentTypeTemplatePM documentTypeTemplatePM = new DocumentTypeTemplateQuery(tenant).GetById(templateId, tenant);
+                if (documentTypeTemplatePM == null) return;
+
+                DocumentDataProviderArgs documentDataProviderArgs = new StiBusinessObjectDataService().GetDocumentDataProviderArgs(documentTypeTemplatePM.DocumentTypeCode);
+                if (documentDataProviderArgs == null) return;
+
+                dpName = documentDataProviderArgs.Type.FullName;
+            }
+            else return;
+
             if (string.IsNullOrEmpty(dpName))
                 return;
 

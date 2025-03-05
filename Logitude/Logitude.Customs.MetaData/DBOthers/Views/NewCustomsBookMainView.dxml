@@ -1,7 +1,7 @@
 <View DBType="Main" Name="NewCustomsBookMainView" Schema="dbo" Module="Customs">
   <SqlScript>
     <![CDATA[
-   CREATE OR ALTER   VIEW [dbo].[NewCustomsBookMainView]
+  CREATE OR ALTER  VIEW [dbo].[NewCustomsBookMainView]
 AS
 select
 CustomsItemId,
@@ -59,8 +59,7 @@ LEFT JOIN --שם יחידת מידה
 select LOCALNAME, MALAMID
 from customs.MEASURMENTUNITS
 )AS m on m.MALAMID = item.PH_MeasurementUnitID
-where (CI_CustomsItemCategoryIDNum='1' or CI_CustomsItemCategoryIDNum='3')
-and CustomsItemEntityStatusIDNum='2'
+where CustomsItemEntityStatusIDNum='2'
 and StartDate <= GETDATE()
 and EndDate >= GETDATE()
 

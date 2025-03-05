@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ComputingPartnerCodePM : BaseEntityPM   {
    #region Constructors
    public ComputingPartnerCodePM() : base() {} 
-   public ComputingPartnerCodePM(ComputingPartnerCode entity) : base()
+   public ComputingPartnerCodePM(POCO.ComputingPartnerCode entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -36,7 +38,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_updatedByUserId = entity.UpdatedByUserId;
 		_objectTableId = entity.ObjectTableId;
 		_computingPartnerId = entity.ComputingPartnerId;
-   }
+		_computingpartner = entity.ComputingPartner !=null ? new ComputingPartnerPM(entity.ComputingPartner) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -200,6 +203,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ComputingPartnerPM _computingpartner;
+		[Include]
+        [DataMember]
+        public virtual ComputingPartnerPM ComputingPartner 
+		{ 
+		get { return _computingpartner; } 
+		set { _computingpartner = value; }
+		}
 	 }
 #endregion Properties
 }

@@ -1,9 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using System.ComponentModel.DataAnnotations;
 
 namespace AmitalCloud.Invoice.Domain.EntityPMs
 {
     public class ARInvoiceEntityPM
     {
+        private ARInvoiceEntityPM a;
+
+        public ARInvoiceEntityPM(ARInvoice a)
+        {
+
+        }
+
         [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }

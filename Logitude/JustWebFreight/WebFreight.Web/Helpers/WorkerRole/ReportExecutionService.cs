@@ -34,6 +34,8 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 reportExecutionLogId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("ReportExecutionLogId") ? queueResponse.MessageValues["ReportExecutionLogId"].ToString() : "";
                 tenant = GetTenantValueFromQueueResponse(queueResponse);
             }
+
+            ReportHelper.AddStimulsoftLicenseKey();
         }
 
         public void ExecuteReportExecutionQueue()

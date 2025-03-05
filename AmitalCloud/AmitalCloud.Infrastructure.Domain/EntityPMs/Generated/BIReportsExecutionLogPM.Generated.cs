@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class BIReportsExecutionLogPM : BaseEntityPM   {
    #region Constructors
    public BIReportsExecutionLogPM() : base() {} 
-   public BIReportsExecutionLogPM(BIReportsExecutionLog entity) : base()
+   public BIReportsExecutionLogPM(POCO.BIReportsExecutionLog entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_createDate = entity.CreateDate;
 		_createdByUserId = entity.CreatedByUserId;
 		_statusCode = entity.StatusCode;
-		_exceptionMessage = entity.ExceptionMessage;
+		_communicationstatustype = entity.CommunicationStatusType !=null ? new CommunicationStatusTypePM(entity.CommunicationStatusType) : null;
+			_exceptionMessage = entity.ExceptionMessage;
 		_doneDate = entity.DoneDate;
 		_reportFilterXML = entity.ReportFilterXML;
 		_bIReportId = entity.BIReportId;
@@ -119,6 +122,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CommunicationStatusTypePM _communicationstatustype;
+		[Include]
+        [DataMember]
+        public virtual CommunicationStatusTypePM CommunicationStatusType 
+		{ 
+		get { return _communicationstatustype; } 
+		set { _communicationstatustype = value; }
+		}
 	  private string _exceptionMessage ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

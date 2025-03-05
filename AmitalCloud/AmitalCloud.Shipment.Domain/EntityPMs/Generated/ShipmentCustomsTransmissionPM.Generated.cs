@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,19 +26,20 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentCustomsTransmissionPM : BaseEntityPM   {
    #region Constructors
    public ShipmentCustomsTransmissionPM() : base() {} 
-   public ShipmentCustomsTransmissionPM(ShipmentCustomsTransmission entity) : base()
+   public ShipmentCustomsTransmissionPM(POCO.ShipmentCustomsTransmission entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_shipmentId = entity.ShipmentId;
 		_sentByUserId = entity.SentByUserId;
-		_communicationLogId = entity.CommunicationLogId;
-		_lastSendDate = entity.LastSendDate;
+		_sendbyuser = entity.SendByUser !=null ? new UserPM(entity.SendByUser) : null;
+			_communicationLogId = entity.CommunicationLogId;
+		_communicationlog = entity.CommunicationLog !=null ? new CommunicationLogPM(entity.CommunicationLog) : null;
+			_lastSendDate = entity.LastSendDate;
 		_error = entity.Error;
 		_messageCode = entity.MessageCode;
-		_status = entity.Status;
-		_statusName = default;
-		_byUserName = default;
+		_shipmentcustomsmessagetype = entity.ShipmentCustomsMessageType !=null ? new ShipmentCustomsMessageTypePM(entity.ShipmentCustomsMessageType) : null;
+			_status = entity.Status;
    }
    #endregion Constructors
    #region Properties
@@ -105,6 +108,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _sendbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM SendByUser 
+		{ 
+		get { return _sendbyuser; } 
+		set { _sendbyuser = value; }
+		}
 	  private string _communicationLogId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -121,6 +132,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CommunicationLogPM _communicationlog;
+		[Include]
+        [DataMember]
+        public virtual CommunicationLogPM CommunicationLog 
+		{ 
+		get { return _communicationlog; } 
+		set { _communicationlog = value; }
+		}
 	  private DateTime? _lastSendDate ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -169,6 +188,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentCustomsMessageTypePM _shipmentcustomsmessagetype;
+		[Include]
+        [DataMember]
+        public virtual ShipmentCustomsMessageTypePM ShipmentCustomsMessageType 
+		{ 
+		get { return _shipmentcustomsmessagetype; } 
+		set { _shipmentcustomsmessagetype = value; }
+		}
 	  private string _status ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -182,38 +209,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Status",OldValue=_status,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _status=value;
-		   }
-		 }
-	   }
-	  private string _statusName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	     get { return _statusName; }
-		 set
-		 {
-		   if(_statusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusName=value;
-		   }
-		 }
-	   }
-	  private string _byUserName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ByUserName  
-	   {
-	     get { return _byUserName; }
-		 set
-		 {
-		   if(_byUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ByUserName",OldValue=_byUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _byUserName=value;
 		   }
 		 }
 	   }

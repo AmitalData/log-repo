@@ -352,8 +352,7 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
             this.description = value;
         }
     }
-
-    RunReport() {
+    ValidateSelectedFilters(){
         this.ValidationErrorsList = [];
 
 
@@ -377,14 +376,28 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
                 }
             }
         }
-        if (this.ValidationErrorsList.length == 0) {
+        return this.ValidationErrorsList.length == 0;
+    }
+    RunReport() {
+       
+        if (this.ValidateSelectedFilters()) {
 
             this.BuildReport();
 
         }
     }
-
-    InitilaizeFilter() {
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+        if (this.isReady) {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        }
+    }
+    GetQueryFilterItems() {
         this.queryFilterItems = new Array<QueryFilterItem>();
         //-----------------------------------------------------------------------------1
 
@@ -453,6 +466,7 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
             this.queryFilterItems.push(this.GetNewQueryFilterItem("Description", this.Description, null));
 
         }
+        return this.queryFilterItems;
 
     }
     BuildFilterByOperator(FieldName, FieldValue, FieldValue2, Type, Operator: { Code: string, EnglishName: string, LocalName: string }) {
@@ -466,8 +480,9 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
 
         }
     }
-   
+    public IsSchedulerReport: boolean = true;
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
@@ -560,7 +575,7 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
         }
     }
     BuildReport() {
-        this.InitilaizeFilter();
+        this.GetQueryFilterItems();
 
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;

@@ -643,16 +643,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 }
             }
-            catch (Exception) // return to old values 
+            catch (Exception e)   // return to old values 
             {
-                entityPM.StatusCode = journalOldStatusCode;
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"AfterUpdating Journal ,JournalNumber" + entityPM?.JournalNumber +",tenant :"+entityPM?.Tenant);
+
+               entityPM.StatusCode = journalOldStatusCode;
                 throw;
             }
             CreateJournalAdditionalDataWhenApprovingJournal(entityPM);
 
 
         }
-       
+
         private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
         {
             if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved)

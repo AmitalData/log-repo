@@ -33,6 +33,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string ForwarderAccountNumber { get; set; }
         [Column("ForwarderCreditNumber")]
 	    public string ForwarderCreditNumber { get; set; }
+		public virtual ICollection<Address> Addresses { get; set; }
+		public virtual ICollection<Contact> Contacts { get; set; }
         [Column("PrimaryContactName")]
 	    public string PrimaryContactName { get; set; }
         [Column("PrimaryContactEmail")]

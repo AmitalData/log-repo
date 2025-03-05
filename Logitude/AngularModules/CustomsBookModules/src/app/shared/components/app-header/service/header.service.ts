@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class HeaderService {
 	public searchState: string = 'יבוא';
 	public searchState$: BehaviorSubject<string> = new BehaviorSubject<string>(this.searchState);
+	public IsDiscountCodes: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor() {
 		this.setSearchState();
@@ -25,6 +26,10 @@ export class HeaderService {
 			? this.searchState
 			: (this.searchState = searchState[sessionStorage.getItem('searchState') as keyof typeof searchState]);
 		return this.searchState;
+	}
+
+	setIsDiscountCodes(value: boolean) {
+		this.IsDiscountCodes.next(value);
 	}
 }
 

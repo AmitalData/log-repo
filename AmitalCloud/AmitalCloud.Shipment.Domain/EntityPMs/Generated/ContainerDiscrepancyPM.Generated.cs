@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,16 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ContainerDiscrepancyPM : BaseEntityPM   {
    #region Constructors
    public ContainerDiscrepancyPM() : base() {} 
-   public ContainerDiscrepancyPM(ContainerDiscrepancy entity) : base()
+   public ContainerDiscrepancyPM(POCO.ContainerDiscrepancy entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_searchFields = entity.SearchFields;
 		_containerID = entity.ContainerID;
-		_shipmentId = entity.ShipmentId;
-		_discrepancyDate = entity.DiscrepancyDate;
+		_container = entity.Container !=null ? new ContainerPM(entity.Container) : null;
+			_shipmentId = entity.ShipmentId;
+		_shipment = entity.Shipment !=null ? new ShipmentPM(entity.Shipment) : null;
+			_discrepancyDate = entity.DiscrepancyDate;
 		_discrepancy = entity.Discrepancy;
    }
    #endregion Constructors
@@ -101,6 +105,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ContainerPM _container;
+		[Include]
+        [DataMember]
+        public virtual ContainerPM Container 
+		{ 
+		get { return _container; } 
+		set { _container = value; }
+		}
 	  private string _shipmentId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -117,6 +129,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPM _shipment;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPM Shipment 
+		{ 
+		get { return _shipment; } 
+		set { _shipment = value; }
+		}
 	  private DateTime _discrepancyDate ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

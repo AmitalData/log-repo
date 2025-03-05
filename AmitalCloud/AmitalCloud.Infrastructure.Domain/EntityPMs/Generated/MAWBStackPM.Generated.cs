@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class MAWBStackPM : BaseEntityPM   {
    #region Constructors
    public MAWBStackPM() : base() {} 
-   public MAWBStackPM(MAWBStack entity) : base()
+   public MAWBStackPM(POCO.MAWBStack entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -34,10 +36,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_airlineId = entity.AirlineId;
 		_notes = entity.Notes;
 		_assignedToId = entity.AssignedToId;
-		_assignedToShipperName = default;
-		_airlineName = default;
-		_airline = default;
-   }
+		_assignedtocard = entity.AssignedToCard !=null ? new CardPM(entity.AssignedToCard) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -169,54 +169,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _assignedToShipperName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AssignedToShipperName  
-	   {
-	     get { return _assignedToShipperName; }
-		 set
-		 {
-		   if(_assignedToShipperName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssignedToShipperName",OldValue=_assignedToShipperName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _assignedToShipperName=value;
-		   }
-		 }
-	   }
-	  private string _airlineName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AirlineName  
-	   {
-	     get { return _airlineName; }
-		 set
-		 {
-		   if(_airlineName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AirlineName",OldValue=_airlineName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _airlineName=value;
-		   }
-		 }
-	   }
-	  private string _airline ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Airline  
-	   {
-	     get { return _airline; }
-		 set
-		 {
-		   if(_airline != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Airline",OldValue=_airline,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _airline=value;
-		   }
-		 }
-	   }
+		private CardPM _assignedtocard;
+		[Include]
+        [DataMember]
+        public virtual CardPM AssignedToCard 
+		{ 
+		get { return _assignedtocard; } 
+		set { _assignedtocard = value; }
+		}
 	 }
 #endregion Properties
 }

@@ -7,6 +7,7 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     
@@ -80,12 +81,25 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
     IsValueDateClicked() {
         this.IsByCreateDate = false;
     }
+    public IsSchedulerReport: boolean = false;
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
             });
         }
+    }
+    public RunReportTitle: string = 'Run Report';
+        SetRunReportTitle() {
+      
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
     }
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         
@@ -118,9 +132,9 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
     
         }
     }
-   
-    RunReport() {
+    ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
+
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
         }
@@ -133,9 +147,36 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
             this.ValidationErrorsList.push("From Date cannot be greater than To Date");
         }
 
-        if (this.ValidationErrorsList.length == 0) {
+        return this.ValidationErrorsList.length == 0;
+    }
+    RunReport() {
+        this.ValidationErrorsList = [];
+       
 
-            this.queryFilterItems = new Array<QueryFilterItem>();
+        if (this.ValidateSelectedFilters()) {
+
+            
+            this.reportFliter = new ReportFliter();
+            this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+            this.reportFliter.CustomerId = this.CustomerId;
+            this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+            this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+            this.reportFliter.NumberOfPage = 1;
+            this.reportFliter.ProcessType = "GenerateReport";
+
+            this.ReportsPreview.CleanPartnersObslist();
+
+            if (!AppTool.IsNullOrEmpty(this.CustomerId)) {
+                this.ReportsPreview.AddPartner("Partner", this.CustomerId);
+            }
+
+            this.ReportsPreview.GenerateReport(this.reportFliter, true);
+        }
+    }
+    GetQueryFilterItems(){
+        this.queryFilterItems = new Array<QueryFilterItem>();
 
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
@@ -172,23 +213,6 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
-            this.reportFliter = new ReportFliter();
-            this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
-            this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-            this.reportFliter.CustomerId = this.CustomerId;
-            this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-            this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-            this.reportFliter.NumberOfPage = 1;
-            this.reportFliter.ProcessType = "GenerateReport";
-
-            this.ReportsPreview.CleanPartnersObslist();
-
-            if (!AppTool.IsNullOrEmpty(this.CustomerId)) {
-                this.ReportsPreview.AddPartner("Partner", this.CustomerId);
-            }
-
-            this.ReportsPreview.GenerateReport(this.reportFliter, true);
-        }
+        return this.queryFilterItems;
     }
 }

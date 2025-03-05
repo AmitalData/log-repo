@@ -36,7 +36,7 @@ namespace AmitalCloud.Shipment.Domain.Validators
                         }
                         if (shipmentPM.ShipmentAWBPrintOnlies.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.CurrencyId != shipmentPM.AWBCurrencyId).Any())
                         {
-                            str = TextCodesTranslator.TranslateText("Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", shipmentPM.Tenant) + shipmentPM.AWBCurrencyCode;
+                            str = TextCodesTranslator.TranslateText("Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", shipmentPM.Tenant) + shipmentPM.AWBCurrencyId; //.AWBCurrencyCode TODO ADD RELATION;
                         }
 
                     }

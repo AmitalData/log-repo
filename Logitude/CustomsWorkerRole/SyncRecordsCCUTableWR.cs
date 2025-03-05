@@ -11,6 +11,8 @@ using System.Linq;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Unifreight.Data.AmitalModel.Repsitories;
+using System.Threading;
+using System.Configuration;
 
 namespace CustomsWorkerRole
 {
@@ -26,7 +28,16 @@ namespace CustomsWorkerRole
                 DevLog.Instance.WriteDebug("SyncRecordsCCUTableWR start run (WorkOnce)");
 
                 isFirstTime = false;
-                Scheduler(SendSyncRecoredToUnifreightQueue, 30000, "SendSyncRecoredToUnifreightQueue");
+
+                double sendSyncRecoredToUnifreightQueueInterval = 30000;
+                if (double.TryParse(ConfigurationManager.AppSettings["sendSyncRecoredToUnifreightQueueInterval"], out double configuredInterval))
+                    sendSyncRecoredToUnifreightQueueInterval = configuredInterval;
+                Scheduler(SendSyncRecoredToUnifreightQueue, sendSyncRecoredToUnifreightQueueInterval, "SendSyncRecoredToUnifreightQueue");
+
+                double returnToQueueInterval = 600000;
+                if (double.TryParse(ConfigurationManager.AppSettings["ReturnToQueueInterval"], out double configuredInterval2))
+                    returnToQueueInterval = configuredInterval2;
+                Scheduler(ReturnToQueue, returnToQueueInterval, "ReturnToQueue");
             }
         }
 
@@ -34,47 +45,54 @@ namespace CustomsWorkerRole
         {
             try
             {
-                DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue start run");
-
-                List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
-                SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
-
-                Lock();
-
-                List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
-
-                if (records == null || records.Count == 0)
+                bool finish = false;
+                while (!finish)
                 {
+                    DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue start run");
+
+                    List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
+                    SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
+
+                    Lock();
+
+                    List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
+
+                    if (records == null || records.Count == 0)
+                    {
+                        Unlock();
+                        finish = true;
+                        return;
+                    }
+
+                    DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
+
+                    records = records.Concat(InsertRecordsForCloseTables(syncRecordQuery, records)).ToList();
+
+                    IEnumerable<IGrouping<int, SyncRecord>> RecordsGroupByTenants = records.GroupBy(record => record.Tenant);
+
+                    foreach (IGrouping<int, SyncRecord> group in RecordsGroupByTenants)
+                    {
+                        List<SyncRecord> recordsOfTenant = group.ToList();
+                        if (recordsOfTenant.Count == 0)
+                            continue;
+
+                        try
+                        {
+                            SendToQueue(recordsOfTenant, group.Key);
+                            syncRecordsInQueueList.AddRange(recordsOfTenant);
+                        }
+                        catch (Exception e)
+                        {
+                            DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue, tenant: " + group.Key);
+                        }
+                    }
+
+                    syncRecordQuery.UpdateStatus(syncRecordsInQueueList, SyncRecordStatus.InQueue);
+
                     Unlock();
-                    return;
+
+                    Thread.Sleep(100);
                 }
-
-                DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
-
-                records = records.Concat(InsertRecordsForCloseTables(syncRecordQuery, records)).ToList();
-
-                IEnumerable<IGrouping<int, SyncRecord>> RecordsGroupByTenants = records.GroupBy(record => record.Tenant);
-
-                foreach (IGrouping<int, SyncRecord> group in RecordsGroupByTenants)
-                {
-                    List<SyncRecord> recordsOfTenant = group.ToList();
-                    if (recordsOfTenant.Count == 0)
-                        continue;
-
-                    try
-                    {
-                        SendToQueue(recordsOfTenant, group.Key);
-                        syncRecordsInQueueList.AddRange(recordsOfTenant);
-                    }
-                    catch (Exception e)
-                    {
-                        DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue, tenant: " + group.Key);
-                    }
-                }
-
-                syncRecordQuery.UpdateStatus(syncRecordsInQueueList, SyncRecordStatus.InQueue);
-
-                Unlock();
             }
             catch (DbUpdateException e) when (e.Message.Contains("SyncRecordsCCUTableWR") && e.Message.Contains("GeneralLock"))
             {
@@ -190,6 +208,27 @@ namespace CustomsWorkerRole
 
             if (tablesName.Length > 0)
                 UnifreightQueueService.Insert(tenant, priority, queueName, subjectCloseTables, storageFolder, actionCloseTables, tableName, tablesName);
+        }
+
+        public void ReturnToQueue()
+        {
+            DevLog.Instance.WriteDebug("ReturnToQueue start run");
+
+            SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
+            List<SyncRecord> records = new SyncRecordQuery().GetNeedToReturnToQueue();
+
+            if (records == null || records.Count == 0)
+            {
+                DevLog.Instance.WriteDebug("ReturnToQueue, records count: 0");
+                return;
+            }
+
+            DevLog.Instance.WriteDebug("ReturnToQueue, records count: " + records.Count);
+            DevLog.Instance.WriteTrace("ReturnToQueue, records: " + string.Join(", ", records));
+
+            syncRecordQuery.UpdateStatus(records, SyncRecordStatus.New);
+
+            DevLog.Instance.WriteDebug("ReturnToQueue finish");
         }
     }
 }

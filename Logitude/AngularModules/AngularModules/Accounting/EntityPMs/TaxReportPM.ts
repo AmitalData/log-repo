@@ -234,6 +234,11 @@ export class TaxReportPM {
     public set CanRecalculate(newValue: boolean) { if (this.canRecalculate != newValue) { this.canRecalculate = newValue; this.MarkAsDirty("CanRecalculate"); } }
        
 	 
+    private isEdited: boolean;
+    public get IsEdited() { return this.isEdited; }
+    public set IsEdited(newValue: boolean) { if (this.isEdited != newValue) { this.isEdited = newValue; this.MarkAsDirty("IsEdited"); } }
+       
+	 
 
     public OldEntityPM: TaxReportPM;
 		

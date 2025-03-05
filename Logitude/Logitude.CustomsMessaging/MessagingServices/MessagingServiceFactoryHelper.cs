@@ -662,6 +662,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
            DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService>
            ((new DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService()).MainInterfaceCode);
+        
             
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInUCB8373_MsgMessagingService>

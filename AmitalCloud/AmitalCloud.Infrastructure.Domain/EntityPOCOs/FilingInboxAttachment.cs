@@ -36,6 +36,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string FilingInboxId { get; set; }
 	      
         public virtual FilingInbox FilingInbox { get; set; }
+		public virtual ICollection<FilingInboxAttachmentLog> AttachLogs { get; set; }
     }
 }
 	 

@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    {
        #region Constructors
        public ContactList() : base() {}
-       public ContactList(Contact entity) : base()
+       public ContactList(POCO.Contact entity) : base()
        {
           Id  = entity.Id;
           Tenant  = entity.Tenant;
@@ -56,7 +56,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           CreateDate  = entity.CreateDate;
           UpdateDate  = entity.UpdateDate;
           DigitalPortalLanguage  = entity.DigitalPortalLanguage;
-          ContactLastLogin  = entity.ContactLastLogin;
        }
        #endregion Constructors
        #region Properties
@@ -126,8 +125,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime UpdateDate  { get; set; }
        [DataMember]
        public string DigitalPortalLanguage  { get; set; }
-       [DataMember]
-       public string ContactLastLogin  { get; set; }
          #endregion Properties
    }
 

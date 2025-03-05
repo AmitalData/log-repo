@@ -24,7 +24,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentChequeUpdateClass
    {  		
-		public const string HashString = "a73b296495a01fac2d752700a8d8f837";
+		public const string HashString = "5a6417275479dd862ed3eb07f2538a42";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -68,9 +68,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewPaymentChequeComponent",
-			      				    LocalDefaultText =  "המחאה",
+			      				    LocalDefaultText =  "המחםה",
 			      				    DefaultText =  "Payment Cheque",
-			      				    NewButtonLocalDefaultText =  "המחאה",
+			      				    NewButtonLocalDefaultText =  "המחםה",
 			      				    Code =  "d25b",
 			      				    Name =  "PaymentCheque Query Group",
 			      				    GenerateDomainService =  false,
@@ -262,10 +262,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						FullLocalDefaultText =  "תםריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						ListLocalDefaultText =  "תםריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -519,7 +519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search by: Cheque No., Pay to name, Account No. ...",
-					  						FullLocalDefaultText =  "מספר המחאה, שולם לפקודת, מספר חשבון בנק",
+					  						FullLocalDefaultText =  "מספר המחםה, שולם לפקודת, מספר חשבון בנק",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search ...",
 					  						IsForeignKey =  false,
@@ -650,10 +650,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChequeNumber",
 					  						DefaultText =  "Cheque Number",
-					  						FullLocalDefaultText =  "מספר המחאה",
+					  						FullLocalDefaultText =  "מספר המחםה",
 					  						ListFieldLable =  "ChequeNumberListLable",
 					  						ListLableDefaultText =  "Cheque Number",
-					  						ListLocalDefaultText =  "מספר המחאה",
+					  						ListLocalDefaultText =  "מספר המחםה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1246,10 +1246,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValueDate",
 					  						DefaultText =  "Value Date",
-					  						FullLocalDefaultText =  "תאריך ערך",
+					  						FullLocalDefaultText =  "תםריך ערך",
 					  						ListFieldLable =  "ValueDateListLable",
 					  						ListLableDefaultText =  "Value Date",
-					  						ListLocalDefaultText =  "תאריך ערך",
+					  						ListLocalDefaultText =  "תםריך ערך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1312,10 +1312,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PrintDate",
 					  						DefaultText =  "Print Date",
-					  						FullLocalDefaultText =  "תאריך הדפסה",
+					  						FullLocalDefaultText =  "תםריך הדפסה",
 					  						ListFieldLable =  "PrintDateListLable",
 					  						ListLableDefaultText =  "Print  Date",
-					  						ListLocalDefaultText =  "תאריך הדפסה",
+					  						ListLocalDefaultText =  "תםריך הדפסה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1378,10 +1378,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ApproveDate",
 					  						DefaultText =  "Approve Date Time",
-					  						FullLocalDefaultText =  "תאריך אישור",
+					  						FullLocalDefaultText =  "תםריך םישור",
 					  						ListFieldLable =  "ApproveDateListLable",
 					  						ListLableDefaultText =  "Approve Date Time",
-					  						ListLocalDefaultText =  "תאריך אישור",
+					  						ListLocalDefaultText =  "תםריך םישור",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1443,7 +1443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ApprovedByUserId",
 					  						DefaultText =  "Approved By User",
-					  						FullLocalDefaultText =  "מאשר",
+					  						FullLocalDefaultText =  "מםשר",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "ApprovedByUser",
@@ -1638,10 +1638,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CancelledDate",
 					  						DefaultText =  "Cancelled Date",
-					  						FullLocalDefaultText =  "תאריך ביטול",
+					  						FullLocalDefaultText =  "תםריך ביטול",
 					  						ListFieldLable =  "CancelledDateListLable",
 					  						ListLableDefaultText =  "Cancelled Date",
-					  						ListLocalDefaultText =  "תאריך ביטול",
+					  						ListLocalDefaultText =  "תםריך ביטול",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3265,10 +3265,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "APPaymentNo",
 					  						DefaultText =  "AP Payment No",
-					  						FullLocalDefaultText =  "מספר הוראת תשלום",
+					  						FullLocalDefaultText =  "מספר הורםת תשלום",
 					  						ListFieldLable =  "APPaymentNoListLable",
 					  						ListLableDefaultText =  "AP Payment No",
-					  						ListLocalDefaultText =  "מספר הוראת תשלום",
+					  						ListLocalDefaultText =  "מספר הורםת תשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3311,8 +3311,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode PaymentChequeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentCheque.Q.AllPaymentCheques", DefaultText = @"Payment Cheques",LocalDefaultText = "המחאות לתשלום", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature PaymentChequeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Q.AllPaymentCheques", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.AllPaymentCheques", NameTextCodeDefaultText = "AllPaymentCheques", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PaymentChequeObjectTable, addedFeatures, addedTextCodes);
+			   TextCode PaymentChequeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentCheque.Q.AllPaymentCheques", DefaultText = @"Payment Cheques",LocalDefaultText = "המחםות לתשלום", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature PaymentChequeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Q.AllPaymentCheques", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.AllPaymentCheques", NameTextCodeDefaultText = "AllPaymentCheques", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,PaymentChequeObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -3381,7 +3381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature PaymentChequeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Tab.General", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentChequeObjectTable);
  
                  
-			   TextCode PaymentChequeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentCheque.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode PaymentChequeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentCheque.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature PaymentChequeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Tab.Events", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentChequeObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -3549,7 +3549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = PaymentChequeFeature_MB1.Id,
 						Style = "ApproveButtonStyle",
-						LocalDefaultText = "אישור",
+						LocalDefaultText = "םישור",
 						FeatureUniqeCode = PaymentChequeFeature_MB1.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -3589,7 +3589,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentChequeFeature_MB20.Id,
 						Style = null,
-						LocalDefaultText = "הדפסת המחאה",
+						LocalDefaultText = "הדפסת המחםה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentChequeFeature_MB20.FeatureUniqeCode,
@@ -3609,7 +3609,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentChequeFeature_MB21.Id,
 						Style = null,
-						LocalDefaultText = "ביטול המחאה",
+						LocalDefaultText = "ביטול המחםה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentChequeFeature_MB21.FeatureUniqeCode,

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,16 +26,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CardContactAdditionalServicePM : BaseEntityPM   {
    #region Constructors
    public CardContactAdditionalServicePM() : base() {} 
-   public CardContactAdditionalServicePM(CardContactAdditionalService entity) : base()
+   public CardContactAdditionalServicePM(POCO.CardContactAdditionalService entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_cardContactId = entity.CardContactId;
-		_additionalServiceId = entity.AdditionalServiceId;
-		_additionalServiceName = default;
-		_cardId = default;
-		_contactId = default;
-   }
+		_cardcontact = entity.CardContact !=null ? new CardContactPM(entity.CardContact) : null;
+			_additionalServiceId = entity.AdditionalServiceId;
+		_additionalservice = entity.AdditionalService !=null ? new AdditionalServicePM(entity.AdditionalService) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -85,6 +86,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardContactPM _cardcontact;
+		[Include]
+        [DataMember]
+        public virtual CardContactPM CardContact 
+		{ 
+		get { return _cardcontact; } 
+		set { _cardcontact = value; }
+		}
 	  private string _additionalServiceId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -101,54 +110,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _additionalServiceName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AdditionalServiceName  
-	   {
-	     get { return _additionalServiceName; }
-		 set
-		 {
-		   if(_additionalServiceName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AdditionalServiceName",OldValue=_additionalServiceName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _additionalServiceName=value;
-		   }
-		 }
-	   }
-	  private string _cardId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CardId  
-	   {
-	     get { return _cardId; }
-		 set
-		 {
-		   if(_cardId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardId",OldValue=_cardId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _cardId=value;
-		   }
-		 }
-	   }
-	  private string _contactId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContactId  
-	   {
-	     get { return _contactId; }
-		 set
-		 {
-		   if(_contactId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactId",OldValue=_contactId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _contactId=value;
-		   }
-		 }
-	   }
+		private AdditionalServicePM _additionalservice;
+		[Include]
+        [DataMember]
+        public virtual AdditionalServicePM AdditionalService 
+		{ 
+		get { return _additionalservice; } 
+		set { _additionalservice = value; }
+		}
 	 }
 #endregion Properties
 }

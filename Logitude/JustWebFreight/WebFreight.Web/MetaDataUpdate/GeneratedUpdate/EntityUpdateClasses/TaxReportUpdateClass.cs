@@ -25,7 +25,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class TaxReportUpdateClass
    {  		
 
-		public const string HashString = "232ccbb556905adee2ac8c8698c8a541";
+
+		public const string HashString = "a546222e6d41ae475e9834e59fdec5f7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2805,6 +2806,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsEdited",
+					  						ObjectTableName =  "TaxReport",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsEdited",
+					  						ListPropertyPath =  "IsEdited",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsEdited",
+					  						DefaultText =  "Is Edited",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
@@ -2838,7 +2900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode TaxReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.Q.ALLTAXREPORTS", DefaultText = @"Tax Reports",LocalDefaultText = "דוח מע\"מ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature TaxReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Q.ALLTAXREPORTS", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReportFeatures.ALLTAXREPORTS", NameTextCodeDefaultText = "ALLTAXREPORTS", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TaxReportObjectTable, addedFeatures, addedTextCodes);
+			   Feature TaxReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Q.ALLTAXREPORTS", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReportFeatures.ALLTAXREPORTS", NameTextCodeDefaultText = "ALLTAXREPORTS", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,TaxReportObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -3289,6 +3351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxReportTextCode_TaxReportODownloadPa = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.DownloadPa", DefaultText = "Download PA file",LocalDefaultText = "הורדת קובץ רש''פ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportTextCode_TaxReportODefaultDifferencesGLAccountIdIsNull = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.DefaultDifferencesGLAccountIdIsNull", DefaultText = "AccountingSettings - DefaultDifferencesGLAccountId is null",LocalDefaultText = @"הגדרות הנהלת חשבונות - לא מוזן ערך בכרטיס ברירת מחדל להפרשים", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TaxReportTextCode_TaxReportOReportIsEdited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ReportIsEdited", DefaultText = "Report in editing - needs to be rebuilt",LocalDefaultText = @"דוח בעריכה - יש לבצע בניה מחדש", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

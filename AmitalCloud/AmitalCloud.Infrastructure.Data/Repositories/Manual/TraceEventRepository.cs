@@ -9,14 +9,14 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 {
     public class TraceEventRepository : Repository<TraceEvent>, IRepository<TraceEvent>
     {
-        IAmitalCloudContext webFreightContext;
+        IAmitalCloudContext amitalCloudContext;
 
         public TraceEventRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }
         public TraceEventRepository(IAmitalCloudContext context) : base(context)
         {
-            webFreightContext = context;
+            amitalCloudContext = context;
         }
         public TraceEventRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -96,7 +96,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
         public IAmitalCloudContext context
         {
-            get { return webFreightContext; }
+            get { return amitalCloudContext; }
         }
 
 

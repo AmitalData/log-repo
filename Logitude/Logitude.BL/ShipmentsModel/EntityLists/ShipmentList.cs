@@ -699,5 +699,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ReferantUserId { get; set; }
         public string IskaNumber { get; set; }
         public string UniCloudShipment { get; set; }
+        public string LockerCode { get; set; }
+        public string LockerName { get; set; }
+        public string LockerCity { get; set; }
+        public string LockerAddress { get; set; }
     }
 }

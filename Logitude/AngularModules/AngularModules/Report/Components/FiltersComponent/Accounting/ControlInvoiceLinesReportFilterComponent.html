@@ -461,7 +461,7 @@
        </td>
         <td colspan="7"> 
              <button (click)="RunReport()" class="greenButton" [style.right.px]="isRTL ? 280 : null" [style.left.px]="isRTL ? null : 288" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{'Accounting.General.O.Run' | TextCodeTranslationPipe}}</div>
+                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>
             </button>
         </td>
         <td colspan="1" style="width: 60px;" [style.text-align]="isRTL ? 'right' : 'left'">

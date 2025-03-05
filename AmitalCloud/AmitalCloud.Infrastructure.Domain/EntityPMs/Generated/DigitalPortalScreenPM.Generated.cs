@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class DigitalPortalScreenPM : BaseEntityPM   {
    #region Constructors
    public DigitalPortalScreenPM() : base() {} 
-   public DigitalPortalScreenPM(DigitalPortalScreen entity) : base()
+   public DigitalPortalScreenPM(POCO.DigitalPortalScreen entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -36,7 +38,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_content = entity.Content;
 		_draftContent = entity.DraftContent;
 		_profileId = entity.ProfileId;
-		_profileCode = default;
 		_isList = entity.IsList;
    }
    #endregion Constructors
@@ -199,22 +200,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfileId",OldValue=_profileId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _profileId=value;
-		   }
-		 }
-	   }
-	  private string _profileCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProfileCode  
-	   {
-	     get { return _profileCode; }
-		 set
-		 {
-		   if(_profileCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfileCode",OldValue=_profileCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _profileCode=value;
 		   }
 		 }
 	   }

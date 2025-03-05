@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,15 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ContainerTrackingResponsePM : BaseEntityPM   {
    #region Constructors
    public ContainerTrackingResponsePM() : base() {} 
-   public ContainerTrackingResponsePM(ContainerTrackingResponse entity) : base()
+   public ContainerTrackingResponsePM(POCO.ContainerTrackingResponse entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_createDate = entity.CreateDate;
 		_searchFields = entity.SearchFields;
 		_containerTrackingRequestId = entity.ContainerTrackingRequestId;
-		_communicationLogId = entity.CommunicationLogId;
+		_containertrackingrequest = entity.ContainerTrackingRequest !=null ? new ContainerTrackingRequestPM(entity.ContainerTrackingRequest) : null;
+			_communicationLogId = entity.CommunicationLogId;
    }
    #endregion Constructors
    #region Properties
@@ -116,6 +119,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ContainerTrackingRequestPM _containertrackingrequest;
+		[Include]
+        [DataMember]
+        public virtual ContainerTrackingRequestPM ContainerTrackingRequest 
+		{ 
+		get { return _containertrackingrequest; } 
+		set { _containertrackingrequest = value; }
+		}
 	  private string _communicationLogId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

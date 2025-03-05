@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,24 +26,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CurrencyPM : BaseEntityPM   {
    #region Constructors
    public CurrencyPM() : base() {} 
-   public CurrencyPM(Currency entity) : base()
+   public CurrencyPM(POCO.Currency entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_code = entity.Code;
 		_englishName = entity.EnglishName;
 		_localName = entity.LocalName;
-		_computedLocalName = default;
 		_addedManually = entity.AddedManually;
 		_inActive = entity.InActive;
 		_notes = entity.Notes;
 		_accountingExternalCode = entity.AccountingExternalCode;
 		_sign = entity.Sign;
 		_searchFields = entity.SearchFields;
-		_isSecured = default;
-		_isHybrid = default;
-		_isExternal = default;
-		_partnerCode = default;
    }
    #endregion Constructors
    #region Properties
@@ -123,22 +120,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=_localName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _localName=value;
-		   }
-		 }
-	   }
-	  private string _computedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputedLocalName  
-	   {
-	     get { return _computedLocalName; }
-		 set
-		 {
-		   if(_computedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computedLocalName=value;
 		   }
 		 }
 	   }
@@ -235,70 +216,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
-		   }
-		 }
-	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
-		   }
-		 }
-	   }
-	  private bool _isExternal ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsExternal  
-	   {
-	     get { return _isExternal; }
-		 set
-		 {
-		   if(_isExternal != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExternal",OldValue=_isExternal,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isExternal=value;
-		   }
-		 }
-	   }
-	  private string _partnerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerCode  
-	   {
-	     get { return _partnerCode; }
-		 set
-		 {
-		   if(_partnerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerCode=value;
 		   }
 		 }
 	   }

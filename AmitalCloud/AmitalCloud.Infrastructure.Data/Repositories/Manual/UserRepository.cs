@@ -11,14 +11,14 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 {
     public class UserRepository : Repository<User>, IRepository<User>
     {
-        IAmitalCloudContext commonDataContext;
+        IAmitalCloudContext amitalCloudContext;
 
         public UserRepository(IUnitOfWork uow) : base(uow)
         {
         }
         public UserRepository(IAmitalCloudContext context) : base(context)
         {
-            commonDataContext = context;
+            amitalCloudContext = context;
         }
         public UserRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
@@ -324,7 +324,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public IAmitalCloudContext context
         {
-            get { return commonDataContext; }
+            get { return amitalCloudContext; }
         }
         public List<int> GetPersonTenantList(string personID)
         {

@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,18 +26,20 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class AWBOCIPM : BaseEntityPM   {
    #region Constructors
    public AWBOCIPM() : base() {} 
-   public AWBOCIPM(AWBOCI entity) : base()
+   public AWBOCIPM(POCO.AWBOCI entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_shipmentId = entity.ShipmentId;
-		_supplementaryCustomsInfo = entity.SupplementaryCustomsInfo;
+		_shipment = entity.Shipment !=null ? new ShipmentPM(entity.Shipment) : null;
+			_supplementaryCustomsInfo = entity.SupplementaryCustomsInfo;
 		_countryId = entity.CountryId;
-		_aWBCustomsInformationCode = entity.AWBCustomsInformationCode;
-		_aWBInformationCode = entity.AWBInformationCode;
-		_isAWBWizardDefault = default;
-		_changeSetOp = default;
-   }
+		_country = entity.Country !=null ? new CountryPM(entity.Country) : null;
+			_aWBCustomsInformationCode = entity.AWBCustomsInformationCode;
+		_awbcustomsinformation = entity.AWBCustomsInformation !=null ? new AWBCustomsInformationPM(entity.AWBCustomsInformation) : null;
+			_aWBInformationCode = entity.AWBInformationCode;
+		_awbinformation = entity.AWBInformation !=null ? new AWBInformationPM(entity.AWBInformation) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -87,6 +91,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPM _shipment;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPM Shipment 
+		{ 
+		get { return _shipment; } 
+		set { _shipment = value; }
+		}
 	  private string _supplementaryCustomsInfo ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -119,6 +131,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CountryPM _country;
+		[Include]
+        [DataMember]
+        public virtual CountryPM Country 
+		{ 
+		get { return _country; } 
+		set { _country = value; }
+		}
 	  private string _aWBCustomsInformationCode ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -135,6 +155,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AWBCustomsInformationPM _awbcustomsinformation;
+		[Include]
+        [DataMember]
+        public virtual AWBCustomsInformationPM AWBCustomsInformation 
+		{ 
+		get { return _awbcustomsinformation; } 
+		set { _awbcustomsinformation = value; }
+		}
 	  private string _aWBInformationCode ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -151,38 +179,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isAWBWizardDefault ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAWBWizardDefault  
-	   {
-	     get { return _isAWBWizardDefault; }
-		 set
-		 {
-		   if(_isAWBWizardDefault != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAWBWizardDefault",OldValue=_isAWBWizardDefault,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isAWBWizardDefault=value;
-		   }
-		 }
-	   }
-	  private string _changeSetOp ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSetOp  
-	   {
-	     get { return _changeSetOp; }
-		 set
-		 {
-		   if(_changeSetOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSetOp",OldValue=_changeSetOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSetOp=value;
-		   }
-		 }
-	   }
+		private AWBInformationPM _awbinformation;
+		[Include]
+        [DataMember]
+        public virtual AWBInformationPM AWBInformation 
+		{ 
+		get { return _awbinformation; } 
+		set { _awbinformation = value; }
+		}
 	 }
 #endregion Properties
 }

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,23 +26,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomsInterfaceSettingPM : BaseEntityPM   {
    #region Constructors
    public CustomsInterfaceSettingPM() : base() {} 
-   public CustomsInterfaceSettingPM(CustomsInterfaceSetting entity) : base()
+   public CustomsInterfaceSettingPM(POCO.CustomsInterfaceSetting entity) : base()
    {
 		_tenant = entity.Tenant;
 		_activateCustomsManagementInShipments = entity.ActivateCustomsManagementInShipments;
 		_localCustomsInterfaceCode = entity.LocalCustomsInterfaceCode;
-		_importToUSAInterfaceCode = entity.ImportToUSAInterfaceCode;
-		_exportFromUSAInterfaceCode = entity.ExportFromUSAInterfaceCode;
-		_localCompanyId = entity.LocalCompanyId;
+		_localcustomsinterface = entity.LocalCustomsInterface !=null ? new CustomsInterfacePM(entity.LocalCustomsInterface) : null;
+			_importToUSAInterfaceCode = entity.ImportToUSAInterfaceCode;
+		_importtousainterface = entity.ImportToUSAInterface !=null ? new CustomsInterfacePM(entity.ImportToUSAInterface) : null;
+			_exportFromUSAInterfaceCode = entity.ExportFromUSAInterfaceCode;
+		_exportfromusainterface = entity.ExportFromUSAInterface !=null ? new CustomsInterfacePM(entity.ExportFromUSAInterface) : null;
+			_localCompanyId = entity.LocalCompanyId;
 		_localUserId = entity.LocalUserId;
 		_localPassword = entity.LocalPassword;
 		_artemusOutSettingsId = entity.ArtemusOutSettingsId;
-		_artemusInSettingsId = entity.ArtemusInSettingsId;
-		_artemusOutSettingsHost = default;
-		_artemusInSettingsHost = default;
-		_aMCAirStartDate = entity.AMCAirStartDate;
+		_artemusoutsettings = entity.ArtemusOutSettings !=null ? new FTPDetailPM(entity.ArtemusOutSettings) : null;
+			_artemusInSettingsId = entity.ArtemusInSettingsId;
+		_artemusinsettings = entity.ArtemusInSettings !=null ? new FTPDetailPM(entity.ArtemusInSettings) : null;
+			_aMCAirStartDate = entity.AMCAirStartDate;
 		_aMCOceanStartDate = entity.AMCOceanStartDate;
-		_localCustomsInterfaceName = default;
    }
    #endregion Constructors
    #region Properties
@@ -93,6 +97,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CustomsInterfacePM _localcustomsinterface;
+		[Include]
+        [DataMember]
+        public virtual CustomsInterfacePM LocalCustomsInterface 
+		{ 
+		get { return _localcustomsinterface; } 
+		set { _localcustomsinterface = value; }
+		}
 	  private string _importToUSAInterfaceCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -109,6 +121,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CustomsInterfacePM _importtousainterface;
+		[Include]
+        [DataMember]
+        public virtual CustomsInterfacePM ImportToUSAInterface 
+		{ 
+		get { return _importtousainterface; } 
+		set { _importtousainterface = value; }
+		}
 	  private string _exportFromUSAInterfaceCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -125,6 +145,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CustomsInterfacePM _exportfromusainterface;
+		[Include]
+        [DataMember]
+        public virtual CustomsInterfacePM ExportFromUSAInterface 
+		{ 
+		get { return _exportfromusainterface; } 
+		set { _exportfromusainterface = value; }
+		}
 	  private string _localCompanyId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -189,6 +217,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FTPDetailPM _artemusoutsettings;
+		[Include]
+        [DataMember]
+        public virtual FTPDetailPM ArtemusOutSettings 
+		{ 
+		get { return _artemusoutsettings; } 
+		set { _artemusoutsettings = value; }
+		}
 	  private string _artemusInSettingsId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -205,38 +241,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _artemusOutSettingsHost ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ArtemusOutSettingsHost  
-	   {
-	     get { return _artemusOutSettingsHost; }
-		 set
-		 {
-		   if(_artemusOutSettingsHost != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ArtemusOutSettingsHost",OldValue=_artemusOutSettingsHost,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _artemusOutSettingsHost=value;
-		   }
-		 }
-	   }
-	  private string _artemusInSettingsHost ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ArtemusInSettingsHost  
-	   {
-	     get { return _artemusInSettingsHost; }
-		 set
-		 {
-		   if(_artemusInSettingsHost != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ArtemusInSettingsHost",OldValue=_artemusInSettingsHost,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _artemusInSettingsHost=value;
-		   }
-		 }
-	   }
+		private FTPDetailPM _artemusinsettings;
+		[Include]
+        [DataMember]
+        public virtual FTPDetailPM ArtemusInSettings 
+		{ 
+		get { return _artemusinsettings; } 
+		set { _artemusinsettings = value; }
+		}
 	  private DateTime? _aMCAirStartDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -266,22 +278,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AMCOceanStartDate",OldValue=_aMCOceanStartDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _aMCOceanStartDate=value;
-		   }
-		 }
-	   }
-	  private string _localCustomsInterfaceName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LocalCustomsInterfaceName  
-	   {
-	     get { return _localCustomsInterfaceName; }
-		 set
-		 {
-		   if(_localCustomsInterfaceName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalCustomsInterfaceName",OldValue=_localCustomsInterfaceName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _localCustomsInterfaceName=value;
 		   }
 		 }
 	   }

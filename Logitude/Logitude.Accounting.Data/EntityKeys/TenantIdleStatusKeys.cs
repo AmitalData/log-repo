@@ -23,11 +23,15 @@ namespace Logitude.Accounting.Data.EntityKeys
 	  
 				 
 	    			   
+	  public string ObjectTable  { get; set; }
+	  
+				 
+	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-                 return Id ;
+                 return Id+'_'+ObjectTable ;
                  
       }
 

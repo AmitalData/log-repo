@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,13 +26,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class AnalyzeQueuePM : BaseEntityPM   {
    #region Constructors
    public AnalyzeQueuePM() : base() {} 
-   public AnalyzeQueuePM(AnalyzeQueue entity) : base()
+   public AnalyzeQueuePM(POCO.AnalyzeQueue entity) : base()
    {
 		_id = entity.Id;
-		_isSecured = default;
-		_messageBodyString = default;
-		_analyzeQueueStatus = default;
-		_tenantManagement = default;
 		_log = entity.Log;
    }
    #endregion Constructors
@@ -49,70 +47,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _id=value;
-		   }
-		 }
-	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
-		   }
-		 }
-	   }
-	  private string _messageBodyString ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MessageBodyString  
-	   {
-	     get { return _messageBodyString; }
-		 set
-		 {
-		   if(_messageBodyString != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MessageBodyString",OldValue=_messageBodyString,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _messageBodyString=value;
-		   }
-		 }
-	   }
-	  private string _analyzeQueueStatus ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AnalyzeQueueStatus  
-	   {
-	     get { return _analyzeQueueStatus; }
-		 set
-		 {
-		   if(_analyzeQueueStatus != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AnalyzeQueueStatus",OldValue=_analyzeQueueStatus,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _analyzeQueueStatus=value;
-		   }
-		 }
-	   }
-	  private string _tenantManagement ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TenantManagement  
-	   {
-	     get { return _tenantManagement; }
-		 set
-		 {
-		   if(_tenantManagement != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantManagement",OldValue=_tenantManagement,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _tenantManagement=value;
 		   }
 		 }
 	   }

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class LogitudeLeadPM : BaseEntityPM   {
    #region Constructors
    public LogitudeLeadPM() : base() {} 
-   public LogitudeLeadPM(LogitudeLead entity) : base()
+   public LogitudeLeadPM(POCO.LogitudeLead entity) : base()
    {
 		_id = entity.Id;
 		_searchFields = entity.SearchFields;
@@ -56,7 +58,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isUserOpened = entity.IsUserOpened;
 		_tenantNumber = entity.TenantNumber;
 		_numberOfUsers = entity.NumberOfUsers;
-		_unassignedCountry = default;
 		_clientId = entity.ClientId;
 		_leadOrigin = entity.LeadOrigin;
 		_campaign = entity.Campaign;
@@ -541,22 +542,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberOfUsers",OldValue=_numberOfUsers,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _numberOfUsers=value;
-		   }
-		 }
-	   }
-	  private bool _unassignedCountry ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool UnassignedCountry  
-	   {
-	     get { return _unassignedCountry; }
-		 set
-		 {
-		   if(_unassignedCountry != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UnassignedCountry",OldValue=_unassignedCountry,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _unassignedCountry=value;
 		   }
 		 }
 	   }

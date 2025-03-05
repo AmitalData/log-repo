@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TariffCarrierTranslationPM : BaseEntityPM   {
    #region Constructors
    public TariffCarrierTranslationPM() : base() {} 
-   public TariffCarrierTranslationPM(TariffCarrierTranslation entity) : base()
+   public TariffCarrierTranslationPM(POCO.TariffCarrierTranslation entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -36,10 +38,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_portId = entity.PortId;
 		_partnerCode = entity.PartnerCode;
 		_carrierId = entity.CarrierId;
-		_portCode = default;
-		_portName = default;
-		_createdByUserName = default;
-		_updatedByUserName = default;
    }
    #endregion Constructors
    #region Properties
@@ -201,70 +199,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CarrierId",OldValue=_carrierId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _carrierId=value;
-		   }
-		 }
-	   }
-	  private string _portCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PortCode  
-	   {
-	     get { return _portCode; }
-		 set
-		 {
-		   if(_portCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PortCode",OldValue=_portCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _portCode=value;
-		   }
-		 }
-	   }
-	  private string _portName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PortName  
-	   {
-	     get { return _portName; }
-		 set
-		 {
-		   if(_portName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PortName",OldValue=_portName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _portName=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
 		   }
 		 }
 	   }

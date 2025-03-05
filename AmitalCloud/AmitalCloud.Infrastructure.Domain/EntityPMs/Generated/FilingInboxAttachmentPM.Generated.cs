@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class FilingInboxAttachmentPM : BaseEntityPM   {
    #region Constructors
    public FilingInboxAttachmentPM() : base() {} 
-   public FilingInboxAttachmentPM(FilingInboxAttachment entity) : base()
+   public FilingInboxAttachmentPM(POCO.FilingInboxAttachment entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_fileName = entity.FileName;
 		_documentId = entity.DocumentId;
 		_filingInboxId = entity.FilingInboxId;
-		attachLogs = default;
+		_filinginbox = entity.FilingInbox !=null ? new FilingInboxPM(entity.FilingInbox) : null;
+			attachLogs = entity.AttachLogs != null ? entity.AttachLogs.Select(a=>new FilingInboxAttachmentLogPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -116,6 +119,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FilingInboxPM _filinginbox;
+		[Include]
+        [DataMember]
+        public virtual FilingInboxPM FilingInbox 
+		{ 
+		get { return _filinginbox; } 
+		set { _filinginbox = value; }
+		}
 	   private List<FilingInboxAttachmentLogPM> attachLogs;
 	 
 		     

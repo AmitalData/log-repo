@@ -112,7 +112,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 
                 CourierPendingReasonQueryService courierPendingReasonQuery = new CourierPendingReasonQueryService(MyContext);
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingleCourierPendingReasonByCode(code, authToken.Tenant);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingle(code,false,false);
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = courierPendingReasonPM;

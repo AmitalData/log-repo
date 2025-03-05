@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentComputedFieldsPM : BaseEntityPM   {
    #region Constructors
    public ShipmentComputedFieldsPM() : base() {} 
-   public ShipmentComputedFieldsPM(ShipmentComputedFields entity) : base()
+   public ShipmentComputedFieldsPM(POCO.ShipmentComputedFields entity) : base()
    {
 		_firstPickupATD = entity.FirstPickupATD;
 		_id = entity.Id;
@@ -37,13 +39,15 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_firstPickupLocation = entity.FirstPickupLocation;
 		_tenant = entity.Tenant;
 		_operationallyClosedByUserId = entity.OperationallyClosedByUserId;
-		_numberOfDeliveries = entity.NumberOfDeliveries;
+		_operationallyclosedbyuser = entity.OperationallyClosedByUser !=null ? new UserPM(entity.OperationallyClosedByUser) : null;
+			_numberOfDeliveries = entity.NumberOfDeliveries;
 		_lastPickupETA = entity.LastPickupETA;
 		_lastPickupETD = entity.LastPickupETD;
 		_lastPickupATA = entity.LastPickupATA;
 		_lastPickupATD = entity.LastPickupATD;
 		_deliveryToPortId = entity.DeliveryToPortId;
-		_deliveryFrom = entity.DeliveryFrom;
+		_deliverytoport = entity.DeliveryToPort !=null ? new PortPM(entity.DeliveryToPort) : null;
+			_deliveryFrom = entity.DeliveryFrom;
 		_deliveryTo = entity.DeliveryTo;
 		_pickupFrom = entity.PickupFrom;
 		_pickupTo = entity.PickupTo;
@@ -61,12 +65,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_commodity = entity.Commodity;
 		_createdFromDigital = entity.CreatedFromDigital;
 		_deliveryTruckerId = entity.DeliveryTruckerId;
-		_deliveryTruckerNumber = entity.DeliveryTruckerNumber;
+		_deliverytrucker = entity.DeliveryTrucker !=null ? new CardPM(entity.DeliveryTrucker) : null;
+			_deliveryTruckerNumber = entity.DeliveryTruckerNumber;
 		_deliveryDriver = entity.DeliveryDriver;
 		_deliveryTrailerNumber = entity.DeliveryTrailerNumber;
 		_deliveryNotes = entity.DeliveryNotes;
 		_pickupTruckerId = entity.PickupTruckerId;
-		_pickupTruckerNumber = entity.PickupTruckerNumber;
+		_pickuptrucker = entity.PickupTrucker !=null ? new CardPM(entity.PickupTrucker) : null;
+			_pickupTruckerNumber = entity.PickupTruckerNumber;
 		_pickupDriver = entity.PickupDriver;
 		_pickupNotes = entity.PickupNotes;
 		_deliveryDate = entity.DeliveryDate;
@@ -80,7 +86,8 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_arrivalNoticeSent = entity.ArrivalNoticeSent;
 		_containersNumbersandTypesArray = entity.ContainersNumbersandTypesArray;
 		_accountingClosedByUserId = entity.AccountingClosedByUserId;
-		_mainCarriageETA = entity.MainCarriageETA;
+		_accountingclosedbyuser = entity.AccountingClosedByUser !=null ? new UserPM(entity.AccountingClosedByUser) : null;
+			_mainCarriageETA = entity.MainCarriageETA;
 		_mainCarriageETD = entity.MainCarriageETD;
 		_mainCarriageATA = entity.MainCarriageATA;
 		_mainCarriageATD = entity.MainCarriageATD;
@@ -267,6 +274,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _operationallyclosedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM OperationallyClosedByUser 
+		{ 
+		get { return _operationallyclosedbyuser; } 
+		set { _operationallyclosedbyuser = value; }
+		}
 	  private int? _numberOfDeliveries ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -363,6 +378,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _deliverytoport;
+		[Include]
+        [DataMember]
+        public virtual PortPM DeliveryToPort 
+		{ 
+		get { return _deliverytoport; } 
+		set { _deliverytoport = value; }
+		}
 	  private string _deliveryFrom ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -651,6 +674,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _deliverytrucker;
+		[Include]
+        [DataMember]
+        public virtual CardPM DeliveryTrucker 
+		{ 
+		get { return _deliverytrucker; } 
+		set { _deliverytrucker = value; }
+		}
 	  private string _deliveryTruckerNumber ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -731,6 +762,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _pickuptrucker;
+		[Include]
+        [DataMember]
+        public virtual CardPM PickupTrucker 
+		{ 
+		get { return _pickuptrucker; } 
+		set { _pickuptrucker = value; }
+		}
 	  private string _pickupTruckerNumber ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -955,6 +994,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _accountingclosedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM AccountingClosedByUser 
+		{ 
+		get { return _accountingclosedbyuser; } 
+		set { _accountingclosedbyuser = value; }
+		}
 	  private DateTime? _mainCarriageETA ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

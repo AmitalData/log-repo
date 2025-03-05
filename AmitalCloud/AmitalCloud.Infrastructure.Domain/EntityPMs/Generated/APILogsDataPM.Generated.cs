@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,13 +26,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class APILogsDataPM : BaseEntityPM   {
    #region Constructors
    public APILogsDataPM() : base() {} 
-   public APILogsDataPM(APILogsData entity) : base()
+   public APILogsDataPM(POCO.APILogsData entity) : base()
    {
 		_tenant = entity.Tenant;
 		_diagnosticLog = entity.DiagnosticLog;
 		_exceptionsMessage = entity.ExceptionsMessage;
 		_id = entity.Id;
-		_requestData = entity.RequestData;
+		_apilogs = entity.APILogs !=null ? new APILogsPM(entity.APILogs) : null;
+			_requestData = entity.RequestData;
 		_responseData = entity.ResponseData;
    }
    #endregion Constructors
@@ -100,6 +103,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private APILogsPM _apilogs;
+		[Include]
+        [DataMember]
+        public virtual APILogsPM APILogs 
+		{ 
+		get { return _apilogs; } 
+		set { _apilogs = value; }
+		}
 	  private string _requestData ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

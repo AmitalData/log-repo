@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class LastRunDetailPM : BaseEntityPM   {
    #region Constructors
    public LastRunDetailPM() : base() {} 
-   public LastRunDetailPM(LastRunDetail entity) : base()
+   public LastRunDetailPM(POCO.LastRunDetail entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_lastRunDate = entity.LastRunDate;
 		_lastRunByUserId = entity.LastRunByUserId;
-		_lastRunByUserName = default;
-   }
+		_lastrunbyuser = entity.LastRunByUser !=null ? new UserPM(entity.LastRunByUser) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -99,22 +101,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _lastRunByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LastRunByUserName  
-	   {
-	     get { return _lastRunByUserName; }
-		 set
-		 {
-		   if(_lastRunByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunByUserName",OldValue=_lastRunByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _lastRunByUserName=value;
-		   }
-		 }
-	   }
+		private UserPM _lastrunbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM LastRunByUser 
+		{ 
+		get { return _lastrunbyuser; } 
+		set { _lastrunbyuser = value; }
+		}
 	 }
 #endregion Properties
 }

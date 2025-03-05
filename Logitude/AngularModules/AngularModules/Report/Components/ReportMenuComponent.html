@@ -97,6 +97,34 @@
     .red-border {
         box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
     }
+
+    .progress-container {
+        width: 100%;
+        background-color: #f3f3f3;
+        position: relative;
+        overflow: hidden;
+        height: 13px;
+        border-radius: 5px;
+    }
+
+    .progress {
+        width: 100%;
+        height: 100%;
+        background-color: #50b29d;
+        position: absolute;
+        left: -100%;
+        animation: loading 2s linear infinite;
+    }
+
+    @keyframes loading {
+        0% {
+            left: -100%;
+        }
+
+        100% {
+            left: 100%;
+        }
+    }
 </style>
 
 <div class="DocumentsDropDown" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0'}:{'right': '0'} ">
@@ -106,9 +134,11 @@
         <tr>
             <td style="vertical-align:top;">
                 <ul style="width: 100%;">
-                    <div  [ngStyle]="LayoutDirection == 'rtl' ? {'text-align': 'right'}:{'text-align': 'left'} " style="text-align: right; padding-top: 5px;padding-right: 5px;">
+                    <div [ngStyle]="LayoutDirection == 'rtl' ? {'text-align': 'right'}:{'text-align': 'left'} "
+                        style="text-align: right; padding-top: 5px;padding-right: 5px;">
                         <img [title]="isPinned ? 'Pin' : 'Unpin'" [style.width.px]="20" [style.height.px]="20"
-                            [style.cursor]="'pointer'" [style.transform]="isPinned ? 'none':LayoutDirection == 'rtl'? 'rotate(90deg)': 'rotate(-90deg)'"
+                            [style.cursor]="'pointer'"
+                            [style.transform]="isPinned ? 'none':LayoutDirection == 'rtl'? 'rotate(90deg)': 'rotate(-90deg)'"
                             src="./Images/Buttons/pinned.png" (click)="togglePin()" />
                     </div>
                     <li *ngIf="!(RelatedReport$ | async)?.length"
@@ -119,7 +149,8 @@
                                              color: #312C31; ">
 
                         <div class="RelatedDocItem" [class.selectedticket]="SelectedReport == relatedRep"
-                            [ngClass]="relatedRep.Id==currentReportId ?  'red-border' : ''">
+                            [ngClass]="relatedRep.reportExecutionLogPM.Id==currentReportId ?  'red-border' : ''"
+                            (click)="relatedRep.reportExecutionLogPM.StatusCode === 'D' && ViewReport(relatedRep)">
                             <table>
 
                                 <!--Header-->
@@ -133,7 +164,7 @@
                                                         <img [title]="'Delete'" class="LeftCenter"
                                                             style="width: 10px; height: 10px; cursor: pointer;"
                                                             src="./Images/Buttons/Delete.over.png"
-                                                            (click)="DeleteReport(relatedRep)" />
+                                                            (click)="$event.stopPropagation(); DeleteReport(relatedRep)" />
                                                     </div>
 
                                                 </td>
@@ -144,16 +175,12 @@
 
                                                     <div class="TextTrimming"
                                                         style="font-weight: bold; text-align: center; padding-bottom: 3px;">
-                                                        {{LayoutDirection == 'rtl'? relatedRep.ReportLocalName :relatedRep.ReportName}}
+                                                        {{LayoutDirection == 'rtl'?
+                                                        relatedRep.reportExecutionLogPM.ReportLocalName
+                                                        :relatedRep.reportExecutionLogPM.ReportName}}
                                                     </div>
                                                 </td>
-                                                <td [hidden]="relatedRep.StatusCode!=='D'"
-                                                    style="width: 20px; vertical-align: top;">
-                                                    <img [title]="'View Report'"
-                                                        style="width: 20px; height: 22px; cursor: pointer;"
-                                                        src="./Images/Split/view-report.png"
-                                                        (click)="ViewReport(relatedRep)" />
-                                                </td>
+
 
                                             </tr>
 
@@ -161,8 +188,9 @@
                                                 <td>
                                                     <div class="TextTrimming"
                                                         style="text-align: center; padding-bottom: 3px;">
-                                                        {{'Reconciliations.F.CreatedByUser' | TextCodeTranslationPipe}}:
-                                                        {{relatedRep.CreatedByUserName}}
+                                                        {{relatedRep.reportExecutionLogPM.CreatedByUserName}}
+                                                        :
+                                                        {{'Reconciliations.F.CreatedByUser' | TextCodeTranslationPipe}}
                                                     </div>
                                                 </td>
 
@@ -174,7 +202,8 @@
                                                     <div class="TextTrimming"
                                                         style="text-align: center; padding-bottom: 3px;">
                                                         {{'Accounting.General.O.CreateDate' | TextCodeTranslationPipe}}:
-                                                        {{relatedRep.CreateDate | DateTimeToDatePipe}}
+                                                        {{relatedRep.reportExecutionLogPM.CreateDate |
+                                                        DateTimeToDatePipe}}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -183,18 +212,14 @@
                                                 <td>
                                                     <div style="margin-right:6px;overflow:hidden">
 
-                                                        <div class="timeline"
-                                                            *ngIf="relatedRep.StatusCode !== 'F'; else failureTemplate">
-                                                            <div
-                                                                style="width: 100%;  border: 0.5px solid #3994c3;border-radius:3px">
-                                                                <div class="step-indicator"
-                                                                    [style.width.%]="getPercentage(relatedRep.StatusCode)">
-                                                                </div>
+                                                        <div
+                                                            *ngIf="relatedRep.reportExecutionLogPM.StatusCode !== 'F'; else failureTemplate">
+
+                                                            <div *ngIf="relatedRep.reportExecutionLogPM.StatusCode !== 'D'"
+                                                                class="progress-container">
+                                                                <div class="progress"></div>
                                                             </div>
-                                                            <div class="step-label">
-                                                                {{ relatedRep.StatusName}} ({{
-                                                                getPercentage(relatedRep.StatusCode) }}%)
-                                                            </div>
+
 
                                                         </div>
 
@@ -203,22 +228,27 @@
                                                         <ng-template #failureTemplate>
                                                             <div class="failure-message">
                                                                 <p class="failed-text"
-                                                                    *ngIf="!relatedRep.ExceptionMessage?.startsWith('Stopped manually by')">
+                                                                    *ngIf="!relatedRep.reportExecutionLogPM.ExceptionMessage?.startsWith('Stopped manually by')">
                                                                     Build failed!</p>
                                                                 <p style="text-decoration: line-through;"
-                                                                    *ngIf="relatedRep.ExceptionMessage?.startsWith('Stopped manually by')"
+                                                                    *ngIf="relatedRep.reportExecutionLogPM.ExceptionMessage?.startsWith('Stopped manually by')"
                                                                     class="canceled-text">Canceled</p>
                                                             </div>
                                                         </ng-template>
                                                     </div>
 
                                                 </td>
-                                                <td [hidden]="relatedRep.StatusCode=='D' ||relatedRep.StatusCode=='F'"
+                                                <td [hidden]="relatedRep.reportExecutionLogPM.StatusCode=='D' ||relatedRep.reportExecutionLogPM.StatusCode=='F'"
                                                     style="width: 1px; vertical-align: top;">
                                                     <img style="width: 18px;height: 18px;" [title]="'Cancel'"
-                                                        (click)="CancelReport(relatedRep)"
+                                                        (click)="$event.stopPropagation();CancelReport(relatedRep)"
                                                         src="./_Resources/Images/Icons/All/BlackDeleteIcon.png" />
 
+                                                </td>
+                                                <td [hidden]="relatedRep.reportExecutionLogPM.StatusCode!=='D'"
+                                                    style="width: 20px; vertical-align: top;">
+                                                    <img [title]="'View Report'" style=" cursor: pointer;"
+                                                        src="./Images/Successful_process@1x.png" />
                                                 </td>
 
 

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,16 +26,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class HTSCodePM : BaseEntityPM   {
    #region Constructors
    public HTSCodePM() : base() {} 
-   public HTSCodePM(HTSCode entity) : base()
+   public HTSCodePM(POCO.HTSCode entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_itemId = entity.ItemId;
-		_code = entity.Code;
+		_item = entity.Item !=null ? new ProductItemPM(entity.Item) : null;
+			_code = entity.Code;
 		_approvedByCustomer = entity.ApprovedByCustomer;
 		_inActive = entity.InActive;
 		_destinationCountryId = entity.DestinationCountryId;
-		_countryEnglishName = default;
 		_lineNumber = entity.LineNumber;
 		_vATPercentage = entity.VATPercentage;
 		_dutiesPercentage = entity.DutiesPercentage;
@@ -91,6 +93,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ProductItemPM _item;
+		[Include]
+        [DataMember]
+        public virtual ProductItemPM Item 
+		{ 
+		get { return _item; } 
+		set { _item = value; }
+		}
 	  private string _code ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -152,22 +162,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationCountryId",OldValue=_destinationCountryId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _destinationCountryId=value;
-		   }
-		 }
-	   }
-	  private string _countryEnglishName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryEnglishName  
-	   {
-	     get { return _countryEnglishName; }
-		 set
-		 {
-		   if(_countryEnglishName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryEnglishName",OldValue=_countryEnglishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryEnglishName=value;
 		   }
 		 }
 	   }

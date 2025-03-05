@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class InsideShipmentPackagePM : BaseEntityPM   {
    #region Constructors
    public InsideShipmentPackagePM() : base() {} 
-   public InsideShipmentPackagePM(InsideShipmentPackage entity) : base()
+   public InsideShipmentPackagePM(POCO.InsideShipmentPackage entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -32,34 +34,22 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_originalInsideShipmentPackageId = entity.OriginalInsideShipmentPackageId;
 		_volumetricWeight = entity.VolumetricWeight;
 		_shipmentPackageId = entity.ShipmentPackageId;
-		_packageTypeId = entity.PackageTypeId;
-		_quantity = entity.Quantity;
+		_shipmentpackage = entity.ShipmentPackage !=null ? new ShipmentPackagePM(entity.ShipmentPackage) : null;
+			_packageTypeId = entity.PackageTypeId;
+		_packagetype = entity.PackageType !=null ? new PackageTypePM(entity.PackageType) : null;
+			_quantity = entity.Quantity;
 		_height = entity.Height;
 		_width = entity.Width;
 		_length = entity.Length;
 		_volume = entity.Volume;
 		_weight = entity.Weight;
 		_description = entity.Description;
-		_packageTypeName = default;
-		_changeSetOp = default;
 		_reference1 = entity.Reference1;
 		_reference2 = entity.Reference2;
 		_reference3 = entity.Reference3;
 		_commodityNumber = entity.CommodityNumber;
 		_reference4 = entity.Reference4;
 		_commodityName = entity.CommodityName;
-		_packageTypeCode = default;
-		_printAs = default;
-		_containerSize = default;
-		_tEU = default;
-		_isContainer = default;
-		_packageTypeIsAir = default;
-		_packageTypeIsOcean = default;
-		_packageTypeIsInland = default;
-		_packageTypeNote = default;
-		_packageTypeLocalName = default;
-		_packageTypeVolume = default;
-		_isPackageAddedManually = default;
 		_make = entity.Make;
 		_model = entity.Model;
 		_year = entity.Year;
@@ -69,12 +59,9 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_countryId = entity.CountryId;
 		_harmonize = entity.Harmonize;
 		_isMultiHarmonize = entity.IsMultiHarmonize;
-		insidePackageHarmonizes = default;
 		_horseId = entity.HorseId;
-		_horseName = default;
-		_grossWeightInLB = default;
-		_volumeInCBF = default;
-   }
+		_horse = entity.Horse !=null ? new HorsePM(entity.Horse) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -174,6 +161,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPackagePM _shipmentpackage;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPackagePM ShipmentPackage 
+		{ 
+		get { return _shipmentpackage; } 
+		set { _shipmentpackage = value; }
+		}
 	  private string _packageTypeId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -190,6 +185,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PackageTypePM _packagetype;
+		[Include]
+        [DataMember]
+        public virtual PackageTypePM PackageType 
+		{ 
+		get { return _packagetype; } 
+		set { _packagetype = value; }
+		}
 	  private int? _quantity ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -302,38 +305,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _packageTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeName  
-	   {
-	     get { return _packageTypeName; }
-		 set
-		 {
-		   if(_packageTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeName",OldValue=_packageTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeName=value;
-		   }
-		 }
-	   }
-	  private string _changeSetOp ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSetOp  
-	   {
-	     get { return _changeSetOp; }
-		 set
-		 {
-		   if(_changeSetOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSetOp",OldValue=_changeSetOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSetOp=value;
-		   }
-		 }
-	   }
 	  private string _reference1 ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -427,198 +398,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommodityName",OldValue=_commodityName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _commodityName=value;
-		   }
-		 }
-	   }
-	  private string _packageTypeCode ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeCode  
-	   {
-	     get { return _packageTypeCode; }
-		 set
-		 {
-		   if(_packageTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeCode",OldValue=_packageTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeCode=value;
-		   }
-		 }
-	   }
-	  private string _printAs ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PrintAs  
-	   {
-	     get { return _printAs; }
-		 set
-		 {
-		   if(_printAs != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrintAs",OldValue=_printAs,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _printAs=value;
-		   }
-		 }
-	   }
-	  private int _containerSize ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int ContainerSize  
-	   {
-	     get { return _containerSize; }
-		 set
-		 {
-		   if(_containerSize != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerSize",OldValue=_containerSize,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _containerSize=value;
-		   }
-		 }
-	   }
-	  private double _tEU ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double TEU  
-	   {
-	     get { return _tEU; }
-		 set
-		 {
-		   if(_tEU != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TEU",OldValue=_tEU,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _tEU=value;
-		   }
-		 }
-	   }
-	  private bool _isContainer ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsContainer  
-	   {
-	     get { return _isContainer; }
-		 set
-		 {
-		   if(_isContainer != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsContainer",OldValue=_isContainer,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isContainer=value;
-		   }
-		 }
-	   }
-	  private bool _packageTypeIsAir ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool PackageTypeIsAir  
-	   {
-	     get { return _packageTypeIsAir; }
-		 set
-		 {
-		   if(_packageTypeIsAir != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeIsAir",OldValue=_packageTypeIsAir,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeIsAir=value;
-		   }
-		 }
-	   }
-	  private bool _packageTypeIsOcean ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool PackageTypeIsOcean  
-	   {
-	     get { return _packageTypeIsOcean; }
-		 set
-		 {
-		   if(_packageTypeIsOcean != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeIsOcean",OldValue=_packageTypeIsOcean,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeIsOcean=value;
-		   }
-		 }
-	   }
-	  private bool _packageTypeIsInland ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool PackageTypeIsInland  
-	   {
-	     get { return _packageTypeIsInland; }
-		 set
-		 {
-		   if(_packageTypeIsInland != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeIsInland",OldValue=_packageTypeIsInland,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeIsInland=value;
-		   }
-		 }
-	   }
-	  private string _packageTypeNote ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeNote  
-	   {
-	     get { return _packageTypeNote; }
-		 set
-		 {
-		   if(_packageTypeNote != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeNote",OldValue=_packageTypeNote,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeNote=value;
-		   }
-		 }
-	   }
-	  private string _packageTypeLocalName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PackageTypeLocalName  
-	   {
-	     get { return _packageTypeLocalName; }
-		 set
-		 {
-		   if(_packageTypeLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeLocalName",OldValue=_packageTypeLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeLocalName=value;
-		   }
-		 }
-	   }
-	  private decimal _packageTypeVolume ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal PackageTypeVolume  
-	   {
-	     get { return _packageTypeVolume; }
-		 set
-		 {
-		   if(_packageTypeVolume != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageTypeVolume",OldValue=_packageTypeVolume,NewValue=value,PropertyType="decimal"};
-		    NotifyPropertyChanged(values);
-		   _packageTypeVolume=value;
-		   }
-		 }
-	   }
-	  private bool _isPackageAddedManually ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsPackageAddedManually  
-	   {
-	     get { return _isPackageAddedManually; }
-		 set
-		 {
-		   if(_isPackageAddedManually != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPackageAddedManually",OldValue=_isPackageAddedManually,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isPackageAddedManually=value;
 		   }
 		 }
 	   }
@@ -815,54 +594,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _horseName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string HorseName  
-	   {
-	     get { return _horseName; }
-		 set
-		 {
-		   if(_horseName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HorseName",OldValue=_horseName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _horseName=value;
-		   }
-		 }
-	   }
-	  private double? _grossWeightInLB ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double? GrossWeightInLB  
-	   {
-	     get { return _grossWeightInLB; }
-		 set
-		 {
-		   if(_grossWeightInLB != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GrossWeightInLB",OldValue=_grossWeightInLB,NewValue=value,PropertyType="double?"};
-		    NotifyPropertyChanged(values);
-		   _grossWeightInLB=value;
-		   }
-		 }
-	   }
-	  private double? _volumeInCBF ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double? VolumeInCBF  
-	   {
-	     get { return _volumeInCBF; }
-		 set
-		 {
-		   if(_volumeInCBF != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VolumeInCBF",OldValue=_volumeInCBF,NewValue=value,PropertyType="double?"};
-		    NotifyPropertyChanged(values);
-		   _volumeInCBF=value;
-		   }
-		 }
-	   }
+		private HorsePM _horse;
+		[Include]
+        [DataMember]
+        public virtual HorsePM Horse 
+		{ 
+		get { return _horse; } 
+		set { _horse = value; }
+		}
 	 }
 #endregion Properties
 }

@@ -117,19 +117,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using <#= NamespacesDictionary["pocosspacestring"] #>;
-<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#><#+}#>
+using POCO = <#= NamespacesDictionary["pocosspacestring"] #>;
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>using AmitalCloud.Infrastructure.Domain.BaseClasses;<#+}#>
 
 namespace <#= listnamespacestring #>
 {
    [DataContract]
-   public partial class <#=tableName #>List<#+if(entity.ApplyGenericCustomFields.ToString() == "true"){#> : CustomFieldList<#+
+   public partial class <#=tableName #>List<#+if(entity.ApplyGenericCustomFields.ToString() == "true"){#> : BaseCustomFieldList<#+
    }#>
    
    {
        #region Constructors
        public <#=tableName #>List() : base() {}
-       public <#=tableName #>List(<#=tableName #> entity) : base()
+       public <#=tableName #>List(POCO.<#=tableName #> entity) : base()
        {
 <#+
  	foreach(var field in entity["field"])  //get all classes

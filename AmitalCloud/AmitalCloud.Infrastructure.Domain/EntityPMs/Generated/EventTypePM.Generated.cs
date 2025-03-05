@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class EventTypePM : BaseEntityPM   {
    #region Constructors
    public EventTypePM() : base() {} 
-   public EventTypePM(EventType entity) : base()
+   public EventTypePM(POCO.EventType entity) : base()
    {
 		_id = entity.Id;
 		_shortView = entity.ShortView;
@@ -33,32 +35,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_allowedInAutomation = entity.AllowedInAutomation;
 		_searchFields = entity.SearchFields;
 		_eventTypeCategoryCode = entity.EventTypeCategoryCode;
-		_isCustomerView = entity.IsCustomerView;
+		_eventtypecategory = entity.EventTypeCategory !=null ? new EventTypeCategoryPM(entity.EventTypeCategory) : null;
+			_isCustomerView = entity.IsCustomerView;
 		_isAgentView = entity.IsAgentView;
 		_tenant = entity.Tenant;
 		_isSharedLogisticsEnabled = entity.IsSharedLogisticsEnabled;
 		_code = entity.Code;
 		_englishName = entity.EnglishName;
 		_localName = entity.LocalName;
-		_computedLocalName = default;
 		_objectTableId = entity.ObjectTableId;
-		_entityStatusName = default;
 		_entityStatusId = entity.EntityStatusId;
-		_isFollowUp = entity.IsFollowUp;
+		_entitystatus = entity.EntityStatus !=null ? new EntityStatusPM(entity.EntityStatus) : null;
+			_isFollowUp = entity.IsFollowUp;
 		_followUpEnglishName = entity.FollowUpEnglishName;
 		_followUpLocalName = entity.FollowUpLocalName;
 		_addedManually = entity.AddedManually;
 		_isManualEntry = entity.IsManualEntry;
 		_manualActivatedFollowUp = entity.ManualActivatedFollowUp;
 		_inActive = entity.InActive;
-		_eventGroupCode = default;
-		_objectTableName = default;
-		_isHybrid = default;
 		_customField = entity.CustomField;
 		_isStatusNotModified = entity.IsStatusNotModified;
-		_partnerCode = default;
 		_eventTrigger = entity.EventTrigger;
-		eventRemarks = default;
 		_weight = entity.Weight;
    }
    #endregion Constructors
@@ -176,6 +173,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private EventTypeCategoryPM _eventtypecategory;
+		[Include]
+        [DataMember]
+        public virtual EventTypeCategoryPM EventTypeCategory 
+		{ 
+		get { return _eventtypecategory; } 
+		set { _eventtypecategory = value; }
+		}
 	  private bool _isCustomerView ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -288,22 +293,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _computedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputedLocalName  
-	   {
-	     get { return _computedLocalName; }
-		 set
-		 {
-		   if(_computedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computedLocalName=value;
-		   }
-		 }
-	   }
 	  private string _objectTableId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -317,22 +306,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableId",OldValue=_objectTableId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _objectTableId=value;
-		   }
-		 }
-	   }
-	  private string _entityStatusName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EntityStatusName  
-	   {
-	     get { return _entityStatusName; }
-		 set
-		 {
-		   if(_entityStatusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityStatusName",OldValue=_entityStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _entityStatusName=value;
 		   }
 		 }
 	   }
@@ -352,6 +325,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private EntityStatusPM _entitystatus;
+		[Include]
+        [DataMember]
+        public virtual EntityStatusPM EntityStatus 
+		{ 
+		get { return _entitystatus; } 
+		set { _entitystatus = value; }
+		}
 	  private bool _isFollowUp ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -464,54 +445,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _eventGroupCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EventGroupCode  
-	   {
-	     get { return _eventGroupCode; }
-		 set
-		 {
-		   if(_eventGroupCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EventGroupCode",OldValue=_eventGroupCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _eventGroupCode=value;
-		   }
-		 }
-	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
-		   }
-		 }
-	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
-		   }
-		 }
-	   }
 	  private string _customField ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -541,22 +474,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsStatusNotModified",OldValue=_isStatusNotModified,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isStatusNotModified=value;
-		   }
-		 }
-	   }
-	  private string _partnerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerCode  
-	   {
-	     get { return _partnerCode; }
-		 set
-		 {
-		   if(_partnerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerCode=value;
 		   }
 		 }
 	   }

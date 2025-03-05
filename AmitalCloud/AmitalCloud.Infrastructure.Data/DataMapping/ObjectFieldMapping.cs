@@ -66,7 +66,7 @@ namespace AmitalCloud.Infrastructure.Data.DataMapping
             objectField.DisplayInEntityVariables = objectFieldPM.DisplayInEntityVariables;
             objectField.TextCase = objectFieldPM.TextCase;
             objectField.DigitsAfterPoint = objectFieldPM.DigitsAfterPoint;
-            objectField.SearchFields = objectFieldPM.FieldName + "," + objectFieldPM.ObjectTableName + "," + objectFieldPM.FullNameTextCodeDefaultText + "," + objectFieldPM.PMPropertyPath + "," + objectFieldPM.ListPropertyPath + "," + objectFieldPM.ListTextCodeDefaultText + "," + objectFieldPM.MinLength + "," + objectFieldPM.MaxLength;
+            objectField.SearchFields = objectFieldPM.FieldName + "," + objectFieldPM.ObjectTable_LookUpTable.Name + "," + objectFieldPM.FullNameTextCode + "," + objectFieldPM.PMPropertyPath + "," + objectFieldPM.ListPropertyPath + "," + objectFieldPM.ListTextCode.DefaultText + "," + objectFieldPM.MinLength + "," + objectFieldPM.MaxLength;
             objectField.DisplayInLookupColumnSize = objectFieldPM.DisplayInLookupColumnSize;
             objectField.ColumnHeaderTemplateName = objectFieldPM.ColumnHeaderTemplateName;
             objectField.ControlField1 = objectFieldPM.ControlField1;

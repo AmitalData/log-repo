@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class DeploymentPackageExecutionLogPM : BaseEntityPM   {
    #region Constructors
    public DeploymentPackageExecutionLogPM() : base() {} 
-   public DeploymentPackageExecutionLogPM(DeploymentPackageExecutionLog entity) : base()
+   public DeploymentPackageExecutionLogPM(POCO.DeploymentPackageExecutionLog entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_createDate = entity.CreateDate;
 		_createdByUserId = entity.CreatedByUserId;
 		_statusCode = entity.StatusCode;
-		_exceptionMessage = entity.ExceptionMessage;
+		_code = entity.Code !=null ? new CommunicationStatusTypePM(entity.Code) : null;
+			_exceptionMessage = entity.ExceptionMessage;
 		_requestXML = entity.RequestXML;
 		_subject = entity.Subject;
 		_logs = entity.Logs;
@@ -123,6 +126,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CommunicationStatusTypePM _code;
+		[Include]
+        [DataMember]
+        public virtual CommunicationStatusTypePM Code 
+		{ 
+		get { return _code; } 
+		set { _code = value; }
+		}
 	  private string _exceptionMessage ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

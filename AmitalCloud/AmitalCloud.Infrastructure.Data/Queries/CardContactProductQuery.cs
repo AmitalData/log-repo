@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                            where a.Tenant == tenant && a.Id == id
                                            select new CardContactProductPM(a)
                                            {
-                                                ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
+                                                //ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
                                            }).FirstOrDefault();
 
             return entity;
@@ -44,7 +44,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                  where a.Tenant == tenant && a.CardContactId == CardContactId
                  select new CardContactProductPM(a)
                  {
-                      ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
+                      //ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
                  }).ToList();
 
             return result;

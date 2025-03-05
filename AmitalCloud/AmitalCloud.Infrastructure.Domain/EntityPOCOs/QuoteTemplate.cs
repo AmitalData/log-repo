@@ -76,6 +76,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool IsDefault { get; set; }
         [Column("InActive")]
 	    public bool InActive { get; set; }
+		public virtual ICollection<QuoteTemplateSection> TemplateSections { get; set; }
         [Column("IsCopiedAtSignup")]
 	    public bool IsCopiedAtSignup { get; set; }
         [Column("IsEnabledForCustomers")]

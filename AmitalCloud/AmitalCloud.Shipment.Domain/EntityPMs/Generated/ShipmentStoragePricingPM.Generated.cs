@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,13 +26,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentStoragePricingPM : BaseEntityPM   {
    #region Constructors
    public ShipmentStoragePricingPM() : base() {} 
-   public ShipmentStoragePricingPM(ShipmentStoragePricing entity) : base()
+   public ShipmentStoragePricingPM(POCO.ShipmentStoragePricing entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_shipmentId = entity.ShipmentId;
 		_warehouseId = entity.WarehouseId;
-		_stepFrom = entity.StepFrom;
+		_warehouse = entity.Warehouse !=null ? new CardPM(entity.Warehouse) : null;
+			_stepFrom = entity.StepFrom;
 		_stepTo = entity.StepTo;
 		_days = entity.Days;
 		_salePrice = entity.SalePrice;
@@ -105,6 +108,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _warehouse;
+		[Include]
+        [DataMember]
+        public virtual CardPM Warehouse 
+		{ 
+		get { return _warehouse; } 
+		set { _warehouse = value; }
+		}
 	  private int _stepFrom ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

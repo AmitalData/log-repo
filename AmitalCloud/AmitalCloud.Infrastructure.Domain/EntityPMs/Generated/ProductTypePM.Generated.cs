@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,18 +26,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ProductTypePM : BaseEntityPM   {
    #region Constructors
    public ProductTypePM() : base() {} 
-   public ProductTypePM(ProductType entity) : base()
+   public ProductTypePM(POCO.ProductType entity) : base()
    {
 		_code = entity.Code;
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
-		_inActive = default;
-		_tenant = default;
 		_quotationDefaultTemplateId = entity.QuotationDefaultTemplateId;
-		_defaultTemplate = default;
-		_routingRQuoteDefaultTemplateId = entity.RoutingRQuoteDefaultTemplateId;
-		_routingRQuoteDefaultTemplate = default;
-   }
+		_quotetemplate = entity.QuoteTemplate !=null ? new QuoteTemplatePM(entity.QuoteTemplate) : null;
+			_routingRQuoteDefaultTemplateId = entity.RoutingRQuoteDefaultTemplateId;
+		_routingrquotedefaulttemplate = entity.RoutingRQuoteDefaultTemplate !=null ? new QuoteTemplatePM(entity.RoutingRQuoteDefaultTemplate) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _code ;
@@ -87,38 +87,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _inActive ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool InActive  
-	   {
-	     get { return _inActive; }
-		 set
-		 {
-		   if(_inActive != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=_inActive,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _inActive=value;
-		   }
-		 }
-	   }
-	  private int _tenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public override int Tenant  
-	   {
-	     get { return _tenant; }
-		 set
-		 {
-		   if(_tenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _tenant=value;
-		   }
-		 }
-	   }
 	  private string _quotationDefaultTemplateId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -135,22 +103,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _defaultTemplate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DefaultTemplate  
-	   {
-	     get { return _defaultTemplate; }
-		 set
-		 {
-		   if(_defaultTemplate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultTemplate",OldValue=_defaultTemplate,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _defaultTemplate=value;
-		   }
-		 }
-	   }
+		private QuoteTemplatePM _quotetemplate;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplatePM QuoteTemplate 
+		{ 
+		get { return _quotetemplate; } 
+		set { _quotetemplate = value; }
+		}
 	  private string _routingRQuoteDefaultTemplateId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -167,22 +127,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _routingRQuoteDefaultTemplate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RoutingRQuoteDefaultTemplate  
-	   {
-	     get { return _routingRQuoteDefaultTemplate; }
-		 set
-		 {
-		   if(_routingRQuoteDefaultTemplate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RoutingRQuoteDefaultTemplate",OldValue=_routingRQuoteDefaultTemplate,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _routingRQuoteDefaultTemplate=value;
-		   }
-		 }
-	   }
+		private QuoteTemplatePM _routingrquotedefaulttemplate;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplatePM RoutingRQuoteDefaultTemplate 
+		{ 
+		get { return _routingrquotedefaulttemplate; } 
+		set { _routingrquotedefaulttemplate = value; }
+		}
 	 }
 #endregion Properties
 }

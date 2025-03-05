@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,10 +26,11 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ContainersExternalDataPM : BaseEntityPM   {
    #region Constructors
    public ContainersExternalDataPM() : base() {} 
-   public ContainersExternalDataPM(ContainersExternalData entity) : base()
+   public ContainersExternalDataPM(POCO.ContainersExternalData entity) : base()
    {
 		_id = entity.Id;
-		_tenant = entity.Tenant;
+		_container = entity.Container !=null ? new ContainerPM(entity.Container) : null;
+			_tenant = entity.Tenant;
 		_gateIn = entity.GateIn;
 		_gateOut = entity.GateOut;
    }
@@ -50,6 +53,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ContainerPM _container;
+		[Include]
+        [DataMember]
+        public virtual ContainerPM Container 
+		{ 
+		get { return _container; } 
+		set { _container = value; }
+		}
 	  private int _tenant ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

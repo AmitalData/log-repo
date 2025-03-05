@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class VatTypePM : BaseEntityPM   {
    #region Constructors
    public VatTypePM() : base() {} 
-   public VatTypePM(VatType entity) : base()
+   public VatTypePM(POCO.VatType entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -33,25 +35,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_englishName = entity.EnglishName;
 		_localName = entity.LocalName;
-		_computedLocalName = default;
 		_description = entity.Description;
 		_localDescription = entity.LocalDescription;
 		_externalVATCard = entity.ExternalVATCard;
 		_addedManually = entity.AddedManually;
 		_inActive = entity.InActive;
 		_isMultiPercentage = entity.IsMultiPercentage;
-		_isSecured = default;
-		_externalVATCardExternalId = default;
-		_externalTAXItemIdExternalId = default;
-		vatTypePercentages = default;
-		vatTypeGroups = default;
-		_newEntityPercentage = default;
-		_newEntityPercentageDate = default;
 		_recognizedPercentage = entity.RecognizedPercentage;
 		_payablesExternalId = entity.PayablesExternalId;
 		_receivablesExternalId = entity.ReceivablesExternalId;
 		_isRegionalTax = entity.IsRegionalTax;
-		_partnerCode = default;
    }
    #endregion Constructors
    #region Properties
@@ -168,22 +161,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _computedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputedLocalName  
-	   {
-	     get { return _computedLocalName; }
-		 set
-		 {
-		   if(_computedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computedLocalName=value;
-		   }
-		 }
-	   }
 	  private string _description ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -280,54 +257,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
-		   }
-		 }
-	   }
-	  private string _externalVATCardExternalId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalVATCardExternalId  
-	   {
-	     get { return _externalVATCardExternalId; }
-		 set
-		 {
-		   if(_externalVATCardExternalId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalVATCardExternalId",OldValue=_externalVATCardExternalId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalVATCardExternalId=value;
-		   }
-		 }
-	   }
-	  private string _externalTAXItemIdExternalId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalTAXItemIdExternalId  
-	   {
-	     get { return _externalTAXItemIdExternalId; }
-		 set
-		 {
-		   if(_externalTAXItemIdExternalId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalTAXItemIdExternalId",OldValue=_externalTAXItemIdExternalId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalTAXItemIdExternalId=value;
-		   }
-		 }
-	   }
 	   private List<VatTypePercentagePM> vatTypePercentages;
 	    
        [Composition]
@@ -394,38 +323,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedVatTypeGroups = value; }
 	    }
-	  private double _newEntityPercentage ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double NewEntityPercentage  
-	   {
-	     get { return _newEntityPercentage; }
-		 set
-		 {
-		   if(_newEntityPercentage != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewEntityPercentage",OldValue=_newEntityPercentage,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _newEntityPercentage=value;
-		   }
-		 }
-	   }
-	  private DateTime _newEntityPercentageDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime NewEntityPercentageDate  
-	   {
-	     get { return _newEntityPercentageDate; }
-		 set
-		 {
-		   if(_newEntityPercentageDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewEntityPercentageDate",OldValue=_newEntityPercentageDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _newEntityPercentageDate=value;
-		   }
-		 }
-	   }
 	  private double? _recognizedPercentage ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -487,22 +384,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRegionalTax",OldValue=_isRegionalTax,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isRegionalTax=value;
-		   }
-		 }
-	   }
-	  private string _partnerCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerCode  
-	   {
-	     get { return _partnerCode; }
-		 set
-		 {
-		   if(_partnerCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerCode=value;
 		   }
 		 }
 	   }

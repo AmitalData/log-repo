@@ -131,5 +131,31 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
                 throw ex;
             }
         }
+
+
+      public bool IsMulti(string AccountId, int Tenant)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(AccountId))
+                    throw new ArgumentException("AccountId cannot be null or empty.", nameof(AccountId));
+
+                if (Tenant <= 0)
+                    throw new ArgumentException("Invalid Tenant ID.", nameof(Tenant));
+
+
+                accountingContext = AccountingContext.GetContext(Tenant);
+                var isMultiCurrency = accountingContext.GLAccounts
+                    .Where(a => a.Id == AccountId && a.Tenant == Tenant)
+                    .Select(a => a.IsMultiCurrency)
+                    .FirstOrDefault();
+
+                return isMultiCurrency ?? false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while checking if the account is multi-currency. ", ex);
+            }
+        }
     }
 }

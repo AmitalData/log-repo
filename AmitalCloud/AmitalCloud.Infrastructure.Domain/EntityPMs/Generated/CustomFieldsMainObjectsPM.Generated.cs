@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomFieldsMainObjectPM : BaseEntityPM   {
    #region Constructors
    public CustomFieldsMainObjectPM() : base() {} 
-   public CustomFieldsMainObjectPM(CustomFieldsMainObject entity) : base()
+   public CustomFieldsMainObjectPM(POCO.CustomFieldsMainObject entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

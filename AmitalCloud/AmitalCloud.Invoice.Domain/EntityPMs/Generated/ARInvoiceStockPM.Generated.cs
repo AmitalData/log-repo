@@ -6,12 +6,14 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
@@ -40,10 +42,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_endDate = entity.EndDate;
 		_amount = entity.Amount;
 		_remaining = entity.Remaining;
-		_statusName = default;
-		aRInvoiceStockLines = default;
 		_notes = entity.Notes;
-		_linesCount = default;
    }
    #endregion Constructors
    #region Properties
@@ -272,22 +271,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _statusName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	     get { return _statusName; }
-		 set
-		 {
-		   if(_statusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusName=value;
-		   }
-		 }
-	   }
 	   private List<ARInvoiceStockLinePM> aRInvoiceStockLines;
 	    
        [Composition]
@@ -334,22 +317,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Notes",OldValue=_notes,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _notes=value;
-		   }
-		 }
-	   }
-	  private string _linesCount ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LinesCount  
-	   {
-	     get { return _linesCount; }
-		 set
-		 {
-		   if(_linesCount != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LinesCount",OldValue=_linesCount,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _linesCount=value;
 		   }
 		 }
 	   }

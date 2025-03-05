@@ -260,10 +260,12 @@ using AmitalCloud.Infrastructure.Web.BaseClasses;
 using <#= NamespacesDictionary["pmsspacestring"] #> ;
 using <#= NamespacesDictionary["updateservicespacestring"] #>;
 using <#= NamespacesDictionary["queryeservicespacestring"] #>;
+using <#= NamespacesDictionary["pocosspacestring"] #>;
+
 namespace <#= controlernamespace #>
 { 
 
-    public partial class <#= dBTableName + "Controller" #> : BasePMControler <<#= tableName #>QueryService, <#= tableName #>UpdateService, <#= pmName #>>
+    public partial class <#= dBTableName + "Controller" #> : BasePMControler <<#= tableName #>QueryService, <#= tableName #>UpdateService, <#= pmName #>,<#= tableName #>>
     {
     	public <#= dBTableName + "Controller" #>() :base("<#= entity.ObjectTableName.Trim('"') #>", <#= enableSecurityString #> , <#= HasTenantString #>, <#= saveHistoryString #>)  {}
     }

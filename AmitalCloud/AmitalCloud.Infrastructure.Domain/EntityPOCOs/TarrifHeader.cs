@@ -46,6 +46,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Notes { get; set; }
         [Column("TransitTimeNotes")]
 	    public string TransitTimeNotes { get; set; }
+		public virtual ICollection<TarrifFromTo> FromLocationList { get; set; }
+		public virtual ICollection<TarrifFromTo> ToLocationList { get; set; }
     }
 }
 	 

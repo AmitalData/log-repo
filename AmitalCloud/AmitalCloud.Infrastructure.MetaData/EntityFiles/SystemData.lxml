@@ -70,7 +70,7 @@
     ObjectTableName="&quot;SystemData&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="0"
+    MaxLength="200"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"

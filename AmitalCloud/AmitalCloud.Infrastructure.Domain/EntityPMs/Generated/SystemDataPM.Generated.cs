@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class SystemDataPM : BaseEntityPM   {
    #region Constructors
    public SystemDataPM() : base() {} 
-   public SystemDataPM(SystemData entity) : base()
+   public SystemDataPM(POCO.SystemData entity) : base()
    {
 		_userName = entity.UserName;
 		_date = entity.Date;
@@ -38,8 +40,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_vatNumber = entity.VatNumber;
 		_addressId = entity.AddressId;
 		_contactId = entity.ContactId;
-		_supportemail = default;
-		_signatureHtml = default;
    }
    #endregion Constructors
    #region Properties
@@ -233,38 +233,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactId",OldValue=_contactId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _contactId=value;
-		   }
-		 }
-	   }
-	  private string _supportemail ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Supportemail  
-	   {
-	     get { return _supportemail; }
-		 set
-		 {
-		   if(_supportemail != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Supportemail",OldValue=_supportemail,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _supportemail=value;
-		   }
-		 }
-	   }
-	  private string _signatureHtml ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SignatureHtml  
-	   {
-	     get { return _signatureHtml; }
-		 set
-		 {
-		   if(_signatureHtml != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SignatureHtml",OldValue=_signatureHtml,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _signatureHtml=value;
 		   }
 		 }
 	   }

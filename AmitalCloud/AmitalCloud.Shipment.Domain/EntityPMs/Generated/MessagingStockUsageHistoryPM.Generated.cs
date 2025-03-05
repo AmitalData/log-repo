@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,22 +26,25 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class MessagingStockUsageHistoryPM : BaseEntityPM   {
    #region Constructors
    public MessagingStockUsageHistoryPM() : base() {} 
-   public MessagingStockUsageHistoryPM(MessagingStockUsageHistory entity) : base()
+   public MessagingStockUsageHistoryPM(POCO.MessagingStockUsageHistory entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_entityId = entity.EntityId;
 		_entityNumber = entity.EntityNumber;
 		_stockId = entity.StockId;
-		_messageType = entity.MessageType;
+		_stock = entity.Stock !=null ? new MessagingStockPM(entity.Stock) : null;
+			_messageType = entity.MessageType;
 		_mAWB = entity.MAWB;
 		_hAWB = entity.HAWB;
 		_actionType = entity.ActionType;
 		_firstActionDate = entity.FirstActionDate;
 		_lastActionDate = entity.LastActionDate;
 		_firstActionByUserId = entity.FirstActionByUserId;
-		_lastActionByUserId = entity.LastActionByUserId;
-   }
+		_firstactionbyuser = entity.FirstActionByUser !=null ? new UserPM(entity.FirstActionByUser) : null;
+			_lastActionByUserId = entity.LastActionByUserId;
+		_lastactionbyuser = entity.LastActionByUser !=null ? new UserPM(entity.LastActionByUser) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -123,6 +128,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private MessagingStockPM _stock;
+		[Include]
+        [DataMember]
+        public virtual MessagingStockPM Stock 
+		{ 
+		get { return _stock; } 
+		set { _stock = value; }
+		}
 	  private string _messageType ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -235,6 +248,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _firstactionbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM FirstActionByUser 
+		{ 
+		get { return _firstactionbyuser; } 
+		set { _firstactionbyuser = value; }
+		}
 	  private string _lastActionByUserId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -251,6 +272,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _lastactionbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM LastActionByUser 
+		{ 
+		get { return _lastactionbyuser; } 
+		set { _lastactionbyuser = value; }
+		}
 	 }
 #endregion Properties
 }

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ChargesGroupPM : BaseEntityPM   {
    #region Constructors
    public ChargesGroupPM() : base() {} 
-   public ChargesGroupPM(ChargesGroup entity) : base()
+   public ChargesGroupPM(POCO.ChargesGroup entity) : base()
    {
 		_searchFields = entity.SearchFields;
 		_code = entity.Code;
@@ -34,7 +36,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_localName = entity.LocalName;
 		_viewOrder = entity.ViewOrder;
 		_quoteGroupSectionID = entity.QuoteGroupSectionID;
-   }
+		_quotegroupsection = entity.QuoteGroupSection !=null ? new QuoteGroupSectionPM(entity.QuoteGroupSection) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _searchFields ;
@@ -166,6 +169,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteGroupSectionPM _quotegroupsection;
+		[Include]
+        [DataMember]
+        public virtual QuoteGroupSectionPM QuoteGroupSection 
+		{ 
+		get { return _quotegroupsection; } 
+		set { _quotegroupsection = value; }
+		}
 	 }
 #endregion Properties
 }

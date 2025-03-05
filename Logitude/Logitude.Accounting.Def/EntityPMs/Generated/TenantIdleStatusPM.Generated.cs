@@ -142,6 +142,31 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string objectTable ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTable  
+	   {
+	    
+	     get
+		{
+		   return objectTable;
+		 }
+		 set
+		 {
+		   if(objectTable != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTable",OldValue=objectTable,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   objectTable=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class InboundEmailPM : BaseEntityPM   {
    #region Constructors
    public InboundEmailPM() : base() {} 
-   public InboundEmailPM(InboundEmail entity) : base()
+   public InboundEmailPM(POCO.InboundEmail entity) : base()
    {
 		_id = entity.Id;
 		_isRejected = entity.IsRejected;
@@ -35,10 +37,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_updateDate = entity.UpdateDate;
 		_objectTableId = entity.ObjectTableId;
 		_createdByContactId = entity.CreatedByContactId;
-		_objectTableName = default;
-		_tenant = entity.Tenant;
-		inboundEmailLines = default;
-		_searchFields = default;
+		_createdbycontact = entity.CreatedByContact !=null ? new ContactPM(entity.CreatedByContact) : null;
+			_tenant = entity.Tenant;
    }
    #endregion Constructors
    #region Properties
@@ -187,22 +187,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
-		   }
-		 }
-	   }
+		private ContactPM _createdbycontact;
+		[Include]
+        [DataMember]
+        public virtual ContactPM CreatedByContact 
+		{ 
+		get { return _createdbycontact; } 
+		set { _createdbycontact = value; }
+		}
 	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -252,22 +244,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedInboundEmailLines = value; }
 	    }
-	  private string _searchFields ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SearchFields  
-	   {
-	     get { return _searchFields; }
-		 set
-		 {
-		   if(_searchFields != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _searchFields=value;
-		   }
-		 }
-	   }
 	 }
 #endregion Properties
 }

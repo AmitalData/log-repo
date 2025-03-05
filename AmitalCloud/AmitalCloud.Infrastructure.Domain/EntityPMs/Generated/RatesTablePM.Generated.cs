@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,19 +26,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class RatesTablePM : BaseEntityPM   {
    #region Constructors
    public RatesTablePM() : base() {} 
-   public RatesTablePM(RatesTable entity) : base()
+   public RatesTablePM(POCO.RatesTable entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_logDateTime = entity.LogDateTime;
 		_foreignCurrencyId = entity.ForeignCurrencyId;
-		_foreignCurrencyCode = default;
-		_baseCurrencyId = entity.BaseCurrencyId;
-		_rate = entity.Rate;
+		_foreigncurrency = entity.ForeignCurrency !=null ? new CurrencyPM(entity.ForeignCurrency) : null;
+			_baseCurrencyId = entity.BaseCurrencyId;
+		_basecurrency = entity.BaseCurrency !=null ? new CurrencyPM(entity.BaseCurrency) : null;
+			_rate = entity.Rate;
 		_valueDate = entity.ValueDate;
-		_foreignCurrencyName = default;
 		_updatedByUserId = entity.UpdatedByUserId;
-		_updatedByUserName = default;
 		_updatedDate = entity.UpdatedDate;
 		_unit = entity.Unit;
    }
@@ -107,22 +108,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _foreignCurrencyCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ForeignCurrencyCode  
-	   {
-	     get { return _foreignCurrencyCode; }
-		 set
-		 {
-		   if(_foreignCurrencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForeignCurrencyCode",OldValue=_foreignCurrencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _foreignCurrencyCode=value;
-		   }
-		 }
-	   }
+		private CurrencyPM _foreigncurrency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM ForeignCurrency 
+		{ 
+		get { return _foreigncurrency; } 
+		set { _foreigncurrency = value; }
+		}
 	  private string _baseCurrencyId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -139,6 +132,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CurrencyPM _basecurrency;
+		[Include]
+        [DataMember]
+        public virtual CurrencyPM BaseCurrency 
+		{ 
+		get { return _basecurrency; } 
+		set { _basecurrency = value; }
+		}
 	  private double? _rate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -171,22 +172,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _foreignCurrencyName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ForeignCurrencyName  
-	   {
-	     get { return _foreignCurrencyName; }
-		 set
-		 {
-		   if(_foreignCurrencyName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForeignCurrencyName",OldValue=_foreignCurrencyName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _foreignCurrencyName=value;
-		   }
-		 }
-	   }
 	  private string _updatedByUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -200,22 +185,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserId",OldValue=_updatedByUserId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _updatedByUserId=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
 		   }
 		 }
 	   }

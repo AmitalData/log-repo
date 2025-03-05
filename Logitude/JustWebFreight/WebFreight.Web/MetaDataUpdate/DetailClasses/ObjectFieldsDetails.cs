@@ -159,6 +159,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string ForeignEntity { get; set; }
         public string NavigationPropertyName { get; set; }
         public bool NoMetaDataField { get; set; }     
+        public string ObjectFieldDataMapping { get; set; }
 
     }
 }

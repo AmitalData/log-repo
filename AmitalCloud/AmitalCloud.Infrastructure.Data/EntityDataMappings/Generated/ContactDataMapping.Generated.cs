@@ -58,8 +58,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         AutomaticLastUpdateDate, 
 	         UpdateDate, 
 	         DigitalPortalLanguage, 
-	         ContactForAccounting, 
-	         ContactLastLogin,	      }
+	         ContactForAccounting,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -87,6 +86,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         IsAll, 
 	         Position, 
 	         SearchFields, 
+	         Name, 
 	         EnglishName, 
 	         LocalName, 
 	         ComputedLocalName, 
@@ -124,7 +124,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         UpdateDate, 
 	         DigitalPortalLanguage, 
 	         ContactForAccounting, 
-	         ContactLastLogin, 
 	         TimeZone,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -161,7 +160,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate)) { entityPOCO.UpdateDate = entityPM.UpdateDate;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DigitalPortalLanguage)) { entityPOCO.DigitalPortalLanguage = entityPM.DigitalPortalLanguage;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactForAccounting)) { entityPOCO.ContactForAccounting = entityPM.ContactForAccounting;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactLastLogin)) { entityPOCO.ContactLastLogin = entityPM.ContactLastLogin;}
 									BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 		public void POCOToPM(ContactPM entityPM, POCO.Contact entityPOCO)
@@ -294,10 +292,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.ContactForAccounting = entityPOCO.ContactForAccounting;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContactLastLogin))
-            {
-					entityPM.ContactLastLogin = entityPOCO.ContactLastLogin;
-            }
 		}
 		public void PMToOldPM(ContactPM entityPM, ContactPM oldEntityPM)
         {
@@ -425,10 +419,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactForAccounting))
             {
                 oldEntityPM.ContactForAccounting = entityPM.ContactForAccounting;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactLastLogin))
-            {
-                oldEntityPM.ContactLastLogin = entityPM.ContactLastLogin;
             }
 					}
 		public void POCOToList(POCO.Contact entityPOCO, ContactList entityList)

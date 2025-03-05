@@ -108,6 +108,10 @@
     <Compile Include="EntityKeys\AccountingIntegrityCheckKeys.cs" />
     <Compile Include="EntityKeys\AccountingNoteKeys.cs" />
     <Compile Include="EntityKeys\ARPaymentsJournalKeys.cs" />
+    <Compile Include="EntityKeys\Aur_ItemKeys.cs" />
+    <Compile Include="EntityKeys\Aur_PaymentItemKeys.cs" />
+    <Compile Include="EntityKeys\Aur_PaymentKeys.cs" />
+    <Compile Include="EntityKeys\Aur_TimesheetKeys.cs" />
     <Compile Include="EntityKeys\AutomaticExternalReconcileMethodKeys.cs" />
     <Compile Include="EntityKeys\BankPageEntryTypeKeys.cs" />
     <Compile Include="EntityKeys\CalculatedChartsLineTypeKeys.cs" />
@@ -154,6 +158,10 @@
     <Compile Include="EntityListQueryServices\AccountingIntegrityCheckListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AccountingNoteListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ARPaymentsJournalListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Aur_ItemListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Aur_PaymentItemListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Aur_PaymentListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Aur_TimesheetListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AutomaticExternalReconcileMethodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BankPageEntryTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CalculatedChartsLineTypeListQueryService.cs" />
@@ -166,6 +174,10 @@
     <Compile Include="EntityListQueryServices\Generated\AccountingIntegrityCheckListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingNoteListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ARPaymentsJournalListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\Aur_ItemListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\Aur_PaymentItemListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\Aur_PaymentListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\Aur_TimesheetListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AutomaticExternalReconcileMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BankPageEntryTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CalculatedChartsLineTypeListQueryService.Generated.cs" />
@@ -245,6 +257,10 @@
     <Compile Include="EntityLists\Generated\AccountingIntegrityCheckList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AccountingNoteList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ARPaymentsJournalList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\Aur_ItemList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\Aur_PaymentItemList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\Aur_PaymentList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\Aur_TimesheetList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AutomaticExternalReconcileMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BankPageEntryTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CalculatedChartsLineTypeList.Generated.cs" />
@@ -291,6 +307,10 @@
     <Compile Include="EntityMapping\AccountingIntegrityCheckMap.cs" />
     <Compile Include="EntityMapping\AccountingNoteMap.cs" />
     <Compile Include="EntityMapping\ARPaymentsJournalMap.cs" />
+    <Compile Include="EntityMapping\Aur_ItemMap.cs" />
+    <Compile Include="EntityMapping\Aur_PaymentItemMap.cs" />
+    <Compile Include="EntityMapping\Aur_PaymentMap.cs" />
+    <Compile Include="EntityMapping\Aur_TimesheetMap.cs" />
     <Compile Include="EntityMapping\AutomaticExternalReconcileMethodMap.cs" />
     <Compile Include="EntityMapping\BankPageEntryTypeMap.cs" />
     <Compile Include="EntityMapping\CalculatedChartsLineTypeMap.cs" />
@@ -337,6 +357,10 @@
     <Compile Include="EntityPOCOs\AccountingIntegrityCheck.cs" />
     <Compile Include="EntityPOCOs\AccountingNote.cs" />
     <Compile Include="EntityPOCOs\ARPaymentsJournal.cs" />
+    <Compile Include="EntityPOCOs\Aur_Item.cs" />
+    <Compile Include="EntityPOCOs\Aur_Payment.cs" />
+    <Compile Include="EntityPOCOs\Aur_PaymentItem.cs" />
+    <Compile Include="EntityPOCOs\Aur_Timesheet.cs" />
     <Compile Include="EntityPOCOs\AutomaticExternalReconcileMethod.cs" />
     <Compile Include="EntityPOCOs\BankPageEntryType.cs" />
     <Compile Include="EntityPOCOs\CalculatedChartsLineType.cs" />
@@ -387,6 +411,10 @@
     <Compile Include="Enums\RevaluationStatusEnum.cs" />
     <Compile Include="Repositories\AccountingEntityJournalRepository.cs" />
     <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
+    <Compile Include="Repositories\Aur_ItemRepository.cs" />
+    <Compile Include="Repositories\Aur_PaymentItemRepository.cs" />
+    <Compile Include="Repositories\Aur_PaymentRepository.cs" />
+    <Compile Include="Repositories\Aur_TimesheetRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsLineTypeRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsOfAccountRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsOfAccountsLineRepository.cs" />
@@ -394,6 +422,10 @@
     <Compile Include="Repositories\CopyFromTenant0Repository.cs" />
     <Compile Include="Repositories\Generated\AccountingEntityJournalRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\ARPaymentsJournalRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\Aur_ItemRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\Aur_PaymentItemRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\Aur_PaymentRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\Aur_TimesheetRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsLineTypeRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsOfAccountRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsOfAccountsLineRepository.Generated.cs" />

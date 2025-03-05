@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,23 +26,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class BatchTaskExecutionPM : BaseEntityPM   {
    #region Constructors
    public BatchTaskExecutionPM() : base() {} 
-   public BatchTaskExecutionPM(BatchTaskExecution entity) : base()
+   public BatchTaskExecutionPM(POCO.BatchTaskExecution entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_createDate = entity.CreateDate;
 		_createdByUserId = entity.CreatedByUserId;
-		_searchFields = entity.SearchFields;
+		_createdbyuser = entity.CreatedByUser !=null ? new UserPM(entity.CreatedByUser) : null;
+			_searchFields = entity.SearchFields;
 		_className = entity.ClassName;
 		_prametersXml = entity.PrametersXml;
 		_statusCode = entity.StatusCode;
-		_errorLog = entity.ErrorLog;
+		_batchtaskexecutionstatus = entity.BatchTaskExecutionStatus !=null ? new BatchTaskExecutionStatusPM(entity.BatchTaskExecutionStatus) : null;
+			_errorLog = entity.ErrorLog;
 		_startDateTime = entity.StartDateTime;
 		_doneDateTime = entity.DoneDateTime;
 		_progressMessage = entity.ProgressMessage;
 		_progressPercentage = entity.ProgressPercentage;
-		_statusName = default;
-		_createdByUserName = default;
 		_subject = entity.Subject;
 		_callStack = entity.CallStack;
    }
@@ -111,6 +113,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _createdbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM CreatedByUser 
+		{ 
+		get { return _createdbyuser; } 
+		set { _createdbyuser = value; }
+		}
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -175,6 +185,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BatchTaskExecutionStatusPM _batchtaskexecutionstatus;
+		[Include]
+        [DataMember]
+        public virtual BatchTaskExecutionStatusPM BatchTaskExecutionStatus 
+		{ 
+		get { return _batchtaskexecutionstatus; } 
+		set { _batchtaskexecutionstatus = value; }
+		}
 	  private string _errorLog ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -252,38 +270,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProgressPercentage",OldValue=_progressPercentage,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _progressPercentage=value;
-		   }
-		 }
-	   }
-	  private string _statusName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	     get { return _statusName; }
-		 set
-		 {
-		   if(_statusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusName=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
 		   }
 		 }
 	   }

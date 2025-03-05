@@ -210,6 +210,19 @@ export class GLAccountChequeListComponent extends BaseComponent implements OnIni
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("PaymentChequeStatus", 'Text', TextCodeTranslator.Translate("ARPaymentCheque.F.StatusCode")));
 
+        this.columns.push({
+            FieldName: 'BankName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.BankName"),
+            Styles: { width: '125px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'BankName'  
+        });
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("BankName", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.BankName")));
+
 
         this.columns.push({
             FieldName: 'Notes',

@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentCommodityPM : BaseEntityPM   {
    #region Constructors
    public ShipmentCommodityPM() : base() {} 
-   public ShipmentCommodityPM(ShipmentCommodity entity) : base()
+   public ShipmentCommodityPM(POCO.ShipmentCommodity entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -32,7 +34,8 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_shipmentId = entity.ShipmentId;
 		_descriptionOfGoods = entity.DescriptionOfGoods;
 		_rateClassCode = entity.RateClassCode;
-		_chargeableWeight = entity.ChargeableWeight;
+		_rateclass = entity.RateClass !=null ? new RateClassPM(entity.RateClass) : null;
+			_chargeableWeight = entity.ChargeableWeight;
 		_chargeRate = entity.ChargeRate;
 		_chargeAmount = entity.ChargeAmount;
 		_commodityNumber = entity.CommodityNumber;
@@ -40,8 +43,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_grossWeight = entity.GrossWeight;
 		_volume = entity.Volume;
 		_volumetricWeight = entity.VolumetricWeight;
-		commodityPackages = default;
-		_changeSetOp = default;
    }
    #endregion Constructors
    #region Properties
@@ -142,6 +143,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private RateClassPM _rateclass;
+		[Include]
+        [DataMember]
+        public virtual RateClassPM RateClass 
+		{ 
+		get { return _rateclass; } 
+		set { _rateclass = value; }
+		}
 	  private double? _chargeableWeight ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -303,22 +312,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
               }
              set {  deletedCommodityPackages = value; }
 	    }
-	  private string _changeSetOp ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSetOp  
-	   {
-	     get { return _changeSetOp; }
-		 set
-		 {
-		   if(_changeSetOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSetOp",OldValue=_changeSetOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSetOp=value;
-		   }
-		 }
-	   }
 	 }
 #endregion Properties
 }

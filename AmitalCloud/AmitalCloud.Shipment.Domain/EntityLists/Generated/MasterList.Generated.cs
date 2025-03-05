@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Shipment.Domain.EntityLists
 {
@@ -22,7 +22,7 @@ namespace AmitalCloud.Shipment.Domain.EntityLists
    {
        #region Constructors
        public MasterList() : base() {}
-       public MasterList(Master entity) : base()
+       public MasterList(POCO.Master entity) : base()
        {
           SpecialServicesTypeId  = entity.SpecialServicesTypeId;
             VolumeInCBM  = default;

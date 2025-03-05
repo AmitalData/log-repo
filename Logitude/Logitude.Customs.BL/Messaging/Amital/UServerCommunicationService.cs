@@ -365,7 +365,7 @@ MoreParams:blockdata ~{1}~
         protected virtual string GetLoggingObjectTableId()
         {
             if (String.IsNullOrWhiteSpace(_CommunicationModel.objectTableName)) return "";//not must 
-            var objectTableRepository = new ObjectTableRepository(0); // ObjectTabelRepository tenant must be zero !!
+            var objectTableRepository = new ObjectTableRepository(_CommunicationModel.Tenant); // ObjectTabelRepository tenant must be zero !!
             var objectTable = objectTableRepository.GetObjectTableByName(_CommunicationModel.objectTableName,// "Customs.PhysicalCheck", 
                 0, true);
 

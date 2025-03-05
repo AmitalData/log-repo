@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,26 +26,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CountryCityPM : BaseEntityPM   {
    #region Constructors
    public CountryCityPM() : base() {} 
-   public CountryCityPM(CountryCity entity) : base()
+   public CountryCityPM(POCO.CountryCity entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_englishName = entity.EnglishName;
 		_localName = entity.LocalName;
-		_computedLocalName = default;
 		_countryId = entity.CountryId;
 		_inActive = entity.InActive;
 		_addedManually = entity.AddedManually;
-		_countryEnglishName = default;
 		_searchFields = entity.SearchFields;
 		_notes = entity.Notes;
 		_code = entity.Code;
-		_isSecured = default;
-		_countryCode = default;
-		_isHybrid = default;
 		_stateId = entity.StateId;
-		_stateEnglishName = default;
-		_stateCode = default;
    }
    #endregion Constructors
    #region Properties
@@ -112,22 +107,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _computedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputedLocalName  
-	   {
-	     get { return _computedLocalName; }
-		 set
-		 {
-		   if(_computedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computedLocalName=value;
-		   }
-		 }
-	   }
 	  private string _countryId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -173,22 +152,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AddedManually",OldValue=_addedManually,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _addedManually=value;
-		   }
-		 }
-	   }
-	  private string _countryEnglishName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryEnglishName  
-	   {
-	     get { return _countryEnglishName; }
-		 set
-		 {
-		   if(_countryEnglishName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryEnglishName",OldValue=_countryEnglishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryEnglishName=value;
 		   }
 		 }
 	   }
@@ -240,54 +203,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
-		   }
-		 }
-	   }
-	  private string _countryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryCode  
-	   {
-	     get { return _countryCode; }
-		 set
-		 {
-		   if(_countryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryCode",OldValue=_countryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryCode=value;
-		   }
-		 }
-	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
-		   }
-		 }
-	   }
 	  private string _stateId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -301,38 +216,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StateId",OldValue=_stateId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _stateId=value;
-		   }
-		 }
-	   }
-	  private string _stateEnglishName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StateEnglishName  
-	   {
-	     get { return _stateEnglishName; }
-		 set
-		 {
-		   if(_stateEnglishName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StateEnglishName",OldValue=_stateEnglishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _stateEnglishName=value;
-		   }
-		 }
-	   }
-	  private string _stateCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StateCode  
-	   {
-	     get { return _stateCode; }
-		 set
-		 {
-		   if(_stateCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StateCode",OldValue=_stateCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _stateCode=value;
 		   }
 		 }
 	   }

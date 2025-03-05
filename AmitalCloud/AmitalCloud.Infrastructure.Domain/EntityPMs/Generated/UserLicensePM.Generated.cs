@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,13 +26,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class UserLicensePM : BaseEntityPM   {
    #region Constructors
    public UserLicensePM() : base() {} 
-   public UserLicensePM(UserLicense entity) : base()
+   public UserLicensePM(POCO.UserLicense entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_userId = entity.UserId;
 		_packageCode = entity.PackageCode;
-		_email = default;
    }
    #endregion Constructors
    #region Properties
@@ -96,22 +97,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageCode",OldValue=_packageCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _packageCode=value;
-		   }
-		 }
-	   }
-	  private string _email ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Email  
-	   {
-	     get { return _email; }
-		 set
-		 {
-		   if(_email != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Email",OldValue=_email,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _email=value;
 		   }
 		 }
 	   }

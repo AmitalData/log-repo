@@ -1,5 +1,5 @@
 declare var window: any;
-import { HostListener, Component, ViewContainerRef, ViewChild, ViewChildren, QueryList, Output, EventEmitter, OnDestroy} from '@angular/core';
+import { HostListener, Component, ViewContainerRef, ViewChild, ViewChildren, QueryList, Output, EventEmitter, OnDestroy, ElementRef} from '@angular/core';
 import {AppTool} from '../../Tools';
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../Utilities/SessionLocator';
@@ -46,6 +46,8 @@ import { ReportMenuComponent } from 'Report/Components/ReportMenuComponent';
 
 @Component({
     templateUrl: './HomeComponent.html',
+    providers: [ReportService]
+
 })
 
 export class HomeComponent implements OnDestroy{
@@ -77,10 +79,11 @@ export class HomeComponent implements OnDestroy{
     isReportPanelVisible: boolean = false;
     currentReportId: string = "";
     private reportPanelTimeout: any;
-    private isPinned: boolean = false;
+    public isPinned: boolean = false;
+    countDoneRepors: number =0;
 
 
-    constructor() {
+    constructor(private reportService: ReportService) {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
         SessionLocator.AllSessions = new Array<SessionComponent>();
@@ -139,10 +142,11 @@ export class HomeComponent implements OnDestroy{
     public SystemFontFamily: string = "'Lucida Sans Unicode', 'Lucida Grande', sans-serif";
     table: any;
     InitializeComponent() {
+        
         this.InitializeBluesnapComponents();
         this.InitializeChargifyComponents();
         this.IsCountryIsrael = SessionLocator.TenantManagementJS.CountryName == "Israel";
-
+        this.InitializeReport();
         this.SetIsINTTRAPackage();
         var isNewSignupTenant = false;
 
@@ -178,7 +182,13 @@ export class HomeComponent implements OnDestroy{
     InitializeChargifyComponents() {
         this.IsChargifyAccount = SessionLocator.TenantManagementJS.PaymentChannelCode == "CY";
     }
-
+    InitializeReport(){
+        this.reportService.LoadReports();
+        this.reportService.reportsCount$.subscribe(count => {
+            this.countDoneRepors = count;
+          });
+      
+    }
     USDLastUpdate=null;
     GetCurrencyRateLastUpdate(){
         var myService: RatesTableExtendedService = new RatesTableExtendedService();
@@ -814,14 +824,8 @@ export class HomeComponent implements OnDestroy{
        
         this.isReportPanelVisible = newValue;
         
-        if (newValue) {
-            this.CurrentReportId = "";
-            this.StartReportPanelTimeout()
-
-        }
-        else{
+        if(!newValue){
             this.isPinned = false;
-            clearTimeout(this.reportPanelTimeout);
 
         }
     }
@@ -830,26 +834,32 @@ export class HomeComponent implements OnDestroy{
         
         if (this.currentReportId != newValue) {
             this.currentReportId = newValue;
+            this.reportService.LoadReports()
+           
         }
+    }
+    IsReportPanelVisibleChanged() {
+        this.IsReportPanelVisible =!this.isReportPanelVisible;
+        this.CurrentReportId = "";
     }
     TogglePinReportPanel(event: any) {
        
         if (event==true) {
             this.isPinned = true;
-            clearTimeout(this.reportPanelTimeout);
         } else {
             this.isPinned = false;
-            this.StartReportPanelTimeout();
         }
+    }
+    
+    keepReportPanelOpen() {
+        this.IsReportPanelVisible = true;
     }
 
-    StartReportPanelTimeout() {
-        if (!this.isPinned) {
-            this.reportPanelTimeout = setTimeout(() => {
-                this.IsReportPanelVisible = false;
-            }, 10000); //10 Seconds
-        }
+    closeReportPanel() {
+        if(!this.isPinned)
+           this.IsReportPanelVisible = false;
     }
+    
     notificationExtendedListService: NotificationExtendedListService = new NotificationExtendedListService();
     GetBadjCount() {
         this.notificationExtendedListService.GetNotificationsBadjCount(SessionLocator.LoggedUserId).subscribe((response:any) => {

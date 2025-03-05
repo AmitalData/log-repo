@@ -19,8 +19,10 @@ using AmitalCloud.Infrastructure.Domain.Enums;
 
 namespace AmitalCloud.Infrastructure.Data.Context
 {
-   public class AmitalCloudContext: DbContextBase, IAmitalCloudContext
+   public partial class AmitalCloudContext: DbContextBase, IAmitalCloudContext
     {
+
+
     	private int _tenant;
         private AmitalCloudContext()
         {
@@ -55,7 +57,8 @@ namespace AmitalCloud.Infrastructure.Data.Context
             }
             else 
 			{
-				return new AmitalCloudContext(dbConnectionInfo, tenant); ;
+                dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo);
+                return new AmitalCloudContext(dbConnectionInfo, tenant); ;
 			}
         }
 		protected override AmitalCloudDBSchema AmitalCloudDBSchema
@@ -199,6 +202,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
 	            modelBuilder.Configurations.Add(new FilingInboxMap());
 	            modelBuilder.Configurations.Add(new FilingInboxAttachmentMap());
 	            modelBuilder.Configurations.Add(new FilingInboxAttachmentLogMap());
+	            modelBuilder.Configurations.Add(new FollowUpMap());
 	            modelBuilder.Configurations.Add(new FTPDetailMap());
 	            modelBuilder.Configurations.Add(new GlobalZoneMap());
 	            modelBuilder.Configurations.Add(new HorseMap());
@@ -224,6 +228,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
 	            modelBuilder.Configurations.Add(new MAWBStackMap());
 	            modelBuilder.Configurations.Add(new MeasurementMap());
 	            modelBuilder.Configurations.Add(new MentionMap());
+	            modelBuilder.Configurations.Add(new MenuButtonMap());
 	            modelBuilder.Configurations.Add(new MetodoPagoMap());
 	            modelBuilder.Configurations.Add(new MoveTypeMap());
 	            modelBuilder.Configurations.Add(new MultiEntityUpdateLogMap());
@@ -269,6 +274,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
 	            modelBuilder.Configurations.Add(new ReportExecutionLogMap());
 	            modelBuilder.Configurations.Add(new ReportsTemplateMap());
 	            modelBuilder.Configurations.Add(new ReportsTemplatesVersionMap());
+	            modelBuilder.Configurations.Add(new ResponsibilityMap());
 	            modelBuilder.Configurations.Add(new RestrictionMap());
 	            modelBuilder.Configurations.Add(new RoleMap());
 	            modelBuilder.Configurations.Add(new RuleUpdateHistoryMap());
@@ -433,7 +439,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
             modelBuilder.Configurations.Add(new DocumentTypeTemplateMap());
             modelBuilder.Configurations.Add(new DueTypeMap());
             modelBuilder.Configurations.Add(new EntityDateMap());
-            modelBuilder.Configurations.Add(new EntityLastActivityMap());
+            //modelBuilder.Configurations.Add(new EntityLastActivityMap());
             modelBuilder.Configurations.Add(new EntityLastActivityTypeMap());
             modelBuilder.Configurations.Add(new EntityLastUpdateMap());
             modelBuilder.Configurations.Add(new EntityStatuMap());
@@ -632,8 +638,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
         {
             base.Dispose(disposing);
         }
- 
-public IDbSet<Account> Accounts1  {  get; set; }
+ public IDbSet<Account> Accounts1  {  get; set; }
 	public IDbSet<AccountingPartner> AccountingPartners  {  get; set; }
 	public IDbSet<AccountingSetting> AccountingSettings  {  get; set; }
 	public IDbSet<AccountingSystem> AccountingSystems  {  get; set; }
@@ -766,6 +771,7 @@ public IDbSet<Account> Accounts1  {  get; set; }
 	public IDbSet<FilingInbox> FilingInboxes  {  get; set; }
 	public IDbSet<FilingInboxAttachment> FilingInboxAttachments  {  get; set; }
 	public IDbSet<FilingInboxAttachmentLog> FilingInboxAttachmentLogs  {  get; set; }
+	public IDbSet<FollowUp> FollowUps  {  get; set; }
 	public IDbSet<FTPDetail> FTPDetails  {  get; set; }
 	public IDbSet<GlobalZone> GlobalZones  {  get; set; }
 	public IDbSet<Horse> Horses  {  get; set; }
@@ -791,6 +797,7 @@ public IDbSet<Account> Accounts1  {  get; set; }
 	public IDbSet<MAWBStack> MAWBStacks  {  get; set; }
 	public IDbSet<Measurement> Measurements  {  get; set; }
 	public IDbSet<Mention> Mentions  {  get; set; }
+	public IDbSet<MenuButton> MenuButtons  {  get; set; }
 	public IDbSet<MetodoPago> MetodoPagos  {  get; set; }
 	public IDbSet<MoveType> MoveTypes  {  get; set; }
 	public IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs  {  get; set; }
@@ -836,6 +843,7 @@ public IDbSet<Account> Accounts1  {  get; set; }
 	public IDbSet<ReportExecutionLog> ReportExecutionLogs  {  get; set; }
 	public IDbSet<ReportsTemplate> ReportsTemplates  {  get; set; }
 	public IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions  {  get; set; }
+	public IDbSet<Responsibility> Responsibilities  {  get; set; }
 	public IDbSet<Restriction> Restrictions  {  get; set; }
 	public IDbSet<Role> Roles  {  get; set; }
 	public IDbSet<RuleUpdateHistory> RuleUpdateHistories  {  get; set; }
@@ -894,50 +902,9 @@ public IDbSet<Account> Accounts1  {  get; set; }
 	public IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings  {  get; set; }
 	public IDbSet<WeightUnit> WeightUnits  {  get; set; }
 	public IDbSet<WorkerRoleName> WorkerRoleNames  {  get; set; }
-	public IDbSet<Counter> Counters { get;set; }
-public IDbSet<ObjectTableRule> ObjectTableRules { get;set;}
-public IDbSet<Query> Queries { get;set;}
-public IDbSet<TriggerType> TriggerTypes { get;set; }
-public IDbSet<ObjectFieldValidation> ObjectFieldValidations { get;set; }
-public IDbSet<RuleType> RuleTypes { get;set; }
-public IDbSet<QueryColumn> QueryColumns { get;set; }
-public IDbSet<ObjectFieldModification> ObjectFieldModifications { get;set; }
+	//public IDbSet<UserPermittedBranch> UserPermittedBranches { get;set; }
 public IDbSet<ObjectField> ObjectFieldsDbSet { get;set; }
-public IDbSet<ScreenField> ScreenFields { get;set; }
-public IDbSet<Screen> Screens { get;set; }
-public IDbSet<ScreenModification> ScreenModifications { get;set; }
-public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters { get;set; }
-public IDbSet<ObjectTableLastUpdate> ObjectTableLastUpdates { get;set; }
-public IDbSet<ObjectTableType> ObjectTableTypes { get;set; }
-public IDbSet<QueryGroup> QueryGroups { get;set; }
-public IDbSet<RuleConditionField> RuleConditionFields { get;set; }
-public IDbSet<SharedUserQuery> SharedUserQueries { get;set; }
-public IDbSet<ObjectTableHelperControl> ObjectTableHelperControls { get;set; }
-public IDbSet<ObjectTableRuleField> ObjectTableRuleFields { get;set;  }
-public IDbSet<ObjectTableTab> ObjectTableTabs { get;set;  }
-public IDbSet<Translation> Translations { get;set; }
-public IDbSet<CustomPickList> CustomPickLists { get;set; }
-public IDbSet<BlobFile> BlobFiles { get;set; }
-public IDbSet<QueueDefinition> QueueDefinitions { get;set; }
-public IDbSet<QueueMessage> QueueMessages { get;set; }
-public IDbSet<Document> Documents { get;set; }
-public IDbSet<CounterLastNumber> CounterLastNumbers { get;set; }
-public IDbSet<CounterStat> CounterStats { get;set; }
-public IDbSet<PackageFeature> PackageFeatures { get;set; }
-public IDbSet<Feature> Features { get;set; }
-public IDbSet<RoleFeature> RoleFeatures { get;set; }
-public IDbSet<CardContact> CardContacts { get;set; }
-public IDbSet<UserLastLogin> UserLastLogins { get;set; }
-public IDbSet<ContactTenant> ContactTenants { get;set; }
-public IDbSet<ContactTenantRole> ContactTenantRoles { get;set; }
-public IDbSet<UserLoginLog> UserLoginLogs { get;set; }
-public IDbSet<UserPermittedBranch> UserPermittedBranches { get;set; }
-public IDbSet<UserPermittedProduct> UserPermittedProducts { get;set; }
-public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get;set; }
-public IDbSet<DocumentsMetaDataType> DocumentsMetaDataTypes { get; set; }
-public IDbSet<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues { get; set; }
-public IDbSet<CommunicationLogStep> CommunicationLogSteps { get; set; }
-public IDbSet<GeneralLock> GeneralLocks { get; set ;}
+
 public int Tenant => _tenant;
  }
 }

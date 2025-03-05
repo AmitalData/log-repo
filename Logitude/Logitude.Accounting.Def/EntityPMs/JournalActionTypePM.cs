@@ -22,4 +22,11 @@ namespace Logitude.Accounting.Def.EntityPMs
         DebitAndCredit = 3,
         DebitCreditAndVatdeduction = 4
     }
+
+    public class AccountingActionCodes
+    {
+        public const string Credit = "1";
+        public const string Debit = "2";
+        public const string DebitAndCredit = "3";
+    }
 }

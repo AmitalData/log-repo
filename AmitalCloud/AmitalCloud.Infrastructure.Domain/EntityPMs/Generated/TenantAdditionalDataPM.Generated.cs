@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TenantAdditionalDataPM : BaseEntityPM   {
    #region Constructors
    public TenantAdditionalDataPM() : base() {} 
-   public TenantAdditionalDataPM(TenantAdditionalData entity) : base()
+   public TenantAdditionalDataPM(POCO.TenantAdditionalData entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -33,7 +35,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_dropBoxUID = entity.DropBoxUID;
 		_dropBoxUEmail = entity.DropBoxUEmail;
 		_paymentGatewayPartnerCode = entity.PaymentGatewayPartnerCode;
-		_paymentGatewayConnectionString = entity.PaymentGatewayConnectionString;
+		_paymentgatewaypartner = entity.PaymentGatewayPartner !=null ? new PaymentGatewayPartnerPM(entity.PaymentGatewayPartner) : null;
+			_paymentGatewayConnectionString = entity.PaymentGatewayConnectionString;
    }
    #endregion Constructors
    #region Properties
@@ -150,6 +153,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PaymentGatewayPartnerPM _paymentgatewaypartner;
+		[Include]
+        [DataMember]
+        public virtual PaymentGatewayPartnerPM PaymentGatewayPartner 
+		{ 
+		get { return _paymentgatewaypartner; } 
+		set { _paymentgatewaypartner = value; }
+		}
 	  private string _paymentGatewayConnectionString ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

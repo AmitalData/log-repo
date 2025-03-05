@@ -6,6 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.ServiceModel.DomainServices.Server;
@@ -13,8 +14,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +27,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentPickUpDeliveryPM :  ChildEntitiesCustomFieldPM   {
    #region Constructors
    public ShipmentPickUpDeliveryPM() : base() {} 
-   public ShipmentPickUpDeliveryPM(ShipmentPickUpDelivery entity) : base()
+   public ShipmentPickUpDeliveryPM(POCO.ShipmentPickUpDelivery entity) : base()
    {
 		_id = entity.Id;
 		_aTD = entity.ATD;
@@ -36,31 +38,38 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_notes = entity.Notes;
 		_pickUpDeliveryNumber = entity.PickUpDeliveryNumber;
 		_fromPartnerCardId = entity.FromPartnerCardId;
-		_fromPortId = entity.FromPortId;
+		_frompartnercard = entity.FromPartnerCard !=null ? new CardPM(entity.FromPartnerCard) : null;
+			_fromPortId = entity.FromPortId;
 		_driver = entity.Driver;
 		_toPartnerCardId = entity.ToPartnerCardId;
-		_toPortId = entity.ToPortId;
+		_topartnercard = entity.ToPartnerCard !=null ? new CardPM(entity.ToPartnerCard) : null;
+			_toPortId = entity.ToPortId;
 		_carrierId = entity.CarrierId;
-		_truckNumber = entity.TruckNumber;
+		_carriercard = entity.CarrierCard !=null ? new CardPM(entity.CarrierCard) : null;
+			_truckNumber = entity.TruckNumber;
 		_trailerNumber = entity.TrailerNumber;
 		_pickUpDeliveryTypeCode = entity.PickUpDeliveryTypeCode;
-		_pickUpDeliveryFromTypeCode = entity.PickUpDeliveryFromTypeCode;
-		_pickUpDeliveryToTypeCode = entity.PickUpDeliveryToTypeCode;
-		_fromAddressCity = entity.FromAddressCity;
+		_pickupdeliverytype = entity.PickUpDeliveryType !=null ? new PickUpDeliveryTypePM(entity.PickUpDeliveryType) : null;
+			_pickUpDeliveryFromTypeCode = entity.PickUpDeliveryFromTypeCode;
+		_pickupdeliveryfromtype = entity.PickUpDeliveryFromType !=null ? new PickUpDeliveryFromToTypePM(entity.PickUpDeliveryFromType) : null;
+			_pickUpDeliveryToTypeCode = entity.PickUpDeliveryToTypeCode;
+		_pickupdeliverytotype = entity.PickUpDeliveryToType !=null ? new PickUpDeliveryFromToTypePM(entity.PickUpDeliveryToType) : null;
+			_fromAddressCity = entity.FromAddressCity;
 		_fromAddressZipCode = entity.FromAddressZipCode;
 		_fromAddressCountryId = entity.FromAddressCountryId;
-		_toAddressCity = entity.ToAddressCity;
+		_fromaddresscountry = entity.FromAddressCountry !=null ? new CountryPM(entity.FromAddressCountry) : null;
+			_toAddressCity = entity.ToAddressCity;
 		_toAddressZipCode = entity.ToAddressZipCode;
 		_toAddressCountryId = entity.ToAddressCountryId;
-		_transportModeCode = entity.TransportModeCode;
-		_shipmentPickUpDeliveryPackages = default;
+		_toaddresscountry = entity.ToAddressCountry !=null ? new CountryPM(entity.ToAddressCountry) : null;
+			_transportModeCode = entity.TransportModeCode;
 		_parentPickUpDeliveryId = entity.ParentPickUpDeliveryId;
-		_childPickUpIndex = entity.ChildPickUpIndex;
+		_parentpickupdelivery = entity.ParentPickUpDelivery !=null ? new ShipmentPickUpDeliveryPM(entity.ParentPickUpDelivery) : null;
+			_childPickUpIndex = entity.ChildPickUpIndex;
 		_childDeliveryIndex = entity.ChildDeliveryIndex;
-		_bookingConfirmationNumber = default;
 		_standaloneShipmentId = entity.StandaloneShipmentId;
-		_standaloneShipmentNumber = entity.StandaloneShipmentNumber;
-		_changeSet = default;
+		_standaloneshipment = entity.StandaloneShipment !=null ? new ShipmentPM(entity.StandaloneShipment) : null;
+			_standaloneShipmentNumber = entity.StandaloneShipmentNumber;
    }
    #endregion Constructors
    #region Properties
@@ -209,6 +218,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _frompartnercard;
+		[Include]
+        [DataMember]
+        public virtual CardPM FromPartnerCard 
+		{ 
+		get { return _frompartnercard; } 
+		set { _frompartnercard = value; }
+		}
 	  private string _fromPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -257,6 +274,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _topartnercard;
+		[Include]
+        [DataMember]
+        public virtual CardPM ToPartnerCard 
+		{ 
+		get { return _topartnercard; } 
+		set { _topartnercard = value; }
+		}
 	  private string _toPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -289,6 +314,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _carriercard;
+		[Include]
+        [DataMember]
+        public virtual CardPM CarrierCard 
+		{ 
+		get { return _carriercard; } 
+		set { _carriercard = value; }
+		}
 	  private string _truckNumber ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -337,6 +370,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PickUpDeliveryTypePM _pickupdeliverytype;
+		[Include]
+        [DataMember]
+        public virtual PickUpDeliveryTypePM PickUpDeliveryType 
+		{ 
+		get { return _pickupdeliverytype; } 
+		set { _pickupdeliverytype = value; }
+		}
 	  private string _pickUpDeliveryFromTypeCode ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -353,6 +394,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PickUpDeliveryFromToTypePM _pickupdeliveryfromtype;
+		[Include]
+        [DataMember]
+        public virtual PickUpDeliveryFromToTypePM PickUpDeliveryFromType 
+		{ 
+		get { return _pickupdeliveryfromtype; } 
+		set { _pickupdeliveryfromtype = value; }
+		}
 	  private string _pickUpDeliveryToTypeCode ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -369,6 +418,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PickUpDeliveryFromToTypePM _pickupdeliverytotype;
+		[Include]
+        [DataMember]
+        public virtual PickUpDeliveryFromToTypePM PickUpDeliveryToType 
+		{ 
+		get { return _pickupdeliverytotype; } 
+		set { _pickupdeliverytotype = value; }
+		}
 	  private string _fromAddressCity ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -417,6 +474,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CountryPM _fromaddresscountry;
+		[Include]
+        [DataMember]
+        public virtual CountryPM FromAddressCountry 
+		{ 
+		get { return _fromaddresscountry; } 
+		set { _fromaddresscountry = value; }
+		}
 	  private string _toAddressCity ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -465,6 +530,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CountryPM _toaddresscountry;
+		[Include]
+        [DataMember]
+        public virtual CountryPM ToAddressCountry 
+		{ 
+		get { return _toaddresscountry; } 
+		set { _toaddresscountry = value; }
+		}
 	  private string _transportModeCode ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -478,22 +551,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransportModeCode",OldValue=_transportModeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _transportModeCode=value;
-		   }
-		 }
-	   }
-	  private string _shipmentPickUpDeliveryPackages ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentPickUpDeliveryPackages  
-	   {
-	     get { return _shipmentPickUpDeliveryPackages; }
-		 set
-		 {
-		   if(_shipmentPickUpDeliveryPackages != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentPickUpDeliveryPackages",OldValue=_shipmentPickUpDeliveryPackages,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentPickUpDeliveryPackages=value;
 		   }
 		 }
 	   }
@@ -513,6 +570,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPickUpDeliveryPM _parentpickupdelivery;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPickUpDeliveryPM ParentPickUpDelivery 
+		{ 
+		get { return _parentpickupdelivery; } 
+		set { _parentpickupdelivery = value; }
+		}
 	  private int? _childPickUpIndex ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -545,22 +610,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _bookingConfirmationNumber ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BookingConfirmationNumber  
-	   {
-	     get { return _bookingConfirmationNumber; }
-		 set
-		 {
-		   if(_bookingConfirmationNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BookingConfirmationNumber",OldValue=_bookingConfirmationNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _bookingConfirmationNumber=value;
-		   }
-		 }
-	   }
 	  private string _standaloneShipmentId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -577,6 +626,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPM _standaloneshipment;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPM StandaloneShipment 
+		{ 
+		get { return _standaloneshipment; } 
+		set { _standaloneshipment = value; }
+		}
 	  private string _standaloneShipmentNumber ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -590,22 +647,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StandaloneShipmentNumber",OldValue=_standaloneShipmentNumber,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _standaloneShipmentNumber=value;
-		   }
-		 }
-	   }
-	  private string _changeSet ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSet  
-	   {
-	     get { return _changeSet; }
-		 set
-		 {
-		   if(_changeSet != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSet",OldValue=_changeSet,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSet=value;
 		   }
 		 }
 	   }

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class IATACodePM : BaseEntityPM   {
    #region Constructors
    public IATACodePM() : base() {} 
-   public IATACodePM(IATACode entity) : base()
+   public IATACodePM(POCO.IATACode entity) : base()
    {
 		_id = entity.Id;
 		_code = entity.Code;
 		_name = entity.Name;
 		_measurementCode = entity.MeasurementCode;
 		_dueTypeCode = entity.DueTypeCode;
-		_isIATA = entity.IsIATA;
+		_duetype = entity.DueType !=null ? new DueTypePM(entity.DueType) : null;
+			_isIATA = entity.IsIATA;
 		_inActive = entity.InActive;
 		_airlineId = entity.AirlineId;
 		_searchFields = entity.SearchFields;
@@ -119,6 +122,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DueTypePM _duetype;
+		[Include]
+        [DataMember]
+        public virtual DueTypePM DueType 
+		{ 
+		get { return _duetype; } 
+		set { _duetype = value; }
+		}
 	  private bool _isIATA ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

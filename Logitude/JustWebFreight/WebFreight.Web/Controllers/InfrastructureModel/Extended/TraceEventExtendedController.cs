@@ -57,7 +57,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         EventTypeClass eventTypeClass = eventTypeArgs.EventTypeList.Where(d => d.Code == eventTypeList.Code).FirstOrDefault();
                         if (eventTypeClass != null)
                         {
-                            if(eventTypeClass.Date!=null) eventTypeList.EventDateTime = eventTypeClass.Date;
+                            if (eventTypeClass.Date != null) eventTypeList.EventDateTime = eventTypeClass.Date;
                             else eventTypeList.EventDateTime = TenantServerConfigration.GetCurrentDateTime(eventTypeArgs.Tenant);
                         }
                     }
@@ -73,10 +73,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     }
 
                 }
-               
 
 
-              TraceEventRepository traceEventRepository = new TraceEventRepository(eventTypeArgs.Tenant);
+
+                TraceEventRepository traceEventRepository = new TraceEventRepository(eventTypeArgs.Tenant);
 
                 if (eventList != null && eventList.Count > 0)
                 {
@@ -124,7 +124,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 if(string.IsNullOrEmpty(args.loggedUserEmail))
                     args.loggedUserEmail = authToken.Email;
                 
-                TraceHelper.Create(args.tenant, args.entityId, args.tableName, args.notes, args.eventTypeCode, args.loggedUserEmail);
+                TraceHelper.Create(args.tenant, args.entityId, args.tableName, args.notes, args.eventTypeCode, args.loggedUserEmail);                
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
 

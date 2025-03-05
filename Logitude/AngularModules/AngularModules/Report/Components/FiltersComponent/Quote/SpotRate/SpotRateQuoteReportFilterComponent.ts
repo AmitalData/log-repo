@@ -27,7 +27,7 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     entityResourceService: EntityResourceService = new EntityResourceService();
 
     isReady: boolean = false;
-    public RunReportTitle: string;
+    public RunReportTitle: string = 'Run Report';
     public OpenDateGraterThan: Date;
     public ExpirationDate: Date;
     public CustomerId: string = null;
@@ -59,7 +59,6 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     RunReport(isloading: boolean) {
         var reportFliter = new ReportFliter();
         reportFliter.Tenant = SessionLocator.Tenant;
-        reportFliter.QueryFilterItemLists = this.queryFilterItems;
         reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
         reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
         reportFliter.ReportCode = this.ReportsPreview.Report.Code;

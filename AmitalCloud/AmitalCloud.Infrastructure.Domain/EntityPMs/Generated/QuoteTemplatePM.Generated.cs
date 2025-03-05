@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,29 +26,32 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class QuoteTemplatePM : BaseEntityPM   {
    #region Constructors
    public QuoteTemplatePM() : base() {} 
-   public QuoteTemplatePM(QuoteTemplate entity) : base()
+   public QuoteTemplatePM(POCO.QuoteTemplate entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_headerDocId = entity.HeaderDocId;
-		_footerDocId = entity.FooterDocId;
-		_quoteTemplateSettingId = entity.QuoteTemplateSettingId;
-		_name = entity.Name;
+		_headerdoc = entity.HeaderDoc !=null ? new DocumentPM(entity.HeaderDoc) : null;
+			_footerDocId = entity.FooterDocId;
+		_footerdoc = entity.FooterDoc !=null ? new DocumentPM(entity.FooterDoc) : null;
+			_quoteTemplateSettingId = entity.QuoteTemplateSettingId;
+		_quotetemplatesetting = entity.QuoteTemplateSetting !=null ? new QuoteTemplateSettingPM(entity.QuoteTemplateSetting) : null;
+			_name = entity.Name;
 		_isTemplate = entity.IsTemplate;
 		_originalQuoteTemplateId = entity.OriginalQuoteTemplateId;
-		_createDate = entity.CreateDate;
+		_originalquotetemplate = entity.OriginalQuoteTemplate !=null ? new QuoteTemplatePM(entity.OriginalQuoteTemplate) : null;
+			_createDate = entity.CreateDate;
 		_updateDate = entity.UpdateDate;
 		_createdByUserId = entity.CreatedByUserId;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_searchFields = entity.SearchFields;
 		_templateTypeCode = entity.TemplateTypeCode;
-		_isDefault = entity.IsDefault;
+		_quotetype = entity.QuoteType !=null ? new QuoteTypePM(entity.QuoteType) : null;
+			_isDefault = entity.IsDefault;
 		_inActive = entity.InActive;
-		_isLastQuoteTemplateDocumentVersion = default;
-		templateSections = default;
+		templateSections = entity.TemplateSections != null ? entity.TemplateSections.Select(a=>new QuoteTemplateSectionPM(a)).ToList() : null;
 		_isCopiedAtSignup = entity.IsCopiedAtSignup;
 		_isEnabledForCustomers = entity.IsEnabledForCustomers;
-		_tenantName = default;
    }
    #endregion Constructors
    #region Properties
@@ -99,6 +104,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentPM _headerdoc;
+		[Include]
+        [DataMember]
+        public virtual DocumentPM HeaderDoc 
+		{ 
+		get { return _headerdoc; } 
+		set { _headerdoc = value; }
+		}
 	  private string _footerDocId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -115,6 +128,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentPM _footerdoc;
+		[Include]
+        [DataMember]
+        public virtual DocumentPM FooterDoc 
+		{ 
+		get { return _footerdoc; } 
+		set { _footerdoc = value; }
+		}
 	  private string _quoteTemplateSettingId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -131,6 +152,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateSettingPM _quotetemplatesetting;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateSettingPM QuoteTemplateSetting 
+		{ 
+		get { return _quotetemplatesetting; } 
+		set { _quotetemplatesetting = value; }
+		}
 	  private string _name ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -179,6 +208,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplatePM _originalquotetemplate;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplatePM OriginalQuoteTemplate 
+		{ 
+		get { return _originalquotetemplate; } 
+		set { _originalquotetemplate = value; }
+		}
 	  private DateTime _createDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -275,6 +312,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTypePM _quotetype;
+		[Include]
+        [DataMember]
+        public virtual QuoteTypePM QuoteType 
+		{ 
+		get { return _quotetype; } 
+		set { _quotetype = value; }
+		}
 	  private bool _isDefault ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -304,22 +349,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=_inActive,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _inActive=value;
-		   }
-		 }
-	   }
-	  private bool _isLastQuoteTemplateDocumentVersion ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsLastQuoteTemplateDocumentVersion  
-	   {
-	     get { return _isLastQuoteTemplateDocumentVersion; }
-		 set
-		 {
-		   if(_isLastQuoteTemplateDocumentVersion != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsLastQuoteTemplateDocumentVersion",OldValue=_isLastQuoteTemplateDocumentVersion,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isLastQuoteTemplateDocumentVersion=value;
 		   }
 		 }
 	   }
@@ -383,22 +412,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsEnabledForCustomers",OldValue=_isEnabledForCustomers,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isEnabledForCustomers=value;
-		   }
-		 }
-	   }
-	  private string _tenantName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TenantName  
-	   {
-	     get { return _tenantName; }
-		 set
-		 {
-		   if(_tenantName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantName",OldValue=_tenantName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _tenantName=value;
 		   }
 		 }
 	   }

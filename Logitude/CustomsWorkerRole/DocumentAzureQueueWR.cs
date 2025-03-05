@@ -125,7 +125,7 @@ namespace CustomsWorkerRole
 				AutoCompleteMessages = false,
 				MaxConcurrentCalls = 1,
 				ReceiveMode = ServiceBusReceiveMode.PeekLock,
-				MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(90),
+				MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(3),
 			});
 
 			processor.ProcessMessageAsync += async (args) =>
@@ -171,7 +171,7 @@ namespace CustomsWorkerRole
 							#region Save document and metadata
 							logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 							response = SaveDocument(filePath, outParams["COM_ID"]);
-							logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+							logs += "after SaveDocument HasError: " + response?.HasError + " ErrorMessage: " + response.ErrorMessage + " InnerErrorMessage: " + response.InnerErrorMessage + " take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 							#endregion
 							if (!response.HasError)
 							{
@@ -345,14 +345,15 @@ namespace CustomsWorkerRole
 		}
 		public Response UpsertDocumentData(DocumentsFilingPM entityPM)
 		{
-			CheckLock(entityPM.Id);
-			using (TransactionScope scope = new TransactionScope())
+			Response response = new Response();
+			TransactionScope scope = null;
+			try
+
 			{
-
-				Response response = new Response();
-
-				try
-				{
+				CheckLock(entityPM.Id);
+				using (scope = new TransactionScope(TransactionScopeOption.Required,
+							new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
+			    {				
 
 					ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
 					IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityPM.Tenant);
@@ -391,47 +392,47 @@ namespace CustomsWorkerRole
 						response.Result = entityPM.Id;
 						response.Result2 = entityPM.SecurityId;
 					}
-					return response;
-				}
-
-				catch (System.Data.Entity.Validation.DbEntityValidationException e)
-				{
-					string Error = "";
-					foreach (var eve in e.EntityValidationErrors)
-					{
-						Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-							eve.Entry.Entity.GetType().Name, eve.Entry.State);
-						foreach (var ve in eve.ValidationErrors)
-						{
-							Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-								ve.PropertyName, ve.ErrorMessage);
-
-							Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
-						}
-					}
-
-					response.HasError = true;
-					response.ErrorMessage = Error;
-
-					return response;
-				}
-				catch (Exception ex)
-				{
-					response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
-					response.HasError = true;
-					response.ErrorMessage = ex.Message;
-					response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
-					if (!string.IsNullOrEmpty(ex.StackTrace))
-					{
-						response.ErrorMessage += Environment.NewLine + ex.StackTrace;
-					}
-					return response;
-				}
-				finally
-				{
 					scope.Complete();
+
+					return response;
+			    }
+			}
+
+			catch (System.Data.Entity.Validation.DbEntityValidationException e)
+			{
+				string Error = "";
+				foreach (var eve in e.EntityValidationErrors)
+				{
+					Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+						eve.Entry.Entity.GetType().Name, eve.Entry.State);
+					foreach (var ve in eve.ValidationErrors)
+					{
+						Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+							ve.PropertyName, ve.ErrorMessage);
+
+						Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
+					}
 				}
 
+				response.HasError = true;
+				response.ErrorMessage = Error;
+
+				return response;
+			}
+			catch (Exception ex)
+			{
+				response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+				response.HasError = true;
+				response.ErrorMessage = ex.Message;
+				response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+				if (!string.IsNullOrEmpty(ex.StackTrace))
+				{
+					response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+				}
+				return response;
+			}
+			finally
+			{
 			}
 		}
 		public void CheckLock(string id)

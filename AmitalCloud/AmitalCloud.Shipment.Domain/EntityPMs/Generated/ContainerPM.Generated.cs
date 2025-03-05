@@ -6,6 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.ServiceModel.DomainServices.Server;
@@ -13,8 +14,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -25,20 +27,22 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ContainerPM :  ChildEntitiesCustomFieldPM   {
    #region Constructors
    public ContainerPM() : base() {} 
-   public ContainerPM(Container entity) : base()
+   public ContainerPM(POCO.Container entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_createDate = entity.CreateDate;
 		_createdByUserId = entity.CreatedByUserId;
-		_updateDate = entity.UpdateDate;
+		_createdbyuser = entity.CreatedByUser !=null ? new UserPM(entity.CreatedByUser) : null;
+			_updateDate = entity.UpdateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
-		_searchFields = entity.SearchFields;
+		_updatedbyuser = entity.UpdatedByUser !=null ? new UserPM(entity.UpdatedByUser) : null;
+			_searchFields = entity.SearchFields;
 		_containerNumber = entity.ContainerNumber;
 		_shipmentPackagesId = entity.ShipmentPackagesId;
 		_mainCarriageCarrierId = entity.MainCarriageCarrierId;
-		_carrierName = default;
-		_mainCarriageCarrierNumber = entity.MainCarriageCarrierNumber;
+		_maincarriagecarrier = entity.MainCarriageCarrier !=null ? new CardPM(entity.MainCarriageCarrier) : null;
+			_mainCarriageCarrierNumber = entity.MainCarriageCarrierNumber;
 		_master = entity.Master;
 		_mainCarriageVesselId = entity.MainCarriageVesselId;
 		_vesselName = entity.VesselName;
@@ -60,18 +64,30 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_shipmentPickupFrom = entity.ShipmentPickupFrom;
 		_shipmentPickupTo = entity.ShipmentPickupTo;
 		_shipmentPreCarriageFromId = entity.ShipmentPreCarriageFromId;
-		_shipmentPreCarriageToId = entity.ShipmentPreCarriageToId;
-		_shipmentMainCarriageFromId = entity.ShipmentMainCarriageFromId;
-		_shipmentMainCarriageToId = entity.ShipmentMainCarriageToId;
-		_shipmentTransshipment1FromId = entity.ShipmentTransshipment1FromId;
-		_shipmentTransshipment1ToId = entity.ShipmentTransshipment1ToId;
-		_shipmentTransshipment2FromId = entity.ShipmentTransshipment2FromId;
-		_shipmentTransshipment2ToId = entity.ShipmentTransshipment2ToId;
-		_shipmentTransshipment3FromId = entity.ShipmentTransshipment3FromId;
-		_shipmentTransshipment3ToId = entity.ShipmentTransshipment3ToId;
-		_shipmentOnCarriageFromId = entity.ShipmentOnCarriageFromId;
-		_shipmentOnCarriageToId = entity.ShipmentOnCarriageToId;
-		_shipmentDeliveryFrom = entity.ShipmentDeliveryFrom;
+		_shipmentprecarriagefromport = entity.ShipmentPreCarriageFromPort !=null ? new PortPM(entity.ShipmentPreCarriageFromPort) : null;
+			_shipmentPreCarriageToId = entity.ShipmentPreCarriageToId;
+		_shipmentprecarriagetoport = entity.ShipmentPreCarriageToPort !=null ? new PortPM(entity.ShipmentPreCarriageToPort) : null;
+			_shipmentMainCarriageFromId = entity.ShipmentMainCarriageFromId;
+		_shipmentmaincarriagefromport = entity.ShipmentMainCarriageFromPort !=null ? new PortPM(entity.ShipmentMainCarriageFromPort) : null;
+			_shipmentMainCarriageToId = entity.ShipmentMainCarriageToId;
+		_shipmentmaincarriagetoport = entity.ShipmentMainCarriageToPort !=null ? new PortPM(entity.ShipmentMainCarriageToPort) : null;
+			_shipmentTransshipment1FromId = entity.ShipmentTransshipment1FromId;
+		_shipmenttransshipment1fromport = entity.ShipmentTransshipment1FromPort !=null ? new PortPM(entity.ShipmentTransshipment1FromPort) : null;
+			_shipmentTransshipment1ToId = entity.ShipmentTransshipment1ToId;
+		_shipmenttransshipment1toport = entity.ShipmentTransshipment1ToPort !=null ? new PortPM(entity.ShipmentTransshipment1ToPort) : null;
+			_shipmentTransshipment2FromId = entity.ShipmentTransshipment2FromId;
+		_shipmenttransshipment2fromport = entity.ShipmentTransshipment2FromPort !=null ? new PortPM(entity.ShipmentTransshipment2FromPort) : null;
+			_shipmentTransshipment2ToId = entity.ShipmentTransshipment2ToId;
+		_shipmenttransshipment2toport = entity.ShipmentTransshipment2ToPort !=null ? new PortPM(entity.ShipmentTransshipment2ToPort) : null;
+			_shipmentTransshipment3FromId = entity.ShipmentTransshipment3FromId;
+		_shipmenttransshipment3fromport = entity.ShipmentTransshipment3FromPort !=null ? new PortPM(entity.ShipmentTransshipment3FromPort) : null;
+			_shipmentTransshipment3ToId = entity.ShipmentTransshipment3ToId;
+		_shipmenttransshipment3toport = entity.ShipmentTransshipment3ToPort !=null ? new PortPM(entity.ShipmentTransshipment3ToPort) : null;
+			_shipmentOnCarriageFromId = entity.ShipmentOnCarriageFromId;
+		_shipmentoncarriagefromport = entity.ShipmentOnCarriageFromPort !=null ? new PortPM(entity.ShipmentOnCarriageFromPort) : null;
+			_shipmentOnCarriageToId = entity.ShipmentOnCarriageToId;
+		_shipmentoncarriagetoiport = entity.ShipmentOnCarriageToIPort !=null ? new PortPM(entity.ShipmentOnCarriageToIPort) : null;
+			_shipmentDeliveryFrom = entity.ShipmentDeliveryFrom;
 		_shipmentDeliveryTo = entity.ShipmentDeliveryTo;
 		_preCarriageLocation = entity.PreCarriageLocation;
 		_preCarriageETD = entity.PreCarriageETD;
@@ -155,40 +171,42 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_carrierReleaseState = entity.CarrierReleaseState;
 		_carrierReleaseDate = entity.CarrierReleaseDate;
 		_availablityDate = entity.AvailablityDate;
-		_shipmentPreCarriageFrom = default;
-		_shipmentPreCarriageTo = default;
-		_shipmentMainCarriageFrom = default;
-		_shipmentMainCarriageTo = default;
-		_shipmentTransshipment1From = default;
-		_shipmentTransshipment1To = default;
-		_shipmentTransshipment2From = default;
-		_shipmentTransshipment3From = default;
-		_shipmentTransshipment3To = default;
-		_shipmentOnCarriageFrom = default;
-		_shipmentOnCarriageTo = default;
 		_availabilityLocation = entity.AvailabilityLocation;
 		_lastFreeDayDate = entity.LastFreeDayDate;
 		_freeDays = entity.FreeDays;
 		_shipmentStatusId = entity.ShipmentStatusId;
-		_shipmentStatusName = default;
-		_emptyPickupLocationPortId = entity.EmptyPickupLocationPortId;
-		_onCarriageLocationPortId = entity.OnCarriageLocationPortId;
-		_emptyReturnLocationPortId = entity.EmptyReturnLocationPortId;
-		_availabilityLocationPortId = entity.AvailabilityLocationPortId;
-		_preCarriageLocationPortId = entity.PreCarriageLocationPortId;
-		_lIFLocationPortId = entity.LIFLocationPortId;
-		_pOLLocationPortId = entity.POLLocationPortId;
-		_pODLocationPortId = entity.PODLocationPortId;
-		_transshipment1LocationPortId = entity.Transshipment1LocationPortId;
-		_transshipment2LocationPortId = entity.Transshipment2LocationPortId;
-		_transshipment3LocationPortId = entity.Transshipment3LocationPortId;
-		_transshipment4LocationPortId = entity.Transshipment4LocationPortId;
-		_terminalId = entity.TerminalId;
-		_terminalAddress = entity.TerminalAddress;
+		_shipmentstatus = entity.ShipmentStatus !=null ? new EntityStatusPM(entity.ShipmentStatus) : null;
+			_emptyPickupLocationPortId = entity.EmptyPickupLocationPortId;
+		_emptypickuplocationport = entity.EmptyPickupLocationPort !=null ? new PortPM(entity.EmptyPickupLocationPort) : null;
+			_onCarriageLocationPortId = entity.OnCarriageLocationPortId;
+		_deliverylocationport = entity.DeliveryLocationPort !=null ? new PortPM(entity.DeliveryLocationPort) : null;
+			_emptyReturnLocationPortId = entity.EmptyReturnLocationPortId;
+		_emptyreturnlocationport = entity.EmptyReturnLocationPort !=null ? new PortPM(entity.EmptyReturnLocationPort) : null;
+			_availabilityLocationPortId = entity.AvailabilityLocationPortId;
+		_availabilitylocationport = entity.AvailabilityLocationPort !=null ? new PortPM(entity.AvailabilityLocationPort) : null;
+			_preCarriageLocationPortId = entity.PreCarriageLocationPortId;
+		_originlocationport = entity.OriginLocationPort !=null ? new PortPM(entity.OriginLocationPort) : null;
+			_lIFLocationPortId = entity.LIFLocationPortId;
+		_liflocationport = entity.LIFLocationPort !=null ? new PortPM(entity.LIFLocationPort) : null;
+			_pOLLocationPortId = entity.POLLocationPortId;
+		_pollocationport = entity.POLLocationPort !=null ? new PortPM(entity.POLLocationPort) : null;
+			_pODLocationPortId = entity.PODLocationPortId;
+		_podlocationport = entity.PODLocationPort !=null ? new PortPM(entity.PODLocationPort) : null;
+			_transshipment1LocationPortId = entity.Transshipment1LocationPortId;
+		_transshipment1locationport = entity.Transshipment1LocationPort !=null ? new PortPM(entity.Transshipment1LocationPort) : null;
+			_transshipment2LocationPortId = entity.Transshipment2LocationPortId;
+		_transshipment2locationport = entity.Transshipment2LocationPort !=null ? new PortPM(entity.Transshipment2LocationPort) : null;
+			_transshipment3LocationPortId = entity.Transshipment3LocationPortId;
+		_transshipment3locationport = entity.Transshipment3LocationPort !=null ? new PortPM(entity.Transshipment3LocationPort) : null;
+			_transshipment4LocationPortId = entity.Transshipment4LocationPortId;
+		_transshipment4locationport = entity.Transshipment4LocationPort !=null ? new PortPM(entity.Transshipment4LocationPort) : null;
+			_terminalId = entity.TerminalId;
+		_terminalcard = entity.TerminalCard !=null ? new CardPM(entity.TerminalCard) : null;
+			_terminalAddress = entity.TerminalAddress;
 		_terminalPhone = entity.TerminalPhone;
-		_terminalName = default;
 		_terminalAddressId = entity.TerminalAddressId;
-		_shipmentPickupETA = entity.ShipmentPickupETA;
+		_terminalcardaddress = entity.TerminalCardAddress !=null ? new AddressPM(entity.TerminalCardAddress) : null;
+			_shipmentPickupETA = entity.ShipmentPickupETA;
 		_shipmentPickupETD = entity.ShipmentPickupETD;
 		_shipmentPickupATA = entity.ShipmentPickupATA;
 		_shipmentPickupATD = entity.ShipmentPickupATD;
@@ -221,44 +239,40 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_shipmentDeliveryATA = entity.ShipmentDeliveryATA;
 		_shipmentDeliveryATD = entity.ShipmentDeliveryATD;
 		_shipmentOriginAgentId = entity.ShipmentOriginAgentId;
-		_shipmentDestinationAgentId = entity.ShipmentDestinationAgentId;
-		_shipmentOriginAgentName = default;
-		_shipmentDestinationAgentName = default;
-		_shipmentNumber = entity.ShipmentNumber;
+		_shipmentoriginagent = entity.ShipmentOriginAgent !=null ? new CardPM(entity.ShipmentOriginAgent) : null;
+			_shipmentDestinationAgentId = entity.ShipmentDestinationAgentId;
+		_shipmentdestinationagent = entity.ShipmentDestinationAgent !=null ? new CardPM(entity.ShipmentDestinationAgent) : null;
+			_shipmentNumber = entity.ShipmentNumber;
 		_containersCount = entity.ContainersCount;
 		_handlerId = entity.HandlerId;
-		_handlerName = default;
-		_customerId = entity.CustomerId;
-		_customerName = default;
-		_oPClosed = entity.OPClosed;
+		_handler = entity.Handler !=null ? new UserPM(entity.Handler) : null;
+			_customerId = entity.CustomerId;
+		_customercard = entity.CustomerCard !=null ? new CardPM(entity.CustomerCard) : null;
+			_oPClosed = entity.OPClosed;
 		_shipmentTypeId = entity.ShipmentTypeId;
-		_shipmentTypeName = default;
-		_shipmentCreateDate = entity.ShipmentCreateDate;
+		_shipmenttype = entity.ShipmentType !=null ? new ShipmentTypePM(entity.ShipmentType) : null;
+			_shipmentCreateDate = entity.ShipmentCreateDate;
 		_pODReceivedOnDate = entity.PODReceivedOnDate;
 		_isAutomaticUpdates = entity.IsAutomaticUpdates;
 		_isClosed = entity.IsClosed;
 		_closedDate = entity.ClosedDate;
-		_isUpdateByAutomation = default;
-		_masterEntityId = default;
-		_customerContactId = default;
-		_handlerContactId = default;
-		_consigneeContactId = default;
-		_shipperContactId = default;
-		_shipperNotExporterContactId = default;
-		_freightForwarderContactId = default;
 		_statusId = entity.StatusId;
-		_statusName = default;
-		_statusWeight = default;
-		_isCancelled = entity.IsCancelled;
+		_entitystatus = entity.EntityStatus !=null ? new EntityStatusPM(entity.EntityStatus) : null;
+			_isCancelled = entity.IsCancelled;
 		_cancelledDate = entity.CancelledDate;
 		_shipmentDeliveryTruckerId = entity.ShipmentDeliveryTruckerId;
-		_shipmentDeliveryTruckerName = default;
-		_leg1VesselId = entity.Leg1VesselId;
-		_leg2VesselId = entity.Leg2VesselId;
-		_leg3VesselId = entity.Leg3VesselId;
-		_leg4VesselId = entity.Leg4VesselId;
-		_leg5VesselId = entity.Leg5VesselId;
-		_hasException = entity.HasException;
+		_truckercard = entity.TruckerCard !=null ? new CardPM(entity.TruckerCard) : null;
+			_leg1VesselId = entity.Leg1VesselId;
+		_vessel1leg = entity.Vessel1Leg !=null ? new VesselPM(entity.Vessel1Leg) : null;
+			_leg2VesselId = entity.Leg2VesselId;
+		_vessel2leg = entity.Vessel2Leg !=null ? new VesselPM(entity.Vessel2Leg) : null;
+			_leg3VesselId = entity.Leg3VesselId;
+		_vessel3leg = entity.Vessel3Leg !=null ? new VesselPM(entity.Vessel3Leg) : null;
+			_leg4VesselId = entity.Leg4VesselId;
+		_vessel4leg = entity.Vessel4Leg !=null ? new VesselPM(entity.Vessel4Leg) : null;
+			_leg5VesselId = entity.Leg5VesselId;
+		_vessel5leg = entity.Vessel5Leg !=null ? new VesselPM(entity.Vessel5Leg) : null;
+			_hasException = entity.HasException;
 		_exceptionResolvedDescription = entity.ExceptionResolvedDescription;
 		_lastExceptionDescription = entity.LastExceptionDescription;
 		_isExceptionResolved = entity.IsExceptionResolved;
@@ -274,53 +288,27 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_preCarriageGateIn = entity.PreCarriageGateIn;
 		_onCarriageGateOut = entity.OnCarriageGateOut;
 		_concurrencyGUID = entity.ConcurrencyGUID;
-		_newConcurrencyGUID = default;
-		_shipmentConcurrencyGUID = default;
-		_shipmentNewConcurrencyGUID = default;
-		_isUpdatedOceanInsightsAnalyzer = default;
 		_updatedByPartner = entity.UpdatedByPartner;
-		_isUpdatedVizionAnalyzer = default;
 		_containerTypeId = entity.ContainerTypeId;
-		_volume = entity.Volume;
+		_containertype = entity.ContainerType !=null ? new PackageTypePM(entity.ContainerType) : null;
+			_volume = entity.Volume;
 		_grossWeight = entity.GrossWeight;
 		_additionalReference1 = entity.AdditionalReference1;
 		_additionalReference2 = entity.AdditionalReference2;
 		_additionalReference3 = entity.AdditionalReference3;
 		_additionalReference4 = entity.AdditionalReference4;
 		_volumeUnitCode = entity.VolumeUnitCode;
-		_grossWeightUnitCode = entity.GrossWeightUnitCode;
-		_containerTypeName = default;
-		_hasTransshipments = entity.HasTransshipments;
-		_mainCarriageFromCountryName = default;
-		_mainCarriageToCountryName = default;
-		_mainCarriageFromCountryCode = default;
-		_mainCarriageToCountryCode = default;
-		_mainCarriageFromCountryId = default;
-		_mainCarriageToCountryId = default;
-		_emptyPickupLocationName = default;
-		_preCarriageLocationName = default;
-		_pODLocationName = default;
-		_pOLLocationName = default;
-		_onCarriageLocationName = default;
-		_transshipment1LocationName = default;
-		_transshipment2LocationName = default;
-		_transshipment3LocationName = default;
-		_transshipment4LocationName = default;
-		_emptyReturnLocationName = default;
+		_volumeunit = entity.VolumeUnit !=null ? new VolumeUnitPM(entity.VolumeUnit) : null;
+			_grossWeightUnitCode = entity.GrossWeightUnitCode;
+		_grossweightunit = entity.GrossWeightUnit !=null ? new WeightUnitPM(entity.GrossWeightUnit) : null;
+			_hasTransshipments = entity.HasTransshipments;
 		_onCarriageATA = entity.OnCarriageATA;
 		_onCarriageETA = entity.OnCarriageETA;
 		_requestDate = entity.RequestDate;
 		_recentResponseDate = entity.RecentResponseDate;
-		_shipmentPreCarriageFromName = default;
-		_shipmentMainCarriageFromName = default;
-		_shipmentMainCarriageToName = default;
-		_shipmentOnCarriageToName = default;
-		_shipmentTransshipment1FromName = default;
-		_shipmentTransshipment2FromName = default;
-		_shipmentTransshipment3FromName = default;
-		_shipmentDepartmentName = default;
 		_shipmentDepartmentId = entity.ShipmentDepartmentId;
-		_shipmentLastLegETA = entity.ShipmentLastLegETA;
+		_department = entity.Department !=null ? new DepartmentPM(entity.Department) : null;
+			_shipmentLastLegETA = entity.ShipmentLastLegETA;
 		_shipmentLastLegATA = entity.ShipmentLastLegATA;
    }
    #endregion Constructors
@@ -390,6 +378,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _createdbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM CreatedByUser 
+		{ 
+		get { return _createdbyuser; } 
+		set { _createdbyuser = value; }
+		}
 	  private DateTime _updateDate ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -422,6 +418,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _updatedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM UpdatedByUser 
+		{ 
+		get { return _updatedbyuser; } 
+		set { _updatedbyuser = value; }
+		}
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -486,22 +490,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _carrierName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CarrierName  
-	   {
-	     get { return _carrierName; }
-		 set
-		 {
-		   if(_carrierName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CarrierName",OldValue=_carrierName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _carrierName=value;
-		   }
-		 }
-	   }
+		private CardPM _maincarriagecarrier;
+		[Include]
+        [DataMember]
+        public virtual CardPM MainCarriageCarrier 
+		{ 
+		get { return _maincarriagecarrier; } 
+		set { _maincarriagecarrier = value; }
+		}
 	  private string _mainCarriageCarrierNumber ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -854,6 +850,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmentprecarriagefromport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentPreCarriageFromPort 
+		{ 
+		get { return _shipmentprecarriagefromport; } 
+		set { _shipmentprecarriagefromport = value; }
+		}
 	  private string _shipmentPreCarriageToId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -870,6 +874,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmentprecarriagetoport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentPreCarriageToPort 
+		{ 
+		get { return _shipmentprecarriagetoport; } 
+		set { _shipmentprecarriagetoport = value; }
+		}
 	  private string _shipmentMainCarriageFromId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -886,6 +898,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmentmaincarriagefromport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentMainCarriageFromPort 
+		{ 
+		get { return _shipmentmaincarriagefromport; } 
+		set { _shipmentmaincarriagefromport = value; }
+		}
 	  private string _shipmentMainCarriageToId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -902,6 +922,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmentmaincarriagetoport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentMainCarriageToPort 
+		{ 
+		get { return _shipmentmaincarriagetoport; } 
+		set { _shipmentmaincarriagetoport = value; }
+		}
 	  private string _shipmentTransshipment1FromId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -918,6 +946,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmenttransshipment1fromport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentTransshipment1FromPort 
+		{ 
+		get { return _shipmenttransshipment1fromport; } 
+		set { _shipmenttransshipment1fromport = value; }
+		}
 	  private string _shipmentTransshipment1ToId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -934,6 +970,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmenttransshipment1toport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentTransshipment1ToPort 
+		{ 
+		get { return _shipmenttransshipment1toport; } 
+		set { _shipmenttransshipment1toport = value; }
+		}
 	  private string _shipmentTransshipment2FromId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -950,6 +994,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmenttransshipment2fromport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentTransshipment2FromPort 
+		{ 
+		get { return _shipmenttransshipment2fromport; } 
+		set { _shipmenttransshipment2fromport = value; }
+		}
 	  private string _shipmentTransshipment2ToId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -966,6 +1018,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmenttransshipment2toport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentTransshipment2ToPort 
+		{ 
+		get { return _shipmenttransshipment2toport; } 
+		set { _shipmenttransshipment2toport = value; }
+		}
 	  private string _shipmentTransshipment3FromId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -982,6 +1042,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmenttransshipment3fromport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentTransshipment3FromPort 
+		{ 
+		get { return _shipmenttransshipment3fromport; } 
+		set { _shipmenttransshipment3fromport = value; }
+		}
 	  private string _shipmentTransshipment3ToId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -998,6 +1066,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmenttransshipment3toport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentTransshipment3ToPort 
+		{ 
+		get { return _shipmenttransshipment3toport; } 
+		set { _shipmenttransshipment3toport = value; }
+		}
 	  private string _shipmentOnCarriageFromId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1014,6 +1090,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmentoncarriagefromport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentOnCarriageFromPort 
+		{ 
+		get { return _shipmentoncarriagefromport; } 
+		set { _shipmentoncarriagefromport = value; }
+		}
 	  private string _shipmentOnCarriageToId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1030,6 +1114,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _shipmentoncarriagetoiport;
+		[Include]
+        [DataMember]
+        public virtual PortPM ShipmentOnCarriageToIPort 
+		{ 
+		get { return _shipmentoncarriagetoiport; } 
+		set { _shipmentoncarriagetoiport = value; }
+		}
 	  private string _shipmentDeliveryFrom ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2374,182 +2466,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _shipmentPreCarriageFrom ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentPreCarriageFrom  
-	   {
-	     get { return _shipmentPreCarriageFrom; }
-		 set
-		 {
-		   if(_shipmentPreCarriageFrom != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentPreCarriageFrom",OldValue=_shipmentPreCarriageFrom,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentPreCarriageFrom=value;
-		   }
-		 }
-	   }
-	  private string _shipmentPreCarriageTo ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentPreCarriageTo  
-	   {
-	     get { return _shipmentPreCarriageTo; }
-		 set
-		 {
-		   if(_shipmentPreCarriageTo != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentPreCarriageTo",OldValue=_shipmentPreCarriageTo,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentPreCarriageTo=value;
-		   }
-		 }
-	   }
-	  private string _shipmentMainCarriageFrom ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentMainCarriageFrom  
-	   {
-	     get { return _shipmentMainCarriageFrom; }
-		 set
-		 {
-		   if(_shipmentMainCarriageFrom != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentMainCarriageFrom",OldValue=_shipmentMainCarriageFrom,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentMainCarriageFrom=value;
-		   }
-		 }
-	   }
-	  private string _shipmentMainCarriageTo ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentMainCarriageTo  
-	   {
-	     get { return _shipmentMainCarriageTo; }
-		 set
-		 {
-		   if(_shipmentMainCarriageTo != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentMainCarriageTo",OldValue=_shipmentMainCarriageTo,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentMainCarriageTo=value;
-		   }
-		 }
-	   }
-	  private string _shipmentTransshipment1From ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTransshipment1From  
-	   {
-	     get { return _shipmentTransshipment1From; }
-		 set
-		 {
-		   if(_shipmentTransshipment1From != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTransshipment1From",OldValue=_shipmentTransshipment1From,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentTransshipment1From=value;
-		   }
-		 }
-	   }
-	  private string _shipmentTransshipment1To ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTransshipment1To  
-	   {
-	     get { return _shipmentTransshipment1To; }
-		 set
-		 {
-		   if(_shipmentTransshipment1To != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTransshipment1To",OldValue=_shipmentTransshipment1To,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentTransshipment1To=value;
-		   }
-		 }
-	   }
-	  private string _shipmentTransshipment2From ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTransshipment2From  
-	   {
-	     get { return _shipmentTransshipment2From; }
-		 set
-		 {
-		   if(_shipmentTransshipment2From != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTransshipment2From",OldValue=_shipmentTransshipment2From,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentTransshipment2From=value;
-		   }
-		 }
-	   }
-	  private string _shipmentTransshipment3From ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTransshipment3From  
-	   {
-	     get { return _shipmentTransshipment3From; }
-		 set
-		 {
-		   if(_shipmentTransshipment3From != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTransshipment3From",OldValue=_shipmentTransshipment3From,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentTransshipment3From=value;
-		   }
-		 }
-	   }
-	  private string _shipmentTransshipment3To ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTransshipment3To  
-	   {
-	     get { return _shipmentTransshipment3To; }
-		 set
-		 {
-		   if(_shipmentTransshipment3To != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTransshipment3To",OldValue=_shipmentTransshipment3To,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentTransshipment3To=value;
-		   }
-		 }
-	   }
-	  private string _shipmentOnCarriageFrom ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentOnCarriageFrom  
-	   {
-	     get { return _shipmentOnCarriageFrom; }
-		 set
-		 {
-		   if(_shipmentOnCarriageFrom != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentOnCarriageFrom",OldValue=_shipmentOnCarriageFrom,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentOnCarriageFrom=value;
-		   }
-		 }
-	   }
-	  private string _shipmentOnCarriageTo ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentOnCarriageTo  
-	   {
-	     get { return _shipmentOnCarriageTo; }
-		 set
-		 {
-		   if(_shipmentOnCarriageTo != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentOnCarriageTo",OldValue=_shipmentOnCarriageTo,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentOnCarriageTo=value;
-		   }
-		 }
-	   }
 	  private string _availabilityLocation ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2614,22 +2530,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _shipmentStatusName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentStatusName  
-	   {
-	     get { return _shipmentStatusName; }
-		 set
-		 {
-		   if(_shipmentStatusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentStatusName",OldValue=_shipmentStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentStatusName=value;
-		   }
-		 }
-	   }
+		private EntityStatusPM _shipmentstatus;
+		[Include]
+        [DataMember]
+        public virtual EntityStatusPM ShipmentStatus 
+		{ 
+		get { return _shipmentstatus; } 
+		set { _shipmentstatus = value; }
+		}
 	  private string _emptyPickupLocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2646,6 +2554,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _emptypickuplocationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM EmptyPickupLocationPort 
+		{ 
+		get { return _emptypickuplocationport; } 
+		set { _emptypickuplocationport = value; }
+		}
 	  private string _onCarriageLocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2662,6 +2578,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _deliverylocationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM DeliveryLocationPort 
+		{ 
+		get { return _deliverylocationport; } 
+		set { _deliverylocationport = value; }
+		}
 	  private string _emptyReturnLocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2678,6 +2602,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _emptyreturnlocationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM EmptyReturnLocationPort 
+		{ 
+		get { return _emptyreturnlocationport; } 
+		set { _emptyreturnlocationport = value; }
+		}
 	  private string _availabilityLocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2694,6 +2626,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _availabilitylocationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM AvailabilityLocationPort 
+		{ 
+		get { return _availabilitylocationport; } 
+		set { _availabilitylocationport = value; }
+		}
 	  private string _preCarriageLocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2710,6 +2650,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _originlocationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM OriginLocationPort 
+		{ 
+		get { return _originlocationport; } 
+		set { _originlocationport = value; }
+		}
 	  private string _lIFLocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2726,6 +2674,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _liflocationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM LIFLocationPort 
+		{ 
+		get { return _liflocationport; } 
+		set { _liflocationport = value; }
+		}
 	  private string _pOLLocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2742,6 +2698,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _pollocationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM POLLocationPort 
+		{ 
+		get { return _pollocationport; } 
+		set { _pollocationport = value; }
+		}
 	  private string _pODLocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2758,6 +2722,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _podlocationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM PODLocationPort 
+		{ 
+		get { return _podlocationport; } 
+		set { _podlocationport = value; }
+		}
 	  private string _transshipment1LocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2774,6 +2746,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _transshipment1locationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM Transshipment1LocationPort 
+		{ 
+		get { return _transshipment1locationport; } 
+		set { _transshipment1locationport = value; }
+		}
 	  private string _transshipment2LocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2790,6 +2770,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _transshipment2locationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM Transshipment2LocationPort 
+		{ 
+		get { return _transshipment2locationport; } 
+		set { _transshipment2locationport = value; }
+		}
 	  private string _transshipment3LocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2806,6 +2794,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _transshipment3locationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM Transshipment3LocationPort 
+		{ 
+		get { return _transshipment3locationport; } 
+		set { _transshipment3locationport = value; }
+		}
 	  private string _transshipment4LocationPortId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2822,6 +2818,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PortPM _transshipment4locationport;
+		[Include]
+        [DataMember]
+        public virtual PortPM Transshipment4LocationPort 
+		{ 
+		get { return _transshipment4locationport; } 
+		set { _transshipment4locationport = value; }
+		}
 	  private string _terminalId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2838,6 +2842,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _terminalcard;
+		[Include]
+        [DataMember]
+        public virtual CardPM TerminalCard 
+		{ 
+		get { return _terminalcard; } 
+		set { _terminalcard = value; }
+		}
 	  private string _terminalAddress ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2867,22 +2879,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TerminalPhone",OldValue=_terminalPhone,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _terminalPhone=value;
-		   }
-		 }
-	   }
-	  private string _terminalName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TerminalName  
-	   {
-	     get { return _terminalName; }
-		 set
-		 {
-		   if(_terminalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TerminalName",OldValue=_terminalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _terminalName=value;
 		   }
 		 }
 	   }
@@ -3062,6 +3058,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AddressPM _terminalcardaddress;
+		[Include]
+        [DataMember]
+        public virtual AddressPM TerminalCardAddress 
+		{ 
+		get { return _terminalcardaddress; } 
+		set { _terminalcardaddress = value; }
+		}
 	  private DateTime? _shipmentPickupETA ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3590,6 +3594,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _shipmentoriginagent;
+		[Include]
+        [DataMember]
+        public virtual CardPM ShipmentOriginAgent 
+		{ 
+		get { return _shipmentoriginagent; } 
+		set { _shipmentoriginagent = value; }
+		}
 	  private string _shipmentDestinationAgentId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3606,38 +3618,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _shipmentOriginAgentName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentOriginAgentName  
-	   {
-	     get { return _shipmentOriginAgentName; }
-		 set
-		 {
-		   if(_shipmentOriginAgentName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentOriginAgentName",OldValue=_shipmentOriginAgentName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentOriginAgentName=value;
-		   }
-		 }
-	   }
-	  private string _shipmentDestinationAgentName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentDestinationAgentName  
-	   {
-	     get { return _shipmentDestinationAgentName; }
-		 set
-		 {
-		   if(_shipmentDestinationAgentName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentDestinationAgentName",OldValue=_shipmentDestinationAgentName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentDestinationAgentName=value;
-		   }
-		 }
-	   }
+		private CardPM _shipmentdestinationagent;
+		[Include]
+        [DataMember]
+        public virtual CardPM ShipmentDestinationAgent 
+		{ 
+		get { return _shipmentdestinationagent; } 
+		set { _shipmentdestinationagent = value; }
+		}
 	  private string _shipmentNumber ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3686,22 +3674,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _handlerName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string HandlerName  
-	   {
-	     get { return _handlerName; }
-		 set
-		 {
-		   if(_handlerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HandlerName",OldValue=_handlerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _handlerName=value;
-		   }
-		 }
-	   }
+		private UserPM _handler;
+		[Include]
+        [DataMember]
+        public virtual UserPM Handler 
+		{ 
+		get { return _handler; } 
+		set { _handler = value; }
+		}
 	  private string _customerId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3718,22 +3698,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _customerName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerName  
-	   {
-	     get { return _customerName; }
-		 set
-		 {
-		   if(_customerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=_customerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerName=value;
-		   }
-		 }
-	   }
+		private CardPM _customercard;
+		[Include]
+        [DataMember]
+        public virtual CardPM CustomerCard 
+		{ 
+		get { return _customercard; } 
+		set { _customercard = value; }
+		}
 	  private bool _oPClosed ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3766,22 +3738,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _shipmentTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTypeName  
-	   {
-	     get { return _shipmentTypeName; }
-		 set
-		 {
-		   if(_shipmentTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTypeName",OldValue=_shipmentTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentTypeName=value;
-		   }
-		 }
-	   }
+		private ShipmentTypePM _shipmenttype;
+		[Include]
+        [DataMember]
+        public virtual ShipmentTypePM ShipmentType 
+		{ 
+		get { return _shipmenttype; } 
+		set { _shipmenttype = value; }
+		}
 	  private DateTime? _shipmentCreateDate ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3862,134 +3826,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isUpdateByAutomation ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsUpdateByAutomation  
-	   {
-	     get { return _isUpdateByAutomation; }
-		 set
-		 {
-		   if(_isUpdateByAutomation != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUpdateByAutomation",OldValue=_isUpdateByAutomation,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isUpdateByAutomation=value;
-		   }
-		 }
-	   }
-	  private string _masterEntityId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MasterEntityId  
-	   {
-	     get { return _masterEntityId; }
-		 set
-		 {
-		   if(_masterEntityId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MasterEntityId",OldValue=_masterEntityId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _masterEntityId=value;
-		   }
-		 }
-	   }
-	  private string _customerContactId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerContactId  
-	   {
-	     get { return _customerContactId; }
-		 set
-		 {
-		   if(_customerContactId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerContactId",OldValue=_customerContactId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerContactId=value;
-		   }
-		 }
-	   }
-	  private string _handlerContactId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string HandlerContactId  
-	   {
-	     get { return _handlerContactId; }
-		 set
-		 {
-		   if(_handlerContactId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HandlerContactId",OldValue=_handlerContactId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _handlerContactId=value;
-		   }
-		 }
-	   }
-	  private string _consigneeContactId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ConsigneeContactId  
-	   {
-	     get { return _consigneeContactId; }
-		 set
-		 {
-		   if(_consigneeContactId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConsigneeContactId",OldValue=_consigneeContactId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _consigneeContactId=value;
-		   }
-		 }
-	   }
-	  private string _shipperContactId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipperContactId  
-	   {
-	     get { return _shipperContactId; }
-		 set
-		 {
-		   if(_shipperContactId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperContactId",OldValue=_shipperContactId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipperContactId=value;
-		   }
-		 }
-	   }
-	  private string _shipperNotExporterContactId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipperNotExporterContactId  
-	   {
-	     get { return _shipperNotExporterContactId; }
-		 set
-		 {
-		   if(_shipperNotExporterContactId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperNotExporterContactId",OldValue=_shipperNotExporterContactId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipperNotExporterContactId=value;
-		   }
-		 }
-	   }
-	  private string _freightForwarderContactId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FreightForwarderContactId  
-	   {
-	     get { return _freightForwarderContactId; }
-		 set
-		 {
-		   if(_freightForwarderContactId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FreightForwarderContactId",OldValue=_freightForwarderContactId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _freightForwarderContactId=value;
-		   }
-		 }
-	   }
 	  private string _statusId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4006,38 +3842,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _statusName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	     get { return _statusName; }
-		 set
-		 {
-		   if(_statusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusName=value;
-		   }
-		 }
-	   }
-	  private int _statusWeight ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int StatusWeight  
-	   {
-	     get { return _statusWeight; }
-		 set
-		 {
-		   if(_statusWeight != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusWeight",OldValue=_statusWeight,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _statusWeight=value;
-		   }
-		 }
-	   }
+		private EntityStatusPM _entitystatus;
+		[Include]
+        [DataMember]
+        public virtual EntityStatusPM EntityStatus 
+		{ 
+		get { return _entitystatus; } 
+		set { _entitystatus = value; }
+		}
 	  private bool _isCancelled ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4086,22 +3898,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _shipmentDeliveryTruckerName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentDeliveryTruckerName  
-	   {
-	     get { return _shipmentDeliveryTruckerName; }
-		 set
-		 {
-		   if(_shipmentDeliveryTruckerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentDeliveryTruckerName",OldValue=_shipmentDeliveryTruckerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentDeliveryTruckerName=value;
-		   }
-		 }
-	   }
+		private CardPM _truckercard;
+		[Include]
+        [DataMember]
+        public virtual CardPM TruckerCard 
+		{ 
+		get { return _truckercard; } 
+		set { _truckercard = value; }
+		}
 	  private string _leg1VesselId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4118,6 +3922,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VesselPM _vessel1leg;
+		[Include]
+        [DataMember]
+        public virtual VesselPM Vessel1Leg 
+		{ 
+		get { return _vessel1leg; } 
+		set { _vessel1leg = value; }
+		}
 	  private string _leg2VesselId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4134,6 +3946,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VesselPM _vessel2leg;
+		[Include]
+        [DataMember]
+        public virtual VesselPM Vessel2Leg 
+		{ 
+		get { return _vessel2leg; } 
+		set { _vessel2leg = value; }
+		}
 	  private string _leg3VesselId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4150,6 +3970,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VesselPM _vessel3leg;
+		[Include]
+        [DataMember]
+        public virtual VesselPM Vessel3Leg 
+		{ 
+		get { return _vessel3leg; } 
+		set { _vessel3leg = value; }
+		}
 	  private string _leg4VesselId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4166,6 +3994,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VesselPM _vessel4leg;
+		[Include]
+        [DataMember]
+        public virtual VesselPM Vessel4Leg 
+		{ 
+		get { return _vessel4leg; } 
+		set { _vessel4leg = value; }
+		}
 	  private string _leg5VesselId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4182,6 +4018,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VesselPM _vessel5leg;
+		[Include]
+        [DataMember]
+        public virtual VesselPM Vessel5Leg 
+		{ 
+		get { return _vessel5leg; } 
+		set { _vessel5leg = value; }
+		}
 	  private bool _hasException ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4438,70 +4282,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _newConcurrencyGUID ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string NewConcurrencyGUID  
-	   {
-	     get { return _newConcurrencyGUID; }
-		 set
-		 {
-		   if(_newConcurrencyGUID != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewConcurrencyGUID",OldValue=_newConcurrencyGUID,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _newConcurrencyGUID=value;
-		   }
-		 }
-	   }
-	  private string _shipmentConcurrencyGUID ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentConcurrencyGUID  
-	   {
-	     get { return _shipmentConcurrencyGUID; }
-		 set
-		 {
-		   if(_shipmentConcurrencyGUID != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentConcurrencyGUID",OldValue=_shipmentConcurrencyGUID,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentConcurrencyGUID=value;
-		   }
-		 }
-	   }
-	  private string _shipmentNewConcurrencyGUID ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentNewConcurrencyGUID  
-	   {
-	     get { return _shipmentNewConcurrencyGUID; }
-		 set
-		 {
-		   if(_shipmentNewConcurrencyGUID != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentNewConcurrencyGUID",OldValue=_shipmentNewConcurrencyGUID,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentNewConcurrencyGUID=value;
-		   }
-		 }
-	   }
-	  private bool _isUpdatedOceanInsightsAnalyzer ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsUpdatedOceanInsightsAnalyzer  
-	   {
-	     get { return _isUpdatedOceanInsightsAnalyzer; }
-		 set
-		 {
-		   if(_isUpdatedOceanInsightsAnalyzer != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUpdatedOceanInsightsAnalyzer",OldValue=_isUpdatedOceanInsightsAnalyzer,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isUpdatedOceanInsightsAnalyzer=value;
-		   }
-		 }
-	   }
 	  private string _updatedByPartner ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4515,22 +4295,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByPartner",OldValue=_updatedByPartner,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _updatedByPartner=value;
-		   }
-		 }
-	   }
-	  private bool _isUpdatedVizionAnalyzer ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsUpdatedVizionAnalyzer  
-	   {
-	     get { return _isUpdatedVizionAnalyzer; }
-		 set
-		 {
-		   if(_isUpdatedVizionAnalyzer != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUpdatedVizionAnalyzer",OldValue=_isUpdatedVizionAnalyzer,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isUpdatedVizionAnalyzer=value;
 		   }
 		 }
 	   }
@@ -4550,6 +4314,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PackageTypePM _containertype;
+		[Include]
+        [DataMember]
+        public virtual PackageTypePM ContainerType 
+		{ 
+		get { return _containertype; } 
+		set { _containertype = value; }
+		}
 	  private double? _volume ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4662,6 +4434,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private VolumeUnitPM _volumeunit;
+		[Include]
+        [DataMember]
+        public virtual VolumeUnitPM VolumeUnit 
+		{ 
+		get { return _volumeunit; } 
+		set { _volumeunit = value; }
+		}
 	  private string _grossWeightUnitCode ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -4678,22 +4458,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _containerTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContainerTypeName  
-	   {
-	     get { return _containerTypeName; }
-		 set
-		 {
-		   if(_containerTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerTypeName",OldValue=_containerTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _containerTypeName=value;
-		   }
-		 }
-	   }
+		private WeightUnitPM _grossweightunit;
+		[Include]
+        [DataMember]
+        public virtual WeightUnitPM GrossWeightUnit 
+		{ 
+		get { return _grossweightunit; } 
+		set { _grossweightunit = value; }
+		}
 	  private bool _hasTransshipments ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -5190,262 +4962,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _mainCarriageFromCountryName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MainCarriageFromCountryName  
-	   {
-	     get { return _mainCarriageFromCountryName; }
-		 set
-		 {
-		   if(_mainCarriageFromCountryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainCarriageFromCountryName",OldValue=_mainCarriageFromCountryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _mainCarriageFromCountryName=value;
-		   }
-		 }
-	   }
-	  private string _mainCarriageToCountryName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MainCarriageToCountryName  
-	   {
-	     get { return _mainCarriageToCountryName; }
-		 set
-		 {
-		   if(_mainCarriageToCountryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainCarriageToCountryName",OldValue=_mainCarriageToCountryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _mainCarriageToCountryName=value;
-		   }
-		 }
-	   }
-	  private string _mainCarriageFromCountryCode ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MainCarriageFromCountryCode  
-	   {
-	     get { return _mainCarriageFromCountryCode; }
-		 set
-		 {
-		   if(_mainCarriageFromCountryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainCarriageFromCountryCode",OldValue=_mainCarriageFromCountryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _mainCarriageFromCountryCode=value;
-		   }
-		 }
-	   }
-	  private string _mainCarriageToCountryCode ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MainCarriageToCountryCode  
-	   {
-	     get { return _mainCarriageToCountryCode; }
-		 set
-		 {
-		   if(_mainCarriageToCountryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainCarriageToCountryCode",OldValue=_mainCarriageToCountryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _mainCarriageToCountryCode=value;
-		   }
-		 }
-	   }
-	  private string _mainCarriageFromCountryId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MainCarriageFromCountryId  
-	   {
-	     get { return _mainCarriageFromCountryId; }
-		 set
-		 {
-		   if(_mainCarriageFromCountryId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainCarriageFromCountryId",OldValue=_mainCarriageFromCountryId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _mainCarriageFromCountryId=value;
-		   }
-		 }
-	   }
-	  private string _mainCarriageToCountryId ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MainCarriageToCountryId  
-	   {
-	     get { return _mainCarriageToCountryId; }
-		 set
-		 {
-		   if(_mainCarriageToCountryId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainCarriageToCountryId",OldValue=_mainCarriageToCountryId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _mainCarriageToCountryId=value;
-		   }
-		 }
-	   }
-	  private string _emptyPickupLocationName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EmptyPickupLocationName  
-	   {
-	     get { return _emptyPickupLocationName; }
-		 set
-		 {
-		   if(_emptyPickupLocationName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EmptyPickupLocationName",OldValue=_emptyPickupLocationName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _emptyPickupLocationName=value;
-		   }
-		 }
-	   }
-	  private string _preCarriageLocationName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PreCarriageLocationName  
-	   {
-	     get { return _preCarriageLocationName; }
-		 set
-		 {
-		   if(_preCarriageLocationName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PreCarriageLocationName",OldValue=_preCarriageLocationName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _preCarriageLocationName=value;
-		   }
-		 }
-	   }
-	  private string _pODLocationName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PODLocationName  
-	   {
-	     get { return _pODLocationName; }
-		 set
-		 {
-		   if(_pODLocationName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PODLocationName",OldValue=_pODLocationName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _pODLocationName=value;
-		   }
-		 }
-	   }
-	  private string _pOLLocationName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string POLLocationName  
-	   {
-	     get { return _pOLLocationName; }
-		 set
-		 {
-		   if(_pOLLocationName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="POLLocationName",OldValue=_pOLLocationName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _pOLLocationName=value;
-		   }
-		 }
-	   }
-	  private string _onCarriageLocationName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OnCarriageLocationName  
-	   {
-	     get { return _onCarriageLocationName; }
-		 set
-		 {
-		   if(_onCarriageLocationName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OnCarriageLocationName",OldValue=_onCarriageLocationName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _onCarriageLocationName=value;
-		   }
-		 }
-	   }
-	  private string _transshipment1LocationName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Transshipment1LocationName  
-	   {
-	     get { return _transshipment1LocationName; }
-		 set
-		 {
-		   if(_transshipment1LocationName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Transshipment1LocationName",OldValue=_transshipment1LocationName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _transshipment1LocationName=value;
-		   }
-		 }
-	   }
-	  private string _transshipment2LocationName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Transshipment2LocationName  
-	   {
-	     get { return _transshipment2LocationName; }
-		 set
-		 {
-		   if(_transshipment2LocationName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Transshipment2LocationName",OldValue=_transshipment2LocationName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _transshipment2LocationName=value;
-		   }
-		 }
-	   }
-	  private string _transshipment3LocationName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Transshipment3LocationName  
-	   {
-	     get { return _transshipment3LocationName; }
-		 set
-		 {
-		   if(_transshipment3LocationName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Transshipment3LocationName",OldValue=_transshipment3LocationName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _transshipment3LocationName=value;
-		   }
-		 }
-	   }
-	  private string _transshipment4LocationName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Transshipment4LocationName  
-	   {
-	     get { return _transshipment4LocationName; }
-		 set
-		 {
-		   if(_transshipment4LocationName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Transshipment4LocationName",OldValue=_transshipment4LocationName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _transshipment4LocationName=value;
-		   }
-		 }
-	   }
-	  private string _emptyReturnLocationName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EmptyReturnLocationName  
-	   {
-	     get { return _emptyReturnLocationName; }
-		 set
-		 {
-		   if(_emptyReturnLocationName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EmptyReturnLocationName",OldValue=_emptyReturnLocationName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _emptyReturnLocationName=value;
-		   }
-		 }
-	   }
 	  private DateTime? _onCarriageATA ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -5510,134 +5026,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _shipmentPreCarriageFromName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentPreCarriageFromName  
-	   {
-	     get { return _shipmentPreCarriageFromName; }
-		 set
-		 {
-		   if(_shipmentPreCarriageFromName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentPreCarriageFromName",OldValue=_shipmentPreCarriageFromName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentPreCarriageFromName=value;
-		   }
-		 }
-	   }
-	  private string _shipmentMainCarriageFromName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentMainCarriageFromName  
-	   {
-	     get { return _shipmentMainCarriageFromName; }
-		 set
-		 {
-		   if(_shipmentMainCarriageFromName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentMainCarriageFromName",OldValue=_shipmentMainCarriageFromName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentMainCarriageFromName=value;
-		   }
-		 }
-	   }
-	  private string _shipmentMainCarriageToName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentMainCarriageToName  
-	   {
-	     get { return _shipmentMainCarriageToName; }
-		 set
-		 {
-		   if(_shipmentMainCarriageToName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentMainCarriageToName",OldValue=_shipmentMainCarriageToName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentMainCarriageToName=value;
-		   }
-		 }
-	   }
-	  private string _shipmentOnCarriageToName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentOnCarriageToName  
-	   {
-	     get { return _shipmentOnCarriageToName; }
-		 set
-		 {
-		   if(_shipmentOnCarriageToName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentOnCarriageToName",OldValue=_shipmentOnCarriageToName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentOnCarriageToName=value;
-		   }
-		 }
-	   }
-	  private string _shipmentTransshipment1FromName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTransshipment1FromName  
-	   {
-	     get { return _shipmentTransshipment1FromName; }
-		 set
-		 {
-		   if(_shipmentTransshipment1FromName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTransshipment1FromName",OldValue=_shipmentTransshipment1FromName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentTransshipment1FromName=value;
-		   }
-		 }
-	   }
-	  private string _shipmentTransshipment2FromName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTransshipment2FromName  
-	   {
-	     get { return _shipmentTransshipment2FromName; }
-		 set
-		 {
-		   if(_shipmentTransshipment2FromName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTransshipment2FromName",OldValue=_shipmentTransshipment2FromName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentTransshipment2FromName=value;
-		   }
-		 }
-	   }
-	  private string _shipmentTransshipment3FromName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTransshipment3FromName  
-	   {
-	     get { return _shipmentTransshipment3FromName; }
-		 set
-		 {
-		   if(_shipmentTransshipment3FromName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTransshipment3FromName",OldValue=_shipmentTransshipment3FromName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentTransshipment3FromName=value;
-		   }
-		 }
-	   }
-	  private string _shipmentDepartmentName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentDepartmentName  
-	   {
-	     get { return _shipmentDepartmentName; }
-		 set
-		 {
-		   if(_shipmentDepartmentName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentDepartmentName",OldValue=_shipmentDepartmentName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentDepartmentName=value;
-		   }
-		 }
-	   }
 	  private string _shipmentDepartmentId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -5654,6 +5042,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DepartmentPM _department;
+		[Include]
+        [DataMember]
+        public virtual DepartmentPM Department 
+		{ 
+		get { return _department; } 
+		set { _department = value; }
+		}
 	  private DateTime? _shipmentLastLegETA ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

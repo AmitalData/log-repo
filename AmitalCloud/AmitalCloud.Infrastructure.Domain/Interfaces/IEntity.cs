@@ -9,6 +9,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 {
     public interface IEntity
     {
-        string SearchFields { get; set; }
+        //string SearchFields { get; set; }
     }
 } 

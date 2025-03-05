@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class HorsePM : BaseEntityPM   {
    #region Constructors
    public HorsePM() : base() {} 
-   public HorsePM(Horse entity) : base()
+   public HorsePM(POCO.Horse entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -36,19 +38,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_name = entity.Name;
 		_yearOfBirth = entity.YearOfBirth;
 		_color = entity.Color;
-		_genderName = default;
 		_breed = entity.Breed;
 		_discipline = entity.Discipline;
 		_travelBehavior = entity.TravelBehavior;
 		_micochipNumber = entity.MicochipNumber;
 		_passportNumber = entity.PassportNumber;
 		_countryOfBirthId = entity.CountryOfBirthId;
-		_currentStable = entity.CurrentStable;
+		_countryofbirth = entity.CountryOfBirth !=null ? new CountryPM(entity.CountryOfBirth) : null;
+			_currentStable = entity.CurrentStable;
 		_owner = entity.Owner;
 		_remarks = entity.Remarks;
 		_inactive = entity.Inactive;
 		_genderCode = entity.GenderCode;
-   }
+		_horsegender = entity.HorseGender !=null ? new HorseGenderPM(entity.HorseGender) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -212,22 +215,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _genderName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string GenderName  
-	   {
-	     get { return _genderName; }
-		 set
-		 {
-		   if(_genderName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GenderName",OldValue=_genderName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _genderName=value;
-		   }
-		 }
-	   }
 	  private string _breed ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -324,6 +311,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CountryPM _countryofbirth;
+		[Include]
+        [DataMember]
+        public virtual CountryPM CountryOfBirth 
+		{ 
+		get { return _countryofbirth; } 
+		set { _countryofbirth = value; }
+		}
 	  private string _currentStable ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -404,6 +399,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private HorseGenderPM _horsegender;
+		[Include]
+        [DataMember]
+        public virtual HorseGenderPM HorseGender 
+		{ 
+		get { return _horsegender; } 
+		set { _horsegender = value; }
+		}
 	 }
 #endregion Properties
 }

@@ -12046,7 +12046,7 @@
     ThisKey="&quot;Id&quot;"
     OtherKey="&quot;CardId&quot;"
     AssociationName="&quot;CustomerPMSharedLogisticContactPM&quot;"
-    IsComposition="false"
+    IsComposition="true"
     IsMaxLength="false"
     NoMetaDataField="true"
     GenerateInList="false"

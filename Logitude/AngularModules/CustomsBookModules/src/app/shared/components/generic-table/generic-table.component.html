@@ -18,12 +18,12 @@
                     <ng-template #otherCell>
                         <td *ngIf="col.visible && col.dataType == 'button'; else notButtonCell">
                             <!-- <button class="link-button" (click)="onButtonClick($event, row, col.key)">{{ row[col.key] }}</button> -->
-                            <a  href="#" (click)="onButtonClick($event, row, col.key)" (click)="$event.preventDefault()">{{ row[col.key] }}</a>
-
-
+                            <a href="#" (click)="onButtonClick($event, row, col.key)"
+                                (click)="$event.preventDefault()">{{ row[col.key] }}</a>
                         </td>
                         <ng-template #notButtonCell>
-                            <td *ngIf="col.visible && col.dataType != 'date' && col.dataType != 'link'; else dateOrLinkCell">
+                            <td
+                                *ngIf="col.visible && (col.dataType != 'date' && col.dataType != 'link' && !row[col.link?.key]); else dateOrLinkCell">
                                 {{ row[col.key] ? row[col.key] : '-' }}
                             </td>
                             <ng-template #dateOrLinkCell>
@@ -32,7 +32,7 @@
                                 </td>
                                 <ng-template #linkCell>
                                     <td *ngIf="col.visible && col.dataType == 'link'">
-                                        <a [href]="checkLink(col.isLink, row[col.key])" target="_blank">{{ row[col.key] }}</a>
+                                        <a [href]="checkLink(col.link?.url, row[col.link?.key])" target="_blank">{{ row[col.key] ? row[col.key] : '' }}</a>
                                     </td>
                                 </ng-template>
                             </ng-template>

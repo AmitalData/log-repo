@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,19 +26,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ReportsTemplatesVersionPM : BaseEntityPM   {
    #region Constructors
    public ReportsTemplatesVersionPM() : base() {} 
-   public ReportsTemplatesVersionPM(ReportsTemplatesVersion entity) : base()
+   public ReportsTemplatesVersionPM(POCO.ReportsTemplatesVersion entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_reportId = entity.ReportId;
-		_templateId = entity.TemplateId;
-		_reportDocumentId = entity.ReportDocumentId;
+		_report = entity.Report !=null ? new ReportPM(entity.Report) : null;
+			_templateId = entity.TemplateId;
+		_reportstemplate = entity.ReportsTemplate !=null ? new ReportsTemplatePM(entity.ReportsTemplate) : null;
+			_reportDocumentId = entity.ReportDocumentId;
 		_createdByUserId = entity.CreatedByUserId;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_createDate = entity.CreateDate;
 		_updateDate = entity.UpdateDate;
 		_version = entity.Version;
-		_updateByUserName = default;
 		_isRestored = entity.IsRestored;
    }
    #endregion Constructors
@@ -90,6 +93,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ReportPM _report;
+		[Include]
+        [DataMember]
+        public virtual ReportPM Report 
+		{ 
+		get { return _report; } 
+		set { _report = value; }
+		}
 	  private string _templateId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -106,6 +117,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ReportsTemplatePM _reportstemplate;
+		[Include]
+        [DataMember]
+        public virtual ReportsTemplatePM ReportsTemplate 
+		{ 
+		get { return _reportstemplate; } 
+		set { _reportstemplate = value; }
+		}
 	  private string _reportDocumentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -199,22 +218,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Version",OldValue=_version,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _version=value;
-		   }
-		 }
-	   }
-	  private string _updateByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdateByUserName  
-	   {
-	     get { return _updateByUserName; }
-		 set
-		 {
-		   if(_updateByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateByUserName",OldValue=_updateByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updateByUserName=value;
 		   }
 		 }
 	   }

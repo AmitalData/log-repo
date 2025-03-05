@@ -29,13 +29,13 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
             return new AddressPM(entity)
             {
-                CountryCode = entity.Country != null ? entity.Country.Code : null,
-                CountryEnglishName = entity.Country != null ? entity.Country.EnglishName : null,
-                CountryName = entity.Country != null ? (entity.IsLocalLanguage ? entity.Country.LocalName : entity.Country.EnglishName) : null,
-                StateCode = entity.State != null ? entity.State.Code : null,
-                StateEnglishName = entity.State != null ? entity.State.EnglishName : null,
-                HasStates = entity.Country == null ? false : entity.Country.HasStates,
-                IsStateRequired = entity.Country == null ? false : entity.Country.IsStateRequired,
+                //CountryCode = entity.Country != null ? entity.Country.Code : null,
+                //CountryEnglishName = entity.Country != null ? entity.Country.EnglishName : null,
+                //CountryName = entity.Country != null ? (entity.IsLocalLanguage ? entity.Country.LocalName : entity.Country.EnglishName) : null,
+                //StateCode = entity.State != null ? entity.State.Code : null,
+                //StateEnglishName = entity.State != null ? entity.State.EnglishName : null,
+                //HasStates = entity.Country == null ? false : entity.Country.HasStates,
+                //IsStateRequired = entity.Country == null ? false : entity.Country.IsStateRequired,
             };
         }
 

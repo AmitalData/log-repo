@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TasksSchedulerPM : BaseEntityPM   {
    #region Constructors
    public TasksSchedulerPM() : base() {} 
-   public TasksSchedulerPM(TasksScheduler entity) : base()
+   public TasksSchedulerPM(POCO.TasksScheduler entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -53,25 +55,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isLastRunError = entity.IsLastRunError;
 		_type = entity.Type;
 		_schedulerDetailsXML = entity.SchedulerDetailsXML;
-		_schedulerDetailsData = default;
 		_nextRunTimeUTC = entity.NextRunTimeUTC;
 		_lastRunStartTimeUTC = entity.LastRunStartTimeUTC;
 		_startDateTimeUTC = entity.StartDateTimeUTC;
 		_version = entity.Version;
 		_status = entity.Status;
-		_duration = default;
 		_lastRunEndTime = entity.LastRunEndTime;
-		_lastEndStartTimeUTC = default;
 		_averageRunTime = entity.AverageRunTime;
 		_entityId = entity.EntityId;
 		_lastRunEndTimeUTC = entity.LastRunEndTimeUTC;
 		_retries = entity.Retries;
-		_recepients = default;
 		_resultType = entity.ResultType;
 		_format = entity.Format;
 		_advancedFormat = entity.AdvancedFormat;
 		_executedByServerName = entity.ExecutedByServerName;
-		documentTypeTemplateIds = default;
+		//documentTypeTemplateIds = entity.DocumentTypeTemplateIds != null ? entity.DocumentTypeTemplateIds.Select(a=>new AmazedSaint.Elastic.Lib.ElasticObjectPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -508,22 +506,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private byte[] _schedulerDetailsData ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public byte[] SchedulerDetailsData  
-	   {
-	     get { return _schedulerDetailsData; }
-		 set
-		 {
-		   if(_schedulerDetailsData != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SchedulerDetailsData",OldValue=_schedulerDetailsData,NewValue=value,PropertyType="byte[]"};
-		    NotifyPropertyChanged(values);
-		   _schedulerDetailsData=value;
-		   }
-		 }
-	   }
 	  private DateTime? _nextRunTimeUTC ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -604,22 +586,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private double _duration ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double Duration  
-	   {
-	     get { return _duration; }
-		 set
-		 {
-		   if(_duration != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Duration",OldValue=_duration,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _duration=value;
-		   }
-		 }
-	   }
 	  private DateTime? _lastRunEndTime ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -633,22 +599,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunEndTime",OldValue=_lastRunEndTime,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _lastRunEndTime=value;
-		   }
-		 }
-	   }
-	  private DateTime? _lastEndStartTimeUTC ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? LastEndStartTimeUTC  
-	   {
-	     get { return _lastEndStartTimeUTC; }
-		 set
-		 {
-		   if(_lastEndStartTimeUTC != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastEndStartTimeUTC",OldValue=_lastEndStartTimeUTC,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   _lastEndStartTimeUTC=value;
 		   }
 		 }
 	   }
@@ -713,22 +663,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Retries",OldValue=_retries,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _retries=value;
-		   }
-		 }
-	   }
-	  private string _recepients ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Recepients  
-	   {
-	     get { return _recepients; }
-		 set
-		 {
-		   if(_recepients != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Recepients",OldValue=_recepients,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _recepients=value;
 		   }
 		 }
 	   }

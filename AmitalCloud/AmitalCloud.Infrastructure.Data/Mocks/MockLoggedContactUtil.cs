@@ -11,7 +11,7 @@ namespace AmitalCloud.Infrastructure.Data.Mocks
             ContactPM loggedcontact = new ContactPM()
             {
                 Id = expectedLoggedUserId,
-                DontShowLocal = true,
+                //DontShowLocal = true,
             };
 
             return loggedcontact;

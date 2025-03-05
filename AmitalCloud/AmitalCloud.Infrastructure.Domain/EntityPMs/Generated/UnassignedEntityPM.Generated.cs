@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,12 +26,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class UnassignedEntityPM : BaseEntityPM   {
    #region Constructors
    public UnassignedEntityPM() : base() {} 
-   public UnassignedEntityPM(UnassignedEntity entity) : base()
+   public UnassignedEntityPM(POCO.UnassignedEntity entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_objectTableId = entity.ObjectTableId;
-		_unassignedCode = entity.UnassignedCode;
+		_entityobjecttable = entity.EntityObjectTable !=null ? new ObjectTablePM(entity.EntityObjectTable) : null;
+			_unassignedCode = entity.UnassignedCode;
    }
    #endregion Constructors
    #region Properties
@@ -82,6 +85,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTablePM _entityobjecttable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM EntityObjectTable 
+		{ 
+		get { return _entityobjecttable; } 
+		set { _entityobjecttable = value; }
+		}
 	  private string _unassignedCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,16 +26,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class RestrictionPM : BaseEntityPM   {
    #region Constructors
    public RestrictionPM() : base() {} 
-   public RestrictionPM(Restriction entity) : base()
+   public RestrictionPM(POCO.Restriction entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_value = entity.Value;
 		_contactTenantId = entity.ContactTenantId;
-		_objectTableId = entity.ObjectTableId;
+		_contacttenant = entity.ContactTenant !=null ? new ContactTenantPM(entity.ContactTenant) : null;
+			_objectTableId = entity.ObjectTableId;
 		_objectFieldId = entity.ObjectFieldId;
-		_userId = default;
-		_objectFieldName = default;
 		_objectFieldCode = entity.ObjectFieldCode;
    }
    #endregion Constructors
@@ -103,6 +104,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ContactTenantPM _contacttenant;
+		[Include]
+        [DataMember]
+        public virtual ContactTenantPM ContactTenant 
+		{ 
+		get { return _contacttenant; } 
+		set { _contacttenant = value; }
+		}
 	  private string _objectTableId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -132,38 +141,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldId",OldValue=_objectFieldId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _objectFieldId=value;
-		   }
-		 }
-	   }
-	  private string _userId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UserId  
-	   {
-	     get { return _userId; }
-		 set
-		 {
-		   if(_userId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UserId",OldValue=_userId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _userId=value;
-		   }
-		 }
-	   }
-	  private string _objectFieldName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectFieldName  
-	   {
-	     get { return _objectFieldName; }
-		 set
-		 {
-		   if(_objectFieldName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldName",OldValue=_objectFieldName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectFieldName=value;
 		   }
 		 }
 	   }

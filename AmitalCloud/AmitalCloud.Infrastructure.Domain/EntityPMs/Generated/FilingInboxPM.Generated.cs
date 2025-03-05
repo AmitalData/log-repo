@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class FilingInboxPM : BaseEntityPM   {
    #region Constructors
    public FilingInboxPM() : base() {} 
-   public FilingInboxPM(FilingInbox entity) : base()
+   public FilingInboxPM(POCO.FilingInbox entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -35,11 +37,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_updateDate = entity.UpdateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_bodyDocumentId = entity.BodyDocumentId;
-		_fileName = default;
-		_searchFields = entity.SearchFields;
-		_emailBody = default;
-		_senderName = default;
-		filingInboxAttachments = default;
+		_bodydocument = entity.BodyDocument !=null ? new DocumentPM(entity.BodyDocument) : null;
+			_searchFields = entity.SearchFields;
+		filingInboxAttachments = entity.FilingInboxAttachments != null ? entity.FilingInboxAttachments.Select(a=>new FilingInboxAttachmentPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -188,22 +188,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _fileName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FileName  
-	   {
-	     get { return _fileName; }
-		 set
-		 {
-		   if(_fileName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileName",OldValue=_fileName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fileName=value;
-		   }
-		 }
-	   }
+		private DocumentPM _bodydocument;
+		[Include]
+        [DataMember]
+        public virtual DocumentPM BodyDocument 
+		{ 
+		get { return _bodydocument; } 
+		set { _bodydocument = value; }
+		}
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -217,38 +209,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private string _emailBody ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EmailBody  
-	   {
-	     get { return _emailBody; }
-		 set
-		 {
-		   if(_emailBody != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EmailBody",OldValue=_emailBody,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _emailBody=value;
-		   }
-		 }
-	   }
-	  private string _senderName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SenderName  
-	   {
-	     get { return _senderName; }
-		 set
-		 {
-		   if(_senderName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SenderName",OldValue=_senderName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _senderName=value;
 		   }
 		 }
 	   }

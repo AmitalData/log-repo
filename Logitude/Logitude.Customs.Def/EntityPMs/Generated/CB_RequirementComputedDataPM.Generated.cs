@@ -349,6 +349,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? trNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? TrNumber  
+	   {
+	    
+	     get
+		{
+		   return trNumber;
+		 }
+		 set
+		 {
+		   if(trNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TrNumber",OldValue=trNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   trNumber=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

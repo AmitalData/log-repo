@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomerSalesNotePM : BaseEntityPM   {
    #region Constructors
    public CustomerSalesNotePM() : base() {} 
-   public CustomerSalesNotePM(CustomerSalesNote entity) : base()
+   public CustomerSalesNotePM(POCO.CustomerSalesNote entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -34,11 +36,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_createDate = entity.CreateDate;
 		_updateDate = entity.UpdateDate;
 		_notes = entity.Notes;
-		_createdByUserName = default;
-		_updatedByUserName = default;
-		_changeSetOp = default;
-		_eventLabel = default;
-		_postToFollowers = default;
    }
    #endregion Constructors
    #region Properties
@@ -168,86 +165,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Notes",OldValue=_notes,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _notes=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
-		   }
-		 }
-	   }
-	  private string _changeSetOp ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSetOp  
-	   {
-	     get { return _changeSetOp; }
-		 set
-		 {
-		   if(_changeSetOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSetOp",OldValue=_changeSetOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSetOp=value;
-		   }
-		 }
-	   }
-	  private string _eventLabel ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EventLabel  
-	   {
-	     get { return _eventLabel; }
-		 set
-		 {
-		   if(_eventLabel != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EventLabel",OldValue=_eventLabel,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _eventLabel=value;
-		   }
-		 }
-	   }
-	  private bool _postToFollowers ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool PostToFollowers  
-	   {
-	     get { return _postToFollowers; }
-		 set
-		 {
-		   if(_postToFollowers != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PostToFollowers",OldValue=_postToFollowers,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _postToFollowers=value;
 		   }
 		 }
 	   }

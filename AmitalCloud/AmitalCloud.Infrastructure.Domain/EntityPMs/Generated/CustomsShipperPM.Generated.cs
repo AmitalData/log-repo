@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.ServiceModel.DomainServices.Server;
@@ -13,8 +14,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +27,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomsShipperPM :  ChildEntitiesCustomFieldPM   {
    #region Constructors
    public CustomsShipperPM() : base() {} 
-   public CustomsShipperPM(CustomsShipper entity) : base()
+   public CustomsShipperPM(POCO.CustomsShipper entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -34,8 +36,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_validDepositionNumber = entity.ValidDepositionNumber;
 		_validityStartDate = entity.ValidityStartDate;
 		_validityEndDate = entity.ValidityEndDate;
-		_englishName = default;
-		_shipperVAT = default;
    }
    #endregion Constructors
    #region Properties
@@ -149,38 +149,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ValidityEndDate",OldValue=_validityEndDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _validityEndDate=value;
-		   }
-		 }
-	   }
-	  private string _englishName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EnglishName  
-	   {
-	     get { return _englishName; }
-		 set
-		 {
-		   if(_englishName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishName",OldValue=_englishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _englishName=value;
-		   }
-		 }
-	   }
-	  private string _shipperVAT ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipperVAT  
-	   {
-	     get { return _shipperVAT; }
-		 set
-		 {
-		   if(_shipperVAT != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperVAT",OldValue=_shipperVAT,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipperVAT=value;
 		   }
 		 }
 	   }

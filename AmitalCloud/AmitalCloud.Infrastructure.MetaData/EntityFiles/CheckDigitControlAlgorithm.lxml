@@ -42,7 +42,7 @@
   CloseTableName="&quot;Name&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Common&quot;"
-  NoViewController="false"
+  NoViewController="true"
   NoPMController="true"
   NoTS="false"
   NoDefaultFeatures="false"

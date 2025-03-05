@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,17 +26,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ChargeTypeAccountingPM : BaseEntityPM   {
    #region Constructors
    public ChargeTypeAccountingPM() : base() {} 
-   public ChargeTypeAccountingPM(ChargeTypeAccounting entity) : base()
+   public ChargeTypeAccountingPM(POCO.ChargeTypeAccounting entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_vatTypeId = entity.VatTypeId;
 		_chargeTypeId = entity.ChargeTypeId;
-		_payableDebitAccount = entity.PayableDebitAccount;
+		_chargetype = entity.ChargeType !=null ? new ChargesTypePM(entity.ChargeType) : null;
+			_payableDebitAccount = entity.PayableDebitAccount;
 		_receivableCreditAccount = entity.ReceivableCreditAccount;
-		_changeSetOp = default;
-		_vatTypeName = default;
-		_chargeTypeName = default;
 		_payableDebitGLAcountId = entity.PayableDebitGLAcountId;
 		_receivableCreditGLAccountId = entity.ReceivableCreditGLAccountId;
    }
@@ -105,6 +105,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ChargesTypePM _chargetype;
+		[Include]
+        [DataMember]
+        public virtual ChargesTypePM ChargeType 
+		{ 
+		get { return _chargetype; } 
+		set { _chargetype = value; }
+		}
 	  private string _payableDebitAccount ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -134,54 +142,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReceivableCreditAccount",OldValue=_receivableCreditAccount,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _receivableCreditAccount=value;
-		   }
-		 }
-	   }
-	  private string _changeSetOp ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChangeSetOp  
-	   {
-	     get { return _changeSetOp; }
-		 set
-		 {
-		   if(_changeSetOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeSetOp",OldValue=_changeSetOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeSetOp=value;
-		   }
-		 }
-	   }
-	  private string _vatTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VatTypeName  
-	   {
-	     get { return _vatTypeName; }
-		 set
-		 {
-		   if(_vatTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatTypeName",OldValue=_vatTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vatTypeName=value;
-		   }
-		 }
-	   }
-	  private string _chargeTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargeTypeName  
-	   {
-	     get { return _chargeTypeName; }
-		 set
-		 {
-		   if(_chargeTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargeTypeName",OldValue=_chargeTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _chargeTypeName=value;
 		   }
 		 }
 	   }

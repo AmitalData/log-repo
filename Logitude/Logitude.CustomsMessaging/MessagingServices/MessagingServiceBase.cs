@@ -191,7 +191,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             
             Stopwatch totalStopwatch = null;
 
-            InitDef(); this.RequestParams = requestParams;
+            InitDef();
+            this.RequestParams = requestParams;
             if (customsRequestCalc == null)
             {
                 if (true
@@ -275,11 +276,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 return;
             }
             var interfaceCode = this.MainInterfaceCode;//may raise NotImplementedException
-            var interfaceTypeQueryService = new InterfaceManagementQueryService(0);
+            int tenant = SettingUtil.GetCurrentTenant();
+            var interfaceTypeQueryService = new InterfaceManagementQueryService(tenant);
             _MainMessageDefinition = interfaceTypeQueryService.GetSingle(interfaceCode, false, true);
         }
 
-
+        
 
 
         private void DoPreCallWSCompleteTrans(TRequestParams requestParams, TCustomsRequest customsRequest)

@@ -85,7 +85,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             }
             AddAcitivityLog(entityPM, "N");
-                       
+
+            FillSearchFields(entityPM);
+
+
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             entityPM.CreatedByUserId = loggedUser?.Id;
 
@@ -473,16 +476,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
             var tenant = entityPM.Tenant;
-            List<CardList> cardLists = null;
+
             if (entityPM.DisplayNumber != entityPOCO.DisplayNumber)
             {
-               cardLists = GetCardsByGLAccountId(entityPM.Id, tenant);
+                List<CardList> cardLists = GetCardsByGLAccountId(entityPM.Id, tenant);
                 foreach (CardList card in cardLists)
                 {
                     UpdateCardDisplayNumber(tenant, card.Id, entityPM.DisplayNumber, entityPM.Id, true);
                 }
             }
-            FillSearchFields(entityPM, cardLists);
             if (!entityPM.IsControlAccount.GetValueOrDefault())
             {
                 this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
@@ -720,43 +722,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ActionDate = DateTime.Today,
                     BatchIt = 1,
                 };
-                //using (var memStream = new MemoryStream())
-                //{
-                //    var serializer = new XmlSerializer(typeof(GLAccountInterestActivationBalanceArgs));
-                //    serializer.Serialize(/*stringwriter*/memStream, args);
-
-                //    var communicationLogId = Communications.AddCommunicationLog(new CommunicationsParams()
-                //    {
-                //        Tenant = entityPOCO.Tenant,
-                //        CommunicationLogTypeCode = "Q",
-                //        QueueName = "externaltasksqueue" + entityPOCO.Tenant + 1,
-                //        Priority = 1,
-                //        InOut = "O",
-                //        Status = "D",
-                //        FileExtension = "xml",
-                //        //LoggingUserId = loggedUserId,
-                //        //LoggingObjectTableId = table.Id,
-                //        //LoggingEntityId = extDocPM.Id,
-
-                //        FolderName = "BatchTaskExecutionsQueue",
-
-                //        To = "GLAccountInterestActivationBalanceBatch",
-
-                //        //EntityId = declarationId,
-                //        //ObjectTableId = objectTableId,
-                //        Subject = "GLAccountInterestActivationBalanceBatch holder ",
-                //        ByteData = memStream.ToArray()
-
-
-                //    });
-                //    args.CommunicationLogId = communicationLogId;
-
-                //}
-                ////GLAccountInterestActivationBalanceBatch.CreateBatchFunctionalTestTask( args,false);
-                //var myGLAccountInterestActivationBalanceBatch = new BatchGLAccountInterestActivationBalanceTask(null);
-                //string subj = $"GLAccount Interest Activation Balance {entityPOCO.Id}";
-                //myGLAccountInterestActivationBalanceBatch.CreateQBatchTaskExecution<GLAccountInterestActivationBalanceArgs>(args, args.Tenant, subj, true);
-
 
                 var accountingContext = AccountingContext.GetContext(tenant);
 
@@ -773,7 +738,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             AddAcitivityLog(entityPM, "U");
 
             FillForeignFields(entityPM);
-           
+            FillSearchFields(entityPM);
             AddEventForGlAccountFollowUpData(entityPM);
             HandleGLAccountFollowUpData(entityPM);
 
@@ -968,16 +933,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return comParams;
         }
 
-        private void FillSearchFields(GLAccountPM entityPM, List<CardList> cardLists)
+        private void FillSearchFields(GLAccountPM entityPM)
         {
-            if (cardLists == null)
-            {
-                cardLists = GetCardsByGLAccountId(entityPM.Id, entityPM.Tenant);
-            }
-
-            string vatNumbers = string.Join(",", cardLists.Where(card => !string.IsNullOrEmpty(card?.VatNumber)).Select(card => card.VatNumber));
-
-            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName + "," + vatNumbers;
+            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName;
         }
 
         private void FillForeignFields(GLAccountPM entityPM)
@@ -2369,7 +2327,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode && entityPM.IsMultiCurrency == false)
+                if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode)
                 {
                     //check glaccount transactions
                     LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(accountingContext);

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,10 +26,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class DocumentTypePM : BaseEntityPM   {
    #region Constructors
    public DocumentTypePM() : base() {} 
-   public DocumentTypePM(DocumentType entity) : base()
+   public DocumentTypePM(POCO.DocumentType entity) : base()
    {
 		_id = entity.Id;
-		_followUpTypeId = default;
 		_notes = entity.Notes;
 		_subject = entity.Subject;
 		_documentTypeDefaultReportTemplateId = entity.DocumentTypeDefaultReportTemplateId;
@@ -35,8 +36,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_documentTypeDefaultEditorTool = entity.DocumentTypeDefaultEditorTool;
 		_customControl = entity.CustomControl;
 		_customerRoleId = entity.CustomerRoleId;
-		_agentRoleId = entity.AgentRoleId;
-		_sharedDocumentTypeCopyId = entity.SharedDocumentTypeCopyId;
+		_customerrole = entity.CustomerRole !=null ? new RolePM(entity.CustomerRole) : null;
+			_agentRoleId = entity.AgentRoleId;
+		_agentrole = entity.AgentRole !=null ? new RolePM(entity.AgentRole) : null;
+			_sharedDocumentTypeCopyId = entity.SharedDocumentTypeCopyId;
 		_isAirDigitalSignRequired = entity.IsAirDigitalSignRequired;
 		_isOceanDigitalSignRequired = entity.IsOceanDigitalSignRequired;
 		_isInlandDigitalSignRequired = entity.IsInlandDigitalSignRequired;
@@ -44,7 +47,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isMaster = entity.IsMaster;
 		_isDirect = entity.IsDirect;
 		_isHouse = entity.IsHouse;
-		_objectTableName = default;
 		_searchFields = entity.SearchFields;
 		_isAgentSharedInHouse = entity.IsAgentSharedInHouse;
 		_isAgentSharedInDirect = entity.IsAgentSharedInDirect;
@@ -65,24 +67,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_name = entity.Name;
 		_code = entity.Code;
 		_documentTypeCategoryCode = entity.DocumentTypeCategoryCode;
-		_templateFormatCode = entity.TemplateFormatCode;
-		_objectTableId = entity.ObjectTableId;
+		_documenttypecategory = entity.DocumentTypeCategory !=null ? new DocumentTypeCategoryPM(entity.DocumentTypeCategory) : null;
+			_templateFormatCode = entity.TemplateFormatCode;
+		_templateformat = entity.TemplateFormat !=null ? new TemplateFormatPM(entity.TemplateFormat) : null;
+			_objectTableId = entity.ObjectTableId;
 		_limitedPrintCopyId = entity.LimitedPrintCopyId;
 		_tenant = entity.Tenant;
 		_isDocOut = entity.IsDocOut;
 		_isDocIn = entity.IsDocIn;
 		_isInland = entity.IsInland;
-		_followUpTypeName = default;
-		_isHybrid = default;
-		documentTypeCustomFields = default;
-		documentTypeCopies = default;
-		documentTypeTemplates = default;
-		_documentTypeCategoryName = default;
+		documentTypeCustomFields = entity.DocumentTypeCustomFields != null ? entity.DocumentTypeCustomFields.Select(a=>new DocumentTypeCustomFieldPM(a)).ToList() : null;
+		documentTypeTemplates = entity.DocumentTypeTemplates != null ? entity.DocumentTypeTemplates.Select(a=>new DocumentTypeTemplatePM(a)).ToList() : null;
 		_addedManually = entity.AddedManually;
 		_onSendPopulateDateFieldName = entity.OnSendPopulateDateFieldName;
 		_onUploadPopulateDateFieldName = entity.OnUploadPopulateDateFieldName;
 		_onPrintPopulateDateFieldName = entity.OnPrintPopulateDateFieldName;
-		_copyName = default;
 		_isCustomerUploadPermission = entity.IsCustomerUploadPermission;
    }
    #endregion Constructors
@@ -101,22 +100,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _id=value;
-		   }
-		 }
-	   }
-	  private string _followUpTypeId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FollowUpTypeId  
-	   {
-	     get { return _followUpTypeId; }
-		 set
-		 {
-		   if(_followUpTypeId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FollowUpTypeId",OldValue=_followUpTypeId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _followUpTypeId=value;
 		   }
 		 }
 	   }
@@ -232,6 +215,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private RolePM _customerrole;
+		[Include]
+        [DataMember]
+        public virtual RolePM CustomerRole 
+		{ 
+		get { return _customerrole; } 
+		set { _customerrole = value; }
+		}
 	  private string _agentRoleId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -248,6 +239,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private RolePM _agentrole;
+		[Include]
+        [DataMember]
+        public virtual RolePM AgentRole 
+		{ 
+		get { return _agentrole; } 
+		set { _agentrole = value; }
+		}
 	  private string _sharedDocumentTypeCopyId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -373,22 +372,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHouse",OldValue=_isHouse,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isHouse=value;
-		   }
-		 }
-	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
 		   }
 		 }
 	   }
@@ -712,6 +695,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentTypeCategoryPM _documenttypecategory;
+		[Include]
+        [DataMember]
+        public virtual DocumentTypeCategoryPM DocumentTypeCategory 
+		{ 
+		get { return _documenttypecategory; } 
+		set { _documenttypecategory = value; }
+		}
 	  private string _templateFormatCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -728,6 +719,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TemplateFormatPM _templateformat;
+		[Include]
+        [DataMember]
+        public virtual TemplateFormatPM TemplateFormat 
+		{ 
+		get { return _templateformat; } 
+		set { _templateformat = value; }
+		}
 	  private string _objectTableId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -824,38 +823,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _followUpTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FollowUpTypeName  
-	   {
-	     get { return _followUpTypeName; }
-		 set
-		 {
-		   if(_followUpTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FollowUpTypeName",OldValue=_followUpTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _followUpTypeName=value;
-		   }
-		 }
-	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
-		   }
-		 }
-	   }
 	   private List<DocumentTypeCustomFieldPM> documentTypeCustomFields;
 	 
 		     
@@ -922,6 +889,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 	    }
 	   private List<DocumentTypeTemplatePM> documentTypeTemplates;
 	 
+		     
+	   [Include]
+	   [Association("DocumentTypesDocumentTypeTemplate", "Id","DocumentTypeId")]
 	   [DataMember]
 	   public virtual List<DocumentTypeTemplatePM> DocumentTypeTemplates  
 	   {
@@ -948,22 +918,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedDocumentTypeTemplates = value; }
 	    }
-	  private string _documentTypeCategoryName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DocumentTypeCategoryName  
-	   {
-	     get { return _documentTypeCategoryName; }
-		 set
-		 {
-		   if(_documentTypeCategoryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentTypeCategoryName",OldValue=_documentTypeCategoryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _documentTypeCategoryName=value;
-		   }
-		 }
-	   }
 	  private bool _addedManually ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1025,22 +979,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OnPrintPopulateDateFieldName",OldValue=_onPrintPopulateDateFieldName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _onPrintPopulateDateFieldName=value;
-		   }
-		 }
-	   }
-	  private string _copyName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CopyName  
-	   {
-	     get { return _copyName; }
-		 set
-		 {
-		   if(_copyName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CopyName",OldValue=_copyName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _copyName=value;
 		   }
 		 }
 	   }

@@ -412,7 +412,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
                     using (var disposableToken =
-                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key,
+                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, false, key,
                         "UCBNDCD.CRS", true)
                         )
                     {
@@ -676,6 +676,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     });
                     customsDocumentPM.IsSendToQueue = true;
                     myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+                    customsDocumentPM.IsCustomSendTime = true;
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({DocumentsFilingPMId})");
 

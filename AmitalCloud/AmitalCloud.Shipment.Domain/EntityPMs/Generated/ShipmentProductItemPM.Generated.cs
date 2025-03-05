@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,13 +26,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentProductItemPM : BaseEntityPM   {
    #region Constructors
    public ShipmentProductItemPM() : base() {} 
-   public ShipmentProductItemPM(ShipmentProductItem entity) : base()
+   public ShipmentProductItemPM(POCO.ShipmentProductItem entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_shipmentId = entity.ShipmentId;
 		_productItemId = entity.ProductItemId;
-		_description = entity.Description;
+		_productitem = entity.ProductItem !=null ? new ProductItemPM(entity.ProductItem) : null;
+			_description = entity.Description;
 		_hTSCode = entity.HTSCode;
 		_sKU = entity.SKU;
 		_approvedByCustomer = entity.ApprovedByCustomer;
@@ -39,14 +42,12 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_aSIN = entity.ASIN;
 		_uPC = entity.UPC;
 		_originCountryId = entity.OriginCountryId;
-		_originCountryName = default;
-		_isEmptyLine = default;
-		_vATPercentage = entity.VATPercentage;
+		_origincountry = entity.OriginCountry !=null ? new CountryPM(entity.OriginCountry) : null;
+			_vATPercentage = entity.VATPercentage;
 		_dutiesPercentage = entity.DutiesPercentage;
 		_otherDuties = entity.OtherDuties;
 		_remarks = entity.Remarks;
 		_shipperId = entity.ShipperId;
-		_shipperName = default;
    }
    #endregion Constructors
    #region Properties
@@ -115,6 +116,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ProductItemPM _productitem;
+		[Include]
+        [DataMember]
+        public virtual ProductItemPM ProductItem 
+		{ 
+		get { return _productitem; } 
+		set { _productitem = value; }
+		}
 	  private string _description ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -259,38 +268,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _originCountryName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OriginCountryName  
-	   {
-	     get { return _originCountryName; }
-		 set
-		 {
-		   if(_originCountryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginCountryName",OldValue=_originCountryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _originCountryName=value;
-		   }
-		 }
-	   }
-	  private bool _isEmptyLine ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsEmptyLine  
-	   {
-	     get { return _isEmptyLine; }
-		 set
-		 {
-		   if(_isEmptyLine != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsEmptyLine",OldValue=_isEmptyLine,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isEmptyLine=value;
-		   }
-		 }
-	   }
+		private CountryPM _origincountry;
+		[Include]
+        [DataMember]
+        public virtual CountryPM OriginCountry 
+		{ 
+		get { return _origincountry; } 
+		set { _origincountry = value; }
+		}
 	  private double? _vATPercentage ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -368,22 +353,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperId",OldValue=_shipperId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _shipperId=value;
-		   }
-		 }
-	   }
-	  private string _shipperName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipperName  
-	   {
-	     get { return _shipperName; }
-		 set
-		 {
-		   if(_shipperName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperName",OldValue=_shipperName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipperName=value;
 		   }
 		 }
 	   }

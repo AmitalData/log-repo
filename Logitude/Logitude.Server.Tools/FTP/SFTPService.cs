@@ -833,10 +833,74 @@ namespace Logitude.Server.Tools.FTP
                
             }
         }
-        #endregion
+		#endregion
+		public void LogonWithKey(string p_host, string p_user, string p_privateKeyPath, string p_port, string p_directory, out string p_status, out string p_message)
+		{
+			MyStart();
+			if (string.IsNullOrEmpty(p_port))
+				p_port = "22";
+			p_status = "";
+			p_message = "";
+			int v_port = 80;
+			int v_sshport = 0;
+			int.TryParse(p_port, out v_sshport);
+			Initialize();
+			try
+			{
+				if (string.IsNullOrEmpty(p_port)) p_port = "80";
+				int.TryParse(p_port, out v_port);
+				if (string.IsNullOrWhiteSpace(p_host))
+				{
+					p_message = "Parameter 'Server Host' is missing";
+					p_status = "-1";
+					return;
+				}
+				if (string.IsNullOrWhiteSpace(p_user))
+				{
+					p_message = "Parameter 'User Name' is missing";
+					p_status = "-1";
+					return;
+				}
+				if (string.IsNullOrWhiteSpace(p_privateKeyPath))
+				{
+					p_message = "Parameter 'Private Key Path' is missing";
+					p_status = "-1";
+					return;
+				}
+				sftp = new nsoftware.IPWorksSSH.Sftp()
+				{
+					Firewall = { Port = v_port },
+					SSHAuthMode = nsoftware.IPWorksSSH.SftpSSHAuthModes.amPublicKey,
+					SSHHost = p_host,
+					SSHUser = p_user,
+					SSHCert = new Certificate(CertStoreTypes.cstPPKFile, p_privateKeyPath, "", "*"),
+					RemotePath = p_directory,
+					RuntimeLicense = "31484E42414431535542323031393130323552413153554241544A353234353800000000000000003135554732304250000058415852315432434D5233410000"
+				};
+				sftp.OnSSHServerAuthentication += new nsoftware.IPWorksSSH.Sftp.OnSSHServerAuthenticationHandler(sftp_OnSSHServerAuthentication);
+				sftp.OnSSHStatus += new nsoftware.IPWorksSSH.Sftp.OnSSHStatusHandler(sftp_OnSSHStatus);
 
+				sftp.SSHLogon(p_host, v_sshport);
+				p_message = "Successfully connected to Host:'" + p_host + "' ,User:'" + p_user;
+				p_message += "', directory:'" + sftp.RemotePath + "'";
 
-    }
+				p_message = FTPLogBuilder.BuildLogLine(p_message);
+				p_status = "0";
+			}
+			catch (Exception ex)
+			{
+				p_status = "-1";
+				p_message = $"Successfully connected to Host: '{p_host}', User: '{p_user}', Directory: '{sftp.RemotePath}'";
+				p_message += Environment.NewLine + ex.Message;
+				if (ex.InnerException != null)
+					p_message += Environment.NewLine + p_message;
+			}
+			finally
+			{
+				MyFinally();
+			}
+		}
+	}
     public class FileParam
     {
         public string Filename;

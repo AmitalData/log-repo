@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class AutomationPM : BaseEntityPM   {
    #region Constructors
    public AutomationPM() : base() {} 
-   public AutomationPM(Automation entity) : base()
+   public AutomationPM(POCO.Automation entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -45,10 +47,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_order = entity.Order;
 		_name = entity.Name;
 		_description = entity.Description;
-		_createdByUserName = default;
-		_updatedByUserName = default;
-		_automatedDataBackup = default;
-		_isChangeAutomationXaml = default;
 		_code = entity.Code;
    }
    #endregion Constructors
@@ -355,70 +353,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Description",OldValue=_description,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _description=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
-		   }
-		 }
-	   }
-	  private string _automatedDataBackup ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AutomatedDataBackup  
-	   {
-	     get { return _automatedDataBackup; }
-		 set
-		 {
-		   if(_automatedDataBackup != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutomatedDataBackup",OldValue=_automatedDataBackup,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _automatedDataBackup=value;
-		   }
-		 }
-	   }
-	  private bool _isChangeAutomationXaml ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsChangeAutomationXaml  
-	   {
-	     get { return _isChangeAutomationXaml; }
-		 set
-		 {
-		   if(_isChangeAutomationXaml != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsChangeAutomationXaml",OldValue=_isChangeAutomationXaml,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isChangeAutomationXaml=value;
 		   }
 		 }
 	   }

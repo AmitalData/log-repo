@@ -6,12 +6,14 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
@@ -30,13 +32,9 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_entityId = entity.EntityId;
 		_accountingTransferHeaderId = entity.AccountingTransferHeaderId;
-		_searchFields = entity.SearchFields;
+		_accountingtransferheader = entity.AccountingTransferHeader !=null ? new AccountingTransferHeaderPM(entity.AccountingTransferHeader) : null;
+			_searchFields = entity.SearchFields;
 		_entityReference = entity.EntityReference;
-		_invoiceDate = default;
-		_billToName = default;
-		_statusName = default;
-		_amountInInvoiceCurrency = default;
-		_invoiceCurrencyCode = default;
    }
    #endregion Constructors
    #region Properties
@@ -105,6 +103,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AccountingTransferHeaderPM _accountingtransferheader;
+		[Include]
+        [DataMember]
+        public virtual AccountingTransferHeaderPM AccountingTransferHeader 
+		{ 
+		get { return _accountingtransferheader; } 
+		set { _accountingtransferheader = value; }
+		}
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -134,86 +140,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityReference",OldValue=_entityReference,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _entityReference=value;
-		   }
-		 }
-	   }
-	  private DateTime _invoiceDate ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime InvoiceDate  
-	   {
-	     get { return _invoiceDate; }
-		 set
-		 {
-		   if(_invoiceDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceDate",OldValue=_invoiceDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _invoiceDate=value;
-		   }
-		 }
-	   }
-	  private string _billToName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BillToName  
-	   {
-	     get { return _billToName; }
-		 set
-		 {
-		   if(_billToName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BillToName",OldValue=_billToName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _billToName=value;
-		   }
-		 }
-	   }
-	  private string _statusName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	     get { return _statusName; }
-		 set
-		 {
-		   if(_statusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusName=value;
-		   }
-		 }
-	   }
-	  private double _amountInInvoiceCurrency ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public double AmountInInvoiceCurrency  
-	   {
-	     get { return _amountInInvoiceCurrency; }
-		 set
-		 {
-		   if(_amountInInvoiceCurrency != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmountInInvoiceCurrency",OldValue=_amountInInvoiceCurrency,NewValue=value,PropertyType="double"};
-		    NotifyPropertyChanged(values);
-		   _amountInInvoiceCurrency=value;
-		   }
-		 }
-	   }
-	  private string _invoiceCurrencyCode ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InvoiceCurrencyCode  
-	   {
-	     get { return _invoiceCurrencyCode; }
-		 set
-		 {
-		   if(_invoiceCurrencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceCurrencyCode",OldValue=_invoiceCurrencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _invoiceCurrencyCode=value;
 		   }
 		 }
 	   }

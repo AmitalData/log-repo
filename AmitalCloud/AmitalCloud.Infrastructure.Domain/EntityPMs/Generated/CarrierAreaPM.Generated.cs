@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CarrierAreaPM : BaseEntityPM   {
    #region Constructors
    public CarrierAreaPM() : base() {} 
-   public CarrierAreaPM(CarrierArea entity) : base()
+   public CarrierAreaPM(POCO.CarrierArea entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -35,11 +37,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_createdByUserId = entity.CreatedByUserId;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_carrierId = entity.CarrierId;
-		_createdByUserName = default;
-		_updatedByUserName = default;
-		carrierAreasPorts = default;
-		_transportModeCode = entity.TransportModeCode;
-   }
+		_carrier = entity.Carrier !=null ? new CardPM(entity.Carrier) : null;
+			_transportModeCode = entity.TransportModeCode;
+		_transportmode = entity.TransportMode !=null ? new TransportModePM(entity.TransportMode) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -187,38 +188,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
-		   }
-		 }
-	   }
+		private CardPM _carrier;
+		[Include]
+        [DataMember]
+        public virtual CardPM Carrier 
+		{ 
+		get { return _carrier; } 
+		set { _carrier = value; }
+		}
 	   private List<CarrierAreasPortPM> carrierAreasPorts;
 	    
        [Composition]
@@ -268,6 +245,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TransportModePM _transportmode;
+		[Include]
+        [DataMember]
+        public virtual TransportModePM TransportMode 
+		{ 
+		get { return _transportmode; } 
+		set { _transportmode = value; }
+		}
 	 }
 #endregion Properties
 }

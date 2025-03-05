@@ -39,7 +39,7 @@
   Name="&quot;APILogsData&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
-  NoViewController="false"
+  NoViewController="true"
   NoPMController="true"
   NoTS="false"
   NoDefaultFeatures="true"

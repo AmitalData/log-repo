@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,13 +26,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class BusinessUnitPM : BaseEntityPM   {
    #region Constructors
    public BusinessUnitPM() : base() {} 
-   public BusinessUnitPM(BusinessUnit entity) : base()
+   public BusinessUnitPM(POCO.BusinessUnit entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_name = entity.Name;
 		_parentId = entity.ParentId;
-		_parentName = default;
 		_inActive = entity.InActive;
 		_searchFields = entity.SearchFields;
    }
@@ -98,22 +99,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ParentId",OldValue=_parentId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _parentId=value;
-		   }
-		 }
-	   }
-	  private string _parentName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ParentName  
-	   {
-	     get { return _parentName; }
-		 set
-		 {
-		   if(_parentName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ParentName",OldValue=_parentName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _parentName=value;
 		   }
 		 }
 	   }

@@ -3,12 +3,16 @@ using System.Linq;
 using Simplog.Server.Infrastructure;
 using System;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
+using NLog;
+using NetCommonHelper.Logger;
+using System.Data.Entity;
 
 namespace Unifreight.Data.AmitalModel.Repsitories
 {
     public class SyncRecordRepository : IRepository<SyncRecord>
     {
         AmitalContext context;
+        DevLog logger = DevLog.Instance;
 
         public SyncRecordRepository(AmitalContext context)
         {
@@ -85,6 +89,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                 syncRecord.CreateDate > yesterday
             );
 
+            logger.WriteTrace($"SyncRecord, GetUnsyncAndMarkAsInProcess query {recordsQurey}");
+            
             List<SyncRecord> records = recordsQurey.ToList();
 
             foreach (SyncRecord syncRecord in records)
@@ -95,9 +101,13 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             context.SaveChanges();
 
-            IEnumerable<SyncRecord> q = records.GroupBy(record => new { record.Entname, record.KeyVal, record.TrigAction })
-                .Select(group => group.FirstOrDefault());
+            IEnumerable<SyncRecord> q = records
+                .GroupBy(record => new { record.Entname, record.KeyVal, record.TrigAction })
+                .Select(group => group.OrderByDescending(record => record.CreateDate).FirstOrDefault())
+                .OrderBy(record => record.CreateDate);
             List<SyncRecord> groupRecord = q.ToList();
+
+            logger.WriteTrace($"SyncRecord, GetUnsyncAndMarkAsInProcess groupRecord {System.Text.Json.JsonSerializer.Serialize(groupRecord)}");
 
             return groupRecord;
         }
@@ -138,14 +148,16 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             DateTime yesterday = DateTime.Now.AddDays(-1);
 
-            IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
-                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday);
+            IEnumerable<SyncRecord> query = context.SyncRecord.Where(syncRecord =>
+                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday).Take(1000);
 
-            int recordsCounts = Math.Min(records.Count(), 10000);
-            for (int i = 0; i < recordsCounts; i++)
-                records.ElementAt(i).IsSync = SyncRecordStatus.InProcess;
+            logger.WriteDebug($"SyncRecord, GetAndMarkNewSyncRecord db: {context.GetConnection().Database}");
 
-            return records.ToList();
+            List<SyncRecord> records = query.ToList();
+
+            UpdateStatus(records, SyncRecordStatus.InProcess);
+
+            return records;
         }
 
         public void UpdateStatus(List<SyncRecord> records, int status)
@@ -158,6 +170,29 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
 
             context.SaveChanges();
+        }
+
+        public List<SyncRecord> GetNeedToReturnToQueue()
+        {
+            DateTime yesterday = DateTime.Now.AddDays(-1);
+            DateTime halfHourBefore = DateTime.Now.AddMinutes(-30);
+
+            int inQueue = context.SyncRecord.Count(syncRecord =>
+                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday);
+
+            DevLog.Instance.WriteDebug($"SyncRecord, GetNeedToReturnToQueue, in queue: {inQueue}");
+
+            if (inQueue > 200)
+                return new List<SyncRecord>();
+
+            var q = context.SyncRecord.Where(syncRecord =>
+                syncRecord.IsSync > SyncRecordStatus.New && syncRecord.IsSync < SyncRecordStatus.SyncedAndUpdated &&
+                syncRecord.CreateDate > yesterday && syncRecord.CreateDate < DbFunctions.AddMinutes(DateTime.Now, -30)).Take(100);
+
+            System.Diagnostics.Debug.Print($"*************** SyncRecord, GetNeedToReturnToQueue query {q}");
+            List<SyncRecord> records = q.ToList();
+
+            return records;
         }
     }
 

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class AccountPM : BaseEntityPM   {
    #region Constructors
    public AccountPM() : base() {} 
-   public AccountPM(Account entity) : base()
+   public AccountPM(POCO.Account entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_code = entity.Code;
 		_name = entity.Name;
 		_accountTypeCode = entity.AccountTypeCode;
-		_externalAccountingCard = entity.ExternalAccountingCard;
+		_accounttype = entity.AccountType !=null ? new AccountTypePM(entity.AccountType) : null;
+			_externalAccountingCard = entity.ExternalAccountingCard;
 		_inActive = entity.InActive;
 		_addedManually = entity.AddedManually;
 		_searchFields = entity.SearchFields;
@@ -119,6 +122,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AccountTypePM _accounttype;
+		[Include]
+        [DataMember]
+        public virtual AccountTypePM AccountType 
+		{ 
+		get { return _accounttype; } 
+		set { _accounttype = value; }
+		}
 	  private string _externalAccountingCard ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CommodityPM : BaseEntityPM   {
    #region Constructors
    public CommodityPM() : base() {} 
-   public CommodityPM(Commodity entity) : base()
+   public CommodityPM(POCO.Commodity entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -33,7 +35,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_searchFields = entity.SearchFields;
 		_inActive = entity.InActive;
 		_airlineId = entity.AirlineId;
-   }
+		_airline = entity.Airline !=null ? new CardPM(entity.Airline) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -149,6 +152,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _airline;
+		[Include]
+        [DataMember]
+        public virtual CardPM Airline 
+		{ 
+		get { return _airline; } 
+		set { _airline = value; }
+		}
 	 }
 #endregion Properties
 }

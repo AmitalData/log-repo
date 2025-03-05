@@ -6,9 +6,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
     public class HybridPartnersPermission
     {
         [Key]
-        [ForeignKey("HybridPartner")]
         [Column("HybridPartnerId", Order = 1)]
         public string HybridPartnerId { get; set; }
+        [ForeignKey("HybridPartnerId")]
         public virtual HybridPartner HybridPartner { get; set; }
 
         [Key]

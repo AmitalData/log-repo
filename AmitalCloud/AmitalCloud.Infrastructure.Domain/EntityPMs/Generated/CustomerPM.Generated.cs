@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomerPM : BaseEntityPM   {
    #region Constructors
    public CustomerPM() : base() {} 
-   public CustomerPM(Customer entity) : base()
+   public CustomerPM(POCO.Customer entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -36,195 +38,82 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_field9 = entity.Field9;
 		_field10 = entity.Field10;
 		_beforeDeactiveStatusCode = entity.BeforeDeactiveStatusCode;
-		_freelancerId = entity.FreelancerId;
-		_logBoxActivated = entity.LogBoxActivated;
-		_invoiceCurrencyId = default;
-		_cityName = default;
+		_beforedeactivestatus = entity.BeforeDeactiveStatus !=null ? new CustomerStatusPM(entity.BeforeDeactiveStatus) : null;
+			_freelancerId = entity.FreelancerId;
+		_freelancer = entity.Freelancer !=null ? new UserPM(entity.Freelancer) : null;
+			_logBoxActivated = entity.LogBoxActivated;
 		_lastShipmentDate = entity.LastShipmentDate;
 		_rankId = entity.RankId;
-		_startWorkingManuallySet = entity.StartWorkingManuallySet;
+		_rank = entity.Rank !=null ? new RankPM(entity.Rank) : null;
+			_startWorkingManuallySet = entity.StartWorkingManuallySet;
 		_startWorkingDate = entity.StartWorkingDate;
-		_phoneNumber = default;
-		_faxNumber = default;
-		_cityWithCountry = default;
-		_rankCode = default;
-		_billToName = default;
-		_vatTypeId = default;
-		_bankName = default;
-		_bankAddress = default;
-		_swift = default;
-		_accountNumber = default;
-		_iBANNumber = default;
-		_sharedLogisticsInvitationStatusName = default;
-		_cargoTrackingInvitationStatusName = default;
-		_lastLoginDate = default;
-		_invitationDate = default;
 		_creditLimit = entity.CreditLimit;
 		_industryId = entity.IndustryId;
-		_leadSourceId = entity.LeadSourceId;
-		_collectorId = entity.CollectorId;
-		_classifierId = entity.ClassifierId;
-		_industryName = default;
-		_aTTN = default;
-		_createDate = default;
-		_leadDescription = entity.LeadDescription;
-		_collectorName = default;
-		_classifierName = default;
+		_industry = entity.Industry !=null ? new IndustryPM(entity.Industry) : null;
+			_leadSourceId = entity.LeadSourceId;
+		_leadsource = entity.LeadSource !=null ? new LeadSourcePM(entity.LeadSource) : null;
+			_collectorId = entity.CollectorId;
+		_collector = entity.Collector !=null ? new UserPM(entity.Collector) : null;
+			_classifierId = entity.ClassifierId;
+		_classifier = entity.Classifier !=null ? new UserPM(entity.Classifier) : null;
+			_leadDescription = entity.LeadDescription;
 		_customsAgentId = entity.CustomsAgentId;
-		_forwarderId = entity.ForwarderId;
-		_mediatorId = entity.MediatorId;
-		_city_Potential = default;
-		_address1_Potential = default;
-		_address2_Potential = default;
-		_countryId_Potential = default;
-		_stateId_Potential = default;
-		_zipCode_Potential = default;
-		_phoneNumber_Potential = default;
-		_faxNumber_Potential = default;
-		_aTTN_Potential = default;
-		_leadSourceName = default;
-		_customerStatusName = default;
-		_primaryContactName = entity.PrimaryContactName;
+		_customsagent = entity.CustomsAgent !=null ? new CardPM(entity.CustomsAgent) : null;
+			_forwarderId = entity.ForwarderId;
+		_forwarder = entity.Forwarder !=null ? new CardPM(entity.Forwarder) : null;
+			_mediatorId = entity.MediatorId;
+		_mediator = entity.Mediator !=null ? new CardPM(entity.Mediator) : null;
+			_primaryContactName = entity.PrimaryContactName;
 		_primaryContactPhone = entity.PrimaryContactPhone;
-		_codeMyCustomer = default;
 		_readyForActivationDate = entity.ReadyForActivationDate;
 		_isCustomer = entity.IsCustomer;
 		_customerStatusCode = entity.CustomerStatusCode;
-		_customerProducts = default;
-		_createdByUserId = default;
-		_updatedByUserId = default;
-		_primaryContactId = default;
-		_regionId = entity.RegionId;
-		_regionName = default;
-		_customerSizeId = entity.CustomerSizeId;
-		_countryName = default;
-		_updateDate = default;
-		_lastCallDate = entity.LastCallDate;
+		_customerstatus = entity.CustomerStatus !=null ? new CustomerStatusPM(entity.CustomerStatus) : null;
+			_regionId = entity.RegionId;
+		_region = entity.Region !=null ? new RegionPM(entity.Region) : null;
+			_customerSizeId = entity.CustomerSizeId;
+		_customersize = entity.CustomerSize !=null ? new CustomerSizePM(entity.CustomerSize) : null;
+			_lastCallDate = entity.LastCallDate;
 		_lastMeetingDate = entity.LastMeetingDate;
 		_lastOpportunityDate = entity.LastOpportunityDate;
 		_firstInvoiceDate = entity.FirstInvoiceDate;
 		_firstShipmentDate = entity.FirstShipmentDate;
 		_lastQuoteDate = entity.LastQuoteDate;
 		_lastInteractionDate = entity.LastInteractionDate;
-		_countryId = default;
-		_enableConsolidationInvoices = default;
-		_salesmanBusinessUnitId = default;
 		_activityWatch = entity.ActivityWatch;
 		_primaryContactEmail = entity.PrimaryContactEmail;
 		_knownConsignor = entity.KnownConsignor;
 		_kCExpirationDate = entity.KCExpirationDate;
-		_code = default;
-		_englishName = default;
-		_localName = default;
-		_computedLocalName = default;
-		_inActive = default;
 		_accountManagerUserId = entity.AccountManagerUserId;
-		_salesmanUserId = entity.SalesmanUserId;
-		_website = default;
-		_billToId = default;
-		_vatNumber = default;
-		_accountingCard = default;
-		_paymentTermId = default;
-		_accountManagerUserEnglishName = default;
-		_salesmanUserEnglishName = default;
-		_rankName = default;
-		_notes = default;
-		_isSecured = default;
-		_fieldsChanged = default;
-		_partnerTypeId = default;
-		_searchFields = default;
-		_cardPMId = default;
-		_existedContactId = default;
-		_cityCode = default;
-		_countryCode = default;
-		_imageDetailId = default;
-		_isActiveForMobile = default;
-		_isHybrid = default;
-		_freelancerName = default;
-		_forwarderName = default;
-		_customsAgentName = default;
-		_mediatorName = default;
-		_googleAddressString = default;
-		_isExternal = default;
-		_setReActivated = default;
-		_setInActive = default;
-		_setReady = default;
-		_setActivated = default;
-		_eventNote = default;
-		_isLocalLanguage = default;
-		_isFirstContactToAdd = default;
-		_savedForActivation = default;
-		_queueMessageLockToken = default;
-		_questionnaireAnsewrsHtmlString = default;
-		_setAsPotential = default;
-		_updatedByUserCode = default;
-		_card = default;
-		addresses = default;
-		contacts = default;
-		sharedLogisticContacts = default;
-		customerProductActualDatas = default;
-		customerCompetitors = default;
-		customerAdditionalServices = default;
-		salesNotes = default;
-		customerSalesmanByProducts = default;
-		customerAccountManagerByProducts = default;
-		customerCustomsAgentByProducts = default;
-		customerForwarderByProducts = default;
-		customerMediatorByProducts = default;
-		cardExternalCodeByCurrencies = default;
-		_isLogBox = default;
-		_sATForeignRFC = default;
-		_metodoPagoCode = default;
-		_usoCFDICode = default;
+		_accountmanageruser = entity.AccountManagerUser !=null ? new UserPM(entity.AccountManagerUser) : null;
+			_salesmanUserId = entity.SalesmanUserId;
+		addresses = entity.Addresses != null ? entity.Addresses.Select(a=>new AddressPM(a)).ToList() : null;
+		contacts = entity.Contacts != null ? entity.Contacts.Select(a=>new ContactPM(a)).ToList() : null;
 		_activatedByUserId = entity.ActivatedByUserId;
-		_setAsInactiveByUserId = entity.SetAsInactiveByUserId;
-		_activationRequestedByUserId = entity.ActivationRequestedByUserId;
-		_isPrivateLabelCustomer = entity.IsPrivateLabelCustomer;
+		_activatedbyuser = entity.ActivatedByUser !=null ? new UserPM(entity.ActivatedByUser) : null;
+			_setAsInactiveByUserId = entity.SetAsInactiveByUserId;
+		_setasinactivebyuser = entity.SetAsInactiveByUser !=null ? new UserPM(entity.SetAsInactiveByUser) : null;
+			_activationRequestedByUserId = entity.ActivationRequestedByUserId;
+		_activationrequestedbyuser = entity.ActivationRequestedByUser !=null ? new UserPM(entity.ActivationRequestedByUser) : null;
+			_isPrivateLabelCustomer = entity.IsPrivateLabelCustomer;
 		_blockNewInvoiceCreation = entity.BlockNewInvoiceCreation;
 		_blockNewShipmentCreation = entity.BlockNewShipmentCreation;
-		_externalId2 = default;
-		_supportNotes = default;
-		_iRSPlace = default;
-		_iRSNumber = default;
-		_requestedAirlines = default;
-		_registeredAirlines = default;
-		_pendingAirlines = default;
-		_receivablesAccountingCard = default;
-		_payablesAccountingCard = default;
 		_competitorFields = entity.CompetitorFields;
 		_isCreditLimitEnabled = entity.IsCreditLimitEnabled;
 		_creditLimitAmount = entity.CreditLimitAmount;
 		_creditLimitOpenBalance = entity.CreditLimitOpenBalance;
 		_creditLimitWarningPercentage = entity.CreditLimitWarningPercentage;
-		_externalAccountingBusinessArea = default;
-		_paymentMethodCode = default;
 		_activationDate = entity.ActivationDate;
 		_inactiveDate = entity.InactiveDate;
 		_activationRequestDate = entity.ActivationRequestDate;
-		_isCustomerAllowed = default;
-		_customerTenant = default;
-		_mainAddressId = default;
-		_billingAddressId = default;
-		_gLAccountId = default;
 		_lastOpportunitySubject = entity.LastOpportunitySubject;
 		_lastOpportunityStatus = entity.LastOpportunityStatus;
-		_createdByPartner = default;
-		_storageFreeDays = default;
-		_accountingVATSplit = default;
-		_gLAccountNumber = default;
 		_eORInumber = entity.EORInumber;
-		_isAutonomy = default;
 		_insuredcreditLimit = entity.InsuredcreditLimit;
-		_regimenFiscalCode = default;
 		_teamId = entity.TeamId;
-		_teamName = default;
-		_exportLocalCustomerGroupId = entity.ExportLocalCustomerGroupId;
+		_customerteam = entity.CustomerTeam !=null ? new CustomerTeamPM(entity.CustomerTeam) : null;
+			_exportLocalCustomerGroupId = entity.ExportLocalCustomerGroupId;
 		_importLocalCustomerGroupId = entity.ImportLocalCustomerGroupId;
-		_sATCustomerName = default;
-		_lastLoginDateViaPC = default;
-		_lastLoginDateViaMobile = default;
-		_cargoTrackingInvitationDate = default;
-		_contactForAccounting = default;
    }
    #endregion Constructors
    #region Properties
@@ -389,6 +278,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CustomerStatusPM _beforedeactivestatus;
+		[Include]
+        [DataMember]
+        public virtual CustomerStatusPM BeforeDeactiveStatus 
+		{ 
+		get { return _beforedeactivestatus; } 
+		set { _beforedeactivestatus = value; }
+		}
 	  private string _freelancerId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -405,6 +302,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _freelancer;
+		[Include]
+        [DataMember]
+        public virtual UserPM Freelancer 
+		{ 
+		get { return _freelancer; } 
+		set { _freelancer = value; }
+		}
 	  private bool _logBoxActivated ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -418,38 +323,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LogBoxActivated",OldValue=_logBoxActivated,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _logBoxActivated=value;
-		   }
-		 }
-	   }
-	  private string _invoiceCurrencyId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InvoiceCurrencyId  
-	   {
-	     get { return _invoiceCurrencyId; }
-		 set
-		 {
-		   if(_invoiceCurrencyId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceCurrencyId",OldValue=_invoiceCurrencyId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _invoiceCurrencyId=value;
-		   }
-		 }
-	   }
-	  private string _cityName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CityName  
-	   {
-	     get { return _cityName; }
-		 set
-		 {
-		   if(_cityName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CityName",OldValue=_cityName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _cityName=value;
 		   }
 		 }
 	   }
@@ -485,6 +358,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private RankPM _rank;
+		[Include]
+        [DataMember]
+        public virtual RankPM Rank 
+		{ 
+		get { return _rank; } 
+		set { _rank = value; }
+		}
 	  private bool _startWorkingManuallySet ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -514,182 +395,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartWorkingDate",OldValue=_startWorkingDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _startWorkingDate=value;
-		   }
-		 }
-	   }
-	  private string _phoneNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PhoneNumber  
-	   {
-	     get { return _phoneNumber; }
-		 set
-		 {
-		   if(_phoneNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhoneNumber",OldValue=_phoneNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _phoneNumber=value;
-		   }
-		 }
-	   }
-	  private string _faxNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FaxNumber  
-	   {
-	     get { return _faxNumber; }
-		 set
-		 {
-		   if(_faxNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FaxNumber",OldValue=_faxNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _faxNumber=value;
-		   }
-		 }
-	   }
-	  private string _cityWithCountry ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CityWithCountry  
-	   {
-	     get { return _cityWithCountry; }
-		 set
-		 {
-		   if(_cityWithCountry != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CityWithCountry",OldValue=_cityWithCountry,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _cityWithCountry=value;
-		   }
-		 }
-	   }
-	  private string _rankCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RankCode  
-	   {
-	     get { return _rankCode; }
-		 set
-		 {
-		   if(_rankCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RankCode",OldValue=_rankCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _rankCode=value;
-		   }
-		 }
-	   }
-	  private string _billToName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BillToName  
-	   {
-	     get { return _billToName; }
-		 set
-		 {
-		   if(_billToName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BillToName",OldValue=_billToName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _billToName=value;
-		   }
-		 }
-	   }
-	  private string _vatTypeId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VatTypeId  
-	   {
-	     get { return _vatTypeId; }
-		 set
-		 {
-		   if(_vatTypeId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatTypeId",OldValue=_vatTypeId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vatTypeId=value;
-		   }
-		 }
-	   }
-	  private string _bankName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BankName  
-	   {
-	     get { return _bankName; }
-		 set
-		 {
-		   if(_bankName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankName",OldValue=_bankName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _bankName=value;
-		   }
-		 }
-	   }
-	  private string _bankAddress ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BankAddress  
-	   {
-	     get { return _bankAddress; }
-		 set
-		 {
-		   if(_bankAddress != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankAddress",OldValue=_bankAddress,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _bankAddress=value;
-		   }
-		 }
-	   }
-	  private string _swift ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Swift  
-	   {
-	     get { return _swift; }
-		 set
-		 {
-		   if(_swift != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Swift",OldValue=_swift,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _swift=value;
-		   }
-		 }
-	   }
-	  private string _accountNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AccountNumber  
-	   {
-	     get { return _accountNumber; }
-		 set
-		 {
-		   if(_accountNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountNumber",OldValue=_accountNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _accountNumber=value;
-		   }
-		 }
-	   }
-	  private string _iBANNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string IBANNumber  
-	   {
-	     get { return _iBANNumber; }
-		 set
-		 {
-		   if(_iBANNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IBANNumber",OldValue=_iBANNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _iBANNumber=value;
 		   }
 		 }
 	   }
@@ -741,70 +446,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _sharedLogisticsInvitationStatusName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SharedLogisticsInvitationStatusName  
-	   {
-	     get { return _sharedLogisticsInvitationStatusName; }
-		 set
-		 {
-		   if(_sharedLogisticsInvitationStatusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SharedLogisticsInvitationStatusName",OldValue=_sharedLogisticsInvitationStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _sharedLogisticsInvitationStatusName=value;
-		   }
-		 }
-	   }
-	  private string _cargoTrackingInvitationStatusName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CargoTrackingInvitationStatusName  
-	   {
-	     get { return _cargoTrackingInvitationStatusName; }
-		 set
-		 {
-		   if(_cargoTrackingInvitationStatusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTrackingInvitationStatusName",OldValue=_cargoTrackingInvitationStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _cargoTrackingInvitationStatusName=value;
-		   }
-		 }
-	   }
-	  private DateTime _lastLoginDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime LastLoginDate  
-	   {
-	     get { return _lastLoginDate; }
-		 set
-		 {
-		   if(_lastLoginDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastLoginDate",OldValue=_lastLoginDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _lastLoginDate=value;
-		   }
-		 }
-	   }
-	  private DateTime _invitationDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime InvitationDate  
-	   {
-	     get { return _invitationDate; }
-		 set
-		 {
-		   if(_invitationDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvitationDate",OldValue=_invitationDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _invitationDate=value;
-		   }
-		 }
-	   }
 	  private double? _creditLimit ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -837,6 +478,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private IndustryPM _industry;
+		[Include]
+        [DataMember]
+        public virtual IndustryPM Industry 
+		{ 
+		get { return _industry; } 
+		set { _industry = value; }
+		}
 	  private string _leadSourceId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -853,6 +502,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private LeadSourcePM _leadsource;
+		[Include]
+        [DataMember]
+        public virtual LeadSourcePM LeadSource 
+		{ 
+		get { return _leadsource; } 
+		set { _leadsource = value; }
+		}
 	  private string _collectorId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -869,6 +526,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _collector;
+		[Include]
+        [DataMember]
+        public virtual UserPM Collector 
+		{ 
+		get { return _collector; } 
+		set { _collector = value; }
+		}
 	  private string _classifierId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -885,54 +550,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _industryName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string IndustryName  
-	   {
-	     get { return _industryName; }
-		 set
-		 {
-		   if(_industryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IndustryName",OldValue=_industryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _industryName=value;
-		   }
-		 }
-	   }
-	  private string _aTTN ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ATTN  
-	   {
-	     get { return _aTTN; }
-		 set
-		 {
-		   if(_aTTN != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ATTN",OldValue=_aTTN,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _aTTN=value;
-		   }
-		 }
-	   }
-	  private DateTime _createDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime CreateDate  
-	   {
-	     get { return _createDate; }
-		 set
-		 {
-		   if(_createDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=_createDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _createDate=value;
-		   }
-		 }
-	   }
+		private UserPM _classifier;
+		[Include]
+        [DataMember]
+        public virtual UserPM Classifier 
+		{ 
+		get { return _classifier; } 
+		set { _classifier = value; }
+		}
 	  private string _leadDescription ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -946,38 +571,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LeadDescription",OldValue=_leadDescription,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _leadDescription=value;
-		   }
-		 }
-	   }
-	  private string _collectorName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CollectorName  
-	   {
-	     get { return _collectorName; }
-		 set
-		 {
-		   if(_collectorName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CollectorName",OldValue=_collectorName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _collectorName=value;
-		   }
-		 }
-	   }
-	  private string _classifierName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ClassifierName  
-	   {
-	     get { return _classifierName; }
-		 set
-		 {
-		   if(_classifierName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassifierName",OldValue=_classifierName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _classifierName=value;
 		   }
 		 }
 	   }
@@ -997,6 +590,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _customsagent;
+		[Include]
+        [DataMember]
+        public virtual CardPM CustomsAgent 
+		{ 
+		get { return _customsagent; } 
+		set { _customsagent = value; }
+		}
 	  private string _forwarderId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1013,6 +614,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _forwarder;
+		[Include]
+        [DataMember]
+        public virtual CardPM Forwarder 
+		{ 
+		get { return _forwarder; } 
+		set { _forwarder = value; }
+		}
 	  private string _mediatorId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1029,182 +638,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _city_Potential ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string City_Potential  
-	   {
-	     get { return _city_Potential; }
-		 set
-		 {
-		   if(_city_Potential != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="City_Potential",OldValue=_city_Potential,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _city_Potential=value;
-		   }
-		 }
-	   }
-	  private string _address1_Potential ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Address1_Potential  
-	   {
-	     get { return _address1_Potential; }
-		 set
-		 {
-		   if(_address1_Potential != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Address1_Potential",OldValue=_address1_Potential,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _address1_Potential=value;
-		   }
-		 }
-	   }
-	  private string _address2_Potential ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Address2_Potential  
-	   {
-	     get { return _address2_Potential; }
-		 set
-		 {
-		   if(_address2_Potential != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Address2_Potential",OldValue=_address2_Potential,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _address2_Potential=value;
-		   }
-		 }
-	   }
-	  private string _countryId_Potential ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryId_Potential  
-	   {
-	     get { return _countryId_Potential; }
-		 set
-		 {
-		   if(_countryId_Potential != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryId_Potential",OldValue=_countryId_Potential,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryId_Potential=value;
-		   }
-		 }
-	   }
-	  private string _stateId_Potential ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StateId_Potential  
-	   {
-	     get { return _stateId_Potential; }
-		 set
-		 {
-		   if(_stateId_Potential != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StateId_Potential",OldValue=_stateId_Potential,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _stateId_Potential=value;
-		   }
-		 }
-	   }
-	  private string _zipCode_Potential ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ZipCode_Potential  
-	   {
-	     get { return _zipCode_Potential; }
-		 set
-		 {
-		   if(_zipCode_Potential != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ZipCode_Potential",OldValue=_zipCode_Potential,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _zipCode_Potential=value;
-		   }
-		 }
-	   }
-	  private string _phoneNumber_Potential ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PhoneNumber_Potential  
-	   {
-	     get { return _phoneNumber_Potential; }
-		 set
-		 {
-		   if(_phoneNumber_Potential != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhoneNumber_Potential",OldValue=_phoneNumber_Potential,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _phoneNumber_Potential=value;
-		   }
-		 }
-	   }
-	  private string _faxNumber_Potential ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FaxNumber_Potential  
-	   {
-	     get { return _faxNumber_Potential; }
-		 set
-		 {
-		   if(_faxNumber_Potential != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FaxNumber_Potential",OldValue=_faxNumber_Potential,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _faxNumber_Potential=value;
-		   }
-		 }
-	   }
-	  private string _aTTN_Potential ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ATTN_Potential  
-	   {
-	     get { return _aTTN_Potential; }
-		 set
-		 {
-		   if(_aTTN_Potential != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ATTN_Potential",OldValue=_aTTN_Potential,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _aTTN_Potential=value;
-		   }
-		 }
-	   }
-	  private string _leadSourceName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LeadSourceName  
-	   {
-	     get { return _leadSourceName; }
-		 set
-		 {
-		   if(_leadSourceName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LeadSourceName",OldValue=_leadSourceName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _leadSourceName=value;
-		   }
-		 }
-	   }
-	  private string _customerStatusName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerStatusName  
-	   {
-	     get { return _customerStatusName; }
-		 set
-		 {
-		   if(_customerStatusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerStatusName",OldValue=_customerStatusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerStatusName=value;
-		   }
-		 }
-	   }
+		private CardPM _mediator;
+		[Include]
+        [DataMember]
+        public virtual CardPM Mediator 
+		{ 
+		get { return _mediator; } 
+		set { _mediator = value; }
+		}
 	  private string _primaryContactName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1234,22 +675,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrimaryContactPhone",OldValue=_primaryContactPhone,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _primaryContactPhone=value;
-		   }
-		 }
-	   }
-	  private string _codeMyCustomer ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CodeMyCustomer  
-	   {
-	     get { return _codeMyCustomer; }
-		 set
-		 {
-		   if(_codeMyCustomer != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CodeMyCustomer",OldValue=_codeMyCustomer,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _codeMyCustomer=value;
 		   }
 		 }
 	   }
@@ -1301,70 +726,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _customerProducts ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomerProducts  
-	   {
-	     get { return _customerProducts; }
-		 set
-		 {
-		   if(_customerProducts != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerProducts",OldValue=_customerProducts,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customerProducts=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserId  
-	   {
-	     get { return _createdByUserId; }
-		 set
-		 {
-		   if(_createdByUserId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserId",OldValue=_createdByUserId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserId=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserId  
-	   {
-	     get { return _updatedByUserId; }
-		 set
-		 {
-		   if(_updatedByUserId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserId",OldValue=_updatedByUserId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserId=value;
-		   }
-		 }
-	   }
-	  private string _primaryContactId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PrimaryContactId  
-	   {
-	     get { return _primaryContactId; }
-		 set
-		 {
-		   if(_primaryContactId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrimaryContactId",OldValue=_primaryContactId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _primaryContactId=value;
-		   }
-		 }
-	   }
+		private CustomerStatusPM _customerstatus;
+		[Include]
+        [DataMember]
+        public virtual CustomerStatusPM CustomerStatus 
+		{ 
+		get { return _customerstatus; } 
+		set { _customerstatus = value; }
+		}
 	  private string _regionId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1381,22 +750,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _regionName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RegionName  
-	   {
-	     get { return _regionName; }
-		 set
-		 {
-		   if(_regionName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RegionName",OldValue=_regionName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _regionName=value;
-		   }
-		 }
-	   }
+		private RegionPM _region;
+		[Include]
+        [DataMember]
+        public virtual RegionPM Region 
+		{ 
+		get { return _region; } 
+		set { _region = value; }
+		}
 	  private string _customerSizeId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1413,38 +774,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _countryName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryName  
-	   {
-	     get { return _countryName; }
-		 set
-		 {
-		   if(_countryName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryName",OldValue=_countryName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryName=value;
-		   }
-		 }
-	   }
-	  private DateTime _updateDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime UpdateDate  
-	   {
-	     get { return _updateDate; }
-		 set
-		 {
-		   if(_updateDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDate",OldValue=_updateDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _updateDate=value;
-		   }
-		 }
-	   }
+		private CustomerSizePM _customersize;
+		[Include]
+        [DataMember]
+        public virtual CustomerSizePM CustomerSize 
+		{ 
+		get { return _customersize; } 
+		set { _customersize = value; }
+		}
 	  private DateTime? _lastCallDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1557,54 +894,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _countryId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryId  
-	   {
-	     get { return _countryId; }
-		 set
-		 {
-		   if(_countryId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryId",OldValue=_countryId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryId=value;
-		   }
-		 }
-	   }
-	  private bool _enableConsolidationInvoices ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool EnableConsolidationInvoices  
-	   {
-	     get { return _enableConsolidationInvoices; }
-		 set
-		 {
-		   if(_enableConsolidationInvoices != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnableConsolidationInvoices",OldValue=_enableConsolidationInvoices,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _enableConsolidationInvoices=value;
-		   }
-		 }
-	   }
-	  private string _salesmanBusinessUnitId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SalesmanBusinessUnitId  
-	   {
-	     get { return _salesmanBusinessUnitId; }
-		 set
-		 {
-		   if(_salesmanBusinessUnitId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SalesmanBusinessUnitId",OldValue=_salesmanBusinessUnitId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _salesmanBusinessUnitId=value;
-		   }
-		 }
-	   }
 	  private bool _activityWatch ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1669,86 +958,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _code ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Code  
-	   {
-	     get { return _code; }
-		 set
-		 {
-		   if(_code != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=_code,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _code=value;
-		   }
-		 }
-	   }
-	  private string _englishName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EnglishName  
-	   {
-	     get { return _englishName; }
-		 set
-		 {
-		   if(_englishName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishName",OldValue=_englishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _englishName=value;
-		   }
-		 }
-	   }
-	  private string _localName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LocalName  
-	   {
-	     get { return _localName; }
-		 set
-		 {
-		   if(_localName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=_localName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _localName=value;
-		   }
-		 }
-	   }
-	  private string _computedLocalName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ComputedLocalName  
-	   {
-	     get { return _computedLocalName; }
-		 set
-		 {
-		   if(_computedLocalName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computedLocalName=value;
-		   }
-		 }
-	   }
-	  private bool _inActive ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool InActive  
-	   {
-	     get { return _inActive; }
-		 set
-		 {
-		   if(_inActive != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=_inActive,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _inActive=value;
-		   }
-		 }
-	   }
 	  private string _accountManagerUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1765,6 +974,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _accountmanageruser;
+		[Include]
+        [DataMember]
+        public virtual UserPM AccountManagerUser 
+		{ 
+		get { return _accountmanageruser; } 
+		set { _accountmanageruser = value; }
+		}
 	  private string _salesmanUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1778,630 +995,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SalesmanUserId",OldValue=_salesmanUserId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _salesmanUserId=value;
-		   }
-		 }
-	   }
-	  private string _website ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Website  
-	   {
-	     get { return _website; }
-		 set
-		 {
-		   if(_website != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Website",OldValue=_website,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _website=value;
-		   }
-		 }
-	   }
-	  private string _billToId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BillToId  
-	   {
-	     get { return _billToId; }
-		 set
-		 {
-		   if(_billToId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BillToId",OldValue=_billToId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _billToId=value;
-		   }
-		 }
-	   }
-	  private string _vatNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VatNumber  
-	   {
-	     get { return _vatNumber; }
-		 set
-		 {
-		   if(_vatNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatNumber",OldValue=_vatNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vatNumber=value;
-		   }
-		 }
-	   }
-	  private string _accountingCard ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AccountingCard  
-	   {
-	     get { return _accountingCard; }
-		 set
-		 {
-		   if(_accountingCard != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingCard",OldValue=_accountingCard,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _accountingCard=value;
-		   }
-		 }
-	   }
-	  private string _paymentTermId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PaymentTermId  
-	   {
-	     get { return _paymentTermId; }
-		 set
-		 {
-		   if(_paymentTermId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentTermId",OldValue=_paymentTermId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _paymentTermId=value;
-		   }
-		 }
-	   }
-	  private string _accountManagerUserEnglishName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AccountManagerUserEnglishName  
-	   {
-	     get { return _accountManagerUserEnglishName; }
-		 set
-		 {
-		   if(_accountManagerUserEnglishName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountManagerUserEnglishName",OldValue=_accountManagerUserEnglishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _accountManagerUserEnglishName=value;
-		   }
-		 }
-	   }
-	  private string _salesmanUserEnglishName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SalesmanUserEnglishName  
-	   {
-	     get { return _salesmanUserEnglishName; }
-		 set
-		 {
-		   if(_salesmanUserEnglishName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SalesmanUserEnglishName",OldValue=_salesmanUserEnglishName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _salesmanUserEnglishName=value;
-		   }
-		 }
-	   }
-	  private string _rankName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RankName  
-	   {
-	     get { return _rankName; }
-		 set
-		 {
-		   if(_rankName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RankName",OldValue=_rankName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _rankName=value;
-		   }
-		 }
-	   }
-	  private string _notes ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Notes  
-	   {
-	     get { return _notes; }
-		 set
-		 {
-		   if(_notes != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Notes",OldValue=_notes,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _notes=value;
-		   }
-		 }
-	   }
-	  private bool _isSecured ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSecured  
-	   {
-	     get { return _isSecured; }
-		 set
-		 {
-		   if(_isSecured != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSecured=value;
-		   }
-		 }
-	   }
-	  private bool _fieldsChanged ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool FieldsChanged  
-	   {
-	     get { return _fieldsChanged; }
-		 set
-		 {
-		   if(_fieldsChanged != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FieldsChanged",OldValue=_fieldsChanged,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _fieldsChanged=value;
-		   }
-		 }
-	   }
-	  private string _partnerTypeId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PartnerTypeId  
-	   {
-	     get { return _partnerTypeId; }
-		 set
-		 {
-		   if(_partnerTypeId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerTypeId",OldValue=_partnerTypeId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _partnerTypeId=value;
-		   }
-		 }
-	   }
-	  private string _searchFields ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SearchFields  
-	   {
-	     get { return _searchFields; }
-		 set
-		 {
-		   if(_searchFields != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private string _cardPMId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CardPMId  
-	   {
-	     get { return _cardPMId; }
-		 set
-		 {
-		   if(_cardPMId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardPMId",OldValue=_cardPMId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _cardPMId=value;
-		   }
-		 }
-	   }
-	  private string _existedContactId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExistedContactId  
-	   {
-	     get { return _existedContactId; }
-		 set
-		 {
-		   if(_existedContactId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExistedContactId",OldValue=_existedContactId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _existedContactId=value;
-		   }
-		 }
-	   }
-	  private string _cityCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CityCode  
-	   {
-	     get { return _cityCode; }
-		 set
-		 {
-		   if(_cityCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CityCode",OldValue=_cityCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _cityCode=value;
-		   }
-		 }
-	   }
-	  private string _countryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryCode  
-	   {
-	     get { return _countryCode; }
-		 set
-		 {
-		   if(_countryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryCode",OldValue=_countryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryCode=value;
-		   }
-		 }
-	   }
-	  private string _imageDetailId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ImageDetailId  
-	   {
-	     get { return _imageDetailId; }
-		 set
-		 {
-		   if(_imageDetailId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImageDetailId",OldValue=_imageDetailId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _imageDetailId=value;
-		   }
-		 }
-	   }
-	  private bool _isActiveForMobile ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsActiveForMobile  
-	   {
-	     get { return _isActiveForMobile; }
-		 set
-		 {
-		   if(_isActiveForMobile != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsActiveForMobile",OldValue=_isActiveForMobile,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isActiveForMobile=value;
-		   }
-		 }
-	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
-		   }
-		 }
-	   }
-	  private string _freelancerName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FreelancerName  
-	   {
-	     get { return _freelancerName; }
-		 set
-		 {
-		   if(_freelancerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FreelancerName",OldValue=_freelancerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _freelancerName=value;
-		   }
-		 }
-	   }
-	  private string _forwarderName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ForwarderName  
-	   {
-	     get { return _forwarderName; }
-		 set
-		 {
-		   if(_forwarderName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwarderName",OldValue=_forwarderName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _forwarderName=value;
-		   }
-		 }
-	   }
-	  private string _customsAgentName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomsAgentName  
-	   {
-	     get { return _customsAgentName; }
-		 set
-		 {
-		   if(_customsAgentName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsAgentName",OldValue=_customsAgentName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customsAgentName=value;
-		   }
-		 }
-	   }
-	  private string _mediatorName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MediatorName  
-	   {
-	     get { return _mediatorName; }
-		 set
-		 {
-		   if(_mediatorName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MediatorName",OldValue=_mediatorName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _mediatorName=value;
-		   }
-		 }
-	   }
-	  private string _googleAddressString ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string GoogleAddressString  
-	   {
-	     get { return _googleAddressString; }
-		 set
-		 {
-		   if(_googleAddressString != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GoogleAddressString",OldValue=_googleAddressString,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _googleAddressString=value;
-		   }
-		 }
-	   }
-	  private bool _isExternal ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsExternal  
-	   {
-	     get { return _isExternal; }
-		 set
-		 {
-		   if(_isExternal != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExternal",OldValue=_isExternal,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isExternal=value;
-		   }
-		 }
-	   }
-	  private bool _setReActivated ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool SetReActivated  
-	   {
-	     get { return _setReActivated; }
-		 set
-		 {
-		   if(_setReActivated != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SetReActivated",OldValue=_setReActivated,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _setReActivated=value;
-		   }
-		 }
-	   }
-	  private bool _setInActive ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool SetInActive  
-	   {
-	     get { return _setInActive; }
-		 set
-		 {
-		   if(_setInActive != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SetInActive",OldValue=_setInActive,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _setInActive=value;
-		   }
-		 }
-	   }
-	  private bool _setReady ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool SetReady  
-	   {
-	     get { return _setReady; }
-		 set
-		 {
-		   if(_setReady != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SetReady",OldValue=_setReady,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _setReady=value;
-		   }
-		 }
-	   }
-	  private bool _setActivated ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool SetActivated  
-	   {
-	     get { return _setActivated; }
-		 set
-		 {
-		   if(_setActivated != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SetActivated",OldValue=_setActivated,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _setActivated=value;
-		   }
-		 }
-	   }
-	  private string _eventNote ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EventNote  
-	   {
-	     get { return _eventNote; }
-		 set
-		 {
-		   if(_eventNote != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EventNote",OldValue=_eventNote,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _eventNote=value;
-		   }
-		 }
-	   }
-	  private bool _isLocalLanguage ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsLocalLanguage  
-	   {
-	     get { return _isLocalLanguage; }
-		 set
-		 {
-		   if(_isLocalLanguage != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsLocalLanguage",OldValue=_isLocalLanguage,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isLocalLanguage=value;
-		   }
-		 }
-	   }
-	  private bool _isFirstContactToAdd ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsFirstContactToAdd  
-	   {
-	     get { return _isFirstContactToAdd; }
-		 set
-		 {
-		   if(_isFirstContactToAdd != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFirstContactToAdd",OldValue=_isFirstContactToAdd,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isFirstContactToAdd=value;
-		   }
-		 }
-	   }
-	  private bool _savedForActivation ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool SavedForActivation  
-	   {
-	     get { return _savedForActivation; }
-		 set
-		 {
-		   if(_savedForActivation != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SavedForActivation",OldValue=_savedForActivation,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _savedForActivation=value;
-		   }
-		 }
-	   }
-	  private string _queueMessageLockToken ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string QueueMessageLockToken  
-	   {
-	     get { return _queueMessageLockToken; }
-		 set
-		 {
-		   if(_queueMessageLockToken != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueueMessageLockToken",OldValue=_queueMessageLockToken,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _queueMessageLockToken=value;
-		   }
-		 }
-	   }
-	  private string _questionnaireAnsewrsHtmlString ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string QuestionnaireAnsewrsHtmlString  
-	   {
-	     get { return _questionnaireAnsewrsHtmlString; }
-		 set
-		 {
-		   if(_questionnaireAnsewrsHtmlString != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuestionnaireAnsewrsHtmlString",OldValue=_questionnaireAnsewrsHtmlString,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _questionnaireAnsewrsHtmlString=value;
-		   }
-		 }
-	   }
-	  private bool _setAsPotential ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool SetAsPotential  
-	   {
-	     get { return _setAsPotential; }
-		 set
-		 {
-		   if(_setAsPotential != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SetAsPotential",OldValue=_setAsPotential,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _setAsPotential=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserCode  
-	   {
-	     get { return _updatedByUserCode; }
-		 set
-		 {
-		   if(_updatedByUserCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserCode",OldValue=_updatedByUserCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserCode=value;
-		   }
-		 }
-	   }
-	  private string _card ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Card  
-	   {
-	     get { return _card; }
-		 set
-		 {
-		   if(_card != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Card",OldValue=_card,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _card=value;
 		   }
 		 }
 	   }
@@ -2468,7 +1061,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
              set {  deletedContacts = value; }
 	    }
 	   private List<SharedLogisticContactPM> sharedLogisticContacts;
-	 
+	    
+       [Composition]
+ 
 		     
 	   [Include]
 	   [Association("CustomerPMSharedLogisticContactPM", "Id","CardId")]
@@ -2828,70 +1423,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedCardExternalCodeByCurrencies = value; }
 	    }
-	  private bool _isLogBox ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsLogBox  
-	   {
-	     get { return _isLogBox; }
-		 set
-		 {
-		   if(_isLogBox != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsLogBox",OldValue=_isLogBox,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isLogBox=value;
-		   }
-		 }
-	   }
-	  private string _sATForeignRFC ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SATForeignRFC  
-	   {
-	     get { return _sATForeignRFC; }
-		 set
-		 {
-		   if(_sATForeignRFC != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SATForeignRFC",OldValue=_sATForeignRFC,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _sATForeignRFC=value;
-		   }
-		 }
-	   }
-	  private string _metodoPagoCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MetodoPagoCode  
-	   {
-	     get { return _metodoPagoCode; }
-		 set
-		 {
-		   if(_metodoPagoCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MetodoPagoCode",OldValue=_metodoPagoCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _metodoPagoCode=value;
-		   }
-		 }
-	   }
-	  private string _usoCFDICode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UsoCFDICode  
-	   {
-	     get { return _usoCFDICode; }
-		 set
-		 {
-		   if(_usoCFDICode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UsoCFDICode",OldValue=_usoCFDICode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _usoCFDICode=value;
-		   }
-		 }
-	   }
 	  private string _activatedByUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2908,6 +1439,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _activatedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM ActivatedByUser 
+		{ 
+		get { return _activatedbyuser; } 
+		set { _activatedbyuser = value; }
+		}
 	  private string _setAsInactiveByUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2924,6 +1463,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _setasinactivebyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM SetAsInactiveByUser 
+		{ 
+		get { return _setasinactivebyuser; } 
+		set { _setasinactivebyuser = value; }
+		}
 	  private string _activationRequestedByUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2940,6 +1487,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _activationrequestedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM ActivationRequestedByUser 
+		{ 
+		get { return _activationrequestedbyuser; } 
+		set { _activationrequestedbyuser = value; }
+		}
 	  private bool _isPrivateLabelCustomer ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2985,150 +1540,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BlockNewShipmentCreation",OldValue=_blockNewShipmentCreation,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _blockNewShipmentCreation=value;
-		   }
-		 }
-	   }
-	  private string _externalId2 ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalId2  
-	   {
-	     get { return _externalId2; }
-		 set
-		 {
-		   if(_externalId2 != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalId2",OldValue=_externalId2,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalId2=value;
-		   }
-		 }
-	   }
-	  private string _supportNotes ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SupportNotes  
-	   {
-	     get { return _supportNotes; }
-		 set
-		 {
-		   if(_supportNotes != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SupportNotes",OldValue=_supportNotes,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _supportNotes=value;
-		   }
-		 }
-	   }
-	  private string _iRSPlace ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string IRSPlace  
-	   {
-	     get { return _iRSPlace; }
-		 set
-		 {
-		   if(_iRSPlace != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IRSPlace",OldValue=_iRSPlace,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _iRSPlace=value;
-		   }
-		 }
-	   }
-	  private string _iRSNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string IRSNumber  
-	   {
-	     get { return _iRSNumber; }
-		 set
-		 {
-		   if(_iRSNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IRSNumber",OldValue=_iRSNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _iRSNumber=value;
-		   }
-		 }
-	   }
-	  private string _requestedAirlines ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RequestedAirlines  
-	   {
-	     get { return _requestedAirlines; }
-		 set
-		 {
-		   if(_requestedAirlines != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestedAirlines",OldValue=_requestedAirlines,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _requestedAirlines=value;
-		   }
-		 }
-	   }
-	  private string _registeredAirlines ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RegisteredAirlines  
-	   {
-	     get { return _registeredAirlines; }
-		 set
-		 {
-		   if(_registeredAirlines != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RegisteredAirlines",OldValue=_registeredAirlines,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _registeredAirlines=value;
-		   }
-		 }
-	   }
-	  private string _pendingAirlines ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PendingAirlines  
-	   {
-	     get { return _pendingAirlines; }
-		 set
-		 {
-		   if(_pendingAirlines != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PendingAirlines",OldValue=_pendingAirlines,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _pendingAirlines=value;
-		   }
-		 }
-	   }
-	  private string _receivablesAccountingCard ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ReceivablesAccountingCard  
-	   {
-	     get { return _receivablesAccountingCard; }
-		 set
-		 {
-		   if(_receivablesAccountingCard != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReceivablesAccountingCard",OldValue=_receivablesAccountingCard,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _receivablesAccountingCard=value;
-		   }
-		 }
-	   }
-	  private string _payablesAccountingCard ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PayablesAccountingCard  
-	   {
-	     get { return _payablesAccountingCard; }
-		 set
-		 {
-		   if(_payablesAccountingCard != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PayablesAccountingCard",OldValue=_payablesAccountingCard,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _payablesAccountingCard=value;
 		   }
 		 }
 	   }
@@ -3212,38 +1623,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _externalAccountingBusinessArea ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ExternalAccountingBusinessArea  
-	   {
-	     get { return _externalAccountingBusinessArea; }
-		 set
-		 {
-		   if(_externalAccountingBusinessArea != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalAccountingBusinessArea",OldValue=_externalAccountingBusinessArea,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _externalAccountingBusinessArea=value;
-		   }
-		 }
-	   }
-	  private string _paymentMethodCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PaymentMethodCode  
-	   {
-	     get { return _paymentMethodCode; }
-		 set
-		 {
-		   if(_paymentMethodCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentMethodCode",OldValue=_paymentMethodCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _paymentMethodCode=value;
-		   }
-		 }
-	   }
 	  private DateTime? _activationDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3292,86 +1671,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isCustomerAllowed ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsCustomerAllowed  
-	   {
-	     get { return _isCustomerAllowed; }
-		 set
-		 {
-		   if(_isCustomerAllowed != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomerAllowed",OldValue=_isCustomerAllowed,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isCustomerAllowed=value;
-		   }
-		 }
-	   }
-	  private int _customerTenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int CustomerTenant  
-	   {
-	     get { return _customerTenant; }
-		 set
-		 {
-		   if(_customerTenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerTenant",OldValue=_customerTenant,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _customerTenant=value;
-		   }
-		 }
-	   }
-	  private string _mainAddressId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MainAddressId  
-	   {
-	     get { return _mainAddressId; }
-		 set
-		 {
-		   if(_mainAddressId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainAddressId",OldValue=_mainAddressId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _mainAddressId=value;
-		   }
-		 }
-	   }
-	  private string _billingAddressId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BillingAddressId  
-	   {
-	     get { return _billingAddressId; }
-		 set
-		 {
-		   if(_billingAddressId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BillingAddressId",OldValue=_billingAddressId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _billingAddressId=value;
-		   }
-		 }
-	   }
-	  private string _gLAccountId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string GLAccountId  
-	   {
-	     get { return _gLAccountId; }
-		 set
-		 {
-		   if(_gLAccountId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountId",OldValue=_gLAccountId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _gLAccountId=value;
-		   }
-		 }
-	   }
 	  private string _lastOpportunitySubject ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3404,70 +1703,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _createdByPartner ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByPartner  
-	   {
-	     get { return _createdByPartner; }
-		 set
-		 {
-		   if(_createdByPartner != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByPartner",OldValue=_createdByPartner,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByPartner=value;
-		   }
-		 }
-	   }
-	  private int? _storageFreeDays ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int? StorageFreeDays  
-	   {
-	     get { return _storageFreeDays; }
-		 set
-		 {
-		   if(_storageFreeDays != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageFreeDays",OldValue=_storageFreeDays,NewValue=value,PropertyType="int?"};
-		    NotifyPropertyChanged(values);
-		   _storageFreeDays=value;
-		   }
-		 }
-	   }
-	  private bool _accountingVATSplit ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool AccountingVATSplit  
-	   {
-	     get { return _accountingVATSplit; }
-		 set
-		 {
-		   if(_accountingVATSplit != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingVATSplit",OldValue=_accountingVATSplit,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _accountingVATSplit=value;
-		   }
-		 }
-	   }
-	  private string _gLAccountNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string GLAccountNumber  
-	   {
-	     get { return _gLAccountNumber; }
-		 set
-		 {
-		   if(_gLAccountNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountNumber",OldValue=_gLAccountNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _gLAccountNumber=value;
-		   }
-		 }
-	   }
 	  private string _eORInumber ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3481,22 +1716,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EORInumber",OldValue=_eORInumber,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _eORInumber=value;
-		   }
-		 }
-	   }
-	  private bool _isAutonomy ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAutonomy  
-	   {
-	     get { return _isAutonomy; }
-		 set
-		 {
-		   if(_isAutonomy != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAutonomy",OldValue=_isAutonomy,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isAutonomy=value;
 		   }
 		 }
 	   }
@@ -3516,22 +1735,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _regimenFiscalCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RegimenFiscalCode  
-	   {
-	     get { return _regimenFiscalCode; }
-		 set
-		 {
-		   if(_regimenFiscalCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RegimenFiscalCode",OldValue=_regimenFiscalCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _regimenFiscalCode=value;
-		   }
-		 }
-	   }
 	  private string _teamId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3548,22 +1751,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _teamName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TeamName  
-	   {
-	     get { return _teamName; }
-		 set
-		 {
-		   if(_teamName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TeamName",OldValue=_teamName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _teamName=value;
-		   }
-		 }
-	   }
+		private CustomerTeamPM _customerteam;
+		[Include]
+        [DataMember]
+        public virtual CustomerTeamPM CustomerTeam 
+		{ 
+		get { return _customerteam; } 
+		set { _customerteam = value; }
+		}
 	  private string _exportLocalCustomerGroupId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3593,86 +1788,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImportLocalCustomerGroupId",OldValue=_importLocalCustomerGroupId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _importLocalCustomerGroupId=value;
-		   }
-		 }
-	   }
-	  private string _sATCustomerName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SATCustomerName  
-	   {
-	     get { return _sATCustomerName; }
-		 set
-		 {
-		   if(_sATCustomerName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SATCustomerName",OldValue=_sATCustomerName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _sATCustomerName=value;
-		   }
-		 }
-	   }
-	  private DateTime _lastLoginDateViaPC ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime LastLoginDateViaPC  
-	   {
-	     get { return _lastLoginDateViaPC; }
-		 set
-		 {
-		   if(_lastLoginDateViaPC != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastLoginDateViaPC",OldValue=_lastLoginDateViaPC,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _lastLoginDateViaPC=value;
-		   }
-		 }
-	   }
-	  private DateTime _lastLoginDateViaMobile ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime LastLoginDateViaMobile  
-	   {
-	     get { return _lastLoginDateViaMobile; }
-		 set
-		 {
-		   if(_lastLoginDateViaMobile != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastLoginDateViaMobile",OldValue=_lastLoginDateViaMobile,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _lastLoginDateViaMobile=value;
-		   }
-		 }
-	   }
-	  private DateTime _cargoTrackingInvitationDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime CargoTrackingInvitationDate  
-	   {
-	     get { return _cargoTrackingInvitationDate; }
-		 set
-		 {
-		   if(_cargoTrackingInvitationDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTrackingInvitationDate",OldValue=_cargoTrackingInvitationDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _cargoTrackingInvitationDate=value;
-		   }
-		 }
-	   }
-	  private string _contactForAccounting ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContactForAccounting  
-	   {
-	     get { return _contactForAccounting; }
-		 set
-		 {
-		   if(_contactForAccounting != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactForAccounting",OldValue=_contactForAccounting,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _contactForAccounting=value;
 		   }
 		 }
 	   }

@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,24 +26,24 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentAWBPrintOnlyPM : BaseEntityPM   {
    #region Constructors
    public ShipmentAWBPrintOnlyPM() : base() {} 
-   public ShipmentAWBPrintOnlyPM(ShipmentAWBPrintOnly entity) : base()
+   public ShipmentAWBPrintOnlyPM(POCO.ShipmentAWBPrintOnly entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_exchangeRate = entity.ExchangeRate;
 		_measurementId = entity.MeasurementId;
-		_iATACodeId = entity.IATACodeId;
-		_currencyId = entity.CurrencyId;
+		_measurement = entity.Measurement !=null ? new MeasurementPM(entity.Measurement) : null;
+			_iATACodeId = entity.IATACodeId;
+		_iatacode = entity.IATACode !=null ? new IATACodePM(entity.IATACode) : null;
+			_currencyId = entity.CurrencyId;
 		_dueTypeCode = entity.DueTypeCode;
-		_prepaidCollectId = entity.PrepaidCollectId;
-		_shipmentId = entity.ShipmentId;
+		_duetype = entity.DueType !=null ? new DueTypePM(entity.DueType) : null;
+			_prepaidCollectId = entity.PrepaidCollectId;
+		_prepaidcollect = entity.PrepaidCollect !=null ? new PrepaidCollectPM(entity.PrepaidCollect) : null;
+			_shipmentId = entity.ShipmentId;
 		_quantity = entity.Quantity;
 		_unitPrice = entity.UnitPrice;
 		_amount = entity.Amount;
-		_currencyCode = default;
-		_dueTypeName = default;
-		_measurementCode = default;
-		_iATACodeName = default;
    }
    #endregion Constructors
    #region Properties
@@ -110,6 +112,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private MeasurementPM _measurement;
+		[Include]
+        [DataMember]
+        public virtual MeasurementPM Measurement 
+		{ 
+		get { return _measurement; } 
+		set { _measurement = value; }
+		}
 	  private string _iATACodeId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -126,6 +136,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private IATACodePM _iatacode;
+		[Include]
+        [DataMember]
+        public virtual IATACodePM IATACode 
+		{ 
+		get { return _iatacode; } 
+		set { _iatacode = value; }
+		}
 	  private string _currencyId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -158,6 +176,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DueTypePM _duetype;
+		[Include]
+        [DataMember]
+        public virtual DueTypePM DueType 
+		{ 
+		get { return _duetype; } 
+		set { _duetype = value; }
+		}
 	  private string _prepaidCollectId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -174,6 +200,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PrepaidCollectPM _prepaidcollect;
+		[Include]
+        [DataMember]
+        public virtual PrepaidCollectPM PrepaidCollect 
+		{ 
+		get { return _prepaidcollect; } 
+		set { _prepaidcollect = value; }
+		}
 	  private string _shipmentId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -235,70 +269,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Amount",OldValue=_amount,NewValue=value,PropertyType="double?"};
 		    NotifyPropertyChanged(values);
 		   _amount=value;
-		   }
-		 }
-	   }
-	  private string _currencyCode ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CurrencyCode  
-	   {
-	     get { return _currencyCode; }
-		 set
-		 {
-		   if(_currencyCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=_currencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _currencyCode=value;
-		   }
-		 }
-	   }
-	  private string _dueTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DueTypeName  
-	   {
-	     get { return _dueTypeName; }
-		 set
-		 {
-		   if(_dueTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DueTypeName",OldValue=_dueTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dueTypeName=value;
-		   }
-		 }
-	   }
-	  private string _measurementCode ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MeasurementCode  
-	   {
-	     get { return _measurementCode; }
-		 set
-		 {
-		   if(_measurementCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasurementCode",OldValue=_measurementCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _measurementCode=value;
-		   }
-		 }
-	   }
-	  private string _iATACodeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string IATACodeName  
-	   {
-	     get { return _iATACodeName; }
-		 set
-		 {
-		   if(_iATACodeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IATACodeName",OldValue=_iATACodeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _iATACodeName=value;
 		   }
 		 }
 	   }

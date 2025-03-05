@@ -196,6 +196,13 @@ export class ReportTemplateComponent implements OnInit {
 
     }
 
+    CheckIsCopiedAtSignupclick(item: ReportsTemplatePM) {
+
+        if (item.IsCopiedAtSignup) item.IsCopiedAtSignup = false;
+        else item.IsCopiedAtSignup = true;
+
+        this.UpdateReportsTemplatePM(item);
+    }
 
     UpdateReportsTemplatePM(item: ReportsTemplatePM) {
         this.CurrentSession.StartBusyIndicatorSaving();

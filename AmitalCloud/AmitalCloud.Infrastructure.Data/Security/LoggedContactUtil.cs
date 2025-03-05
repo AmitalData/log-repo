@@ -59,7 +59,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
             catch { }
 
 
-            loggedContact = loggedContact ?? new ContactPM() { DontShowLocal = true };
+            loggedContact = loggedContact ?? new ContactPM();// { DontShowLocal = true };
             return loggedContact;
         }
     }

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ReportExecutionLogPM : BaseEntityPM   {
    #region Constructors
    public ReportExecutionLogPM() : base() {} 
-   public ReportExecutionLogPM(ReportExecutionLog entity) : base()
+   public ReportExecutionLogPM(POCO.ReportExecutionLog entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -35,15 +37,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_doneDate = entity.DoneDate;
 		_reportFilterXML = entity.ReportFilterXML;
 		_reportId = entity.ReportId;
-		_reportTemplateId = entity.ReportTemplateId;
+		_report = entity.Report !=null ? new ReportPM(entity.Report) : null;
+			_reportTemplateId = entity.ReportTemplateId;
 		_retryNumber = entity.RetryNumber;
 		_startDate = entity.StartDate;
 		_disablePreview = entity.DisablePreview;
 		_executedByServerName = entity.ExecutedByServerName;
-		_reportName = default;
-		_statusName = default;
 		_searchFields = entity.SearchFields;
-		_createdByUserName = default;
    }
    #endregion Constructors
    #region Properties
@@ -192,6 +192,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ReportPM _report;
+		[Include]
+        [DataMember]
+        public virtual ReportPM Report 
+		{ 
+		get { return _report; } 
+		set { _report = value; }
+		}
 	  private string _reportTemplateId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -272,38 +280,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _reportName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ReportName  
-	   {
-	     get { return _reportName; }
-		 set
-		 {
-		   if(_reportName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReportName",OldValue=_reportName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _reportName=value;
-		   }
-		 }
-	   }
-	  private string _statusName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	     get { return _statusName; }
-		 set
-		 {
-		   if(_statusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusName=value;
-		   }
-		 }
-	   }
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -317,22 +293,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
 		   }
 		 }
 	   }

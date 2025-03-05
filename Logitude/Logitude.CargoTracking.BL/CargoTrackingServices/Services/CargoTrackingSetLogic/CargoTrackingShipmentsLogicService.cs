@@ -36,6 +36,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
             SetShipmentTypeCode(args.TableRow);
             SetExceptionDescription(args.TableRow);
             SetHouse(args.TableRow);
+            SetLocker(args.TableRow);
+
 
         }
 
@@ -43,7 +45,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.CargoTracking
         {
             tableRow.SetField("SHOHouse", tableRow["OrderHouse"]);
         }
-
+        private static void SetLocker(DataRow tableRow)
+        {
+            tableRow.SetField("LockerCode", tableRow["LockerCode"]);
+            tableRow.SetField("LockerName", tableRow["LockerName"]);
+            tableRow.SetField("LockerAddress", tableRow["LockerAddress"]);
+            tableRow.SetField("LockerCity", tableRow["LockerCity"]);
+        }
         private static void SetDefaultFields(DataRow tableRow)
         {
             SetDefaultShipper(tableRow);

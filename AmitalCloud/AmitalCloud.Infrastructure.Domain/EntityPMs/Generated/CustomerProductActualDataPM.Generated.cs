@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomerProductActualDataPM : BaseEntityPM   {
    #region Constructors
    public CustomerProductActualDataPM() : base() {} 
-   public CustomerProductActualDataPM(CustomerProductActualData entity) : base()
+   public CustomerProductActualDataPM(POCO.CustomerProductActualData entity) : base()
    {
 		_tenant = entity.Tenant;
 		_customerId = entity.CustomerId;
@@ -35,8 +37,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tEU = entity.TEU;
 		_numberOfShipments = entity.NumberOfShipments;
 		_revenue = entity.Revenue;
-		_monthCode = default;
-		productLocations = default;
    }
    #endregion Constructors
    #region Properties
@@ -185,22 +185,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Revenue",OldValue=_revenue,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   _revenue=value;
-		   }
-		 }
-	   }
-	  private string _monthCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MonthCode  
-	   {
-	     get { return _monthCode; }
-		 set
-		 {
-		   if(_monthCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MonthCode",OldValue=_monthCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _monthCode=value;
 		   }
 		 }
 	   }

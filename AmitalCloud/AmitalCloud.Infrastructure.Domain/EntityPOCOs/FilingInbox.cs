@@ -55,6 +55,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
    
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+		public virtual ICollection<FilingInboxAttachment> FilingInboxAttachments { get; set; }
     }
 }
 	 

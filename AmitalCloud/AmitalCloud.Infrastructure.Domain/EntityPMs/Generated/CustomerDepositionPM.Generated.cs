@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,12 +26,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomerDepositionPM : BaseEntityPM   {
    #region Constructors
    public CustomerDepositionPM() : base() {} 
-   public CustomerDepositionPM(CustomerDeposition entity) : base()
+   public CustomerDepositionPM(POCO.CustomerDeposition entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_customsShipperId = entity.CustomsShipperId;
-		_depositionNumber = entity.DepositionNumber;
+		_customsshipper = entity.CustomsShipper !=null ? new CustomsShipperPM(entity.CustomsShipper) : null;
+			_depositionNumber = entity.DepositionNumber;
 		_validityStartDate = entity.ValidityStartDate;
 		_validityEndDate = entity.ValidityEndDate;
 		_createDate = entity.CreateDate;
@@ -85,6 +88,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CustomsShipperPM _customsshipper;
+		[Include]
+        [DataMember]
+        public virtual CustomsShipperPM CustomsShipper 
+		{ 
+		get { return _customsshipper; } 
+		set { _customsshipper = value; }
+		}
 	  private string _depositionNumber ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

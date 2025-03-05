@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,17 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentReferancePM : BaseEntityPM   {
    #region Constructors
    public ShipmentReferancePM() : base() {} 
-   public ShipmentReferancePM(ShipmentReferance entity) : base()
+   public ShipmentReferancePM(POCO.ShipmentReferance entity) : base()
    {
 		_shipmentId = entity.ShipmentId;
-		_tenant = entity.Tenant;
+		_shipmentcode = entity.ShipmentCode !=null ? new ShipmentPM(entity.ShipmentCode) : null;
+			_tenant = entity.Tenant;
 		_lineNumber = entity.LineNumber;
 		_referenceType = entity.ReferenceType;
-		_partnerId = entity.PartnerId;
-		_referenceValue = entity.ReferenceValue;
+		_referencetypecode = entity.ReferenceTypeCode !=null ? new ReferenceTypePM(entity.ReferenceTypeCode) : null;
+			_partnerId = entity.PartnerId;
+		_card = entity.Card !=null ? new CardPM(entity.Card) : null;
+			_referenceValue = entity.ReferenceValue;
    }
    #endregion Constructors
    #region Properties
@@ -52,6 +57,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPM _shipmentcode;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPM ShipmentCode 
+		{ 
+		get { return _shipmentcode; } 
+		set { _shipmentcode = value; }
+		}
 	  private int _tenant ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -100,6 +113,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ReferenceTypePM _referencetypecode;
+		[Include]
+        [DataMember]
+        public virtual ReferenceTypePM ReferenceTypeCode 
+		{ 
+		get { return _referencetypecode; } 
+		set { _referencetypecode = value; }
+		}
 	  private string _partnerId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -116,6 +137,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _card;
+		[Include]
+        [DataMember]
+        public virtual CardPM Card 
+		{ 
+		get { return _card; } 
+		set { _card = value; }
+		}
 	  private string _referenceValue ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

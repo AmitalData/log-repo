@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class QuoteTemplateSettingPM : BaseEntityPM   {
    #region Constructors
    public QuoteTemplateSettingPM() : base() {} 
-   public QuoteTemplateSettingPM(QuoteTemplateSetting entity) : base()
+   public QuoteTemplateSettingPM(POCO.QuoteTemplateSetting entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -63,15 +65,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_pageHeaderArea2Type = entity.PageHeaderArea2Type;
 		_pageHeaderArea3Type = entity.PageHeaderArea3Type;
 		_pageHeaderArea1ImageDetailId = entity.PageHeaderArea1ImageDetailId;
-		_pageHeaderArea2ImageDetailId = entity.PageHeaderArea2ImageDetailId;
-		_pageHeaderArea3ImageDetailId = entity.PageHeaderArea3ImageDetailId;
-		_pageHeaderArea1FreeText = entity.PageHeaderArea1FreeText;
+		_pageheaderarea1imagedetail = entity.PageHeaderArea1ImageDetail !=null ? new ImageDetailPM(entity.PageHeaderArea1ImageDetail) : null;
+			_pageHeaderArea2ImageDetailId = entity.PageHeaderArea2ImageDetailId;
+		_pageheaderarea2imagedetail = entity.PageHeaderArea2ImageDetail !=null ? new ImageDetailPM(entity.PageHeaderArea2ImageDetail) : null;
+			_pageHeaderArea3ImageDetailId = entity.PageHeaderArea3ImageDetailId;
+		_pageheaderarea3imagedetail = entity.PageHeaderArea3ImageDetail !=null ? new ImageDetailPM(entity.PageHeaderArea3ImageDetail) : null;
+			_pageHeaderArea1FreeText = entity.PageHeaderArea1FreeText;
 		_pageHeaderArea2FreeText = entity.PageHeaderArea2FreeText;
 		_pageHeaderArea3FreeText = entity.PageHeaderArea3FreeText;
 		_pageHeaderArea1FreeTextDesignId = entity.PageHeaderArea1FreeTextDesignId;
-		_pageHeaderArea2FreeTextDesignId = entity.PageHeaderArea2FreeTextDesignId;
-		_pageHeaderArea3FreeTextDesignId = entity.PageHeaderArea3FreeTextDesignId;
-		_pageHeaderArea1Width = entity.PageHeaderArea1Width;
+		_pageheaderarea1freetextdesign = entity.PageHeaderArea1FreeTextDesign !=null ? new QuoteTemplateTextDesignPM(entity.PageHeaderArea1FreeTextDesign) : null;
+			_pageHeaderArea2FreeTextDesignId = entity.PageHeaderArea2FreeTextDesignId;
+		_pageheaderarea2freetextdesign = entity.PageHeaderArea2FreeTextDesign !=null ? new QuoteTemplateTextDesignPM(entity.PageHeaderArea2FreeTextDesign) : null;
+			_pageHeaderArea3FreeTextDesignId = entity.PageHeaderArea3FreeTextDesignId;
+		_pageheaderarea3freetextdesign = entity.PageHeaderArea3FreeTextDesign !=null ? new QuoteTemplateTextDesignPM(entity.PageHeaderArea3FreeTextDesign) : null;
+			_pageHeaderArea1Width = entity.PageHeaderArea1Width;
 		_pageHeaderArea2Width = entity.PageHeaderArea2Width;
 		_pageHeaderArea3Width = entity.PageHeaderArea3Width;
 		_pageHeaderImage1Width = entity.PageHeaderImage1Width;
@@ -92,15 +100,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_pageFooterArea2Type = entity.PageFooterArea2Type;
 		_pageFooterArea3Type = entity.PageFooterArea3Type;
 		_pageFooterArea1ImageDetailId = entity.PageFooterArea1ImageDetailId;
-		_pageFooterArea2ImageDetailId = entity.PageFooterArea2ImageDetailId;
-		_pageFooterArea3ImageDetailId = entity.PageFooterArea3ImageDetailId;
-		_pageFooterArea1FreeText = entity.PageFooterArea1FreeText;
+		_pagefooterarea1imagedetail = entity.PageFooterArea1ImageDetail !=null ? new ImageDetailPM(entity.PageFooterArea1ImageDetail) : null;
+			_pageFooterArea2ImageDetailId = entity.PageFooterArea2ImageDetailId;
+		_pagefooterarea2imagedetail = entity.PageFooterArea2ImageDetail !=null ? new ImageDetailPM(entity.PageFooterArea2ImageDetail) : null;
+			_pageFooterArea3ImageDetailId = entity.PageFooterArea3ImageDetailId;
+		_pagefooterarea3imagedetail = entity.PageFooterArea3ImageDetail !=null ? new ImageDetailPM(entity.PageFooterArea3ImageDetail) : null;
+			_pageFooterArea1FreeText = entity.PageFooterArea1FreeText;
 		_pageFooterArea2FreeText = entity.PageFooterArea2FreeText;
 		_pageFooterArea3FreeText = entity.PageFooterArea3FreeText;
 		_pageFooterArea1FreeTextDesignId = entity.PageFooterArea1FreeTextDesignId;
-		_pageFooterArea2FreeTextDesignId = entity.PageFooterArea2FreeTextDesignId;
-		_pageFooterArea3FreeTextDesignId = entity.PageFooterArea3FreeTextDesignId;
-		_pageFooterArea1Width = entity.PageFooterArea1Width;
+		_pagefooterarea1freetextdesign = entity.PageFooterArea1FreeTextDesign !=null ? new QuoteTemplateTextDesignPM(entity.PageFooterArea1FreeTextDesign) : null;
+			_pageFooterArea2FreeTextDesignId = entity.PageFooterArea2FreeTextDesignId;
+		_pagefooterarea2freetextdesign = entity.PageFooterArea2FreeTextDesign !=null ? new QuoteTemplateTextDesignPM(entity.PageFooterArea2FreeTextDesign) : null;
+			_pageFooterArea3FreeTextDesignId = entity.PageFooterArea3FreeTextDesignId;
+		_pagefooterarea3freetextdesign = entity.PageFooterArea3FreeTextDesign !=null ? new QuoteTemplateTextDesignPM(entity.PageFooterArea3FreeTextDesign) : null;
+			_pageFooterArea1Width = entity.PageFooterArea1Width;
 		_pageFooterArea2Width = entity.PageFooterArea2Width;
 		_pageFooterArea3Width = entity.PageFooterArea3Width;
 		_pageFooterArea1Height = entity.PageFooterArea1Height;
@@ -141,24 +155,39 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_showTitlePricingPackages = entity.ShowTitlePricingPackages;
 		_showTitlePricingContainsers = entity.ShowTitlePricingContainsers;
 		_packagesTableDesignId = entity.PackagesTableDesignId;
-		_containserTableDesignId = entity.ContainserTableDesignId;
-		_totalsPackagesLabelDesignId = entity.TotalsPackagesLabelDesignId;
-		_totalsContainsersLabelDesignId = entity.TotalsContainsersLabelDesignId;
-		_totalsPackagesValueDesignId = entity.TotalsPackagesValueDesignId;
-		_totalsContainsersValueDesignId = entity.TotalsContainsersValueDesignId;
-		_rightToLeft = entity.RightToLeft;
+		_packagestabledesign = entity.PackagesTableDesign !=null ? new QuoteTemplateTableDesignPM(entity.PackagesTableDesign) : null;
+			_containserTableDesignId = entity.ContainserTableDesignId;
+		_containsertabledesign = entity.ContainserTableDesign !=null ? new QuoteTemplateTableDesignPM(entity.ContainserTableDesign) : null;
+			_totalsPackagesLabelDesignId = entity.TotalsPackagesLabelDesignId;
+		_quotetemplatetextdesignpackageslabel = entity.QuoteTemplateTextDesignPackagesLabel !=null ? new QuoteTemplateTextDesignPM(entity.QuoteTemplateTextDesignPackagesLabel) : null;
+			_totalsContainsersLabelDesignId = entity.TotalsContainsersLabelDesignId;
+		_quotetemplatetextdesigncontainserslabel = entity.QuoteTemplateTextDesignContainsersLabel !=null ? new QuoteTemplateTextDesignPM(entity.QuoteTemplateTextDesignContainsersLabel) : null;
+			_totalsPackagesValueDesignId = entity.TotalsPackagesValueDesignId;
+		_quotetemplatetextdesignpackagesvalue = entity.QuoteTemplateTextDesignPackagesValue !=null ? new QuoteTemplateTextDesignPM(entity.QuoteTemplateTextDesignPackagesValue) : null;
+			_totalsContainsersValueDesignId = entity.TotalsContainsersValueDesignId;
+		_quotetemplatetextdesigncontainsersvalue = entity.QuoteTemplateTextDesignContainsersValue !=null ? new QuoteTemplateTextDesignPM(entity.QuoteTemplateTextDesignContainsersValue) : null;
+			_rightToLeft = entity.RightToLeft;
 		_groupByPackagesLabelDesignId = entity.GroupByPackagesLabelDesignId;
-		_groupByPackagesValueDesignId = entity.GroupByPackagesValueDesignId;
-		_groupByContainsersLabelDesignId = entity.GroupByContainsersLabelDesignId;
-		_groupByContainsersValueDesignId = entity.GroupByContainsersValueDesignId;
-		_detailsTableDesignId = entity.DetailsTableDesignId;
-		_detailsSectionHasTwoColumns = entity.DetailsSectionHasTwoColumns;
+		_quotetemplatetextdesignpackagesgroupbylabel = entity.QuoteTemplateTextDesignPackagesGroupByLabel !=null ? new QuoteTemplateTextDesignPM(entity.QuoteTemplateTextDesignPackagesGroupByLabel) : null;
+			_groupByPackagesValueDesignId = entity.GroupByPackagesValueDesignId;
+		_quotetemplatetextdesignpackagesgroupbyvalue = entity.QuoteTemplateTextDesignPackagesGroupByValue !=null ? new QuoteTemplateTextDesignPM(entity.QuoteTemplateTextDesignPackagesGroupByValue) : null;
+			_groupByContainsersLabelDesignId = entity.GroupByContainsersLabelDesignId;
+		_quotetemplatetextdesigncontainsersgroupbylabel = entity.QuoteTemplateTextDesignContainsersGroupByLabel !=null ? new QuoteTemplateTextDesignPM(entity.QuoteTemplateTextDesignContainsersGroupByLabel) : null;
+			_groupByContainsersValueDesignId = entity.GroupByContainsersValueDesignId;
+		_quotetemplatetextdesigncontainsersgroupbyvalue = entity.QuoteTemplateTextDesignContainsersGroupByValue !=null ? new QuoteTemplateTextDesignPM(entity.QuoteTemplateTextDesignContainsersGroupByValue) : null;
+			_detailsTableDesignId = entity.DetailsTableDesignId;
+		_detailstabledesign = entity.DetailsTableDesign !=null ? new QuoteTemplateTableDesignPM(entity.DetailsTableDesign) : null;
+			_detailsSectionHasTwoColumns = entity.DetailsSectionHasTwoColumns;
 		_headerTableDesignId = entity.HeaderTableDesignId;
-		_headerSectionHasTwoColumns = entity.HeaderSectionHasTwoColumns;
+		_headertabledesign = entity.HeaderTableDesign !=null ? new QuoteTemplateTableDesignPM(entity.HeaderTableDesign) : null;
+			_headerSectionHasTwoColumns = entity.HeaderSectionHasTwoColumns;
 		_detailsTitleDesignId = entity.DetailsTitleDesignId;
-		_pricingPackagesTitleDesignId = entity.PricingPackagesTitleDesignId;
-		_pricingContainsersTitleDesignId = entity.PricingContainsersTitleDesignId;
-		_pageHeaderBorderTypeCode = entity.PageHeaderBorderTypeCode;
+		_detailstitledesign = entity.DetailsTitleDesign !=null ? new QuoteTemplateTextDesignPM(entity.DetailsTitleDesign) : null;
+			_pricingPackagesTitleDesignId = entity.PricingPackagesTitleDesignId;
+		_pricingpackagestitledesign = entity.PricingPackagesTitleDesign !=null ? new QuoteTemplateTextDesignPM(entity.PricingPackagesTitleDesign) : null;
+			_pricingContainsersTitleDesignId = entity.PricingContainsersTitleDesignId;
+		_pricingcontainserstitledesign = entity.PricingContainsersTitleDesign !=null ? new QuoteTemplateTextDesignPM(entity.PricingContainsersTitleDesign) : null;
+			_pageHeaderBorderTypeCode = entity.PageHeaderBorderTypeCode;
 		_pageHeaderBorderColor = entity.PageHeaderBorderColor;
 		_pageHeaderBorderThickness = entity.PageHeaderBorderThickness;
 		_pageFooterBorderTypeCode = entity.PageFooterBorderTypeCode;
@@ -178,8 +207,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_showTotalPerChargeGroupContainers = entity.ShowTotalPerChargeGroupContainers;
 		_showPageBreakBeforeTotalPerContainersTable = entity.ShowPageBreakBeforeTotalPerContainersTable;
 		_totalPerContainersAdditionalTextDesignId = entity.TotalPerContainersAdditionalTextDesignId;
-		_totalPerContainersTableDesignId = entity.TotalPerContainersTableDesignId;
-		_totalPerContainersCurrencyType = entity.TotalPerContainersCurrencyType;
+		_totalpercontainersadditionaltextdesign = entity.TotalPerContainersAdditionalTextDesign !=null ? new QuoteTemplateTextDesignPM(entity.TotalPerContainersAdditionalTextDesign) : null;
+			_totalPerContainersTableDesignId = entity.TotalPerContainersTableDesignId;
+		_totalpercontainerstabledesign = entity.TotalPerContainersTableDesign !=null ? new QuoteTemplateTableDesignPM(entity.TotalPerContainersTableDesign) : null;
+			_totalPerContainersCurrencyType = entity.TotalPerContainersCurrencyType;
 		_showTitleTotalPerContainersTable = entity.ShowTitleTotalPerContainersTable;
 		_showChargeNotePackages = entity.ShowChargeNotePackages;
 		_showChargeNoteContainers = entity.ShowChargeNoteContainers;
@@ -205,7 +236,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_showVATPercentageContainers = entity.ShowVATPercentageContainers;
 		_hidePageNumber = entity.HidePageNumber;
 		_pageNumberingTextDesignId = entity.PageNumberingTextDesignId;
-		_showRegionalTAXPackages = entity.ShowRegionalTAXPackages;
+		_pagenumberingtextdesign = entity.PageNumberingTextDesign !=null ? new QuoteTemplateTextDesignPM(entity.PageNumberingTextDesign) : null;
+			_showRegionalTAXPackages = entity.ShowRegionalTAXPackages;
 		_showRegionalTAXContainers = entity.ShowRegionalTAXContainers;
 		_xMLData = entity.XMLData;
 		_showUnitsContainers = entity.ShowUnitsContainers;
@@ -809,6 +841,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ImageDetailPM _pageheaderarea1imagedetail;
+		[Include]
+        [DataMember]
+        public virtual ImageDetailPM PageHeaderArea1ImageDetail 
+		{ 
+		get { return _pageheaderarea1imagedetail; } 
+		set { _pageheaderarea1imagedetail = value; }
+		}
 	  private string _pageHeaderArea2ImageDetailId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -825,6 +865,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ImageDetailPM _pageheaderarea2imagedetail;
+		[Include]
+        [DataMember]
+        public virtual ImageDetailPM PageHeaderArea2ImageDetail 
+		{ 
+		get { return _pageheaderarea2imagedetail; } 
+		set { _pageheaderarea2imagedetail = value; }
+		}
 	  private string _pageHeaderArea3ImageDetailId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -841,6 +889,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ImageDetailPM _pageheaderarea3imagedetail;
+		[Include]
+        [DataMember]
+        public virtual ImageDetailPM PageHeaderArea3ImageDetail 
+		{ 
+		get { return _pageheaderarea3imagedetail; } 
+		set { _pageheaderarea3imagedetail = value; }
+		}
 	  private string _pageHeaderArea1FreeText ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -905,6 +961,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _pageheaderarea1freetextdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM PageHeaderArea1FreeTextDesign 
+		{ 
+		get { return _pageheaderarea1freetextdesign; } 
+		set { _pageheaderarea1freetextdesign = value; }
+		}
 	  private string _pageHeaderArea2FreeTextDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -921,6 +985,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _pageheaderarea2freetextdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM PageHeaderArea2FreeTextDesign 
+		{ 
+		get { return _pageheaderarea2freetextdesign; } 
+		set { _pageheaderarea2freetextdesign = value; }
+		}
 	  private string _pageHeaderArea3FreeTextDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -937,6 +1009,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _pageheaderarea3freetextdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM PageHeaderArea3FreeTextDesign 
+		{ 
+		get { return _pageheaderarea3freetextdesign; } 
+		set { _pageheaderarea3freetextdesign = value; }
+		}
 	  private double _pageHeaderArea1Width ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1273,6 +1353,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ImageDetailPM _pagefooterarea1imagedetail;
+		[Include]
+        [DataMember]
+        public virtual ImageDetailPM PageFooterArea1ImageDetail 
+		{ 
+		get { return _pagefooterarea1imagedetail; } 
+		set { _pagefooterarea1imagedetail = value; }
+		}
 	  private string _pageFooterArea2ImageDetailId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1289,6 +1377,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ImageDetailPM _pagefooterarea2imagedetail;
+		[Include]
+        [DataMember]
+        public virtual ImageDetailPM PageFooterArea2ImageDetail 
+		{ 
+		get { return _pagefooterarea2imagedetail; } 
+		set { _pagefooterarea2imagedetail = value; }
+		}
 	  private string _pageFooterArea3ImageDetailId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1305,6 +1401,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ImageDetailPM _pagefooterarea3imagedetail;
+		[Include]
+        [DataMember]
+        public virtual ImageDetailPM PageFooterArea3ImageDetail 
+		{ 
+		get { return _pagefooterarea3imagedetail; } 
+		set { _pagefooterarea3imagedetail = value; }
+		}
 	  private string _pageFooterArea1FreeText ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1369,6 +1473,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _pagefooterarea1freetextdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM PageFooterArea1FreeTextDesign 
+		{ 
+		get { return _pagefooterarea1freetextdesign; } 
+		set { _pagefooterarea1freetextdesign = value; }
+		}
 	  private string _pageFooterArea2FreeTextDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1385,6 +1497,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _pagefooterarea2freetextdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM PageFooterArea2FreeTextDesign 
+		{ 
+		get { return _pagefooterarea2freetextdesign; } 
+		set { _pagefooterarea2freetextdesign = value; }
+		}
 	  private string _pageFooterArea3FreeTextDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1401,6 +1521,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _pagefooterarea3freetextdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM PageFooterArea3FreeTextDesign 
+		{ 
+		get { return _pagefooterarea3freetextdesign; } 
+		set { _pagefooterarea3freetextdesign = value; }
+		}
 	  private double _pageFooterArea1Width ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2057,6 +2185,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTableDesignPM _packagestabledesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTableDesignPM PackagesTableDesign 
+		{ 
+		get { return _packagestabledesign; } 
+		set { _packagestabledesign = value; }
+		}
 	  private string _containserTableDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2073,6 +2209,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTableDesignPM _containsertabledesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTableDesignPM ContainserTableDesign 
+		{ 
+		get { return _containsertabledesign; } 
+		set { _containsertabledesign = value; }
+		}
 	  private string _totalsPackagesLabelDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2089,6 +2233,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _quotetemplatetextdesignpackageslabel;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM QuoteTemplateTextDesignPackagesLabel 
+		{ 
+		get { return _quotetemplatetextdesignpackageslabel; } 
+		set { _quotetemplatetextdesignpackageslabel = value; }
+		}
 	  private string _totalsContainsersLabelDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2105,6 +2257,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _quotetemplatetextdesigncontainserslabel;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM QuoteTemplateTextDesignContainsersLabel 
+		{ 
+		get { return _quotetemplatetextdesigncontainserslabel; } 
+		set { _quotetemplatetextdesigncontainserslabel = value; }
+		}
 	  private string _totalsPackagesValueDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2121,6 +2281,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _quotetemplatetextdesignpackagesvalue;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM QuoteTemplateTextDesignPackagesValue 
+		{ 
+		get { return _quotetemplatetextdesignpackagesvalue; } 
+		set { _quotetemplatetextdesignpackagesvalue = value; }
+		}
 	  private string _totalsContainsersValueDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2137,6 +2305,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _quotetemplatetextdesigncontainsersvalue;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM QuoteTemplateTextDesignContainsersValue 
+		{ 
+		get { return _quotetemplatetextdesigncontainsersvalue; } 
+		set { _quotetemplatetextdesigncontainsersvalue = value; }
+		}
 	  private bool _rightToLeft ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2169,6 +2345,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _quotetemplatetextdesignpackagesgroupbylabel;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM QuoteTemplateTextDesignPackagesGroupByLabel 
+		{ 
+		get { return _quotetemplatetextdesignpackagesgroupbylabel; } 
+		set { _quotetemplatetextdesignpackagesgroupbylabel = value; }
+		}
 	  private string _groupByPackagesValueDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2185,6 +2369,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _quotetemplatetextdesignpackagesgroupbyvalue;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM QuoteTemplateTextDesignPackagesGroupByValue 
+		{ 
+		get { return _quotetemplatetextdesignpackagesgroupbyvalue; } 
+		set { _quotetemplatetextdesignpackagesgroupbyvalue = value; }
+		}
 	  private string _groupByContainsersLabelDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2201,6 +2393,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _quotetemplatetextdesigncontainsersgroupbylabel;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM QuoteTemplateTextDesignContainsersGroupByLabel 
+		{ 
+		get { return _quotetemplatetextdesigncontainsersgroupbylabel; } 
+		set { _quotetemplatetextdesigncontainsersgroupbylabel = value; }
+		}
 	  private string _groupByContainsersValueDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2217,6 +2417,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _quotetemplatetextdesigncontainsersgroupbyvalue;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM QuoteTemplateTextDesignContainsersGroupByValue 
+		{ 
+		get { return _quotetemplatetextdesigncontainsersgroupbyvalue; } 
+		set { _quotetemplatetextdesigncontainsersgroupbyvalue = value; }
+		}
 	  private string _detailsTableDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2233,6 +2441,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTableDesignPM _detailstabledesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTableDesignPM DetailsTableDesign 
+		{ 
+		get { return _detailstabledesign; } 
+		set { _detailstabledesign = value; }
+		}
 	  private bool _detailsSectionHasTwoColumns ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2265,6 +2481,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTableDesignPM _headertabledesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTableDesignPM HeaderTableDesign 
+		{ 
+		get { return _headertabledesign; } 
+		set { _headertabledesign = value; }
+		}
 	  private bool _headerSectionHasTwoColumns ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2297,6 +2521,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _detailstitledesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM DetailsTitleDesign 
+		{ 
+		get { return _detailstitledesign; } 
+		set { _detailstitledesign = value; }
+		}
 	  private string _pricingPackagesTitleDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2313,6 +2545,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _pricingpackagestitledesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM PricingPackagesTitleDesign 
+		{ 
+		get { return _pricingpackagestitledesign; } 
+		set { _pricingpackagestitledesign = value; }
+		}
 	  private string _pricingContainsersTitleDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2329,6 +2569,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _pricingcontainserstitledesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM PricingContainsersTitleDesign 
+		{ 
+		get { return _pricingcontainserstitledesign; } 
+		set { _pricingcontainserstitledesign = value; }
+		}
 	  private string _pageHeaderBorderTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2649,6 +2897,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _totalpercontainersadditionaltextdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM TotalPerContainersAdditionalTextDesign 
+		{ 
+		get { return _totalpercontainersadditionaltextdesign; } 
+		set { _totalpercontainersadditionaltextdesign = value; }
+		}
 	  private string _totalPerContainersTableDesignId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2665,6 +2921,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTableDesignPM _totalpercontainerstabledesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTableDesignPM TotalPerContainersTableDesign 
+		{ 
+		get { return _totalpercontainerstabledesign; } 
+		set { _totalpercontainerstabledesign = value; }
+		}
 	  private string _totalPerContainersCurrencyType ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3081,6 +3345,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplateTextDesignPM _pagenumberingtextdesign;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateTextDesignPM PageNumberingTextDesign 
+		{ 
+		get { return _pagenumberingtextdesign; } 
+		set { _pagenumberingtextdesign = value; }
+		}
 	  private bool _showRegionalTAXPackages ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

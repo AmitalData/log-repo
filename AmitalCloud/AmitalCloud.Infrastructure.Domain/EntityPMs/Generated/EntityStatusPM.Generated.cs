@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class EntityStatusPM : BaseEntityPM   {
    #region Constructors
    public EntityStatusPM() : base() {} 
-   public EntityStatusPM(EntityStatus entity) : base()
+   public EntityStatusPM(POCO.EntityStatus entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -32,13 +34,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_inActive = entity.InActive;
 		_name = entity.Name;
-		_objectTableName = default;
 		_statusWeight = entity.StatusWeight;
 		_searchFields = entity.SearchFields;
-		_isHybrid = default;
 		_displayName = entity.DisplayName;
 		_entityStatusTypeCode = entity.EntityStatusTypeCode;
-		_statusLocalWeight = entity.StatusLocalWeight;
+		_entitystatustype = entity.EntityStatusType !=null ? new EntityStatusTypePM(entity.EntityStatusType) : null;
+			_statusLocalWeight = entity.StatusLocalWeight;
 		_allowPartial = entity.AllowPartial;
 		_isDigitalPortal = entity.IsDigitalPortal;
    }
@@ -141,22 +142,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
-		   }
-		 }
-	   }
 	  private int _statusWeight ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -186,22 +171,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
 		   }
 		 }
 	   }
@@ -237,6 +206,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private EntityStatusTypePM _entitystatustype;
+		[Include]
+        [DataMember]
+        public virtual EntityStatusTypePM EntityStatusType 
+		{ 
+		get { return _entitystatustype; } 
+		set { _entitystatustype = value; }
+		}
 	  private int? _statusLocalWeight ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

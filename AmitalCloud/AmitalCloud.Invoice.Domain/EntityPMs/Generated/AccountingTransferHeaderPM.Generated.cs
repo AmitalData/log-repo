@@ -6,12 +6,14 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
@@ -32,12 +34,11 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_transferDate = entity.TransferDate;
 		_fileName = entity.FileName;
 		_userId = entity.UserId;
-		_accountingTransferTypeCode = entity.AccountingTransferTypeCode;
-		_searchFields = entity.SearchFields;
-		_userName = default;
-		_accountingTransferTypeName = default;
+		_user = entity.User !=null ? new UserPM(entity.User) : null;
+			_accountingTransferTypeCode = entity.AccountingTransferTypeCode;
+		_transfertype = entity.TransferType !=null ? new AccountingTransferTypePM(entity.TransferType) : null;
+			_searchFields = entity.SearchFields;
 		_notes = entity.Notes;
-		transferLines = default;
    }
    #endregion Constructors
    #region Properties
@@ -138,6 +139,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _user;
+		[Include]
+        [DataMember]
+        public virtual UserPM User 
+		{ 
+		get { return _user; } 
+		set { _user = value; }
+		}
 	  private string _accountingTransferTypeCode ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -154,6 +163,14 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AccountingTransferTypePM _transfertype;
+		[Include]
+        [DataMember]
+        public virtual AccountingTransferTypePM TransferType 
+		{ 
+		get { return _transfertype; } 
+		set { _transfertype = value; }
+		}
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -167,38 +184,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private string _userName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UserName  
-	   {
-	     get { return _userName; }
-		 set
-		 {
-		   if(_userName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UserName",OldValue=_userName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _userName=value;
-		   }
-		 }
-	   }
-	  private string _accountingTransferTypeName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AccountingTransferTypeName  
-	   {
-	     get { return _accountingTransferTypeName; }
-		 set
-		 {
-		   if(_accountingTransferTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingTransferTypeName",OldValue=_accountingTransferTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _accountingTransferTypeName=value;
 		   }
 		 }
 	   }

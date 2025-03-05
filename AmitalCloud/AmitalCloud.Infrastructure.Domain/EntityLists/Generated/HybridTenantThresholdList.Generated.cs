@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
    {
        #region Constructors
        public HybridTenantThresholdList() : base() {}
-       public HybridTenantThresholdList(HybridTenantThreshold entity) : base()
+       public HybridTenantThresholdList(POCO.HybridTenantThreshold entity) : base()
        {
           Tenant  = entity.Tenant;
           FailedThresold  = entity.FailedThresold;

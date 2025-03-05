@@ -380,7 +380,7 @@ namespace Logitude.Server.Tools
 
                     var queueService = new CustomDbQueueService//();
                                                                //queueService.InitializeQueue
-                    (queueName, 0);
+                    (queueName, tenant);
                     var messageProperties = new Dictionary<string, string>();
                     messageProperties["CommunicationLogId"] = communicationLogId;
                     messageProperties["Tenant"] = tenant.ToString();

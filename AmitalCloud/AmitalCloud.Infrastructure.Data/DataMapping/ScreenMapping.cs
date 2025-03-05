@@ -11,7 +11,7 @@ namespace AmitalCloud.Infrastructure.Data.DataMapping
 
             if (isNewState)
             {
-                screen.Code = screenPM.Code = string.IsNullOrEmpty(screenPM.Code) ? screenPM.ObjectTableName + "." + screenPM.Tenant + '.' + screenPM.Id : screenPM.Code;
+                screen.Code = screenPM.Code; //todo : = string.IsNullOrEmpty(screenPM.Code) ? screenPM.ObjectTableName + "." + screenPM.Tenant + '.' + screenPM.Id : screenPM.Code;
                 screen.Type = !string.IsNullOrEmpty(screenPM.Type) ? screenPM.Type : "CLASSIC";
 
             }

@@ -2595,8 +2595,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         var currentEditComponent = SessionLocator.SelectedSession.CurrentEditComponent;
         if(currentEditComponent != null)
         ServiceHelper.DeleteGeneralLock(currentEditComponent.EntityId ,currentEditComponent.ObjectTableName)
-        else
-        ServiceHelper.DeleteGeneralLock(this.EntityId , this.ObjectTableName);
+        else if(!AppTool.IsNullOrEmpty(this.EntityId) && !AppTool.IsNullOrEmpty(this.ObjectTableName))
+         ServiceHelper.DeleteGeneralLock(this.EntityId , this.ObjectTableName);
 
     }
 }

@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,18 +26,16 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentAssemblyPM : BaseEntityPM   {
    #region Constructors
    public ShipmentAssemblyPM() : base() {} 
-   public ShipmentAssemblyPM(ShipmentAssembly entity) : base()
+   public ShipmentAssemblyPM(POCO.ShipmentAssembly entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_shipmentId = entity.ShipmentId;
 		_shipperId = entity.ShipperId;
-		_shipperName = default;
-		_house = entity.House;
+		_shipper = entity.Shipper !=null ? new CardPM(entity.Shipper) : null;
+			_house = entity.House;
 		_createdByUserId = entity.CreatedByUserId;
-		_createdByUserName = default;
 		_updatedByUserId = entity.UpdatedByUserId;
-		_updatedByUserName = default;
 		_createDate = entity.CreateDate;
 		_updateDate = entity.UpdateDate;
    }
@@ -106,22 +106,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _shipperName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipperName  
-	   {
-	     get { return _shipperName; }
-		 set
-		 {
-		   if(_shipperName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperName",OldValue=_shipperName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipperName=value;
-		   }
-		 }
-	   }
+		private CardPM _shipper;
+		[Include]
+        [DataMember]
+        public virtual CardPM Shipper 
+		{ 
+		get { return _shipper; } 
+		set { _shipper = value; }
+		}
 	  private string _house ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -154,22 +146,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
 	  private string _updatedByUserId ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -183,22 +159,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserId",OldValue=_updatedByUserId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _updatedByUserId=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
 		   }
 		 }
 	   }

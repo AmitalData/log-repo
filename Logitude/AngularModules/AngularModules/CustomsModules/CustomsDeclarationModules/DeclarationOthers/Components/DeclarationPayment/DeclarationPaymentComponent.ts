@@ -2180,7 +2180,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             else {
                 if (!this.isConnectToUnifreight) {
 
-                    if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
+                    if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) { this.Send2755(params); return;}
 
                     this.CheckCustomFileCreditFromUnifreight(params);   
                 }
@@ -3095,12 +3095,11 @@ export class PaymentMethodModel extends BaseComponent {
                                                         }
                                                     }
                                                     else {
-                                                        if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
                                                             if (!AppTool.IsNullOrEmpty(this.parent.GetCreditInternalBankId)) {
                                                                 this.InternalBankId = this.parent.GetCreditInternalBankId;
                                                             }
                                                             this.SendCreditToGetBank();
-                                                        }
+                                                       
                                                         this.BanksList = this.agentBanks;
                                                         if (customsSetting != null && customsSetting.IsConnectedToUniFreight) {
                                                             //   GetCustomBankDefaultForCard();

@@ -11,14 +11,14 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 {
     public class DocumentsFilingRepository : Repository<DocumentsFiling>, IRepository<DocumentsFiling>
     {
-        IAmitalCloudContext commonDataContext;
+        IAmitalCloudContext amitalCloudContext;
         public DocumentsFilingRepository(int tenant) : this(AmitalCloudContext.GetContext(tenant))
         {
         }
 
         public DocumentsFilingRepository(IAmitalCloudContext context) : base(context)
         {
-            commonDataContext = context;
+            amitalCloudContext = context;
         }
         public DocumentsFilingRepository(IUnitOfWork uow) : base(uow)
         {
@@ -269,7 +269,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public IAmitalCloudContext context
         {
 
-            get { return commonDataContext; }
+            get { return amitalCloudContext; }
         }
 
         public string GetEntityDocumentsSearchFields(string EntityId, string ObjectTableId, int tenant)

@@ -8,7 +8,7 @@ namespace WebFreight.Web.DataContracts
     public class EventTypeArgs
     {
 
-        public List<string> EventTypeCodeList {get; set;}
+        public List<string> EventTypeCodeList { get; set; }
         public List<EventTypeClass> EventTypeList { get; set; }
 
         public string EntityId { get; set; }

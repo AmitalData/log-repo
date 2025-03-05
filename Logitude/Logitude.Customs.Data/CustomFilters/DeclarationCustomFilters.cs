@@ -90,10 +90,7 @@ namespace Logitude.Customs.Data.CustomFilters
             if (frlUtil.user.IsFreelancer)
             {
                 List<string> customersIds = frlUtil.GetConnectedCustomersIds(tenant);
-                if (customersIds.Count > 0)
-                {
-                    queryableData = queryableData.Where(d => customersIds.Contains(d.CustomerId));
-                }
+               queryableData = queryableData.Where(d => customersIds.Contains(d.CustomerId));
             }
 
             return queryableData;

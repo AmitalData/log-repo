@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,12 +26,13 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class PickUpDeliveryPackageHarmonizePM : BaseEntityPM   {
    #region Constructors
    public PickUpDeliveryPackageHarmonizePM() : base() {} 
-   public PickUpDeliveryPackageHarmonizePM(PickUpDeliveryPackageHarmonize entity) : base()
+   public PickUpDeliveryPackageHarmonizePM(POCO.PickUpDeliveryPackageHarmonize entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_packageId = entity.PackageId;
-		_harmonize = entity.Harmonize;
+		_package = entity.Package !=null ? new ShipmentPickUpDeliveryPackagePM(entity.Package) : null;
+			_harmonize = entity.Harmonize;
    }
    #endregion Constructors
    #region Properties
@@ -82,6 +85,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentPickUpDeliveryPackagePM _package;
+		[Include]
+        [DataMember]
+        public virtual ShipmentPickUpDeliveryPackagePM Package 
+		{ 
+		get { return _package; } 
+		set { _package = value; }
+		}
 	  private string _harmonize ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

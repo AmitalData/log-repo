@@ -6,12 +6,14 @@
 // </auto-generated> InvoiceClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
@@ -39,8 +41,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		_profitVatableAmount = entity.ProfitVatableAmount;
 		_externalVATCard = entity.ExternalVATCard;
 		_externalTAXItemId = entity.ExternalTAXItemId;
-		_vatTypeName = default;
-		_vatTypeCell = default;
 		_isRegionalTax = entity.IsRegionalTax;
    }
    #endregion Constructors
@@ -251,38 +251,6 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalTAXItemId",OldValue=_externalTAXItemId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _externalTAXItemId=value;
-		   }
-		 }
-	   }
-	  private string _vatTypeName ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VatTypeName  
-	   {
-	     get { return _vatTypeName; }
-		 set
-		 {
-		   if(_vatTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatTypeName",OldValue=_vatTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vatTypeName=value;
-		   }
-		 }
-	   }
-	  private string _vatTypeCell ;
-	  	   [CustomValidation(typeof(IInvoiceValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VatTypeCell  
-	   {
-	     get { return _vatTypeCell; }
-		 set
-		 {
-		   if(_vatTypeCell != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatTypeCell",OldValue=_vatTypeCell,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _vatTypeCell=value;
 		   }
 		 }
 	   }

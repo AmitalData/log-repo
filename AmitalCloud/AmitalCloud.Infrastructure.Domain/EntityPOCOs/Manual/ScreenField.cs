@@ -1,9 +1,10 @@
+using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-    public class ScreenField
+    public class ScreenField : BaseEntity
     {
         [Key]
         public string Id { get; set; }

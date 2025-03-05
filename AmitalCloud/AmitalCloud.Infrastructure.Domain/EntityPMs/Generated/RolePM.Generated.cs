@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class RolePM : BaseEntityPM   {
    #region Constructors
    public RolePM() : base() {} 
-   public RolePM(Role entity) : base()
+   public RolePM(POCO.Role entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -33,13 +35,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_name = entity.Name;
 		_description = entity.Description;
 		_roleTypeCode = entity.RoleTypeCode;
-		_parentRoleId = entity.ParentRoleId;
+		_roletype = entity.RoleType !=null ? new RoleTypePM(entity.RoleType) : null;
+			_parentRoleId = entity.ParentRoleId;
 		_isCustomRole = entity.IsCustomRole;
-		_exists = default;
-		_added = default;
-		_removed = default;
-		_userId = default;
-		_currentTenant = default;
 		_inactive = entity.Inactive;
    }
    #endregion Constructors
@@ -157,6 +155,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private RoleTypePM _roletype;
+		[Include]
+        [DataMember]
+        public virtual RoleTypePM RoleType 
+		{ 
+		get { return _roletype; } 
+		set { _roletype = value; }
+		}
 	  private string _parentRoleId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -186,86 +192,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomRole",OldValue=_isCustomRole,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isCustomRole=value;
-		   }
-		 }
-	   }
-	  private bool _exists ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool Exists  
-	   {
-	     get { return _exists; }
-		 set
-		 {
-		   if(_exists != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Exists",OldValue=_exists,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _exists=value;
-		   }
-		 }
-	   }
-	  private bool _added ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool Added  
-	   {
-	     get { return _added; }
-		 set
-		 {
-		   if(_added != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Added",OldValue=_added,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _added=value;
-		   }
-		 }
-	   }
-	  private bool _removed ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool Removed  
-	   {
-	     get { return _removed; }
-		 set
-		 {
-		   if(_removed != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Removed",OldValue=_removed,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _removed=value;
-		   }
-		 }
-	   }
-	  private string _userId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UserId  
-	   {
-	     get { return _userId; }
-		 set
-		 {
-		   if(_userId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UserId",OldValue=_userId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _userId=value;
-		   }
-		 }
-	   }
-	  private int _currentTenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int CurrentTenant  
-	   {
-	     get { return _currentTenant; }
-		 set
-		 {
-		   if(_currentTenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrentTenant",OldValue=_currentTenant,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _currentTenant=value;
 		   }
 		 }
 	   }

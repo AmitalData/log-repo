@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentSubTypePM : BaseEntityPM   {
    #region Constructors
    public ShipmentSubTypePM() : base() {} 
-   public ShipmentSubTypePM(ShipmentSubType entity) : base()
+   public ShipmentSubTypePM(POCO.ShipmentSubType entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -32,15 +34,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_createdByUserId = entity.CreatedByUserId;
 		_updateDate = entity.UpdateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
-		_searchFields = entity.SearchFields;
+		_updatedbyuser = entity.UpdatedByUser !=null ? new UserPM(entity.UpdatedByUser) : null;
+			_searchFields = entity.SearchFields;
 		_code = entity.Code;
 		_name = entity.Name;
-		_createdByUserName = default;
-		_updatedByUserName = default;
-		_shipmentTypeName = default;
 		_inactive = entity.Inactive;
 		_shipmentTypeCode = entity.ShipmentTypeCode;
-		_isManuallyAdded = entity.IsManuallyAdded;
+		_shipmenttype = entity.ShipmentType !=null ? new ShipmentTypePM(entity.ShipmentType) : null;
+			_isManuallyAdded = entity.IsManuallyAdded;
    }
    #endregion Constructors
    #region Properties
@@ -141,6 +142,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _updatedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM UpdatedByUser 
+		{ 
+		get { return _updatedbyuser; } 
+		set { _updatedbyuser = value; }
+		}
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -189,54 +198,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
-		   }
-		 }
-	   }
-	  private string _shipmentTypeName ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShipmentTypeName  
-	   {
-	     get { return _shipmentTypeName; }
-		 set
-		 {
-		   if(_shipmentTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentTypeName",OldValue=_shipmentTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shipmentTypeName=value;
-		   }
-		 }
-	   }
 	  private bool _inactive ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -269,6 +230,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ShipmentTypePM _shipmenttype;
+		[Include]
+        [DataMember]
+        public virtual ShipmentTypePM ShipmentType 
+		{ 
+		get { return _shipmenttype; } 
+		set { _shipmenttype = value; }
+		}
 	  private bool _isManuallyAdded ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

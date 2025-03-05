@@ -65,31 +65,31 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                          select new UserPM()
                          {
                              BranchId = a.BranchId,
-                             BranchName = a.Branch != null ? a.Branch.EnglishName : "",
-                             DepartmentName = a.Department != null ? a.Department.EnglishName : "",
+                             //BranchName = a.Branch != null ? a.Branch.EnglishName : "",
+                             //DepartmentName = a.Department != null ? a.Department.EnglishName : "",
                              DepartmentId = a.DepartmentId,
                              Id = a.Id,
                              Notes = a.Notes,
                              Tenant = a.Tenant,
-                             Email = a.Contact.Email,
-                             EnglishName = a.Contact.EnglishName,
-                             Anniversary = (DateTime)a.Contact.Anniversary,
-                             Birthday = (DateTime)a.Contact.Birthday,
-                             BusinessPhone = a.Contact.BusinessPhone,
-                             FacebookId = a.Contact.FacebookId,
-                             Fax = a.Contact.Fax,
-                             InActive = a.Contact.InActive,
-                             LocalName = a.Contact.LocalName,
+                             //Email = a.Contact.Email,
+                             //EnglishName = a.Contact.EnglishName,
+                             //Anniversary = (DateTime)a.Contact.Anniversary,
+                             //Birthday = (DateTime)a.Contact.Birthday,
+                             //BusinessPhone = a.Contact.BusinessPhone,
+                             //FacebookId = a.Contact.FacebookId,
+                             //Fax = a.Contact.Fax,
+                             //InActive = a.Contact.InActive,
+                             //LocalName = a.Contact.LocalName,
                              SearchFields = a.SearchFields,
-                             Mobile = a.Contact.Mobile,
-                             DontShowLocalLabels = a.Contact.DontShowLocalLabels,
-                             Position = a.Contact.Position,
-                             ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
+                             //Mobile = a.Contact.Mobile,
+                             //DontShowLocalLabels = a.Contact.DontShowLocalLabels,
+                             //Position = a.Contact.Position,
+                             //ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
                              IsBranchRestricted = a.IsBranchRestricted,
                              IsSalesman = a.IsSalesman,
                              IsFreelancer = a.IsFreelancer,
                              FreelancerId = a.FreelancerId,
-                             FreelancerName = a.Freelancer != null ? a.Freelancer.EnglishName : null,
+                             //FreelancerName = a.Freelancer != null ? a.Freelancer.EnglishName : null,
                              BusinessUnitId = a.BusinessUnitId,
                              Code = a.Code,
                              CreateDate = a.CreateDate,
@@ -97,15 +97,15 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                              LicencedUser = a.LicencedUser,
                              IsProductRestricted = a.IsProductRestricted,
                              ProductTypeCode = a.ProductTypeCode,
-                             ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
+                             //ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
                              IsDistributor = a.IsDistributor,
                              DistributorCode = a.DistributorCode,
-                             IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
+                             //IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
                              PersonalId = a.PersonalId,
                              IsShowContactDetailsInTheMobileApp = a.IsShowContactDetailsInTheMobileApp,
                              Technology = a.Technology,
                              SetAngularAsDefault = a.SetAngularAsDefault,
-                             DisplayGettingStarted = a.Contact.DisplayGettingStarted,
+                             //DisplayGettingStarted = a.Contact.DisplayGettingStarted,
                              IsTwoFactorAuthenticationEnabled = a.IsTwoFactorAuthenticationEnabled,
                              DocumentFilingInbox = a.DocumentFilingInbox,
                              ShowLogBoxToolTip = a.ShowLogBoxToolTip,
@@ -121,8 +121,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             UserPM entity = query.FirstOrDefault();
             if (entity != null)
             {
-                entity.IsHRUser = this.CheckIfIsHRUser(entity);
-                entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
+                //entity.IsHRUser = this.CheckIfIsHRUser(entity);
+                //entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
                 UserLastLoginRepository rep = new UserLastLoginRepository(context);
                 UserLastLoginQuery userLastLoginQuery = new UserLastLoginQuery(rep);
                 //entity.UserLastLogin = userLastLoginQuery.GetSinglePM(entity.Id, tenant);
@@ -139,13 +139,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         private UserPM GetSinglePMFromDBLite(Expression<Func<UserPM, bool>> predicate)
         {
             return (from a in context.Users.Include("Contact")
-                    select new UserPM()
+                    select new UserPM(a)
                     {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        DontShowLocalLabels = a.Contact.DontShowLocalLabels,
-                        Email = a.Contact.Email,
-                        EnglishName = a.Contact.EnglishName,
+                        //DontShowLocalLabels = a.Contact.DontShowLocalLabels,
+                        //Email = a.Contact.Email,
+                        //EnglishName = a.Contact.EnglishName,
                     }).Where(predicate).FirstOrDefault();
         }
         private int ComputeDaysLeft(DateTime? date)
@@ -184,20 +182,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
             return technology;
         }
-        private bool CheckIfIsHRUser(UserPM entity)
-        {
-            bool isHR = false;
-            IAmitalCloudContext context = AmitalCloudContext.GetContext(entity.Tenant);
-            Role role = new Repository<Role>(context).GetSingle(new RoleKeys<string>() { Id = "HRAD" });                     //.GetSingleByCode("HRAD", 0);
-            ContactTenant contactTenant = new Repository<ContactTenant>(context).GetMulti(a => a.Contact.Email == entity.Email.ToLower()).FirstOrDefault();   //.GetContactTenantForContactId(entity.Id, entity.Tenant);
-            if (role != null && contactTenant != null)
-            {
-                ContactTenantRole contactTenantRole = new Repository<ContactTenantRole>(context).GetMulti(a => a.RoleId == role.Id && a.Tenant == entity.Tenant && a.ContactTenantId == contactTenant.Id).FirstOrDefault(); //.GetContactTenantRoleByRoleIdAndContactTenant(role.Id, contactTenant.Id, entity.Tenant);
-                isHR = contactTenantRole == null ? false : true;
-            }
-
-            return isHR;
-        }
         #endregion Private Methods
 
         public bool CheckIfUserExistInTenant(string userId, int tenant)
@@ -234,55 +218,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         #region Get Single User
         public UserPM GetSinglePM(string id, int tenant) => GetSinglePMFromCache(a => (a.Tenant == tenant || a.Tenant == 0) && a.Id == id, "UserPM" + id + tenant);
-        public UserPM GetSingleUserPM(string id, int tenant, bool fromcache) => fromcache ? GetSinglePMFromCache(a => (a.Tenant == tenant || a.Tenant == 0) && a.Id == id, "UserPM" + id + tenant) : GetSinglePMFromDB(a => (a.Tenant == tenant || a.Tenant == 0) && a.Id == id);
-        public UserPM GetSingleUserPMByCode(string code, int tenant, bool fromcache) => fromcache ? GetSinglePMFromCache(d => d.Tenant == tenant && d.Code == code, "UserPM" + code + tenant) : GetSinglePMFromDB(d => d.Tenant == tenant && d.Code == code);
-        public UserPM GetSingleUserPMByEmail(string email, int tenant, bool fromcache) => fromcache ? GetSinglePMFromCache(d => d.Tenant == tenant && d.Email == email, "UserPM" + email + tenant) : GetSinglePMFromDB(d => d.Tenant == tenant && d.Email == email);
-        public UserPM GetSinglePMByCode(string code, int tenant) => GetSinglePMFromDB(a => a.Tenant == tenant && a.Code == code);
-        public UserPM GetSinglePMByEmail(string email, int tenant) => GetSinglePMFromDB(a => a.Tenant == tenant && a.Email == email);
-        public UserPM GetSinglePMLite(string id, int tenant) => GetSinglePMFromDBLite(a => a.Tenant == tenant && a.Id == id);
-        public UserPM GetSingleUserPMByEmailLite(string email, int tenant) => GetSinglePMFromDBLite(a => a.Tenant == tenant && a.Email == email);
-        //------
-        public UserPM GetSingleUserByEmailOrIdAndTenantOrTenantZero(string id, string email, int tenant)
-        {
-            UserPM entity = (from a in context.Users
-                             where !a.Contact.InActive && a.Tenant == tenant
-                             && (a.Contact.Email == email || a.Id == id)
-                             select new UserPM()
-                             {
-                                 Id = a.Id,
-                                 Tenant = a.Tenant,
-                                 Email = a.Contact.Email,
-                                 IsDistributor = a.IsDistributor,
-                                 DontShowLocalLabels = a.Contact.DontShowLocalLabels,
-                                 IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
-                                 IsShowContactDetailsInTheMobileApp = a.IsShowContactDetailsInTheMobileApp,
-                                 Technology = a.Technology,
-                                 DocumentFilingInbox = a.DocumentFilingInbox,
-                                 ShowLogBoxToolTip = a.ShowLogBoxToolTip,
-                                 ShowInboxToolTip = a.ShowInboxToolTip,
-                             }).FirstOrDefault();
-
-            if (entity == null)
-            {
-                entity = (from a in context.Users
-                          where a.Tenant == 0
-                          && (a.Contact.Email == email || a.Id == id)
-                          select new UserPM()
-                          {
-                              Id = a.Id,
-                              Tenant = a.Tenant,
-                              Email = a.Contact.Email,
-                              IsDistributor = a.IsDistributor,
-                              IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
-                              IsShowContactDetailsInTheMobileApp = a.IsShowContactDetailsInTheMobileApp,
-                              Technology = a.Technology,
-                              DocumentFilingInbox = a.DocumentFilingInbox,
-                              ShowLogBoxToolTip = a.ShowLogBoxToolTip,
-                              ShowInboxToolTip = a.ShowInboxToolTip,
-                          }).FirstOrDefault();
-            }
-            return entity;
-        }
         //public UserPM UserCustomDataMappingAndValidatin(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.User MyEntity, int Tenant, string ComputingPartnerName = "")
         //{
         //    try
@@ -705,54 +640,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             UserLastLoginRepository rep = new UserLastLoginRepository(this.context);
             UserLastLoginQuery query = new UserLastLoginQuery(rep);
             return result;
-        }
-        public List<UserPM> GetUserPMsByUserIds(List<string> userIds, int tenant)
-        {
-            List<UserPM> users = (from a in context.Users.Include("Contact")
-                                  where userIds.Contains(a.Id) && a.Tenant == tenant
-                                  select new UserPM()
-                                  {
-                                      BranchId = a.BranchId,
-                                      BranchName = a.Branch != null ? a.Branch.EnglishName : "",
-                                      DepartmentName = a.Department != null ? a.Department.EnglishName : "",
-                                      DepartmentId = a.DepartmentId,
-                                      Id = a.Id,
-                                      Notes = a.Notes,
-                                      Tenant = a.Tenant,
-                                      Email = a.Contact.Email,
-                                      EnglishName = a.Contact.EnglishName,
-                                      InActive = a.Contact.InActive,
-                                      LocalName = a.Contact.LocalName,
-                                      DontShowLocalLabels = a.Contact.DontShowLocalLabels,
-                                      SearchFields = a.SearchFields,
-                                      Code = a.Code,
-                                      IsBranchRestricted = a.IsBranchRestricted,
-                                      IsSalesman = a.IsSalesman,
-                                      IsFreelancer = a.IsFreelancer,
-                                      FreelancerId = a.FreelancerId,
-                                      FreelancerName = a.Freelancer != null ? a.Freelancer.EnglishName : null,
-                                      BusinessUnitId = a.BusinessUnitId,
-                                      CreateDate = a.CreateDate,
-                                      ExpirationDate = a.ExpirationDate,
-                                      LicencedUser = a.LicencedUser,
-                                      IsProductRestricted = a.IsProductRestricted,
-                                      ProductTypeCode = a.ProductTypeCode,
-                                      ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
-                                      IsDistributor = a.IsDistributor,
-                                      DistributorCode = a.DistributorCode,
-                                      IsShowContactDetailsInTheMobileApp = a.IsShowContactDetailsInTheMobileApp,
-                                      PersonalId = a.PersonalId,
-                                      Technology = a.Technology,
-                                      SetAngularAsDefault = a.SetAngularAsDefault,
-                                      IsTwoFactorAuthenticationEnabled = a.IsTwoFactorAuthenticationEnabled,
-                                      DocumentFilingInbox = a.DocumentFilingInbox,
-                                      ShowLogBoxToolTip = a.ShowLogBoxToolTip,
-                                      ShowInboxToolTip = a.ShowInboxToolTip,
-                                      ShowLocalNameInLOV = a.ShowLocalNameInLOV,
-                                      LayoutDirection = a.LayoutDirection,
-                                      SignatureImageId = a.SignatureImageId,
-                                  }).ToList();
-            return users;
         }
         #endregion Get Users List<UserList>
 

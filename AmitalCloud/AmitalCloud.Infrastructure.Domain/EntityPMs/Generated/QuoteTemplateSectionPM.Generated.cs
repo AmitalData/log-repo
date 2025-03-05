@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class QuoteTemplateSectionPM : BaseEntityPM   {
    #region Constructors
    public QuoteTemplateSectionPM() : base() {} 
-   public QuoteTemplateSectionPM(QuoteTemplateSection entity) : base()
+   public QuoteTemplateSectionPM(POCO.QuoteTemplateSection entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -32,17 +34,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_description = entity.Description;
 		_isCancel = entity.IsCancel;
 		_quoteTemplateId = entity.QuoteTemplateId;
-		_sectionDocId = entity.SectionDocId;
-		_order = entity.Order;
+		_quotetemplate = entity.QuoteTemplate !=null ? new QuoteTemplatePM(entity.QuoteTemplate) : null;
+			_sectionDocId = entity.SectionDocId;
+		_sectiondoc = entity.SectionDoc !=null ? new DocumentPM(entity.SectionDoc) : null;
+			_order = entity.Order;
 		_quoteTemplateSectionTypeCode = entity.QuoteTemplateSectionTypeCode;
-		_ischangeBodySection = default;
-		_isSettingTypeCodeS = default;
-		_isSettingTypeCodeP = default;
-		_templatedata = default;
-		_quoteId = default;
-		_isQuoteEdited = default;
-		_isExcluded = default;
-   }
+		_quotetemplatesectiontype = entity.QuoteTemplateSectionType !=null ? new QuoteTemplateSectionTypePM(entity.QuoteTemplateSectionType) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -142,6 +140,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QuoteTemplatePM _quotetemplate;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplatePM QuoteTemplate 
+		{ 
+		get { return _quotetemplate; } 
+		set { _quotetemplate = value; }
+		}
 	  private string _sectionDocId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -158,6 +164,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentPM _sectiondoc;
+		[Include]
+        [DataMember]
+        public virtual DocumentPM SectionDoc 
+		{ 
+		get { return _sectiondoc; } 
+		set { _sectiondoc = value; }
+		}
 	  private int _order ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -190,118 +204,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _ischangeBodySection ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IschangeBodySection  
-	   {
-	     get { return _ischangeBodySection; }
-		 set
-		 {
-		   if(_ischangeBodySection != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IschangeBodySection",OldValue=_ischangeBodySection,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _ischangeBodySection=value;
-		   }
-		 }
-	   }
-	  private bool _isSettingTypeCodeS ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSettingTypeCodeS  
-	   {
-	     get { return _isSettingTypeCodeS; }
-		 set
-		 {
-		   if(_isSettingTypeCodeS != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSettingTypeCodeS",OldValue=_isSettingTypeCodeS,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSettingTypeCodeS=value;
-		   }
-		 }
-	   }
-	  private bool _isSettingTypeCodeP ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsSettingTypeCodeP  
-	   {
-	     get { return _isSettingTypeCodeP; }
-		 set
-		 {
-		   if(_isSettingTypeCodeP != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSettingTypeCodeP",OldValue=_isSettingTypeCodeP,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isSettingTypeCodeP=value;
-		   }
-		 }
-	   }
-	  private string _templatedata ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Templatedata  
-	   {
-	     get { return _templatedata; }
-		 set
-		 {
-		   if(_templatedata != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Templatedata",OldValue=_templatedata,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _templatedata=value;
-		   }
-		 }
-	   }
-	  private string _quoteId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string QuoteId  
-	   {
-	     get { return _quoteId; }
-		 set
-		 {
-		   if(_quoteId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuoteId",OldValue=_quoteId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _quoteId=value;
-		   }
-		 }
-	   }
-	  private bool _isQuoteEdited ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsQuoteEdited  
-	   {
-	     get { return _isQuoteEdited; }
-		 set
-		 {
-		   if(_isQuoteEdited != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsQuoteEdited",OldValue=_isQuoteEdited,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isQuoteEdited=value;
-		   }
-		 }
-	   }
-	  private bool _isExcluded ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsExcluded  
-	   {
-	     get { return _isExcluded; }
-		 set
-		 {
-		   if(_isExcluded != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExcluded",OldValue=_isExcluded,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isExcluded=value;
-		   }
-		 }
-	   }
+		private QuoteTemplateSectionTypePM _quotetemplatesectiontype;
+		[Include]
+        [DataMember]
+        public virtual QuoteTemplateSectionTypePM QuoteTemplateSectionType 
+		{ 
+		get { return _quotetemplatesectiontype; } 
+		set { _quotetemplatesectiontype = value; }
+		}
 	 }
 #endregion Properties
 }

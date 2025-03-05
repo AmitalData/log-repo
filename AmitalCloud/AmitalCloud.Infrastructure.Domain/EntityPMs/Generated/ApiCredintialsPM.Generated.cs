@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ApiCredintialsPM : BaseEntityPM   {
    #region Constructors
    public ApiCredintialsPM() : base() {} 
-   public ApiCredintialsPM(ApiCredintials entity) : base()
+   public ApiCredintialsPM(POCO.ApiCredintials entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -38,7 +40,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_updatedBy = entity.UpdatedBy;
 		_maskedPrimaryAccessKey = entity.maskedPrimaryAccessKey;
 		_maskedSeconderyAccessKey = entity.maskedSeconderyAccessKey;
-		_searchFields = default;
 		_tokenExpirationTime = entity.TokenExpirationTime;
    }
    #endregion Constructors
@@ -233,22 +234,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="maskedSeconderyAccessKey",OldValue=_maskedSeconderyAccessKey,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _maskedSeconderyAccessKey=value;
-		   }
-		 }
-	   }
-	  private string _searchFields ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SearchFields  
-	   {
-	     get { return _searchFields; }
-		 set
-		 {
-		   if(_searchFields != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _searchFields=value;
 		   }
 		 }
 	   }

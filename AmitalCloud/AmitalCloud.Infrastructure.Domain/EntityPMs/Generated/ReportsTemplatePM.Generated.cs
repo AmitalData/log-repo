@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ReportsTemplatePM : BaseEntityPM   {
    #region Constructors
    public ReportsTemplatePM() : base() {} 
-   public ReportsTemplatePM(ReportsTemplate entity) : base()
+   public ReportsTemplatePM(POCO.ReportsTemplate entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -37,15 +39,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_createDate = entity.CreateDate;
 		_updateDate = entity.UpdateDate;
 		_currentVersion = entity.CurrentVersion;
-		_updatedByUserName = default;
-		_isDefault = default;
-		_templateData = default;
 		_templateType = entity.TemplateType;
 		_from = entity.From;
 		_replyTo = entity.ReplyTo;
 		_cC = entity.CC;
 		_subject = entity.Subject;
-		_updateByUserName = default;
 		_objectTableId = entity.ObjectTableId;
 		_entityId = entity.EntityId;
    }
@@ -228,54 +226,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
-		   }
-		 }
-	   }
-	  private bool _isDefault ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsDefault  
-	   {
-	     get { return _isDefault; }
-		 set
-		 {
-		   if(_isDefault != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDefault",OldValue=_isDefault,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isDefault=value;
-		   }
-		 }
-	   }
-	  private string _templateData ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TemplateData  
-	   {
-	     get { return _templateData; }
-		 set
-		 {
-		   if(_templateData != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TemplateData",OldValue=_templateData,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _templateData=value;
-		   }
-		 }
-	   }
 	  private string _templateType ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -353,22 +303,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Subject",OldValue=_subject,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _subject=value;
-		   }
-		 }
-	   }
-	  private string _updateByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdateByUserName  
-	   {
-	     get { return _updateByUserName; }
-		 set
-		 {
-		   if(_updateByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateByUserName",OldValue=_updateByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updateByUserName=value;
 		   }
 		 }
 	   }

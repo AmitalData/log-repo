@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,22 +26,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TextCodePM : BaseEntityPM   {
    #region Constructors
    public TextCodePM() : base() {} 
-   public TextCodePM(TextCode entity) : base()
+   public TextCodePM(POCO.TextCode entity) : base()
    {
 		_code = entity.Code;
 		_objectTableId = entity.ObjectTableId;
 		_textCodeTypeCode = entity.TextCodeTypeCode;
-		_id = entity.Id;
+		_textcodetype = entity.TextCodeType !=null ? new TextCodeTypePM(entity.TextCodeType) : null;
+			_id = entity.Id;
 		_tenant = entity.Tenant;
 		_isSpellChecked = entity.IsSpellChecked;
 		_spellCheckDate = entity.SpellCheckDate;
 		_spellCheckedByUserId = entity.SpellCheckedByUserId;
-		_inActive = entity.InActive;
+		_spellcheckedbyuser = entity.SpellCheckedByUser !=null ? new UserPM(entity.SpellCheckedByUser) : null;
+			_inActive = entity.InActive;
 		_defaultText = entity.DefaultText;
 		_defaultTextPlural = entity.DefaultTextPlural;
 		_localDefaultText = entity.LocalDefaultText;
-		_objectTableName = default;
-		_spellCheckedByUserName = default;
    }
    #endregion Constructors
    #region Properties
@@ -91,6 +93,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TextCodeTypePM _textcodetype;
+		[Include]
+        [DataMember]
+        public virtual TextCodeTypePM TextCodeType 
+		{ 
+		get { return _textcodetype; } 
+		set { _textcodetype = value; }
+		}
 	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -172,6 +182,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _spellcheckedbyuser;
+		[Include]
+        [DataMember]
+        public virtual UserPM SpellCheckedByUser 
+		{ 
+		get { return _spellcheckedbyuser; } 
+		set { _spellcheckedbyuser = value; }
+		}
 	  private bool _inActive ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -233,38 +251,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalDefaultText",OldValue=_localDefaultText,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _localDefaultText=value;
-		   }
-		 }
-	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
-		   }
-		 }
-	   }
-	  private string _spellCheckedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SpellCheckedByUserName  
-	   {
-	     get { return _spellCheckedByUserName; }
-		 set
-		 {
-		   if(_spellCheckedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SpellCheckedByUserName",OldValue=_spellCheckedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _spellCheckedByUserName=value;
 		   }
 		 }
 	   }

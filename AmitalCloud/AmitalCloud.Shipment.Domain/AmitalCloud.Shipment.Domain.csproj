@@ -370,6 +370,11 @@
     <Compile Include="EntityPMs\Generated\ShipmentCustomsTransmissionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ShipmentDigitalFieldPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ShipmentLevelPM.Generated.cs" />
+    <Compile Include="EntityPMs\Manual\AWBStatusPM.cs" />
+    <Compile Include="EntityPMs\Manual\FHLStatusPM.cs" />
+    <Compile Include="EntityPMs\Manual\INTTRASIStatusPM.cs" />
+    <Compile Include="EntityPMs\Manual\NextLegPM.cs" />
+    <Compile Include="EntityPMs\Manual\ShipmentMasterDataPM.cs" />
     <Compile Include="EntityPMs\Generated\ShipmentOrderPackagePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ShipmentPackageHarmonizePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ShipmentPackageItemPM.Generated.cs" />
@@ -389,6 +394,10 @@
     <Compile Include="EntityPMs\Generated\ShipmentUnassignedFieldPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SpecialServicesTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Manual\CommodityPackagePM.cs" />
+    <Compile Include="EntityPMs\Manual\PickUpDeliveryTypePM.cs" />
+    <Compile Include="EntityPMs\Manual\ShipmentPayableAmountTypePM.cs" />
+    <Compile Include="EntityPMs\Manual\ShipmentPayableLineStatusPM.cs" />
+    <Compile Include="EntityPMs\Manual\ShipmentReceivableLineStatusPM.cs" />
     <Compile Include="EntityPMs\ShipmentAPInvoicePM.cs" />
     <Compile Include="EntityPMs\ShipmentARInvoiceMoneyPM.cs" />
     <Compile Include="EntityPMs\ShipmentARInvoicePM.cs" />

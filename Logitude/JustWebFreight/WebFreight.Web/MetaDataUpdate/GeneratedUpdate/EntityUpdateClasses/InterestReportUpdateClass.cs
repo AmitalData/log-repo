@@ -24,7 +24,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "11ce3dd805218bb08a07fa4d8804c55c";
+		public const string HashString = "c010bd42f587d5cc47c66dc15e30d0e5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4020,19 +4020,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode InterestReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InterestReport", DefaultText = @"All Reports",LocalDefaultText = "כל הדוחות", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature InterestReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InterestReport", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InterestReport", NameTextCodeDefaultText = "Interest Report", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
+			   Feature InterestReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InterestReport", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InterestReport", NameTextCodeDefaultText = "Interest Report", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
  
 
 			   TextCode InterestReportTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.DraftReports", DefaultText = @"Draft Reports",LocalDefaultText = "דוחות טיוטה", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature InterestReportFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.DraftReports", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.DraftReports", NameTextCodeDefaultText = "DraftReports", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
+			   Feature InterestReportFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.DraftReports", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.DraftReports", NameTextCodeDefaultText = "DraftReports", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
  
 
 			   TextCode InterestReportTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.InvoicedReports", DefaultText = @"Invoiced Reports",LocalDefaultText = "דוחות עם חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature InterestReportFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InvoicedReports", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InvoicedReports", NameTextCodeDefaultText = "InvoicedReports", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
+			   Feature InterestReportFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.InvoicedReports", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.InvoicedReports", NameTextCodeDefaultText = "InvoicedReports", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
  
 
 			   TextCode InterestReportTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.Q.ClosedWithoutInvoice", DefaultText = @"Closed Without Invoice",LocalDefaultText = "דוחות שנסגרו ללא חשבונית", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature InterestReportFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.ClosedWithoutInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.ClosedWithoutInvoice", NameTextCodeDefaultText = "ClosedWithoutInvoice", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
+			   Feature InterestReportFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestReport.Q.ClosedWithoutInvoice", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestReportFeatures.ClosedWithoutInvoice", NameTextCodeDefaultText = "ClosedWithoutInvoice", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InterestReportObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    

@@ -3,14 +3,14 @@ import { AfterViewInit, Component, HostListener, Input, OnInit, SimpleChanges } 
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
 import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
-import { NgFor, NgForOf, NgIf, NgStyle } from '@angular/common';
+import { CommonModule, NgFor, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
 import { mockData } from '../../../../../mock_data';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { BehaviorSubject, filter } from 'rxjs';
 import { SearchBy, SearchService } from '../page-top/service/top-page.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { FilterPopupService, FiltersSearch } from '../filter-popup/service/filter-popup.service';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
@@ -21,10 +21,12 @@ import { LoginService } from '../../../core/Infrastructure/Services/LoginService
 import { Router } from '@angular/router';
 import { RomanToolService } from '../../services/roman-tool.service';
 import { AddCommentService } from '../add-comment/service/add-comment.service';
+import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
+import { PreferencesService } from '../preference-menu/PreferencesService';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle, PreferenceMenuComponent],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
@@ -55,15 +57,17 @@ export class MainDisplayComponent implements OnInit {
 	private _filters;
 	data: CB_CustomsItemComputedDataList[] = [];
 	fullData: CB_CustomsItemComputedDataList[] = [];
+	originalDataByIsDiscountCodes: CB_CustomsItemComputedDataList[] = [];
+
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService,
-		private addCommentService: AddCommentService, private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService
-	) {
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private preferencesService: PreferencesService,
+		private filterPopupService: FilterPopupService, private addCommentService: AddCommentService, private loginService: LoginService,
+		private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService) {
 		this.screenWidth = window.innerWidth;
 	}
 	searchState: string = searchState.יבוא;
@@ -72,10 +76,16 @@ export class MainDisplayComponent implements OnInit {
 	ngOnInit() {
 		this.headerService.searchState$.subscribe((data) => {
 			if (!searchState[data]) return;
-			this.searchState = searchState[data];
-			this.InitData();
-			this.ListenToItemsSearched();
+
+			if (this.searchState != searchState[data]) {
+				this.searchState = searchState[data];
+				this.InitData();
+			}
+
+			// this.InitData();
 		});
+		this.ListenToItemsSearched();
+		this.getByIsDiscountCodes();
 	}
 
 	InitData() {
@@ -101,6 +111,7 @@ export class MainDisplayComponent implements OnInit {
 				if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
 					this.data = [];
 					this.fullData = [];
+					this.originalDataByIsDiscountCodes = [];
 					this.isLoadingMode.next(false);
 					this.isFeaturePermessionCB.next(true);
 				}
@@ -111,7 +122,15 @@ export class MainDisplayComponent implements OnInit {
 			});
 		});
 	}
+	getByIsDiscountCodes() {
+		this.headerService.IsDiscountCodes.subscribe((value) => {
+			this.IsDiscountCodes = value;
+			if (this.searchService.GetSearchText()) this.getSearchDataByFilter(this.filterPopupService.getFilters());
+			else this.InitData();
+		});
+	}
 
+	IsDiscountCodes: boolean = false;
 	GetAllCustomsBookMainView() {
 		this.isLoadingMode.next(true);
 		let filters: Filters = {
@@ -119,16 +138,27 @@ export class MainDisplayComponent implements OnInit {
 			Tenant: SessionInfo.LoggedUserTenant,
 			SearchFields: ''
 		};
+
+		filters.IsDiscountCodes = this.headerService.IsDiscountCodes?.getValue();
+
 		this.getRulesData();
 		this.getCommentsData(SessionInfo.LoggedUserTenant);
+
+
 
 		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
 			const result: CB_CustomsItemComputedDataList[] = data.body;
 			if (!result) return; // TODO: add error message
 			this.countSearchResult = 0;
 			this.handleClearResults();
-			this.fullData = this.orderedData(result);
-			this.data = this.fullData;
+
+
+			this.data = this.orderedData(result);
+			if (this.data.length > 0) {
+				if (this.IsDiscountCodes) this.originalDataByIsDiscountCodes = this.data;
+				else this.fullData = this.data;
+			}
+
 			this.searchMode = TableTopState.ViewAll;
 			this.isLoadingMode.next(false);
 			this.isFeaturePermessionCB.next(false);
@@ -166,7 +196,6 @@ export class MainDisplayComponent implements OnInit {
 		this.searchService.searchText$.subscribe((searchText) => {
 			if (searchText === "") this.handleClearResults();
 		});
-
 
 		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
@@ -292,6 +321,7 @@ export class MainDisplayComponent implements OnInit {
 	updateShowDetailsClick() {
 		this.showDetails = !this.showDetails;
 		this.showDetailsOpen.next(this.showDetails);
+		this.preferencesService.showSettingsClick(false);
 		if (!this.showDetails) {
 			this.showCommentsIsOpen.next(false);
 			this.showRulesIsOpen.next(false);
@@ -360,6 +390,8 @@ export class MainDisplayComponent implements OnInit {
 			PageSize: 0,
 			Tenant: SessionInfo.LoggedUserTenant
 		};
+		if (this.IsDiscountCodes)
+			filters.IsDiscountCodes = this.IsDiscountCodes;
 
 		this.selectSearchBy = this.searchService.selectSearchBy;
 
@@ -435,8 +467,11 @@ export class MainDisplayComponent implements OnInit {
 		this.searchValue = "";
 		this.countSearchResult = 0;
 		this.filterPopupService.toggleFilterPopup(false);
-		this.data = this.fullData;
-		this.toggleVisibility(false, this.data)
+		// this.data = this.fullData;
+		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;
+		if(this.IsDiscountCodes && this.originalDataByIsDiscountCodes?.length == 0) this.GetAllCustomsBookMainView();
+		this.toggleVisibility(false, this.data);
+		this.preferencesService.showSettingsClick(false);
 	}
 
 	public orderedDataForSearch = (data) => {
@@ -698,3 +733,4 @@ export class ClassifGuidanceAttached {
 	fullClassification: string;
 	attachedCustomsItemID: number;
 }
+

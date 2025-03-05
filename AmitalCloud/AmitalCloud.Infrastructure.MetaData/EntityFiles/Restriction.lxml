@@ -38,7 +38,7 @@
   Code="&quot;e6c6&quot;"
   Name="&quot;Restriction&quot;"
   GenerateDomainService="false"
-  NoViewController="false"
+  NoViewController="true"
   NoPMController="true"
   NoTS="false"
   NoDefaultFeatures="true"

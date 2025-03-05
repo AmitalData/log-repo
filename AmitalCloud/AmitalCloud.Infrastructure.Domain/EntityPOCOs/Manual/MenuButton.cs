@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-    public class MenuButton
+    public partial class MenuButton
     {
         [Key]
         public string Id { get; set; }

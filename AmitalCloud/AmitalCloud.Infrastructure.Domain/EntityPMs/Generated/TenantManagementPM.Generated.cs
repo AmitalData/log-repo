@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TenantManagementPM : BaseEntityPM   {
    #region Constructors
    public TenantManagementPM() : base() {} 
-   public TenantManagementPM(TenantManagement entity) : base()
+   public TenantManagementPM(POCO.TenantManagement entity) : base()
    {
 		_enableBranding = entity.EnableBranding;
 		_trialStartDate = entity.TrialStartDate;
@@ -34,9 +36,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_numberOfUsers = entity.NumberOfUsers;
 		_searchFields = entity.SearchFields;
 		_countryName = entity.CountryName;
-		_timeZone = default;
-		_isActive = default;
-		_globalDBId = default;
 		_tTY = entity.TTY;
 		_freeUsers = entity.FreeUsers;
 		_bluesnapContractQTY = entity.BluesnapContractQTY;
@@ -111,32 +110,33 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_packageCode = entity.PackageCode;
 		_temporalPackageCode = entity.TemporalPackageCode;
 		_recurringPeriodCode = entity.RecurringPeriodCode;
-		_paymentMethodCode = entity.PaymentMethodCode;
-		_paymentChannelCode = entity.PaymentChannelCode;
-		_paymentCurrencyCode = entity.PaymentCurrencyCode;
-		_distributorCode = entity.DistributorCode;
+		_recurringperiod = entity.RecurringPeriod !=null ? new RecurringPeriodPM(entity.RecurringPeriod) : null;
+			_paymentMethodCode = entity.PaymentMethodCode;
+		_paymentmethod = entity.PaymentMethod !=null ? new PaymentMethodPM(entity.PaymentMethod) : null;
+			_paymentChannelCode = entity.PaymentChannelCode;
+		_paymentchannel = entity.PaymentChannel !=null ? new PaymentChannelPM(entity.PaymentChannel) : null;
+			_paymentCurrencyCode = entity.PaymentCurrencyCode;
+		_paymentcurrency = entity.PaymentCurrency !=null ? new PaymentCurrencyPM(entity.PaymentCurrency) : null;
+			_distributorCode = entity.DistributorCode;
 		_technology = entity.Technology;
 		_bluesnapCRMContractId = entity.BluesnapCRMContractId;
-		_bluesnapEAWBContractId = entity.BluesnapEAWBContractId;
-		_bluesnapEAWBSContractId = entity.BluesnapEAWBSContractId;
-		_bluesnapOneTimeContract = entity.BluesnapOneTimeContract;
+		_bluesnapcontractcrm = entity.BluesnapContractCRM !=null ? new BluesnapContractPM(entity.BluesnapContractCRM) : null;
+			_bluesnapEAWBContractId = entity.BluesnapEAWBContractId;
+		_bluesnapcontracteawb = entity.BluesnapContractEAWB !=null ? new BluesnapContractPM(entity.BluesnapContractEAWB) : null;
+			_bluesnapEAWBSContractId = entity.BluesnapEAWBSContractId;
+		_bluesnapcontracteawbs = entity.BluesnapContractEAWBS !=null ? new BluesnapContractPM(entity.BluesnapContractEAWBS) : null;
+			_bluesnapOneTimeContract = entity.BluesnapOneTimeContract;
 		_bluesnapContractId = entity.BluesnapContractId;
-		_aWBMessagesCCSTypeCode = entity.AWBMessagesCCSTypeCode;
-		_tenantTypeCode = entity.TenantTypeCode;
-		_temporalPackageName = default;
-		_doBlocking = default;
-		_trailDaysLeft = default;
-		_paidDaysLeft = default;
-		_suspendDaysLeft = default;
-		packagesCodes_PK = default;
-		packagesCodes_BS = default;
-		_globalTenant = default;
-		tenantManagementLicenses = default;
-		addOns = default;
+		_bluesnapcontract = entity.BluesnapContract !=null ? new BluesnapContractPM(entity.BluesnapContract) : null;
+			_aWBMessagesCCSTypeCode = entity.AWBMessagesCCSTypeCode;
+		_awbmessagesccstype = entity.AWBMessagesCCSType !=null ? new AWBMessagesCCSTypePM(entity.AWBMessagesCCSType) : null;
+			_tenantTypeCode = entity.TenantTypeCode;
+		_tenanttype = entity.TenantType !=null ? new TenantTypePM(entity.TenantType) : null;
+		//	packagesCodes_PK = entity.PackagesCodes_PK != null ? entity.PackagesCodes_PK.Select(a=>new stringPM(a)).ToList() : null;
+		//packagesCodes_BS = entity.PackagesCodes_BS != null ? entity.PackagesCodes_BS.Select(a=>new stringPM(a)).ToList() : null;
 		_hideSharedlogistics = entity.HideSharedlogistics;
 		_contactEmail = entity.ContactEmail;
 		_customerURL = entity.CustomerURL;
-		_updateByUserId = default;
 		_silverlightEndDate = entity.SilverlightEndDate;
 		_agentSharedLogisticsStatisticsLastDate = entity.AgentSharedLogisticsStatisticsLastDate;
 		_agentSharedLogisticsStatisticsLastWeek = entity.AgentSharedLogisticsStatisticsLastWeek;
@@ -152,18 +152,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_requestedAirlines = entity.RequestedAirlines;
 		_registeredAirlines = entity.RegisteredAirlines;
 		_pendingAirlines = entity.PendingAirlines;
-		_privateLabelId = default;
 		_isParentTenant = entity.IsParentTenant;
 		_parentTenantId = entity.ParentTenantId;
 		_changeHeaderColor = entity.ChangeHeaderColor;
-		_documentShareAsDefault = default;
 		_isINTTRAStockPrepaid = entity.IsINTTRAStockPrepaid;
 		_packageCodeSearchField = entity.PackageCodeSearchField;
 		_isINTTRAOnlyDemo = entity.IsINTTRAOnlyDemo;
-		_autoArchiveOnInvoice = default;
 		_bluesnapInttraStockContractId = entity.BluesnapInttraStockContractId;
-		_bluesnapInttraStockContractQTY = entity.BluesnapInttraStockContractQTY;
-		_isTestTenant = default;
+		_bluesnapinttrastockcontract = entity.BluesnapInttraStockContract !=null ? new BluesnapContractPM(entity.BluesnapInttraStockContract) : null;
+			_bluesnapInttraStockContractQTY = entity.BluesnapInttraStockContractQTY;
 		_mainAdditionalPackageApplied = entity.MainAdditionalPackageApplied;
 		_totalPrice = entity.TotalPrice;
 		_supportDomain = entity.SupportDomain;
@@ -189,16 +186,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_lastWeekCreatedTariffs = entity.LastWeekCreatedTariffs;
 		_lastMonthCreatedTariffs = entity.LastMonthCreatedTariffs;
 		_scheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport;
-		_isHybrid = default;
 		_whatsAppMessagingPhoneNumber = entity.WhatsAppMessagingPhoneNumber;
 		_activatedforDeclarationApprove = entity.ActivatedforDeclarationApprove;
 		_declarationMessage = entity.DeclarationMessage;
 		_permissionBuildMonths = entity.PermissionBuildMonths;
 		_cargoTokenTimeout = entity.CargoTokenTimeout;
-		_privateLabelName = default;
 		_activatePrivateSite = entity.ActivatePrivateSite;
 		_enableExportToExcel = entity.EnableExportToExcel;
-		_autoArchiveOnPODExport = default;
 		_tertiaryColor = entity.TertiaryColor;
 		_isContainerTrackingPrepaid = entity.IsContainerTrackingPrepaid;
 		_showMoneyOrder = entity.ShowMoneyOrder;
@@ -216,10 +210,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_cargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents;
 		_logoURL = entity.LogoURL;
 		_serviceAgreementURL = entity.ServiceAgreementURL;
-		_ecommerceSupportEmail = default;
 		_amitalApiToken = entity.AmitalApiToken;
 		_headerColor = entity.HeaderColor;
-		_ecommerceTenant = default;
 		_exportLoginCredintial = entity.ExportLoginCredintial;
 		_exportTenant = entity.ExportTenant;
 		_tranzilaPaymentWithBit = entity.TranzilaPaymentWithBit;
@@ -352,54 +344,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryName",OldValue=_countryName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _countryName=value;
-		   }
-		 }
-	   }
-	  private string _timeZone ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TimeZone  
-	   {
-	     get { return _timeZone; }
-		 set
-		 {
-		   if(_timeZone != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TimeZone",OldValue=_timeZone,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _timeZone=value;
-		   }
-		 }
-	   }
-	  private bool _isActive ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsActive  
-	   {
-	     get { return _isActive; }
-		 set
-		 {
-		   if(_isActive != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsActive",OldValue=_isActive,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isActive=value;
-		   }
-		 }
-	   }
-	  private string _globalDBId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string GlobalDBId  
-	   {
-	     get { return _globalDBId; }
-		 set
-		 {
-		   if(_globalDBId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GlobalDBId",OldValue=_globalDBId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _globalDBId=value;
 		   }
 		 }
 	   }
@@ -1588,6 +1532,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private RecurringPeriodPM _recurringperiod;
+		[Include]
+        [DataMember]
+        public virtual RecurringPeriodPM RecurringPeriod 
+		{ 
+		get { return _recurringperiod; } 
+		set { _recurringperiod = value; }
+		}
 	  private string _paymentMethodCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1604,6 +1556,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PaymentMethodPM _paymentmethod;
+		[Include]
+        [DataMember]
+        public virtual PaymentMethodPM PaymentMethod 
+		{ 
+		get { return _paymentmethod; } 
+		set { _paymentmethod = value; }
+		}
 	  private string _paymentChannelCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1620,6 +1580,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PaymentChannelPM _paymentchannel;
+		[Include]
+        [DataMember]
+        public virtual PaymentChannelPM PaymentChannel 
+		{ 
+		get { return _paymentchannel; } 
+		set { _paymentchannel = value; }
+		}
 	  private string _paymentCurrencyCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1636,6 +1604,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PaymentCurrencyPM _paymentcurrency;
+		[Include]
+        [DataMember]
+        public virtual PaymentCurrencyPM PaymentCurrency 
+		{ 
+		get { return _paymentcurrency; } 
+		set { _paymentcurrency = value; }
+		}
 	  private string _distributorCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1684,6 +1660,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BluesnapContractPM _bluesnapcontractcrm;
+		[Include]
+        [DataMember]
+        public virtual BluesnapContractPM BluesnapContractCRM 
+		{ 
+		get { return _bluesnapcontractcrm; } 
+		set { _bluesnapcontractcrm = value; }
+		}
 	  private string _bluesnapEAWBContractId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1700,6 +1684,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BluesnapContractPM _bluesnapcontracteawb;
+		[Include]
+        [DataMember]
+        public virtual BluesnapContractPM BluesnapContractEAWB 
+		{ 
+		get { return _bluesnapcontracteawb; } 
+		set { _bluesnapcontracteawb = value; }
+		}
 	  private string _bluesnapEAWBSContractId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1716,6 +1708,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BluesnapContractPM _bluesnapcontracteawbs;
+		[Include]
+        [DataMember]
+        public virtual BluesnapContractPM BluesnapContractEAWBS 
+		{ 
+		get { return _bluesnapcontracteawbs; } 
+		set { _bluesnapcontracteawbs = value; }
+		}
 	  private string _bluesnapOneTimeContract ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1748,6 +1748,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BluesnapContractPM _bluesnapcontract;
+		[Include]
+        [DataMember]
+        public virtual BluesnapContractPM BluesnapContract 
+		{ 
+		get { return _bluesnapcontract; } 
+		set { _bluesnapcontract = value; }
+		}
 	  private string _aWBMessagesCCSTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1764,6 +1772,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private AWBMessagesCCSTypePM _awbmessagesccstype;
+		[Include]
+        [DataMember]
+        public virtual AWBMessagesCCSTypePM AWBMessagesCCSType 
+		{ 
+		get { return _awbmessagesccstype; } 
+		set { _awbmessagesccstype = value; }
+		}
 	  private string _tenantTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1780,86 +1796,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _temporalPackageName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string TemporalPackageName  
-	   {
-	     get { return _temporalPackageName; }
-		 set
-		 {
-		   if(_temporalPackageName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TemporalPackageName",OldValue=_temporalPackageName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _temporalPackageName=value;
-		   }
-		 }
-	   }
-	  private bool _doBlocking ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool DoBlocking  
-	   {
-	     get { return _doBlocking; }
-		 set
-		 {
-		   if(_doBlocking != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DoBlocking",OldValue=_doBlocking,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _doBlocking=value;
-		   }
-		 }
-	   }
-	  private int _trailDaysLeft ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int TrailDaysLeft  
-	   {
-	     get { return _trailDaysLeft; }
-		 set
-		 {
-		   if(_trailDaysLeft != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TrailDaysLeft",OldValue=_trailDaysLeft,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _trailDaysLeft=value;
-		   }
-		 }
-	   }
-	  private int _paidDaysLeft ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int PaidDaysLeft  
-	   {
-	     get { return _paidDaysLeft; }
-		 set
-		 {
-		   if(_paidDaysLeft != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaidDaysLeft",OldValue=_paidDaysLeft,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _paidDaysLeft=value;
-		   }
-		 }
-	   }
-	  private int _suspendDaysLeft ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int SuspendDaysLeft  
-	   {
-	     get { return _suspendDaysLeft; }
-		 set
-		 {
-		   if(_suspendDaysLeft != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SuspendDaysLeft",OldValue=_suspendDaysLeft,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _suspendDaysLeft=value;
-		   }
-		 }
-	   }
+		private TenantTypePM _tenanttype;
+		[Include]
+        [DataMember]
+        public virtual TenantTypePM TenantType 
+		{ 
+		get { return _tenanttype; } 
+		set { _tenanttype = value; }
+		}
 	   private List<string> packagesCodes_PK;
 	 
 	   [DataMember]
@@ -1916,22 +1860,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedPackagesCodes_BS = value; }
 	    }
-	  private string _globalTenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string GlobalTenant  
-	   {
-	     get { return _globalTenant; }
-		 set
-		 {
-		   if(_globalTenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GlobalTenant",OldValue=_globalTenant,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _globalTenant=value;
-		   }
-		 }
-	   }
 	   private List<TenantManagementLicensePM> tenantManagementLicenses;
 	    
        [Composition]
@@ -2043,22 +1971,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerURL",OldValue=_customerURL,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _customerURL=value;
-		   }
-		 }
-	   }
-	  private string _updateByUserId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdateByUserId  
-	   {
-	     get { return _updateByUserId; }
-		 set
-		 {
-		   if(_updateByUserId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateByUserId",OldValue=_updateByUserId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updateByUserId=value;
 		   }
 		 }
 	   }
@@ -2302,22 +2214,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _privateLabelId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PrivateLabelId  
-	   {
-	     get { return _privateLabelId; }
-		 set
-		 {
-		   if(_privateLabelId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrivateLabelId",OldValue=_privateLabelId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _privateLabelId=value;
-		   }
-		 }
-	   }
 	  private bool _isParentTenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2363,22 +2259,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeHeaderColor",OldValue=_changeHeaderColor,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _changeHeaderColor=value;
-		   }
-		 }
-	   }
-	  private bool _documentShareAsDefault ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool DocumentShareAsDefault  
-	   {
-	     get { return _documentShareAsDefault; }
-		 set
-		 {
-		   if(_documentShareAsDefault != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentShareAsDefault",OldValue=_documentShareAsDefault,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _documentShareAsDefault=value;
 		   }
 		 }
 	   }
@@ -2430,22 +2310,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _autoArchiveOnInvoice ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool AutoArchiveOnInvoice  
-	   {
-	     get { return _autoArchiveOnInvoice; }
-		 set
-		 {
-		   if(_autoArchiveOnInvoice != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutoArchiveOnInvoice",OldValue=_autoArchiveOnInvoice,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _autoArchiveOnInvoice=value;
-		   }
-		 }
-	   }
 	  private string _bluesnapInttraStockContractId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2462,6 +2326,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private BluesnapContractPM _bluesnapinttrastockcontract;
+		[Include]
+        [DataMember]
+        public virtual BluesnapContractPM BluesnapInttraStockContract 
+		{ 
+		get { return _bluesnapinttrastockcontract; } 
+		set { _bluesnapinttrastockcontract = value; }
+		}
 	  private int? _bluesnapInttraStockContractQTY ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2475,22 +2347,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BluesnapInttraStockContractQTY",OldValue=_bluesnapInttraStockContractQTY,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _bluesnapInttraStockContractQTY=value;
-		   }
-		 }
-	   }
-	  private bool _isTestTenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsTestTenant  
-	   {
-	     get { return _isTestTenant; }
-		 set
-		 {
-		   if(_isTestTenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsTestTenant",OldValue=_isTestTenant,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isTestTenant=value;
 		   }
 		 }
 	   }
@@ -2894,22 +2750,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isHybrid ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsHybrid  
-	   {
-	     get { return _isHybrid; }
-		 set
-		 {
-		   if(_isHybrid != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isHybrid=value;
-		   }
-		 }
-	   }
 	  private string _whatsAppMessagingPhoneNumber ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2990,22 +2830,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _privateLabelName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PrivateLabelName  
-	   {
-	     get { return _privateLabelName; }
-		 set
-		 {
-		   if(_privateLabelName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrivateLabelName",OldValue=_privateLabelName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _privateLabelName=value;
-		   }
-		 }
-	   }
 	  private bool _activatePrivateSite ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3035,22 +2859,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnableExportToExcel",OldValue=_enableExportToExcel,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _enableExportToExcel=value;
-		   }
-		 }
-	   }
-	  private bool _autoArchiveOnPODExport ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool AutoArchiveOnPODExport  
-	   {
-	     get { return _autoArchiveOnPODExport; }
-		 set
-		 {
-		   if(_autoArchiveOnPODExport != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutoArchiveOnPODExport",OldValue=_autoArchiveOnPODExport,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _autoArchiveOnPODExport=value;
 		   }
 		 }
 	   }
@@ -3326,22 +3134,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _ecommerceSupportEmail ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EcommerceSupportEmail  
-	   {
-	     get { return _ecommerceSupportEmail; }
-		 set
-		 {
-		   if(_ecommerceSupportEmail != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EcommerceSupportEmail",OldValue=_ecommerceSupportEmail,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _ecommerceSupportEmail=value;
-		   }
-		 }
-	   }
 	  private string _amitalApiToken ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3371,22 +3163,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HeaderColor",OldValue=_headerColor,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _headerColor=value;
-		   }
-		 }
-	   }
-	  private bool _ecommerceTenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool EcommerceTenant  
-	   {
-	     get { return _ecommerceTenant; }
-		 set
-		 {
-		   if(_ecommerceTenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EcommerceTenant",OldValue=_ecommerceTenant,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _ecommerceTenant=value;
 		   }
 		 }
 	   }

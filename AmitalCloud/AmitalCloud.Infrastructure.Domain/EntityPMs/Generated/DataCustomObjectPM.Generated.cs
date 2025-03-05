@@ -6,6 +6,7 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.ServiceModel.DomainServices.Server;
@@ -13,8 +14,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,7 +27,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class DataCustomObjectPM :  ChildEntitiesCustomFieldPM   {
    #region Constructors
    public DataCustomObjectPM() : base() {} 
-   public DataCustomObjectPM(DataCustomObject entity) : base()
+   public DataCustomObjectPM(POCO.DataCustomObject entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -86,9 +88,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_updateDate = entity.UpdateDate;
 		_isCancelled = entity.IsCancelled;
 		_statusId = entity.StatusId;
-		_searchFields = entity.SearchFields;
-		_createdByUserName = default;
-		_updatedByUserName = default;
+		_entitystatus = entity.EntityStatus !=null ? new EntityStatusPM(entity.EntityStatus) : null;
+			_searchFields = entity.SearchFields;
    }
    #endregion Constructors
    #region Properties
@@ -1037,6 +1038,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private EntityStatusPM _entitystatus;
+		[Include]
+        [DataMember]
+        public virtual EntityStatusPM EntityStatus 
+		{ 
+		get { return _entitystatus; } 
+		set { _entitystatus = value; }
+		}
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1050,38 +1059,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
-		   }
-		 }
-	   }
-	  private string _createdByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CreatedByUserName  
-	   {
-	     get { return _createdByUserName; }
-		 set
-		 {
-		   if(_createdByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _createdByUserName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
 		   }
 		 }
 	   }

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class CustomerTenantAccessPM : BaseEntityPM   {
    #region Constructors
    public CustomerTenantAccessPM() : base() {} 
-   public CustomerTenantAccessPM(CustomerTenantAccess entity) : base()
+   public CustomerTenantAccessPM(POCO.CustomerTenantAccess entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -37,16 +39,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_contactPhone = entity.ContactPhone;
 		_requestDateTime = entity.RequestDateTime;
 		_status = entity.Status;
-		_statusName = default;
-		_updatedByUserId = entity.UpdatedByUserId;
+		_statuscode = entity.StatusCode !=null ? new CustomerTenantAccessStatusTypePM(entity.StatusCode) : null;
+			_updatedByUserId = entity.UpdatedByUserId;
 		_lastUpdateDate = entity.LastUpdateDate;
 		_searchFields = entity.SearchFields;
 		_lastShipmentDate = entity.LastShipmentDate;
-		_updatedByUserName = default;
-		customerTenantAccessCards = default;
 		_stockTypeCode = entity.StockTypeCode;
 		_isPrivateLabelCustomer = entity.IsPrivateLabelCustomer;
-		_customCompanyName = default;
    }
    #endregion Constructors
    #region Properties
@@ -227,22 +226,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _statusName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string StatusName  
-	   {
-	     get { return _statusName; }
-		 set
-		 {
-		   if(_statusName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _statusName=value;
-		   }
-		 }
-	   }
+		private CustomerTenantAccessStatusTypePM _statuscode;
+		[Include]
+        [DataMember]
+        public virtual CustomerTenantAccessStatusTypePM StatusCode 
+		{ 
+		get { return _statuscode; } 
+		set { _statuscode = value; }
+		}
 	  private string _updatedByUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -304,22 +295,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastShipmentDate",OldValue=_lastShipmentDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _lastShipmentDate=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
 		   }
 		 }
 	   }
@@ -385,22 +360,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPrivateLabelCustomer",OldValue=_isPrivateLabelCustomer,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isPrivateLabelCustomer=value;
-		   }
-		 }
-	   }
-	  private string _customCompanyName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CustomCompanyName  
-	   {
-	     get { return _customCompanyName; }
-		 set
-		 {
-		   if(_customCompanyName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomCompanyName",OldValue=_customCompanyName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _customCompanyName=value;
 		   }
 		 }
 	   }

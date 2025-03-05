@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class InboundEmailLinePM : BaseEntityPM   {
    #region Constructors
    public InboundEmailLinePM() : base() {} 
-   public InboundEmailLinePM(InboundEmailLine entity) : base()
+   public InboundEmailLinePM(POCO.InboundEmailLine entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -34,15 +36,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_internalUsers = entity.InternalUsers;
 		_entityLineId = entity.EntityLineId;
 		_inboundEmailId = entity.InboundEmailId;
-		_createDate = entity.CreateDate;
+		_inboundemail = entity.InboundEmail !=null ? new InboundEmailPM(entity.InboundEmail) : null;
+			_createDate = entity.CreateDate;
 		_sender = entity.Sender;
 		_recepient = entity.Recepient;
 		_subject = entity.Subject;
 		_direction = entity.Direction;
 		_cCs = entity.CCs;
 		_communicationLogId = entity.CommunicationLogId;
-		_body = entity.Body;
-		_inboundEmail = default;
+		_communicationlog = entity.CommunicationLog !=null ? new CommunicationLogPM(entity.CommunicationLog) : null;
+			_body = entity.Body;
    }
    #endregion Constructors
    #region Properties
@@ -175,6 +178,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private InboundEmailPM _inboundemail;
+		[Include]
+        [DataMember]
+        public virtual InboundEmailPM InboundEmail 
+		{ 
+		get { return _inboundemail; } 
+		set { _inboundemail = value; }
+		}
 	  private DateTime _createDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -287,6 +298,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CommunicationLogPM _communicationlog;
+		[Include]
+        [DataMember]
+        public virtual CommunicationLogPM CommunicationLog 
+		{ 
+		get { return _communicationlog; } 
+		set { _communicationlog = value; }
+		}
 	  private string _body ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -300,22 +319,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Body",OldValue=_body,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _body=value;
-		   }
-		 }
-	   }
-	  private string _inboundEmail ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InboundEmail  
-	   {
-	     get { return _inboundEmail; }
-		 set
-		 {
-		   if(_inboundEmail != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InboundEmail",OldValue=_inboundEmail,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _inboundEmail=value;
 		   }
 		 }
 	   }

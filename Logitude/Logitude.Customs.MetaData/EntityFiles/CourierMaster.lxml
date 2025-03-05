@@ -13,6 +13,7 @@
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="false"
+  IsLock="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -6264,7 +6265,8 @@
     FeatureTextCodeCode="&quot;CourierMaster.Features.General&quot;"
     FeatureDefaultText="&quot;General&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Connected Declaration&quot;"
     TabLocalNameBack_up="&quot;הצהרות מקושרות&quot;"
@@ -6281,7 +6283,8 @@
     FeatureTextCodeCode="&quot;CourierMaster.Features.ConnectedDeclaration&quot;"
     FeatureDefaultText="&quot;Connected Declaration&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalNameBack_up="&quot;אירועים&quot;"
@@ -6298,7 +6301,8 @@
     FeatureTextCodeCode="&quot;CourierMaster.Features.Events&quot;"
     FeatureDefaultText="&quot;Events&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Communications&quot;"
     TabLocalNameBack_up="&quot;תקשורות&quot;"
@@ -6315,7 +6319,8 @@
     FeatureTextCodeCode="&quot;CourierMaster.Features.Communications&quot;"
     FeatureDefaultText="&quot;Communications&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -6892,8 +6897,8 @@
     <TextCode
       Code="&quot;Customs.CourierMaster.O.SelectedRecoverDec&quot;"
       DefaultText="&quot;Recover Declaration&quot;"
-      LocalDefaultTextBack_up="&quot;שחזור הצהרה מסומנות&quot;"
-      LocalDefaultText="&quot;BS64:Itep15fXlteV16gg15TXpteU16jXlCDXnteh15XXnteg15XXqiI=&quot;"
+      LocalDefaultTextBack_up="&quot;שחזור הצהרה מסומנים&quot;"
+      LocalDefaultText="&quot;BS64:Itep15fXlteV16gg15TXpteU16jXlCDXnteh15XXnteg15nXnSI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

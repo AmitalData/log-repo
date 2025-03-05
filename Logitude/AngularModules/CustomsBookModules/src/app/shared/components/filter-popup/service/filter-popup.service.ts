@@ -15,6 +15,7 @@ export class FilterPopupService {
 		rules: false,
 		remarks: false,
 	};
+	public isClearFilter: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	constructor() {}
 
 	toggleFilterPopup(openPopup: boolean) {

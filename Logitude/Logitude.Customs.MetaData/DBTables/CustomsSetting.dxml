@@ -243,6 +243,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MyCustomURL"
+    Type="varchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"

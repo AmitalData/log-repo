@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,16 +26,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TermsofUseSignaturePM : BaseEntityPM   {
    #region Constructors
    public TermsofUseSignaturePM() : base() {} 
-   public TermsofUseSignaturePM(TermsofUseSignature entity) : base()
+   public TermsofUseSignaturePM(POCO.TermsofUseSignature entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_contactId = entity.ContactId;
-		_signedDatetime = entity.SignedDatetime;
+		_contact = entity.Contact !=null ? new ContactPM(entity.Contact) : null;
+			_signedDatetime = entity.SignedDatetime;
 		_termsofUseId = entity.TermsofUseId;
-		_versionNumber = default;
-		_versionDocumentId = default;
-   }
+		_termsofuse = entity.TermsofUse !=null ? new TermsofUsePM(entity.TermsofUse) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -85,6 +87,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ContactPM _contact;
+		[Include]
+        [DataMember]
+        public virtual ContactPM Contact 
+		{ 
+		get { return _contact; } 
+		set { _contact = value; }
+		}
 	  private DateTime _signedDatetime ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -117,38 +127,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private int _versionNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int VersionNumber  
-	   {
-	     get { return _versionNumber; }
-		 set
-		 {
-		   if(_versionNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VersionNumber",OldValue=_versionNumber,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _versionNumber=value;
-		   }
-		 }
-	   }
-	  private string _versionDocumentId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string VersionDocumentId  
-	   {
-	     get { return _versionDocumentId; }
-		 set
-		 {
-		   if(_versionDocumentId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VersionDocumentId",OldValue=_versionDocumentId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _versionDocumentId=value;
-		   }
-		 }
-	   }
+		private TermsofUsePM _termsofuse;
+		[Include]
+        [DataMember]
+        public virtual TermsofUsePM TermsofUse 
+		{ 
+		get { return _termsofuse; } 
+		set { _termsofuse = value; }
+		}
 	 }
 #endregion Properties
 }

@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ChargesExternalAccountsByProductPM : BaseEntityPM   {
    #region Constructors
    public ChargesExternalAccountsByProductPM() : base() {} 
-   public ChargesExternalAccountsByProductPM(ChargesExternalAccountsByProduct entity) : base()
+   public ChargesExternalAccountsByProductPM(POCO.ChargesExternalAccountsByProduct entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
@@ -33,11 +35,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_receivablesGLAccount = entity.ReceivablesGLAccount;
 		_receivablesCostCenter = entity.ReceivablesCostCenter;
 		_chargesTypeId = entity.ChargesTypeId;
-		_productTypeCode = entity.ProductTypeCode;
+		_chargestype = entity.ChargesType !=null ? new ChargesTypePM(entity.ChargesType) : null;
+			_productTypeCode = entity.ProductTypeCode;
 		_updateDate = entity.UpdateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
-		_productTypeName = default;
-		_updatedByUserName = default;
    }
    #endregion Constructors
    #region Properties
@@ -154,6 +155,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ChargesTypePM _chargestype;
+		[Include]
+        [DataMember]
+        public virtual ChargesTypePM ChargesType 
+		{ 
+		get { return _chargestype; } 
+		set { _chargestype = value; }
+		}
 	  private string _productTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -199,38 +208,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserId",OldValue=_updatedByUserId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _updatedByUserId=value;
-		   }
-		 }
-	   }
-	  private string _productTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProductTypeName  
-	   {
-	     get { return _productTypeName; }
-		 set
-		 {
-		   if(_productTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProductTypeName",OldValue=_productTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _productTypeName=value;
-		   }
-		 }
-	   }
-	  private string _updatedByUserName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserName  
-	   {
-	     get { return _updatedByUserName; }
-		 set
-		 {
-		   if(_updatedByUserName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _updatedByUserName=value;
 		   }
 		 }
 	   }

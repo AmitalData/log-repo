@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,27 +26,32 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class ObjectFieldPM : BaseEntityPM   {
    #region Constructors
    public ObjectFieldPM() : base() {} 
-   public ObjectFieldPM(ObjectField entity) : base()
+   public ObjectFieldPM(POCO.ObjectField entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_fullNameTextCodeId = entity.FullNameTextCodeId;
-		_fieldName = entity.FieldName;
+		_fullnametextcode = entity.FullNameTextCode !=null ? new TextCodePM(entity.FullNameTextCode) : null;
+			_fieldName = entity.FieldName;
 		_code = entity.Code;
 		_dataTypeCode = entity.DataTypeCode;
-		_maxLength = entity.MaxLength;
+		_datatype = entity.DataType !=null ? new FieldDataTypePM(entity.DataType) : null;
+			_maxLength = entity.MaxLength;
 		_isRequiered = entity.IsRequiered;
 		_isCustom = entity.IsCustom;
 		_helpTextCodeId = entity.HelpTextCodeId;
-		_minLength = entity.MinLength;
+		_helptextcode = entity.HelpTextCode !=null ? new TextCodePM(entity.HelpTextCode) : null;
+			_minLength = entity.MinLength;
 		_lookUpTableId = entity.LookUpTableId;
-		_displayOnLookUp = entity.DisplayOnLookUp;
+		_objecttable_lookuptable = entity.ObjectTable_LookUpTable !=null ? new ObjectTablePM(entity.ObjectTable_LookUpTable) : null;
+			_displayOnLookUp = entity.DisplayOnLookUp;
 		_canFilter = entity.CanFilter;
 		_displayOnly = entity.DisplayOnly;
 		_systemRequired = entity.SystemRequired;
 		_systemMaxLength = entity.SystemMaxLength;
 		_listTextCodeId = entity.ListTextCodeId;
-		_displayInList = entity.DisplayInList;
+		_listtextcode = entity.ListTextCode !=null ? new TextCodePM(entity.ListTextCode) : null;
+			_displayInList = entity.DisplayInList;
 		_isCustomFilter = entity.IsCustomFilter;
 		_operator = entity.Operator;
 		_multiLine = entity.MultiLine;
@@ -58,11 +65,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_automaticField = entity.AutomaticField;
 		_uniqueField = entity.UniqueField;
 		_shortNameTextCodeId = entity.ShortNameTextCodeId;
-		_displayInSearchWindowListIndex = entity.DisplayInSearchWindowListIndex;
+		_shortnametextcode = entity.ShortNameTextCode !=null ? new TextCodePM(entity.ShortNameTextCode) : null;
+			_displayInSearchWindowListIndex = entity.DisplayInSearchWindowListIndex;
 		_displayInSearchWindowFiltersIndex = entity.DisplayInSearchWindowFiltersIndex;
 		_isMulti = entity.IsMulti;
 		_multiTableId = entity.MultiTableId;
-		_dependencyFilter1Value = entity.DependencyFilter1Value;
+		_objecttable_multitable = entity.ObjectTable_MultiTable !=null ? new ObjectTablePM(entity.ObjectTable_MultiTable) : null;
+			_dependencyFilter1Value = entity.DependencyFilter1Value;
 		_dependencyFilter2Value = entity.DependencyFilter2Value;
 		_dependencyFilter3Value = entity.DependencyFilter3Value;
 		_dependencyFilter1Type = entity.DependencyFilter1Type;
@@ -84,8 +93,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_displayInLookupColumnSize = entity.DisplayInLookupColumnSize;
 		_displayLongName = entity.DisplayLongName;
 		_customerPermissionTypeCode = entity.CustomerPermissionTypeCode;
-		_agentPermissionTypeCode = entity.AgentPermissionTypeCode;
-		_numberOfDigits = entity.NumberOfDigits;
+		_customerpermissiontype = entity.CustomerPermissionType !=null ? new PermissionTypePM(entity.CustomerPermissionType) : null;
+			_agentPermissionTypeCode = entity.AgentPermissionTypeCode;
+		_agentpermissiontype = entity.AgentPermissionType !=null ? new PermissionTypePM(entity.AgentPermissionType) : null;
+			_numberOfDigits = entity.NumberOfDigits;
 		_customPickListCode = entity.CustomPickListCode;
 		_isMaxLength = entity.IsMaxLength;
 		_automationEmailRecipient = entity.AutomationEmailRecipient;
@@ -101,35 +112,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_htmlListComponentUrl = entity.HtmlListComponentUrl;
 		_htmlHeaderComponentName = entity.HtmlHeaderComponentName;
 		_htmlListComponentName = entity.HtmlListComponentName;
-		_fullNameTextCodeDefaultText = default;
 		_objectTableId = entity.ObjectTableId;
 		_canAutomateSetValue = entity.CanAutomateSetValue;
 		_allowedinAutomationConditions = entity.AllowedinAutomationConditions;
-		_objectTableName = default;
-		_fullNameTextCodeLocalDefaultText = default;
-		_objectTable_LookUpTableName = default;
-		_objectTable_MultiTableName = default;
 		_helpTextCodeCode = entity.HelpTextCodeCode;
 		_fullNameTextCodeCode = entity.FullNameTextCodeCode;
 		_listTextCodeCode = entity.ListTextCodeCode;
 		_shortNameTextCodeCode = entity.ShortNameTextCodeCode;
-		_listTextCodeDefaultText = default;
-		_helpTextCodeDefaultText = default;
-		_userTenant = default;
-		_tenantZeroIsRequired = default;
-		_tenantZeroMaxLength = default;
-		_tenantZeroMinLength = default;
-		_restorDefault = default;
-		_shortNameTextCodeDefaultText = default;
-		objectFieldValidations = default;
-		_fullLabelTranslatedText = default;
-		_shortLabelTranslatedText = default;
-		_listHeaderLabelTranslatedText = default;
-		_helpTextTranslatedText = default;
-		_fullLabelFieldTranslationId = default;
-		_shortLabelFieldTranslationId = default;
-		_listHeaderLabelFieldTranslationId = default;
-		_helpTextFieldTranslationId = default;
 		_copyToDW = entity.CopyToDW;
 		_displayOnLookUpLocal = entity.DisplayOnLookUpLocal;
 		_recordType = entity.RecordType;
@@ -143,14 +132,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_foreignEntity = entity.ForeignEntity;
 		_navigationPropertyName = entity.NavigationPropertyName;
 		_defaultAdditionalFilters = entity.DefaultAdditionalFilters;
-		_defaultAdditionalTreeFilters = default;
 		_forMetaDataOnly = entity.ForMetaDataOnly;
 		_isListFilter = entity.IsListFilter;
-		_dataTypeName = default;
-		_indexOrder = default;
-		_inUse = default;
-		_relatedEntities = default;
-		_isRelatedEntity = default;
 		_displayInRequiredFields = entity.DisplayInRequiredFields;
 		_shortName = entity.ShortName;
    }
@@ -205,6 +188,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TextCodePM _fullnametextcode;
+		[Include]
+        [DataMember]
+        public virtual TextCodePM FullNameTextCode 
+		{ 
+		get { return _fullnametextcode; } 
+		set { _fullnametextcode = value; }
+		}
 	  private string _fieldName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -253,6 +244,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FieldDataTypePM _datatype;
+		[Include]
+        [DataMember]
+        public virtual FieldDataTypePM DataType 
+		{ 
+		get { return _datatype; } 
+		set { _datatype = value; }
+		}
 	  private int _maxLength ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -317,6 +316,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TextCodePM _helptextcode;
+		[Include]
+        [DataMember]
+        public virtual TextCodePM HelpTextCode 
+		{ 
+		get { return _helptextcode; } 
+		set { _helptextcode = value; }
+		}
 	  private int _minLength ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -349,6 +356,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTablePM _objecttable_lookuptable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM ObjectTable_LookUpTable 
+		{ 
+		get { return _objecttable_lookuptable; } 
+		set { _objecttable_lookuptable = value; }
+		}
 	  private bool _displayOnLookUp ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -445,6 +460,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TextCodePM _listtextcode;
+		[Include]
+        [DataMember]
+        public virtual TextCodePM ListTextCode 
+		{ 
+		get { return _listtextcode; } 
+		set { _listtextcode = value; }
+		}
 	  private bool _displayInList ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -669,6 +692,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TextCodePM _shortnametextcode;
+		[Include]
+        [DataMember]
+        public virtual TextCodePM ShortNameTextCode 
+		{ 
+		get { return _shortnametextcode; } 
+		set { _shortnametextcode = value; }
+		}
 	  private int _displayInSearchWindowListIndex ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -733,6 +764,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTablePM _objecttable_multitable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM ObjectTable_MultiTable 
+		{ 
+		get { return _objecttable_multitable; } 
+		set { _objecttable_multitable = value; }
+		}
 	  private string _dependencyFilter1Value ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1085,6 +1124,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PermissionTypePM _customerpermissiontype;
+		[Include]
+        [DataMember]
+        public virtual PermissionTypePM CustomerPermissionType 
+		{ 
+		get { return _customerpermissiontype; } 
+		set { _customerpermissiontype = value; }
+		}
 	  private string _agentPermissionTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1101,6 +1148,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private PermissionTypePM _agentpermissiontype;
+		[Include]
+        [DataMember]
+        public virtual PermissionTypePM AgentPermissionType 
+		{ 
+		get { return _agentpermissiontype; } 
+		set { _agentpermissiontype = value; }
+		}
 	  private int _numberOfDigits ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1357,22 +1412,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _fullNameTextCodeDefaultText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FullNameTextCodeDefaultText  
-	   {
-	     get { return _fullNameTextCodeDefaultText; }
-		 set
-		 {
-		   if(_fullNameTextCodeDefaultText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeDefaultText",OldValue=_fullNameTextCodeDefaultText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fullNameTextCodeDefaultText=value;
-		   }
-		 }
-	   }
 	  private string _objectTableId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1418,70 +1457,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowedinAutomationConditions",OldValue=_allowedinAutomationConditions,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _allowedinAutomationConditions=value;
-		   }
-		 }
-	   }
-	  private string _objectTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTableName  
-	   {
-	     get { return _objectTableName; }
-		 set
-		 {
-		   if(_objectTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTableName=value;
-		   }
-		 }
-	   }
-	  private string _fullNameTextCodeLocalDefaultText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FullNameTextCodeLocalDefaultText  
-	   {
-	     get { return _fullNameTextCodeLocalDefaultText; }
-		 set
-		 {
-		   if(_fullNameTextCodeLocalDefaultText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeLocalDefaultText",OldValue=_fullNameTextCodeLocalDefaultText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fullNameTextCodeLocalDefaultText=value;
-		   }
-		 }
-	   }
-	  private string _objectTable_LookUpTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTable_LookUpTableName  
-	   {
-	     get { return _objectTable_LookUpTableName; }
-		 set
-		 {
-		   if(_objectTable_LookUpTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTable_LookUpTableName",OldValue=_objectTable_LookUpTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTable_LookUpTableName=value;
-		   }
-		 }
-	   }
-	  private string _objectTable_MultiTableName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ObjectTable_MultiTableName  
-	   {
-	     get { return _objectTable_MultiTableName; }
-		 set
-		 {
-		   if(_objectTable_MultiTableName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTable_MultiTableName",OldValue=_objectTable_MultiTableName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _objectTable_MultiTableName=value;
 		   }
 		 }
 	   }
@@ -1549,134 +1524,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _listTextCodeDefaultText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ListTextCodeDefaultText  
-	   {
-	     get { return _listTextCodeDefaultText; }
-		 set
-		 {
-		   if(_listTextCodeDefaultText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ListTextCodeDefaultText",OldValue=_listTextCodeDefaultText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _listTextCodeDefaultText=value;
-		   }
-		 }
-	   }
-	  private string _helpTextCodeDefaultText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string HelpTextCodeDefaultText  
-	   {
-	     get { return _helpTextCodeDefaultText; }
-		 set
-		 {
-		   if(_helpTextCodeDefaultText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HelpTextCodeDefaultText",OldValue=_helpTextCodeDefaultText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _helpTextCodeDefaultText=value;
-		   }
-		 }
-	   }
-	  private int _userTenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int UserTenant  
-	   {
-	     get { return _userTenant; }
-		 set
-		 {
-		   if(_userTenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UserTenant",OldValue=_userTenant,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _userTenant=value;
-		   }
-		 }
-	   }
-	  private bool _tenantZeroIsRequired ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool TenantZeroIsRequired  
-	   {
-	     get { return _tenantZeroIsRequired; }
-		 set
-		 {
-		   if(_tenantZeroIsRequired != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantZeroIsRequired",OldValue=_tenantZeroIsRequired,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _tenantZeroIsRequired=value;
-		   }
-		 }
-	   }
-	  private int _tenantZeroMaxLength ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int TenantZeroMaxLength  
-	   {
-	     get { return _tenantZeroMaxLength; }
-		 set
-		 {
-		   if(_tenantZeroMaxLength != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantZeroMaxLength",OldValue=_tenantZeroMaxLength,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _tenantZeroMaxLength=value;
-		   }
-		 }
-	   }
-	  private int _tenantZeroMinLength ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int TenantZeroMinLength  
-	   {
-	     get { return _tenantZeroMinLength; }
-		 set
-		 {
-		   if(_tenantZeroMinLength != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantZeroMinLength",OldValue=_tenantZeroMinLength,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _tenantZeroMinLength=value;
-		   }
-		 }
-	   }
-	  private bool _restorDefault ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool RestorDefault  
-	   {
-	     get { return _restorDefault; }
-		 set
-		 {
-		   if(_restorDefault != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RestorDefault",OldValue=_restorDefault,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _restorDefault=value;
-		   }
-		 }
-	   }
-	  private string _shortNameTextCodeDefaultText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShortNameTextCodeDefaultText  
-	   {
-	     get { return _shortNameTextCodeDefaultText; }
-		 set
-		 {
-		   if(_shortNameTextCodeDefaultText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShortNameTextCodeDefaultText",OldValue=_shortNameTextCodeDefaultText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shortNameTextCodeDefaultText=value;
-		   }
-		 }
-	   }
 	   private List<ObjectFieldValidationPM> objectFieldValidations;
 	    
        [Composition]
@@ -1710,134 +1557,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedObjectFieldValidations = value; }
 	    }
-	  private string _fullLabelTranslatedText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FullLabelTranslatedText  
-	   {
-	     get { return _fullLabelTranslatedText; }
-		 set
-		 {
-		   if(_fullLabelTranslatedText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullLabelTranslatedText",OldValue=_fullLabelTranslatedText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fullLabelTranslatedText=value;
-		   }
-		 }
-	   }
-	  private string _shortLabelTranslatedText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShortLabelTranslatedText  
-	   {
-	     get { return _shortLabelTranslatedText; }
-		 set
-		 {
-		   if(_shortLabelTranslatedText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShortLabelTranslatedText",OldValue=_shortLabelTranslatedText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shortLabelTranslatedText=value;
-		   }
-		 }
-	   }
-	  private string _listHeaderLabelTranslatedText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ListHeaderLabelTranslatedText  
-	   {
-	     get { return _listHeaderLabelTranslatedText; }
-		 set
-		 {
-		   if(_listHeaderLabelTranslatedText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ListHeaderLabelTranslatedText",OldValue=_listHeaderLabelTranslatedText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _listHeaderLabelTranslatedText=value;
-		   }
-		 }
-	   }
-	  private string _helpTextTranslatedText ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string HelpTextTranslatedText  
-	   {
-	     get { return _helpTextTranslatedText; }
-		 set
-		 {
-		   if(_helpTextTranslatedText != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HelpTextTranslatedText",OldValue=_helpTextTranslatedText,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _helpTextTranslatedText=value;
-		   }
-		 }
-	   }
-	  private string _fullLabelFieldTranslationId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string FullLabelFieldTranslationId  
-	   {
-	     get { return _fullLabelFieldTranslationId; }
-		 set
-		 {
-		   if(_fullLabelFieldTranslationId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullLabelFieldTranslationId",OldValue=_fullLabelFieldTranslationId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _fullLabelFieldTranslationId=value;
-		   }
-		 }
-	   }
-	  private string _shortLabelFieldTranslationId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ShortLabelFieldTranslationId  
-	   {
-	     get { return _shortLabelFieldTranslationId; }
-		 set
-		 {
-		   if(_shortLabelFieldTranslationId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShortLabelFieldTranslationId",OldValue=_shortLabelFieldTranslationId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _shortLabelFieldTranslationId=value;
-		   }
-		 }
-	   }
-	  private string _listHeaderLabelFieldTranslationId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ListHeaderLabelFieldTranslationId  
-	   {
-	     get { return _listHeaderLabelFieldTranslationId; }
-		 set
-		 {
-		   if(_listHeaderLabelFieldTranslationId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ListHeaderLabelFieldTranslationId",OldValue=_listHeaderLabelFieldTranslationId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _listHeaderLabelFieldTranslationId=value;
-		   }
-		 }
-	   }
-	  private string _helpTextFieldTranslationId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string HelpTextFieldTranslationId  
-	   {
-	     get { return _helpTextFieldTranslationId; }
-		 set
-		 {
-		   if(_helpTextFieldTranslationId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HelpTextFieldTranslationId",OldValue=_helpTextFieldTranslationId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _helpTextFieldTranslationId=value;
-		   }
-		 }
-	   }
 	  private bool _copyToDW ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2046,22 +1765,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _defaultAdditionalTreeFilters ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DefaultAdditionalTreeFilters  
-	   {
-	     get { return _defaultAdditionalTreeFilters; }
-		 set
-		 {
-		   if(_defaultAdditionalTreeFilters != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultAdditionalTreeFilters",OldValue=_defaultAdditionalTreeFilters,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _defaultAdditionalTreeFilters=value;
-		   }
-		 }
-	   }
 	  private bool _forMetaDataOnly ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2091,86 +1794,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsListFilter",OldValue=_isListFilter,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isListFilter=value;
-		   }
-		 }
-	   }
-	  private string _dataTypeName ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DataTypeName  
-	   {
-	     get { return _dataTypeName; }
-		 set
-		 {
-		   if(_dataTypeName != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DataTypeName",OldValue=_dataTypeName,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dataTypeName=value;
-		   }
-		 }
-	   }
-	  private bool _indexOrder ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IndexOrder  
-	   {
-	     get { return _indexOrder; }
-		 set
-		 {
-		   if(_indexOrder != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IndexOrder",OldValue=_indexOrder,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _indexOrder=value;
-		   }
-		 }
-	   }
-	  private bool _inUse ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool InUse  
-	   {
-	     get { return _inUse; }
-		 set
-		 {
-		   if(_inUse != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InUse",OldValue=_inUse,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _inUse=value;
-		   }
-		 }
-	   }
-	  private string _relatedEntities ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string RelatedEntities  
-	   {
-	     get { return _relatedEntities; }
-		 set
-		 {
-		   if(_relatedEntities != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RelatedEntities",OldValue=_relatedEntities,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _relatedEntities=value;
-		   }
-		 }
-	   }
-	  private bool _isRelatedEntity ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsRelatedEntity  
-	   {
-	     get { return _isRelatedEntity; }
-		 set
-		 {
-		   if(_isRelatedEntity != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRelatedEntity",OldValue=_isRelatedEntity,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isRelatedEntity=value;
 		   }
 		 }
 	   }

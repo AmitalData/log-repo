@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TenantManagmentPrivateLabelsPM : BaseEntityPM   {
    #region Constructors
    public TenantManagmentPrivateLabelsPM() : base() {} 
-   public TenantManagmentPrivateLabelsPM(TenantManagmentPrivateLabels entity) : base()
+   public TenantManagmentPrivateLabelsPM(POCO.TenantManagmentPrivateLabels entity) : base()
    {
 		_mainLogo = entity.MainLogo;
 		_smallLogo = entity.SmallLogo;

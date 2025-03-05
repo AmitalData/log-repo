@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,7 +26,7 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class MessagingStockPM : BaseEntityPM   {
    #region Constructors
    public MessagingStockPM() : base() {} 
-   public MessagingStockPM(MessagingStock entity) : base()
+   public MessagingStockPM(POCO.MessagingStock entity) : base()
    {
 		_id = entity.Id;
 		_searchFields = entity.SearchFields;
@@ -37,14 +39,9 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		_createdByUserId = entity.CreatedByUserId;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_isCancelled = entity.IsCancelled;
-		_status = default;
 		_notes = entity.Notes;
 		_tenantNumber = entity.TenantNumber;
 		_totalPrice = entity.TotalPrice;
-		_isTotalPriceChanged = default;
-		_isOtherFieldsChanged = default;
-		stockUsageHistories = default;
-		_dummyTenant = default;
 		_stockType = entity.StockType;
    }
    #endregion Constructors
@@ -226,22 +223,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _status ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Status  
-	   {
-	     get { return _status; }
-		 set
-		 {
-		   if(_status != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Status",OldValue=_status,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _status=value;
-		   }
-		 }
-	   }
 	  private string _notes ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -290,38 +271,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool _isTotalPriceChanged ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsTotalPriceChanged  
-	   {
-	     get { return _isTotalPriceChanged; }
-		 set
-		 {
-		   if(_isTotalPriceChanged != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsTotalPriceChanged",OldValue=_isTotalPriceChanged,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isTotalPriceChanged=value;
-		   }
-		 }
-	   }
-	  private bool _isOtherFieldsChanged ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsOtherFieldsChanged  
-	   {
-	     get { return _isOtherFieldsChanged; }
-		 set
-		 {
-		   if(_isOtherFieldsChanged != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsOtherFieldsChanged",OldValue=_isOtherFieldsChanged,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _isOtherFieldsChanged=value;
-		   }
-		 }
-	   }
 	   private List<MessagingStockUsageHistoryPM> stockUsageHistories;
 	    
        [Composition]
@@ -355,22 +304,6 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
               }
              set {  deletedStockUsageHistories = value; }
 	    }
-	  private int _dummyTenant ;
-	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int DummyTenant  
-	   {
-	     get { return _dummyTenant; }
-		 set
-		 {
-		   if(_dummyTenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DummyTenant",OldValue=_dummyTenant,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _dummyTenant=value;
-		   }
-		 }
-	   }
 	  private string _stockType ;
 	  	   [CustomValidation(typeof(IShipmentValidationClass), "ValidateClass")]
 	   [DataMember]

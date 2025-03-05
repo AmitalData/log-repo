@@ -6,14 +6,16 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
 
 
 
@@ -24,14 +26,15 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
    public partial class ShipmentPackageHarmonizePM : BaseEntityPM   {
    #region Constructors
    public ShipmentPackageHarmonizePM() : base() {} 
-   public ShipmentPackageHarmonizePM(ShipmentPackageHarmonize entity) : base()
+   public ShipmentPackageHarmonizePM(POCO.ShipmentPackageHarmonize entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_packageId = entity.PackageId;
 		_harmonize = entity.Harmonize;
 		_insidePackageId = entity.InsidePackageId;
-   }
+		_insidepackage = entity.InsidePackage !=null ? new InsideShipmentPackagePM(entity.InsidePackage) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _id ;
@@ -115,6 +118,14 @@ namespace AmitalCloud.Shipment.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private InsideShipmentPackagePM _insidepackage;
+		[Include]
+        [DataMember]
+        public virtual InsideShipmentPackagePM InsidePackage 
+		{ 
+		get { return _insidepackage; } 
+		set { _insidepackage = value; }
+		}
 	 }
 #endregion Properties
 }

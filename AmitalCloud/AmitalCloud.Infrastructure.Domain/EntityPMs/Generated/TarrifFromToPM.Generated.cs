@@ -6,14 +6,16 @@
 // </auto-generated> AmitalClassesGenerator.tt
 //---
 using System;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -24,17 +26,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public partial class TarrifFromToPM : BaseEntityPM   {
    #region Constructors
    public TarrifFromToPM() : base() {} 
-   public TarrifFromToPM(TarrifFromTo entity) : base()
+   public TarrifFromToPM(POCO.TarrifFromTo entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_tarrifHeaderId = entity.TarrifHeaderId;
-		_tarrifFromToTypeCode = entity.TarrifFromToTypeCode;
-		_portId = entity.PortId;
+		_tarrifheader = entity.TarrifHeader !=null ? new TarrifHeaderPM(entity.TarrifHeader) : null;
+			_tarrifFromToTypeCode = entity.TarrifFromToTypeCode;
+		_tarriffromtotype = entity.TarrifFromToType !=null ? new TarrifFromToTypePM(entity.TarrifFromToType) : null;
+			_portId = entity.PortId;
 		_countryId = entity.CountryId;
-		_portCode = default;
-		_countryCode = default;
-		_changeOp = default;
    }
    #endregion Constructors
    #region Properties
@@ -87,6 +88,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TarrifHeaderPM _tarrifheader;
+		[Include]
+        [DataMember]
+        public virtual TarrifHeaderPM TarrifHeader 
+		{ 
+		get { return _tarrifheader; } 
+		set { _tarrifheader = value; }
+		}
 	  private string _tarrifFromToTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -103,6 +112,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TarrifFromToTypePM _tarriffromtotype;
+		[Include]
+        [DataMember]
+        public virtual TarrifFromToTypePM TarrifFromToType 
+		{ 
+		get { return _tarriffromtotype; } 
+		set { _tarriffromtotype = value; }
+		}
 	  private string _portId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -132,54 +149,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryId",OldValue=_countryId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _countryId=value;
-		   }
-		 }
-	   }
-	  private string _portCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PortCode  
-	   {
-	     get { return _portCode; }
-		 set
-		 {
-		   if(_portCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PortCode",OldValue=_portCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _portCode=value;
-		   }
-		 }
-	   }
-	  private string _countryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CountryCode  
-	   {
-	     get { return _countryCode; }
-		 set
-		 {
-		   if(_countryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryCode",OldValue=_countryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _countryCode=value;
-		   }
-		 }
-	   }
-	  private string _changeOp ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string changeOp  
-	   {
-	     get { return _changeOp; }
-		 set
-		 {
-		   if(_changeOp != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="changeOp",OldValue=_changeOp,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _changeOp=value;
 		   }
 		 }
 	   }

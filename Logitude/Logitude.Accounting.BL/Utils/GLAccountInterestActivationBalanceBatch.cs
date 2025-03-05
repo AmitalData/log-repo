@@ -34,6 +34,12 @@ using Microsoft.Practices.Unity;
 using Logitude.Accounting.Data.EntityKeys;
 using System.Runtime.Remoting.Contexts;
 using Logitude.Accounting.Data.Enums;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.Customs.BL.EntityQueryServices;
+using System.Windows.Forms;
+using AccountingEntityValues = Logitude.Accounting.Data.Enums.AccountingEntityValues;
+
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -123,11 +129,7 @@ namespace Logitude.Accounting.BL.Utils
                         this.AddErrorRow($"GLAccount id={gLAccountPM} display={gLAccountPM.DisplayNumber} is a control account");
                         _errors = true;
                     }
-                    //else if (gLAccountPM.ParentAccountId != null)
-                    //{
-                    //    this.AddErrorRow($"GLAccount id={gLAccountPM} display={gLAccountPM.DisplayNumber} is a descendant of {gLAccountPM.ParentAccountId}");
-                    //    _errors = true;
-                    //}
+
                 }
 
                 if (!_errors)
@@ -145,7 +147,7 @@ namespace Logitude.Accounting.BL.Utils
                                 _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
                                 gLAccountIdList.ForEach(accId =>
                                 {
-                                    ActivationBalanceCalculation(accId, null, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
+                                    ActivationBalanceCalculation(accId, null, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant, gLAccountQueryService);
                                 });
                             }
                         }
@@ -160,19 +162,20 @@ namespace Logitude.Accounting.BL.Utils
                                 _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
                                 gLAccountIdList.ForEach(accId =>
                                 {
-                                    ActivationBalanceCalculation(accId, null, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
+                                    ActivationBalanceCalculation(accId, null, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant, gLAccountQueryService);
                                 });
                             }
                         }
                     }
                     else
                     {
-                        ActivationBalanceCalculation(myGLAccountId, gLAccountPM, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant);
+                        ActivationBalanceCalculation(myGLAccountId, gLAccountPM, gLAccountInterestActivationBalanceArgs.InterestActivationDate, ActionDate, tenant, gLAccountQueryService);
                     }
                 }
-
-                _ResponseText = $"Good: {_MyResult.SuccessAccountLineCount},  Bad: {_MyResult.BadAccountLineCount}, \n  Lines: \n{String.Join("\n", _MyResult.ErrorRowList.ToArray())}";
-
+                
+                _ResponseText = $"Good: {_MyResult.SuccessAccountLineCount}, Bad: {_MyResult.BadAccountLineCount}, " +
+                                $"{Environment.NewLine}Details: {_MyResult.MadeListText}" +
+                                $"{Environment.NewLine}{(_MyResult.ErrorRowList?.Any() == true ? string.Join(Environment.NewLine, _MyResult.ErrorRowList) : "No errors")}";
             }
 
             catch //(Exception e)
@@ -200,11 +203,7 @@ namespace Logitude.Accounting.BL.Utils
             this._MyResult.BadAccountLineCount++;
         }
 
-
-
-
-
-        public void ActivationBalanceCalculation(string gLAccountId, GLAccountPM accPM, DateTime interestActivationDate, DateTime actionDate, int _Tenant)
+        public void ActivationBalanceCalculation(string gLAccountId, GLAccountPM accPM, DateTime interestActivationDate, DateTime actionDate, int _Tenant, GLAccountQueryService gLAccountQueryService)
         {
             const string OPEN_ = "OPEN_";
             IAccountingContext context = AccountingContext.GetContext(_Tenant);
@@ -225,7 +224,7 @@ namespace Logitude.Accounting.BL.Utils
                     }
                     GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(context, new Dictionary<string, IContext>(), _Tenant);
 
-                    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
+                    
                     InterestTransactionRepository myInterestTransactionRepository = new InterestTransactionRepository(context);
                     InterestTransactionQueryService myInterestTransactionService = new InterestTransactionQueryService(context);
                     InterestTransactionUpdateService myInterestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), _Tenant);
@@ -292,39 +291,22 @@ namespace Logitude.Accounting.BL.Utils
                     }
 
 
-              //    if (!ReportExists(gLAccountId, context, _Tenant))
-              //    {
-                        if (!ReportExists(gLAccountId, context, _Tenant))
-                        {
-                            ClearPreviousActivation(gLAccountId, myInterestTransactionRepository, myInterestTransactionService, myInterestTransactionUpdateService, gLAccountQueryService, gLAccountUpdateService, OPEN_, _Tenant);
-                        }
+
+                        ClearPreviousActivation(gLAccountId, myInterestTransactionRepository, myInterestTransactionService, myInterestTransactionUpdateService, gLAccountQueryService, gLAccountUpdateService, OPEN_, _Tenant);
+
                         var myGLAccountRepo = new GLAccountRepository(context);
 
                         var myJournalRepository = new JournalRepository(context);
+                        var myJournalLineRepository = new JournalLineRepository(context);
 
                         TenantQuery tenantQuery = new TenantQuery(_Tenant);
                         TenantPM tPM = tenantQuery.GetSinglePM(_Tenant);
                         string accountingCurrencyId = tPM.CurrencyId;
 
 
-                        ///// 1. Compute future AMITAL BalanceInLocalCurrency
-                        var myLedgerTransactionRepository = new LedgerTransactionRepository(context);
-                        var qLedgerTrans =
+                        ///// 1. Compute BalanceInLocalCurrency
 
-                                    from lt in myLedgerTransactionRepository.GetAll(_Tenant)
-                                        .Where(ltrec => ltrec.AccountId == gLAccountId)
-                                    join j in myJournalRepository.GetAll(_Tenant).Where(jrec => jrec.ExternalSystem == "AMITAL")
-                                    on lt.JournalId equals j.Id
-                                    select
-                                     lt.LocalAmountDebit - lt.LocalAmountCredit;
-
-                        decimal ledgerTransAmt = 0m;
-                        List<decimal> ledgerTrans_list = qLedgerTrans != null ? qLedgerTrans.ToList() : new List<decimal>();
-                        if (ledgerTrans_list != null && ledgerTrans_list.Count > 0)
-                        {
-                            decimal? ledgerTransAmt_qm = ledgerTrans_list.Sum();
-                            ledgerTransAmt = ledgerTransAmt_qm.HasValue ? ledgerTransAmt_qm.Value : 0m;
-                        }
+                        Decimal balanceInLocalCurrency = gLAccountQueryService.GetTotalLocalBalance(gLAccountId, interestActivationDate, _Tenant);
 
 
                         ////////////
@@ -333,32 +315,128 @@ namespace Logitude.Accounting.BL.Utils
                         string ourInterestReportId = OPEN_ + actionDateStr;
 
 
-                        ////////////
-                        /// 2. Compute "After" interestActivationDate, that are still open 
+                    ////////////
+                    /// 2. Compute "After" interestActivationDate, that are open,
+                    /// WHERE Acc Date before interestActivationDate 
+                    /// AND intTrans.InterestValueDate >= interestActivationDate
+                     
 
+                        var journalAccEntityCodes = new HashSet<string> { AccountingEntityValues.Journal, AccountingEntityValues.Adjustment, AccountingEntityValues.BankAdjustment };
                         var calcAfterInterestTrans =
-                                  (
-                                     from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
-                                         .Where(intTrans => intTrans.GLAccountId == gLAccountId
-                                         && !intTrans.IsClosed
-                                         && intTrans.InterestValueDate >= interestActivationDate
-                                         && intTrans.InterestEntityTypeCode == "3")
-                                     join j in myJournalRepository.GetAll(_Tenant).Where(jrec => jrec.ExternalSystem == "AMITAL")
-                                     on intTrans.EntityId equals j.Id
-                                     select new InterestTransactionBefore
-                                     {
-                                         Tenant = intTrans.Tenant,
-                                         Id = intTrans.Id,
-                                         LocalAmount = intTrans.LocalAmount,
-                                     }
-                                  );
-                        decimal amount_after = 0m;
-                        List<InterestTransactionBefore> after_list = calcAfterInterestTrans != null ? calcAfterInterestTrans.ToList() : new List<InterestTransactionBefore>();
-                        if (after_list != null && after_list.Count > 0)
+                            from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
+                                .Where(intTrans => intTrans.GLAccountId == gLAccountId
+                                                   && !intTrans.IsClosed
+                                                   && intTrans.InterestValueDate >= interestActivationDate)   //  ***** >= interestActivationDate
+                                                                                                              // Condition only matched for journalAccEntityCodes
+
+                            from j in context.Journals.Where(r => r.Tenant == _Tenant)
+                                .Where(jrec => journalAccEntityCodes.Contains(intTrans.AccountingEntityCode)
+                                    && jrec.Id == intTrans.EntityId)
+                                .DefaultIfEmpty() // if code not matched or no journal found, j is null
+
+                            from jl in context.JournalLines.Where(r => r.Tenant == _Tenant)
+                                .Where(jlrec => journalAccEntityCodes.Contains(intTrans.AccountingEntityCode)
+                                         && jlrec.JournalId == intTrans.EntityId
+                                         && jlrec.Line == intTrans.OriginalEntityLineNumber)
+                                .DefaultIfEmpty()
+
+                            where  // At least one of the following conditions is true:
+                                   // 1) Code not in journalAccEntityCodes
+                                !journalAccEntityCodes.Contains(intTrans.AccountingEntityCode)
+
+                                // 2) Journal line matched & its AccountingDate < interestActivationDate
+                                || (jl != null && jl.AccountingDate < interestActivationDate)               //  ***** < interestActivationDate
+
+                                // 3) No journal line matched & journal’s AccountingDate < interestActivationDate
+                                || (jl == null && j != null && j.AccountingDate < interestActivationDate)   //  ***** < interestActivationDate
+
+                            select new InterestTransactionBefore
+                            {
+                                Tenant = intTrans.Tenant,
+                                Id = intTrans.Id,
+                                LocalAmount = intTrans.LocalAmount,
+                                EntityId = intTrans.EntityId,
+                                AccountingEntityCode = intTrans.AccountingEntityCode,
+                            };
+                    List<InterestTransactionBefore> after_list = calcAfterInterestTrans != null ? calcAfterInterestTrans.ToList() : new List<InterestTransactionBefore>();
+
+                    decimal amount_after = 0m;
+
+                    if (after_list.Count > 0 )
+                    {
+                        List<InterestTransactionBefore> journalTransactions = after_list.Where(c => c.AccountingEntityCode == "1" || c.AccountingEntityCode == "10" || c.AccountingEntityCode == "12").ToList();
+                        if (journalTransactions.Count > 0)
                         {
-                            decimal? amount_after_qm = after_list.Select(c => c.LocalAmount).Sum();
-                            amount_after = amount_after_qm.HasValue ? amount_after_qm.Value : 0m;
+                            decimal amount_j_qm = journalTransactions.Select(c => c.LocalAmount).Sum();
+                            amount_after += amount_j_qm;
                         }
+
+
+                        List<InterestTransactionBefore> aRInvoiceTransactions = after_list.Where(c => c.AccountingEntityCode == "2").ToList();
+                        List<InterestTransactionBefore> aRPaymentTransactions = after_list.Where(c => c.AccountingEntityCode == "3").ToList();
+                        if (aRInvoiceTransactions.Count > 0 || aRPaymentTransactions.Count > 0)
+                        {    
+                            IInvoiceContext invoiceContext = InvoiceContext.GetContext(_Tenant);
+                            if (aRInvoiceTransactions.Count > 0)
+                            { 
+                                // Get all invoices that are before interestActivationDate
+                                var aRInvoiceRepository = new ARInvoiceRepository(invoiceContext);
+                                var invoiceIds = aRInvoiceTransactions
+                                    .Select(x => x.EntityId)
+                                    .Distinct()
+                                    .ToList();
+
+                                var preexistingInvoiceIds = aRInvoiceRepository
+                                    .GetInvoices()
+                                    .Where(inv => invoiceIds.Contains(inv.Id) && inv.InvoiceDate < interestActivationDate)   //  ***** < interestActivationDate
+                                    .Select(inv => inv.Id)
+                                    .ToHashSet();
+
+                                aRInvoiceTransactions = aRInvoiceTransactions
+                                    .Where(x => preexistingInvoiceIds.Contains(x.EntityId))
+                                    .ToList();
+
+                                if (aRInvoiceTransactions.Any())
+                                {
+                                    decimal amount_inv_qm = aRInvoiceTransactions.Select(c => c.LocalAmount).Sum();
+                                    amount_after += amount_inv_qm;
+                                }
+                            }
+
+                            if (aRPaymentTransactions.Count > 0)
+                            { 
+                                // Get all Payments that are before interestActivationDate
+                                var aRPaymentRepository = new ARPaymentRepository(invoiceContext);
+                                var paymentIds = aRPaymentTransactions
+                                    .Select(x => x.EntityId)
+                                    .Distinct()
+                                    .ToList();
+
+                                var preexistingPaymentIds = aRPaymentRepository
+                                    .GetARPayments()
+                                    .Where(pmt => paymentIds.Contains(pmt.Id) && pmt.RegisterDate < interestActivationDate)    //  ***** < interestActivationDate 
+                                    .Select(pmt => pmt.Id)
+                                    .ToHashSet();
+
+                                aRPaymentTransactions = aRPaymentTransactions
+                                    .Where(x => preexistingPaymentIds.Contains(x.EntityId))
+                                    .ToList();
+
+                                if (aRPaymentTransactions.Any())
+                                {
+                                    decimal amount_pay_qm = aRPaymentTransactions.Select(c => c.LocalAmount).Sum();
+                                    amount_after += amount_pay_qm;
+                                }
+                            }
+
+
+                        }
+
+
+                    }
+
+                    
+
 
 
                         ////////////
@@ -377,18 +455,14 @@ namespace Logitude.Accounting.BL.Utils
                                         LocalAmount = intTrans.LocalAmount,
                                     }
                                  );
-                        decimal amount_before = 0m;
+
                         List<InterestTransactionBefore> before_list = calcBeforeInterestTrans != null ? calcBeforeInterestTrans.ToList() : new List<InterestTransactionBefore>();
-                        if (before_list != null && before_list.Count > 0)
-                        {
-                            decimal? amount_before_qm = before_list.Select(c => c.LocalAmount).Sum();
-                            amount_before = amount_before_qm.HasValue ? amount_before_qm.Value : 0m;
-                        }
+
 
 
                         ////////////////
                         /// 4.Compute interestOpenBalance
-                        decimal interestOpenBalance = ledgerTransAmt - amount_after + amount_before; // nis
+                        decimal interestOpenBalance = balanceInLocalCurrency - amount_after ; // nis
 
 
 
@@ -427,9 +501,17 @@ namespace Logitude.Accounting.BL.Utils
                             gLAccountPM.InterestOpenBalance = interestOpenBalance;
                             gLAccountPM.ChangeSetOp = ChangeSetOperation.Update;
                             gLAccountUpdateService.Update(gLAccountPM, true);
-                        }
+                        // Add to MadeList
+                        _MyResult.MadeList.Add(new MadeListItem
+                        {
+                            DisplayNumber = gLAccountPM.DisplayNumber,
+                            BalanceInLocalCurrency = balanceInLocalCurrency,
+                            AmountAfter = amount_after,
+                            InterestOpenBalance = interestOpenBalance
+                        });
+                    }
 
-             //     }
+
 
 
                     if (!String.IsNullOrEmpty(_AggregateKey))
@@ -448,7 +530,6 @@ namespace Logitude.Accounting.BL.Utils
                         string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
                         _ResponseText = errorMessage;
                         _StatusCode = HttpStatusCode.InternalServerError;
-                        //       UpdateARPaymentChequeStatus(id, tenant, "2", context);
                     }
                     if (!String.IsNullOrEmpty(_AggregateKey))
                     {
@@ -459,7 +540,7 @@ namespace Logitude.Accounting.BL.Utils
 
             }
 
-            // }
+
         }
 
 
@@ -594,7 +675,8 @@ namespace Logitude.Accounting.BL.Utils
         public int Tenant { get; set; }
 
         public string Id { get; set; }
-
+        public string EntityId { get; set; }
+        public string AccountingEntityCode { get; set; }
         public decimal LocalAmount { get; set; }
 
     }
@@ -627,6 +709,23 @@ namespace Logitude.Accounting.BL.Utils
         public long SuccessAccountLineCount = 0;
         public long BadAccountLineCount = 0;
         public List<string> ErrorRowList = new List<string>();
+        public List<MadeListItem> MadeList = new List<MadeListItem>();
+
+        public string MadeListText
+        {
+            get
+            {
+                return string.Join("\n", MadeList.Select(item => $"DisplayNumber: {item.DisplayNumber}, BalanceInLocalCurrency: {item.BalanceInLocalCurrency}, AmountAfter: {item.AmountAfter}, InterestOpenBalance: {item.InterestOpenBalance}"));
+            }
+        }
+    }
+
+    public class MadeListItem
+    {
+        public string DisplayNumber { get; set; }
+        public decimal BalanceInLocalCurrency { get; set; }
+        public decimal AmountAfter { get; set; }
+        public decimal InterestOpenBalance { get; set; }
     }
 
 
