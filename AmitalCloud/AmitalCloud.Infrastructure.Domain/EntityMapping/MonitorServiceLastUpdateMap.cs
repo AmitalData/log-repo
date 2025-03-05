@@ -22,13 +22,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Code });
 	 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropName).HasColumnName("CdropName").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
             this.Property(t => t.LastUpdate).HasColumnName("LastUpdate").IsRequired();
 
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropSearchfields).HasColumnName("CdropSearchfields").IsRequired().HasMaxLength(-1).IsUnicode(true);
+
+            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(60).IsUnicode(false);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsRequired().HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

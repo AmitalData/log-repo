@@ -25,11 +25,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Id { get; set; }
         [Column("DWObjectFieldCode")]
 	    public string DWObjectFieldCode { get; set; }
-        [ForeignKey("DWCategory")]
+        [ForeignKey("DWCategories")]
         [Column("DWCategoryCode")]
 	    public string DWCategoryCode { get; set; }
 	      
-        public virtual DWCategories DWCategory { get; set; }
+        public virtual DWCategories DWCategories { get; set; }
         [Column("DWObjectTableCode")]
 	    public string DWObjectTableCode { get; set; }
     }

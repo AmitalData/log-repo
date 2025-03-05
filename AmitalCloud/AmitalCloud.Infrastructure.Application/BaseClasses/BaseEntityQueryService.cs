@@ -3,7 +3,10 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
+using System.Web.Http.Results;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {
@@ -119,9 +122,20 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             }
             return entityPMs;
         }
-        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate,string include)
-        => Repository.GetMulti(predicate
-            ,a=> (TEntityPM)typeof(TEntityPM).GetConstructor(new Type[] { typeof(TEntityPOCO)}).Invoke(a, null)
-            , include);
-}
+        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate)
+        => Repository.GetMulti(predicate).Select(a=> NewPMEntity(a)).ToList();
+        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, string include)
+        => Repository.GetMulti(predicate,include).Select(a => NewPMEntity(a)).ToList();
+        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TEntityPM>> select)
+        => Repository.GetMulti(predicate,select);
+        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TEntityPM>> select, string include)
+        => Repository.GetMulti(predicate, select,include);
+
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TResult>> select)
+            => Repository.GetMulti(predicate, select);
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TResult>> select, string include)
+        => Repository.GetMulti(predicate, select, include);
+        internal TEntityPM NewPMEntity(TEntityPOCO entity)
+        => (TEntityPM)typeof(TEntityPM).GetConstructor(new Type[] { typeof(TEntityPOCO) }).Invoke(new object[] { entity });
+    }
 }

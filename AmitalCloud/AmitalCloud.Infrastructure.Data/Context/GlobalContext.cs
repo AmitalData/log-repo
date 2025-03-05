@@ -7,6 +7,7 @@ using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 namespace AmitalCloud.Infrastructure.Data.Context
 {
     public class GlobalContext : DbContextBase, IGlobalContext
@@ -53,6 +54,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
             }
             else
             {
+                dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo, ConnectionLifetime, suppressPool);
                 return new GlobalContext(dbConnectionInfo);
             }
         }
@@ -99,52 +101,53 @@ namespace AmitalCloud.Infrastructure.Data.Context
 
 
 
-            Database.SetInitializer<GlobalContext>(null);
+            //Database.SetInitializer<GlobalContext>(null);
             //string databasename = DatabaseInitializer.GetDatabaseName();
             //Database.DefaultConnectionFactory.CreateConnection(databasename);
-            modelBuilder.Configurations.Add(new AnalyzeQueueMap());
-            modelBuilder.Configurations.Add(new AnalyzeQueueStatuMap());
-            modelBuilder.Configurations.Add(new ConvertProgramInfoMap());
-            modelBuilder.Configurations.Add(new GlobalContactMap());
-            modelBuilder.Configurations.Add(new GlobalDBMap());
-            modelBuilder.Configurations.Add(new GlobalTenantCounterMap());
-            modelBuilder.Configurations.Add(new GlobalTenantMap());
-            modelBuilder.Configurations.Add(new LogitudeLeadsMap());
-            modelBuilder.Configurations.Add(new PaymentChannelMap());
-            modelBuilder.Configurations.Add(new PaymentMethodMap());
-            modelBuilder.Configurations.Add(new PerformanceLogMap());
-            modelBuilder.Configurations.Add(new RecurringPeriodMap());
-            modelBuilder.Configurations.Add(new TenantManagementMap());
-            modelBuilder.Configurations.Add(new ContactPasswordMap());
-            modelBuilder.Configurations.Add(new PasswordResetRequestMap());
-            modelBuilder.Configurations.Add(new SettingMap());
-            modelBuilder.Configurations.Add(new PaymentCurrencyMap());
-            modelBuilder.Configurations.Add(new AutoSignupEmailMap());
-            modelBuilder.Configurations.Add(new BluesnapContractMap());
-            modelBuilder.Configurations.Add(new BluesnapTransactionMap());
-            modelBuilder.Configurations.Add(new BluesnapContractTypeMap());
-            modelBuilder.Configurations.Add(new AWBMessagesCCSTypeMap());
-            modelBuilder.Configurations.Add(new MobileNotificationLogMap());
-            modelBuilder.Configurations.Add(new ContactMobileDeviceMap());
-            modelBuilder.Configurations.Add(new SystemMetadataLastUpdateMap());
-            modelBuilder.Configurations.Add(new MonitorServiceLastUpdateMap());
-            modelBuilder.Configurations.Add(new HelpResourceMap());
-            modelBuilder.Configurations.Add(new ChangePasswordLogMap());
-            modelBuilder.Configurations.Add(new TenantTypeMap());
-            modelBuilder.Configurations.Add(new ApiCredintialsMap());
-            modelBuilder.Configurations.Add(new TenantManagementLicenseMap());
-            modelBuilder.Configurations.Add(new TenantAddOnMap());
-            modelBuilder.Configurations.Add(new BatchServicesDefinitionModsMap());
-            modelBuilder.Configurations.Add(new OneTimePasswordMap());
-            modelBuilder.Configurations.Add(new TenantManagmentPrivateLabelsMap());
-            //modelBuilder.Configurations.Add(new AgentSharedLogisticsKeyMap());
-            modelBuilder.Configurations.Add(new SessionPolicyMap());
-            modelBuilder.Configurations.Add(new CaptchaKeyMap());
-            modelBuilder.Configurations.Add(new InvalidEmailResetPasswordMap());
-            modelBuilder.Configurations.Add(new WebhookKeysMap());
+            //modelBuilder.Configurations.Add(new AnalyzeQueueMap());
+            //modelBuilder.Configurations.Add(new AnalyzeQueueStatuMap());
+            //modelBuilder.Configurations.Add(new ConvertProgramInfoMap());
+            //modelBuilder.Configurations.Add(new GlobalContactMap());
+            //modelBuilder.Configurations.Add(new GlobalDBMap());
+            //modelBuilder.Configurations.Add(new GlobalTenantCounterMap());
+            //modelBuilder.Configurations.Add(new GlobalTenantMap());
+            //modelBuilder.Configurations.Add(new LogitudeLeadsMap());
+            //modelBuilder.Configurations.Add(new PaymentChannelMap());
+            //modelBuilder.Configurations.Add(new PaymentMethodMap());
+            //modelBuilder.Configurations.Add(new PerformanceLogMap());
+            //modelBuilder.Configurations.Add(new RecurringPeriodMap());
+            //modelBuilder.Configurations.Add(new TenantManagementMap());
+            //modelBuilder.Configurations.Add(new ContactPasswordMap());
+            //modelBuilder.Configurations.Add(new PasswordResetRequestMap());
+            //modelBuilder.Configurations.Add(new SettingMap());
+            //modelBuilder.Configurations.Add(new PaymentCurrencyMap());
+            //modelBuilder.Configurations.Add(new AutoSignupEmailMap());
+            //modelBuilder.Configurations.Add(new BluesnapContractMap());
+            //modelBuilder.Configurations.Add(new BluesnapTransactionMap());
+            //modelBuilder.Configurations.Add(new BluesnapContractTypeMap());
+            //modelBuilder.Configurations.Add(new AWBMessagesCCSTypeMap());
+            //modelBuilder.Configurations.Add(new MobileNotificationLogMap());
+            //modelBuilder.Configurations.Add(new ContactMobileDeviceMap());
+            //modelBuilder.Configurations.Add(new SystemMetadataLastUpdateMap());
+            //modelBuilder.Configurations.Add(new MonitorServiceLastUpdateMap());
+            //modelBuilder.Configurations.Add(new HelpResourceMap());
+            //modelBuilder.Configurations.Add(new ChangePasswordLogMap());
+            //modelBuilder.Configurations.Add(new TenantTypeMap());
+            //modelBuilder.Configurations.Add(new ApiCredintialsMap());
+            //modelBuilder.Configurations.Add(new TenantManagementLicenseMap());
+            //modelBuilder.Configurations.Add(new TenantAddOnMap());
+            //modelBuilder.Configurations.Add(new BatchServicesDefinitionModsMap());
+            //modelBuilder.Configurations.Add(new OneTimePasswordMap());
+            //modelBuilder.Configurations.Add(new TenantManagmentPrivateLabelsMap());
+            ////modelBuilder.Configurations.Add(new AgentSharedLogisticsKeyMap());
+            //modelBuilder.Configurations.Add(new SessionPolicyMap());
+            //modelBuilder.Configurations.Add(new CaptchaKeyMap());
+            //modelBuilder.Configurations.Add(new InvalidEmailResetPasswordMap());
+            //modelBuilder.Configurations.Add(new WebhookKeysMap());
 
-            //Was Missing
-            modelBuilder.Configurations.Add(new BatchServicesDefinitionMap());
+            ////Was Missing
+            //modelBuilder.Configurations.Add(new BatchServicesDefinitionMap());
+            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             base.OnModelCreating(modelBuilder);
         }

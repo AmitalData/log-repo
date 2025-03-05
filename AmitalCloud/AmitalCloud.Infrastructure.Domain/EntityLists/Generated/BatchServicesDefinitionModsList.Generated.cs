@@ -24,23 +24,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public BatchServicesDefinitionModsList() : base() {}
        public BatchServicesDefinitionModsList(POCO.BatchServicesDefinitionMods entity) : base()
        {
-          Code  = entity.Code;
+          CdropCode  = entity.CdropCode;
           InActive  = entity.InActive;
           NumberOfThreads  = entity.NumberOfThreads;
-          BatchServicesDefinition  = entity.BatchServicesDefinition;
+          Code  = entity.Code;
        }
        #endregion Constructors
        #region Properties
-   
-       [Key]
-       [DataMember]
-       public string Code  { get; set; }
+          [DataMember]
+       public string CdropCode  { get; set; }
        [DataMember]
        public bool InActive  { get; set; }
        [DataMember]
        public int? NumberOfThreads  { get; set; }
+
+       [Key]
        [DataMember]
-       public string BatchServicesDefinition  { get; set; }
+       public string Code  { get; set; }
          #endregion Properties
    }
 

@@ -14,13 +14,8 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
     {
        	 IDbSet<AdvancedQueryFilter> AdvancedQueryFilters { get; }
 		 IDbSet<AgentSharedLogisticsKey> AgentSharedLogisticsKeys { get; }
-		 IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; }
-		 IDbSet<AnalyzeQueueStatus> AnalyzeQueueStatuss { get; }
-		 IDbSet<AuthenticationToken> AuthenticationTokens { get; }
 		 IDbSet<AutomationHistory> AutomationHistorys { get; }
 		 IDbSet<AutomationLastUpdate> AutomationLastUpdates { get; }
-		 IDbSet<AutoSignupEmail> AutoSignupEmails { get; }
-		 IDbSet<BatchServicesDefinitionMods> BatchServicesDefinitionModss { get; }
 		 IDbSet<BlobFile> BlobFiles { get; }
 		 IDbSet<CaptchaKey> CaptchaKeys { get; }
 		 IDbSet<CardContact> CardContacts { get; }
@@ -35,58 +30,49 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<ContactMobileDevice> ContactMobileDevices { get; }
 		 IDbSet<ContactPassword> ContactPasswords { get; }
 		 IDbSet<ContactTenant> ContactTenants { get; }
-		 IDbSet<ContactTenantRole> ContactTenantRoles { get; }
-		 IDbSet<ConvertProgramInfo> ConvertProgramInfos { get; }
+		 IDbSet<ContactTenantRole> ContactTenantRoleset { get; }
+		 IDbSet<ConvertProgramInfo> ConvertProgramInfoes { get; }
 		 IDbSet<Counter> Counters { get; }
 		 IDbSet<CounterLastNumber> CounterLastNumbers { get; }
 		 IDbSet<CounterStat> CounterStats { get; }
 		 IDbSet<CustomerCompetitor> CustomerCompetitors { get; }
 		 IDbSet<CustomerCompetitorProduct> CustomerCompetitorProducts { get; }
 		 IDbSet<CustomerProductLocationActualData> CustomerProductLocationActualDatas { get; }
-		 IDbSet<CustomMetaDataTypesAdditional> CustomMetaDataTypesAdditionals { get; }
 		 IDbSet<CustomPickList> CustomPickLists { get; }
 		 IDbSet<CustomTable> CustomTables { get; }
-		 IDbSet<DataBaseProperty> DataBasePropertys { get; }
+		 IDbSet<DataBaseProperty> databaseproperties { get; }
 		 IDbSet<DataProvider> DataProviders { get; }
 		 IDbSet<DBIdCounter> DBIdCounters { get; }
 		 IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get; }
 		 IDbSet<Document> Documents { get; }
 		 IDbSet<DocumentOut> DocumentOuts { get; }
-		 IDbSet<DocumentOutCopy> DocumentOutCopys { get; }
+		 IDbSet<DocumentOutCopy> documentoutcopies { get; }
 		 IDbSet<DocumentsDataProvider> DocumentsDataProviders { get; }
 		 IDbSet<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues { get; }
-		 IDbSet<DocumentsFilingsView> DocumentsFilingsViews { get; }
 		 IDbSet<DocumentsMetaDataType> DocumentsMetaDataTypes { get; }
-		 IDbSet<DocumentStatus> DocumentStatuss { get; }
+		 IDbSet<DocumentStatus> DocumentStatus { get; }
 		 IDbSet<DocumentTypeMetaData> DocumentTypeMetaDatas { get; }
-		 IDbSet<DWHBuildStatus> DWHBuildStatuss { get; }
+		 IDbSet<DWHBuildStatus> DWHBuildStatus { get; }
 		 IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; }
-		 IDbSet<DWObjectFieldCategories> DWObjectFieldCategoriess { get; }
-		 IDbSet<DWQuery> DWQuerys { get; }
+		 IDbSet<DWObjectFieldCategories> DWObjectFieldCategories { get; }
+		 IDbSet<DWQuery> dwqueries { get; }
 		 IDbSet<DWQueryColumn> DWQueryColumns { get; }
 		 IDbSet<DWQueryFilter> DWQueryFilters { get; }
-		 IDbSet<DWSubQuery> DWSubQuerys { get; }
+		 IDbSet<DWSubQuery> dwsubqueries { get; }
 		 IDbSet<EmailProvider> EmailProviders { get; }
-		 IDbSet<EntityCasualData> EntityCasualDatas { get; }
+		 IDbSet<EntityCasualData> EntityCasualData { get; }
 		 IDbSet<EntityChange> EntityChanges { get; }
 		 IDbSet<EntityDate> EntityDates { get; }
-		 IDbSet<EntityLastActivity> EntityLastActivitys { get; }
 		 IDbSet<EntityLastActivityType> EntityLastActivityTypes { get; }
 		 IDbSet<EntityLastUpdate> EntityLastUpdates { get; }
-		 IDbSet<EntityPartner> EntityPartners { get; }
 		 IDbSet<FailedLoginLog> FailedLoginLogs { get; }
 		 IDbSet<FailedTokenLog> FailedTokenLogs { get; }
 		 IDbSet<Feature> Features { get; }
 		 IDbSet<FeatureChange> FeatureChanges { get; }
 		 IDbSet<FeatureType> FeatureTypes { get; }
 		 IDbSet<FieldDataType> FieldDataTypes { get; }
-		 IDbSet<FieldsTranslations> FieldsTranslationss { get; }
-		 IDbSet<FormCustomField> FormCustomFields { get; }
+		 IDbSet<FormCustomField> FormCustomFields1 { get; }
 		 IDbSet<GeneralLock> GeneralLocks { get; }
-		 IDbSet<GlobalContact> GlobalContacts { get; }
-		 IDbSet<GlobalDB> GlobalDBs { get; }
-		 IDbSet<GlobalTenant> GlobalTenants { get; }
-		 IDbSet<GlobalTenantCounter> GlobalTenantCounters { get; }
 		 IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; }
 		 IDbSet<ImageDetail> ImageDetails { get; }
 		 IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; }
@@ -109,7 +95,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<PasswordResetRequest> PasswordResetRequests { get; }
 		 IDbSet<PerformanceLog> PerformanceLogs { get; }
 		 IDbSet<PermissionType> PermissionTypes { get; }
-		 IDbSet<Query> Querys { get; }
+		 IDbSet<Query> QUERIES { get; }
 		 IDbSet<QueryColumn> QueryColumns { get; }
 		 IDbSet<QueryGroup> QueryGroups { get; }
 		 IDbSet<QueueDefinition> QueueDefinitions { get; }
@@ -123,9 +109,9 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<Screen> Screens { get; }
 		 IDbSet<ScreenField> ScreenFields { get; }
 		 IDbSet<ScreenModification> ScreenModifications { get; }
-		 IDbSet<SessionPolicy> SessionPolicys { get; }
+		 IDbSet<SessionPolicy> sessionpolicies { get; }
 		 IDbSet<Setting> Settings { get; }
-		 IDbSet<SharedUserQuery> SharedUserQuerys { get; }
+		 IDbSet<SharedUserQuery> shareduserqueries { get; }
 		 IDbSet<SmallDocument> SmallDocuments { get; }
 		 IDbSet<SpecialService> SpecialServices { get; }
 		 IDbSet<SystemMetadataLastUpdate> SystemMetadataLastUpdates { get; }
@@ -133,13 +119,13 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<TermsofUse> TermsofUses { get; }
 		 IDbSet<TextCodeType> TextCodeTypes { get; }
 		 IDbSet<Tip> Tips { get; }
-		 IDbSet<TipsVisibility> TipsVisibilitys { get; }
+		 IDbSet<TipsVisibility> tipsvisibilities { get; }
 		 IDbSet<Translation> Translations { get; }
 		 IDbSet<TranslationHeader> TranslationHeaders { get; }
 		 IDbSet<TriggerType> TriggerTypes { get; }
 		 IDbSet<UserLastLogin> UserLastLogins { get; }
 		 IDbSet<UserLoginLog> UserLoginLogs { get; }
-		 IDbSet<UserPermittedBranch> UserPermittedBranchs { get; }
+		 IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
 		 IDbSet<UserPermittedProduct> UserPermittedProducts { get; }
 		 IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; }
 		 IDbSet<ValidationType> ValidationTypes { get; }

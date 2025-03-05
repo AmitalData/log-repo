@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class GlobalContactQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.GlobalContact,GlobalContactKeys<string>,GlobalContactPM,GlobalContactList,string>
+   public partial class GlobalContactQueryService: BaseEntityQueryService<IGlobalContext,POCO.GlobalContact,GlobalContactKeys<string>,GlobalContactPM,GlobalContactList,string>
    {
-        public GlobalContactQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public GlobalContactQueryService(IAmitalCloudContext context) : base(new Repository<POCO.GlobalContact>(context),new GlobalContactDataMapping()) {}
+        public GlobalContactQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public GlobalContactQueryService(IGlobalContext context) : base(new Repository<POCO.GlobalContact>(context),new GlobalContactDataMapping()) {}
 		public  GlobalContactPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new GlobalContactKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.GlobalContact,string> GetKeys(POCO.GlobalContact entityPOCO) => new GlobalContactKeys<string>() { Id = entityPOCO.Id,  };
    }

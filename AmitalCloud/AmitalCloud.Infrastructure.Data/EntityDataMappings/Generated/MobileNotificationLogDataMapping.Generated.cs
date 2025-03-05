@@ -286,6 +286,26 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 return;
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.NotificationMessage)) //T4 find type == nText 
+            {
+                entityPM.NotificationMessage = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.NotificationMessage));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Exception)) //T4 find type == nText 
+            {
+                entityPM.Exception = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Exception));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.NotificationMessageIOS)) //T4 find type == nText 
+            {
+                entityPM.NotificationMessageIOS = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.NotificationMessageIOS));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.NotificationMessageAndroid)) //T4 find type == nText 
+            {
+                entityPM.NotificationMessageAndroid = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.NotificationMessageAndroid));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.XML)) //T4 find type == nText 
+            {
+                entityPM.XML = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.XML));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)

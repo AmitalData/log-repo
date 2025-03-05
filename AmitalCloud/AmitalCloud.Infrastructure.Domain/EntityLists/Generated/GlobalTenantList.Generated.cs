@@ -30,10 +30,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           Version  = entity.Version;
           IsActive  = entity.IsActive;
           TTY  = entity.TTY;
-          computed  = entity.computed;
           PrivateLabelId  = entity.PrivateLabelId;
           LastUpdateDate  = entity.LastUpdateDate;
-          TenantManagement  = entity.TenantManagement;
        }
        #endregion Constructors
        #region Properties
@@ -52,13 +50,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string TTY  { get; set; }
        [DataMember]
-       public string computed  { get; set; }
-       [DataMember]
        public string PrivateLabelId  { get; set; }
        [DataMember]
        public DateTime? LastUpdateDate  { get; set; }
-       [DataMember]
-       public string TenantManagement  { get; set; }
          #endregion Properties
    }
 

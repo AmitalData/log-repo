@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AuthenticationTokenQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AuthenticationToken,AuthenticationTokenKeys<string>,AuthenticationTokenPM,AuthenticationTokenList,string>
+   public partial class AuthenticationTokenQueryService: BaseEntityQueryService<IGlobalContext,POCO.AuthenticationToken,AuthenticationTokenKeys<string>,AuthenticationTokenPM,AuthenticationTokenList,string>
    {
-        public AuthenticationTokenQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AuthenticationTokenQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AuthenticationToken>(context),new AuthenticationTokenDataMapping()) {}
+        public AuthenticationTokenQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public AuthenticationTokenQueryService(IGlobalContext context) : base(new Repository<POCO.AuthenticationToken>(context),new AuthenticationTokenDataMapping()) {}
 		public  AuthenticationTokenPM GetSingle(string token,bool getComposition, bool getFromCache) => base.GetSingle(new AuthenticationTokenKeys<string>(){ Token = token }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AuthenticationToken,string> GetKeys(POCO.AuthenticationToken entityPOCO) => new AuthenticationTokenKeys<string>() { Token = entityPOCO.Token,  };
    }

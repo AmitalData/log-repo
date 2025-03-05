@@ -51,6 +51,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 		public virtual ICollection<CommunicationLog> CommunicationLogs_Documentid { get; set; }
 		public virtual ICollection<CommunicationLog> CommunicationLogs_Responsedocumentid { get; set; }
 		public virtual ICollection<CommunicationLogStep> CommunicationLogSteps { get; set; }
+		public virtual ICollection<DocumentOutCopy> DocumentOutCopys { get; set; }
 		public virtual ICollection<DocumentOut> DocumentOuts { get; set; }
 		public virtual ICollection<FilingInboxAttachment> FilingInboxAttachments { get; set; }
 		public virtual ICollection<ImageLibrary> ImageLibrarys { get; set; }

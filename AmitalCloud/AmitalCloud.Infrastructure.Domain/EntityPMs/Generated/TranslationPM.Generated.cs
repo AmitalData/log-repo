@@ -32,8 +32,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_translationHeaderCode = entity.TranslationHeaderCode;
 		_translationheader = entity.TranslationHeader !=null ? new TranslationHeaderPM(entity.TranslationHeader) : null;
 			_textCodeId = entity.TextCodeId;
-		_textcode = entity.TextCode !=null ? new TextCodePM(entity.TextCode) : null;
-			_translatedText = entity.TranslatedText;
+		_translatedText = entity.TranslatedText;
 		_translatedTextPlural = entity.TranslatedTextPlural;
 		_tenant = entity.Tenant;
 		_translateDate = entity.TranslateDate;
@@ -100,14 +99,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private TextCodePM _textcode;
-		[Include]
-        [DataMember]
-        public virtual TextCodePM TextCode 
-		{ 
-		get { return _textcode; } 
-		set { _textcode = value; }
-		}
 	  private string _translatedText ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

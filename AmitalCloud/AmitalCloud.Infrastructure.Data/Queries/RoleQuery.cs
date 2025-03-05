@@ -40,7 +40,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 {
                     throw new Exception($"contacttenant not exist in DB ({contactid})");
                 }
-                List<ContactTenantRole> contactTenantRoles = (from a in context.ContactTenantRoles
+                List<ContactTenantRole> contactTenantRoles = (from a in context.ContactTenantRoleset
                                                               where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
                                                               select a).ToList();
 

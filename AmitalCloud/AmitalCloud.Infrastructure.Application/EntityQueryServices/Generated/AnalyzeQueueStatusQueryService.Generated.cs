@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AnalyzeQueueStatusQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AnalyzeQueueStatus,AnalyzeQueueStatusKeys<string>,AnalyzeQueueStatusPM,AnalyzeQueueStatusList,string>
+   public partial class AnalyzeQueueStatusQueryService: BaseEntityQueryService<IGlobalContext,POCO.AnalyzeQueueStatus,AnalyzeQueueStatusKeys<string>,AnalyzeQueueStatusPM,AnalyzeQueueStatusList,string>
    {
-        public AnalyzeQueueStatusQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public AnalyzeQueueStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AnalyzeQueueStatus>(context),new AnalyzeQueueStatusDataMapping()) {}
+        public AnalyzeQueueStatusQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public AnalyzeQueueStatusQueryService(IGlobalContext context) : base(new Repository<POCO.AnalyzeQueueStatus>(context),new AnalyzeQueueStatusDataMapping()) {}
 		public  AnalyzeQueueStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new AnalyzeQueueStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AnalyzeQueueStatus,string> GetKeys(POCO.AnalyzeQueueStatus entityPOCO) => new AnalyzeQueueStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

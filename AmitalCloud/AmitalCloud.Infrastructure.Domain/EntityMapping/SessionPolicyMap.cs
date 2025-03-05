@@ -18,11 +18,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public SessionPolicyMap()
         { 
-				this.ToTable("SessionPolicys");
+				this.ToTable("sessionpolicies");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropId).HasColumnName("CdropId").IsRequired().HasMaxLength(128).IsUnicode(true);
 
             this.Property(t => t.WebTokenLifeTimeInMinutes).HasColumnName("WebTokenLifeTimeInMinutes").IsRequired();
 
@@ -36,6 +36,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
               this.Property(t => t.WebTokenExpirationWarningInMinutes).HasColumnName("WebTokenExpirationWarningInMinutes").IsRequired();
 			}
 
+
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

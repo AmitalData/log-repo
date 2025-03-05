@@ -30,15 +30,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_id = entity.Id;
 		_globalDBId = entity.GlobalDBId;
-		_companyName = entity.CompanyName;
+		_globaldb = entity.GlobalDB !=null ? new GlobalDBPM(entity.GlobalDB) : null;
+			_companyName = entity.CompanyName;
 		_version = entity.Version;
 		_isActive = entity.IsActive;
 		_tTY = entity.TTY;
-		_computed = entity.computed;
 		_privateLabelId = entity.PrivateLabelId;
-		_tenantmanagmentprivatelabel = entity.TenantManagmentPrivateLabel !=null ? new TenantManagmentPrivateLabelsPM(entity.TenantManagmentPrivateLabel) : null;
+		_tenantmanagmentprivatelabels = entity.TenantManagmentPrivateLabels !=null ? new TenantManagmentPrivateLabelsPM(entity.TenantManagmentPrivateLabels) : null;
 			_lastUpdateDate = entity.LastUpdateDate;
-		_tenantManagement = entity.TenantManagement;
+		globalContacts = entity.GlobalContacts != null ? entity.GlobalContacts.Select(a=>new GlobalContactPM(a)).ToList() : null;
+		//tenantManagements = entity.TenantManagements != null ? entity.TenantManagements.Select(a=>new TenantManagementPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -75,6 +76,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private GlobalDBPM _globaldb;
+		[Include]
+        [DataMember]
+        public virtual GlobalDBPM GlobalDB 
+		{ 
+		get { return _globaldb; } 
+		set { _globaldb = value; }
+		}
 	  private string _companyName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -139,22 +148,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _computed ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string computed  
-	   {
-	     get { return _computed; }
-		 set
-		 {
-		   if(_computed != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="computed",OldValue=_computed,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _computed=value;
-		   }
-		 }
-	   }
 	  private string _privateLabelId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -171,13 +164,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private TenantManagmentPrivateLabelsPM _tenantmanagmentprivatelabel;
+		private TenantManagmentPrivateLabelsPM _tenantmanagmentprivatelabels;
 		[Include]
         [DataMember]
-        public virtual TenantManagmentPrivateLabelsPM TenantManagmentPrivateLabel 
+        public virtual TenantManagmentPrivateLabelsPM TenantManagmentPrivateLabels 
 		{ 
-		get { return _tenantmanagmentprivatelabel; } 
-		set { _tenantmanagmentprivatelabel = value; }
+		get { return _tenantmanagmentprivatelabels; } 
+		set { _tenantmanagmentprivatelabels = value; }
 		}
 	  private DateTime? _lastUpdateDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -195,22 +188,68 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _tenantManagement ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   private List<GlobalContactPM> globalContacts;
+	 
+		     
+	   [Include]
+	   [Association("GlobalContactGlobalTenant", "Id","Globaltenantid")]
 	   [DataMember]
-       public string TenantManagement  
+	   public virtual List<GlobalContactPM> GlobalContacts  
 	   {
-	     get { return _tenantManagement; }
-		 set
-		 {
-		   if(_tenantManagement != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantManagement",OldValue=_tenantManagement,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _tenantManagement=value;
-		   }
-		 }
-	   }
+	        get
+             {
+                 if (globalContacts == null)
+                 {
+                     globalContacts = new List<GlobalContactPM>();
+                 }
+                 return globalContacts;
+              }
+             set { globalContacts = value; }
+	    }
+	   private List<GlobalContactPM>  deletedGlobalContacts;
+	   public virtual List<GlobalContactPM> DeletedGlobalContacts  
+	   {
+	        get
+             {
+                 if ( deletedGlobalContacts == null)
+                 {
+                      deletedGlobalContacts = new List<GlobalContactPM>();
+                 }
+                 return  deletedGlobalContacts;
+              }
+             set {  deletedGlobalContacts = value; }
+	    }
+	   private List<TenantManagementPM> tenantManagements;
+	 
+		     
+	   [Include]
+	   [Association("TenantManagementGlobalTenant", "Id","Id")]
+	   [DataMember]
+	   public virtual List<TenantManagementPM> TenantManagements  
+	   {
+	        get
+             {
+                 if (tenantManagements == null)
+                 {
+                     tenantManagements = new List<TenantManagementPM>();
+                 }
+                 return tenantManagements;
+              }
+             set { tenantManagements = value; }
+	    }
+	   private List<TenantManagementPM>  deletedTenantManagements;
+	   public virtual List<TenantManagementPM> DeletedTenantManagements  
+	   {
+	        get
+             {
+                 if ( deletedTenantManagements == null)
+                 {
+                      deletedTenantManagements = new List<TenantManagementPM>();
+                 }
+                 return  deletedTenantManagements;
+              }
+             set {  deletedTenantManagements = value; }
+	    }
 	 }
 #endregion Properties
 }

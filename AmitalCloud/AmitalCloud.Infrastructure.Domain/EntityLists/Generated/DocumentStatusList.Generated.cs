@@ -25,6 +25,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DocumentStatusList(POCO.DocumentStatus entity) : base()
        {
           Code  = entity.Code;
+          DropCdropName  = entity.DropCdropName;
+          DropCdropSearchfields  = entity.DropCdropSearchfields;
           Name  = entity.Name;
           SearchFields  = entity.SearchFields;
        }
@@ -34,6 +36,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [Key]
        [DataMember]
        public string Code  { get; set; }
+       [DataMember]
+       public string DropCdropName  { get; set; }
+       [DataMember]
+       public string DropCdropSearchfields  { get; set; }
        [DataMember]
        public string Name  { get; set; }
        [DataMember]

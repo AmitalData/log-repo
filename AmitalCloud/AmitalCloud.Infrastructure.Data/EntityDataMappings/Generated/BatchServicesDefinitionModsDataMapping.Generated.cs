@@ -24,30 +24,30 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         Code, 
+	         CdropCode, 
 	         InActive, 
 	         NumberOfThreads, 
-	         BatchServicesDefinition,	      }
+	         Code,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         Code, 
+	         CdropCode, 
 	         InActive, 
 	         NumberOfThreads, 
-	         BatchServicesDefinition,	      }
+	         Code,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(BatchServicesDefinitionModsPM entityPM, POCO.BatchServicesDefinitionMods entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive)) { entityPOCO.InActive = entityPM.InActive;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropCode)) { entityPOCO.CdropCode = entityPM.CdropCode;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive)) { entityPOCO.InActive = entityPM.InActive;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfThreads)) { entityPOCO.NumberOfThreads = entityPM.NumberOfThreads;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BatchServicesDefinition)) { entityPOCO.BatchServicesDefinition = entityPM.BatchServicesDefinition;}
 					}
 		public void POCOToPM(BatchServicesDefinitionModsPM entityPM, POCO.BatchServicesDefinitionMods entityPOCO)
         {
-			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
+			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropCode))
             {
-					entityPM.Code = entityPOCO.Code;
+					entityPM.CdropCode = entityPOCO.CdropCode;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InActive))
             {
@@ -57,25 +57,25 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.NumberOfThreads = entityPOCO.NumberOfThreads;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BatchServicesDefinition))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
             {
-					entityPM.BatchServicesDefinition = entityPOCO.BatchServicesDefinition;
+					entityPM.Code = entityPOCO.Code;
             }
 		}
 		public void PMToOldPM(BatchServicesDefinitionModsPM entityPM, BatchServicesDefinitionModsPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropCode))
+            {
+                oldEntityPM.CdropCode = entityPM.CdropCode;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InActive))
             {
                 oldEntityPM.InActive = entityPM.InActive;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberOfThreads))
             {
                 oldEntityPM.NumberOfThreads = entityPM.NumberOfThreads;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BatchServicesDefinition))
-            {
-                oldEntityPM.BatchServicesDefinition = entityPM.BatchServicesDefinition;
             }
 					}
 		public void POCOToList(POCO.BatchServicesDefinitionMods entityPOCO, BatchServicesDefinitionModsList entityList)
@@ -98,6 +98,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CdropCode)) //T4 find type == nText 
+            {
+                entityPM.CdropCode = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropCode));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

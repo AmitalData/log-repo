@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_dWObjectFieldCode = entity.DWObjectFieldCode;
 		_dWCategoryCode = entity.DWCategoryCode;
-		_dwcategory = entity.DWCategory !=null ? new DWCategoriesPM(entity.DWCategory) : null;
+		_dwcategories = entity.DWCategories !=null ? new DWCategoriesPM(entity.DWCategories) : null;
 			_dWObjectTableCode = entity.DWObjectTableCode;
    }
    #endregion Constructors
@@ -85,13 +85,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private DWCategoriesPM _dwcategory;
+		private DWCategoriesPM _dwcategories;
 		[Include]
         [DataMember]
-        public virtual DWCategoriesPM DWCategory 
+        public virtual DWCategoriesPM DWCategories 
 		{ 
-		get { return _dwcategory; } 
-		set { _dwcategory = value; }
+		get { return _dwcategories; } 
+		set { _dwcategories = value; }
 		}
 	  private string _dWObjectTableCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]

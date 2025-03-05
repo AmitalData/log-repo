@@ -20,13 +20,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	{
 	        new const bool hasTenant = false;  
 		
-        [Key]
-        [Column("Id")]
-	    public string Id { get; set; }
+           [Column("CdropId")]
+	    public string CdropId { get; set; }
         [Column("WebTokenLifeTimeInMinutes")]
 	    public int WebTokenLifeTimeInMinutes { get; set; }
      
 	    public int WebTokenExpirationWarningInMinutes { get; set; }
+     [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
     }
 }
 	 

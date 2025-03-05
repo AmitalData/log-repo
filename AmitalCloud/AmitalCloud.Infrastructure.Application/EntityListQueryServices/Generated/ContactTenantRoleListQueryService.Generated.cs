@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class ContactTenantRoleListQueryService  : BaseEntityListQueryService<ContactTenantRoleList,POCO.ContactTenantRole,  ContactTenantRoleKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ContactTenantRole> contextEntity => (context as IAmitalCloudContext).ContactTenantRoles;
+	    protected override System.Data.Entity.IDbSet<POCO.ContactTenantRole> contextEntity => (context as IAmitalCloudContext).ContactTenantRoleset;
 		public ContactTenantRoleListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public ContactTenantRoleList GetSingle(string id)
 		{

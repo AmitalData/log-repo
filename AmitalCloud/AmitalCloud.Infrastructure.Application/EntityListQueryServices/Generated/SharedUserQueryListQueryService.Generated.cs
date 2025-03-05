@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class SharedUserQueryListQueryService  : BaseEntityListQueryService<SharedUserQueryList,POCO.SharedUserQuery,  SharedUserQueryKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.SharedUserQuery> contextEntity => (context as IAmitalCloudContext).SharedUserQuerys;
+	    protected override System.Data.Entity.IDbSet<POCO.SharedUserQuery> contextEntity => (context as IAmitalCloudContext).shareduserqueries;
 		public SharedUserQueryListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public SharedUserQueryList GetSingle(string id)
 		{

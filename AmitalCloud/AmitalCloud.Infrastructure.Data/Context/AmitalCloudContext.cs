@@ -57,7 +57,8 @@ namespace AmitalCloud.Infrastructure.Data.Context
             }
             else 
 			{
-				return new AmitalCloudContext(dbConnectionInfo, tenant); ;
+                dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo);
+                return new AmitalCloudContext(dbConnectionInfo, tenant); ;
 			}
         }
 		protected override AmitalCloudDBSchema AmitalCloudDBSchema
@@ -438,7 +439,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
             modelBuilder.Configurations.Add(new DocumentTypeTemplateMap());
             modelBuilder.Configurations.Add(new DueTypeMap());
             modelBuilder.Configurations.Add(new EntityDateMap());
-            modelBuilder.Configurations.Add(new EntityLastActivityMap());
+            //modelBuilder.Configurations.Add(new EntityLastActivityMap());
             modelBuilder.Configurations.Add(new EntityLastActivityTypeMap());
             modelBuilder.Configurations.Add(new EntityLastUpdateMap());
             modelBuilder.Configurations.Add(new EntityStatuMap());
@@ -901,7 +902,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
 	public IDbSet<WarehouseWeightRounding> WarehouseWeightRoundings  {  get; set; }
 	public IDbSet<WeightUnit> WeightUnits  {  get; set; }
 	public IDbSet<WorkerRoleName> WorkerRoleNames  {  get; set; }
-	public IDbSet<UserPermittedBranch> UserPermittedBranches { get;set; }
+	//public IDbSet<UserPermittedBranch> UserPermittedBranches { get;set; }
 public IDbSet<ObjectField> ObjectFieldsDbSet { get;set; }
 
 public int Tenant => _tenant;

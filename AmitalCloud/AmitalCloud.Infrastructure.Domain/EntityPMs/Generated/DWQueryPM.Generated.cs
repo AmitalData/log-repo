@@ -28,30 +28,34 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public DWQueryPM() : base() {} 
    public DWQueryPM(POCO.DWQuery entity) : base()
    {
-		_id = entity.Id;
+		_cdropId = entity.CdropId;
 		_tenant = entity.Tenant;
 		_sQLString = entity.SQLString;
 		_createdByUserId = entity.CreatedByUserId;
 		_updateByUserId = entity.UpdateByUserId;
-		_createdDate = entity.CreatedDate;
+		_updatebyuseriduser = entity.UpdateByUserIdUser !=null ? new UserPM(entity.UpdateByUserIdUser) : null;
+			_createdDate = entity.CreatedDate;
 		_updatedDate = entity.UpdatedDate;
+		_id = entity.Id;
+		bIReports = entity.BIReports != null ? entity.BIReports.Select(a=>new BIReportPM(a)).ToList() : null;
+		dWQueryColumns = entity.DWQueryColumns != null ? entity.DWQueryColumns.Select(a=>new DWQueryColumnPM(a)).ToList() : null;
+		dWQueryFilters = entity.DWQueryFilters != null ? entity.DWQueryFilters.Select(a=>new DWQueryFilterPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
-   	  private string _id ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+   	  private string _cdropId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Id  
+       public string CdropId  
 	   {
-	     get { return _id; }
+	     get { return _cdropId; }
 		 set
 		 {
-		   if(_id != value)
+		   if(_cdropId != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropId",OldValue=_cdropId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _id=value;
+		   _cdropId=value;
 		   }
 		 }
 	   }
@@ -119,6 +123,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _updatebyuseriduser;
+		[Include]
+        [DataMember]
+        public virtual UserPM UpdateByUserIdUser 
+		{ 
+		get { return _updatebyuseriduser; } 
+		set { _updatebyuseriduser = value; }
+		}
 	  private DateTime _createdDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -151,6 +163,116 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _id ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	     get { return _id; }
+		 set
+		 {
+		   if(_id != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _id=value;
+		   }
+		 }
+	   }
+	   private List<BIReportPM> bIReports;
+	 
+		     
+	   [Include]
+	   [Association("BIReport", "Id","Dwqueryid")]
+	   [DataMember]
+	   public virtual List<BIReportPM> BIReports  
+	   {
+	        get
+             {
+                 if (bIReports == null)
+                 {
+                     bIReports = new List<BIReportPM>();
+                 }
+                 return bIReports;
+              }
+             set { bIReports = value; }
+	    }
+	   private List<BIReportPM>  deletedBIReports;
+	   public virtual List<BIReportPM> DeletedBIReports  
+	   {
+	        get
+             {
+                 if ( deletedBIReports == null)
+                 {
+                      deletedBIReports = new List<BIReportPM>();
+                 }
+                 return  deletedBIReports;
+              }
+             set {  deletedBIReports = value; }
+	    }
+	   private List<DWQueryColumnPM> dWQueryColumns;
+	 
+		     
+	   [Include]
+	   [Association("DWQueryColumn", "Id","Dwqueryid")]
+	   [DataMember]
+	   public virtual List<DWQueryColumnPM> DWQueryColumns  
+	   {
+	        get
+             {
+                 if (dWQueryColumns == null)
+                 {
+                     dWQueryColumns = new List<DWQueryColumnPM>();
+                 }
+                 return dWQueryColumns;
+              }
+             set { dWQueryColumns = value; }
+	    }
+	   private List<DWQueryColumnPM>  deletedDWQueryColumns;
+	   public virtual List<DWQueryColumnPM> DeletedDWQueryColumns  
+	   {
+	        get
+             {
+                 if ( deletedDWQueryColumns == null)
+                 {
+                      deletedDWQueryColumns = new List<DWQueryColumnPM>();
+                 }
+                 return  deletedDWQueryColumns;
+              }
+             set {  deletedDWQueryColumns = value; }
+	    }
+	   private List<DWQueryFilterPM> dWQueryFilters;
+	 
+		     
+	   [Include]
+	   [Association("DWQueryFilter", "Id","Dwqueryid")]
+	   [DataMember]
+	   public virtual List<DWQueryFilterPM> DWQueryFilters  
+	   {
+	        get
+             {
+                 if (dWQueryFilters == null)
+                 {
+                     dWQueryFilters = new List<DWQueryFilterPM>();
+                 }
+                 return dWQueryFilters;
+              }
+             set { dWQueryFilters = value; }
+	    }
+	   private List<DWQueryFilterPM>  deletedDWQueryFilters;
+	   public virtual List<DWQueryFilterPM> DeletedDWQueryFilters  
+	   {
+	        get
+             {
+                 if ( deletedDWQueryFilters == null)
+                 {
+                      deletedDWQueryFilters = new List<DWQueryFilterPM>();
+                 }
+                 return  deletedDWQueryFilters;
+              }
+             set {  deletedDWQueryFilters = value; }
+	    }
 	 }
 #endregion Properties
 }

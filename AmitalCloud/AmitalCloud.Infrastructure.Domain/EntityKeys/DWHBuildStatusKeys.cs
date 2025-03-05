@@ -23,7 +23,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
    	  public string Id  { get; set; }
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
-      public override string GetEntityPMName() => "DWHBuildStatussPM";
+      public override string GetEntityPMName() => "DWHBuildStatusPM";
 	  public override Expression<Func<EntityPOCOs.DWHBuildStatus, bool>> Predicate => a => a.Id == Id;
    }
 }

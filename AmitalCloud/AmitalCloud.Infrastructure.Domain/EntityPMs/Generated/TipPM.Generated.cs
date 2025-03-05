@@ -35,6 +35,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_objectTableId = entity.ObjectTableId;
 		_shortTextCodeCode = entity.ShortTextCodeCode;
 		objectTables = entity.ObjectTables != null ? entity.ObjectTables.Select(a=>new ObjectTablePM(a)).ToList() : null;
+		tipsVisibilitys = entity.TipsVisibilitys != null ? entity.TipsVisibilitys.Select(a=>new TipsVisibilityPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -165,6 +166,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
                  return  deletedObjectTables;
               }
              set {  deletedObjectTables = value; }
+	    }
+	   private List<TipsVisibilityPM> tipsVisibilitys;
+	 
+		     
+	   [Include]
+	   [Association("TipsVisibilityTip", "Code","Tipcode")]
+	   [DataMember]
+	   public virtual List<TipsVisibilityPM> TipsVisibilitys  
+	   {
+	        get
+             {
+                 if (tipsVisibilitys == null)
+                 {
+                     tipsVisibilitys = new List<TipsVisibilityPM>();
+                 }
+                 return tipsVisibilitys;
+              }
+             set { tipsVisibilitys = value; }
+	    }
+	   private List<TipsVisibilityPM>  deletedTipsVisibilitys;
+	   public virtual List<TipsVisibilityPM> DeletedTipsVisibilitys  
+	   {
+	        get
+             {
+                 if ( deletedTipsVisibilitys == null)
+                 {
+                      deletedTipsVisibilitys = new List<TipsVisibilityPM>();
+                 }
+                 return  deletedTipsVisibilitys;
+              }
+             set {  deletedTipsVisibilitys = value; }
 	    }
 	 }
 #endregion Properties

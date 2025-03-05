@@ -106,8 +106,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_supportEmail = entity.SupportEmail;
 		_isMultiPackage = entity.IsMultiPackage;
 		_id = entity.Id;
-		_globaltenant = entity.GlobalTenant !=null ? new GlobalTenantPM(entity.GlobalTenant) : null;
-			_name = entity.Name;
+		_name = entity.Name;
 		_packageCode = entity.PackageCode;
 		_temporalPackageCode = entity.TemporalPackageCode;
 		_recurringPeriodCode = entity.RecurringPeriodCode;
@@ -133,7 +132,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_awbmessagesccstype = entity.AWBMessagesCCSType !=null ? new AWBMessagesCCSTypePM(entity.AWBMessagesCCSType) : null;
 			_tenantTypeCode = entity.TenantTypeCode;
 		_tenanttype = entity.TenantType !=null ? new TenantTypePM(entity.TenantType) : null;
-			//packagesCodes_PK = entity.PackagesCodes_PK != null ? entity.PackagesCodes_PK.Select(a=>new stringPM(a)).ToList() : null;
+		//	packagesCodes_PK = entity.PackagesCodes_PK != null ? entity.PackagesCodes_PK.Select(a=>new stringPM(a)).ToList() : null;
 		//packagesCodes_BS = entity.PackagesCodes_BS != null ? entity.PackagesCodes_BS.Select(a=>new stringPM(a)).ToList() : null;
 		_hideSharedlogistics = entity.HideSharedlogistics;
 		_contactEmail = entity.ContactEmail;
@@ -1469,14 +1468,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private GlobalTenantPM _globaltenant;
-		[Include]
-        [DataMember]
-        public virtual GlobalTenantPM GlobalTenant 
-		{ 
-		get { return _globaltenant; } 
-		set { _globaltenant = value; }
-		}
 	  private string _name ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

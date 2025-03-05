@@ -24,13 +24,8 @@ namespace AmitalCloud.Infrastructure.Data.Context
 
 public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<AgentSharedLogisticsKey> AgentSharedLogisticsKeys  {  get; set; }
-	public IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews  {  get; set; }
-	public IDbSet<AnalyzeQueueStatus> AnalyzeQueueStatuss  {  get; set; }
-	public IDbSet<AuthenticationToken> AuthenticationTokens  {  get; set; }
 	public IDbSet<AutomationHistory> AutomationHistorys  {  get; set; }
 	public IDbSet<AutomationLastUpdate> AutomationLastUpdates  {  get; set; }
-	public IDbSet<AutoSignupEmail> AutoSignupEmails  {  get; set; }
-	public IDbSet<BatchServicesDefinitionMods> BatchServicesDefinitionModss  {  get; set; }
 	public IDbSet<BlobFile> BlobFiles  {  get; set; }
 	public IDbSet<CaptchaKey> CaptchaKeys  {  get; set; }
 	public IDbSet<CardContact> CardContacts  {  get; set; }
@@ -45,58 +40,49 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<ContactMobileDevice> ContactMobileDevices  {  get; set; }
 	public IDbSet<ContactPassword> ContactPasswords  {  get; set; }
 	public IDbSet<ContactTenant> ContactTenants  {  get; set; }
-	public IDbSet<ContactTenantRole> ContactTenantRoles  {  get; set; }
-	public IDbSet<ConvertProgramInfo> ConvertProgramInfos  {  get; set; }
+	public IDbSet<ContactTenantRole> ContactTenantRoleset  {  get; set; }
+	public IDbSet<ConvertProgramInfo> ConvertProgramInfoes  {  get; set; }
 	public IDbSet<Counter> Counters  {  get; set; }
 	public IDbSet<CounterLastNumber> CounterLastNumbers  {  get; set; }
 	public IDbSet<CounterStat> CounterStats  {  get; set; }
 	public IDbSet<CustomerCompetitor> CustomerCompetitors  {  get; set; }
 	public IDbSet<CustomerCompetitorProduct> CustomerCompetitorProducts  {  get; set; }
 	public IDbSet<CustomerProductLocationActualData> CustomerProductLocationActualDatas  {  get; set; }
-	public IDbSet<CustomMetaDataTypesAdditional> CustomMetaDataTypesAdditionals  {  get; set; }
 	public IDbSet<CustomPickList> CustomPickLists  {  get; set; }
 	public IDbSet<CustomTable> CustomTables  {  get; set; }
-	public IDbSet<DataBaseProperty> DataBasePropertys  {  get; set; }
+	public IDbSet<DataBaseProperty> databaseproperties  {  get; set; }
 	public IDbSet<DataProvider> DataProviders  {  get; set; }
 	public IDbSet<DBIdCounter> DBIdCounters  {  get; set; }
 	public IDbSet<DigitalContactLastSetting> DigitalContactLastSettings  {  get; set; }
 	public IDbSet<Document> Documents  {  get; set; }
 	public IDbSet<DocumentOut> DocumentOuts  {  get; set; }
-	public IDbSet<DocumentOutCopy> DocumentOutCopys  {  get; set; }
+	public IDbSet<DocumentOutCopy> documentoutcopies  {  get; set; }
 	public IDbSet<DocumentsDataProvider> DocumentsDataProviders  {  get; set; }
 	public IDbSet<DocumentsFilingMetaDataValue> DocumentsFilingMetaDataValues  {  get; set; }
-	public IDbSet<DocumentsFilingsView> DocumentsFilingsViews  {  get; set; }
 	public IDbSet<DocumentsMetaDataType> DocumentsMetaDataTypes  {  get; set; }
-	public IDbSet<DocumentStatus> DocumentStatuss  {  get; set; }
+	public IDbSet<DocumentStatus> DocumentStatus  {  get; set; }
 	public IDbSet<DocumentTypeMetaData> DocumentTypeMetaDatas  {  get; set; }
-	public IDbSet<DWHBuildStatus> DWHBuildStatuss  {  get; set; }
+	public IDbSet<DWHBuildStatus> DWHBuildStatus  {  get; set; }
 	public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings  {  get; set; }
-	public IDbSet<DWObjectFieldCategories> DWObjectFieldCategoriess  {  get; set; }
-	public IDbSet<DWQuery> DWQuerys  {  get; set; }
+	public IDbSet<DWObjectFieldCategories> DWObjectFieldCategories  {  get; set; }
+	public IDbSet<DWQuery> dwqueries  {  get; set; }
 	public IDbSet<DWQueryColumn> DWQueryColumns  {  get; set; }
 	public IDbSet<DWQueryFilter> DWQueryFilters  {  get; set; }
-	public IDbSet<DWSubQuery> DWSubQuerys  {  get; set; }
+	public IDbSet<DWSubQuery> dwsubqueries  {  get; set; }
 	public IDbSet<EmailProvider> EmailProviders  {  get; set; }
-	public IDbSet<EntityCasualData> EntityCasualDatas  {  get; set; }
+	public IDbSet<EntityCasualData> EntityCasualData  {  get; set; }
 	public IDbSet<EntityChange> EntityChanges  {  get; set; }
 	public IDbSet<EntityDate> EntityDates  {  get; set; }
-	public IDbSet<EntityLastActivity> EntityLastActivitys  {  get; set; }
 	public IDbSet<EntityLastActivityType> EntityLastActivityTypes  {  get; set; }
 	public IDbSet<EntityLastUpdate> EntityLastUpdates  {  get; set; }
-	public IDbSet<EntityPartner> EntityPartners  {  get; set; }
 	public IDbSet<FailedLoginLog> FailedLoginLogs  {  get; set; }
 	public IDbSet<FailedTokenLog> FailedTokenLogs  {  get; set; }
 	public IDbSet<Feature> Features  {  get; set; }
 	public IDbSet<FeatureChange> FeatureChanges  {  get; set; }
 	public IDbSet<FeatureType> FeatureTypes  {  get; set; }
 	public IDbSet<FieldDataType> FieldDataTypes  {  get; set; }
-	public IDbSet<FieldsTranslations> FieldsTranslationss  {  get; set; }
-	public IDbSet<FormCustomField> FormCustomFields  {  get; set; }
+	public IDbSet<FormCustomField> FormCustomFields1  {  get; set; }
 	public IDbSet<GeneralLock> GeneralLocks  {  get; set; }
-	public IDbSet<GlobalContact> GlobalContacts  {  get; set; }
-	public IDbSet<GlobalDB> GlobalDBs  {  get; set; }
-	public IDbSet<GlobalTenant> GlobalTenants  {  get; set; }
-	public IDbSet<GlobalTenantCounter> GlobalTenantCounters  {  get; set; }
 	public IDbSet<HybridPartnersPermission> HybridPartnersPermissions  {  get; set; }
 	public IDbSet<ImageDetail> ImageDetails  {  get; set; }
 	public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords  {  get; set; }
@@ -119,7 +105,7 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<PasswordResetRequest> PasswordResetRequests  {  get; set; }
 	public IDbSet<PerformanceLog> PerformanceLogs  {  get; set; }
 	public IDbSet<PermissionType> PermissionTypes  {  get; set; }
-	public IDbSet<Query> Querys  {  get; set; }
+	public IDbSet<Query> QUERIES  {  get; set; }
 	public IDbSet<QueryColumn> QueryColumns  {  get; set; }
 	public IDbSet<QueryGroup> QueryGroups  {  get; set; }
 	public IDbSet<QueueDefinition> QueueDefinitions  {  get; set; }
@@ -133,9 +119,9 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<Screen> Screens  {  get; set; }
 	public IDbSet<ScreenField> ScreenFields  {  get; set; }
 	public IDbSet<ScreenModification> ScreenModifications  {  get; set; }
-	public IDbSet<SessionPolicy> SessionPolicys  {  get; set; }
+	public IDbSet<SessionPolicy> sessionpolicies  {  get; set; }
 	public IDbSet<Setting> Settings  {  get; set; }
-	public IDbSet<SharedUserQuery> SharedUserQuerys  {  get; set; }
+	public IDbSet<SharedUserQuery> shareduserqueries  {  get; set; }
 	public IDbSet<SmallDocument> SmallDocuments  {  get; set; }
 	public IDbSet<SpecialService> SpecialServices  {  get; set; }
 	public IDbSet<SystemMetadataLastUpdate> SystemMetadataLastUpdates  {  get; set; }
@@ -143,13 +129,13 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<TermsofUse> TermsofUses  {  get; set; }
 	public IDbSet<TextCodeType> TextCodeTypes  {  get; set; }
 	public IDbSet<Tip> Tips  {  get; set; }
-	public IDbSet<TipsVisibility> TipsVisibilitys  {  get; set; }
+	public IDbSet<TipsVisibility> tipsvisibilities  {  get; set; }
 	public IDbSet<Translation> Translations  {  get; set; }
 	public IDbSet<TranslationHeader> TranslationHeaders  {  get; set; }
 	public IDbSet<TriggerType> TriggerTypes  {  get; set; }
 	public IDbSet<UserLastLogin> UserLastLogins  {  get; set; }
 	public IDbSet<UserLoginLog> UserLoginLogs  {  get; set; }
-	public IDbSet<UserPermittedBranch> UserPermittedBranchs  {  get; set; }
+	public IDbSet<UserPermittedBranch> UserPermittedBranches  {  get; set; }
 	public IDbSet<UserPermittedProduct> UserPermittedProducts  {  get; set; }
 	public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays  {  get; set; }
 	public IDbSet<ValidationType> ValidationTypes  {  get; set; }

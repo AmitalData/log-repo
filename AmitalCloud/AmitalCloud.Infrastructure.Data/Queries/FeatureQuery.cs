@@ -155,7 +155,102 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                     where a.Code == code && a.ObjectTableId == objectTableId
                     select new FeaturePM(a)).FirstOrDefault();
         }
+
+        public LoggedUserFeatures GetAllowedFeaturesForLoggedUser(string loggedUserId, int tenant)
+        {
+            LoggedUserFeatures loggedUserFeatures;
+            if (true)
+                //!AmitalCloudSettings.DeploymentStage.IsDBStage(AmitalCloudSettings.DeploymentStage.LogboxAndAccountingProduction))
+            {
+                string key = $"GetAllowedFeaturesForLoggedUser,{loggedUserId},{tenant}";
+                loggedUserFeatures = CacheManager.GetOrInsertNewObject<LoggedUserFeatures>(key, () =>
+                {
+                    return GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
+                });
+            }
+            else
+            {
+                loggedUserFeatures = GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
+            }
+            return loggedUserFeatures;
+        }
+        LoggedUserFeatures GetAllowedFeaturesForLoggedUserBL(string loggedUserId, int tenant)
+        {
+            LoggedUserFeatures myResult = new LoggedUserFeatures();
+            bool isDistributor = false;
+            bool isCustomerCare = false;
+            List<FeaturePM> allFeatures = new List<FeaturePM>();
+            List<string> allowedPackages = new List<string>();
+            ContactTenantQuery contactTenantQuery = new ContactTenantQuery(tenant);
+            ContactTenantPM contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, tenant);
+            if (contactTenant == null)
+            {
+                    contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, 0);
+                    UserQuery userQuery = new UserQuery(0);
+                    UserPM user = userQuery.GetSinglePM(loggedUserId, 0);
+                    isDistributor = user.IsDistributor;
+                    isCustomerCare = !user.IsDistributor;
+            }
+
+            else if (contactTenant.TenantId == 0)
+            {
+                UserQuery userQuery = new UserQuery(0);
+                UserPM user = userQuery.GetSinglePM(contactTenant.ContactId, 0);
+                isDistributor = user.IsDistributor;
+                isCustomerCare = !user.IsDistributor;
+            }
+            List<ContactTenantRolePM> contactTenantRoles = new List<ContactTenantRolePM>();
+            ContactTenantRoleQuery contactTenantRoleQuery = new ContactTenantRoleQuery(tenant);
+            if (isCustomerCare || isDistributor)
+            {
+                contactTenantRoles = contactTenantRoleQuery.GetContactTenantRolesForContactTenant(contactTenant.Id, 0);
+            }
+            else
+            {
+                contactTenantRoles = contactTenantRoleQuery.GetContactTenantRolesForContactTenant(contactTenant.Id, tenant);
+            }
+            if (contactTenantRoles.Count > 0)
+            {
+                List<string> allRolesIds = contactTenantRoles.Select(s => s.RoleId).ToList();
+                List<RolePM> allCustomRoles = new Repository<Role>(context)
+                    .GetMulti(a => allRolesIds.Contains(a.Id) && a.IsCustomRole == true, a => new RolePM(a));
+                foreach (RolePM item in allCustomRoles)
+                {
+                    if (allRolesIds.Contains(item.ParentRoleId))
+                    {
+                        allRolesIds.Remove(item.ParentRoleId);
+                    }
+                }
+                var isTenantZeroAccess = isCustomerCare || isDistributor ? true : false;
+                allowedPackages = this.GetAllPackagesCodes(loggedUserId, tenant, isTenantZeroAccess);
+                foreach (string myRoleId in allRolesIds)
+                {
+                    List<FeaturePM> myFeatures = this.GetAllowedFeaturesForRole(myRoleId, allowedPackages, tenant);
+                    foreach (FeaturePM feature in myFeatures)
+                    {
+                        if (!allFeatures.Contains(feature))
+                        {
+                            allFeatures.Add(feature);
+                        }
+                    }
+                }
+            }
+            myResult.Features = allFeatures;
+            myResult.AllowedPackagesCodes = allowedPackages;
+            return myResult;
+        }
+        private List<string> GetAllPackagesCodes(string loggedUserId, int tenant, bool isCustomerCare)
+        {
+            PackagesCodesManager iManager = new PackagesCodesManager(tenant, loggedUserId, isCustomerCare);
+            return iManager.BasePackagesCodes;
+        }
     }
+    public class LoggedUserFeatures
+    {
+        public List<FeaturePM> Features { get; set; }
+        public List<string> AllowedPackagesCodes { get; set; }
+    }
+
     public class PackagesCodesManager
     {
         public int Tenant { get; set; }

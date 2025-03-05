@@ -24,27 +24,30 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         Id, 
+	         CdropId, 
 	         WebTokenLifeTimeInMinutes, 
-	         WebTokenExpirationWarningInMinutes,	      }
+	         WebTokenExpirationWarningInMinutes, 
+	         Id,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         Id, 
+	         CdropId, 
 	         WebTokenLifeTimeInMinutes, 
-	         WebTokenExpirationWarningInMinutes,	      }
+	         WebTokenExpirationWarningInMinutes, 
+	         Id,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(SessionPolicyPM entityPM, POCO.SessionPolicy entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WebTokenLifeTimeInMinutes)) { entityPOCO.WebTokenLifeTimeInMinutes = entityPM.WebTokenLifeTimeInMinutes;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropId)) { entityPOCO.CdropId = entityPM.CdropId;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WebTokenLifeTimeInMinutes)) { entityPOCO.WebTokenLifeTimeInMinutes = entityPM.WebTokenLifeTimeInMinutes;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WebTokenExpirationWarningInMinutes)) { entityPOCO.WebTokenExpirationWarningInMinutes = entityPM.WebTokenExpirationWarningInMinutes;}
 					}
 		public void POCOToPM(SessionPolicyPM entityPM, POCO.SessionPolicy entityPOCO)
         {
-			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropId))
             {
-					entityPM.Id = entityPOCO.Id;
+					entityPM.CdropId = entityPOCO.CdropId;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WebTokenLifeTimeInMinutes))
             {
@@ -54,11 +57,19 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.WebTokenExpirationWarningInMinutes = entityPOCO.WebTokenExpirationWarningInMinutes;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
 		}
 		public void PMToOldPM(SessionPolicyPM entityPM, SessionPolicyPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WebTokenLifeTimeInMinutes))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropId))
+            {
+                oldEntityPM.CdropId = entityPM.CdropId;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WebTokenLifeTimeInMinutes))
             {
                 oldEntityPM.WebTokenLifeTimeInMinutes = entityPM.WebTokenLifeTimeInMinutes;
             }
@@ -87,6 +98,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CdropId)) //T4 find type == nText 
+            {
+                entityPM.CdropId = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropId));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

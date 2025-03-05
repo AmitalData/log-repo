@@ -27,11 +27,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string TranslationHeaderCode { get; set; }
 	      
         public virtual TranslationHeader TranslationHeader { get; set; }
-        [ForeignKey("TextCode")]
         [Column("TextCodeId")]
 	    public string TextCodeId { get; set; }
-	      
-        public virtual TextCode TextCode { get; set; }
         [Column("TranslatedText")]
 	    public string TranslatedText { get; set; }
         [Column("TranslatedTextPlural")]

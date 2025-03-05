@@ -18,17 +18,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public DWObjectFieldCategoriesMap()
         { 
-				this.ToTable("DWObjectFieldCategoriess");
+				this.ToTable("DWObjectFieldCategories");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.DWObjectFieldCode).HasColumnName("DWObjectFieldCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DWObjectFieldCode).HasColumnName("DWObjectFieldCode").IsRequired().HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.DWCategoryCode).HasColumnName("DWCategoryCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DWCategoryCode).HasColumnName("DWCategoryCode").IsRequired().HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.DWObjectTableCode).HasColumnName("DWObjectTableCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DWObjectTableCode).HasColumnName("DWObjectTableCode").IsRequired().HasMaxLength(50).IsUnicode(false);
         }
     }
 }

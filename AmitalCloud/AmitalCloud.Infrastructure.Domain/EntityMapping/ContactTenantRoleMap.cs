@@ -18,15 +18,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public ContactTenantRoleMap()
         { 
-				this.ToTable("ContactTenantRoles");
+				this.ToTable("ContactTenantRoleset");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.RoleId).HasColumnName("RoleId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.RoleId).HasColumnName("RoleId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.ContactTenantId).HasColumnName("ContactTenantId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ContactTenantId).HasColumnName("ContactTenantId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
         }

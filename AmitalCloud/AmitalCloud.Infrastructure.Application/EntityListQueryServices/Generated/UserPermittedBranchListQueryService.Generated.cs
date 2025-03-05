@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class UserPermittedBranchListQueryService  : BaseEntityListQueryService<UserPermittedBranchList,POCO.UserPermittedBranch,  UserPermittedBranchKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.UserPermittedBranch> contextEntity => (context as IAmitalCloudContext).UserPermittedBranchs;
+	    protected override System.Data.Entity.IDbSet<POCO.UserPermittedBranch> contextEntity => (context as IAmitalCloudContext).UserPermittedBranches;
 		public UserPermittedBranchListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public UserPermittedBranchList GetSingle(string id)
 		{

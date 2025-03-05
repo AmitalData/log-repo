@@ -25,22 +25,28 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           { 
 		     None,  
 	         Code, 
-	         Name, 
+	         CdropName, 
 	         LastUpdate, 
+	         CdropSearchfields, 
+	         Name, 
 	         SearchFields,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
 	         Code, 
-	         Name, 
+	         CdropName, 
 	         LastUpdate, 
+	         CdropSearchfields, 
+	         Name, 
 	         SearchFields,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(MonitorServiceLastUpdatePM entityPM, POCO.MonitorServiceLastUpdate entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name)) { entityPOCO.Name = entityPM.Name;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropName)) { entityPOCO.CdropName = entityPM.CdropName;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUpdate)) { entityPOCO.LastUpdate = entityPM.LastUpdate;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropSearchfields)) { entityPOCO.CdropSearchfields = entityPM.CdropSearchfields;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name)) { entityPOCO.Name = entityPM.Name;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields)) { entityPOCO.SearchFields = entityPM.SearchFields;}
 									BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
@@ -50,13 +56,21 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.Code = entityPOCO.Code;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Name))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropName))
             {
-					entityPM.Name = entityPOCO.Name;
+					entityPM.CdropName = entityPOCO.CdropName;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastUpdate))
             {
 					entityPM.LastUpdate = entityPOCO.LastUpdate;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropSearchfields))
+            {
+					entityPM.CdropSearchfields = entityPOCO.CdropSearchfields;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Name))
+            {
+					entityPM.Name = entityPOCO.Name;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
             {
@@ -66,13 +80,21 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		public void PMToOldPM(MonitorServiceLastUpdatePM entityPM, MonitorServiceLastUpdatePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropName))
             {
-                oldEntityPM.Name = entityPM.Name;
+                oldEntityPM.CdropName = entityPM.CdropName;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUpdate))
             {
                 oldEntityPM.LastUpdate = entityPM.LastUpdate;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropSearchfields))
+            {
+                oldEntityPM.CdropSearchfields = entityPM.CdropSearchfields;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
+            {
+                oldEntityPM.Name = entityPM.Name;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
@@ -99,6 +121,18 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CdropName)) //T4 find type == nText 
+            {
+                entityPM.CdropName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CdropSearchfields)) //T4 find type == nText 
+            {
+                entityPM.CdropSearchfields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropSearchfields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
+            {
+                entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

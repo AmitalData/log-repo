@@ -25,8 +25,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public MonitorServiceLastUpdateList(POCO.MonitorServiceLastUpdate entity) : base()
        {
           Code  = entity.Code;
-          Name  = entity.Name;
+          CdropName  = entity.CdropName;
           LastUpdate  = entity.LastUpdate;
+          CdropSearchfields  = entity.CdropSearchfields;
+          Name  = entity.Name;
           SearchFields  = entity.SearchFields;
        }
        #endregion Constructors
@@ -36,9 +38,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string Code  { get; set; }
        [DataMember]
-       public string Name  { get; set; }
+       public string CdropName  { get; set; }
        [DataMember]
        public DateTime LastUpdate  { get; set; }
+       [DataMember]
+       public string CdropSearchfields  { get; set; }
+       [DataMember]
+       public string Name  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
          #endregion Properties

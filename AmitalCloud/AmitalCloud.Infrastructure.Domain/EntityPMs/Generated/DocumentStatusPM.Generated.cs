@@ -29,8 +29,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public DocumentStatusPM(POCO.DocumentStatus entity) : base()
    {
 		_code = entity.Code;
+		_dropCdropName = entity.DropCdropName;
+		_dropCdropSearchfields = entity.DropCdropSearchfields;
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
+		documentsFilings = entity.DocumentsFilings != null ? entity.DocumentsFilings.Select(a=>new DocumentsFilingPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -48,6 +51,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=_code,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _code=value;
+		   }
+		 }
+	   }
+	  private string _dropCdropName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DropCdropName  
+	   {
+	     get { return _dropCdropName; }
+		 set
+		 {
+		   if(_dropCdropName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropCdropName",OldValue=_dropCdropName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dropCdropName=value;
+		   }
+		 }
+	   }
+	  private string _dropCdropSearchfields ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DropCdropSearchfields  
+	   {
+	     get { return _dropCdropSearchfields; }
+		 set
+		 {
+		   if(_dropCdropSearchfields != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropCdropSearchfields",OldValue=_dropCdropSearchfields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dropCdropSearchfields=value;
 		   }
 		 }
 	   }
@@ -83,6 +118,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<DocumentsFilingPM> documentsFilings;
+	 
+		     
+	   [Include]
+	   [Association("DocumentsFilingDocumentStatus", "Code","Statuscode")]
+	   [DataMember]
+	   public virtual List<DocumentsFilingPM> DocumentsFilings  
+	   {
+	        get
+             {
+                 if (documentsFilings == null)
+                 {
+                     documentsFilings = new List<DocumentsFilingPM>();
+                 }
+                 return documentsFilings;
+              }
+             set { documentsFilings = value; }
+	    }
+	   private List<DocumentsFilingPM>  deletedDocumentsFilings;
+	   public virtual List<DocumentsFilingPM> DeletedDocumentsFilings  
+	   {
+	        get
+             {
+                 if ( deletedDocumentsFilings == null)
+                 {
+                      deletedDocumentsFilings = new List<DocumentsFilingPM>();
+                 }
+                 return  deletedDocumentsFilings;
+              }
+             set {  deletedDocumentsFilings = value; }
+	    }
 	 }
 #endregion Properties
 }

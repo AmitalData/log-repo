@@ -22,17 +22,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(true);
 
-            this.Property(t => t.DBConnection).HasColumnName("DBConnection").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DBConnection).HasColumnName("DBConnection").IsRequired().HasMaxLength(512).IsUnicode(true);
 
             this.Property(t => t.IsUpgrading).HasColumnName("IsUpgrading").IsRequired();
 
             this.Property(t => t.IsActive).HasColumnName("IsActive").IsRequired();
 
-            this.Property(t => t.SharedDWConnection).HasColumnName("SharedDWConnection").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SharedDWConnection).HasColumnName("SharedDWConnection").IsRequired().HasMaxLength(512).IsUnicode(true);
 
-            this.Property(t => t.SecondaryAzureDBConnection).HasColumnName("SecondaryAzureDBConnection").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SecondaryAzureDBConnection).HasColumnName("SecondaryAzureDBConnection").IsRequired().HasMaxLength(512).IsUnicode(true);
 
             this.Property(t => t.IsBlocking).HasColumnName("IsBlocking").IsRequired();
         }

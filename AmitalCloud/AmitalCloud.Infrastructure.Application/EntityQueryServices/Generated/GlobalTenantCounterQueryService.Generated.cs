@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class GlobalTenantCounterQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.GlobalTenantCounter,GlobalTenantCounterKeys<int>,GlobalTenantCounterPM,GlobalTenantCounterList,int>
+   public partial class GlobalTenantCounterQueryService: BaseEntityQueryService<IGlobalContext,POCO.GlobalTenantCounter,GlobalTenantCounterKeys<int>,GlobalTenantCounterPM,GlobalTenantCounterList,int>
    {
-        public GlobalTenantCounterQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public GlobalTenantCounterQueryService(IAmitalCloudContext context) : base(new Repository<POCO.GlobalTenantCounter>(context),new GlobalTenantCounterDataMapping()) {}
+        public GlobalTenantCounterQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public GlobalTenantCounterQueryService(IGlobalContext context) : base(new Repository<POCO.GlobalTenantCounter>(context),new GlobalTenantCounterDataMapping()) {}
 		public  GlobalTenantCounterPM GetSingle(int id,bool getComposition, bool getFromCache) => base.GetSingle(new GlobalTenantCounterKeys<int>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.GlobalTenantCounter,int> GetKeys(POCO.GlobalTenantCounter entityPOCO) => new GlobalTenantCounterKeys<int>() { Id = entityPOCO.Id,  };
    }

@@ -18,23 +18,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public DWSubQueryMap()
         { 
-				this.ToTable("DWSubQuerys");
+				this.ToTable("dwsubqueries");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.DWFactTableCode).HasColumnName("DWFactTableCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DWFactTableCode).HasColumnName("DWFactTableCode").IsRequired().HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.DWQueryId).HasColumnName("DWQueryId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DWQueryId).HasColumnName("DWQueryId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.SQLString).HasColumnName("SQLString").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SQLString).HasColumnName("SQLString").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.FiltersXML).HasColumnName("FiltersXML").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.FiltersXML).HasColumnName("FiltersXML").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
-            this.Property(t => t.ColumnsXML).HasColumnName("ColumnsXML").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ColumnsXML).HasColumnName("ColumnsXML").IsRequired().HasMaxLength(-1).IsUnicode(true);
         }
     }
 }

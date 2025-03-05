@@ -18,21 +18,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public DocumentOutCopyMap()
         { 
-				this.ToTable("DocumentOutCopys");
+				this.ToTable("documentoutcopies");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.DocumentId).HasColumnName("DocumentId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DocumentId).HasColumnName("DocumentId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.DocumentOutId).HasColumnName("DocumentOutId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DocumentOutId).HasColumnName("DocumentOutId").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.DocumentTypeCopyId).HasColumnName("DocumentTypeCopyId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DocumentTypeCopyId).HasColumnName("DocumentTypeCopyId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.LastPrintedByUserId).HasColumnName("LastPrintedByUserId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.LastPrintedByUserId).HasColumnName("LastPrintedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.LastPrintDate).HasColumnName("LastPrintDate").IsRequired();
         }

@@ -31,13 +31,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_code = entity.Code;
-		_uniqueCode = entity.UniqueCode;
 		_userId = entity.UserId;
 		_objectTableId = entity.ObjectTableId;
 		_systemLevel = entity.SystemLevel;
 		_tenantLevel = entity.TenantLevel;
 		_originalQueryId = entity.OriginalQueryId;
-		_originalQueryCode = entity.OriginalQueryCode;
 		_querySection = entity.QuerySection;
 		_indexOrder = entity.IndexOrder;
 		_displayCount = entity.DisplayCount;
@@ -45,8 +43,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_queryGroupCode = entity.QueryGroupCode;
 		_querygroup = entity.QueryGroup !=null ? new QueryGroupPM(entity.QueryGroup) : null;
 			_nameTextCodeId = entity.NameTextCodeId;
-		_nametextcode = entity.NameTextCode !=null ? new TextCodePM(entity.NameTextCode) : null;
-			_defaultSortDirection = entity.DefaultSortDirection;
+		_defaultSortDirection = entity.DefaultSortDirection;
 		_defaultSortColumn = entity.DefaultSortColumn;
 		_spotlightDataTemplate = entity.SpotlightDataTemplate;
 		_internal = entity.Internal;
@@ -61,15 +58,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_sharedWithAll = entity.SharedWithAll;
 		_sharedWithSpecificUsers = entity.SharedWithSpecificUsers;
 		_sharedByUserId = entity.SharedByUserId;
-		_sharedbyuser = entity.SharedByUser !=null ? new UserPM(entity.SharedByUser) : null;
+		_sharedbyuseriduser = entity.SharedByUserIdUser !=null ? new UserPM(entity.SharedByUserIdUser) : null;
 			_spotlightModeActivated = entity.SpotlightModeActivated;
+		_uniqueCode = entity.UniqueCode;
+		_originalQueryCode = entity.OriginalQueryCode;
 		_nameTextCodeCode = entity.NameTextCodeCode;
 		_featureUniqeCode = entity.FeatureUniqeCode;
 		_isViewOnly = entity.IsViewOnly;
 		_isDefault = entity.IsDefault;
-		_feature = entity.Feature;
-		_originalQuery = entity.OriginalQuery;
-		_copiedQueries = entity.CopiedQueries;
    }
    #endregion Constructors
    #region Properties
@@ -119,22 +115,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=_code,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _code=value;
-		   }
-		 }
-	   }
-	  private string _uniqueCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UniqueCode  
-	   {
-	     get { return _uniqueCode; }
-		 set
-		 {
-		   if(_uniqueCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UniqueCode",OldValue=_uniqueCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _uniqueCode=value;
 		   }
 		 }
 	   }
@@ -215,22 +195,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginalQueryId",OldValue=_originalQueryId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _originalQueryId=value;
-		   }
-		 }
-	   }
-	  private string _originalQueryCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OriginalQueryCode  
-	   {
-	     get { return _originalQueryCode; }
-		 set
-		 {
-		   if(_originalQueryCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginalQueryCode",OldValue=_originalQueryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _originalQueryCode=value;
 		   }
 		 }
 	   }
@@ -338,14 +302,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private TextCodePM _nametextcode;
-		[Include]
-        [DataMember]
-        public virtual TextCodePM NameTextCode 
-		{ 
-		get { return _nametextcode; } 
-		set { _nametextcode = value; }
-		}
 	  private string _defaultSortDirection ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -586,13 +542,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private UserPM _sharedbyuser;
+		private UserPM _sharedbyuseriduser;
 		[Include]
         [DataMember]
-        public virtual UserPM SharedByUser 
+        public virtual UserPM SharedByUserIdUser 
 		{ 
-		get { return _sharedbyuser; } 
-		set { _sharedbyuser = value; }
+		get { return _sharedbyuseriduser; } 
+		set { _sharedbyuseriduser = value; }
 		}
 	  private bool _spotlightModeActivated ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
@@ -607,6 +563,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SpotlightModeActivated",OldValue=_spotlightModeActivated,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _spotlightModeActivated=value;
+		   }
+		 }
+	   }
+	  private string _uniqueCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UniqueCode  
+	   {
+	     get { return _uniqueCode; }
+		 set
+		 {
+		   if(_uniqueCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UniqueCode",OldValue=_uniqueCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _uniqueCode=value;
+		   }
+		 }
+	   }
+	  private string _originalQueryCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginalQueryCode  
+	   {
+	     get { return _originalQueryCode; }
+		 set
+		 {
+		   if(_originalQueryCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginalQueryCode",OldValue=_originalQueryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _originalQueryCode=value;
 		   }
 		 }
 	   }
@@ -671,54 +659,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDefault",OldValue=_isDefault,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isDefault=value;
-		   }
-		 }
-	   }
-	  private string _feature ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Feature  
-	   {
-	     get { return _feature; }
-		 set
-		 {
-		   if(_feature != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Feature",OldValue=_feature,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _feature=value;
-		   }
-		 }
-	   }
-	  private string _originalQuery ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string OriginalQuery  
-	   {
-	     get { return _originalQuery; }
-		 set
-		 {
-		   if(_originalQuery != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginalQuery",OldValue=_originalQuery,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _originalQuery=value;
-		   }
-		 }
-	   }
-	  private string _copiedQueries ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CopiedQueries  
-	   {
-	     get { return _copiedQueries; }
-		 set
-		 {
-		   if(_copiedQueries != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CopiedQueries",OldValue=_copiedQueries,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _copiedQueries=value;
 		   }
 		 }
 	   }

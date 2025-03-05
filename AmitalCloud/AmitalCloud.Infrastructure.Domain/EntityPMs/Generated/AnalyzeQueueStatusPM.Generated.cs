@@ -30,6 +30,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_code = entity.Code;
 		_name = entity.Name;
+		analyzeQueues = entity.AnalyzeQueues != null ? entity.AnalyzeQueues.Select(a=>new AnalyzeQueuePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -66,6 +67,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<AnalyzeQueuePM> analyzeQueues;
+	 
+		     
+	   [Include]
+	   [Association("AnalyzeQueueAnalyzeQueueStatus", "Code","Status")]
+	   [DataMember]
+	   public virtual List<AnalyzeQueuePM> AnalyzeQueues  
+	   {
+	        get
+             {
+                 if (analyzeQueues == null)
+                 {
+                     analyzeQueues = new List<AnalyzeQueuePM>();
+                 }
+                 return analyzeQueues;
+              }
+             set { analyzeQueues = value; }
+	    }
+	   private List<AnalyzeQueuePM>  deletedAnalyzeQueues;
+	   public virtual List<AnalyzeQueuePM> DeletedAnalyzeQueues  
+	   {
+	        get
+             {
+                 if ( deletedAnalyzeQueues == null)
+                 {
+                      deletedAnalyzeQueues = new List<AnalyzeQueuePM>();
+                 }
+                 return  deletedAnalyzeQueues;
+              }
+             set {  deletedAnalyzeQueues = value; }
+	    }
 	 }
 #endregion Properties
 }
