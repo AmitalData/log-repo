@@ -170,5 +170,6 @@ export class GLAccountList {
 	ContactName: string;
 	ContactEmail: string;
 	ContactPhone: string;
-	
+	MarkDate: Date;
+
 }
