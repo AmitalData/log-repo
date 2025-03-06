@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Logitude.Accounting.Data.Repositories;
+using System.Data.Entity.Core.Objects;
 
 
 namespace Logitude.Accounting.BL.EntityQueryServices
@@ -71,5 +72,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pm;
         }
 
+        public  IQueryable<Reconciliation> GetNotCancelledByAccountId(string accountId, int tenant)
+        {
+            return this.repository.GetAll(tenant)
+                .Where(rec => rec.AccountId == accountId && rec.IsCancelled == false);
+
+        }
     }// class ReconciliationQueryService
 }

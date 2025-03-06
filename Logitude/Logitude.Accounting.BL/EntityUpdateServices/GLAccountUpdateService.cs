@@ -46,6 +46,11 @@ using System.IO;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using System.Globalization;
 using System.Net;
+using Logitude.Accounting.BL.CloseTables;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Data.SqlClient;
+using System.Data;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -2366,15 +2371,66 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode)
                 {
-                    //check glaccount transactions
-                    LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(accountingContext);
-                    LedgerTransactionPM trans = transQuery.GetFirstLedgerTransaction(entityPM.Id, entityPM.Tenant);
-                    if (trans != null)
-                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ReconcileMethodcantUpdated", 0, showLocals));
+                    //check glaccount non-cancelled reconciliations
+                    ReconciliationQueryService recoQuery = new ReconciliationQueryService(accountingContext);
+                    var reco = recoQuery.GetNotCancelledByAccountId(entityPM.Id, entityPM.Tenant);
+                    if (reco.Any() == true)
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ReconcileMethodCannotBeUpdated", 0, showLocals));
+                
+                    RecalculateOpenAmounts(entityPM.Id, entityPM.ReconcileMethodCode, entityPOCO.Tenant);
+
                 }
             }
 
         }
+
+        private void RecalculateOpenAmounts(string id, string recoMethod, int tenant)
+        {
+            int transactionsMade = RecalculateLTOpenAmounts(tenant, id, null, null, recoMethod);
+        }
+
+
+
+        public int RecalculateLTOpenAmounts(int tenant, string accountId, string accountingCurrencyId, string connectionString, string reconcileMethod)
+        {
+            int transactionsMade = 0;
+
+            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(4)))
+            {
+                try
+                {
+                    if (reconcileMethod == ReconcileMethodValues.LocalCurrency)
+                    {
+                        if (String.IsNullOrEmpty(accountingCurrencyId))
+                        {
+                            TenantQuery tenantQuery = new TenantQuery(tenant);
+                            TenantPM tPM = tenantQuery.GetSinglePM(tenant);
+                            accountingCurrencyId = tPM.CurrencyId;
+                        }
+                        if (String.IsNullOrEmpty(accountingCurrencyId))
+                        {
+                            throw new ApplicationException("Accounting currency is not set for the tenant.");
+                        }        
+                        
+                        // Open Transactions - Local
+                        transactionsMade = RunStoredProcedureClass.Update_LT_Local(tenant, accountId, accountingCurrencyId);
+                    }
+                    else // ReconcileMethodValues.ForeignCurrency
+                    {
+                        // Open Transactions - Foreign
+                        transactionsMade = RunStoredProcedureClass.Update_LT_Foreign(tenant, accountId);
+                    }
+                    scope.Complete();
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+
+            return transactionsMade;
+        }
+
 
 
         public virtual void AddAcitivityLog(GLAccountPM entityPM, string activityTypeCode)
