@@ -1,4 +1,6 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
@@ -213,6 +215,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return repository.GetAccountIdForCheque(tenant, paymentId, lineNumber);
         }
+
+
+        public  int GetOpenChequesByBankAccount(string bankId,string bankBranch, string bankAccount, int tenant)
+        {
+
+            ARPaymentChequeRepository aRPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
+           return aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, bankBranch, bankAccount, tenant).Where(a=>a.ValueDate> DateTime.Now).Count();
+         
+        }
+
+        public List<ARPaymentChequePM> GetOpenChequesByBankAccountInThePast(string bankId, string bankBranch, string bankAccount, int tenant,DateTime valueDate)
+        {
+            ARPaymentChequeRepository aRPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
+            var cheques = aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, bankBranch, bankAccount, tenant).Where(a => a.ValueDate <= valueDate).ToList();
+            return cheques.Select(rec => GetEntityPM(rec)).ToList();
+         }
     }
 }
 

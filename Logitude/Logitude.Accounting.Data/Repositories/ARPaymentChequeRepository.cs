@@ -92,7 +92,34 @@ namespace Logitude.Accounting.Data.Repositories
                 context.ARPaymentCheques.Remove(entity);
             }
         }
+        public List<ARPaymentCheque> GetOpenChequesByBankAccount(string bankId, string bankBranch, string bankAccount, int tenant)
+        {
+            List<ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques
+                                                      where a.BankAccount == bankAccount && a.BankId == bankId && a.BankBranch == bankBranch && a.Tenant == tenant && (a.StatusCode == "2" || a.StatusCode == "3") 
+                                                      select new ARPaymentCheque()
+                                                      {
+                                                          Id = a.Id,
+                                                          Tenant = a.Tenant,
+                                                        
+                                                          SearchFields = a.SearchFields,
+                                                          LineNumber = a.LineNumber,
+                                                          ChequeNumber = a.ChequeNumber,
+                                                          ValueDate = a.ValueDate,
+                                                          LocalAmount = a.LocalAmount,
+                                                          ForeignAmount = a.ForeignAmount,
+                                                          BankId = a.BankId,
+                                                          BankBranch = a.BankBranch,
+                                                          BankAccount = a.BankAccount,
+                                                         
+                                                          PaymentId = a.PaymentId,
+                                                          ExchangeRate = a.ExchangeRate,
+                                                          StatusCode = a.StatusCode,
+                                                          CurrencyId = a.CurrencyId,
 
+
+                                                      }).ToList();
+            return paymentCheques;
+        }
         public bool IsChequeExists(string paymentId, string arPaymentChequesId, int tenant)
         {
             return context.ARPaymentCheques.Any(a => a.PaymentId == paymentId && a.Id == arPaymentChequesId && a.Tenant == tenant);
