@@ -10,7 +10,8 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
@@ -164,9 +165,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.userPermittedBranchPMChangeSet = entityPM.UserPermittedBranches;
                 this.userPermittedProductPMChangeSet = entityPM.UserPermittedProducts;
-                this.userFreelancerGroupPMChangeSet = entityPM.FreelancerGroups;
-                
             }
+            this.userFreelancerGroupPMChangeSet = entityPM.FreelancerGroups;
+
 
             contactRepository = new ContactRepository(objectContext);
             roleRepository = new RoleRepository(objectContext);
@@ -791,31 +792,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if (userFreelancerGroupPMChangeSet != null)
             {
+                DeleteUserFreelancerGroups(entityPM);
                 foreach (UserFreelancerGroupPM itemPM in userFreelancerGroupPMChangeSet)
                 {
                     itemPM.UserId = entityPM.Id;
-                    switch (itemPM.ChangeSetOp)
-                    {
-                        case ChangeSetOperation.Insert:
-                            {
-                                this.CreateUserFreelancerGroup(itemPM, entityPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Update:
-                            {
-                                this.UpdateUserFreelancerGroup(itemPM);
-                                break;
-                            }
-
-                        case ChangeSetOperation.Delete:
-                            {
-                                this.DeleteUserFreelancerGroup(itemPM);
-                                break;
-                            }
-
-                        default: { break; }
-                    }
+                    this.CreateUserFreelancerGroup(itemPM, entityPM);
                 }
             }
         }
@@ -874,22 +855,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             userPermittedProductRepository.Update(Poco);
         }
 
-        private void UpdateUserFreelancerGroup(UserFreelancerGroupPM entityPM)
-        {
-            UserFreelancerGroup Poco = userFreelancerGroupRepository.GetSingleUserFreelancerGroup(entityPM.Id, entityPM.Tenant);
-            UserFreelancerGroupMapping.MapEntity(entityPM, Poco, false);
-            userFreelancerGroupRepository.Update(Poco);
-        }
         private void DeleteUserPermittedProduct(UserPermittedProductPM entityPM)
         {
             UserPermittedProduct Poco = userPermittedProductRepository.GetSingleUserPermittedProduct(entityPM.Id, entityPM.Tenant);
             UserPermittedProductValidating.Validate(entityPM);
             userPermittedProductRepository.Remove(Poco);
         }
-        private void DeleteUserFreelancerGroup(UserFreelancerGroupPM entityPM)
+        private void DeleteUserFreelancerGroups(UserPM userPM)
         {
-            UserFreelancerGroup Poco = userFreelancerGroupRepository.GetSingleUserFreelancerGroup(entityPM.Id, entityPM.Tenant);
-            userFreelancerGroupRepository.Remove(Poco);
+            var listOfGroupsToDelete = userFreelancerGroupRepository.GetUserFreelancerGroupByUserId(userPM.Id,userPM.Tenant);
+            foreach(var item in listOfGroupsToDelete)
+            {
+                userFreelancerGroupRepository.Remove(item);
+            }
         }
 
         private void UpdateRolePM(UserPM entityPM)
