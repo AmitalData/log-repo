@@ -51,6 +51,7 @@ using System.Data.Common;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Utils;
+using Logitude.BL.InvoiceModel.Enums;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -572,11 +573,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (!initializer.IsNewEntity)
             {
-                if (this.invoice.StatusCode == "AD")
+                if (this.invoice.StatusCode == APInvoiceStatusCodes.Unpaid)
                 {
                     bool throwException = false;
 
-                    if (string.IsNullOrEmpty(this.entityPM.StatusCode) || this.entityPM.StatusCode == "WA")
+                    if (string.IsNullOrEmpty(this.entityPM.StatusCode) || this.entityPM.StatusCode == APInvoiceStatusCodes.WaitingForApproval)
                     {
                         throwException = true;
                     }
@@ -654,13 +655,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         + ", SetApproved"
                         + ", old status= " + entityPM.StatusCode
                         + ", AmountInInvoiceCurrency= " + entityPM.AmountInInvoiceCurrency.ToString());
-                    entityPM.StatusCode = "PD";
+                    if (entityPM.StatusCode != APInvoiceStatusCodes.Void) entityPM.StatusCode = APInvoiceStatusCodes.Paid;
                     entityPM.IsClosed = true;
                 }
 
-                else if (entityPM.StatusCode != "VD")
+                else if (entityPM.StatusCode != APInvoiceStatusCodes.Void)
                 {
-                    entityPM.StatusCode = "AD";
+                    entityPM.StatusCode = APInvoiceStatusCodes.Unpaid;
                 }
 
                 entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
@@ -704,23 +705,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else if (entityPM.SetVoided)
             {
-                if (entityPM.StatusCode != "VD")
+                if (entityPM.StatusCode != APInvoiceStatusCodes.Void)
                 {
-                    entityPM.StatusCode = "VD";
+                    entityPM.StatusCode = APInvoiceStatusCodes.Void;
                 }
             }
 
             else if (entityPM.SetCancelApproval)
             {
-                if (entityPM.StatusCode != "WA")
+                if (entityPM.StatusCode != APInvoiceStatusCodes.WaitingForApproval)
                 {
-                    entityPM.StatusCode = "WA";
+                    entityPM.StatusCode = APInvoiceStatusCodes.WaitingForApproval;
                 }
             }
 
             else if (string.IsNullOrEmpty(entityPM.StatusCode))
             {
-                entityPM.StatusCode = "WA";
+                entityPM.StatusCode = APInvoiceStatusCodes.WaitingForApproval;
             }
 
             this.InitializeTransferComponents();
@@ -821,7 +822,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             bool isInitializing = false;
 
-            if (entityPM.StatusCode != null && entityPM.StatusCode != "WA")
+            if (entityPM.StatusCode != null && entityPM.StatusCode != APInvoiceStatusCodes.WaitingForApproval)
             {
                 isInitializing = true;
             }
@@ -1527,7 +1528,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             List<APInvoiceEntity> dbEntities = invoiceEntityRepository.GetInvoiceEntitiesForInvoice(entityPM.Id, entityPM.Tenant).ToList();
 
-            if (invoice.StatusCode != "VD" && entityPM.StatusCode == "VD")
+            if (invoice.StatusCode != APInvoiceStatusCodes.Void && entityPM.StatusCode == APInvoiceStatusCodes.Void)
             {
                 foreach (APInvoiceEntity invoiceEntity in dbEntities)
                 {
@@ -1535,7 +1536,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-            else if (invoice.StatusCode != "AD")
+            else if (invoice.StatusCode != APInvoiceStatusCodes.Unpaid)
             {
                 if (entityPM.InvoiceLines.Where(d => d.ObjectTableId == null && d.ChangeSetOp != ChangeSetOperation.Delete).Any())
                 {
@@ -1612,7 +1613,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     int lastLineNumber = (from a in invoiceLinesChangeSet select a.LineNumber).Max();
                     foreach (APInvoiceLinePM item in invoiceLinesChangeSet)
                     {
-                        if (invoice.StatusCode != "VD" && entityPM.StatusCode == "VD")
+                        if (invoice.StatusCode != APInvoiceStatusCodes.Void && entityPM.StatusCode == APInvoiceStatusCodes.Void)
                         {
                             this.DisconnectPayable(item.EntityPayableId, item.ForiegnCurrencyAmount);
                             this.DisconnectInvoiceLine(item);
@@ -1826,12 +1827,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     entityPM.IsClosed = false;
 
-                    if (entityPM.StatusCode != "VD")
+                    if (entityPM.StatusCode != APInvoiceStatusCodes.Void)
                     {
-                        if (entityPM.StatusCode != "WA")
+                        if (entityPM.StatusCode != APInvoiceStatusCodes.WaitingForApproval)
                         {
                             entityPM.AmountDue = entityPM.AmountInInvoiceCurrency.Value;
-                            entityPM.StatusCode = "AD";
+                            entityPM.StatusCode = APInvoiceStatusCodes.Unpaid;
                         }
                     }
                 }
@@ -1848,7 +1849,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             if (conntectedPaymentAmount < entityPM.AmountInInvoiceCurrency)
                             {
-                                entityPM.StatusCode = "PP";
+                                entityPM.StatusCode = APInvoiceStatusCodes.PaidPartially;
                                 entityPM.IsClosed = false;
                             }
 
@@ -1860,7 +1861,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 + ", invoicepayments.Count= " + invoicepayments.Count.ToString()
                                 + ", connectedPaymentAmount= " + conntectedPaymentAmount.ToString()
                                 + ", AmountInInvoiceCurrency= " + entityPM.AmountInInvoiceCurrency.ToString());
-                            entityPM.StatusCode = "PD";
+                                if (entityPM.StatusCode != APInvoiceStatusCodes.Void) entityPM.StatusCode = APInvoiceStatusCodes.Paid;
                                 entityPM.IsClosed = true;
                             }
                         }
@@ -1883,7 +1884,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 invoice.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency;
 
                 invoice.AmountDue = entityPM.AmountDue;
-                invoice.StatusCode = entityPM.StatusCode;
+                if (invoice.StatusCode != APInvoiceStatusCodes.Void) invoice.StatusCode = entityPM.StatusCode;
                 invoice.IsClosed = entityPM.IsClosed;
             }
         }
