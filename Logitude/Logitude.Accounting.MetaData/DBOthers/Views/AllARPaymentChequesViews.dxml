@@ -1,7 +1,7 @@
 ﻿<View DBType="Main" Name="AllARPaymentChequesViews" Schema="dbo" Module="Accounting">
 	<SqlScript>
 		<![CDATA[
-CREATE  view [dbo].[AllARPaymentChequesViews] as
+CREATE OR ALTER  view [dbo].[AllARPaymentChequesViews] as
 with trns as (select 
 						l.AccountId
 						,l.Id
@@ -35,7 +35,7 @@ where c.TypeCode = '5'
 select distinct trns.AccountId,trns.Id, trns.tenant, chk.ValueDate,
 'C' as [type],
 trns.AccountingEntityReference,trns.LocalAmountCredit,trns.LocalAmountDebit,trns.ForeignAmountCredit,trns.ForeignAmountDebit,trns.reference1,trns.reference2,trns.reference3,
-trns.journalnumber,trns.Id as journalId,trns.AccountingEntityCode,trns.AccountingEntityId,chk.localname,chk.EnglishName,trns.Notes
+trns.journalnumber,trns.journalId as journalId,trns.AccountingEntityCode,trns.AccountingEntityId,chk.localname,chk.EnglishName,trns.Notes
 from trns
 inner join chk on trns.AccountingEntityId = chk.PaymentId and trns.JournalLineNumber= chk.LineNumber  and chk.Tenant = trns.Tenant
 
