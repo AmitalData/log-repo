@@ -825,14 +825,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         myParams
                         );
 
-                int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;
-				ICommonDataContext myContextCommon = CommonDataContext.GetContext(tenant);
-				FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
-				FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
+                int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;				
+				FeatureQuery featureQuery = new FeatureQuery(new FeatureRepository(CommonDataContext.GetContext(tenant)));
 				var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
-				var featureIsSendSFTP = features.Features.FirstOrDefault(x => x.Code == "IsSendSFTP");
-                string serverJobID = string.Empty;
-				if (featureIsSendSFTP != null)
+				bool isSendSFTPEnabled = features.Features.Any(x => x.Code == "IsSendSFTP");
+				string serverJobID = string.Empty;
+				if (isSendSFTPEnabled)
 				{
 					var bytsArry = Convert.FromBase64String(fileContentsBASE64);
 					serverJobID = SendFileToSFTP(tenant, bytsArry, dCAOutFileName, out MessageOut);
