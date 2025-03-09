@@ -766,7 +766,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 var myBatchGLAccountInterestActivationBalanceTask = new BatchGLAccountInterestActivationBalanceTask(null);
                 string subj = $"GLAccount Interest Activation Balance {entityPOCO.DisplayNumber}";
                 var batchTaskId = myBatchGLAccountInterestActivationBalanceTask.CreateQBatchTaskExecution<GLAccountInterestActivationBalanceArgs>(
-                    args, args.Tenant, subj, true);
+                    args, args.Tenant, subj, false);
             }
 
         }
