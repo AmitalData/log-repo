@@ -890,7 +890,7 @@ namespace Logitude.Server.Tools.FTP
 			catch (Exception ex)
 			{
 				p_status = "-1";
-				p_message = $"Successfully connected to Host: '{p_host}', User: '{p_user}', Directory: '{sftp.RemotePath}'";
+				p_message = $"Failed to perform 'Logon' to Host: '{p_host}', User: '{p_user}', Directory: '{sftp.RemotePath}'";
 				p_message += Environment.NewLine + ex.Message;
 				if (ex.InnerException != null)
 					p_message += Environment.NewLine + p_message;
