@@ -35,7 +35,7 @@ where c.TypeCode = '5'
 select distinct trns.AccountId,trns.Id, trns.tenant, chk.ValueDate,
 'C' as [type],
 trns.AccountingEntityReference,trns.LocalAmountCredit,trns.LocalAmountDebit,trns.ForeignAmountCredit,trns.ForeignAmountDebit,trns.reference1,trns.reference2,trns.reference3,
-trns.journalnumber,trns.Id as journalId,trns.AccountingEntityCode,trns.AccountingEntityId,chk.Code,chk.localname,chk.EnglishName,trns.Notes,chk.Id as ChequeId
+trns.journalnumber,trns.journalId as journalId,trns.AccountingEntityCode,trns.AccountingEntityId,chk.Code,chk.localname,chk.EnglishName,trns.Notes,chk.Id as ChequeId
 from trns
 inner join chk on trns.AccountingEntityId = chk.PaymentId and trns.JournalLineNumber= chk.LineNumber  and chk.Tenant = trns.Tenant
  
