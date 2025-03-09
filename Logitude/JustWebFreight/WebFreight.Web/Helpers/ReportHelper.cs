@@ -1843,7 +1843,7 @@ namespace WebFreight.Web.Helpers
                     }
                 case "MBBR":
                     {
-                        dataProviderName = "Logitude.Accounting.BL.DataContract.MonthlyBalancesReportDataProvider";
+                        dataProviderName = "WebFreight.Web.DataProviders.MonthlyBalancesReportDataProvider";
 
 
                         break;
