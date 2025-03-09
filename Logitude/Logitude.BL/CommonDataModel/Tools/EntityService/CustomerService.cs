@@ -624,7 +624,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid && (string.IsNullOrEmpty(entityPM.Code) || entityPM.Code == "new"))
                 {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CustomerService InitializeComponent entityPM.Code:{entityPM.Code} tenant:{entityPM.Tenant}");
                     entityPM.Code = CodeCounter.GetNumber("Customer", tenant).ToString();
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CustomerService InitializeComponent entityPM.Code:{entityPM.Code} tenant:{entityPM.Tenant}");
+
                 }
 
                 this.CreatePotentialMainAddress();
