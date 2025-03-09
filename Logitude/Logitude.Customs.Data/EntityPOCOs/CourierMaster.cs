@@ -129,6 +129,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool EffectiveFlight { get; set; }
         [Column("SentDeclarationStatus")]
 	    public bool SentDeclarationStatus { get; set; }
+        [Column("CourierMasterPaymentStatusCd")]
+	    public string CourierMasterPaymentStatusCd { get; set; }
     }
 }
 	 
