@@ -2377,16 +2377,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (reco.Any() == true)
                         throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ReconcileMethodCannotBeUpdated", 0, showLocals));
                 
-                    RecalculateOpenAmounts(entityPM.Id, entityPM.ReconcileMethodCode, entityPOCO.Tenant);
+                    int transactionsMade = RecalculateLTOpenAmounts(entityPOCO.Tenant, entityPM.Id, null, null, entityPM.ReconcileMethodCode);
 
                 }
             }
 
-        }
-
-        private void RecalculateOpenAmounts(string id, string recoMethod, int tenant)
-        {
-            int transactionsMade = RecalculateLTOpenAmounts(tenant, id, null, null, recoMethod);
         }
 
 
