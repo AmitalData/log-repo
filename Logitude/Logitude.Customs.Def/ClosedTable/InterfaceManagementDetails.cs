@@ -3498,6 +3498,20 @@ namespace Logitude.Customs.Def.ClosedTable
             });
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "8318",
+                InOut = InOutEnum.O.ToString(),
+                Description = "תדפיסי חקיקה (מקח''ים) - ספר סיווג",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                DcaPrefixName = "",
+                DcaPrefixName2 = "",
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
                 Code = "UCB8373",
                 InOut = InOutEnum.I.ToString(),
                 Description = "שחזור הצהרה בלדר",

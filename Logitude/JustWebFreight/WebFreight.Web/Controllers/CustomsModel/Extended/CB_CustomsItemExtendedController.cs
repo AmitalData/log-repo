@@ -324,6 +324,33 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
+          public HttpResponseMessage GetMekachDetails(int customsItemId, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                CustomItemMekachRequestParams requestParamsData = new CustomItemMekachRequestParams()
+                {
+                    customsItemId = customsItemId,
+                    Tenant = tenant,
+                    validToDate = DateTime.Now,
+                    languageType = 1
+                };
+                DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService messagingService = new DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService();
+                CustomItemMekachResponseData responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
         public async Task<HttpResponseMessage> GetFromTypesense(string searchValue, string customsBookType)
         {
