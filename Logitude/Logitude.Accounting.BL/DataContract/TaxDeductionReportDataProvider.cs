@@ -318,17 +318,11 @@ namespace Logitude.Accounting.BL.DataContract
             if (String.IsNullOrEmpty(wh))
                 throw new ApplicationException("Withholding Account not defined in Full Accounting Settings");
 
-            List<LedgerTransaction> transactions = SelectUsingSQL(wh, startDate, endDate);
+            // List<LedgerTransaction> transactions = SelectUsingSQL(wh, startDate, endDate);
 
-            //var accountsIds = (
-            //    from d in transactions
-            //    join glacurr in accountingContext.GLAccountCurrencies
-            //        on d.OppositeAccountId equals glacurr.GLAccountId into glacurrGroup
-            //    from glacurrItem in glacurrGroup.DefaultIfEmpty()
-            //    where d.OppositeAccountId != null
-            //    select d.OppositeAccountId
-            //).Distinct()
-            // .ToHashSet();
+            LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(accountingContext);
+
+            List<LedgerTransaction> transactions = ledgerTransactionQueryService.GetTransactionsDeduction(wh, startDate, endDate, Tenant);
 
 
             var tempAccountsIds = (

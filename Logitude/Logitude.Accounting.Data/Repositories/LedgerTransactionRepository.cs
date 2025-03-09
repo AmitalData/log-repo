@@ -24,6 +24,8 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Runtime.InteropServices;
 using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Accounting.Data.Enums;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -1794,6 +1796,36 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                     && a.Tenant == tenant
                  select a).OrderByDescending(a => a.AccountingDate);
             return pocos;
+        }
+
+
+        public IQueryable<LedgerTransactionDeductionDTO> GetTransactionsDeductionDTO(
+            string whAccountId,
+            DateTime startDate,
+            DateTime endDate,
+            int tenant)
+        {
+            var query =
+                from a in context.LedgerTransactionsDeductionView
+                where a.Tenant == tenant
+                      && (a.ChartOfAccountsTypeCode == ChartOfAccountsTypes.Banks || a.AccountId == whAccountId)
+                      && a.AccountingDate >= startDate
+                      && a.AccountingDate <= endDate
+                select new LedgerTransactionDeductionDTO
+                {
+                    Id = a.Id,
+                    AccountId = a.AccountId,
+                    OppositeAccountId = a.OppositeAccountId,
+                    JournalId = a.JournalId,
+                    JournalLineNumber = a.JournalLineNumber,
+                    LocalAmountDebit = a.LocalAmountDebit ?? 0m,
+                    LocalAmountCredit = a.LocalAmountCredit ?? 0m,
+                    Reference1 = a.Reference1,
+                    AccountingDate = a.AccountingDate,
+                    Tenant = a.Tenant
+                };
+
+            return query;
         }
 
         public List<LedgerTransaction> GetTransactionsBySourceId(string sourceId, string sourceTypeCode, int tenant)
