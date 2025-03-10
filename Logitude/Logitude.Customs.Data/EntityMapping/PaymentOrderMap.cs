@@ -55,7 +55,18 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
 
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(2000).IsUnicode(true);
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.SearchFields).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.SearchFields).HasMaxLength(4000);
+			}
+
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsUnicode(true);
 
             this.Property(t => t.CustomsEntityTypeCode).HasColumnName("CustomsEntityTypeCode").HasMaxLength(9).IsUnicode(false);
 
