@@ -128,18 +128,34 @@ namespace Logitude.Accounting.BL.DataContract
         private List<TaxDeductionReportLine> CreateTaxDeductionLinesByAPPayments(List<APPayment> payments,bool cancelled) {
             List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
             string id = null;
+
+            var vendorsWithoutGLAccount = payments.Where(d => d.VendorCard != null && d.VendorCard.GLAccountId == null).ToList();
+            if (vendorsWithoutGLAccount.Any() && taxDeductionReport != null)
+            {
+                var sb = new StringBuilder();
+                string paymentOrderText = TextCodesTranslator.TranslateText("TaxDeductionReport.O.PaymentOrder", Tenant);
+                string vendorWithoutAccountText = TextCodesTranslator.TranslateText("TaxDeductionReport.O.VendorWithoutAccount", Tenant);
+                foreach (var p in vendorsWithoutGLAccount)
+                {
+                    sb.AppendLine()
+                      .Append(paymentOrderText)
+                      .Append(p.PaymentNo).AppendLine()
+                      .Append(p.VendorCard.Code)
+                      .Append(vendorWithoutAccountText)
+                      .AppendLine().AppendLine();
+                }
+
+                taxDeductionReport.ErrorMessage += sb.ToString();
+            }
+
+
             foreach (APPayment payment in payments) {
 
                 if (id == payment.Id) continue;
                 id = payment.Id;
                 TaxDeductionReportLine taxDeductionReportline = new TaxDeductionReportLine();
                 taxDeductionReportline.VendorId = payment.VendorCard!= null? payment.VendorCard.GLAccountId: null;
-                if (taxDeductionReportline.VendorId == null)
-                {
-                    if(taxDeductionReport != null) 
-                        taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + "הוראת תשלום :" + payment.PaymentNo + "\n" + "הכרטיס התפעולי לא מחובר לכרטיס ההנח\"ש";
 
-                }
                 taxDeductionReportline.MonthOfRegisterDate = cancelled? payment.AccountingCancelationDate.Value.Month : payment.RegisterDate.Value.Month;
                 taxDeductionReportline.AmountInLocalCurrency = cancelled ?  payment.AmountInLocalCurrency*-1 : payment.AmountInLocalCurrency;
                 taxDeductionReportline.AmountInLocalCurrency = Math.Round((double)taxDeductionReportline.AmountInLocalCurrency, 0);
