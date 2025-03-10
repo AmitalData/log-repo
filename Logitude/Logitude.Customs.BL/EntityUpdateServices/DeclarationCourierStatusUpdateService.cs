@@ -349,7 +349,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             LogMessagingUtil.Instance.AppendLine("DeclarationCourierStatusPM.DocumentStatusCode: " + entityPM.DocumentStatusCode);
             AutomatedCustomsMessagingService automatedCustomsMessagingService = new AutomatedCustomsMessagingService(entityPM.Tenant);
-            AutomatedCustomsMessagingService automatedCustomsMessagingService = new AutomatedCustomsMessagingService(resolveLoggingUserId,entityPM.Tenant);
             automatedCustomsMessagingService.CheckAndSendMessageis(entityPM);
         }
 
