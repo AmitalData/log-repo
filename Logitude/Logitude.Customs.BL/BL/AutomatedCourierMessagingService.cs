@@ -28,10 +28,10 @@ namespace Logitude.Customs.BL.BL
         private string declarationObjectTableId;
         private string objectTableIdCourierMaster;
         private readonly string userId;
-        public AutomatedCustomsMessagingService(string userId, int tenant)
+        public AutomatedCustomsMessagingService(int tenant)
         {
             FeatureQuery featureQuery = new FeatureQuery();
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(userId, tenant);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
 
             _featureSendManifest = features.Features.Any(x => x.Code == "SendManifest");
             _featureSendDeclaration = features.Features.Any(x => x.Code == "SendDeclaration");
