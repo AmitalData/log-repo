@@ -878,7 +878,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private string courierDocToken ;
 	  	  
        
@@ -902,7 +901,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private string forbiddenSigns ;
 	  	  
        
@@ -922,29 +920,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForbiddenSigns",OldValue=forbiddenSigns,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   forbiddenSigns=value;
-		   }
-			
-		 }
-	   }
-	  private string myCustomURL ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MyCustomURL  
-	   {
-	    
-	     get
-		{
-		   return myCustomURL;
-		 }
-		 set
-		 {
-		   if(myCustomURL != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MyCustomURL",OldValue=myCustomURL,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   myCustomURL=value;
 		   }
 			
 		 }
