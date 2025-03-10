@@ -186,7 +186,7 @@ namespace Logitude.Server.Tools
                 if (!String.IsNullOrWhiteSpace(communicationParams.LoggingObjectTableId))
                 {
 
-                    objectTable = objecttableRep.GetSingleObjectTable(communicationParams.LoggingObjectTableId, 0, true);
+                    objectTable = objecttableRep.GetSingleObjectTable(communicationParams.LoggingObjectTableId, communicationParams.Tenant, true);
                 }
                 else
                 {
