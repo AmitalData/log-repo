@@ -905,7 +905,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 				
 					string ftpHostIP = pmCustomsPartnerFtp.MyFtpDetail.Host;
 					string ftpUserName = pmCustomsPartnerFtp.MyFtpDetail.UserName;
-					string ftpPrivateKeyPath = string.IsNullOrEmpty(pmCustomsPartnerFtp.MyFtpDetail.Password) ? Path.Combine(Directory.GetCurrentDirectory(), "PRK.PPK") : pmCustomsPartnerFtp.MyFtpDetail.Password;
+					string ftpPrivateKeyPath = pmCustomsPartnerFtp.MyFtpDetail.Password ?? Path.Combine(Directory.GetCurrentDirectory(), "PRK.PPK");
 					string ftpFolderName = pmCustomsPartnerFtp.MyFtpDetail.Folder;
 					string p_message = "";
 					string p_status = "";
