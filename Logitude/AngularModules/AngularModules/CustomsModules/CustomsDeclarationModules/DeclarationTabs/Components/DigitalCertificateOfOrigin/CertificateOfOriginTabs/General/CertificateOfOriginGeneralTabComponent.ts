@@ -1980,6 +1980,7 @@ export class CertificateOfOriginItemLine extends BaseComponent {
     }
     public set ItemId(newValue: string) {
         this.entityPM.ItemId = newValue;
+        this.updateIsDirty();
     }
 
     public get MeasureType(): string {

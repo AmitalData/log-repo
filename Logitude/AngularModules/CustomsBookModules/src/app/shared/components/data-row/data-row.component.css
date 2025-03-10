@@ -10,7 +10,7 @@
 }
 
 .selected {
-	background-color: var(--blue) !important;
+	background-color: var(--blue);
 	color: white;
 }
 
