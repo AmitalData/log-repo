@@ -348,8 +348,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void AfterUpdating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
             LogMessagingUtil.Instance.AppendLine("DeclarationCourierStatusPM.DocumentStatusCode: " + entityPM.DocumentStatusCode);
-            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
-            AutomatedCustomsMessagingService automatedCustomsMessagingService = new AutomatedCustomsMessagingService(resolveLoggingUserId,entityPM.Tenant);
+            AutomatedCustomsMessagingService automatedCustomsMessagingService = new AutomatedCustomsMessagingService(entityPM.Tenant);
             automatedCustomsMessagingService.CheckAndSendMessageis(entityPM);
         }
 
