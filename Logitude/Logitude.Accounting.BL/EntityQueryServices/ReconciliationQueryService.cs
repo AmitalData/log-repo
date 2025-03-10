@@ -26,11 +26,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             ReconciliationLineQueryService reconciliationLineQueryService = new ReconciliationLineQueryService(context);
             entityPM.ReconciliationLines = reconciliationLineQueryService.GetMulti(reconciliationKeys, true);
 
-            //if (entityPM.ReconciliationLines.Count > 0)
-            //{
-            //    entityPM.LastLineNumber = entityPM.ReconciliationLines.Max(m => m.Line);
-            //}
-
             base.GetComposition(entityKeys, entityPM);
         }
 
