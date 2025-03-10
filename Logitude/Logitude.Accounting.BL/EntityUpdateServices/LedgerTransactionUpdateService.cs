@@ -40,7 +40,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(LedgerTransactionPM entityPM)
         {
-            FillSearchFields(entityPM);
 
             if (entityPM.IsReconciled == null)
             {
@@ -208,15 +207,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        private void FillSearchFields(LedgerTransactionPM entityPM)
-        {
-
-            var fieldsToMap = new[] { "ForeignAmountCreditWithSign", "IsForeignAmountCreditPos", "ForeignAmountDebit", "IsLocalAmountCreditPos", "LocalAmountDebit", "Reference2", "Reference1", "JournalNumber" };
-            entityPM.SearchFields = string.Join(",", fieldsToMap
-             .Select(field => entityPM.GetType().GetProperty(field, BindingFlags.Public | BindingFlags.Instance)
-              ?.GetValue(entityPM)?.ToString() ?? ""));
-
-        }
+        
 
         internal void UpdateBankAccount(LedgerTransactionPM entityPM)
         {
