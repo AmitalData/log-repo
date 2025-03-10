@@ -214,9 +214,9 @@ export class ShipmentPMService {
         if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
             myCustomURL = this._apiUrl;
         }
-        var callTime = new Date();
+       
         return defer(() => {
-            var url = CustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey;
+            var url = myCustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey;
 
             if (!AppTool.IsNullOrUndefined(Tenant)) {
                 url += '&tenant=' + Tenant;
@@ -224,9 +224,7 @@ export class ShipmentPMService {
             return this._http.get(url, ServiceHelper.GetHttpFullHeadersWithoutToken()).pipe(
                 map((response: HttpResponse<any>) => {
 
-                    //var servertime = response.headers.get('ServerExecutionTime');
-                    //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "getSingleBySecurityKey", SecurityKey);
-
+                  
                     var pm = response.body;
                     var entity: ShipmentPM;
                     if (pm) {
