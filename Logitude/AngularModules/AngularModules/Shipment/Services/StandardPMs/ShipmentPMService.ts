@@ -44,6 +44,7 @@ import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationReferantDataPM } from 'Customs/EntityPMs/DeclarationReferantDataPM';
 import { DeclarationReferantDataPMService } from 'Customs/Services/StandardPMs/DeclarationReferantDataPMService';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 @Injectable()
 
@@ -208,32 +209,11 @@ export class ShipmentPMService {
 
     getSingleBySecurityKeyTenantWithoutToken(SecurityKey: string, Tenant: number) {
 
-        let CustomURL = this._apiUrl;
-
-        //var myAuthHeader = new Headers();
-        //myAuthHeader.append('Content-Type', 'application/json');
-        //myAuthHeader.append('Accept', 'application/json');
-        //myAuthHeader.append('token', SessionInfo.Token);
-        //loginService.AuthHeader = myAuthHeader;
-        //loginService.GetGlobalSetting().subscribe(Setting => {
-        //    if (Setting) {
-        //        if (Setting.DeploymentStage == "amitalstorage") {
-        //            var myCustomURL = "http://13.93.36.4/api/shipment";
-        //        }
-        //    }
-        //});
-
-        this.getMyCustomUrl().subscribe((response: ServiceResponse) => {
-
-            if (response.Result) {
-                CustomURL = response.Result;
-            }
-
-            if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
-                CustomURL = this._apiUrl;
-            }
-        });
-        //var key = PerformanceLogger.AddLogTime();
+        var myCustomURL = ObjectsLocator.GlobalSetting.CustomURL ?? this._apiUrl;
+       
+        if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
+            myCustomURL = this._apiUrl;
+        }
         var callTime = new Date();
         return defer(() => {
             var url = CustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey;
@@ -280,7 +260,7 @@ export class ShipmentPMService {
     }
 
     getLogoAndUrlWithoutToken(securityKey: string): Promise<UrlAndLogo> {
-        const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : "https://systemwr.amital.co.il/api/shipment";
+        const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : (ObjectsLocator.GlobalSetting.CustomURL ?? this._apiUrl);
         return this._http.get(url + '/GetLogoAndUrlWithoutToken', { params: { securityKey: securityKey } }).toPromise() as Promise<UrlAndLogo>;
     }
 

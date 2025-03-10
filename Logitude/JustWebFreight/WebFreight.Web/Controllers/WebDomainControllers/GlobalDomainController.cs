@@ -190,6 +190,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
                         myResult.ReleaseDateString = mySetting.ReleaseDateString;
                         myResult.DNSZone = mySetting.DNSZone;
+                        myResult.CustomURL = mySetting.CustomURL;
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
                             myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
@@ -887,6 +888,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public DateTime? TMPersonalAccessExpirationDate { get; set; }
         public string ReleaseDateString { get; set; }
         public string DNSZone { get; set; }
+        public string CustomURL { get; set; }
     }
 
     public class TenantManagementJS
