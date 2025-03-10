@@ -38,6 +38,7 @@ import { ShipmentUnassignedFieldPM } from '../../EntityPMs/ShipmentUnassignedFie
 import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
 import { JsonPatchBuilder } from 'Infrastructure/Helpers/JsonPatchBuilder';
 import { AppTool } from 'Infrastructure/Tools';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 @Injectable()
 
@@ -142,19 +143,8 @@ export class ShipmentPMService {
 
     getSingleBySecurityKeyTenantWithoutToken(SecurityKey: string, Tenant: number) {
 
-        var myCustomURL = "https://systemwr.amital.co.il/api/shipment";
-        //var myAuthHeader = new Headers();
-        //myAuthHeader.append('Content-Type', 'application/json');
-        //myAuthHeader.append('Accept', 'application/json');
-        //myAuthHeader.append('token', SessionInfo.Token);
-        //loginService.AuthHeader = myAuthHeader;
-        //loginService.GetGlobalSetting().subscribe(Setting => {
-        //    if (Setting) {
-        //        if (Setting.DeploymentStage == "amitalstorage") {
-        //            var myCustomURL = "http://13.93.36.4/api/shipment";
-        //        }
-        //    }
-        //});
+        var myCustomURL = ObjectsLocator.GlobalSetting.CustomURL ?? this._apiUrl;
+       
         if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
             myCustomURL = this._apiUrl;
         }
@@ -206,7 +196,7 @@ export class ShipmentPMService {
     }
    
     getLogoAndUrlWithoutToken(securityKey: string): Promise<UrlAndLogo> {
-        const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : "https://systemwr.amital.co.il/api/shipment";
+        const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : (ObjectsLocator.GlobalSetting.CustomURL ?? this._apiUrl);
         return this._http.get(url + '/GetLogoAndUrlWithoutToken', { params: { securityKey: securityKey } }).toPromise() as Promise<UrlAndLogo>;
     }
 
