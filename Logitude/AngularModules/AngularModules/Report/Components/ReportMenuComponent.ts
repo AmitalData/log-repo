@@ -24,7 +24,7 @@ import { HomeComponent } from "Infrastructure/Components/HomeComponent/HomeCompo
 @Component({
     selector: 'ReportMenuComponent',
     templateUrl: './ReportMenuComponent.html',
-    inputs: ['CurrentReportId','IsReportPanelVisible'],
+    inputs: ['CurrentReportId','IsReportPanelVisible','IsPinned'],
 })
 
 export class ReportMenuComponent implements OnDestroy {
@@ -87,6 +87,13 @@ export class ReportMenuComponent implements OnDestroy {
         
         if (this.currentReportId != newValue) {
             this.currentReportId = newValue;
+        }
+    }
+    get IsPinned() { return this.isPinned; }
+    set IsPinned(newValue: boolean) {``
+        
+        if (this.isPinned != newValue) {
+            this.isPinned = newValue;
         }
     }
     get IsReportPanelVisible() { return this.isReportPanelVisible; }
