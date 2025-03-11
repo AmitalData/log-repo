@@ -155,6 +155,11 @@
 
         private INV_EXPENSES[] iNV_EXPENSESField;
 
+        private SupplierInvoiceFreightAmounts[] supplierInvoiceFreightAmountsField;
+
+        private SupplierInvoiceModifications[] supplierInvoiceModificationsField;
+
+
 		/// <remarks/>
 		public string INVOICELINENO
         {
@@ -336,6 +341,32 @@
             set
             {
                 this.iNV_EXPENSESField = value;
+            }
+        }
+
+        [System.Xml.Serialization.XmlElementAttribute("SupplierInvoiceFreightAmounts")]
+        public SupplierInvoiceFreightAmounts[] SupplierInvoiceFreightAmounts
+        {
+            get
+            {
+                return this.supplierInvoiceFreightAmountsField;
+            }
+            set
+            {
+                this.supplierInvoiceFreightAmountsField = value;
+            }
+        }
+
+        [System.Xml.Serialization.XmlElementAttribute("SupplierInvoiceModifications")]
+        public SupplierInvoiceModifications[] SupplierInvoiceModifications
+        {
+            get
+            {
+                return this.supplierInvoiceModificationsField;
+            }
+            set
+            {
+                this.supplierInvoiceModificationsField = value;
             }
         }
     }
@@ -843,6 +874,67 @@
             }
         }
     }
+    public partial class SupplierInvoiceFreightAmounts
+    {
+        private string sIFAmountField;
+        private string sIFCurrencyTypeCodeField;
+
+        public string SIFAmount
+        {
+            get
+            {
+                return this.sIFAmountField;
+            }
+            set
+            {
+                this.sIFAmountField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string SIFCurrencyTypeCode
+        {
+            get
+            {
+                return this.sIFCurrencyTypeCodeField;
+            }
+            set
+            {
+                this.sIFCurrencyTypeCodeField = value;
+            }
+        }
+    }
+    public partial class SupplierInvoiceModifications
+    {
+        private string sIMTypeCodeField;
+        private string sIMAmountField;
+
+        public string SIMAmount
+        {
+            get
+            {
+                return this.sIMAmountField;
+            }
+            set
+            {
+                this.sIMAmountField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string SIMTypeCode
+        {
+            get
+            {
+                return this.sIMTypeCodeField;
+            }
+            set
+            {
+                this.sIMTypeCodeField = value;
+            }
+        }
+    }
+
 
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]

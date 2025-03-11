@@ -6,6 +6,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.Messaging.Customs;
@@ -845,6 +847,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 this._MySupplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItemPM(this._INVOICE);
             }
             this._MySupplierInvoicePM.SupplierInvoiceModifications = GetSupplierInvoiceModificationsPM(this._INVOICE);
+            this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts = GetSupplierInvoiceFreightAmountsPM(this._INVOICE);
             AppendLogLine("this._MySupplierInvoicePM.ChangeSetOp"+ this._MySupplierInvoicePM.ChangeSetOp);
             if (this._MySupplierInvoicePM.ChangeSetOp != ChangeSetOperation.Update)
             {
@@ -1299,6 +1302,79 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
             return supplierInvoiceItemCertificatePMList;
         }
+        private List<SupplierInvoiceFreightAmountPM> GetSupplierInvoiceFreightAmountsPM(INVOICE iNVOICE)
+        {
+            var supplierInvoiceFreightAmountPMList = new List<SupplierInvoiceFreightAmountPM>();
+            if(this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts != null && this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts.Count() > 0)
+            {
+                supplierInvoiceFreightAmountPMList = this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts;
+            }
+            if (iNVOICE.SupplierInvoiceFreightAmounts != null)
+            {
+                foreach(var freightAmount in iNVOICE.SupplierInvoiceFreightAmounts)
+                {
+                    var existingRow= supplierInvoiceFreightAmountPMList.Where(d => d.CurrencyTypeCode == freightAmount.SIFCurrencyTypeCode).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(freightAmount.SIFCurrencyTypeCode) && existingRow != null)
+                    {
+                        if (decimal.TryParse(freightAmount.SIFAmount, out decimal decimal1))
+                        {
+                            if (existingRow.Amount != decimal1)
+                            {
+                                existingRow.Amount = decimal1;
+                                existingRow.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                        }
+                        else
+                        {
+                            throw new BusinessErrorException("Error in parsing freightAmount.SIFAmount ("
+                                                             + freightAmount.SIFAmount + ") into decimal");
+                        }
+                    }
+                    else if (
+                        !string.IsNullOrEmpty(freightAmount.SIFCurrencyTypeCode)
+                        || (string.IsNullOrEmpty(freightAmount.SIFCurrencyTypeCode)
+                            && this._MySupplierInvoicePM.ChangeSetOp == ChangeSetOperation.Insert)
+                    )
+                    {
+                        var supplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM();
+                        if (decimal.TryParse(freightAmount.SIFAmount, out decimal decimal1))
+                        {
+                            supplierInvoiceFreightAmountPM.Amount = decimal1;
+                        }
+                        else
+                        {
+                            throw new BusinessErrorException("Error in parsing freightAmount.SIFAmount (" + freightAmount.SIFAmount + ") into decimal");
+                        }
+                        if (!String.IsNullOrWhiteSpace(freightAmount.SIFCurrencyTypeCode))
+                        {
+                            var currencyType = new CurrencyTypeRepository(ResolvedTenant());
+                            var myCurrencyType = currencyType.GetSingle(freightAmount.SIFCurrencyTypeCode);
+                            if (myCurrencyType == null)
+                            {
+                                string currencyCode = "";
+                                currencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
+                                if (!string.IsNullOrWhiteSpace(currencyCode))
+                                {
+                                    supplierInvoiceFreightAmountPM.CurrencyTypeCode = currencyCode;
+                                }
+                            }
+                            else
+                            {
+                                supplierInvoiceFreightAmountPM.CurrencyTypeCode = myCurrencyType.Code;
+                            }
+                        }
+
+                        supplierInvoiceFreightAmountPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
+                        if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) supplierInvoiceFreightAmountPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
+                        supplierInvoiceFreightAmountPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
+                        supplierInvoiceFreightAmountPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        supplierInvoiceFreightAmountPMList.Add(supplierInvoiceFreightAmountPM);
+                    }
+                    
+                }
+            }
+            return supplierInvoiceFreightAmountPMList;
+        }
 
 
         private List<SupplierInvoiceModificationPM> GetSupplierInvoiceModificationsPM(INVOICE iNVOICE)
@@ -1412,6 +1488,56 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         }
                     }
                 }
+                if(iNVOICE.SupplierInvoiceModifications != null)
+                {
+                    foreach (var invoiceModification in iNVOICE.SupplierInvoiceModifications)
+                    {
+                        var existingRow = SupplierInvoiceModificationPMList.Where(d => d.TypeCode == invoiceModification.SIMTypeCode).FirstOrDefault();
+                        if (existingRow != null)
+                        {
+                            if (decimal.TryParse(invoiceModification.SIMAmount, out decimal simAmountDecimal))
+                            {
+                                if (existingRow.Amount != simAmountDecimal)
+                                {
+                                    existingRow.Amount = simAmountDecimal;
+                                    existingRow.ChangeSetOp = ChangeSetOperation.Update;
+                                }
+                            }
+                            else
+                            {
+                                throw new BusinessErrorException("Error in parsing invoieModification.SIMAmount (" + invoiceModification.SIMAmount + ") into decimal");
+                            }
+                        }
+                        else if (!string.IsNullOrEmpty(invoiceModification.SIMTypeCode) || (string.IsNullOrEmpty(invoiceModification.SIMTypeCode) && this._MySupplierInvoicePM.ChangeSetOp == ChangeSetOperation.Insert))
+                        {
+                            var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
+                            if (decimal.TryParse(invoiceModification.SIMAmount, out decimal amountInDecimal))
+                            {
+                                SupplierInvoiceModificationPM.Amount = amountInDecimal;
+                                SupplierInvoiceModificationPM.CurrencyTypeCode = "ILS";
+                            }
+                            else
+                            {
+                                throw new BusinessErrorException("Error in parsing invoieModification.SIMAmount (" + invoiceModification.SIMAmount + ") into decimal");
+                            }
+
+                            if (!String.IsNullOrWhiteSpace(invoiceModification.SIMTypeCode))
+                            {
+                                var modificationAndDiscountType = new ModificationAndDiscountTypeRepository(ResolvedTenant());
+                                var mymodificationAndDiscountType = modificationAndDiscountType.GetSingle(invoiceModification.SIMTypeCode);
+                                if (mymodificationAndDiscountType != null && !String.IsNullOrWhiteSpace(mymodificationAndDiscountType.Code))
+                                {
+                                    SupplierInvoiceModificationPM.TypeCode = mymodificationAndDiscountType.Code;
+                                }
+                            }
+                            SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
+                            if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
+                            SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
+                            SupplierInvoiceModificationPM.ChangeSetOp = ChangeSetOperation.Insert;
+                            SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
+                        }
+                    }
+                    }
             }
 
             return SupplierInvoiceModificationPMList;
