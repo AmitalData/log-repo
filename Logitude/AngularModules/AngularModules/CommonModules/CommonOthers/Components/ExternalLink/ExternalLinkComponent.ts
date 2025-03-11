@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ExternalLinkPM } from 'Common/EntityPMs/ExternalLinkPM';
 import { ExternalLinkPMService } from 'Common/Services/StandardPMs/ExternalLinkPMService';
 import { LogitudeWindowTemplateComponent } from 'Controls/Windows/LogitudeWindow';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { UIProperties } from 'Infrastructure/Components/LogitudeComponents/UIProperties';
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
@@ -72,6 +73,7 @@ export class ExternalLinkComponent {
     }
 
     initNewData(): void {
+        SessionLocator.SelectedSession.StartBusyIndicator('');
         const externalLinkPM: ExternalLinkPM = new ExternalLinkPM();
         externalLinkPM.Tenant = 0
         this.isNew = true;
@@ -79,12 +81,14 @@ export class ExternalLinkComponent {
     }
 
     async initExistsData(externalLinkPM: ExternalLinkPM): Promise<void> {        
+        SessionLocator.SelectedSession.StartBusyIndicator('');
         await this.initData(externalLinkPM);        
     }
 
-    async initData(externalLinkPM: ExternalLinkPM): Promise<void> {
+    initData(externalLinkPM: ExternalLinkPM): void {
         this.externalLinkPM = externalLinkPM;
         this.externalLinkPM.UIProperties = new UIProperties();
+        SessionLocator.SelectedSession.StopBusyIndicator();
         this.dataReady = true;
     }
 
@@ -98,17 +102,24 @@ export class ExternalLinkComponent {
     }
     
     async sendToServer(): Promise<boolean> {
-        SessionLocator.SelectedSession.StartBusyIndicator('');
+        let successSend: boolean = false;
+        try {
+            SessionLocator.SelectedSession.StartBusyIndicator('');
 
-        const serviceRequest: Observable<ServiceResponse> = this.isNew ?
+            const serviceRequest: Observable<ServiceResponse> = this.isNew ?
             new ExternalLinkPMService().insert(this.externalLinkPM) : new ExternalLinkPMService().update(this.externalLinkPM);
+            
+            const result = await new Promise<ServiceResponse>(res => serviceRequest.subscribe((myResult: ServiceResponse) => res(myResult)));
+            if (result.HasError)
+                this.errors = result.ErrorsArray;
+            else
+                successSend = true;
 
-        const result = await new Promise<ServiceResponse>(res => serviceRequest.subscribe((myResult: ServiceResponse) => res(myResult)));
-        if (result.HasError)
-            this.errors = result.ErrorsArray;
-
-        SessionLocator.SelectedSession.StopBusyIndicator();
-
-        return !result.HasError;
+        } catch (error) {            
+            MessageWindow.showErrorMessage(error?.message || error);
+        } finally {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            return successSend;
+        }
     }
 }
