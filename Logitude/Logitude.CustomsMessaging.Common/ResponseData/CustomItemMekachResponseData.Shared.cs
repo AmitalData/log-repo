@@ -15,7 +15,7 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
     {
         public int mekachNumber { get; set; }
         [XmlIgnore]
-        public Attachment attachedMekahFile { get; set; }
+        public string attachedMekahFile { get; set; }
         public DateTime validityDate { get; set; }
         public string changeDescription { get; set; }
     }
