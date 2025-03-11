@@ -276,7 +276,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 if (entityPM.DocumentStatusCode == "I" || entityPM.DocumentStatusCode == "X")
                 {
-					logData = $"DeclarationCourierStatus OnUpdating entityPM.DocumentStatusCode: {entityPM.DocumentStatusCode} CallStack: {new StackTrace().ToString()}";
+					logData = $"DeclarationCourierStatus OnUpdating entityPM.DocumentStatusCode: {entityPM.DocumentStatusCode} DeclarationId: {entityPM.DeclarationId} CallStack: {new StackTrace().ToString()}";
 					NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logData);
 				}
 				if (!String.IsNullOrWhiteSpace(entityPOCO.CourierPaymentStatusCode) && String.IsNullOrWhiteSpace(entityPM.CourierPaymentStatusCode))
