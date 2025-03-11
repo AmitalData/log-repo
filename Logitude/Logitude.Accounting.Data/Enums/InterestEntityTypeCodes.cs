@@ -14,4 +14,5 @@ namespace Logitude.Accounting.Data.Enums
         public const string Adjustments = "AJ";
         public const string InterestReport = "IR";
     }
+
 }
