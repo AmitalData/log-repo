@@ -122,6 +122,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                
+                if(args == null || string.IsNullOrEmpty(args.tableName) || string.IsNullOrEmpty(args.entityId) || args.tenant == null)
+                    throw new Exception("Dismmis argument data");
 
                 if (string.IsNullOrEmpty(args.loggedUserEmail))
                     args.loggedUserEmail = authToken.Email;

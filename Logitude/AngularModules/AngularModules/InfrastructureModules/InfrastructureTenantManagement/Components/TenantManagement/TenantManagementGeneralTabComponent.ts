@@ -21,7 +21,6 @@ import {TenantManagementList} from '../../../../Infrastructure/EntityLists/Tenan
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TenantLoginPolicyPMService } from '../../../../Common/Services/StandardPMs/TenantLoginPolicyPMService';
 import { TenantLoginPolicyPM } from '../../../../Common/EntityPMs/TenantLoginPolicyPM';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TraceEventExtendedPMService } from 'Infrastructure/Services/ExtendedPMs/TraceEventExtendedPMService';
 @Component({
