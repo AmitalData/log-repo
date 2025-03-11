@@ -247,48 +247,45 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
+              
                    
                     JSGlobalSettings myResult = new JSGlobalSettings();
 
                     SettingRepository mySettingRepository = new SettingRepository();
                     Setting mySetting = mySettingRepository.GetSingleSetting("1");
-                    if (mySetting != null)
+                if (mySetting != null)
+                {
+                    myResult.Id = mySetting.Id;
+                    myResult.LogitudeURL = mySetting.LogitudeURL;
+                    myResult.LogoCode = mySetting.LogoCode;
+                    myResult.WorkEnvironment = mySetting.WorkEnvironment;
+                    myResult.SameUserLoginEnabled = mySetting.SameUserLoginEnabled;
+                    myResult.LayoutDirection = mySetting.LayoutDirection;
+                    myResult.ReportsRunUsingWR = mySetting.ReportsRunUsingWR;
+                    myResult.DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
+                    myResult.DeploymentStage = mySetting.DeploymentStage;
+                    myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
+                    myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
+                    myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
+                    myResult.ReleaseDateString = mySetting.ReleaseDateString;
+                    myResult.DNSZone = mySetting.DNSZone;
+                    myResult.CustomURL = mySetting.CustomURL;
+                    if (LogitudeSettings.IsCostomsDeploy)
                     {
-                        myResult.Id = mySetting.Id;
-                        myResult.LogitudeURL = mySetting.LogitudeURL;
-                        myResult.LogoCode = mySetting.LogoCode;
-                        myResult.WorkEnvironment = mySetting.WorkEnvironment;
-                        myResult.SameUserLoginEnabled = mySetting.SameUserLoginEnabled;
-                        myResult.LayoutDirection = mySetting.LayoutDirection;
-                        myResult.ReportsRunUsingWR = mySetting.ReportsRunUsingWR;
-                        myResult.DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
-                        myResult.DeploymentStage = mySetting.DeploymentStage;
-                        myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
-                        myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
-                        myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
-                        myResult.ReleaseDateString = mySetting.ReleaseDateString;
-                        myResult.DNSZone = mySetting.DNSZone;
-                        myResult.CustomURL = mySetting.CustomURL;
-                        if (LogitudeSettings.IsCostomsDeploy)
-                        {
-                            myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
-                            myResult.ProductMessage = LogitudeSettings.ProductMessage;
-                        }
+                        myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
+                        myResult.ProductMessage = LogitudeSettings.ProductMessage;
                     }
 
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+
             }
 
             catch (Exception e)
             {
                 try
                 {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
+               
                        
 
                         JSGlobalSettings myResult = new JSGlobalSettings();
@@ -306,9 +303,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             myResult.DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
                         }
 
-                        scope.Complete();
+                       
                         return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                    }
+                 
                 }
 
                 catch (Exception ex)
