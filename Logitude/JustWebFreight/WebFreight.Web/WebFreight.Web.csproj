@@ -3740,6 +3740,7 @@
     <Compile Include="Helpers\StimulReportCustomizationDataProvider\GenericDataProviderGreator.cs" />
     <Compile Include="Helpers\StimulReportCustomizationDataProvider\StiBusinessObjectDataService.cs" />
     <Compile Include="Helpers\StimulsoftReportFontSizeService.cs" />
+    <Compile Include="Helpers\TraceHelper.cs" />
     <Compile Include="Helpers\UpdateShipmetsBatchArgs.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
