@@ -2370,7 +2370,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                           AmendmentissueDate = rec.AmendmentissueDate,
                           IsAmendment = rec.IsAmendment,
                           AmedmentType = rec.AmedmentType,
-                          AmendmentStatusName = j == null ? "" : j.Name
+                          AmendmentStatusName = j.Name
                       }
                   ).ToList();
             }
@@ -2396,7 +2396,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         AmendmentissueDate = rec.AmendmentissueDate,
                         IsAmendment = rec.IsAmendment,
                         AmedmentType = rec.AmedmentType,
-                        AmendmentStatusName = j == null ? "" : j.LocalName
+                        AmendmentStatusName = j == null ? null : j.LocalName
                     }
                 ).ToList();
             }
