@@ -60,6 +60,7 @@ export class AddEditRecoExPageComponent extends BaseComponent {
     isNewEntity: boolean = false;
     IsCancelApprovedEnabled: boolean = false;
     IsRestoreButtonVisibile: boolean = false;
+    IsLeumi: boolean = false;
     public IsDisplayOnly: boolean = false;
     public IsMultiCurrency: boolean = false;
     RestoreToolTipMessage: string;
@@ -119,8 +120,8 @@ export class AddEditRecoExPageComponent extends BaseComponent {
             this.SetCancelApprovalEditablilty();
             this.CalculateTotals();
             this.FillGridsData();
-
-
+            var bankCode = (this.PageObjectTableName == 'BankAccount') ? this.EntityPM.BankCode : null;
+            this.IsLeumi = bankCode == "10";
         }
     }
 
@@ -630,6 +631,24 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         }
     }
 
+    OnTextFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
+
+        if (file) {
+            var extension: string = file.name.split('.')[1];
+
+            if (extension.includes("dat")) {
+                var file = fileEvent.target.files[0];
+                this.UploadText(file);
+            }
+
+            else {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload text .dat files only");
+            }
+        }
+    }
+
     UploadExcel(file: any) {
         this.CurrentSession.StartBusyIndicator("Uploading...");
         this.UploadButtonIsEnabled = false;
@@ -664,6 +683,40 @@ export class AddEditRecoExPageComponent extends BaseComponent {
         }
     }
 
+    UploadText(file: any) {
+        this.CurrentSession.StartBusyIndicator("Uploading...");
+        this.UploadButtonIsEnabled = false;
+
+        this.fileName = null;
+        this.fileExtension = null;
+
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.fileName = name[0];
+                this.fileExtension = name[1];
+            }
+        }
+        if (file && file.size > 0) {
+            var documentExtendedService = new DocumentsFilingExtendedPMService();
+            documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var myResult = response.Result;
+                    if (myResult) {
+                        this.StartUploadingTextFile(file);
+                    }
+                }
+            });
+        }
+    }
+
+    StartUploadingTextFile(file: any) {
+        if (file && file.size > 0) {
+            var filebuffer = file.slice(0, file.size);
+            this.ConvertArrayBufferToBase64Text(filebuffer, this);
+        }
+    }
+
 
     formData: FormData = new FormData();
     UploadFile(event: any) {
@@ -674,6 +727,18 @@ export class AddEditRecoExPageComponent extends BaseComponent {
           this.UploadButtonIsEnabled = false;
           this.formData.append('file', file, file.name);
           this.SendExcelToServer();
+        }
+    }
+
+
+    UploadTextFile(event: any) {
+        const fileList: FileList = event.target.files;
+        if (fileList.length > 0) {
+            const file: File = fileList[0];
+            this.FileName = file.name.replace("." + this.FileExtension, "");
+            this.UploadButtonIsEnabled = false;
+            this.formData.append('file', file, file.name);
+            this.SendTextToServer();
         }
     }
 
@@ -729,6 +794,57 @@ export class AddEditRecoExPageComponent extends BaseComponent {
             else {
                 this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                this.UploadButtonIsEnabled = true;
+            }
+        });
+    }
+
+    ConvertArrayBufferToBase64Text(file: any, viewmodel: any) {
+        return new Promise((resolve, reject) => {
+            var reader: FileReader = new FileReader();
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var binary = '';
+                var bytes = new Uint8Array(ResultAsArray(e));
+                var len = bytes.byteLength;
+
+                for (var i = 0; i < len; i++) {
+                    binary += String.fromCharCode(bytes[i]);
+                }
+
+                viewmodel.partnersUploadExcelParameter = new PartnersUploadExcelParameter();
+                viewmodel.partnersUploadExcelParameter.FileData = window.btoa(binary);
+                viewmodel.partnersUploadExcelParameter.FileName = viewmodel.FileName;
+                viewmodel.partnersUploadExcelParameter.ComputingPartnerCode = viewmodel.ComputingPartnerCode;
+                viewmodel.SendTextToServer(viewmodel.partnersUploadExcelParameter);
+            };
+            reader.onerror = function (e) {
+                console.log(e);
+            };
+            reader.readAsArrayBuffer(file);
+        });
+    }
+
+    SendTextToServer() {
+        var glaccountId = (this.PageObjectTableName == 'GLAccount') ? this.EntityPM.Id : null;
+        var line = 0;
+        if (this.ReconcileExternalPagePM.ReconcileExternalPageLines.length > 0) {
+            var line = this.ReconcileExternalPagePM.ReconcileExternalPageLines.reduce(function (prev, current) { return (prev.LineNumber > current.LineNumber) ? prev : current }).LineNumber;
+        }
+        line++;
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this._ReconcileExternalPageExtendedPMService.ImportReconcileExternalPageLineFromText(this.formData, this.EntityPM.bankId, this.EntityPM.tenant, this.ReconcileExternalPagePM?.Id, line, glaccountId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                //filters = response.Result;
+                this.FillReconcileExternalPageLines(response);
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                this.UploadButtonIsEnabled = true;
             }
         });
     }
