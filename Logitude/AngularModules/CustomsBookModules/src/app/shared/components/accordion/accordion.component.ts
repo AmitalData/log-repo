@@ -3,7 +3,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FileTypes, GenericTableComponent, TableData } from '../generic-table/generic-table.component';
 import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, MainEntity, Mekach } from '../main-display/main-display.component';
-import { API_MainService, Filters } from '../../../core/API_MainService';
+import { API_MainService } from '../../../core/API_MainService';
 import { CommonModule, NgStyle } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
@@ -31,11 +31,11 @@ export class AccordionComponent implements OnInit {
   tableData4: TableData;
   tableData5: TableData;
   MainEntity: MainEntity = new MainEntity([], [], [], [], []);
-  reloadMsg : string = "טוען נתונים...";
-  freeImportHeader : string = "יבוא חופשי";
-  pesonalImportHeader : string = "יבוא אישי";
-  classificationHeader : string = "הנחיות סיווג";
-  mekachHeader : string = "תדפיסי חקיקה (מקח''ים)";
+  reloadMsg: string = "טוען נתונים...";
+  freeImportHeader: string = "יבוא חופשי";
+  pesonalImportHeader: string = "יבוא אישי";
+  classificationHeader: string = "הנחיות סיווג";
+  mekachHeader: string = "תדפיסי חקיקה (מקח''ים)";
   expandedArea1: boolean = false;
   expandedArea2: boolean = false;
   expandedArea3: boolean = true;
@@ -248,10 +248,10 @@ export class AccordionComponent implements OnInit {
     this.API_MainService.GetMekachDetails(this.customsItemId, SessionInfo.LoggedUserTenant).subscribe(
       (data: any) => {
         console.log(data?.body?.CustomItemMekachDataList);
-        const result: Mekach[] = data?.body?.CustomItemMekachDataList;
+        const result: Mekach[] = data?.body?.CustomItemMekachDataList ?? [];
         this.isLoadingMekach = false;
-        if (!result || result.length == 0) {
-          this.noExistMessageMakach = data?.body.UserMessage
+        if (result?.length === 0) {
+          this.noExistMessageMakach = data?.body?.UserMessage ?? this.noExistMessageMakach;
           return;
         };
         this.MainEntity.Mekach = result;

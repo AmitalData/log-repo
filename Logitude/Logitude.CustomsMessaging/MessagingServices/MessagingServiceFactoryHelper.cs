@@ -676,14 +676,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             Debug.WriteLine("this method its to enshur static constractor is up ");
         }
-        //public static void ResolveAndExecute(string mainInterfaceCode, int tenant, string correlationId,
-        //    CustomsCommandEnum myCustomsCommandEnum)
-        //{
-        //    MessagingServiceFactoryHelper.InitContainer();
-        //    var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
-        //    anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;
-
-        //}
 
         public static IMessagingServiceInterfaceType GetMessagingService(string mainInterfaceCode, string correlationId = "")
         {
