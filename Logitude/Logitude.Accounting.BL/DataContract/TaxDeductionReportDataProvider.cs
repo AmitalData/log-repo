@@ -52,7 +52,7 @@ namespace Logitude.Accounting.BL.DataContract
         private const string completedStatusCode = "3";
         int? ReportYear;
         List<CardList> transactionsVendors;
-        List<Address> addresses;
+        HashSet<Address> addresses;
         List<GLAccountList> transactionsOppositGLAccounts;
         DateTime? reportMonth;
         TaxDeductionReportPM taxDeductionReport;
@@ -75,7 +75,7 @@ namespace Logitude.Accounting.BL.DataContract
             accountingContext = AccountingContext.GetContext(tenant);
             vendors = new List<CardList>();
             gLAccounts = new List<GLAccountList>();
-            addresses = new List<Address>();
+            addresses = new HashSet<Address>();
             transactionsOppositGLAccounts = new List<GLAccountList>();
             mainGLAccounts = new List<GLAccountList>();
             accountCurrencies = new List<GLAccountCurrency>();
@@ -127,7 +127,6 @@ namespace Logitude.Accounting.BL.DataContract
         private List<TaxDeductionReportLine> GetTaxReportDeductionLines()
         {
             List<TaxDeductionReportLine> transactionDeductionLines;
-            List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
 
             if (FeatureToggleHelper.HasFeatureToggle("TXD", Tenant))  
             { 
@@ -145,105 +144,7 @@ namespace Logitude.Accounting.BL.DataContract
 
 
 
-        private List<LedgerTransaction> SelectUsingSQL(string whAccountId, DateTime startDate, DateTime endDate)
-        {
-            List<LedgerTransaction> transactions = new List<LedgerTransaction>();
 
-            string strConnString = TenantServerConfigration.GetDbConnection(Tenant);
-
-            using (SqlConnection connection = new SqlConnection(strConnString))
-            {
-                try
-                {
-                    connection.Open();
-                    using (SqlCommand command = connection.CreateCommand())
-                    {
-                        command.CommandText =
-                            "SELECT lt.Id, lt.AccountId, lt.OppositeAccountId, lt.JournalId, lt.JournalLineNumber, lt.LocalAmountDebit, lt.LocalAmountCredit, lt.Reference1, lt.AccountingDate, lt.Tenant " +
-                            "FROM LedgerTransactions lt " +
-                            "JOIN GLAccounts gla ON gla.id = lt.AccountId AND gla.Tenant = lt.tenant " +
-                            "JOIN GLAccounts opp ON opp.Id = lt.OppositeAccountId AND opp.Tenant = lt.Tenant " +
-                            "LEFT OUTER JOIN GLAccountCurrencies glacur ON opp.Id = glacur.GLAccountId " +
-                            "JOIN Cards c ON c.Id = ( " +
-                                    "SELECT TOP 1 Id " +
-                                    "FROM Cards " +
-                                    "WHERE GLAccountId = ISNULL(glacur.MainGLAccountId, opp.Id) " +
-                                    "AND InActive = 0 " +
-                                    "ORDER BY CreateDate DESC " +
-                                ") AND c.Tenant = gla.Tenant " +
-                            "JOIN Addresses adr ON adr.CardId = c.Id AND adr.Tenant = c.Tenant " +
-                            "JOIN Countries co ON co.Id = adr.CountryId  AND co.Tenant = adr.Tenant " +
-                            "JOIN Journals j ON j.Id = lt.JournalId AND j.Tenant = lt.Tenant " +
-                            "WHERE lt.Tenant = @V_Tenant " +
-                            "AND opp.AccountTypeCode = '3' " +              // Supplier
-                            "AND opp.ExcludeFromDeductionReport = 0 " +     // Include in deduction report
-                            "AND adr.AddressTypeId = 'M' " +                // Main
-                            "AND lt.LocalAmountDebit = 0 " +                // Credit
-                            "AND co.Code = 'IL' " +                         // Israel
-                            "AND (gla.ChartOfAccountsTypeCode = '5' OR " +  // Bank
-                                "gla.Id = @V_WhAccountId) " +               // Withholding Account
-                            "AND j.AccountingEntityCode != '5' " +          // APPayment
-                            "AND lt.AccountingDate >= @V_StartDate " +
-                            "AND lt.AccountingDate < @V_EndDate ";
-
-                        command.CommandType = CommandType.Text;
-
-                        command.Parameters.Add("@V_Tenant", SqlDbType.Int);
-                        command.Parameters["@V_Tenant"].Value = Tenant;
-
-                        command.Parameters.Add("@V_WhAccountId", SqlDbType.VarChar);
-                        command.Parameters["@V_WhAccountId"].Value = whAccountId;
-
-                        command.Parameters.Add("@V_StartDate", SqlDbType.DateTime);
-                        command.Parameters["@V_StartDate"].Value = startDate;
-
-                        command.Parameters.Add("@V_EndDate", SqlDbType.DateTime);
-                        command.Parameters["@V_EndDate"].Value = endDate;
-
-                        bool isDebug = false;
-                        if (isDebug)
-                        {
-                            // Variable holding the final SQL text
-                            string finalSqlText = command.CommandText
-                                .Replace("@V_Tenant", Tenant.ToString())
-                                .Replace("@V_WhAccountId", "'" + whAccountId + "'")
-                                .Replace("@V_StartDate", "'" + startDate.ToString("yyyy-MM-dd HH:MM:ss") + "'")
-                                .Replace("@V_EndDate", "'" + endDate.ToString("yyyy-MM-dd HH:MM:ss") + "'");  
-                        }
-
-                        SqlDataReader reader = command.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            LedgerTransaction transaction = new LedgerTransaction
-                            {
-                                Id = reader["Id"].ToString(),
-                                AccountId = reader["AccountId"].ToString(),
-                                OppositeAccountId = reader["OppositeAccountId"].ToString(),
-                                JournalId = reader["JournalId"].ToString(),
-                                JournalLineNumber = Convert.ToInt32(reader["JournalLineNumber"]),
-                                LocalAmountDebit = Convert.ToDecimal(reader["LocalAmountDebit"]),
-                                LocalAmountCredit = Convert.ToDecimal(reader["LocalAmountCredit"]),
-                                Reference1 = reader["Reference1"].ToString(),
-                                AccountingDate = Convert.ToDateTime(reader["AccountingDate"]),
-                                Tenant = Convert.ToInt32(reader["Tenant"]),
-
-                            };
-                            transactions.Add(transaction);
-                        }
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    throw ex;
-                }
-                finally
-                {
-                    connection.Close();
-                }
-            } 
-
-            return transactions;
-        }
 
         private List<TaxDeductionReportLine> CreateTaxDeductionLinesByAPPayments(List<APPayment> payments,bool cancelled) {
             List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
@@ -317,8 +218,6 @@ namespace Logitude.Accounting.BL.DataContract
             string wh = setting.TaxWithholdingGLAccountId;
             if (String.IsNullOrEmpty(wh))
                 throw new ApplicationException("Withholding Account not defined in Full Accounting Settings");
-
-            // List<LedgerTransaction> transactions = SelectUsingSQL(wh, startDate, endDate);
 
             LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(accountingContext);
 
@@ -416,7 +315,7 @@ namespace Logitude.Accounting.BL.DataContract
            
             gLAccounts = gLAccounts.Concat(GetVendorsGLAccounts(vendors)).ToList();
             vendors = vendors.Concat(GetAccountsVendors(gLAccounts.Select(d => d.Id).ToList())).ToList();
-            addresses = addresses.Concat(GetVendorsAddresses(vendors.Select(d=> d.Id).ToList())).ToList();
+            addresses = addresses.Concat(GetVendorsAddresses(vendors.Select(d => d.Id).ToHashSet())).ToHashSet();
             return vendors;
 
         }
@@ -460,16 +359,16 @@ namespace Logitude.Accounting.BL.DataContract
                                           LocalName = a.LocalName,
                                           Code = a.Code,
                                       }).ToList();
-            List<string> vendorIds = vendors.Select(d => d.Id).Distinct().ToList();
-            addresses =addresses.Concat(GetVendorsAddresses(vendorIds)).ToList();
+            HashSet<string> vendorIds = vendors.Select(d => d.Id).Distinct().ToHashSet();
+            addresses = addresses.Concat(GetVendorsAddresses(vendorIds)).ToHashSet();
             return vendors;
 
         }
-        List<Address> GetVendorsAddresses(List<string> vendorsIds)
+        HashSet<Address> GetVendorsAddresses(HashSet<string> vendorsIds)
         {
             return (from a in commoncontext.Addresses
                     where a.Tenant == Tenant && vendorsIds.Contains(a.CardId)
-                    && a.AddressTypeId == "M" select a).ToList();
+                    && a.AddressTypeId == "M" select a).ToHashSet();
 
 
         }
@@ -540,7 +439,7 @@ namespace Logitude.Accounting.BL.DataContract
         List<GLAccountList> transactionsGLAccounts;
 
         FullAccountingSettingPM setting;
-        List<LedgerTransaction> createdLines;
+        HashSet<LedgerTransaction> createdLines;
         public List<TaxDeductionReportLine> FillTaxDeductionReportUsingLedgerTransactions()
         {
             List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
@@ -551,7 +450,7 @@ namespace Logitude.Accounting.BL.DataContract
             transactionsGLAccounts = GetTransactionsGLAccounts(transactions);
 
             
-            createdLines = new List<LedgerTransaction>();
+            createdLines = new HashSet<LedgerTransaction>();
             foreach (LedgerTransaction transaction in transactions)
             {
                 bool LineCreated = CheckIfLineCreated(transaction);
@@ -601,7 +500,7 @@ namespace Logitude.Accounting.BL.DataContract
                 })
                 .ToList();
 
-            createdLines = new List<LedgerTransaction>();
+            createdLines = new HashSet<LedgerTransaction>();
 
             foreach (var group in groupedCreditTransactions)
             {
@@ -618,12 +517,11 @@ namespace Logitude.Accounting.BL.DataContract
                     MonthOfRegisterDate = firstTransaction.AccountingDate.Month
                 };
 
-                var whTransactions = group.Transactions
-                    .Where(tr => tr.AccountId == setting.TaxWithholdingGLAccountId);
+                var transactionsTaxWhLookup = group.Transactions.ToLookup(tr => tr.AccountId == setting.TaxWithholdingGLAccountId);
 
+                var whTransactions = transactionsTaxWhLookup[true]; 
 
-                var bankTransactions = group.Transactions
-                    .Where(tr => tr.AccountId != setting.TaxWithholdingGLAccountId);
+                var bankTransactions = transactionsTaxWhLookup[false]; 
 
                 if (whTransactions.Any())
                 {

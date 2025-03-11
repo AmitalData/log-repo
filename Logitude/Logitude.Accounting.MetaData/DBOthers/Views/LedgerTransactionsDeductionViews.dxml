@@ -1,7 +1,7 @@
-	<View DBType="Main" Name="LedgerTransactionsDeductionView" Schema="dbo" Module="Accounting">
+	<View DBType="Main" Name="LedgerTransactionsDeductionViews" Schema="dbo" Module="Accounting">
 	<SqlScript>
 		<![CDATA[
-CREATE CREATE OR ALTER  view  [dbo].[LedgerTransactionsDeductionView]
+CREATE OR ALTER  view  [dbo].[LedgerTransactionsDeductionViews]
 AS
     SELECT 
         lt.Id,
