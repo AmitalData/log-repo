@@ -317,7 +317,7 @@ namespace Logitude.Accounting.BL.InterestService
             interestTransactionLists.JournalNumber = GetSingleJournalnumberByInterestTransaction(entityResult, interestTransactionLists, JournalNumbers);
             interestTransactionLists.InterestEntityNumber = entityResult.EntityNumber; //aRInvoice.InvoiceNumber //aRPaymentPM.PaymentNo //journalPM.JournalNumber //journalPM.JournalNumber //reportPM.ReportNumber
             interestTransactionLists.InterestEntityType = entityResult.EntityType;     //"ARInvoice" //"ARPayment" //"Journal" //"Adjustments" //"Interest Report"
-            interestTransactionLists.InterestEntityIconCode = entityResult.EntityTypeCode; // "IN" //"PY" //"JR" //"AJ" //"IR"
+            interestTransactionLists.InterestEntityIconCode = entityResult.EntityTypeCode; // See InterestEntityTypeCodes.cs
             interestTransactionLists.JournalId = entityResult.JournalId;               //aRInvoice.JournalId //aRPaymentPM.JournalId //journalPM.Id //journalPM.Id //null
             interestTransactionLists.AccountEntityCode = entityResult.AccountCode;     //"2" //"3" //"1" //"1" //"11"
             if (entityResult.OriginalLines.Any(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber))

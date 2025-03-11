@@ -44,9 +44,21 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal AccumulatedAmount { get; set; }
         public decimal TotalAmount { get; set; }
         public int TotalInterestDays { get; set; }
+
         public decimal StandardInterestPercentage { get; set; }
         public decimal ExceptionalInterestPercentage { get; set; }
         public decimal CreditInterestPercentage { get; set; }
+
+        public decimal CalculatedStandardInterestAmount { get; set; }
+        public decimal CalculatedExceptionalInterestAmount { get; set; }
+        public decimal CalculatedCreditInterestAmount { get; set; }
+
+        public decimal TotalStandardInterestAmount { get; set; }
+        public decimal TotalExceptionalInterestAmount { get; set; }
+        public decimal TotalCreditInterestAmount { get; set; }
+
+
+
         public string CalculationDetails { get; set; }
         public decimal TotalInterest { get; set; }
         public decimal TotalLocalAmount { get; set; }
@@ -81,15 +93,24 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal? AccumulatedForInterest { get; set; }
         public string Currency { get; set; }
         public decimal? ForeignAmount { get; set; }
+
+
+        // Standard Interest
+        public decimal? CalculatedStdInterestAmount { get; set; }
         public decimal? StdPercentage { get; set; }
         public decimal? TotalStdInterest { get; set; }
-        public decimal? CalculatedStdInterest { get; set; }
+
+
+        // Exceptional Interest
+        public decimal? CalculatedExcInterestAmount { get; set; }
         public decimal? ExcPercentage { get; set; }
         public decimal? TotalExcInterest { get; set; }
-        public decimal? CalculatedExcInterest { get; set; }
+
+        // Credit Interest
+        public decimal? CalculatedCrdInterestAmount { get; set; }
         public decimal? CrdPercentage { get; set; }
         public decimal? TotalCrdInterest { get; set; }
-        public decimal? CalculatedCrdInterest { get; set; }
+        
         public string CalculationDetails { get; set; }
     }
 }

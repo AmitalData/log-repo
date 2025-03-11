@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.Enums;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.CustomsMessaging.Common.ResponseData;
@@ -28,7 +29,7 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 result.AccountCode = "2";
                 result.EntityCode = "1";
                 result.EntityType = "ARInvoice";
-                result.EntityTypeCode = "IN";
+                result.EntityTypeCode = InterestEntityTypeCodes.ARInvoice;
 
                 result.OriginalLines = new List<InterestEntityOriginalLineResult>();
                 int count = 0;

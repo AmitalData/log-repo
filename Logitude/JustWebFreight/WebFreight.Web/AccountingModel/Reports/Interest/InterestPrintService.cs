@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.InterestService;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
@@ -39,17 +40,32 @@ using WebFreight.Web.Helpers;
             InterestReportService interestReportService = new InterestReportService();
             List<InterestTransactionList> interestTransactionLists = interestReportService.GetAllInterestTransactionByDate(entityId, null, tenant, null).interestTransactionLists;
 
-            List<InterestReportLinesByDateProvider> InterestReportLines = InterestReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
+            List<InterestReportLinesByDateProvider> InterestReportPeriods = InterestReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
             {
                 FromDate = d.FromDate,
                 ToDate = d.ToDate,
                 AccumulatedAmount = d.AccumulatedAmount,
                 TotalAmount = d.TotalAmount,
                 TotalInterestDays = d.TotalInterestDays,
+
+                CalculationDetails = d.CalculationDetails,
+
+                // Percentages
                 StandardInterestPercentage = d.StandardInterestPercentage,
                 ExceptionalInterestPercentage = d.ExceptionalInterestPercentage,
                 CreditInterestPercentage = d.CreditInterestPercentage,
-                CalculationDetails = d.CalculationDetails,
+
+                // Calculated Amounts
+                CalculatedStandardInterestAmount = d.CalculatedStandInterestAmount,
+                CalculatedExceptionalInterestAmount = d.CalculatedExcepInterestAmount,
+                CalculatedCreditInterestAmount = d.CalculatedCreditInterestAmount,
+
+                // Total Amounts
+                TotalStandardInterestAmount = d.StandardInterestAmount,
+                TotalExceptionalInterestAmount = d.ExceptionalInterestAmount,
+                TotalCreditInterestAmount = d.CreditInterestAmount,
+
+
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
                 TotalLocalAmount = interestTransactionLists == null ? 0 : interestTransactionLists.Sum(s => s.LocalAmount),
 
@@ -81,22 +97,58 @@ using WebFreight.Web.Helpers;
                    }).ToList(),
             }).ToList();
 
-            InterestReportLines = InterestReportLines.OrderBy(s => s.FromDate).ToList();    
+            InterestReportPeriods = InterestReportPeriods.OrderBy(s => s.FromDate).ToList();    
 
-            if (InterestReportLines != null && InterestReportLines.Count > 0)
+            if (InterestReportPeriods.Any())
             {
 
-                foreach (var period in InterestReportLines) // For each period
+                foreach (var period in InterestReportPeriods) 
                 {
-                    DateTime date = period.FromDate.Value.Date;
-                    List<InterestTransactionList> periodInterestTransactionList = interestTransactionLists == null ? null : interestTransactionLists.Where(s => s.InterestValueDate.Date == date).ToList();
                     List<InterestReportFlatLine> periodLineList = new List<InterestReportFlatLine>();
-                    InterestReportFlatLine firstLine = FirstPeriodFlatLine(InterestReportPM, period, periodInterestTransactionList);
-
-
-                    periodLineList.Add(firstLine);
-                    if (periodLineList.Count > 0)
+                    foreach (var transactionDP in period.InterestTransactionList)
                     {
+                        InterestReportFlatLine line = new InterestReportFlatLine();
+                        line.LineNo = ++FlatLineCounter_;
+                        line.LineType = InterestPeriodLineTypes.Transaction;
+                        line.Date = transactionDP.InterestValueDate;
+                        
+                        line.LocalAmount = transactionDP.LocalAmount;
+                        line.Reference1 = GetReference1(transactionDP);
+                        line.Notes = GetNotes(transactionDP);
+
+                        periodLineList.Add(line);
+                    }
+                    if (periodLineList.Any())
+                    {
+                        // First in a period
+                        var firstLineInPeriod = periodLineList[0];
+                        firstLineInPeriod.Date = period.FromDate;
+                        firstLineInPeriod.NumberOfDays = period.TotalInterestDays;
+                        firstLineInPeriod.LineType = InterestPeriodLineTypes.FirstInPeriod;
+
+                        // Last in a period
+                        var lastLineInPeriod = periodLineList.Last();
+                        lastLineInPeriod.Notes = TranslateTextsClass.Translate("Accounting.General.O.TotalInterest", tenant);
+                        lastLineInPeriod.LineType = InterestPeriodLineTypes.LastInPeriod;
+                        lastLineInPeriod.TotalToDate = period.TotalLocalAmount;
+
+                        lastLineInPeriod.CalculatedStdInterestAmount = period.CalculatedStandardInterestAmount;
+                        lastLineInPeriod.StdPercentage = period.StandardInterestPercentage; 
+                        lastLineInPeriod.TotalStdInterest = period.TotalStandardInterestAmount; 
+
+                        lastLineInPeriod.CalculatedExcInterestAmount = period.CalculatedExceptionalInterestAmount;
+                        lastLineInPeriod.ExcPercentage = period.ExceptionalInterestPercentage;
+                        lastLineInPeriod.TotalExcInterest = period.TotalExceptionalInterestAmount;
+
+                        lastLineInPeriod.CalculatedCrdInterestAmount = period.CalculatedCreditInterestAmount;
+                        lastLineInPeriod.CrdPercentage = period.CreditInterestPercentage;
+                        lastLineInPeriod.TotalCrdInterest = period.TotalCreditInterestAmount;
+
+                        lastLineInPeriod.CalculationDetails = period.CalculationDetails;
+
+                        lastLineInPeriod.TotalStdInterest = period.CalculatedStandardInterestAmount;
+
+
                         InterestReportDP.InterestReportFlatLineList.AddRange(periodLineList);
                     }
                 }
@@ -109,7 +161,7 @@ using WebFreight.Web.Helpers;
             InterestReportDP.CustomerName = InterestReportPM.CustomerName;
             InterestReportDP.InterestCalculationDate = InterestReportPM.InterestCalculationDate;
             InterestReportDP.InvoiceNumber = InterestReportPM.ARInvoiceNumber;
-            InterestReportDP.InterestReportLinesByDateList = InterestReportLines;
+            InterestReportDP.InterestReportLinesByDateList = InterestReportPeriods;
             InterestReportDP.TotalAmount = InterestReportPM.TotalAmount;
             InterestReportDP.CreditAllotmentPercentage = InterestReportPM.CreditAllotmentPercentage;
             InterestReportDP.CalCreditAllotmentCommission = InterestReportPM.CalCreditAllotmentCommission;
@@ -132,11 +184,11 @@ using WebFreight.Web.Helpers;
         {
             InterestReportFlatLine rv = new InterestReportFlatLine();
             rv.LineNo = ++FlatLineCounter_;
-            rv.LineType = "F"; // First 
+            rv.LineType = InterestPeriodLineTypes.First;
             if (interestReportPM != null)
             {
                 rv.Date = interestReportPM.InterestCalculationDate;
-                rv.Details = TranslateTextsClass.Translate("Accounting.General.O.OpenAmount", interestReportPM.Tenant);
+                rv.Notes = TranslateTextsClass.Translate("Accounting.General.O.OpenAmount", interestReportPM.Tenant);
                 rv.LocalAmount = interestReportPM.OpenBalance ?? 0m;
             }
             return rv;
@@ -146,7 +198,7 @@ using WebFreight.Web.Helpers;
         {
             InterestReportFlatLine rv = new InterestReportFlatLine();
             rv.LineNo = ++FlatLineCounter_;
-            rv.LineType = "E"; // First 
+            rv.LineType = InterestPeriodLineTypes.End;
             if (interestReportPM != null)
             {
                 rv.Notes = TranslateTextsClass.Translate("Accounting.General.O.ReportTotalInterest", interestReportPM.Tenant);
@@ -155,43 +207,51 @@ using WebFreight.Web.Helpers;
             return rv;
         }
 
-        private InterestReportFlatLine FirstPeriodFlatLine(InterestReportPM interestReportPM, InterestReportLinesByDateProvider period, List<InterestTransactionList> periodInterestTransactionList)
-        {
-            InterestReportFlatLine rv = new InterestReportFlatLine();
-            rv.LineNo = ++FlatLineCounter_;
-            rv.LineType = "P1"; // First in a period
-            rv.Date = period.FromDate;
-            rv.NumberOfDays = period.TotalInterestDays;
 
-            FillRef1Notes(period, periodInterestTransactionList, ref rv);
+        private string GetReference1(InterestTransactionProvider interestTransactionDP)
+        {
+            string rv = string.Empty;
+            
+
+            switch (interestTransactionDP.EntityType)   // InterestEntityIconCode
+            {
+                case InterestEntityTypeCodes.ARInvoice:
+                case InterestEntityTypeCodes.ARPayment:
+                case InterestEntityTypeCodes.Adjustments:
+                case InterestEntityTypeCodes.InterestReport:
+                    rv = interestTransactionDP.EntityNumber;
+                    break;
+                case InterestEntityTypeCodes.Journal:
+                    rv = interestTransactionDP.EntityNumber;
+                    break;
+                default:
+                    break;
+            }
             return rv;
+
         }
 
-        private static void FillRef1Notes(InterestReportLinesByDateProvider period, List<InterestTransactionList> periodInterestTransactionList, ref InterestReportFlatLine flatLine)
+        private string GetNotes(InterestTransactionProvider interestTransactionDP)
         {
-            flatLine.Reference1 = string.Empty;
-            flatLine.Notes = string.Empty;
-            if (period != null)
+            string rv = interestTransactionDP.Notes;
+
+
+            switch (interestTransactionDP.EntityType)   // InterestEntityIconCode
             {
-                if (period.GroupedInterestTransactionList != null && period.GroupedInterestTransactionList.Count > 0)
-                {
-                    var firstlist = period.GroupedInterestTransactionList[0];
-                    switch (firstlist.EntityType)   // InterestEntityIconCode
-                    {
-                        case "IN":
-                        case "PY":
-                        case "AJ":
-                        case "IR":
-                            flatLine.Reference1 = firstlist.EntityNumber;
-                            break;
-                        case "JR":
-                            flatLine.Reference1 = firstlist.EntityNumber;
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                case InterestEntityTypeCodes.ARInvoice:
+                case InterestEntityTypeCodes.ARPayment:
+                case InterestEntityTypeCodes.Adjustments:
+                case InterestEntityTypeCodes.InterestReport:
+
+                    break;
+                case InterestEntityTypeCodes.Journal:
+
+                    break;
+                default:
+                    break;
             }
+            return rv;
+
         }
 
         private static void GetGLAccountDisplayNumber(int tenant, InterestDataProvider InterestReportDP, InterestReportPM InterestReportPM)
