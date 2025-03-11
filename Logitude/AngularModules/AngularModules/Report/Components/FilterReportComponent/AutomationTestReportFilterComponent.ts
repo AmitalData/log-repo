@@ -56,9 +56,9 @@ export class AutomationTestReportFilterComponent extends BaseComponent {
     }
 
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
         this.RunReportTitle = "Preview";
-        this.IsReportScheduler = true;
+        this.IsReportScheduler = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);

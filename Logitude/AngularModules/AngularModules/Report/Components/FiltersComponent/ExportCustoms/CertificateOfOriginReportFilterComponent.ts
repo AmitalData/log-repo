@@ -222,37 +222,38 @@ export class CertificateOfOriginReportFilterComponent extends BaseComponent {
     queryFilterItem: QueryFilterItem;
     RunReport() {
         this.ValidationErrorsList = [];
-
-
-        var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        
-            if (this.FromDate == null) {
-                var FromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "מתאריך");
-                this.ValidationErrorsList.push(FromDateValidation);
-            }
-
-            if (this.ToDate == null) {
-                var ToDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "עד תאריך");
-                this.ValidationErrorsList.push(ToDateValidation);
-            }
-
-            if (this.FromDate != null && this.ToDate != null) {
-                var FromDate = new Date(this.FromDate.getUTCFullYear(), this.FromDate.getUTCMonth(), this.FromDate.getUTCDate(), 0, 0, 0, 0);
-                var ToDate = new Date(this.ToDate.getUTCFullYear(), this.ToDate.getUTCMonth(), this.ToDate.getUTCDate(), 0, 0, 0, 0);
-                if (FromDate > ToDate) {
-                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
-                }
-            
-        }
-        if (this.ValidationErrorsList.length == 0) {
+                  
+        if (this.ValidateSelectedFilters()) {
 
             this.BuildReport();
 
         }
     }
+    ValidateSelectedFilters() {
+        var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        
+        if (this.FromDate == null) {
+            var FromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "מתאריך");
+            this.ValidationErrorsList.push(FromDateValidation);
+        }
 
+        if (this.ToDate == null) {
+            var ToDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "עד תאריך");
+            this.ValidationErrorsList.push(ToDateValidation);
+        }
+
+        if (this.FromDate != null && this.ToDate != null) {
+            var FromDate = new Date(this.FromDate.getUTCFullYear(), this.FromDate.getUTCMonth(), this.FromDate.getUTCDate(), 0, 0, 0, 0);
+            var ToDate = new Date(this.ToDate.getUTCFullYear(), this.ToDate.getUTCMonth(), this.ToDate.getUTCDate(), 0, 0, 0, 0);
+            if (FromDate > ToDate) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+            }
+        
+         }
+         return this.ValidationErrorsList.length == 0;
+    }
     BuildReport() {
-        this.InitilaizeFilter();
+        this.GetQueryFilterItems();
 
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
@@ -265,8 +266,61 @@ export class CertificateOfOriginReportFilterComponent extends BaseComponent {
 
         this.ReportsPreview.GenerateReport(this.reportFliter, true);
     }
-
-    InitilaizeFilter() {
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+  
+        if (this.IsSchedulerReport) {
+            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+        }
+        else {
+            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+        }
+   
+}
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "CreateDate":{
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    this.ToDate = new Date(queryFilterItem.FieldValue2);
+                    break;
+                }
+                   
+                case "CustomFileNo":
+                    this.CustomFileNo = queryFilterItem.FieldValue;
+                     break;
+                 case "DeclarationNumber":
+                    this.DeclarationNumber = queryFilterItem.FieldValue;
+                    break;
+                case "CooTypeCode":{
+                    this.CooTypeCode=queryFilterItem.FieldValue;
+                     break;
+                 }
+                 case "COONumber":
+                    this.COONumber = queryFilterItem.FieldValue;
+                     break;
+                 case "Customer":
+                    this.CustomerId = queryFilterItem.FieldValue;
+                     break; 
+                 case "TransportModeId":
+                    this.SelectedTransportModeId = queryFilterItem.FieldValue;
+                     break;             
+            }
+   
+    
+        }
+    }
+    GetQueryFilterItems() {
        
         this.queryFilterItems = new Array<QueryFilterItem>();
         //-----------------------------------------------------------------------------1
@@ -299,7 +353,7 @@ export class CertificateOfOriginReportFilterComponent extends BaseComponent {
         if(!AppTool.IsNullOrEmpty(this.CustomerId)) {
             this.queryFilterItems.push(this.GetNewQueryFilterItem("Customer", this.CustomerId, null, "string"));
         }
-        //-----------------------------------------------------------------------------8
+       return this.queryFilterItems;
     }
 
     GetNewQueryFilterItem(FieldName: string, FieldValue: any, FieldValue2: any = null, FieldDataType: string = null, Operator: string = "Equals") {

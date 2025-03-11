@@ -183,15 +183,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                         entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 
+
                     }
 
-
-                    service.Update(entityPM);
-                    entityPM.SchedulerDetailsXML = null;
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                        service.Update(entityPM);
+                        entityPM.SchedulerDetailsXML = null;
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
                 }
-            }
+           
 
             catch (Exception ex)
             {

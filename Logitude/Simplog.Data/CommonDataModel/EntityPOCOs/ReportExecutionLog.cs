@@ -34,6 +34,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public string SearchFields { get; set; }
 
+        public bool NotDisplayInMenu { get; set; }
 
         [ForeignKey("StatusCode")]
         public virtual CommunicationStatusType CommunicationStatusType { get; set; }
