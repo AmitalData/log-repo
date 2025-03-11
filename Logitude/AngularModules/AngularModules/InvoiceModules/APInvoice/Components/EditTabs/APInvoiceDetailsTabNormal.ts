@@ -221,7 +221,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     SetUIProperties_VATNumber() {
         var isRequired = false;
 
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && this.EntityPM.VendorCountry === "ISRAEL") {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
                 isRequired = true;
             }
