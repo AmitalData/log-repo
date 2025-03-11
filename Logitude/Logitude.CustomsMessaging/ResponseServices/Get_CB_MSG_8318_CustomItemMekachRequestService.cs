@@ -36,7 +36,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         mekachNumber = item.mekachNumber,
                         changeDescription = item.changeDescription,
                         validityDate = item.validityDate,
-                        //attachedMekahFile = Convert.ToBase64String(System.IO.File.ReadAllBytes(@"C:\Users\Elon.NTDOMAIN\Downloads\elon test.pdf"))
                         attachedMekahFile = item.attachedMekahFile?.content != null ? Convert.ToBase64String(item.attachedMekahFile?.content) : null
                     });
                 }
