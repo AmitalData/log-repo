@@ -1479,12 +1479,12 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 }
                 if(iNVOICE.SupplierInvoiceModifications != null)
                 {
-                    foreach (var invoieModification in iNVOICE.SupplierInvoiceModifications)
+                    foreach (var invoiceModification in iNVOICE.SupplierInvoiceModifications)
                     {
-                        var existingRow = SupplierInvoiceModificationPMList.Where(d => d.TypeCode == invoieModification.SIMTypeCode).FirstOrDefault();
+                        var existingRow = SupplierInvoiceModificationPMList.Where(d => d.TypeCode == invoiceModification.SIMTypeCode).FirstOrDefault();
                         if (existingRow != null)
                         {
-                            if (decimal.TryParse(invoieModification.SIMAmount, out decimal simAmountDecimal))
+                            if (decimal.TryParse(invoiceModification.SIMAmount, out decimal simAmountDecimal))
                             {
                                 if (existingRow.Amount != simAmountDecimal)
                                 {
@@ -1494,26 +1494,26 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             }
                             else
                             {
-                                throw new BusinessErrorException("Error in parsing invoieModification.SIMAmount (" + invoieModification.SIMAmount + ") into decimal");
+                                throw new BusinessErrorException("Error in parsing invoieModification.SIMAmount (" + invoiceModification.SIMAmount + ") into decimal");
                             }
                         }
-                        else if (!string.IsNullOrEmpty(invoieModification.SIMTypeCode) || (string.IsNullOrEmpty(invoieModification.SIMTypeCode) && this._MySupplierInvoicePM.ChangeSetOp == ChangeSetOperation.Insert))
+                        else if (!string.IsNullOrEmpty(invoiceModification.SIMTypeCode) || (string.IsNullOrEmpty(invoiceModification.SIMTypeCode) && this._MySupplierInvoicePM.ChangeSetOp == ChangeSetOperation.Insert))
                         {
                             var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
-                            if (decimal.TryParse(invoieModification.SIMAmount, out decimal1))
+                            if (decimal.TryParse(invoiceModification.SIMAmount, out decimal amountInDecimal))
                             {
-                                SupplierInvoiceModificationPM.Amount = decimal1;
+                                SupplierInvoiceModificationPM.Amount = amountInDecimal;
                                 SupplierInvoiceModificationPM.CurrencyTypeCode = "ILS";
                             }
                             else
                             {
-                                throw new BusinessErrorException("Error in parsing invoieModification.SIMAmount (" + invoieModification.SIMAmount + ") into decimal");
+                                throw new BusinessErrorException("Error in parsing invoieModification.SIMAmount (" + invoiceModification.SIMAmount + ") into decimal");
                             }
 
-                            if (!String.IsNullOrWhiteSpace(invoieModification.SIMTypeCode))
+                            if (!String.IsNullOrWhiteSpace(invoiceModification.SIMTypeCode))
                             {
                                 var modificationAndDiscountType = new ModificationAndDiscountTypeRepository(ResolvedTenant());
-                                var mymodificationAndDiscountType = modificationAndDiscountType.GetSingle(invoieModification.SIMTypeCode);
+                                var mymodificationAndDiscountType = modificationAndDiscountType.GetSingle(invoiceModification.SIMTypeCode);
                                 if (mymodificationAndDiscountType != null && !String.IsNullOrWhiteSpace(mymodificationAndDiscountType.Code))
                                 {
                                     SupplierInvoiceModificationPM.TypeCode = mymodificationAndDiscountType.Code;
