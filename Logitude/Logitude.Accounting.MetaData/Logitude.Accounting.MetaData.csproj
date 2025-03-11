@@ -155,6 +155,7 @@
     <None Include="DBScripts\202405021130_UpdateObjectField_DisplayInRequiredFields.sxml" />
     <None Include="DBScripts\20250202_Create_PIX_GLAccounts_ChartOfAccountsTypeCode.sxml" />
     <None Include="DBScripts\20250202_Create_PIX_Journals_ExternalSystem.sxml" />
+    <None Include="DBScripts\20250311_Create_PIX_LedgerTransactions_Tenant_LocalAmountDebit_AccountingDate.sxml" />
     <None Include="DBScripts\27092023_FillDefaultHeaderColor.sxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
