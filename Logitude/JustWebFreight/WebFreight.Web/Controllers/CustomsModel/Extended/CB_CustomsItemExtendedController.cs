@@ -23,7 +23,6 @@ using Logitude.Customs.BL.AzureSearch;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Common.RequestParams;
-
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class CB_CustomsItemExtendedController : ApiController
@@ -324,7 +323,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
-          public HttpResponseMessage GetMekachDetails(int customsItemId, int tenant)
+        public HttpResponseMessage GetMekachDetails(int customsItemId, int tenant)
         {
             try
             {

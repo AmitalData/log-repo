@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { GenericTableComponent, TableData } from '../generic-table/generic-table.component';
+import { FileTypes, GenericTableComponent, TableData } from '../generic-table/generic-table.component';
 import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, MainEntity, Mekach } from '../main-display/main-display.component';
-import { API_MainService, Filters } from '../../../core/API_MainService';
+import { API_MainService } from '../../../core/API_MainService';
 import { CommonModule, NgStyle } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
@@ -31,7 +31,11 @@ export class AccordionComponent implements OnInit {
   tableData4: TableData;
   tableData5: TableData;
   MainEntity: MainEntity = new MainEntity([], [], [], [], []);
-
+  reloadMsg: string = "טוען נתונים...";
+  freeImportHeader: string = "יבוא חופשי";
+  pesonalImportHeader: string = "יבוא אישי";
+  classificationHeader: string = "הנחיות סיווג";
+  mekachHeader: string = "תדפיסי חקיקה (מקח''ים)";
   expandedArea1: boolean = false;
   expandedArea2: boolean = false;
   expandedArea3: boolean = true;
@@ -39,6 +43,7 @@ export class AccordionComponent implements OnInit {
   faChevronLeft = faChevronLeft;
   faChevronDown = faChevronDown;
   noExistMessageClasisificationGuidance = "לא התקבלו הנחיות סיווג";
+  noExistMessageMakach = "לא התקבלו פרטי תדפיסי חקיקה";
   isLoadingClasisificationGuidance = false;
   isLoadingMekach = false;
   resetClassificationGuidanceData: boolean = true;
@@ -60,7 +65,7 @@ export class AccordionComponent implements OnInit {
       this.expandedArea1 = false;
       this.expandedArea2 = false;
       this.expandedArea3 = true;
-      this.expandedArea5 = false;
+      this.expandedArea5 = true;
 
       this.customsItemId = data?.CustomsItemID;
       if (this.customsItemId) {
@@ -68,7 +73,8 @@ export class AccordionComponent implements OnInit {
         this.buildAgreementsList(data?.CustomsItemID, data?.PH_MeasurementUnitID);
         this.buildRegularityRequirementList();
         this.buildClasisificationGuidance();
-        this.buildDataMekach(1, '2', 1);
+        this.buildDataMekach();
+
       }
     });
   }
@@ -138,10 +144,10 @@ export class AccordionComponent implements OnInit {
 
     this.tableData5 = {
       columns: [
-        { key: 'mekachNumber', displayName: 'מס מק"ת/מק"ח', dataType: 'string', visible: true },
-        { key: 'attachedMekahFile', displayName: 'קובץ מצורף', dataType: 'string', visible: true },
-        { key: 'validityDate', displayName: 'בתוקף מיום', dataType: 'date', visible: true },
-        { key: 'changeDescription', displayName: 'דברי הסבר', dataType: 'string', visible: true }
+        { key: 'mekachNumber', displayName: 'מס מק"ת/מק"ח', dataType: 'string', visible: true, width: '120px' },
+        { key: 'attachedMekahFile', displayName: 'קובץ מצורף', dataType: FileTypes.pdf, visible: true, width: '120px' },
+        { key: 'validityDate', displayName: 'בתוקף מיום', dataType: 'date', visible: true, width: '120px' },
+        { key: 'changeDescription', displayName: 'דברי הסבר', dataType: 'string', visible: true, width: '120px' }
       ],
       data: []
     };
@@ -215,6 +221,7 @@ export class AccordionComponent implements OnInit {
       },
       (error) => {
         console.log(error.message);
+        this.isLoadingClasisificationGuidance = false;
       }
     );
   }
@@ -236,30 +243,22 @@ export class AccordionComponent implements OnInit {
     }
   }
 
-  // 
-  buildDataMekach(customsItemId: number, validToDate: string, languageType: number) {
+  buildDataMekach() {
     this.isLoadingMekach = true;
-    this.MainEntity.Mekach = [
-      { mekachNumber: 296, attachedMekahFile: "file1", validityDate: new Date(), changeDescription: "description1" },
-      { mekachNumber: 123, attachedMekahFile: "file2", validityDate: new Date(), changeDescription: "description2" }
-      
-    ];
-    this.tableData5.data = this.MainEntity.Mekach;
-    this.isLoadingMekach = false;
-    
-    this.API_MainService.GetMekachDetails(customsItemId, SessionInfo.LoggedUserTenant).subscribe(
+    this.API_MainService.GetMekachDetails(this.customsItemId, SessionInfo.LoggedUserTenant).subscribe(
       (data: any) => {
-          console.log(data);
-          
-        // const result: Mekach[] = data?.body?.CustomItemClassifGuidanceList;
-        // if (!result) return;;
-        // this.MainEntity.Mekach = result;
-        // this.tableData5.data = this.MainEntity.CustomItemClassifGuidanceResult;
-        // this.isLoadingMekach = false;
-
+        const result: Mekach[] = data?.body?.CustomItemMekachDataList ?? [];
+        this.isLoadingMekach = false;
+        if (result?.length === 0) {
+          this.noExistMessageMakach = data?.body?.UserMessage ?? this.noExistMessageMakach;
+          return;
+        };
+        this.MainEntity.Mekach = result;
+        this.tableData5.data = this.MainEntity.Mekach;
       },
       (error) => {
         console.log(error.message);
+        this.isLoadingMekach = false;
       }
     );
   }
