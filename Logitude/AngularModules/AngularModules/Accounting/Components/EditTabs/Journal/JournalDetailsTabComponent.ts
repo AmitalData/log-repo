@@ -674,7 +674,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             if (confirmWindow.Yes) {
 
                 this.JournalLines.Remove(line);
-                this.EntityPM.JournalLines.splice(line.Line - 1, 1);
+                this.EntityPM.JournalLines = this.EntityPM.JournalLines.filter((journalLine) => journalLine.Line !== line.Line);
                 //var ItemsSource = [];
 
                 // Recalculate line numbers
@@ -1045,7 +1045,6 @@ class JournalLineModel extends BaseComponent {
 
         if (this.JournalLinePM.ActionId != value) {
             this.JournalLinePM.ActionId = value;
-            this.parent.CalculateTotals();
         }
        // if (value != null) {
         //    this.CurrencyId = null;
@@ -1091,6 +1090,8 @@ class JournalLineModel extends BaseComponent {
             if (value != null) {
                 this.ActionCode = value.Code;
                 this.ActionName = value.LocalName;
+                this.parent.CalculateTotals();
+
             }
         }
 
