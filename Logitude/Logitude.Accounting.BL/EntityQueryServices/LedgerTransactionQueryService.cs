@@ -783,7 +783,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         CancelledJournal = cancelledj,
                         GLAccount = g
                     })
-                    .ToList() // materialize into memory - EF bug workaround (placing ResolveReferenceType in the LINQ-to-Entities query causes an exception)
+                    .AsEnumerable() // materialize into memory - EF bug workaround (placing ResolveReferenceType in the LINQ-to-Entities query causes an exception)
                     .Select(x => new B100Data
                     {
                         AccountingDate = x.LedgerTransaction.AccountingDate,
