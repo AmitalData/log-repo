@@ -130,8 +130,8 @@ namespace Logitude.Customs.BL.BL
             try
             {
                 var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
-                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2755", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
-                if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+                var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2755", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
+                if (requestInProgressList != null && requestInProgressList.Any())
                 {
                     return;
                 }
@@ -166,8 +166,8 @@ namespace Logitude.Customs.BL.BL
             try
             {
                 var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
-                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2750", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
-                if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+                var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2750", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
+                if (requestInProgressList != null && requestInProgressList.Any())
                 {
                     return;
                 }
@@ -205,8 +205,8 @@ namespace Logitude.Customs.BL.BL
             {
 
                 var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
-                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "1170", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
-                if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+                var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "1170", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
+                if (requestInProgressList != null && requestInProgressList.Any())
                 {
                     return;
                 }
