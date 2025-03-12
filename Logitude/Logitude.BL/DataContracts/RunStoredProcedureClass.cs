@@ -506,62 +506,80 @@ namespace Logitude.BL.DataContracts
 
         public static int Update_LT_Foreign(int tenant, string accountId)
         {
-            string strConnString = GetConnection(tenant);
-
-            using (SqlConnection connection = new SqlConnection(strConnString))
+            try
             {
-                SqlCommand command = new SqlCommand("dbo.usp_UpdateLTForeign", connection);
-                command.CommandType = CommandType.StoredProcedure;
 
-                SqlParameter param1 = new SqlParameter("@V_Tenant", SqlDbType.Int);
-                param1.Direction = ParameterDirection.Input;
-                param1.Value = tenant;
-                command.Parameters.Add(param1);
 
-                SqlParameter param2= new SqlParameter("@V_AccountId", SqlDbType.VarChar);
-                param2.Direction = ParameterDirection.Input;
-                param2.Value = accountId;
-                command.Parameters.Add(param2);
+                string strConnString = GetConnection(tenant);
 
-                connection.Open();
-                int transactionsMade = command.ExecuteNonQuery();
-                connection.Close();
-                return transactionsMade;
+                using (SqlConnection connection = new SqlConnection(strConnString))
+                {
+                    SqlCommand command = new SqlCommand("dbo.usp_UpdateLTForeign", connection);
+                    command.CommandType = CommandType.StoredProcedure;
 
+                    SqlParameter param1 = new SqlParameter("@V_Tenant", SqlDbType.Int);
+                    param1.Direction = ParameterDirection.Input;
+                    param1.Value = tenant;
+                    command.Parameters.Add(param1);
+
+                    SqlParameter param2 = new SqlParameter("@V_AccountId", SqlDbType.VarChar);
+                    param2.Direction = ParameterDirection.Input;
+                    param2.Value = accountId;
+                    command.Parameters.Add(param2);
+
+                    connection.Open();
+                    int transactionsMade = command.ExecuteNonQuery();
+                    connection.Close();
+                    return transactionsMade;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Update_LT_Foreign", null, ip);
+                throw;
             }
         }
 
         public static int Update_LT_Local(int tenant, string accountId, string accountingCurrencyId)
         {
-            string strConnString = GetConnection(tenant);
-
-            using (SqlConnection connection = new SqlConnection(strConnString))
+            try
             {
-                SqlCommand command = new SqlCommand("dbo.usp_UpdateLTLocal", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                string strConnString = GetConnection(tenant);
 
-                SqlParameter param1 = new SqlParameter("@V_Tenant", SqlDbType.Int);
-                param1.Direction = ParameterDirection.Input;
-                param1.Value = tenant;
-                command.Parameters.Add(param1);
+                using (SqlConnection connection = new SqlConnection(strConnString))
+                {
+                    SqlCommand command = new SqlCommand("dbo.usp_UpdateLTLocal", connection);
+                    command.CommandType = CommandType.StoredProcedure;
 
-                SqlParameter param2 = new SqlParameter("@V_AccountId", SqlDbType.VarChar);
-                param2.Direction = ParameterDirection.Input;
-                param2.Value = accountId;
-                command.Parameters.Add(param2);
+                    SqlParameter param1 = new SqlParameter("@V_Tenant", SqlDbType.Int);
+                    param1.Direction = ParameterDirection.Input;
+                    param1.Value = tenant;
+                    command.Parameters.Add(param1);
 
-                SqlParameter param3 = new SqlParameter("@V_AccountingCurrencyId", SqlDbType.VarChar);
-                param3.Direction = ParameterDirection.Input;
-                param3.Value = accountingCurrencyId;
-                command.Parameters.Add(param3);
+                    SqlParameter param2 = new SqlParameter("@V_AccountId", SqlDbType.VarChar);
+                    param2.Direction = ParameterDirection.Input;
+                    param2.Value = accountId;
+                    command.Parameters.Add(param2);
 
-                connection.Open();
-                int transactionsMade = command.ExecuteNonQuery();
-                connection.Close();
-                return transactionsMade;
+                    SqlParameter param3 = new SqlParameter("@V_AccountingCurrencyId", SqlDbType.VarChar);
+                    param3.Direction = ParameterDirection.Input;
+                    param3.Value = accountingCurrencyId;
+                    command.Parameters.Add(param3);
 
+                    connection.Open();
+                    int transactionsMade = command.ExecuteNonQuery();
+                    connection.Close();
+                    return transactionsMade;
+
+                }
             }
-        }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Update_LT_Foreign", null, ip);
+                throw;
+            }
+}
 
     }
 }
