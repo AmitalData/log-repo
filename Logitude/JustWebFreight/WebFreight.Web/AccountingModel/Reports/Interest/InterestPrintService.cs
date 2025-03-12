@@ -29,7 +29,7 @@ using WebFreight.Web.Helpers;
     public class InterestPrintService
     {
         public InterestReportPM InterestReportPM;
-        private int FlatLineCounter_ = 0;
+        private int flatLineCounter = 0;
 
         public InterestDataProvider LoadDataProvider(string entityId, int tenant)
         {
@@ -93,7 +93,7 @@ using WebFreight.Web.Helpers;
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
                 TotalLocalAmount = interestTransactionLists.Sum(s => s.LocalAmount),
 
-                InterestTransactionList = interestTransactionLists == null ? null : interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
+                InterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
                 .Select(a =>
                 new InterestTransactionProvider
                 {
@@ -107,7 +107,7 @@ using WebFreight.Web.Helpers;
                     Notes = a.Notes,
                 }).ToList(),
 
-                GroupedInterestTransactionList = interestTransactionLists == null ? null : interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
+                GroupedInterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
                 .GroupBy(x => new { x.InterestEntityNumber, x.InterestEntityIconCode, x.CurrencyCode, x.InterestValueDate })
                 .Select(a =>
                    new InterestTransactionProvider
@@ -138,7 +138,7 @@ using WebFreight.Web.Helpers;
                     foreach (var transactionDP in period.InterestTransactionList)
                     {
                         InterestReportFlatLine line = new InterestReportFlatLine();
-                        line.LineNo = ++FlatLineCounter_;
+                        line.LineNo = ++flatLineCounter;
                         line.LineType = InterestPeriodLineTypes.Transaction;
                         line.Date = transactionDP.InterestValueDate;
 
@@ -218,7 +218,7 @@ using WebFreight.Web.Helpers;
         private InterestReportFlatLine FirstFlatLine(InterestReportPM interestReportPM)
         {
             InterestReportFlatLine rv = new InterestReportFlatLine();
-            rv.LineNo = ++FlatLineCounter_;
+            rv.LineNo = ++flatLineCounter;
             rv.LineType = InterestPeriodLineTypes.First;
             if (interestReportPM != null)
             {
@@ -232,7 +232,7 @@ using WebFreight.Web.Helpers;
         private InterestReportFlatLine EndFlatLine(InterestReportPM interestReportPM)
         {
             InterestReportFlatLine rv = new InterestReportFlatLine();
-            rv.LineNo = ++FlatLineCounter_;
+            rv.LineNo = ++flatLineCounter;
             rv.LineType = InterestPeriodLineTypes.End;
             if (interestReportPM != null)
             {
