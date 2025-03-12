@@ -177,6 +177,7 @@
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
     <None Include="DBTables\AccountingNote.dxml" />
     <None Include="DBTables\AccountingPeriod.dxml" />
+    <None Include="DBTables\AdditionalCurrencyRate.dxml" />
     <None Include="DBTables\ARPaymentCheque.dxml" />
     <None Include="DBTables\ARPaymentChequeStatus.dxml" />
     <None Include="DBTables\ARPaymentsJournal.dxml" />
@@ -387,6 +388,7 @@
     <None Include="EntityFiles\Reconciliation.lxml" />
     <None Include="EntityFiles\ReconciliationLine.lxml" />
     <None Include="EntityFiles\Revaluation.lxml" />
+    <None Include="EntityFiles\AdditionalCurrencyRate.lxml" />
     <None Include="EntityFiles\RevaluationStatus.lxml" />
     <None Include="EntityFiles\RevenueExpenseType.lxml" />
     <None Include="EntityFiles\TaxDeductionReport.lxml" />
