@@ -1299,7 +1299,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             {
                 return supplierInvoiceFreightAmountPMList;
             }
-            if (this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts != null && this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts.Count() > 0)
+            if (this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts?.Any() == true)
             {
                 supplierInvoiceFreightAmountPMList = this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts;
             }
