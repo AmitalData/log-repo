@@ -1294,13 +1294,18 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         private List<SupplierInvoiceFreightAmountPM> GetSupplierInvoiceFreightAmountsPM(INVOICE iNVOICE)
         {
             var supplierInvoiceFreightAmountPMList = new List<SupplierInvoiceFreightAmountPM>();
-            if(this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts != null && this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts.Count() > 0)
+            if (this._MySupplierInvoicePM.InvoiceCounterKey != 1)
+            {
+                return supplierInvoiceFreightAmountPMList;
+            }
+            if (this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts != null && this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts.Count() > 0)
             {
                 supplierInvoiceFreightAmountPMList = this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts;
             }
             if (iNVOICE.SupplierInvoiceFreightAmounts != null)
             {
-                foreach(var freightAmount in iNVOICE.SupplierInvoiceFreightAmounts)
+                
+                foreach (var freightAmount in iNVOICE.SupplierInvoiceFreightAmounts)
                 {
                     var existingRow= supplierInvoiceFreightAmountPMList.Where(d => d.CurrencyTypeCode == freightAmount.SIFCurrencyTypeCode).FirstOrDefault();
                     if (!string.IsNullOrEmpty(freightAmount.SIFCurrencyTypeCode) && existingRow != null)
@@ -1479,6 +1484,11 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 }
                 if(iNVOICE.SupplierInvoiceModifications != null)
                 {
+                    if (this._MySupplierInvoicePM.InvoiceCounterKey != 1 )
+                    {
+                        return SupplierInvoiceModificationPMList;
+                    }
+
                     foreach (var invoiceModification in iNVOICE.SupplierInvoiceModifications)
                     {
                         var existingRow = SupplierInvoiceModificationPMList.Where(d => d.TypeCode == invoiceModification.SIMTypeCode).FirstOrDefault();
