@@ -72,9 +72,7 @@ export class AccordionComponent implements OnInit {
         this.resetData();
         this.buildAgreementsList(data?.CustomsItemID, data?.PH_MeasurementUnitID);
         this.buildRegularityRequirementList();
-        this.buildClasisificationGuidance();
-        this.buildDataMekach();
-
+        this.getClassificationAndMekachData();
       }
     });
   }
@@ -226,26 +224,14 @@ export class AccordionComponent implements OnInit {
     );
   }
 
-  buildClasisificationGuidance() {
+  buildClasisificationGuidance(tenant: number = 0) {
     this.isLoadingClasisificationGuidance = true;
-    if (SessionInfo.LoggedUserTenant != 0)
-      this.GetDataCustomItemClassifGuidance(this.customsItemId, SessionInfo.LoggedUserTenant);
-    else {
-      this.API_MainService.GetTenantFromCustomsSettings().subscribe(
-        (data: any) => {
-          const tenant: number = data?.body;
-          this.GetDataCustomItemClassifGuidance(this.customsItemId, tenant);
-        },
-        (error) => {
-          console.log(error.message);
-        }
-      );
-    }
+    this.GetDataCustomItemClassifGuidance(this.customsItemId, tenant);
   }
 
-  buildDataMekach() {
+  buildDataMekach(tenant: number = 0) {
     this.isLoadingMekach = true;
-    this.API_MainService.GetMekachDetails(this.customsItemId, SessionInfo.LoggedUserTenant).subscribe(
+    this.API_MainService.GetMekachDetails(this.customsItemId, tenant).subscribe(
       (data: any) => {
         const result: Mekach[] = data?.body?.CustomItemMekachDataList ?? [];
         this.isLoadingMekach = false;
@@ -261,5 +247,25 @@ export class AccordionComponent implements OnInit {
         this.isLoadingMekach = false;
       }
     );
+  }
+
+  getClassificationAndMekachData() {
+    let tenant: number = SessionInfo.LoggedUserTenant;
+    if (tenant != 0) {
+      this.buildClasisificationGuidance(tenant);
+      this.buildDataMekach(tenant);
+    }
+    else {
+      this.API_MainService.GetTenantFromCustomsSettings().subscribe(
+        (data: any) => {
+          tenant = data?.body;
+          this.buildClasisificationGuidance(tenant);
+          this.buildDataMekach(tenant);
+        },
+        (error) => {
+          console.log(error.message);
+        }
+      );
+    }
   }
 }
