@@ -1294,7 +1294,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         private List<SupplierInvoiceFreightAmountPM> GetSupplierInvoiceFreightAmountsPM(INVOICE iNVOICE)
         {
             var supplierInvoiceFreightAmountPMList = new List<SupplierInvoiceFreightAmountPM>();
-            if (this._MySupplierInvoicePM.InvoiceCounterKey != 1)
+            // If the supplierinvoice is NOT the first invoice, exit early.
+            if ((SupplierInvoiceCounterKeyType)this._MySupplierInvoicePM.InvoiceCounterKey != SupplierInvoiceCounterKeyType.FirstSupplierInvoice)
             {
                 return supplierInvoiceFreightAmountPMList;
             }
@@ -1484,7 +1485,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 }
                 if(iNVOICE.SupplierInvoiceModifications != null)
                 {
-                    if (this._MySupplierInvoicePM.InvoiceCounterKey != 1 )
+                    // If the supplierinvoice is NOT the first invoice, exit early.
+                    if ((SupplierInvoiceCounterKeyType)this._MySupplierInvoicePM.InvoiceCounterKey != SupplierInvoiceCounterKeyType.FirstSupplierInvoice) 
                     {
                         return SupplierInvoiceModificationPMList;
                     }
@@ -1778,6 +1780,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         {
             public int line { get; set; }
             public int sequenceNumeric { get; set; }
+        }
+        public enum SupplierInvoiceCounterKeyType
+        {
+            FirstSupplierInvoice = 1,
         }
 
     }
