@@ -244,8 +244,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.initCertificateOriginItemItems(EntityPM);
     }
 
-
-
     operationalDataFromUnifreight(EntityPM: CertificateOfOriginPM) {
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
@@ -266,7 +264,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                         EntityPM.ConsigneeName = result?.ConsigneeName || this.entityPM.ConsigneeName;
                         EntityPM.ConsigneeAddress = result?.ConsigneeAddress || this.entityPM.ConsigneeAddress;
                         this.entityPM = EntityPM;
-                    
+
                         if (AppTool.IsNullOrEmpty(result) || AppTool.IsNullOrEmpty(result?.certificateOfOriginItems) || result?.certificateOfOriginItems == 0) {
                             this.initCertificateOriginItemItems(EntityPM);
                         }
@@ -297,6 +295,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         const oldItems = this.entityPM.CertificateOriginItemItems.filter(a => !AppTool.IsNullOrEmpty(a.Id));
         this.entityPM.CertificateOriginItemItems = [];
         result?.certificateOfOriginItems?.forEach((unifreightItem) => {
+            if(!unifreightItem)
+                return;
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
             mappedConsignments.Tenant = EntityPM.Tenant;
 
@@ -305,6 +305,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedConsignments.MarksAndNumbers = unifreightItem.marksAndNumbers || '';
             mappedConsignments.Weight = unifreightItem.weight || '';
             mappedConsignments.ContainerIsoCode = unifreightItem.isoContainerType || '';
+            mappedConsignments.ItemDescription = unifreightItem.description || '';
 
             // Find corresponding consignment item by serial or other identifier
             let consignment = this.currentDeclaration.Consignments.filter(c => c.SequenceNumeric == unifreightItem.itemSerial)[0];
@@ -319,7 +320,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 mappedConsignments.PackageType = consignmentPackage?.PackageTypeCode || '';
                 mappedConsignments.PackingTypeName = consignmentPackage?.PackageTypeName || '';
                 mappedConsignments.MeasureTypeName = consignmentPackage?.GrossMassMeasureTypeName || '';
-                mappedConsignments.ItemDescription = consignment.CargoDescription || '';
+                mappedConsignments.ItemDescription = mappedConsignments.ItemDescription || consignment.CargoDescription || '';
                 mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6) || '';
                 // Initialize ContainerTypeWCO field:
                 this.getContainerTypeWCOData(consignment, mappedConsignments, unifreightItem.manifestNumber);
@@ -361,12 +362,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 this.entityPM.CertificateOriginItemItems.push(mappedConsignments);
             }
         });
-        
+
         oldItems.forEach(item => {
             item.ChangeSetOp = "Delete";
             this.entityPM.CertificateOriginItemItems.push(item);
         });
-        this.entityPM.IsChange = true;  
+        this.entityPM.IsChange = true;
     }
 
     parseXml(xmlString: string): any {
@@ -383,7 +384,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         const ExporterAddress = customsFile.getElementsByTagName('ExporterAddress')[0]?.textContent || '';
         const ConsigneeName = customsFile.getElementsByTagName('ConsigneeName')[0]?.textContent || '';
         const ConsigneeAddress = customsFile.getElementsByTagName('ConsigneeAddress')[0]?.textContent || '';
-        
+
         const items = customsFile.getElementsByTagName('CertificateOfOriginItem');
         const certificateOfOriginItems: any[] = [];
 
@@ -451,9 +452,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         certificate.ele('CustomFileNo', data.CustomFileNo);
         certificate.ele('Id', data.Id);
         certificate.ele('CertificateType', data.CertificateType || ''); // Handle potentially undefined CertificateType
-        certificate.ele('ExporterName', data.ExporterName || ''); 
-        certificate.ele('ExporterAddress', data.ExporterAddress || ''); 
-        certificate.ele('ConsigneeName', data.ConsigneeName || ''); 
+        certificate.ele('ExporterName', data.ExporterName || '');
+        certificate.ele('ExporterAddress', data.ExporterAddress || '');
+        certificate.ele('ConsigneeName', data.ConsigneeName || '');
         certificate.ele('ConsigneeAddress', data.ConsigneeAddress || '');
 
         const items = certificate.ele('CertificateOfOriginItems');
@@ -638,7 +639,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     updateIsDisplay(IsDisplayOnlyByCooConnection: boolean, IsDisplayOnlyByRecordEditable: boolean) {
-        if(!this.entityPM.CooStatusCode) return;
+        if (!this.entityPM.CooStatusCode) return;
         this.IsDisplayOnlyByRecordEditable = IsDisplayOnlyByRecordEditable;
         this.IsDisplayOnlyByCooConnection = IsDisplayOnlyByCooConnection;
         let enabled = !this.IsDisplayOnlyByRecordEditable && !this.IsDisplayOnly;
