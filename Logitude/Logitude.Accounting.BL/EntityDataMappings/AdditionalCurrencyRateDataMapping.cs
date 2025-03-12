@@ -19,12 +19,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(AdditionalCurrencyRatePM entityPM, AdditionalCurrencyRate entityPOCO)
         {
-            //throw new NotImplementedException();
         }
 
         public void CustomPOCOToPM(AdditionalCurrencyRatePM entityPM, AdditionalCurrencyRate entityPOCO)
         {
-            //throw new NotImplementedException();
         }
    }
 

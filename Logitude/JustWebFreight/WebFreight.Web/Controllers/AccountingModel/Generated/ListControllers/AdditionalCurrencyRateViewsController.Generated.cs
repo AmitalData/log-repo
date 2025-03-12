@@ -6,6 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -23,7 +24,6 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Interfaces;
 using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
