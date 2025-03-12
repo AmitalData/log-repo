@@ -1,6 +1,7 @@
 ﻿using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -45,24 +46,24 @@ namespace WebFreight.Web.WcfApi
             {
                 SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
                 SecurityUtility.CheckContactFeature("DefaultValue", "UPDATE", entityPM.Tenant);//UPDATE//READ
-                
 
-                    ClassLevelValidator validationClass = new ClassLevelValidator("DefaultValue", entityPM.Tenant);
-                    if (!validationClass.IsValid(entityPM, entityPM, null))
-                    {
-                        response.HasError = true;
-                        response.ErrorMessage = validationClass.GetErrorMessage(entityPM, null);
-                        return response;
-                    }
 
-               
+                ClassLevelValidator validationClass = new ClassLevelValidator("DefaultValue", entityPM.Tenant);
+                if (!validationClass.IsValid(entityPM, entityPM, null))
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = validationClass.GetErrorMessage(entityPM, null);
+                    return response;
+                }
 
-                    if (string.IsNullOrEmpty(entityPM.DefaultTypeId))
-                    {
-                        response.HasError = true;
-                        response.ErrorMessage = "DefaultTypeId field is required";
-                        return response;
-                    }
+
+
+                if (string.IsNullOrEmpty(entityPM.DefaultTypeId))
+                {
+                    response.HasError = true;
+                    response.ErrorMessage = "DefaultTypeId field is required";
+                    return response;
+                }
                 ICustomContext customContext = CustomContext.GetContext(entityPM.Tenant);
 
                 DefaultValueRepository defaultValueRepository = new DefaultValueRepository(entityPM.Tenant);
@@ -72,32 +73,35 @@ namespace WebFreight.Web.WcfApi
 
 
                 if (entityPM.DefaultTypeId != null)
+                {
+                    var existingDefaultValue = !string.IsNullOrEmpty(entityPM.CardId) ? 
+                        defaultValueRepository.GetSingleByDefaultTypeIdAndCardId(entityPM.DefaultTypeId,entityPM.Tenant, entityPM.CardId)
+                        : defaultValueRepository.GetSingleByDefaultTypeId( entityPM.DefaultTypeId,entityPM.Tenant);
+
+                    if (existingDefaultValue == null)
                     {
-                        DefaultValue defaultValue = defaultValueRepository.GetSingleByDefaultTypeId(entityPM.DefaultTypeId, entityPM.Tenant);
-                       
-                        if (defaultValue == null)
-                        {
-                            entityPM.ChangeSetOp = ChangeSetOperation.Insert;
-                        }
-                        else
-                        {
-                            entityPM.ChangeSetOp = ChangeSetOperation.Update;
-                            entityPM.Id = defaultValue.Id;
-                        }
-                        entityPM.BranchId = entityPM.BranchId == "NON" ? null : entityPM.BranchId;
-                        entityPM.CardId = entityPM.CardId == "NON" ? null : entityPM.CardId;
-
-                        defaultValueUpdateService.Update(entityPM, true);
-                        if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-                        {
-                            DefaultValue entity = defaultValueRepository.GetSingleByDefaultTypeId(entityPM.DefaultTypeId, entityPM.Tenant);
-                            entityPM.Id = entity?.Id;
-                        }
-                    response.Result = entityPM.Id;
-
-                   
+                        entityPM.ChangeSetOp = ChangeSetOperation.Insert;
                     }
-                 return response;
+                    else
+                    {
+                        entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                        entityPM.Id = existingDefaultValue.Id;
+                    }
+                    entityPM.BranchId = entityPM.BranchId == "NON" ? null : entityPM.BranchId;
+                    entityPM.CardId = entityPM.CardId == "NON" ? null : entityPM.CardId;
+
+                    defaultValueUpdateService.Update(entityPM, true);
+                    if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+                    {
+                        DefaultValue insertedEntity = string.IsNullOrEmpty(entityPM.CardId) ?
+                            defaultValueRepository.GetSingleByDefaultTypeId(entityPM.DefaultTypeId, entityPM.Tenant)
+                            : defaultValueRepository.GetSingleByDefaultTypeIdAndCardId(entityPM.DefaultTypeId, entityPM.Tenant, entityPM.CardId);
+
+                        entityPM.Id = insertedEntity?.Id;
+                    }
+                    response.Result = entityPM.Id;
+                }
+                return response;
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
             {
@@ -133,6 +137,6 @@ namespace WebFreight.Web.WcfApi
             }
         }
 
-        
+
     }
 }
