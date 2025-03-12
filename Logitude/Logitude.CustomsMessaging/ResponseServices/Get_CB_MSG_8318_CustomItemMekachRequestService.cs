@@ -4,6 +4,7 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using RtfPipe;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnifreightIIG.Common.CustomItemMekachServiceReference;
 
 
@@ -13,7 +14,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
     {
         public override void Update(CB_NG_8318_CustomItemMekachOut customResponse, CustomItemMekachRequestParams requestParams)
         {
-
             this.MyResponseData = new CustomItemMekachResponseData();
             if (customResponse?.CIMekachOut == null)
             {
@@ -27,8 +27,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 CustomItemMekachDataList = new List<CustomItemMekachData>()
             };
-            if (customResponse.CIMekachOut?.Length > 0) 
-            { 
+            if (customResponse.CIMekachOut?.Length > 0)
+            {
                 foreach (var item in customResponse.CIMekachOut)
                 {
                     this.MyResponseData.CustomItemMekachDataList.Add(new CustomItemMekachData
@@ -36,18 +36,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         mekachNumber = item.mekachNumber,
                         changeDescription = item.changeDescription,
                         validityDate = item.validityDate,
-                        //attachedMekahFile = item.attachedMekahFile
+                        attachedMekahFile = item.attachedMekahFile?.content != null ? Convert.ToBase64String(item.attachedMekahFile?.content) : null
                     });
                 }
             }
-      
-
-
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
             this.MyResponseData.UserMessage = " פרטי תדפיסי חקיקה התקבלו בהצלחה";
-
-
         }
 
         public override CustomItemMekachResponseData GetResponse(CB_NG_8318_CustomItemMekachOut customResponse, CustomItemMekachRequestParams requestParams)
@@ -57,3 +52,4 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
     }
 }
+
