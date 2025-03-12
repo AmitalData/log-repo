@@ -16,6 +16,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Devart.Data.Oracle;
 using Simplog.Data.Helpers;
 using System.Data.SqlClient;
+using Logitude.Customs.BL.EntityQueryServices;
 
 
 namespace Logitude.Customs.BL.BL
@@ -76,7 +77,7 @@ namespace Logitude.Customs.BL.BL
                 bool hasActivePending = false;
                 if (declaration != null)
                 {
-                    hasActivePending = declarationPendingRepo.HasPendingWithStatus(declaration.Id, declarationCourierStatusPM.Tenant,"A");
+                    hasActivePending = declarationPendingRepo.HasPendingWithStatus(declaration.Id, declarationCourierStatusPM.Tenant, "A");
                 }
 
                 if (declaration != null &&
@@ -128,6 +129,12 @@ namespace Logitude.Customs.BL.BL
         {
             try
             {
+                var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
+                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2755", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
+                if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+                {
+                    return;
+                }
                 using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                 {
                     var requestParams2755 = new GenericRequestParams()
@@ -142,15 +149,14 @@ namespace Logitude.Customs.BL.BL
                         RequestVIA = SendRequestVIA.WebServiceBatch,
                     };
                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
-                    RealSetDeclarationCourierPaymentStatusCode(declarationCourierStatusPM.Tenant, declarationCourierStatusPM.DeclarationId);
 
                     scopeNewCRS.Complete();
                 }
             }
-            catch (System.Exception ee1)
+            catch (System.Exception ex)
             {
-                LogMessagingUtil.Instance.AppendLine($"Exception SendPayment!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ee1.Message}");
-            
+                LogMessagingUtil.Instance.AppendLine($"Exception SendPayment!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ex.Message}");
+
             }
 
         }
@@ -159,6 +165,12 @@ namespace Logitude.Customs.BL.BL
         {
             try
             {
+                var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
+                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2750", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
+                if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+                {
+                    return;
+                }
                 using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                 {
 
@@ -176,119 +188,57 @@ namespace Logitude.Customs.BL.BL
                     };
                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false);
                     LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId})");
-                    RealSetDeclarationCourierDeclarationStatusCode(declarationCourierStatusPM.Tenant, declarationCourierStatusPM.DeclarationId);
 
                     scopeNewCRS.Complete();
                 }
 
             }
-            catch (System.Exception ee1)
+            catch (System.Exception ex)
             {
-                LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ee1.Message}");
+                LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ex.Message}");
             }
         }
 
         private void SendManifest(DeclarationCourierStatusPM declarationCourierStatusPM)
         {
-            
-            var requestParams1170 = new MANIFESTRequestRequestParams()
-            {
-                Tenant = declarationCourierStatusPM.Tenant,
-                //IsFakeResponse = true,
-                //RequestName = requestName,
-                //ResponseName = responseName,
-                LoggingEnabled = true,
-                LoggingObjectTableId = declarationObjectTableId,
-                LoggingEntityId = declarationCourierStatusPM.DeclarationId,
-                LoggingObjectTableId2 = objectTableIdCourierMaster,
-                LoggingEntityId2 = objectTableIdCourierMaster,
-                //AppicationId = itemPM.DeclarationId,
-                InterfaceTypeCode = "1170",
-
-                //LoggingEntityReference = declarationNumber,
-                LoggingUserId = userId,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-                DeclarationId = declarationCourierStatusPM.DeclarationId,
-                LoggingEntityReference = declarationCourierStatusPM.DeclarationId,
-            };
-            SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
-            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId})");
-        }
-        public static void RealSetDeclarationCourierDeclarationStatusCode(int tenant, string declarationId)
-        {
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-
-            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
-
-
-            if (dbms == "oracle")
+            try
             {
 
-                using (OracleConnection con = new OracleConnection(strConnString))
+                var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
+                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "1170", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
+                if (RequestInProgressList != null && RequestInProgressList.Count > 0)
                 {
-                    string cmd = "Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I'";
-                    cmd = cmd + "  where DECLARATIONID=:p1 ";
-
-                    OracleCommand oracleCommand = new OracleCommand(cmd, con);
-                    oracleCommand.Parameters.Add(new OracleParameter("p1", declarationId));
-                    con.Open();
-                    oracleCommand.ExecuteNonQuery();
-                    con.Close();
+                    return;
                 }
+
+                var requestParams1170 = new MANIFESTRequestRequestParams()
+                {
+                    Tenant = declarationCourierStatusPM.Tenant,
+                    //IsFakeResponse = true,
+                    //RequestName = requestName,
+                    //ResponseName = responseName,
+                    LoggingEnabled = true,
+                    LoggingObjectTableId = declarationObjectTableId,
+                    LoggingEntityId = declarationCourierStatusPM.DeclarationId,
+                    LoggingObjectTableId2 = objectTableIdCourierMaster,
+                    LoggingEntityId2 = objectTableIdCourierMaster,
+                    //AppicationId = itemPM.DeclarationId,
+                    InterfaceTypeCode = "1170",
+
+                    //LoggingEntityReference = declarationNumber,
+                    LoggingUserId = userId,
+                    RequestVIA = SendRequestVIA.WebServiceBatch,
+                    DeclarationId = declarationCourierStatusPM.DeclarationId,
+                    LoggingEntityReference = declarationCourierStatusPM.DeclarationId,
+                };
+                SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
+                LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId})");
 
             }
-            else
+            catch (System.Exception ex)
             {
-                using (SqlConnection cn = new SqlConnection(strConnString))
-                {
-                    string cmd = "Update Customs.DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I'";
-                    cmd = cmd + " where DECLARATIONID=" + "'" + declarationId + "'";
-
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    cn.Close();
-                }
+                LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ex.Message}");
             }
         }
-        public static void RealSetDeclarationCourierPaymentStatusCode(int tenant, string declarationId)
-        {
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
-
-            if (dbms == "oracle")
-            {
-
-                using (OracleConnection con = new OracleConnection(strConnString))
-                {
-                    string cmd = "Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
-                    cmd = cmd + "  where DECLARATIONID=:p1 ";
-
-                    OracleCommand oracleCommand = new OracleCommand(cmd, con);
-                    oracleCommand.Parameters.Add(new OracleParameter("p1", declarationId));
-                    con.Open();
-                    oracleCommand.ExecuteNonQuery();
-                    con.Close();
-                }
-
-            }
-            else
-            {
-                using (SqlConnection cn = new SqlConnection(strConnString))
-                {
-                    string cmd = "Update Customs.DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
-                    cmd = cmd + " where DECLARATIONID=" + "'" + declarationId + "'";
-
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    cn.Close();
-                }
-            }
-        }
-
-
     }
 }
