@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
-using AccountingEntityValues = Logitude.Accounting.Data.Enums.AccountingEntityValues;
+using Logitude.Accounting.Data.Enums;
 using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
@@ -725,11 +725,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         private static readonly Dictionary<string, Func<LedgerTransaction, Journal, int, string, string>> referenceTypeResolvers =
            new Dictionary<string, Func<LedgerTransaction, Journal, int, string, string>>
            {
-                { AccountingEntityValues.ARInvoice, (lt, jr, tenant, fallback) => OpenFormatDocumentTypes.TaxInvoice },
-                { AccountingEntityValues.ARPayment, (lt, jr, tenant, fallback) => OpenFormatDocumentTypes.Receipt },
-                { AccountingEntityValues.Journal, (lt, jr, tenant, fallback) => GetJournalReferenceType(lt, jr, tenant, fallback) },
-                { AccountingEntityValues.ChequeDeposit, (lt, jr, tenant, fallback) => GetDepositReferenceType(jr, tenant, fallback) },
-                { AccountingEntityValues.CashDeposit, (lt, jr, tenant, fallback) => GetDepositReferenceType(jr, tenant, fallback) },
+                { Logitude.Accounting.Data.Enums.AccountingEntityValues.ARInvoice, (lt, jr, tenant, fallback) => OpenFormatDocumentTypes.TaxInvoice },
+                { Logitude.Accounting.Data.Enums.AccountingEntityValues.ARPayment, (lt, jr, tenant, fallback) => OpenFormatDocumentTypes.Receipt },
+                { Logitude.Accounting.Data.Enums.AccountingEntityValues.Journal, (lt, jr, tenant, fallback) => GetJournalReferenceType(lt, jr, tenant, fallback) },
+                { Logitude.Accounting.Data.Enums.AccountingEntityValues.ChequeDeposit, (lt, jr, tenant, fallback) => GetDepositReferenceType(jr, tenant, fallback) },
+                { Logitude.Accounting.Data.Enums.AccountingEntityValues.CashDeposit, (lt, jr, tenant, fallback) => GetDepositReferenceType(jr, tenant, fallback) },
           };
 
         private static string GetJournalReferenceType(LedgerTransaction lt, Journal jr, int tenant, string fallback)
@@ -827,7 +827,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     where ((lt.AccountingDate >= fromDate && lt.AccountingDate <= toDate))
                         && lt.Tenant == tenant
                         && (DbFunctions.TruncateTime(lt.AccountingDate) != firstDayOfFromDate || (DbFunctions.TruncateTime(lt.AccountingDate) == firstDayOfFromDate 
-                                && !(j.AccountingEntityCode == AccountingEntityValues.YearTransfer & (g.ChartOfAccountsTypeCode == "1" || g.ChartOfAccountsTypeCode == "2" || g.Id == f.RevenueExpenseGLAccountId))))
+                                && !(j.AccountingEntityCode == Logitude.Accounting.Data.Enums.AccountingEntityValues.YearTransfer & (g.ChartOfAccountsTypeCode == "1" || g.ChartOfAccountsTypeCode == "2" || g.Id == f.RevenueExpenseGLAccountId))))
 
                     select new
                     {
@@ -910,7 +910,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 List<string> recoLinesTransactionsId = recoLines.Select(d => d.TransactionId).ToList();
                  reconciledTransactions = transactionsQuery.GetLedgerTransactionPMsByIdList(recoLinesTransactionsId, tenant);
 
-                reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == AccountingEntityValues.ARInvoice).ToList();
+                reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == Logitude.Accounting.Data.Enums.AccountingEntityValues.ARInvoice).ToList();
 
                 reconciledTransactions = FillTransactionsReconciliationNumbers(reconciledTransactions, tenant);
                 reconciledTransactions = FillReconciledPaymentTransactionAmount(reconciledTransactions, paymentTransaction != null ? paymentTransaction.Id : null, tenant);
@@ -938,7 +938,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 // reconciledTransactions = transactionsQuery.GetLedgerTransactionPMsByIdList(recoLinesTransactionsId, tenant);
                 reconciledTransactions = transactionsQuery.GetLedgerTransactionJournalLineLTsByIdList(recoLinesTransactionsId, tenant);
 
-                reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == AccountingEntityValues.ARInvoice).ToList();
+                reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == Logitude.Accounting.Data.Enums.AccountingEntityValues.ARInvoice).ToList();
 
                 reconciledTransactions = FillTransactionsReconciliationNumbersLT(reconciledTransactions, tenant);
                 reconciledTransactions = FillReconciledPaymentTransactionAmountLT(reconciledTransactions, paymentTransaction != null ? paymentTransaction.Id : null, tenant);
@@ -977,7 +977,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         d.AccountId == billToGLAccountId
                         && d.Tenant == tenant
                         && d.IsReconciled == false
-                        && d.SourceTypeCode == AccountingEntityValues.ARInvoice)
+                        && d.SourceTypeCode == Logitude.Accounting.Data.Enums.AccountingEntityValues.ARInvoice)
                     .OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
 
             var transactionsList = invoicesTransactions.ToList();
@@ -1004,7 +1004,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         d.AccountId == billToGLAccountId
                         && d.Tenant == tenant
                         && d.IsReconciled == false
-                        && d.SourceTypeCode == AccountingEntityValues.ARInvoice)
+                        && d.SourceTypeCode == Logitude.Accounting.Data.Enums.AccountingEntityValues.ARInvoice)
                     .OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
 
             var transactionsList = invoicesTransactions.ToList();
