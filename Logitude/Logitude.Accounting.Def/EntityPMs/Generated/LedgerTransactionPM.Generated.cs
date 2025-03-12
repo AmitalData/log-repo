@@ -1753,7 +1753,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 }
 	   }
 
-	  private bool isExternalEntity ;
+ 	  private bool isExternalEntity ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
