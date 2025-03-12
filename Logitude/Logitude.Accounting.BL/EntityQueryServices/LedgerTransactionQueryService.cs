@@ -759,7 +759,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public string ResolveReferenceType(LedgerTransaction lt, Journal jr, int tenant, string fallback)
         {
-            if (referenceTypeResolvers.TryGetValue(jr.AccountingEntityCode, out var dateResolver))
+            if (jr != null && referenceTypeResolvers.TryGetValue(jr.AccountingEntityCode, out var dateResolver))
             {
                 return dateResolver(lt, jr, tenant, fallback);
             }
