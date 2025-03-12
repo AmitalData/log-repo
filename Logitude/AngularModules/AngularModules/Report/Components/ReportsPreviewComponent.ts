@@ -457,10 +457,13 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     FillReportFilter(filter: ReportFliter) {
-
-        if (this.StimulsoftArg) filter.DefaultTemplateId = this.StimulsoftArg.DefaultTemplateId;
-        else filter.DefaultTemplateId = this.Report.DefaultTemplateId;
-
+        if (AppTool.IsNullOrEmpty(filter.DefaultTemplateId)) {
+            if (this.StimulsoftArg) {
+                filter.DefaultTemplateId = this.StimulsoftArg.DefaultTemplateId;
+            } else {
+                filter.DefaultTemplateId = this.Report.DefaultTemplateId;
+            }
+        }
         filter.ReportsRunUsingWR = false;
         filter.Tenant = SessionLocator.Tenant;
         filter.ReportName = this.Title;
