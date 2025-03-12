@@ -3,6 +3,7 @@ using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -246,19 +247,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     Reference1 = item.AccountingEntityReference.PadLeft(20, ' ');
                 }
 
-                if (computingPartnerTranslations != null)
-                {
-                    var entityPartnerCode = computingPartnerTranslations.Where(d => d.ObjectTableName == "AccountingEntity" && d.OurCode == item.AccountingEntityCode).FirstOrDefault();
-                    if (entityPartnerCode != null)
-                    {
-                        if (entityPartnerCode.PartnerCode != null)
-                        {
 
-                            if (entityPartnerCode.PartnerCode.Length > 3) { entityPartnerCode.PartnerCode = entityPartnerCode.PartnerCode.Substring(0, 3); }
-                            Reference1Type = entityPartnerCode.PartnerCode.PadLeft(3, '0');
-                        }
-                    }
-                }
+                Reference1Type = item.AccountingEntityReferenceType.PadLeft(3, '0');
+
 
                 if (item.Reference2 != null)
                 {
