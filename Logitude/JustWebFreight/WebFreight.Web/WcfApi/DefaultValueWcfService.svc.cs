@@ -74,9 +74,7 @@ namespace WebFreight.Web.WcfApi
 
                 if (entityPM.DefaultTypeId != null)
                 {
-                    var existingDefaultValue = !string.IsNullOrEmpty(entityPM.CardId) ? 
-                        defaultValueRepository.GetSingleByDefaultTypeIdAndCardId(entityPM.DefaultTypeId,entityPM.Tenant, entityPM.CardId)
-                        : defaultValueRepository.GetSingleByDefaultTypeId( entityPM.DefaultTypeId,entityPM.Tenant);
+                    var existingDefaultValue = defaultValueRepository.GetSingleByDefaultTypeIdAndCardId(entityPM.DefaultTypeId, entityPM.Tenant, entityPM.CardId);
 
                     if (existingDefaultValue == null)
                     {
