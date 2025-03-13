@@ -28,16 +28,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             webFreightContext = WebFreightContext.GetContext(tenant);
         }
-        
-		public bool IsObjectTableMaster(string objectTableId, bool getFromCache = true)
-		{
-			return IsObjectTableType(objectTableId, "Master", getFromCache);
-		}
-		public bool IsObjectTableShipment(string objectTableId, bool getFromCache = true)
-		{
-			return IsObjectTableType(objectTableId, "Shipment", getFromCache);
-		}
-        public bool IsObjectTableType(string objectTableId, string type, bool getFromCache = true)
+
+		public bool IsObjectTableType(string objectTableId, string type, bool getFromCache = true)
 		{
 			string cacheKey = $"ObjectTable{type}{objectTableId}";
 
@@ -49,14 +41,20 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 					return (bool)cachedValue;
 				}
 			}
-
 			bool result = context.ObjectTables.Any(d => d.Id == objectTableId && d.Name == type);
-
 			if (getFromCache)
 			{
 				CacheManager.CacheWrapper.Insert(cacheKey, result, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
 			}
 			return result;
+		}
+		public bool IsObjectTableMaster(string objectTableId, bool getFromCache = true)
+		{
+			return IsObjectTableType(objectTableId, "Master", getFromCache);
+		}
+		public bool IsObjectTableShipment(string objectTableId, bool getFromCache = true)
+		{
+			return IsObjectTableType(objectTableId, "Shipment", getFromCache);
 		}
 
 		public IQueryable<ObjectTable> GetObjects()
