@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,18 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 result.JournalNumber = journalPM.JournalNumber;
                 result.AccountCode = "1";
                 result.EntityCode = "5";
-                result.EntityType = "Adjsutments";
-                result.EntityTypeCode = "AJ";
+                result.EntityType = "Adjustments";
+                result.EntityTypeCode = InterestEntityTypeCodes.Adjustments;
+
+                result.OriginalLines = new List<InterestEntityOriginalLineResult>();
+                foreach (var item in journalPM.JournalLines)
+                {
+                    InterestEntityOriginalLineResult line = new InterestEntityOriginalLineResult();
+                    line.OriginalLineNumber = item.Line;
+                    line.Reference1 = item.Reference1;
+                    line.Notes = item.Notes;
+                    result.OriginalLines.Add(line);
+                }
             }
 
 

@@ -16,6 +16,12 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices
         public string EntityNumber;
         public string EntityType;
         public string EntityTypeCode;
-
+        public List<InterestEntityOriginalLineResult> OriginalLines;
+    }
+    public class InterestEntityOriginalLineResult
+    {
+        public int OriginalLineNumber;
+        public string Reference1;
+        public string Notes;
     }
 }
