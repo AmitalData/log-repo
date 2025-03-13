@@ -16,8 +16,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         string GetObjectTableIdByName(string tablename);
         Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys);
         Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable GetSingleObjectTable(string id, int tenant, bool getFromCache);
-        bool IsObjectTableMaster(string objectTableId);
-        bool IsObjectTableShipment(string objectTableId);
+        bool IsObjectTableMaster(string objectTableId, bool getFromCache);
+        bool IsObjectTableShipment(string objectTableId, bool getFromCache);
         void Remove(Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable entity);
         void SubmitChanges();
         void Update(Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable entity);

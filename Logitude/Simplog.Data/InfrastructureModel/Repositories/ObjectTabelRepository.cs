@@ -29,23 +29,57 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             webFreightContext = WebFreightContext.GetContext(tenant);
         }
 
-        public bool IsObjectTableMaster(string objectTableId)
-        {
-            bool isMaster = (from a in context.ObjectTables
-                             where a.Id == objectTableId && a.Name == "Master"
-                             select a).Any();
-            return isMaster;
-        }
+		public bool IsObjectTableMaster(string objectTableId, bool getFromCache = true)
+		{
+			bool isMaster;
 
-        public bool IsObjectTableShipment(string objectTableId)
-        {
-            bool isMaster = (from a in context.ObjectTables
-                             where a.Id == objectTableId && a.Name == "Shipment"
-                             select a).Any();
-            return isMaster;
-        }
+			if (getFromCache)
+			{
+				string keyObjectTable = "ObjectTableMaster" + objectTableId;
 
-        public IQueryable<ObjectTable> GetObjects()
+				if (CacheManager.CacheWrapper.Get(keyObjectTable) == null)
+				{
+					isMaster = context.ObjectTables.Any(d => d.Id == objectTableId && d.Name == "Master");
+					CacheManager.CacheWrapper.Insert(keyObjectTable, isMaster, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+				}
+				else
+				{
+					isMaster = (bool)CacheManager.CacheWrapper.Get(keyObjectTable);
+				}
+			}
+			else
+			{
+				isMaster = context.ObjectTables.Any(d => d.Id == objectTableId && d.Name == "Master");
+			}
+			return isMaster;
+		}
+		public bool IsObjectTableShipment(string objectTableId, bool getFromCache = true)
+		{
+			bool isShipment;
+
+			if (getFromCache)
+			{
+				string keyObjectTable = "ObjectTableShipment" + objectTableId;
+
+				if (CacheManager.CacheWrapper.Get(keyObjectTable) == null)
+				{
+					isShipment = context.ObjectTables.Any(d => d.Id == objectTableId && d.Name == "Shipment");
+					CacheManager.CacheWrapper.Insert(keyObjectTable, isShipment, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+
+				}
+				else
+				{
+					isShipment = (bool)CacheManager.CacheWrapper.Get(keyObjectTable);
+				}
+			}
+			else
+			{
+				isShipment = context.ObjectTables.Any(d => d.Id == objectTableId && d.Name == "Shipment");
+			}
+			return isShipment;
+		}
+
+		public IQueryable<ObjectTable> GetObjects()
         {
             return context.ObjectTables;
         }
