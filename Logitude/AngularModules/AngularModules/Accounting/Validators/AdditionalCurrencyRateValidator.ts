@@ -13,12 +13,12 @@ export class AdditionalCurrencyRateValidator {
             filters.GetCount = true;
             filters.addAdditionalFilter("Rate", entityPM.Rate, null, null, "Equals", false, false, false, "number");
 
-            var additionalCurrencyRateListService = new AdditionalCurrencyRateListService();
+            const additionalCurrencyRateListService = new AdditionalCurrencyRateListService();
 
             return additionalCurrencyRateListService.getByFilters(filters).subscribe(response => {
                 if (response.Count > 0) {
-                    var msg = TextCodeTranslator.Translate("AdditionalCurrencyRate.O.AlreadyExistRate").replace("{name}", entityPM.Name);
-                    var confirmWindow = new ConfirmWindow();
+                    const msg = TextCodeTranslator.Translate("AdditionalCurrencyRate.O.AlreadyExistRate").replace("{name}", entityPM.Name);
+                    const confirmWindow = new ConfirmWindow();
                     const widthOfWindow = 300;
                     const heightOfWindow = 150;
 
