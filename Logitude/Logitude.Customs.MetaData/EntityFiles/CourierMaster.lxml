@@ -5998,10 +5998,12 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CourierMasterPaymentStatusCd&quot;"
     DefaultText="&quot;CourierMasterPayStatusCode &quot;"
-    FullLocalDefaultText="&quot;סטטוס תשלום טיסה&quot;"
+    FullLocalDefaultTextBack_up="&quot;סטטוס תשלום טיסה&quot;"
+    FullLocalDefaultText="&quot;BS64:Iteh15jXmNeV16Eg16rXqdec15XXnSDXmNeZ16HXlCI=&quot;"
     ListFieldLable="&quot;CourierMasterPaymentStatusCdListLable&quot;"
     ListLableDefaultText="&quot;CourierMasterPayStatusCode &quot;"
-    ListLocalDefaultText="&quot;סטטוס תשלום טיסה&quot;"
+    ListLocalDefaultTextBack_up="&quot;סטטוס תשלום טיסה&quot;"
+    ListLocalDefaultText="&quot;BS64:Iteh15jXmNeV16Eg16rXqdec15XXnSDXmNeZ16HXlCI=&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -7098,13 +7100,14 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;SendPaymentOn900Close&quot;"
-      FeatureTypeCode="&quot; שליחת תשלום בסגירת PENDING גביה&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.SendPaymentOn900Close&quot;"
-      FeatureDefaultText="&quot;SendPaymentOn900Close&quot;"
+      FeatureDefaultTextBack_up="&quot; שליחת תשלום בסגירת PENDING גביה&quot;"
+      FeatureDefaultText="&quot;BS64:IiDXqdec15nXl9eqINeq16nXnNeV150g15HXodeS15nXqNeqIFBFTkRJTkcg15LXkdeZ15Qi&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false"
-      ToggleCode="&quot;ACT&quot;" />
+      ToggleCode="&quot;&quot;" />
   </AdditionalFeatures>
 </entity>
