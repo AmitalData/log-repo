@@ -29,7 +29,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="UpdateDate"
@@ -42,7 +42,7 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="SearchFields"
@@ -59,7 +59,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Value"
+    Name="Rate"
     Type="float">
     <Constraints
       Nullable="true" />
