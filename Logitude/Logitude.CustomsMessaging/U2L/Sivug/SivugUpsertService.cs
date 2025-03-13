@@ -1305,13 +1305,19 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         private List<SupplierInvoiceFreightAmountPM> GetSupplierInvoiceFreightAmountsPM(INVOICE iNVOICE)
         {
             var supplierInvoiceFreightAmountPMList = new List<SupplierInvoiceFreightAmountPM>();
-            if(this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts != null && this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts.Count() > 0)
+            // If the supplierinvoice is NOT the first invoice, exit early.
+            if ((SupplierInvoiceCounterKeyType)this._MySupplierInvoicePM.InvoiceCounterKey != SupplierInvoiceCounterKeyType.FirstSupplierInvoice)
+            {
+                return supplierInvoiceFreightAmountPMList;
+            }
+            if (this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts?.Any() == true)
             {
                 supplierInvoiceFreightAmountPMList = this._MySupplierInvoicePM.SupplierInvoiceFreightAmounts;
             }
             if (iNVOICE.SupplierInvoiceFreightAmounts != null)
             {
-                foreach(var freightAmount in iNVOICE.SupplierInvoiceFreightAmounts)
+                
+                foreach (var freightAmount in iNVOICE.SupplierInvoiceFreightAmounts)
                 {
                     var existingRow= supplierInvoiceFreightAmountPMList.Where(d => d.CurrencyTypeCode == freightAmount.SIFCurrencyTypeCode).FirstOrDefault();
                     if (!string.IsNullOrEmpty(freightAmount.SIFCurrencyTypeCode) && existingRow != null)
@@ -1490,6 +1496,12 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 }
                 if(iNVOICE.SupplierInvoiceModifications != null)
                 {
+                    // If the supplierinvoice is NOT the first invoice, exit early.
+                    if ((SupplierInvoiceCounterKeyType)this._MySupplierInvoicePM.InvoiceCounterKey != SupplierInvoiceCounterKeyType.FirstSupplierInvoice) 
+                    {
+                        return SupplierInvoiceModificationPMList;
+                    }
+
                     foreach (var invoiceModification in iNVOICE.SupplierInvoiceModifications)
                     {
                         var existingRow = SupplierInvoiceModificationPMList.Where(d => d.TypeCode == invoiceModification.SIMTypeCode).FirstOrDefault();
@@ -1779,6 +1791,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         {
             public int line { get; set; }
             public int sequenceNumeric { get; set; }
+        }
+        public enum SupplierInvoiceCounterKeyType
+        {
+            FirstSupplierInvoice = 1,
         }
 
     }
