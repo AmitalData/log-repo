@@ -91,10 +91,7 @@ namespace WebFreight.Web.WcfApi
                     defaultValueUpdateService.Update(entityPM, true);
                     if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
                     {
-                        DefaultValue insertedEntity = string.IsNullOrEmpty(entityPM.CardId) ?
-                            defaultValueRepository.GetSingleByDefaultTypeId(entityPM.DefaultTypeId, entityPM.Tenant)
-                            : defaultValueRepository.GetSingleByDefaultTypeIdAndCardId(entityPM.DefaultTypeId, entityPM.Tenant, entityPM.CardId);
-
+                        var insertedEntity = defaultValueRepository.GetSingleByDefaultTypeIdAndCardId(entityPM.DefaultTypeId, entityPM.Tenant, entityPM.CardId);
                         entityPM.Id = insertedEntity?.Id;
                     }
                     response.Result = entityPM.Id;
