@@ -89,27 +89,30 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public decimal GetSumOfExReportsOrInterestOpenBalance(int tenant, string glaccountId)
+        public decimal GetSumOfExReportsOrInterestOpenBalance(int tenant, string glAccountId)
         {
-            var acc = (from ga in context.GLAccounts
-                       where ga.Tenant == tenant
-                       where ga.Id == glaccountId
-                       select ga
-                        );
-            GLAccount gLAccount = acc.FirstOrDefault();
+            var gLAccount = context.GLAccounts
+                .FirstOrDefault(ga => ga.Tenant == tenant && ga.Id == glAccountId);
 
-            decimal? closedBalance = (from a in context.InterestReports
-                                      join ga in acc on a.GLAccountId equals ga.Id
-                                      where a.Tenant == tenant
-                                     && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
-                                     || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
-                                     && a.GLAccountId == glaccountId
-                                     && ((a.InterestCalculationDate >= ga.InterestCalculationStartDate) || ga.InterestCalculationStartDate == null)
-                                      orderby a.InterestCalculationDate descending
-                                      select a.CloseBalance).FirstOrDefault();
+            // If a matching GLAccount doesn't exist, return 0
+            if (gLAccount == null)
+                return 0m;
 
-            return closedBalance != null ? closedBalance.Value : gLAccount != null ? gLAccount.InterestOpenBalance.HasValue ? gLAccount.InterestOpenBalance.Value : 0 : 0;
+            decimal? closedBalance = context.InterestReports
+                .Where(a => a.Tenant == tenant
+                     && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
+                         || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
+                     && a.GLAccountId == glAccountId
+                     && (gLAccount.InterestCalculationStartDate == null
+                         || a.InterestCalculationDate >= gLAccount.InterestCalculationStartDate))
+                .OrderByDescending(a => a.InterestCalculationDate)
+                .Select(a => a.CloseBalance)
+                .FirstOrDefault();
+
+            return closedBalance ?? gLAccount.InterestOpenBalance ?? 0;
         }
+
+
 
         public CloseBalanceInterestReportData GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(int tenant,string glaccountId)
         {
