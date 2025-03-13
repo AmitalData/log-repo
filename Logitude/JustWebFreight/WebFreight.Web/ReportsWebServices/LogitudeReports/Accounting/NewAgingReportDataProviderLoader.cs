@@ -166,111 +166,61 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                
                 case "Debtors":
-                    agingDataLine = agingDataLine.Where(line =>
-                (line.Minus180Days ?? 0) +
-                (line.Minus150Days ?? 0) +
-                (line.Minus120Days ?? 0) +
-                (line.Minus90Days ?? 0) +
-                (line.Minus60Days ?? 0) +
-                (line.Minus30Days ?? 0) +
-                (line.Past ?? 0) > 0).ToList();
+                    agingDataLine = agingDataLine.Where(line =>SumOfBalance(line) > 0).ToList();
                     break;
                 case "DebtBetween":
-                 agingDataLine = agingDataLine.Where(line => (
-                (line.Minus180Days ?? 0) +
-                (line.Minus150Days ?? 0) +
-                (line.Minus120Days ?? 0) +
-                (line.Minus90Days ?? 0) +
-                (line.Minus60Days ?? 0) +
-                (line.Minus30Days ?? 0) +
-                (line.Past ?? 0) > FromBalanceFilterValue) &&
-                (
-                (line.Minus180Days ?? 0) +
-                (line.Minus150Days ?? 0) +
-                (line.Minus120Days ?? 0) +
-                (line.Minus90Days ?? 0) +
-                (line.Minus60Days ?? 0) +
-                (line.Minus30Days ?? 0) +
-                (line.Past ?? 0) < ToBalanceFilterValue)).ToList();
+                 agingDataLine = agingDataLine.Where(line => SumOfBalance(line) > FromBalanceFilterValue && SumOfBalance(line) < ToBalanceFilterValue).ToList();
                     break;
                 case "BalanceDiffersFrom0":
-                    agingDataLine = agingDataLine.Where(line =>
-               (line.Minus180Days ?? 0) +
-               (line.Minus150Days ?? 0) +
-               (line.Minus120Days ?? 0) +
-               (line.Minus90Days ?? 0) +
-               (line.Minus60Days ?? 0) +
-               (line.Minus30Days ?? 0) +
-               (line.Past ?? 0) != 0).ToList();
+                    agingDataLine = agingDataLine.Where(line =>  SumOfBalance(line) != 0).ToList();
                     break;
                 default:
                     break;
             }
 
         }
-
+        public decimal? SumOfBalance(NewAgingPeriod agingDataLine)
+        {
+            return (agingDataLine.Minus180Days ?? 0) +
+                   (agingDataLine.Minus150Days ?? 0) +
+                   (agingDataLine.Minus120Days ?? 0) +
+                   (agingDataLine.Minus90Days ?? 0) +
+                   (agingDataLine.Minus60Days ?? 0) +
+                   (agingDataLine.Minus30Days ?? 0) +
+                   (agingDataLine.Past ?? 0);
+        }
         private List<NewAgingPeriod> SortAccountingAgingDataLines(List<NewAgingPeriod> agingDataLine)
         {
             string sortField = GetFilterValue<string>("SortField");
             string sortDirection = GetFilterValue<string>("SortDirection");
 
-            if (sortField == "balance")
-               return SortByBalance(sortDirection,agingDataLine);
-            else if (sortField == "customer")
-                return SortByCustoemrName(sortDirection, agingDataLine);
-            else if (sortField == "TotalToCollect")
-                return  SortByTotalToCollectAmount(sortDirection, agingDataLine);
-            else if (sortField == "Obligo")
-                return SortByObligoField(sortDirection, agingDataLine);
-            else if (sortField == "CreditUsed")
-                return SortByUsedCreditAmount(sortDirection, agingDataLine);
-            else
-                return DefaultSort(agingDataLine);
+            switch (sortField)
+            {
+                case "balance":
+                    return SortByField(agingDataLine, sortDirection, d => d.AccountingBalance);
+                case "customer":
+                    return SortByField(agingDataLine, sortDirection, d => d.AccountEnglishName);
+                case "TotalToCollect":
+                    return SortByField(agingDataLine, sortDirection, d => d.TotalToCollect);
+                case "Obligo":
+                    return SortByField(agingDataLine, sortDirection, d => d.Obligo);
+                case "CreditUsed":
+                    return SortByField(agingDataLine, sortDirection, d => d.CreditUsed);
+                default:
+                    return DefaultSort(agingDataLine);
+            }
         }
 
         private List<NewAgingPeriod> DefaultSort(List<NewAgingPeriod> agingDataLine)
         {
             return agingDataLine.OrderBy(d => d.AccountEnglishName).ToList();
         }
-
-        private List<NewAgingPeriod> SortByUsedCreditAmount(string sortDirection, List<NewAgingPeriod> agingDataLine)
+             
+        private List<NewAgingPeriod> SortByField<TKey>(List<NewAgingPeriod> agingDataLine, string sortDirection, Func<NewAgingPeriod, TKey> keySelector)
         {
-            if (sortDirection == "Descending")
-                return agingDataLine.OrderByDescending(d => d.CreditUsed).ToList();
-            else
-                return agingDataLine.OrderBy(d => d.CreditUsed).ToList();
-        }
-
-        private List<NewAgingPeriod> SortByObligoField(string sortDirection, List<NewAgingPeriod> agingDataLine)
-        {
-            if (sortDirection == "Descending")
-                return agingDataLine.OrderByDescending(d => d.Obligo).ToList();
-            else
-                return agingDataLine.OrderBy(d => d.Obligo).ToList();
-        }
-
-        private List<NewAgingPeriod> SortByTotalToCollectAmount(string sortDirection, List<NewAgingPeriod> agingDataLine)
-        {
-            if (sortDirection == "Descending")
-                return agingDataLine.OrderByDescending(d => d.TotalToCollect).ToList();
-            else
-                return agingDataLine.OrderBy(d => d.TotalToCollect).ToList();
-        }
-
-        private List<NewAgingPeriod> SortByCustoemrName(string sortDirection, List<NewAgingPeriod> agingDataLine)
-        {
-            if (sortDirection == "Descending")
-                return agingDataLine.OrderByDescending(d => d.AccountEnglishName).ToList();
-            else
-                return agingDataLine.OrderBy(d => d.AccountEnglishName).ToList();
-        }
-
-        private List<NewAgingPeriod> SortByBalance(string sortDirection, List<NewAgingPeriod> agingDataLine)
-        {
-            if (sortDirection == "Descending")
-                return agingDataLine.OrderByDescending(d => d.AccountingBalance).ToList();
-            else
-                return agingDataLine.OrderBy(d => d.AccountingBalance).ToList();
+            return sortDirection == "Descending"
+            ? agingDataLine.OrderByDescending(keySelector).ToList()
+            : agingDataLine.OrderBy(keySelector).ToList();
         }
         private static string GetConnection(int tenant)
         {

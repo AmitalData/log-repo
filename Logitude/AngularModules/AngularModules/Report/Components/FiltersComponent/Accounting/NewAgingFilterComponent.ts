@@ -9,11 +9,8 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { FullAccountingSettingPM } from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
-import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 import { GLAccountListService } from '../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { ChartOfAccountListService } from '../../../../Accounting/Services/StandardLists/ChartOfAccountListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';

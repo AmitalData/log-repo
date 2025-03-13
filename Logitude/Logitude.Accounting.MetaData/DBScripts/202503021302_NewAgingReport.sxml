@@ -78,7 +78,7 @@ INSERT INTO #TemporaryTable
 	MAX(GL.CollectorId) AS CollectorId,
 	MAX(CURRENCY.Code) AS AccountCurrencyCode,
 	MAX(C.TotalOpenShipments) AS TotalOpenShipments,
-	MAX(MORE.TotFutureOpenChequesInLocalCur) AS TotFutureOpenChequesInLocalCur,
+	MAX(FUTQ.TotFutureOpenChequesInLocalCur) AS TotFutureOpenChequesInLocalCur,
 	MAX(GL.DisplayNumber) AS DisplayNumber,
 	MAX(GL.LocalName) AS LocalName,
 	MAX(GL.EnglishName) AS EnglishName,
@@ -222,9 +222,26 @@ LEFT JOIN
     (SELECT * FROM LedgerTransactions WHERE tenant = @Tenant AND IsReconciled = 0 AND IsExternalReconcile=0) T ON GL.Id = T.ACCOUNTID
 INNER JOIN 
     TENANTS TEN ON GL.tenant = TEN.Id
-LEFT JOIN 
-    (SELECT TotFutureOpenChequesInLocalCur,AccountId FROM GLAccountMoreDatas WHERE tenant = @Tenant )
-	 MORE ON GL.ID = MORE.AccountId
+	LEFT JOIN
+(
+    SELECT 
+        jl.CreditAccountId,
+        COALESCE(SUM(DISTINCT jl.LocalAmount), 0) AS TotFutureOpenChequesInLocalCur
+    FROM JournalLines jl
+    JOIN Journals j 
+        ON jl.JournalId = j.Id
+    JOIN ARPaymentCheques arpch 
+        ON j.AccountingEntityId = arpch.PaymentId
+    WHERE 
+	  j.Tenant = @Tenant and
+	  j.AccountingEntityCode = '3'
+      AND jl.ActionCode = '1'
+      AND j.IsLedgerCreated = 1
+      AND jl.DueDate > GETDATE()
+	  
+    GROUP BY jl.CreditAccountId
+) AS FUTQ 
+
 LEFT JOIN 
     (SELECT TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
 	 C ON GL.CardsDataId = C.Id
