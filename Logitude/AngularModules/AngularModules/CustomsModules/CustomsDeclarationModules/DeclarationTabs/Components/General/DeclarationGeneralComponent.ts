@@ -1171,10 +1171,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ExportDeclarationComponent');
     }
 
-    showButtonSearchClient:boolean = false;
+
     SearchClient(type, item) {
-        
-        if (this.IsDisplayOnly && !this.showButtonSearchClient) {
+
+        if (this.IsDisplayOnly) {
             return;
         }
 
@@ -1192,7 +1192,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         switch (type) {
             case "Importer":
                 importerCode = this.ImporterCode;
-                if (!this.IsImporerCodeEnabled && !this.showButtonSearchClient) {
+                if (!this.IsImporerCodeEnabled) {
                     importerCode = "";
                     isExternalId = false;
                     isPassport = true;
@@ -1215,7 +1215,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-        
+
         var logWindow = new LogitudeWindow();
         windowArgs.Mode = "DeclarationGeneralComponent";
         windowArgs.ImporterCode = importerCode;
@@ -1702,13 +1702,6 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             this.SetScreenFieldsEditability();
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
-
-        if((this.EntityPM?.IsSubmitDeclaration && this.EntityPM?.Direction == "E" ) || this.EntityPM?.PaymentDate){
-            this.showButtonSearchClient = true;
-        }
-        else{
-            this.showButtonSearchClient = false;
-        }
     }
 
     BuildConsignments() {
