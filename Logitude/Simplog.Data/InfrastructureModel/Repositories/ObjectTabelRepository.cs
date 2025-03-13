@@ -28,55 +28,35 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             webFreightContext = WebFreightContext.GetContext(tenant);
         }
-
+        
 		public bool IsObjectTableMaster(string objectTableId, bool getFromCache = true)
 		{
-			bool isMaster;
-
-			if (getFromCache)
-			{
-				string keyObjectTable = "ObjectTableMaster" + objectTableId;
-
-				if (CacheManager.CacheWrapper.Get(keyObjectTable) == null)
-				{
-					isMaster = context.ObjectTables.Any(d => d.Id == objectTableId && d.Name == "Master");
-					CacheManager.CacheWrapper.Insert(keyObjectTable, isMaster, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-				}
-				else
-				{
-					isMaster = (bool)CacheManager.CacheWrapper.Get(keyObjectTable);
-				}
-			}
-			else
-			{
-				isMaster = context.ObjectTables.Any(d => d.Id == objectTableId && d.Name == "Master");
-			}
-			return isMaster;
+			return IsObjectTableType(objectTableId, "Master", getFromCache);
 		}
 		public bool IsObjectTableShipment(string objectTableId, bool getFromCache = true)
 		{
-			bool isShipment;
+			return IsObjectTableType(objectTableId, "Shipment", getFromCache);
+		}
+        public bool IsObjectTableType(string objectTableId, string type, bool getFromCache = true)
+		{
+			string cacheKey = $"ObjectTable{type}{objectTableId}";
 
 			if (getFromCache)
 			{
-				string keyObjectTable = "ObjectTableShipment" + objectTableId;
-
-				if (CacheManager.CacheWrapper.Get(keyObjectTable) == null)
+				var cachedValue = CacheManager.CacheWrapper.Get(cacheKey);
+				if (cachedValue != null)
 				{
-					isShipment = context.ObjectTables.Any(d => d.Id == objectTableId && d.Name == "Shipment");
-					CacheManager.CacheWrapper.Insert(keyObjectTable, isShipment, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-
-				}
-				else
-				{
-					isShipment = (bool)CacheManager.CacheWrapper.Get(keyObjectTable);
+					return (bool)cachedValue;
 				}
 			}
-			else
+
+			bool result = context.ObjectTables.Any(d => d.Id == objectTableId && d.Name == type);
+
+			if (getFromCache)
 			{
-				isShipment = context.ObjectTables.Any(d => d.Id == objectTableId && d.Name == "Shipment");
+				CacheManager.CacheWrapper.Insert(cacheKey, result, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
 			}
-			return isShipment;
+			return result;
 		}
 
 		public IQueryable<ObjectTable> GetObjects()
