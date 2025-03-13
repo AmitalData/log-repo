@@ -877,13 +877,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="DisplayNumber"
-    Type="nvarchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"
@@ -1038,11 +1031,6 @@
     ForeignKeyColumn="ConfirmationNumberStatus"
     ReferencedTable="ConfirmationNumberStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="DisplayNumber"
-    ReferencedTable="GLAccounts"
-    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InvoiceDate" />
