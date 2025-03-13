@@ -1703,7 +1703,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
         });
 
-        if((this.EntityPM?.IsSubmitDeclaration && this.EntityPM?.Direction == "E" ) || this.EntityPM?.PaymentDate){
+        if((this.EntityPM?.IsSubmitDeclaration && this.EntityPM?.Direction === "E" ) || this.EntityPM?.PaymentDate){
             this.showButtonSearchClient = true;
         }
         else{
