@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AdditionalCurrencyRateUpdateClass
    {  		
-		public const string HashString = "adc8d97dfdf4629eebc9ce663a5f3307";
+		public const string HashString = "7e78ae566168b028b75e2121a0e9d9e8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -106,7 +106,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
-			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -133,7 +132,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewAdditionalCurrencyRateComponent",
-			      				    LocalDefaultTextBack_up =  "סוגי שערים נוספים",
 			      				    LocalDefaultText =  "BS64:Iteh15XXkteZINep16LXqNeZ150g16DXldeh16TXmdedIg==",
 			      				    DefaultText =  "Additional Currency Rates",
 			      				    Code =  "3eba",
@@ -291,7 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -326,8 +324,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -355,7 +355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -417,7 +417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -452,8 +452,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -481,7 +483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -641,12 +643,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
 					  						DefaultText =  "Name",
-					  						FullLocalDefaultTextBack_up =  "שם הסוג",
-					  						FullLocalDefaultText =  "BS64:Itep150g15TXodeV15Ii",
+					  						FullLocalDefaultText =  "BS64:Itep150g16HXldeSINep16LXqCI=",
 					  						ListFieldLable =  "NameListLable",
 					  						ListLableDefaultText =  "Name",
-					  						ListLocalDefaultTextBack_up =  "שם הסוג",
-					  						ListLocalDefaultText =  "BS64:Itep150g15TXodeV15Ii",
+					  						ListLocalDefaultText =  "BS64:Itep150g16HXldeSINep16LXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -668,7 +668,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Value",
+					 						FieldName =  "Rate",
 					  						ObjectTableName =  "AdditionalCurrencyRate",
 					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
@@ -687,8 +687,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Value",
-					  						ListPropertyPath =  "Value",
+					  						PMPropertyPath =  "Rate",
+					  						ListPropertyPath =  "Rate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -708,14 +708,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DigitsAfterPoint =  6,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Value",
-					  						DefaultText =  "Value",
-					  						FullLocalDefaultTextBack_up =  "ערך",
-					  						FullLocalDefaultText =  "BS64:Itei16jXmiI=",
-					  						ListFieldLable =  "ValueListLable",
-					  						ListLableDefaultText =  "Value",
-					  						ListLocalDefaultTextBack_up =  "ערך",
-					  						ListLocalDefaultText =  "BS64:Itei16jXmiI=",
+					  						FullFieldLable =  "Rate",
+					  						DefaultText =  "Rate",
+					  						FullLocalDefaultText =  "BS64:IiDXoteo15og16HXldeSINep16LXqCI=",
+					  						ListFieldLable =  "RateListLable",
+					  						ListLableDefaultText =  "Rate",
+					  						ListLocalDefaultText =  "BS64:IiDXoteo15og16HXldeSINep16LXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -758,7 +756,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode AdditionalCurrencyRateTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.Q.allrates", DefaultText = @"All Additional Currency Rates",LocalDefaultText = null, ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode AdditionalCurrencyRateTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.Q.allrates", DefaultText = @"All",LocalDefaultText = "BS64:IiDXm9ecINeh15XXkteZINep16LXqNeZ150i", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature AdditionalCurrencyRateFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalCurrencyRate.Q.allrates", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, NameTextCodeCode = "AdditionalCurrencyRateFeatures.allrates", NameTextCodeDefaultText = "allrates", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AdditionalCurrencyRateObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -769,7 +767,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn allratesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allratesQuery.Id,QueryCode = allratesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AdditionalCurrencyRate.Name" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn allratesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allratesQuery.Id,QueryCode = allratesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AdditionalCurrencyRate.Value" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn allratesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allratesQuery.Id,QueryCode = allratesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AdditionalCurrencyRate.Rate" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn allratesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allratesQuery.Id,QueryCode = allratesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AdditionalCurrencyRate.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -825,7 +823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACRG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AdditionalCurrencyRateGeneralFeature_TH0.Id,FeatureUniqeCode = AdditionalCurrencyRateGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, TabNameTextCodeId = AdditionalCurrencyRateGeneralTextCode_TH0.Id, TabNameTextCodeCode = AdditionalCurrencyRateGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACRG",HtmlComponentName = "AdditionalCurrencyRateGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/AdditionalCurrencyRate/AdditionalCurrencyRateGeneralTabComponent", FeatureId = AdditionalCurrencyRateGeneralFeature_TH0.Id,FeatureUniqeCode = AdditionalCurrencyRateGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "AdditionalCurrencyRateGeneralTabComponent", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, TabNameTextCodeId = AdditionalCurrencyRateGeneralTextCode_TH0.Id, TabNameTextCodeCode = AdditionalCurrencyRateGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACRE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AdditionalCurrencyRateEventsFeature_TH1.Id,FeatureUniqeCode = AdditionalCurrencyRateEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, TabNameTextCodeId = AdditionalCurrencyRateEventsTextCode_TH1.Id, TabNameTextCodeCode = AdditionalCurrencyRateEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
@@ -842,7 +840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature AdditionalCurrencyRateFeature_Category1_Features_AdditionalCurrencyRate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Category1.Features.AdditionalCurrencyRate", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, NameTextCodeCode = "AdditionalCurrencyRate.Features.Category1.Features.AdditionalCurrencyRate", NameTextCodeDefaultText = @"BS64:Iteh15XXkteZINep16LXqNeZ150g16DXldeh16TXmdedIg==" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AdditionalCurrencyRateObjectTable);
+		   Feature AdditionalCurrencyRateFeature_AdditionalCurrencyRate_Features_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalCurrencyRate.Features.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, NameTextCodeCode = "AdditionalCurrencyRate.Features.Menu", NameTextCodeDefaultText = @"BS64:Iteh15XXkteZINep16LXqNeZ150g16DXldeh16TXmdedIg==" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AdditionalCurrencyRateObjectTable);
 
    
 	    
@@ -901,6 +899,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable AdditionalCurrencyRateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AdditionalCurrencyRate" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode AdditionalCurrencyRateTextCode_GeneralMCACCAdditionalCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.AdditionalCurrencyRate", DefaultText = "AdditionalCurrencyRate",LocalDefaultText = @"BS64:Iteh15XXkteZINep16LXqNeZ150g16DXldeh16TXmdedIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateONewAdditionalCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.NewAdditionalCurrencyRate", DefaultText = "New Currency Rate",LocalDefaultText = @"BS64:Iteh15XXkiDXqdei16gg15fXk9epIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.NewButton", DefaultText = "New Currency Rate",LocalDefaultText = @"BS64:Iteh15XXkiDXqdei16gg15fXk9epIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
