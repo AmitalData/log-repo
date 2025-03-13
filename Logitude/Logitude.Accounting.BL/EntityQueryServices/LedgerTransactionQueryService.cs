@@ -739,7 +739,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 return fallback;
             }
             var paymentMarkers = new HashSet<string>{ "PAYMENT:", "PAY:", "CHQ:" };
-            return !String.IsNullOrEmpty(jr.ExternalSystem) && paymentMarkers.Any(pm => lt.Notes.Contains(pm))
+            return !String.IsNullOrEmpty(jr.ExternalSystem) && !String.IsNullOrEmpty(lt.Notes) && paymentMarkers.Any(pm => lt.Notes.Contains(pm))
                         ? OpenFormatDocumentTypes.AgentInvoice
                         : fallback;
         }
