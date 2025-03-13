@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {AdditionalCurrencyRatePM} from '../../EntityPMs/AdditionalCurrencyRatePM';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {AdditionalCurrencyRatePMService} from '../../Services/StandardPMs/AdditionalCurrencyRatePMService';
+import { AdditionalCurrencyRatePMService } from '../../Services/StandardPMs/AdditionalCurrencyRatePMService';
+import { AdditionalCurrencyRateValidator } from 'Accounting/Validators/AdditionalCurrencyRateValidator';
 
 @Component({
     selector: 'NewAdditionalCurrencyRateComponent',
@@ -19,25 +19,17 @@ export class NewAdditionalCurrencyRateComponent extends BaseComponent{
     public ObjectTableName: string = "AdditionalCurrencyRate";
     public TenantPM: TenantPM;
     public ValidationErrorsList: string[] = [];
-    myService: AdditionalCurrencyRatePMService;
+    myservice: AdditionalCurrencyRatePMService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
         this.EntityPM = new AdditionalCurrencyRatePM();
         this.EntityPM.Tenant = this.TenantPM.Id;
-        this.myService = new AdditionalCurrencyRatePMService();
-
+        this.myservice = new AdditionalCurrencyRatePMService();
     }
 
     // Properties
-    get Value() { return this.EntityPM.Value; }
-    set Value(value: number) {
-        if (this.EntityPM.Value != value) {
-            this.EntityPM.Value = value;
-        }
-    }
-
     get Name() { return this.EntityPM.Name; }
     set Name(value: string) {
         if (this.EntityPM.Name != value) {
@@ -45,33 +37,32 @@ export class NewAdditionalCurrencyRateComponent extends BaseComponent{
         }
     }
 
-    // Commands
-    OkButtonClicked() {
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-        this.ValidationErrorsList = errors;
-
-        if (this.ValidationErrorsList.length == 0) {
-
-            this.SubmitChanges();
+    get Rate() { return this.EntityPM.Rate; }
+    set Rate(value: number) {
+        if (this.EntityPM.Rate != value) {
+            this.EntityPM.Rate = value;
         }
     }
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    SubmitChanges() {
-        
-        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
+    async SubmitChanges() {
 
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-                this.CurrentSession.CloseCurrentWindowEmit("ok");
-            }
+        const canContinue = await AdditionalCurrencyRateValidator.CheckIdenticalRateValue(this.EntityPM);
+        if (canContinue) {
+            this.myservice.insert(this.EntityPM).subscribe((myResult:any) => {
 
-            else {
-                this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
-            }
-        });
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                }
+
+                else {
+                    this.ValidationErrorsList = mm.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
+        }
     }
 }

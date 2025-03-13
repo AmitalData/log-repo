@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AdditionalCurrencyRateUpdateClass
    {  		
-		public const string HashString = "7e78ae566168b028b75e2121a0e9d9e8";
+		public const string HashString = "1d48910decd9fd6aa65e5e9b26870d68";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -710,10 +710,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Rate",
 					  						DefaultText =  "Rate",
-					  						FullLocalDefaultText =  "BS64:IiDXoteo15og16HXldeSINep16LXqCI=",
+					  						FullLocalDefaultText =  "BS64:IiDXoteo15oi",
 					  						ListFieldLable =  "RateListLable",
 					  						ListLableDefaultText =  "Rate",
-					  						ListLocalDefaultText =  "BS64:IiDXoteo15og16HXldeSINep16LXqCI=",
+					  						ListLocalDefaultText =  "BS64:IiDXqdei16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -788,21 +788,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen AdditionalCurrencyRateAdditionalCurrencyRateHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "HeaderScreen", Name = "AdditionalCurrencyRate.HeaderScreen", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen AdditionalCurrencyRateHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AdditionalCurrencyRate.HeaderScreen", Name = "HeaderScreen", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-             ScreenField AdditionalCurrencyRateHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AdditionalCurrencyRateAdditionalCurrencyRateHeaderScreenScreen0.Id,ScreenCode = AdditionalCurrencyRateAdditionalCurrencyRateHeaderScreenScreen0.Code, ObjectFieldCode = "AdditionalCurrencyRate.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField AdditionalCurrencyRateAdditionalCurrencyRateHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AdditionalCurrencyRateHeaderScreenScreen0.Id,ScreenCode = AdditionalCurrencyRateHeaderScreenScreen0.Code, ObjectFieldCode = "AdditionalCurrencyRate.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
-		    AdditionalCurrencyRateObjectTable.HeaderScreenId = AdditionalCurrencyRateAdditionalCurrencyRateHeaderScreenScreen0.Id;
-		    AdditionalCurrencyRateObjectTable.HeaderScreenCode = AdditionalCurrencyRateAdditionalCurrencyRateHeaderScreenScreen0.Code;
+		    AdditionalCurrencyRateObjectTable.HeaderScreenId = AdditionalCurrencyRateHeaderScreenScreen0.Id;
+		    AdditionalCurrencyRateObjectTable.HeaderScreenCode = AdditionalCurrencyRateHeaderScreenScreen0.Code;
 
 	   		  
 	      
 
-	         Screen AdditionalCurrencyRateAdditionalCurrencyRateGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GeneralTabScreen", Name = "AdditionalCurrencyRate.GeneralTabScreen", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen AdditionalCurrencyRateGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AdditionalCurrencyRate.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-             ScreenField AdditionalCurrencyRateGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AdditionalCurrencyRateAdditionalCurrencyRateGeneralTabScreenScreen1.Id,ScreenCode = AdditionalCurrencyRateAdditionalCurrencyRateGeneralTabScreenScreen1.Code, ObjectFieldCode = "AdditionalCurrencyRate.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField AdditionalCurrencyRateAdditionalCurrencyRateGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AdditionalCurrencyRateGeneralTabScreenScreen1.Id,ScreenCode = AdditionalCurrencyRateGeneralTabScreenScreen1.Code, ObjectFieldCode = "AdditionalCurrencyRate.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField AdditionalCurrencyRateGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AdditionalCurrencyRateAdditionalCurrencyRateGeneralTabScreenScreen1.Id,ScreenCode = AdditionalCurrencyRateAdditionalCurrencyRateGeneralTabScreenScreen1.Code, ObjectFieldCode = "AdditionalCurrencyRate.Value", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField AdditionalCurrencyRateAdditionalCurrencyRateGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AdditionalCurrencyRateGeneralTabScreenScreen1.Id,ScreenCode = AdditionalCurrencyRateGeneralTabScreenScreen1.Code, ObjectFieldCode = "AdditionalCurrencyRate.Rate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }
@@ -823,7 +823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACRG",HtmlComponentName = "AdditionalCurrencyRateGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/AdditionalCurrencyRate/AdditionalCurrencyRateGeneralTabComponent", FeatureId = AdditionalCurrencyRateGeneralFeature_TH0.Id,FeatureUniqeCode = AdditionalCurrencyRateGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "AdditionalCurrencyRateGeneralTabComponent", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, TabNameTextCodeId = AdditionalCurrencyRateGeneralTextCode_TH0.Id, TabNameTextCodeCode = AdditionalCurrencyRateGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACRG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AdditionalCurrencyRateGeneralFeature_TH0.Id,FeatureUniqeCode = AdditionalCurrencyRateGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, TabNameTextCodeId = AdditionalCurrencyRateGeneralTextCode_TH0.Id, TabNameTextCodeCode = AdditionalCurrencyRateGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACRE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AdditionalCurrencyRateEventsFeature_TH1.Id,FeatureUniqeCode = AdditionalCurrencyRateEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, TabNameTextCodeId = AdditionalCurrencyRateEventsTextCode_TH1.Id, TabNameTextCodeCode = AdditionalCurrencyRateEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
@@ -903,6 +903,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateONewAdditionalCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.NewAdditionalCurrencyRate", DefaultText = "New Currency Rate",LocalDefaultText = @"BS64:Iteh15XXkiDXqdei16gg15fXk9epIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.NewButton", DefaultText = "New Currency Rate",LocalDefaultText = @"BS64:Iteh15XXkiDXqdei16gg15fXk9epIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateOAlreadyExistRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.AlreadyExistRate", DefaultText = "There are already currency rates for the currency rate type {name}. The change will only apply to future currency rates!",LocalDefaultText = @"BS64:Itec16HXldeSINep16LXqCB7bmFtZX0g15vXkdeoINen15nXmdee15nXnSDXqdei16jXmdedLiDXlNep15nXoNeV15kg15nXl9eV15wg16jXpyDXotecINep16LXqNeZ150g16LXqteZ15PXmdeZ150hIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateORateRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.RateRequired", DefaultText = "Rate is required",LocalDefaultText = @"BS64:Itep16LXqCDXlNeV15Ag16nXk9eUINeX15XXkdeUIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateORateRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.RateRange", DefaultText = "The rate must be within the allowed range of {min} to {max}",LocalDefaultText = @"BS64:IteU16nXoteoINeX15nXmdeRINec15TXmdeV16og15HXmdefIHttaW59INecIHttYXh9Ig==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

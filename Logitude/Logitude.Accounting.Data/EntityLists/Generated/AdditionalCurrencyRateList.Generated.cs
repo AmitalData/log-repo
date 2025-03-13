@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string Name  { get; set; }
        [DataMember]
-       public double? Value  { get; set; }
+       public double? Rate  { get; set; }
    }
 
 }

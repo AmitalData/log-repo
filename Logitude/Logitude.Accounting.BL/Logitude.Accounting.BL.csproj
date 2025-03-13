@@ -802,6 +802,7 @@
     <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServices\AccountingEntityJournalUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingIntegrityCheckUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\AdditionalCurrencyRateUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AdditionalCurrencyRateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ChequeCounterSerialUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountMoreDataUpdateService.cs" />
@@ -929,6 +930,7 @@
     <Compile Include="Utils\ReconciliationAfterConversionBatch.cs" />
     <Compile Include="Utils\ReconciliationStageBBatch.cs" />
     <Compile Include="Utils\ReconciliationStageCBatch.cs" />
+    <Compile Include="Validators\AdditionalCurrencyRateValidator.cs" />
     <Compile Include="Validators\UserDefinedReportValidator.cs" />
     <Compile Include="Validators\InterestReportValidator.cs" />
     <Compile Include="Validators\AccountingPeriodValidator.cs" />

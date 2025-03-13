@@ -41,7 +41,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          Name = a.Name,
 					
-					                          Value = a.Value,
+					                          Rate = a.Rate,
 					
 		                    	            });
             return query;
@@ -49,15 +49,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<AdditionalCurrencyRate> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AdditionalCurrencyRate> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<AdditionalCurrencyRate> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<AdditionalCurrencyRate> iQueryable, int tenant)
+            return iQueryable;
+        }
+        private IQueryable<AdditionalCurrencyRate> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<AdditionalCurrencyRate> iQueryable, int tenant)
         {
 			return iQueryable;
 		}
 		
-			}
-
+	}
 
 }
 	

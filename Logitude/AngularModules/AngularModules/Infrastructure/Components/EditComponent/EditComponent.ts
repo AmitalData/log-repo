@@ -42,6 +42,7 @@ import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlow
 //import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { AdditionalCurrencyRateValidator } from 'Accounting/Validators/AdditionalCurrencyRateValidator';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -1679,10 +1680,22 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         this.SaveEntityChanges(true);
     }
 
-    private SaveEntityChanges(isClosing: boolean, busyIndicatorText: string = null, loadNextEntity: boolean = false, loadPreviousEntity: boolean = false) {
+    private async SaveEntityChanges(isClosing: boolean, busyIndicatorText: string = null, loadNextEntity: boolean = false, loadPreviousEntity: boolean = false) {
         if (this.EntityPM.IsDirty) {
 
             this.ValidationErrorsList = [];
+
+            this.SaveStart.emit(this.EntityPM)
+            if(this.ObjectTableName === "AdditionalCurrencyRate"){
+                const oldRate = this.EntityPM.OldEntityPM?.rate;
+                const newRate = this.EntityPM.Rate;
+                if (oldRate !== newRate) {
+                    const canContinue = await AdditionalCurrencyRateValidator.CheckIdenticalRateValue(this.EntityPM);
+                    if (!canContinue) {
+                        return;
+                    }
+                }
+            }
 
             if (!AppTool.IsNullOrEmpty(busyIndicatorText)) {
                 this.StartBusyIndicator(busyIndicatorText);
@@ -1691,8 +1704,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             else {
                 this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             }
-
-            this.SaveStart.emit(this.EntityPM)
 
             if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "APInvoice" || this.ObjectTableName == "ARPayment" || this.ObjectTableName == "APPayment"
                 || this.ObjectTableName == "BankDeposit" || this.ObjectTableName == "UserDefinedReport" || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration

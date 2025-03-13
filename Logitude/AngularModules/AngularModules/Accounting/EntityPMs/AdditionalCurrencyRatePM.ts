@@ -64,9 +64,9 @@ export class AdditionalCurrencyRatePM {
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
        
 	 
-    private value: number;
-    public get Value() { return this.value; }
-    public set Value(newValue: number) { if (this.value != newValue) { this.value = newValue; this.MarkAsDirty("Value"); } }
+    private rate: number;
+    public get Rate() { return this.rate; }
+    public set Rate(newValue: number) { if (this.rate != newValue) { this.rate = newValue; this.MarkAsDirty("Rate"); } }
        
 	 
 
