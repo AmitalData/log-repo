@@ -75,6 +75,10 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DefaultTypeId == defTypeId && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+        public DefaultValue GetSingleByDefaultTypeIdAndCardId(string defTypeId, int tenant,string cardId)
+        {
+            return context.DefaultValues.FirstOrDefault(d =>d.DefaultTypeId == defTypeId && d.Tenant == tenant && d.CardId == cardId);
+        }
         public string GetDefaultAccountNumberByDefaultValue(string Distr, string DefaultTypeCode, string BranchCode, string ShortValue, int Tenant)
         {
             string accountNo = "";
