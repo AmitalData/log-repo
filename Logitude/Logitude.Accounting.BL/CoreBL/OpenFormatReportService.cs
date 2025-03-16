@@ -1212,7 +1212,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                 }
                 GLAccountPM gLAccountPM = acccounts.Where(d => d.Id == item.GLAccountId).FirstOrDefault();
-                if (gLAccountPM != null)
+                if (gLAccountPM != null)   
                 {
                     item.CustomerVendorCode = gLAccountPM.DisplayNumber;
                     if (item.CustomerVendorCode != null)
@@ -2088,7 +2088,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
                     C100User = item.CreatedbyUser.PadLeft(9, ' ');
                 }
-
+                C100SumBeforeDiscount = C100SumIncludeVat;
+                C100SumAfterDiscount = C100SumIncludeVat;
                 string c100 = C100Count.ToString();
                 if (c100.Length > 7) { c100 = c100.Substring(0, 7); }
                 C100Mekasher = a + c100.PadLeft(7, '0');
@@ -2639,6 +2640,20 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (item.CreatedbyUser.Length > 9) { item.CreatedbyUser = item.CreatedbyUser.Substring(0, 9); }
                     C100User = a + item.CreatedbyUser.PadLeft(9, ' ');
+                }
+                C100SumBeforeDiscount = C100SumIncludeVat;
+                C100SumAfterDiscount = C100SumIncludeVat;
+
+                GLAccountPM gLAccountPM = acccounts.Where(d => d.Id == item.GLAccountId).FirstOrDefault();
+                if (gLAccountPM != null)
+                {
+                    item.CustomerVendorCode = gLAccountPM.DisplayNumber;
+                    if (item.CustomerVendorCode != null)
+                    {
+                        if (item.CustomerVendorCode.Length > 15) { item.CustomerVendorCode = item.CustomerVendorCode.Substring(0, 15); }
+                        C100Key = a + item.CustomerVendorCode.PadLeft(15, ' ');
+                    }
+
                 }
 
                 string c100 = C100Count.ToString();
@@ -3480,7 +3495,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             List<C100Data> c100s = (from a in invoiceContext.ARPayments
-                                    where ((a.ValueDate >= openFormatReportPM.FromDate && a.ValueDate <= openFormatReportPM.ToDate) || (a.RegisterDate >= openFormatReportPM.FromDate && a.RegisterDate <= openFormatReportPM.ToDate)) && a.Tenant == tenant
+                                    where ((a.RegisterDate >= openFormatReportPM.FromDate && a.RegisterDate <= openFormatReportPM.ToDate) || (a.RegisterDate >= openFormatReportPM.FromDate && a.RegisterDate <= openFormatReportPM.ToDate)) && a.Tenant == tenant
                                     select new C100Data()
                                     {
                                         ARPaymentId = a.Id,
@@ -3524,6 +3539,9 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             c100s = (from a in accountingContext.BankDeposits
+                     join baTmp in accountingContext.BankAccounts
+                         on a.DepositBankAccountId equals baTmp.Id into baGroup
+                     from ba in baGroup.DefaultIfEmpty()
                      where (a.AccountingDate >= openFormatReportPM.FromDate && a.AccountingDate <= openFormatReportPM.ToDate) && a.Tenant == tenant
                      select new C100Data()
                      {
@@ -3545,7 +3563,7 @@ namespace Logitude.Accounting.BL.CoreBL
                          DocumentAmountAndVATAmount = (double)a.LocalDepositAmount,
                          DocuemntsReferenceDate = a.AccountingDate,
                          CreatedbyUser = a.CreatedByUser.Code != null ? a.CreatedByUser.Code : a.CreatedByUser.Contact.EnglishName,
-                         GLAccountId = null,
+                         GLAccountId = ba.Id != null ? ba.GLAccountId : null,
                          IsCancelled = a.IsCanceled,
                          VendorId = null,
                          DepositId = a.Id,
