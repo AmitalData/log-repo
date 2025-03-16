@@ -22,17 +22,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
             iContext = context;
         }
 
-        public ExternalLink GetSingleExternalLink(string id, int teantat) => GetSingle(id);
+        public ExternalLink GetSingleExternalLink(string id, int tenant) => GetSingle(id);
         public ExternalLink GetSingleExternalLink(string id) => GetSingle(id);
 
-        public ExternalLink GetSingleExternalLinkByRef(string Ref) => (from a in Context.ExternalLinks where a.Ref == Ref select a).FirstOrDefault();
+        public ExternalLink GetSingleExternalLinkByRef(string referenceId) => 
+            Context.ExternalLinks.FirstOrDefault(a => a.Ref == referenceId);
 
-        public ExternalLink GetSingle(string id)
-        {
-            var q = (from a in Context.ExternalLinks where a.Id == id select a);
-            var res = q.FirstOrDefault();
-            return res;
-        }
+        public ExternalLink GetSingle(string id) =>
+            Context.ExternalLinks.FirstOrDefault(a => a.Id == id);
 
         public IQueryable<ExternalLink> GetExternalLinks(int tenant) => GetExternalLinks();
         public IQueryable<ExternalLink> GetExternalLinks()
@@ -72,9 +69,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
             get { return iContext; }
         }
 
-        public void SubmitChanges()
+        public bool SubmitChanges()
         {
-            Context.SaveChanges();
+            return Context.SaveChanges() > 0;
         }
 
         public List<ExternalLink> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
