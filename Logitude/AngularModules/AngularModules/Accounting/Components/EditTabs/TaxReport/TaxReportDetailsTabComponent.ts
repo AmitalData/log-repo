@@ -68,9 +68,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
         var table = window.ObjectTables.filter(d => d.Name === 'TaxReport')[0];
 
-        this.IsTesterButtonVisibile = FeatureLocator.Features.filter(f => (f.Code == "TaxReport.Features.TestButton") && f.ObjectTableId == table.Id)[0] ? true : false;
+        this.IsTesterButtonVisibile = FeatureLocator.Features.filter(f => (f.Code === "TaxReport.Features.TestButton") && f.ObjectTableId === table.Id)[0] ? true : false;
 
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection === "rtl");
         this.showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
 
         this.EntityPM = entityArgs.EntityPM;
@@ -91,8 +91,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
-            if (this.SaveCompletedEvent == null) {
+        if (this.CurrentSession.CurrentEditComponent !== null) {
+            if (this.SaveCompletedEvent === null) {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
@@ -101,7 +101,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
                 });
             }
 
-            if (this.LoadCompletedEvent == null) {
+            if (this.LoadCompletedEvent === null) {
                 this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
@@ -134,12 +134,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
                             this.isReady = true;
 
 
-                            // this.GetStatuses();
-                            // this.FillGrids();
-
-                            // this.BuildColumns();
                             this.ReloadScreen();
-                            // this.ReloadData();
+
                         });
                     });
                 });
@@ -156,7 +152,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.GetTransmitStatuses();
         
         this.CD.detectChanges();
-        // this.FillGrids();
+
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
         
@@ -179,75 +175,67 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     //#region Properties
-    //VatNumber
-    //TaxableOutputAmount
-    //LastUpdateDate
-    //ExemptTaxableOutput
-    //TaxReportMonth
-    //TaxableOutputAmount
-    //EquipmentInputsTaxAmount
-    //OtherInputsTaxAmount
-    //AmountForPayRefund
+
 
     get VatNumber() { return this.EntityPM.VatNumber; }
     set VatNumber(value: string) {
-        if (this.EntityPM.VatNumber != value) {
+        if (this.EntityPM.VatNumber !== value) {
             this.EntityPM.VatNumber = value;
         }
     }
 
     get OutputTaxAmount() { return this.EntityPM.OutputTaxAmount; }
     set OutputTaxAmount(value: number) {
-        if (this.EntityPM.OutputTaxAmount != value) {
+        if (this.EntityPM.OutputTaxAmount !== value) {
             this.EntityPM.OutputTaxAmount = value;
         }
     }
 
     get TaxableOutputAmount() { return this.EntityPM.TaxableOutputAmount; }
     set TaxableOutputAmount(value: number) {
-        if (this.EntityPM.TaxableOutputAmount != value) {
+        if (this.EntityPM.TaxableOutputAmount !== value) {
             this.EntityPM.TaxableOutputAmount = value;
         }
     }
 
     get LastUpdateDate() { return this.EntityPM.LastUpdateDate; }
     set LastUpdateDate(value: Date) {
-        if (this.EntityPM.LastUpdateDate != value) {
+        if (this.EntityPM.LastUpdateDate !== value) {
             this.EntityPM.LastUpdateDate = value;
         }
     }
 
     get ExemptTaxableOutput() { return this.EntityPM.ExemptTaxableOutput; }
     set ExemptTaxableOutput(value: number) {
-        if (this.EntityPM.ExemptTaxableOutput != value) {
+        if (this.EntityPM.ExemptTaxableOutput !== value) {
             this.EntityPM.ExemptTaxableOutput = value;
         }
     }
 
     get TaxReportMonth() { return this.EntityPM.TaxReportMonth; }
     set TaxReportMonth(value: Date) {
-        if (this.EntityPM.TaxReportMonth != value) {
+        if (this.EntityPM.TaxReportMonth !== value) {
             this.EntityPM.TaxReportMonth = value;
         }
     }
 
     get EquipmentInputsTaxAmount() { return this.EntityPM.EquipmentInputsTaxAmount; }
     set EquipmentInputsTaxAmount(value: number) {
-        if (this.EntityPM.EquipmentInputsTaxAmount != value) {
+        if (this.EntityPM.EquipmentInputsTaxAmount !== value) {
             this.EntityPM.EquipmentInputsTaxAmount = value;
         }
     }
 
     get OtherInputsTaxAmount() { return this.EntityPM.OtherInputsTaxAmount; }
     set OtherInputsTaxAmount(value: number) {
-        if (this.EntityPM.OtherInputsTaxAmount != value) {
+        if (this.EntityPM.OtherInputsTaxAmount !== value) {
             this.EntityPM.OtherInputsTaxAmount = value;
         }
     }
 
     get AmountForPayRefund() { return this.EntityPM.AmountForPayRefund; }
     set AmountForPayRefund(value: number) {
-        if (this.EntityPM.AmountForPayRefund != value) {
+        if (this.EntityPM.AmountForPayRefund !== value) {
             this.EntityPM.AmountForPayRefund = value;
         }
     }
@@ -265,7 +253,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     public FilterSelectedValue: string = 'All';
     FilterItemClicked(itemValue: string) {
-        if (this.FilterSelectedValue != itemValue) {
+        if (this.FilterSelectedValue !== itemValue) {
             this.FilterSelectedValue = itemValue;
             this.FilterLines();
         }
@@ -273,22 +261,15 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     ListFilters: ApiQueryFilters = new ApiQueryFilters();
     FilterLines() {
 
-        // var filteredLines = [];
-        // filteredLines = this.OriginalReportLines.Collection;
+
         var filters = new ApiQueryFilters;
 
         //search
         if (!AppTool.IsNullOrEmpty(this.searchText))
             filters.addAdditionalFilter("SearchFields", this.searchText, null, null, "Contains", false, false, false, "string");
-        // filteredLines = filteredLines.filter(d => d.SearchFields.toLowerCase().includes(this.searchText.toLowerCase()));
 
-        //update filters count
-        //this.TaxableTransactionsCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O" && d.TaxReportLinePM.VatAmount > 0).length;
-        //this.ExemptTransactionsCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O" && d.TaxReportLinePM.VatAmount == 0).length;
-        //this.AllTransactionsCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O").length;
-        //this.InputsEquipmentsCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == true).length;
-        //this.InputsOtherCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == false).length;
-        //this.AllCount = filteredLines.length;
+
+
 
 
         //toggle filters
@@ -331,7 +312,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             this.SelectedStatusItems.forEach(item => { statusesListString += item + ","; });
             statusesListString = statusesListString.slice(0, -1); // trim last comma
             filters.addAdditionalFilter("StatusCode", statusesListString, null, null, "InList", false, false, false, "string");
-            //filteredLines = filteredLines.filter(d => this.SelectedStatusItems.includes(d.StatusCode));
+
         }
 
 
@@ -376,29 +357,10 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     //#region Data
     FillGrids() {
-        // var lines = [];
 
-        // this.OriginalReportLines = new ObservableCollection([]);
-
-        // if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
-        //     for (let item of this.ReportLines.Collection.sort((a, b) => { return (a.Line === b.Line) ? 0 : (a.Line < b.Line) ? -1 : 1 })) {
-        //         lines.push(item));
-        //     }
-        // }
-
-        // // this.ReportLines.InsertCollection(lines);
-        // this.OriginalReportLines.InsertCollection(lines);
-
-        //calculate sums
-        //this.TaxableTransactionsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O" && d.TaxReportLinePM.VatAmount > 0).length;
-        //this.ExemptTransactionsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O" && d.TaxReportLinePM.VatAmount == 0).length;
-        //this.AllTransactionsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O").length;
-        //this.InputsEquipmentsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == true).length;
-        //this.InputsOtherCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == false).length;
-        //this.AllCount = lines.length;
 
         var lines = this.ReportLines.Collection;
-        this.errorsCount = lines.filter((d) => d.TaxReportLinePM.StatusCode != "6" && (d.TaxReportLinePM.TransmitStatusCode == "1" && d.TaxReportLinePM.TransmitStatusCode == "4")).length;
+        this.errorsCount = lines.filter((d) => d.TaxReportLinePM.StatusCode !== "6" && (d.TaxReportLinePM.TransmitStatusCode === "1" && d.TaxReportLinePM.TransmitStatusCode === "4")).length;
         this.ShowErrorMsg = this.errorsCount > 0;
 
     }
@@ -409,7 +371,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     SelectedStatusItems = [];
     CheckSelectedStatusItems(status){
         
-        return this.SelectedStatusItems?.some(a => a == status.Code) ?? false
+        return this.SelectedStatusItems?.some(a => a === status.Code) ?? false
     }
     GetStatuses() {
         this._TaxReportLineStatusListService.getAll().subscribe((myResult: any) => {
@@ -634,7 +596,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.columns.push({
             FieldName: 'IsExternalLine',
             DataTypeCode: 'String',
-            //  Display: TextCodeTranslator.Translate("TaxReportLine.F.IsExternalLine"),
+
             Styles: { width: '40px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
@@ -642,7 +604,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             ServerSideSortable: true,
         });
         this.TaxReportColumnsReady.emit(this.columns);
-        //this.CustomColumnsReady.emit(this.columns);
+
     }
     buildQueryColumns() {
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TransmitStatusCode", 'Text', TextCodeTranslator.Translate("Accounting.O.Included")));
@@ -653,7 +615,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferecneGroup", 'Text', TextCodeTranslator.Translate("TaxReportLine.F.ReferecneGroup")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferenceDate", 'DateTime', TextCodeTranslator.Translate("TaxReportLine.F.ReferenceDate")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TotalInvoiceAmount", 'Decimal', TextCodeTranslator.Translate("TaxReportLine.F.TotalInvoiceAmount")));
-        //ameerah
+         
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("SubTotalInLocalCurrency", 'Decimal', TextCodeTranslator.Translate("ARInvoice.F.SubTotalInLocalCurrency")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("VatAmount", 'Decimal', TextCodeTranslator.Translate("TaxReportLine.F.VatAmount")));
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.
@@ -682,11 +644,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         //add report id
         filters.addAdditionalFilter('TaxReportId', this.EntityPM.Id, null, null, 'Equals', false, false, false, 'string');
 
-        //if (this.dateFilter) {
-        //     filters.AdditionalFilters.push(this.dateFilter);
-        // } else {
-        //     return;
-        // }
+  
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
@@ -695,7 +653,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         filters.PageIndex = skip;
         filters.GetCount = true;
 
-        if (sortingDir != "") {
+        if (sortingDir !== "") {
             filters.SortBy = sortingCol;
             filters.SortDirection = sortingDir;
         }
@@ -703,9 +661,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             filters.SortBy = "Line";
             filters.SortDirection = "Ascending";
         }
-
-        // filters.addAdditionalFilter("BankAccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        //filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
 
         //#endregion
 
@@ -734,8 +689,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     RefreshButtonClicked() {
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        //this.ListFilters = new ApiQueryFilters();
-        //this.FilterSelectedValue = 'All';
+
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }
@@ -773,7 +727,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             logWindow.Title = windowTitle;
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe((event: any) => {
-                if (event == "ok")
+                if (event === "ok")
                     this.ReloadScreen();
             });
             logWindow.Show('./Accounting/Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent');
