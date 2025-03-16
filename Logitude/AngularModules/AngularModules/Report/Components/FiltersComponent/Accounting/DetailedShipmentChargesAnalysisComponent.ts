@@ -5,9 +5,10 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { ReportFliter } from '../../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+
     templateUrl: './DetailedShipmentChargesAnalysisComponent.html',
 })
 
@@ -34,7 +35,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
     }
 
     public DateFilterList: CodeNameClass[];
-    private BuildDateFilter() {
+    private BuildDateFilter(code: string = "OPE") {
         this.DateFilterList = [];
 
         this.DateFilterList.push(new CodeNameClass("OPE", "Operational Date"));
@@ -43,7 +44,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
         this.DateFilterList.push(new CodeNameClass("OPC", "Operational Close Date"));
         this.DateFilterList.push(new CodeNameClass("ACD", "Accounting Close Date"));
 
-        this.selectedDateFilter = this.DateFilterList.filter(d => d.Code == "OPE")[0];
+        this.selectedDateFilter = this.DateFilterList.filter(d => d.Code === code)[0];
     }
 
     private selectedDateFilter: CodeNameClass;
@@ -71,7 +72,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
             this.toDate = value;
         }
     }
-    
+
     private selectedCurrencyCode: string = null;
     public get SelectedCurrencyCode() { return this.selectedCurrencyCode; }
     public set SelectedCurrencyCode(value: string) {
@@ -79,7 +80,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
             this.selectedCurrencyCode = value;
         }
     }
-    
+
     private includeDraftInvoices: boolean = false;
     public get IncludeDraftInvoices() { return this.includeDraftInvoices; }
     public set IncludeDraftInvoices(value: boolean) {
@@ -119,36 +120,99 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
             this.housesAndDirectOnly = value;
         }
     }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) {
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
 
+        if (this.IsSchedulerReport) {
+            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+        }
+        else {
+            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+        }
+
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "SelectedCurrencyCode":
+                    this.SelectedCurrencyCode = queryFilterItem.FieldValue;
+                    break;
+                case "IncludeDraftInvoices":
+                    this.IncludeDraftInvoices = queryFilterItem.FieldValue;
+                    break;
+                case "IncludeEstimations":
+                    this.IncludeEstimations = queryFilterItem.FieldValue;
+                    break;
+                case "SplitByCharges":
+                    this.SplitByCharges = queryFilterItem.FieldValue;
+                    break;
+                case "IncludeCancelledShipments":
+                    this.IncludeCancelledShipments = queryFilterItem.FieldValue;
+                    break;
+                case "HousesAndDirectOnly":
+                    this.HousesAndDirectOnly = queryFilterItem.FieldValue;
+                    break;
+                case "SelectedDateType":
+                    this.BuildDateFilter(queryFilterItem.FieldValue);
+                    break;
+                case "IsLocalCurrency":
+                    this.SelectedCurrencyCode = queryFilterItem.FieldValue?? this.LocalCurrencyCode;
+                    break;
+
+
+            }
+
+
+
+        }
+    }
     RunButtonClicked() {
         this.SetUIProperties();
 
+        if (this.ValidateSelectedFilters()) {
+            
+            var myReportFliter: ReportFliter = new ReportFliter();
+            myReportFliter.NumberOfPage = 1;
+            myReportFliter.ProcessType = "GenerateReport";
+            myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.RunReportEvent.emit(myReportFliter);
+        }
+    }
+    GetQueryFilterItems(){
+        var myFilterItems: QueryFilterItem[] = [];
+        myFilterItems.push(new QueryFilterItem("SelectedDateType", this.SelectedDateFilter.Code));
+        myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
+        myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
+        myFilterItems.push(new QueryFilterItem("IsLocalCurrency", this.SelectedCurrencyCode == this.LocalCurrencyCode ? true : false));
+        myFilterItems.push(new QueryFilterItem("SelectedCurrencyCode", this.SelectedCurrencyCode));
+        myFilterItems.push(new QueryFilterItem("IncludeDraftInvoices", this.IncludeDraftInvoices));
+        myFilterItems.push(new QueryFilterItem("IncludeEstimations", this.IncludeEstimations));
+        myFilterItems.push(new QueryFilterItem("SplitByCharges", this.SplitByCharges));
+        myFilterItems.push(new QueryFilterItem("IncludeCancelledShipments", this.IncludeCancelledShipments));
+        myFilterItems.push(new QueryFilterItem("HousesAndDirectOnly", this.HousesAndDirectOnly));
+        return myFilterItems;
+    }
+    ValidateSelectedFilters(){
         var errors: string[] = [];
 
         if (AppTool.IsNullOrEmpty(this.FromDate)) {
             errors.push("From Date is required");
         }
-
-        this.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
-            var myFilterItems: QueryFilterItem[] = [];
-            myFilterItems.push(new QueryFilterItem("SelectedDateType", this.SelectedDateFilter.Code));
-            myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
-            myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
-            myFilterItems.push(new QueryFilterItem("IsLocalCurrency", this.SelectedCurrencyCode == this.LocalCurrencyCode ? true : false));
-            myFilterItems.push(new QueryFilterItem("SelectedCurrencyCode", this.SelectedCurrencyCode));
-            myFilterItems.push(new QueryFilterItem("IncludeDraftInvoices", this.IncludeDraftInvoices));
-            myFilterItems.push(new QueryFilterItem("IncludeEstimations", this.IncludeEstimations));
-            myFilterItems.push(new QueryFilterItem("SplitByCharges", this.SplitByCharges));
-            myFilterItems.push(new QueryFilterItem("IncludeCancelledShipments", this.IncludeCancelledShipments));
-            myFilterItems.push(new QueryFilterItem("HousesAndDirectOnly", this.HousesAndDirectOnly));
-
-            var myReportFliter: ReportFliter = new ReportFliter();
-            myReportFliter.NumberOfPage = 1;
-            myReportFliter.ProcessType = "GenerateReport";
-            myReportFliter.QueryFilterItemLists = myFilterItems;
-            this.RunReportEvent.emit(myReportFliter);
-        }
+        return errors.length == 0;
     }
 }

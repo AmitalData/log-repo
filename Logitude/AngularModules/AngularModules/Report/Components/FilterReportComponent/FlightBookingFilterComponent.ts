@@ -7,6 +7,7 @@ import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 @Component({
 
     
@@ -61,42 +62,45 @@ export class FlightBookingFilterComponent extends BaseComponent implements OnIni
     ngOnInit() {
         
     }
-
+    public IsSchedulerReport : boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FlightDate":
+                    this.FlightDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "CustomAgentId":
+                    this.CustomAgentId = queryFilterItem.FieldValue;
+                    break;
+                case "FlightNumber":
+                    this.FlightNumber = queryFilterItem.FieldValue;
+                    break;   
+               }
+            }
+    }
     public CustomAgentId: string; 
     RunReport() {
-        this.ValidationErrorsList = [];
-        if (this.FlightNumber == null || this.FlightNumber.trim() == '') {
-            this.ValidationErrorsList.push("Flight Number is required");
-        }
-
-        if (this.FlightDate == null) {
-            this.ValidationErrorsList.push("Flight Date is required");
-        }
-
-        if (this.ValidationErrorsList.length==0) {
-            this.queryFilterItems = new Array<QueryFilterItem>();
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "FlightDate";
-            this.queryFilterItem.FieldValue = this.FlightDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "FlightNumber";
-            this.queryFilterItem.FieldValue = this.FlightNumber;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CustomAgentId";
-            this.queryFilterItem.FieldValue = this.CustomAgentId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
+       
+        if (this.ValidateSelectedFilters()) {
+            
             if (!this.DateType) {
                 this.DateType = "CreateDate";
             }
@@ -104,7 +108,7 @@ export class FlightBookingFilterComponent extends BaseComponent implements OnIni
             this.reportFliter = new ReportFliter();
             this.reportFliter.DateType = this.DateType;
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -117,5 +121,42 @@ export class FlightBookingFilterComponent extends BaseComponent implements OnIni
             }
             this.ReportsPreview.GenerateReport(this.reportFliter, true);
         }
-    }   
+    } 
+    GetQueryFilterItems(){
+        this.queryFilterItems = new Array<QueryFilterItem>();
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "FlightDate";
+        this.queryFilterItem.FieldValue = this.FlightDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "FlightNumber";
+        this.queryFilterItem.FieldValue = this.FlightNumber;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "CustomAgentId";
+        this.queryFilterItem.FieldValue = this.CustomAgentId;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+        return this.queryFilterItems;
+    }
+    ValidateSelectedFilters() {
+        this.ValidationErrorsList = [];
+        if (this.FlightNumber == null || this.FlightNumber.trim() == '') {
+            this.ValidationErrorsList.push("Flight Number is required");
+        }
+
+        if (this.FlightDate == null) {
+            this.ValidationErrorsList.push("Flight Date is required");
+        }
+        return this.ValidationErrorsList.length == 0;
+    }  
 }
+

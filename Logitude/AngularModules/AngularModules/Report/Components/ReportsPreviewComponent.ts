@@ -84,7 +84,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     ReportsPreview(GroupList: ReportGroupList, ReportList: ReportList, reportTemplateLists: ReportsTemplateList[]) {
         this.Report = ReportList;
         this.ReportGroup = GroupList;
-        this.ReportsTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType == "R");
+        this.ReportsTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType == "R" || temp.TemplateType == "E");
         this.MessageTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType == "M");
         this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
         this.FilterControlName = ReportList.FilterControlName;

@@ -13,6 +13,7 @@ import { OpportunityTypeListService } from 'CRM/Services/StandardLists/Opportuni
 import { OpportunityTypeList } from 'CRM/EntityLists/OpportunityTypeList';
 import { PaymentChannelListService } from 'Infrastructure/Services/StandardLists/PaymentChannelListService';
 import { PaymentChannelList } from 'Infrastructure/EntityLists/PaymentChannelList';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
 
@@ -65,7 +66,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
     FillPaymentChannels(paymentChannels: PaymentChannelList[]) {
         this.PaymentChannels = [];
         paymentChannels.forEach((paymentChannel: any) => {
-            paymentChannel.Checked = false;
+            paymentChannel.Checked = this.SelectedPaymentChannel?.indexOf(paymentChannel.Code) > -1;
             this.PaymentChannels.push(paymentChannel);
         });
         this.PaymentChannels.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
@@ -79,7 +80,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
                 var item = new CodeNameClass();
                 item.Code = i.Id;
                 item.Name = i.Name;
-                item.Checked = false;
+                item.Checked = this.SelectedItem == "All" ? true || this.SelectedItem.indexOf(i.Id) > -1:false;
                 this.FilterdOpportunityTypeList.push(i);
             }
         });
@@ -88,12 +89,12 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
 
 
     public CustomerStatusList: CodeNameClass[];
-    private BuildCustomerStatusFilters() {
+    private BuildCustomerStatusFilters(code: string = "ALL") {
         this.CustomerStatusList = [];
         this.CustomerStatusList.push(new CodeNameClass("ALL", "All"));
         this.CustomerStatusList.push(new CodeNameClass("ACT", "Active"));
 
-        this.selectedCustomerStatus = this.CustomerStatusList.filter(d => d.Code == "ALL")[0];
+        this.selectedCustomerStatus = this.CustomerStatusList.filter(d => d.Code == code)[0];
     }
 
     public Years: number[];
@@ -135,8 +136,60 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
     EditedItemSource(newSource: any) {
         this.FilterdOpportunityTypeList = newSource;
     }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+        
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        
+    }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+   
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "ExchangeRate":
+                   this.ExchangeRate = queryFilterItem.FieldValue;
+                    break;
+                case "Year":
+                    this.SelectedYear = queryFilterItem.FieldValue;
+                    break;
+                 case "ResellerId":
+                    this.ResellerId = queryFilterItem.FieldValue;
+                    break;
+                case "ShowNet":
+                    this.ShowNet = queryFilterItem.FieldValue;
+                    break;
+                 case "PaymentChannels":
+                     this.SelectedPaymentChannel = queryFilterItem.FieldValue;   
+                    break;
+                case "CustomerStatus":  
+                    this.BuildCustomerStatusFilters(queryFilterItem.FieldValue);
+                    break;
+                case "OpportunityTypes":
+                    this.SelectedItem = queryFilterItem.FieldValue;
+                    break;
 
-    RunReport(isloading: boolean) {
+                        
+            }
+                 
+        }
+    }
+
+    ValidateSelectedFilters(){
         this.ValidationErrorsList = [];
         if (this.ExchangeRate == null) {
             this.ValidationErrorsList.push("Exchange Rate is required");
@@ -149,12 +202,30 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         if (!this.selectedYear) {
             this.ValidationErrorsList.push("Year field is required");
         }
+        return this.ValidationErrorsList.length == 0;
+    }
+    RunReport(isloading: boolean) {
+       
 
-
-        if (this.ValidationErrorsList.length != 0) {
+        if (!this.ValidateSelectedFilters()) {
             return;
         }
 
+       
+        var reportFliter = new ReportFliter();
+        reportFliter.Tenant = SessionLocator.Tenant;
+        reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+        reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+        reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+        reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+        reportFliter.NumberOfPage = 1;
+        reportFliter.ProcessType = "GenerateReport";
+
+        this.ReportsPreview.GenerateReport(reportFliter, isloading);
+
+    }
+    
+    GetQueryFilterItems(){
         if (this.SelectedCustomerStatus.Code == "ALL") {
             this.SelectedCustomerStatus.Code = "";
         }
@@ -225,18 +296,7 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
         this.queryFilterItem.Operator = "Equals";
         this.queryFilterItems.push(this.queryFilterItem);
 
-
-        var reportFliter = new ReportFliter();
-        reportFliter.Tenant = SessionLocator.Tenant;
-        reportFliter.QueryFilterItemLists = this.queryFilterItems;
-        reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-        reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-        reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-        reportFliter.NumberOfPage = 1;
-        reportFliter.ProcessType = "GenerateReport";
-
-        this.ReportsPreview.GenerateReport(reportFliter, isloading);
-
+        return this.queryFilterItems;
     }
 
     GetSelectedPaymentChannels(): any {
