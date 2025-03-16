@@ -158,7 +158,7 @@
   <Column
     Name="OriginalReference"
     Type="varchar"
-    Size="20">
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>

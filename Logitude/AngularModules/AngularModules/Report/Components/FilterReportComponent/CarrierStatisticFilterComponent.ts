@@ -6,6 +6,7 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     
@@ -67,8 +68,43 @@ export class CarrierStatisticFilterComponent extends BaseComponent   {
     reportFliter: ReportFliter;
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
-    RunReport(isloading: boolean) {
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "CreateDateTime":
+                    if (queryFilterItem.Operator == "GreaterThanOrEqual") {
+                        this.FromDate = new Date(queryFilterItem.FieldValue);
+                        break;
+                    }
+                    if (queryFilterItem.Operator == "LessThanOrEqual") {
+                        this.ToDate = new Date(queryFilterItem.FieldValue);
+                        break;
+                    }
+                break;
+               
+                case "IsOperationalClosed":
+                    this.IncludeClosed = queryFilterItem.FieldValue;
+                    break;                          
+                case "Direction":
+                        this.MySelectedDirectionFilter = queryFilterItem.FieldValue;
+                        break;      
+            }
+    
+        }
+    }
+    ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
+
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
         }
@@ -81,49 +117,26 @@ export class CarrierStatisticFilterComponent extends BaseComponent   {
             this.ValidationErrorsList.push("From Date cannot be greater than To Date");
         }
 
-        if (this.ValidationErrorsList.length == 0) {
-            this.queryFilterItems = new Array<QueryFilterItem>();
-
-            if (this.MySelectedDirectionFilter == "All") {
-                this.MySelectedDirectionFilter = null;
+        return this.ValidationErrorsList.length == 0;
+    }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
             }
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CreateDateTime";
-            this.queryFilterItem.FieldValue = this.FromDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "GreaterThanOrEqual";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CreateDateTime";
-            this.queryFilterItem.FieldValue = this.ToDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "LessThanOrEqual";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "IsOperationalClosed";
-            this.queryFilterItem.FieldValue = this.IncludeClosed;
-            this.queryFilterItem.FieldDataType = "Boolean";
-            this.queryFilterItem.Operator = "Equal";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            if (!AppTool.IsNullOrEmpty(this.MySelectedDirectionFilter)) {
-                this.queryFilterItem = new QueryFilterItem();
-                this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = "Direction";
-                this.queryFilterItem.FieldValue = this.MySelectedDirectionFilter;
-                this.queryFilterItem.Operator = "Equals";
-                this.queryFilterItems.push(this.queryFilterItem);
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
             }
+       
+    }
+    RunReport(isloading: boolean) {
+        
 
+        if (this.ValidateSelectedFilters()) {
+            
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -133,5 +146,47 @@ export class CarrierStatisticFilterComponent extends BaseComponent   {
 
             this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
         }
+    }
+    GetQueryFilterItems(){
+        this.queryFilterItems = new Array<QueryFilterItem>();
+
+        if (this.MySelectedDirectionFilter == "All") {
+            this.MySelectedDirectionFilter = null;
+        }
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "CreateDateTime";
+        this.queryFilterItem.FieldValue = this.FromDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "GreaterThanOrEqual";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "CreateDateTime";
+        this.queryFilterItem.FieldValue = this.ToDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "LessThanOrEqual";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "IsOperationalClosed";
+        this.queryFilterItem.FieldValue = this.IncludeClosed;
+        this.queryFilterItem.FieldDataType = "Boolean";
+        this.queryFilterItem.Operator = "Equal";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        if (!AppTool.IsNullOrEmpty(this.MySelectedDirectionFilter)) {
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "Direction";
+            this.queryFilterItem.FieldValue = this.MySelectedDirectionFilter;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+        }
+        return this.queryFilterItems;
+
     }
 }

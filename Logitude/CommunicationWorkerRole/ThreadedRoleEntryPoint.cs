@@ -236,13 +236,7 @@ namespace CommunicationWorkerRole
 
             }
 
-            StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHk5LQfMb0Dr1Ze4z6YRXSb7imTiay6/HzKYGUzkd/h3FMt5R7" +
-"uunoM5lX8Vs2voVkSeT6Wv6WI6Jcy4xOeAjjPkTBhC+ivrrxidMQjLaebItqFcnJWqKXBUgoJa0WfmH3soi0IbfEmI" +
-"fQ3ZmMq5BHsjsKoHSdnbzDUPWMXieYRTJZL6tsBC6QRy2ALPnYwg88ZJDGAWgAqMhZ+M0BVM17B3YJN9mu1MfAblN7" +
-"rG1eWrSrR5B53af4aeWs0RmqVNatfenGL8sufvTgOiyEuQmC9J7sHOT6VoQpWOlZthrc7JOl4zbw+qduZHZrpLuK+1" +
-"O3AB8EeDCQ6EgM8TcUesQBZZrUA4ZUFpxsCdvL0n4DQiB1tIof1TGHXCtZ62S1kAfU4XJzEGM/g3MYbKridAK5ckyc" +
-"0xwsK2y46rm9W3EV0m49Na0pcJe+2ZScc6BP1o3tDS9ddHbfkt7hFZpUNTqOxn9BOP0YVoQul+dPckYle4PS4mzXVp" +
-"tMrKV4En69rnW/z658axW0kQ2GxorKwW0IAR";
+            ReportHelper.AddStimulsoftLicenseKey();
             if (BatchServicesParam.Contains("SATInterface"))
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls11;
@@ -574,7 +568,7 @@ namespace CommunicationWorkerRole
                             args.Add(Service.Parameter2 == "null" ? null : Service.Parameter2);
                         }
                         object[] ArrArgs = args.ToArray();
-                        var classname = (Service.ClassName == "CustomsSchedularWR" ? "SchedularWorkerRole" : Service.ClassName);
+                        var classname = (Service.ClassName == "CustomsSchedularWR" ? "SchedularWorkerRole" : (Service.ClassName == "ReportExecutionLogWR" ? "ReportExecutionLogWorkerRole" : Service.ClassName));
                         var Item = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole." + classname), ArrArgs) as WorkerEntryPoint;
                         Item.MaxWorkingTimeInMinutes = Service.MaxWorkingTimeInMinutes;
                         workers.Add(Item);

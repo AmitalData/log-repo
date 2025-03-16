@@ -11,6 +11,7 @@ import {LastFilter} from '../../../Infrastructure/Utilities/LastFilter';
 import {CodeNameClass} from './CodeNameClass';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeListBoxComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogitudeListBox/LogitudeListBoxComponent';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
 
@@ -209,10 +210,73 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
         this.SelectedItemShow = this.showComboList[0];
 
     }
+    public  IsSchedulerReport: boolean=false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        this.timeRangeComboList = LastFilter.myList();
+        var lastFilter: LastFilter = new LastFilter();
+        lastFilter.lastTitle = "Custom";
+        lastFilter.LastDays = 0;
+        lastFilter.Lastmonths = 0;
 
-    RunReport() {
+        this.timeRangeComboList.push(lastFilter);
+        this.SelectedItem 
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "LastMonths":
+                    this.SelectedItem = this.timeRangeComboList[queryFilterItem.FieldValue];
+                    break;
+                case "TransportModeId":
+                    this.MySelectedTransportFilter=queryFilterItem.FieldValue;
+                    break;
+                case "DirectionId":
+                    this.MySelectedDirectionFilter=queryFilterItem.FieldValue;
+                    break;
+                case "ShowIndex":{
+                    this.BuildShowTypesFilters();
+                    this.SelectedItemShow = this.showComboList[queryFilterItem.FieldValue];
+                    break;    
 
+                }
+                case "FromDate":
+                    this.ActivityToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ActivityFromDate= new Date(queryFilterItem.FieldValue);
+                    break;
+                
+                
+                case "TimeRange":
+                    this.SelectedItem.lastTitle = queryFilterItem.FieldValue;
+                    break;
+                
+                   
+               
+            }
+    
+           
+    
+        }
+    }
 
+    ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
 
         if (!this.SelectedItem) {
@@ -232,129 +296,28 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
         }
 
 
-        if (this.ValidationErrorsList.length == 0) {
+        return this.ValidationErrorsList.length == 0;
+    }
+    RunReport() {
 
 
-            var showIndex;
+       
+
+        if (this.ValidateSelectedFilters()) {
 
 
-            switch (this.SelectedItemShow.Code) {
-                case "SHI":
-                    {
-                        showIndex = 0;
-                        break;
-                    }
-
-                case "CHW":
-                    {
-                        showIndex = 1;
-                        break;
-                    }
-
-                case "GSW":
-                    {
-                        showIndex = 2;
-                        break;
-                    }
-
-                case "PAC":
-                    {
-                        showIndex = 3;
-                        break;
-                    }
-
-                case "PPT":
-                    {
-                        showIndex = 4;
-                        break;
-                    }
-
-                case "RAC":
-                    {
-                        showIndex = 5;
-                        break;
-                    }
-
-                case "RPT":
-                    {
-                        showIndex = 6;
-                        break;
-                    }
-            }
+          
 
             if (this.MySelectedDirectionFilter == "All")
                 this.MySelectedDirectionFilter = "";
             if (this.MySelectedTransportFilter == "All")
                 this.MySelectedTransportFilter = "";
 
-            this.queryFilterItems = [];
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "LastDays";
-            this.queryFilterItem.FieldValue = this.SelectedItem.LastDays;
-
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "LastMonths";
-            this.queryFilterItem.FieldValue = 0 + "";
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ShowIndex";
-            this.queryFilterItem.FieldValue = showIndex;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "DirectionId";
-            this.queryFilterItem.FieldValue = this.MySelectedDirectionFilter;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "TransportModeId";
-            this.queryFilterItem.FieldValue = this.MySelectedTransportFilter;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-                this.queryFilterItem = new QueryFilterItem();
-                this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = "FromDate";
-                this.queryFilterItem.FieldValue = this.ActivityToDate;
-                this.queryFilterItem.FieldDataType = "Date";
-                this.queryFilterItems.push(this.queryFilterItem);
-
-                this.queryFilterItem = new QueryFilterItem();
-                this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = "ToDate";
-                this.queryFilterItem.FieldValue = this.ActivityFromDate;
-                this.queryFilterItem.FieldDataType = "Date";
-                this.queryFilterItems.push(this.queryFilterItem);
-            
-
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "TimeRange";
-            this.queryFilterItem.FieldValue = this.SelectedItem.lastTitle;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
 
 
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -365,7 +328,118 @@ export class ActivityStatusDashboardFilterComponent extends BaseComponent implem
         }
         }
     
+     public GetQueryFilterItems() {
+        var showIndex;
 
+
+        switch (this.SelectedItemShow.Code) {
+            case "SHI":
+                {
+                    showIndex = 0;
+                    break;
+                }
+
+            case "CHW":
+                {
+                    showIndex = 1;
+                    break;
+                }
+
+            case "GSW":
+                {
+                    showIndex = 2;
+                    break;
+                }
+
+            case "PAC":
+                {
+                    showIndex = 3;
+                    break;
+                }
+
+            case "PPT":
+                {
+                    showIndex = 4;
+                    break;
+                }
+
+            case "RAC":
+                {
+                    showIndex = 5;
+                    break;
+                }
+
+            case "RPT":
+                {
+                    showIndex = 6;
+                    break;
+                }
+        }
+        this.queryFilterItems = [];
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "LastDays";
+        this.queryFilterItem.FieldValue = this.SelectedItem.LastDays;
+
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "LastMonths";
+        this.queryFilterItem.FieldValue = 0 + "";
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "ShowIndex";
+        this.queryFilterItem.FieldValue = showIndex;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "DirectionId";
+        this.queryFilterItem.FieldValue = this.MySelectedDirectionFilter;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "TransportModeId";
+        this.queryFilterItem.FieldValue = this.MySelectedTransportFilter;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.ActivityToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ActivityFromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+        
+
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "TimeRange";
+        this.queryFilterItem.FieldValue = this.SelectedItem.lastTitle;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+        return this.queryFilterItems;   
+     }
 
 }
 

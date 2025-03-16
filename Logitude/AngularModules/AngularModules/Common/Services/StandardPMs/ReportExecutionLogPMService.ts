@@ -44,7 +44,7 @@ export class ReportExecutionLogPMService {
             }),
             catchError(ServiceHelper.HandleServiceError));
     }
-
+    
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReportExecutionLogPM = null) {
         if (!entityPM) {
             entityPM = new ReportExecutionLogPM();

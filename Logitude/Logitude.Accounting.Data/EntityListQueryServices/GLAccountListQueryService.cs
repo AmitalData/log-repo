@@ -152,8 +152,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Category4LocalName = a.Category4.LocalName,
                              Category5LocalName = a.Category5.LocalName,
 
-
                              ActiveForInterest = a.ActiveForInterest,
+
+                             MarkDate = a.MarkDate,
                              ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
                              MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
                              InterestCalculationStartDate = a.InterestCalculationStartDate,
@@ -396,7 +397,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Category4LocalName = a.Category4.LocalName,
                              Category5LocalName = a.Category5.LocalName,
 
-
+                             MarkDate= a.MarkDate,
                              ActiveForInterest = a.ActiveForInterest,
                              ActiveForInterestCreditInvoice = a.ActiveForInterestCreditInvoice,
                              MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
@@ -740,8 +741,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            Category3LocalName = glaccount.Category3LocalName,
                            Category4LocalName = glaccount.Category4LocalName,
                            Category5LocalName = glaccount.Category5LocalName,
-
-
+                           MarkDate = glaccount.MarkDate,
                            ActiveForInterest = glaccount.ActiveForInterest,
                            ActiveForInterestCreditInvoice = glaccount.ActiveForInterestCreditInvoice,
                            MinimumInterestInvoiceBilling = glaccount.MinimumInterestInvoiceBilling,
@@ -1160,6 +1160,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                               ContactEmail  = a.Contact != null ? a.Contact.Email : null,
                                                               ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
                                                               ActiveForInterest = a.ActiveForInterest,
+                                                              MarkDate=a.MarkDate
                                                           });
             //var xxx = accountListQuery.ToList();
 

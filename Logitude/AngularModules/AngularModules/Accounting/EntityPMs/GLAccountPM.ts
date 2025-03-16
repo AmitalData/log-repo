@@ -918,7 +918,11 @@ export class GLAccountPM {
     private contactName: string;
     public get ContactName() { return this.contactName; }
     public set ContactName(newValue: string) { if (this.contactName != newValue) { this.contactName = newValue; this.MarkAsDirty("ContactName"); } }
-       
+    
+    private markDate: Date;
+    public get MarkDate() { return this.markDate; }
+    public set MarkDate(newValue: Date) { if (this.markDate != newValue) { this.markDate = newValue;  } }
+     
 	 
 
     public OldEntityPM: GLAccountPM;

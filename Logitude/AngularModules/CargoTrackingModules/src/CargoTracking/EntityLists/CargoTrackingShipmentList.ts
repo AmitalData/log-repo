@@ -162,6 +162,10 @@ export class CargoTrackingShipmentList {
 	ShowMoneyOrder: boolean;
 	CargoTrackingPrivateShowEvents: boolean;
 	CargoTrackingPublicShowEvents: boolean;
+	LockerAddress: string;
+	LockerCity: string;
+	LockerName: string;
+	LockerCode: string;
 	
 }
  

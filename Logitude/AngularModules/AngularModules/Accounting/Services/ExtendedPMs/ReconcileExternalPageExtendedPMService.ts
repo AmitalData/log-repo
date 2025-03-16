@@ -291,7 +291,36 @@ export class ReconcileExternalPageExtendedPMService {
 
         var serviceResponse: ServiceResponse = new ServiceResponse();
 
-        return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromExcel/?bankCodeId=" + bankCodeId+"&GLAccountID=" + GLAccountID +   "&tenant=" + tenant+"&reconcileExternalPageId=" + reconcileExternalPageId+"&line=" + line, formData, {headers: authHeader });
+        return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromExcel/?bankCodeId=" + bankCodeId+"&GLAccountID=" + GLAccountID +   "&tenant=" + tenant+"&reconcileExternalPageId=" + reconcileExternalPageId+"&line=" + line, formData, {headers: authHeader }).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
+
+
+    ImportReconcileExternalPageLineFromText(formData: FormData, bankCodeId: string, tenant: number, reconcileExternalPageId: string, line: number, GLAccountID: string) {
+        var authHeader = new HttpHeaders();
+        authHeader.append('Token', SessionInfo.Token);
+        authHeader.append('Content-Type', 'application/json');
+
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+
+        return this.httpClient.post(this._apiUrl + "/ImportReconcileExternalPageLineFromText/?bankCodeId=" + bankCodeId + "&GLAccountID=" + GLAccountID + "&tenant=" + tenant + "&reconcileExternalPageId=" + reconcileExternalPageId + "&line=" + line, formData, { headers: authHeader }).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
     }
 
     public clone(jsonPM: any) {

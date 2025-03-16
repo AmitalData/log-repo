@@ -352,8 +352,7 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
             this.description = value;
         }
     }
-
-    RunReport() {
+    ValidateSelectedFilters(){
         this.ValidationErrorsList = [];
 
 
@@ -377,14 +376,28 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
                 }
             }
         }
-        if (this.ValidationErrorsList.length == 0) {
+        return this.ValidationErrorsList.length == 0;
+    }
+    RunReport() {
+       
+        if (this.ValidateSelectedFilters()) {
 
             this.BuildReport();
 
         }
     }
-
-    InitilaizeFilter() {
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+        if (this.isReady) {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        }
+    }
+    GetQueryFilterItems() {
         this.queryFilterItems = new Array<QueryFilterItem>();
         //-----------------------------------------------------------------------------1
 
@@ -453,6 +466,7 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
             this.queryFilterItems.push(this.GetNewQueryFilterItem("Description", this.Description, null));
 
         }
+        return this.queryFilterItems;
 
     }
     BuildFilterByOperator(FieldName, FieldValue, FieldValue2, Type, Operator: { Code: string, EnglishName: string, LocalName: string }) {
@@ -466,8 +480,102 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
 
         }
     }
+    public IsSchedulerReport: boolean = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "InvoiceDate":{
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    this.ToDate = new Date(queryFilterItem.FieldValue2);
+                    this.TypeFilterDate = "Accountant";
+                    break;
+                }
+                case "CreateDate":{
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    this.ToDate = new Date(queryFilterItem.FieldValue2);
+                    this.TypeFilterDate = "Creation";
+
+                    break;
+                }  
+                case "NotIncludedInAnyTaxReport":{
+                    this.NotIncludedInAnyTaxReport =queryFilterItem.FieldValue;
+                    this.TypeFilterDate = "VATreport";
+
+                    break;
+                }
+                 case "TaxReportId":
+                        this.SelectedTaxReport =queryFilterItem.FieldValue;
+                        break; 
+                
+                 case "Description":
+                    this.Description = queryFilterItem.FieldValue;
+                   break;
+                               
+                 case "MainEntityReference":{
+                    this.CaseNumber = queryFilterItem.FieldValue;
+                    this.selectedCaseNumberOperator = this.operatorsList.filter(p => p.Code == queryFilterItem.Operator)[0];
+                    break;
+                 }
+                 case "TotalAmountForTaxReport":{
+                    this.AmountReportFrom = queryFilterItem.FieldValue;
+                    this.AmountReportTo = queryFilterItem.FieldValue2;
+                    this.selectedAmountReportOperator = this.operatorsList.filter(p => p.Code == queryFilterItem.Operator)[0];
+                    break;
+                 }
+                 case "AmountInLocalCurrency":{
+                    this.AmountInvoiceFrom = queryFilterItem.FieldValue;
+                    this.AmountInvoiceTo = queryFilterItem.FieldValue2;
+                    this.selectedAmountInvoiceOperator = this.operatorsList.filter(p => p.Code == queryFilterItem.Operator)[0];
+                    break;
+                 }
+                 case "TotalVAT":{
+                    this.AmountVatableFrom = queryFilterItem.FieldValue;
+                    this.AmountVatableTo = queryFilterItem.FieldValue2;
+                    this.selectedAmountVatableOperator = this.operatorsList.filter(p => p.Code == queryFilterItem.Operator)[0];
+                    break;
+                 }
+                 case "TotalExamptFortaxReport":{
+                    this.AmountExamptFrom = queryFilterItem.FieldValue;
+                    this.AmountExamptTo = queryFilterItem.FieldValue2;
+                    this.selectedAmountExamptOperator = this.operatorsList.filter(p => p.Code == queryFilterItem.Operator)[0];
+                    break;
+                 }
+                 case "IsExternalEntity":{
+                    if (queryFilterItem.FieldValue==null) {
+                        this.typeFilterIsExternal = "All";
+                    } else {
+                        this.typeFilterIsExternal = queryFilterItem.FieldValue=="1" ? "Externally" : "Internal";
+                    }
+                    break;
+                 }
+                 case "LineActionCode":{
+                    if (queryFilterItem.FieldValue==null) {
+                        this.TypeFilterReportsToVAT = "All";
+                    } else {
+                        this.TypeFilterReportsToVAT = queryFilterItem.FieldValue=="1" ? "Yes" : "No";
+                    }
+                    break;
+                 }
+                 
+               
+                
+               
+            }
+    
+           
+    
+        }
+    }
     BuildReport() {
-        this.InitilaizeFilter();
+        this.GetQueryFilterItems();
 
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;

@@ -3726,6 +3726,31 @@ namespace Logitude.Accounting.Def.EntityPMs
 
             }
         }
+
+
+        private DateTime? markDate;
+
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        public DateTime? MarkDate
+        {
+
+            get
+            {
+                return markDate;
+            }
+            set
+            {
+                if (markDate != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "MarkDate", OldValue = markDate, NewValue = value, PropertyType = "DateTime?" };
+                    NotifyPropertyChanged(values);
+                    markDate = value;
+                }
+
+            }
+        }
     }
    
 }

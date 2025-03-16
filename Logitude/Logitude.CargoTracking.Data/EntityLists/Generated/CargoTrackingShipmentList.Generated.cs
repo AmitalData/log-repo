@@ -322,6 +322,14 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public bool CargoTrackingPrivateShowEvents  { get; set; }
        [DataMember]
        public bool CargoTrackingPublicShowEvents  { get; set; }
+       [DataMember]
+       public string LockerAddress  { get; set; }
+       [DataMember]
+       public string LockerCity  { get; set; }
+       [DataMember]
+       public string LockerName  { get; set; }
+       [DataMember]
+       public string LockerCode  { get; set; }
    }
 
 }

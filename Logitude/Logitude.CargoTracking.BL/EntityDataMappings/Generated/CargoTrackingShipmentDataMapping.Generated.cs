@@ -143,7 +143,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         ChargeableWeightInKG, 
 	         ChargeableWeight, 
 	         ChargeableWeightUnitCode, 
-	         IncotermName,
+	         IncotermName, 
+	         LockerAddress, 
+	         LockerCity, 
+	         LockerName, 
+	         LockerCode,
 	      }
 
 
@@ -292,7 +296,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         IncotermName, 
 	         ShowMoneyOrder, 
 	         CargoTrackingPrivateShowEvents, 
-	         CargoTrackingPublicShowEvents,
+	         CargoTrackingPublicShowEvents, 
+	         LockerAddress, 
+	         LockerCity, 
+	         LockerName, 
+	         LockerCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -894,6 +902,26 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IncotermName))
             {
 				entityPOCO.IncotermName = entityPM.IncotermName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LockerAddress))
+            {
+				entityPOCO.LockerAddress = entityPM.LockerAddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LockerCity))
+            {
+				entityPOCO.LockerCity = entityPM.LockerCity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LockerName))
+            {
+				entityPOCO.LockerName = entityPM.LockerName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LockerCode))
+            {
+				entityPOCO.LockerCode = entityPM.LockerCode;
 			}
 			}
 
@@ -1500,6 +1528,26 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.IncotermName = entityPOCO.IncotermName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LockerAddress))
+            {
+					entityPM.LockerAddress = entityPOCO.LockerAddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LockerCity))
+            {
+					entityPM.LockerCity = entityPOCO.LockerCity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LockerName))
+            {
+					entityPM.LockerName = entityPOCO.LockerName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LockerCode))
+            {
+					entityPM.LockerCode = entityPOCO.LockerCode;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingShipmentPM entityPM, CargoTrackingShipmentPM oldEntityPM)
@@ -2101,6 +2149,26 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
                 oldEntityPM.IncotermName = entityPM.IncotermName;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LockerAddress))
+            {
+                oldEntityPM.LockerAddress = entityPM.LockerAddress;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LockerCity))
+            {
+                oldEntityPM.LockerCity = entityPM.LockerCity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LockerName))
+            {
+                oldEntityPM.LockerName = entityPM.LockerName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LockerCode))
+            {
+                oldEntityPM.LockerCode = entityPM.LockerCode;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CargoTrackingShipmentPM entityPM)
@@ -2205,6 +2273,10 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SHOHouse)) //T4 find type == nText 
             {
                 entityPM.SHOHouse = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SHOHouse));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LockerName)) //T4 find type == nText 
+            {
+                entityPM.LockerName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LockerName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

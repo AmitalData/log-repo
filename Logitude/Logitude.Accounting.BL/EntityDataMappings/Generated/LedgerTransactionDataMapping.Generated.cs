@@ -137,8 +137,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TaxReportId, 
 	         TaxReportNumber, 
 	         AmountInNIS, 
-	         IsExternalEntity,
-	      }
+ 	         IsExternalEntity,
+ 	         BankName,
+ 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();

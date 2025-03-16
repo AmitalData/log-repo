@@ -15,7 +15,7 @@ const SelectedHebrewLabel: string = 'בחירת';
 export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public Text: string = null;
     public WaterMark: string = null;
-    public ItemsSource: any[];
+    public itemsSource: any[];
     public WithinImage: boolean = false;
     public Binding: string = null;
     @Input() public AlternativeBinding: string = null;
@@ -60,6 +60,21 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
             this.ProductsSelectionType = SelectedHebrewLabel + ' ' + this.SelectionType;
         else
             this.ProductsSelectionType = " Selected " + this.SelectionType;
+    }
+    get ItemsSource(): any[] {
+        return this.itemsSource;
+    }
+    set ItemsSource(value: any[]) {
+        this.itemsSource = value;
+        if (this.ItemsSource != null &&(this.SelectedItem=="NotAll"||this.CheckBoxOnly)) {
+            this.TotalPickedItems = "";
+            this.ItemsSource.forEach(item => {
+                if (item.Checked) {
+                    this.TotalPickedItems = [this.TotalPickedItems, item.Name]?.filter(Boolean).join(",");
+
+                }
+            });
+        }
     }
     public ProductsSelectionType: string = " Selected " + this.SelectionType;
 
@@ -172,8 +187,8 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         if (this.selectedItem != value) {
             this.selectedItem = value;
             this.SetDisplayText();
-
         }
+
     }
 
     clickItem(item: any, index: any) {
@@ -271,7 +286,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     }
     SetDefaultTotalPickedItems() {
         if (!this.WithinImage) {
-            if (this.ItemsSource.filter(i => i.Checked)[0] == null) {
+            if (this.ItemsSource?.filter(i => i.Checked)[0] == null) {
                 this.TotalPickedItems = " " + TextCodeTranslator.Translate("Accounting.General.O.All");
             } else {
                 for (var i = 0; i < this.ItemsSource.length; i++) {

@@ -28,7 +28,7 @@ export class CertificateOfOriginCountReportFilterComponent extends BaseComponent
     errors: any[];
     isReady: boolean = false;
     public IsSchedulerReport: boolean = false;
-    public RunReportTitle: string;
+    public RunReportTitle: string = 'Run Report';
 
     constructor(private EntityResourceService: EntityResourceService, private CD: ChangeDetectorRef) {
         super();
@@ -228,8 +228,8 @@ export class CertificateOfOriginCountReportFilterComponent extends BaseComponent
     }
 
     // this function must exist for Report Scheduler
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) {
-        this.IsSchedulerReport = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
@@ -321,7 +321,7 @@ export class CertificateOfOriginCountReportFilterComponent extends BaseComponent
     }
 
     BuildReport() {
-        this.InitilaizeFilter();
+        this.QueryFilterItemLists();
 
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
@@ -335,7 +335,7 @@ export class CertificateOfOriginCountReportFilterComponent extends BaseComponent
         this.ReportsPreview.GenerateReport(this.reportFliter, true);
     }
 
-    InitilaizeFilter() {
+    QueryFilterItemLists() {
        
         this.queryFilterItems = new Array<QueryFilterItem>();
         //-----------------------------------------------------------------------------1
@@ -350,7 +350,7 @@ export class CertificateOfOriginCountReportFilterComponent extends BaseComponent
         if(!AppTool.IsNullOrEmpty(this.Tenant)) {
             this.queryFilterItems.push(this.GetNewQueryFilterItem("Tenant", this.Tenant, null, "int"));
         }
-        //-----------------------------------------------------------------------------8
+       return this.queryFilterItems;
     }
 
     GetNewQueryFilterItem(FieldName: string, FieldValue: any, FieldValue2: any = null, FieldDataType: string = null, Operator: string = "Equals") {

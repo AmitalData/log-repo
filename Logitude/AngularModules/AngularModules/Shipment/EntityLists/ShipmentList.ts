@@ -597,5 +597,9 @@ export class ShipmentList {
 		NotesSharedWithCustomer: string;
 		Volume: number;
 		IsDocumentsNeedApprove: boolean;
-	
-}
+	    LockerCode: string;
+		LockerName: string;	
+        LockerCity: string;
+		LockerAddress: string;
+
+}
