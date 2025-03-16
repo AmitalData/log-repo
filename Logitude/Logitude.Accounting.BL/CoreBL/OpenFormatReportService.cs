@@ -3,6 +3,7 @@ using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
@@ -2644,16 +2645,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 C100SumBeforeDiscount = C100SumIncludeVat;
                 C100SumAfterDiscount = C100SumIncludeVat;
 
-                GLAccountPM gLAccountPM = acccounts.Where(d => d.Id == item.GLAccountId).FirstOrDefault();
-                if (gLAccountPM != null)
+                if (item.CustomerVendorCode != null)
                 {
-                    item.CustomerVendorCode = gLAccountPM.DisplayNumber;
-                    if (item.CustomerVendorCode != null)
-                    {
-                        if (item.CustomerVendorCode.Length > 15) { item.CustomerVendorCode = item.CustomerVendorCode.Substring(0, 15); }
-                        C100Key = a + item.CustomerVendorCode.PadLeft(15, ' ');
-                    }
-
+                    if (item.CustomerVendorCode.Length > 15) { item.CustomerVendorCode = item.CustomerVendorCode.Substring(0, 15); }
+                    C100Key = a + item.CustomerVendorCode.PadLeft(15, ' ');
                 }
 
                 string c100 = C100Count.ToString();
@@ -3539,9 +3534,15 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             c100s = (from a in accountingContext.BankDeposits
+
                      join baTmp in accountingContext.BankAccounts
                          on a.DepositBankAccountId equals baTmp.Id into baGroup
                      from ba in baGroup.DefaultIfEmpty()
+
+                     join glAccountTmp in accountingContext.GLAccounts
+                        on ba.GLAccountId equals glAccountTmp.Id into glAccountGroup
+                     from glAccount in glAccountGroup.DefaultIfEmpty()
+
                      where (a.AccountingDate >= openFormatReportPM.FromDate && a.AccountingDate <= openFormatReportPM.ToDate) && a.Tenant == tenant
                      select new C100Data()
                      {
@@ -3550,12 +3551,7 @@ namespace Logitude.Accounting.BL.CoreBL
                          DocumentReference = a.DepositNumber.ToString(),
                          DocumentCreateDate = a.CreateDate,
                          CustomerVendorName = a.DepositBankAccountId,
-                         //AddressStreet = a.BillToAddress != null ? a.BillToAddress.Address1 : null,
-                         //AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
-                         //AddressZIPCode = a.BillToAddress != null ? a.BillToAddress.ZipCode : null,
-                         //AddressCountry = a.BillToAddress != null ? a.BillToAddress.Country.EnglishName : null,
-                         //AddressCountryCode = a.BillToAddress != null ? a.BillToAddress.Country.Code : null,
-                         //CustomeVendorTelephone = a.BillToAddress != null ? a.BillToAddress.PhoneNumber : null,
+                         CustomerVendorCode = glAccount.Id != null ? glAccount.DisplayNumber : null,
                          CustomerVendorVatNumber = null,
                          ValueDate = a.AccountingDate,
                          TotalDocumentsAmountBeforeDiscount = null,
@@ -3563,7 +3559,7 @@ namespace Logitude.Accounting.BL.CoreBL
                          DocumentAmountAndVATAmount = (double)a.LocalDepositAmount,
                          DocuemntsReferenceDate = a.AccountingDate,
                          CreatedbyUser = a.CreatedByUser.Code != null ? a.CreatedByUser.Code : a.CreatedByUser.Contact.EnglishName,
-                         GLAccountId = ba.Id != null ? ba.GLAccountId : null,
+                         GLAccountId = null,
                          IsCancelled = a.IsCanceled,
                          VendorId = null,
                          DepositId = a.Id,
