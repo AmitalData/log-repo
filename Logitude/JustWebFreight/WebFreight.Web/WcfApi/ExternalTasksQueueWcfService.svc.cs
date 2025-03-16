@@ -35,6 +35,7 @@ using System.Data.Entity.Infrastructure;
 using Logitude.Customs.Data.EntityPOCOs;
 using System.Windows.Media.Effects;
 using System.Diagnostics;
+using Simplog.Global.Data.GlobalModel.Helpers;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -403,13 +404,15 @@ namespace WebFreight.Web.WcfApi
                         connection.ConnectionString = GlobalContext.Database.Connection.ConnectionString;
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug("global db : " + connection.ConnectionString);
 
-                        remark = "GlobalContext";
+                        remark = "GlobalContext" + connection.ConnectionString;
                     }
                     else
                     {
-                        connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ship db : " + connection.ConnectionString);
-                        remark = "ShipmentsContext";
+                        //connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                        GlobalDB currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+                        connection.ConnectionString = currentDb.DBConnection;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GlobalDB : " + connection.ConnectionString);
+                        remark = "GlobalDB tenant=" + tenant.ToString()+ " " + connection.ConnectionString;
                     }
                     
                     connection.Open();
