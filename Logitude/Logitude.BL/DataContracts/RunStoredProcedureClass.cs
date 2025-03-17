@@ -536,7 +536,7 @@ namespace Logitude.BL.DataContracts
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Update_LT_Foreign", null, ip);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Update_LT_Foreign", null, ex.Message);
                 throw;
             }
         }
@@ -576,7 +576,7 @@ namespace Logitude.BL.DataContracts
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Update_LT_Foreign", null, ip);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Update_LT_Foreign", null, ex.Message);
                 throw;
             }
 }
