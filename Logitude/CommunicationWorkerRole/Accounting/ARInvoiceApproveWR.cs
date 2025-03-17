@@ -188,11 +188,7 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                             ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
                             ARInvoicePM aRInvoicePM = aRInvoiceQuery.GetSinglePM(arinvoiceId, tenant);
                             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
-                            if(aRInvoicePM.ARInvoiceTypeCode == "IT")
-                            {
-
-                            }
-
+                
                             if (arinvoiceId != null)
                             {
                                     try
@@ -201,6 +197,7 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                                         ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
                                         invoiceService.Update(aRInvoicePM, true);
                                         _DbQueueService.Complete();
+                                        
                                         if(aRInvoicePM.ARInvoiceTypeCode == "IT" && !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber))
                                         {
                                         
@@ -227,12 +224,11 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                                           
                                             }
 
-                                    }
+                                        }
 
-                                }
+                                    }
                                     catch (Exception ex)
                                     {
-
                                         ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(tenant);
                                         ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
                                         if(invoice != null && invoice.StatusCode == "AD")
@@ -274,7 +270,7 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                         }                                
 
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         throw;
                     }
@@ -309,7 +305,7 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
             {                
                 ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
                 ObjectTable objectTable = objectTableRepository.GetObjectTableByName(_ObjectTable, 0, true);
-                var key = TableCounter.counterState.Keys.Where(k => k.Contains($"_{tenant}_{objectTable.Id}")).FirstOrDefault();
+                var key = TableCounter.counterState.Keys.FirstOrDefault(k => k.EndsWith($"_{tenant}_{objectTable.Id}")); 
                 if (!string.IsNullOrEmpty(key))
                 {
                     int id = int.Parse(key.Split('_')[0]);

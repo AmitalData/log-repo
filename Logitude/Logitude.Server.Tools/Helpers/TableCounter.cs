@@ -364,22 +364,18 @@ namespace Logitude.Server.Tools.Helpers
 
         public static void SaveCounter(string counterStateId, int tenant, string objectTableId, string lastValue)
         {
-            if (counterState == null)
-            {
-                counterState = new Dictionary<string, string>();
-            }
+            counterState = counterState ?? new Dictionary<string, string>();
+
 
             string key = $"{counterStateId}_{tenant}_{objectTableId}";
-
-            var keysToRemove = counterState.Keys.Where(k => k.Contains($"_{tenant}_{objectTableId}")).ToList();
-            if (keysToRemove.Count > 0)
-            {
-                foreach (var k in keysToRemove)
-                {
-                    counterState.Remove(k);
-                }
-            }
-           
+            
+            // Remove any existing keys that match the tenant and objectTableId
+            counterState.Keys
+             .Where(k => k.EndsWith($"_{tenant}_{objectTableId}"))
+             .ToList()
+             .ForEach(k => counterState.Remove(k));
+            
+            // Store the new value
             counterState[key] = lastValue;
             
         }
