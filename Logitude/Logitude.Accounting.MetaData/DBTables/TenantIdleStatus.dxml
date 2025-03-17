@@ -46,7 +46,8 @@
   <Column
     Name="ObjectTable"
     Type="varchar"
-    Size="25">
+    Size="25"
+    DefaultValue="'Journal'">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
