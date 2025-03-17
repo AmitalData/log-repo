@@ -40,9 +40,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServiceExt
             {
                 MainContext = AccountingContext.GetContext(Tenant);
             }
-            var InterestReportsConnectInvoice = MainContext.InterestReportsConnectInvoices.FirstOrDefault(a => a.ReportId == ReportId && a.Tenant == Tenant);
-            var InvoiceCreated = MainContext.InterestReports.FirstOrDefault(a => a.Id == ReportId && a.Tenant == Tenant && a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced);
-            return InterestReportsConnectInvoice != null || InvoiceCreated != null;
+            return MainContext.InterestReportsConnectInvoices.Any(a => a.ReportId == ReportId && a.Tenant == Tenant) ||
+                MainContext.InterestReports.Any(a => a.Id == ReportId && a.Tenant == Tenant && a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced); 
         }
 
     }

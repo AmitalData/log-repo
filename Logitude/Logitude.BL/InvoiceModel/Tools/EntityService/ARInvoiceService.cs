@@ -57,6 +57,8 @@ using Logitude.Server.Tools.TreeFilterQuery.Expression;
 using NetCommonHelper.Logger;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Server.Tools.Models;
+using Logitude.Accounting.Data.Enums;
+using AccountingEntityValues = Logitude.BL.InvoiceModel.CloseTables.AccountingEntityValues;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -342,7 +344,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             entityPM.PaidStatus = invoice.PaidStatus = SetPaidStatus();
             if (CheckIfReportConnectedToInvoice(entityPM))
             {
-                UpdateInterestReportStatus(entityPM, "2");
+                UpdateInterestReportStatus(entityPM, InterestReportStatusCodes.Invoiced);
                 throw new BusinessErrorException("An invoice has already been created for this report.");
               
             }

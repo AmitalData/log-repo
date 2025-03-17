@@ -145,8 +145,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 interestReport.InterestReportLinesByDates = LinesByDatesForSelectedReport;
                 CreateInvoiceForInterestReport(interestReportArgs, interestReport);
             }
-            catch (BusinessErrorException e) { 
-
+            catch (BusinessErrorException e) {
+                BatchTaskExecution.ErrorLog += "\n" + "Report # " + interestReport.ReportNumber + " " + e.Message;
             }
              catch (Exception e)
             {
