@@ -218,10 +218,10 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                                                 {
                                                     scope.Dispose();
                                                     NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*4*) interestReport.Id=" + interestReportPM.Id);
+                                                    UpdateInterestReportsStatues(aRInvoicePM.InterestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
 
-                                                    throw;
                                                 }
-                                          
+
                                             }
 
                                         }
