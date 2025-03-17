@@ -28,7 +28,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPOCO.Id = entityPM.Id;
             }
-            //throw new NotImplementedException();
         }
 
         public void CustomPOCOToPM(CustomsPartnerFtpPM entityPM, CustomsPartnerFtp entityPOCO)
@@ -42,7 +41,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.MyFtpDetail = ftpDetail;
                 }
             }
-			//throw new NotImplementedException();
 		}
    }
 
