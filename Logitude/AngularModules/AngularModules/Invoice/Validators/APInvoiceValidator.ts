@@ -5,6 +5,7 @@ import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { VatTypeList } from '../../Common/EntityLists/VatTypeList';
 import { APInvoicePM } from '../EntityPMs/APInvoicePM';
 import { VatTypesValidator } from '../../Infrastructure/Validators/VatTypesValidator';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 export class APInvoiceValidator {
     private Errors: string[] = [];
