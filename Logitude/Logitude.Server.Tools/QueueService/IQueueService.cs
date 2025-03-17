@@ -10,7 +10,7 @@ namespace Logitude.Server.Tools.QueueService
         //QueueResponse Receive();
         QueueResponse Receive(TimeSpan? serverWaitTime = null);
 
-        QueueResponse ReceiveJournal(TimeSpan? serverWaitTime = null);
+        QueueResponse ReceiveDetailsWithMultiThread(string objectTable, TimeSpan? serverWaitTime = null);
         void Complete();
         void Delay(TimeSpan delayTime);
         void Return();

@@ -153,7 +153,7 @@ namespace CommunicationWorkerRole
             Tenant tenantPoco = tenantRep.GetSingleTenant(tenant);
 
             List<ARPayment> payments = paymentRep.GetARPayments(tenant).Where(p => (p.RegisterDate >= date1 && p.RegisterDate <= date2) && p.StatusCode != "DR").ToList();
-            List<ARInvoice> invoices = invoiceRep.GetIQueryableInvoices(tenant).Where(i => (i.InvoiceDate >= date1 && i.InvoiceDate <= date2) && i.StatusCode != "DR").ToList();
+            List<ARInvoice> invoices = invoiceRep.GetIQueryableInvoices(tenant).Where(i => (i.InvoiceDate >= date1 && i.InvoiceDate <= date2) && i.StatusCode != "DR" && i.StatusCode != "PR").ToList();
             List<APInvoice> apInvoices = apInvoiceRep.GetIQueryableInvoices(tenant).Where(i => (i.InvoiceDate >= date1 && i.InvoiceDate <= date2) && i.StatusCode != "WA").ToList();
 
             string computed = this.Compute(date1, date2, payments, invoices, apInvoices, tenantPoco, invoiceCotnext, random, username);

@@ -129,7 +129,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 bool isTransferingVoiding = true;
 
-                if (entityPOCO.StatusCode == null || entityPOCO.StatusCode == "DR")
+                if (entityPOCO.StatusCode == null || entityPOCO.StatusCode == "DR" || entityPOCO.StatusCode == "PR")
                 {
                     isTransferingVoiding = false;
                 }

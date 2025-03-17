@@ -50,7 +50,7 @@ export class ARInvoiceValidator {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
         }
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAR) {
-            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "PR") {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.VatNumber)) {
                     this.Errors.push(this.message.replace("%FieldName", "Vat Number"));
                 }
@@ -59,7 +59,7 @@ export class ARInvoiceValidator {
 
         if (!SessionLocator.AccountingSettingPM.AllowManualInvoiceNumber) {
             if (this.EntityPM.IsInvoiceNumberManuallySet) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "PR") {
                     this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.ManualInvoiceNumberNotAllowed"));
                 }
             }

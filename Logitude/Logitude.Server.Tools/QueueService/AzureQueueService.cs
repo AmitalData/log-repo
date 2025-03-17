@@ -67,7 +67,7 @@ namespace Logitude.Server.Tools.QueueService
             }
         }
 
-        public QueueResponse ReceiveJournal(TimeSpan? serverWaitTime = null)
+        public QueueResponse ReceiveDetailsWithMultiThread(string objectTable, TimeSpan? serverWaitTime = null)
         {
             throw new NotImplementedException();
         }

@@ -29,6 +29,9 @@ export class InvoiceTool {
             else if (entityPM.StatusCode == "DR") {
                 myResult = true;
             }
+            else if (entityPM.StatusCode == "PR") {
+                myResult = false;
+            }
 
             else if (entityPM.IsConstituentInvoice) {
                 if (AppTool.IsNullOrEmpty(entityPM.ConsolidationInvoiceId) && entityPM.StatusCode == "NT") {

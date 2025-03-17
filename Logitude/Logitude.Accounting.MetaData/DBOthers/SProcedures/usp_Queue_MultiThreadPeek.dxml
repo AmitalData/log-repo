@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_Queue_MultiThreadPeek"
+  Schema="dbo"
+  Module="Accounting">
+  <SqlScript>
+  <![CDATA[
+  
+CREATE OR ALTER procedure [dbo].[usp_Queue_MultiThreadPeek]
+(
+@MessageId  bigint output,
+@MessageBody  varchar(2000) output,
+@RetryNumber int output,
+@QueueDefinitionCode varchar(255),
+@Tenant INTEGER output,
+@WatingStatus int,
+@ObjectTable varchar(25) = 'Journal'
+)
+as
+begin
+BEGIN TRAN
+			Declare @frequency INTEGER
+			set @frequency = 60
+			SELECT TOP 1 @MessageId=[Id],@Tenant=Tenant,@MessageBody=MessageBody,@RetryNumber=RetryNumber
+										FROM [dbo].[QueueMessages] WITH (UPDLOCK, READPAST,ROWLOCK)
+												WHERE ((@ObjectTable != 'ARInvoice' and [NextRunDateTime] <= getdate()) 
+												OR (@ObjectTable = 'ARInvoice' and [CreateDateTime] <= getdate()))
+														and [Status] = @WatingStatus
+														and QueueDefinitionCode = @QueueDefinitionCode
+														and Tenant in (select Tenant from TenantIdleStatuses with (UPDLOCK, READPAST,ROWLOCK) where Idle = 0 and ObjectTable = @ObjectTable)
+												ORDER BY 
+												CASE 
+												WHEN @ObjectTable = 'ARInvoice' THEN [CreateDateTime]
+												ELSE [NextRunDateTime]
+												END ASC;
+												
+			IF (@MessageId IS NOT NULL)
+			BEGIN
+					
+					UPDATE [dbo].[TenantIdleStatuses] SET [Idle] = 1,[UpdateDate] =  GETDATE()	
+														WHERE [Tenant] = @Tenant and [ObjectTable] = @ObjectTable
+
+					UPDATE [dbo].[QueueMessages] SET [ProcessingDateTime] = getdate(),[NextRunDateTime] = dateadd(second,@frequency,getdate()),RetryNumber = (RetryNumber+1)
+														WHERE [Id] = @MessageId
+
+					UPDATE [dbo].[QueueMessageMoreDetails] SET [ProcessingDateTime] = getdate(),[NextRunDateTime] = dateadd(second,@frequency,getdate()),RetryNumber = (RetryNumber+1)
+														WHERE [Id] = @MessageId
+			END
+commit TRAN
+end
+
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

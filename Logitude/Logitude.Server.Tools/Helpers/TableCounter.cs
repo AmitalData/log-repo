@@ -17,13 +17,13 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using Devart.Data.Oracle;
 using Simplog.Data.Helpers;
-
 namespace Logitude.Server.Tools.Helpers
 {
     public partial class TableCounter
     {
         private static Object thisLock = new Object();
-        public static string GetNumber(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
+        public static Dictionary<string, string> counterState;
+        public static string GetNumber(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null, bool saveCounter = false)
         {
             Counter counter = null;
             CounterDefinition counterDef = null;
@@ -82,14 +82,14 @@ namespace Logitude.Server.Tools.Helpers
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                     {
-                        counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString, branchCounterCode);
+                        counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString, branchCounterCode, saveCounter);
                         scope.Complete();
                     }
                 }
             }
             else
             {
-                counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString, branchCounterCode);
+                counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString, branchCounterCode, saveCounter);
             }
 
             number = GetCounterLastNumberWithPrefixSuffix(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
@@ -107,7 +107,7 @@ namespace Logitude.Server.Tools.Helpers
                 throw new Exception("The Counter Code of the " + additionalParameters["[BranchName]"] + " Branch is required.");
             }
         }
-        private static string ExecuteNextTableNumberValueProcedure(int tenant, Counter counter, string prefix, int startNumber, string strConnString, string branchCounterCode)
+        private static string ExecuteNextTableNumberValueProcedure(int tenant, Counter counter, string prefix, int startNumber, string strConnString, string branchCounterCode,bool saveCounter)
         {
 #if false
             if (LogitudeSettings.IsCostomsDeploy)
@@ -206,12 +206,14 @@ namespace Logitude.Server.Tools.Helpers
                     SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
                     SqlParameter prefixPar = new SqlParameter("@pPrefix", SqlDbType.NVarChar);
                     SqlParameter startNumberPar = new SqlParameter("@pStartNumber", SqlDbType.Int);
+                    SqlParameter counterStateIdPar = new SqlParameter("@pCounterStateId", SqlDbType.Int);
 
                     lastValuePar.Direction = ParameterDirection.Output;
                     counterIdPar.Direction = ParameterDirection.Input;
                     tenantPar.Direction = ParameterDirection.Input;
                     prefixPar.Direction = ParameterDirection.Input;
                     startNumberPar.Direction = ParameterDirection.Input;
+                    counterStateIdPar.Direction = ParameterDirection.Output;
 
                     counterIdPar.Value = counter.Id;
                     tenantPar.Value = tenant;
@@ -233,6 +235,7 @@ namespace Logitude.Server.Tools.Helpers
                     cmd.Parameters.Add(prefixPar);
                     cmd.Parameters.Add(counterIdPar);
                     cmd.Parameters.Add(startNumberPar);
+                    cmd.Parameters.Add(counterStateIdPar);
 
                     AddbranchCounterCodeParameter(branchCounterCode, cmd);
 
@@ -241,6 +244,10 @@ namespace Logitude.Server.Tools.Helpers
                     cn.Close();
                     //number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["@pLastValue"].Value : counterDef.Prefix + cmd.Parameters["@pLastValue"].Value);
                     counterLastNumberValue = cmd.Parameters["@pLastValue"].Value.ToString();
+                    if(saveCounter)
+                    {
+                        SaveCounter(cmd.Parameters["@pCounterStateId"].Value.ToString(), tenant, counter.ObjectTableId, cmd.Parameters["@pLastValue"].Value.ToString());
+                    }
 
 
                 }
@@ -353,6 +360,28 @@ namespace Logitude.Server.Tools.Helpers
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
+        }
+
+        public static void SaveCounter(string counterStateId, int tenant, string objectTableId, string lastValue)
+        {
+            if (counterState == null)
+            {
+                counterState = new Dictionary<string, string>();
+            }
+
+            string key = $"{counterStateId}_{tenant}_{objectTableId}";
+
+            var keysToRemove = counterState.Keys.Where(k => k.Contains($"_{tenant}_{objectTableId}")).ToList();
+            if (keysToRemove.Count > 0)
+            {
+                foreach (var k in keysToRemove)
+                {
+                    counterState.Remove(k);
+                }
+            }
+           
+            counterState[key] = lastValue;
+            
         }
     }
 }

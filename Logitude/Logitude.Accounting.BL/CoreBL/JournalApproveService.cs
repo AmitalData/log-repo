@@ -1333,7 +1333,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private static void SetTenantIdle(int tenant)
         {
             TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
-            TenantIdleStatus tenantObj = tenantRepository.GetAll(tenant).FirstOrDefault();
+            TenantIdleStatus tenantObj = tenantRepository.GetAllByObjectTable(tenant,  "Journal").FirstOrDefault();
             tenantObj.Idle = false;
             tenantObj.UpdateDate = DateTime.Now;
             tenantRepository.Update(tenantObj);
@@ -1791,9 +1791,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (DateTime.Now.Subtract(_freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
                         {
                             _freeTenantsDateTime = DateTime.Now;
-                            queueservice.FreeTenants();
+                            queueservice.FreeTenants("Journal");
                         }
-                        response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
+                        response = queueservice.ReceiveDetailsWithMultiThread("Journal",new TimeSpan(0, 0, 0, 5));
                     }
                     catch (Exception)
                     {

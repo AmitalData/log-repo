@@ -190,27 +190,27 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*2*) interestReport.Id=" + interestReport.Id);
                     throw;
                 }
-                if (!String.IsNullOrEmpty(aRInvoicePM.InvoiceNumber))
-                {
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        try
-                        {
-                            BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
-                            UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
-                            SignInvoice(aRInvoicePM, interestReportArgs.Tenant);
-                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
-                            scope.Complete();
-                        }
-                        catch (Exception ex)
-                        {
-                            scope.Dispose();
-                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*4*) interestReport.Id=" + interestReport.Id);
+                //if (!String.IsNullOrEmpty(aRInvoicePM.InvoiceNumber))
+                //{
+                //    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                //    {
+                //        try
+                //        {
+                //            BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
+                //            UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
+                //            SignInvoice(aRInvoicePM, interestReportArgs.Tenant);
+                //            NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
+                //            scope.Complete();
+                //        }
+                //        catch (Exception ex)
+                //        {
+                //            scope.Dispose();
+                //            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*4*) interestReport.Id=" + interestReport.Id);
 
-                            throw;
-                        }
-                    }
-                }
+                //            throw;
+                //        }
+                //    }
+                //}
             }
 
         }

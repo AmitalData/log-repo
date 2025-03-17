@@ -123,6 +123,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return entityPOCO;
         }
+
+
+        public ARInvoice GetSingle(string id, int tenant)
+        {
+            return repository.context.ARInvoices
+                .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
+        }
         public bool CheckARInvoiceByExternalAccountingEnityId(string externalEntityId, int tenant)
         {
 
@@ -196,6 +203,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                  && a.TransferTries < 5
                  && a.StatusCode != "DR"
                  && a.StatusCode != "VD"
+                 && a.StatusCode != "PR"
                  select a);
 
             entityPOCO = (from d in iQueryable_Data where d.TransferStatusCode == "RD" select d).FirstOrDefault();
@@ -232,7 +240,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             IQueryable<ARPayment> payments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARPayment>(new QueryOperations(), repository.context.ARPayments.Where(t => t.Tenant == tenant), tenant);
 
             List<MoneyStatusClass> datalistInvoice = (from a in invoices
-                                                      where a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= lastDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
+                                                      where a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= lastDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
                                                      && !a.IsConstituentInvoice
                                                       group a by new
                                                       {
@@ -252,7 +260,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                  ).ToList();
 
             List<MoneyStatusClass> datalistPayment = (from a in payments
-                                                      where a.RegisterDate >= lastDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR" //&& !a.IsClosed
+                                                      where a.RegisterDate >= lastDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR"  && a.StatusCode != "PR"//&& !a.IsClosed
                                                       group a by new
                                                       {
                                                           a.RegisterDate.Value.Day,
@@ -494,7 +502,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             IQueryable<ARPayment> payments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARPayment>(new QueryOperations(), repository.context.ARPayments.Where(t => t.Tenant == tenant), tenant);
 
             List<MoneyStatusClass> datalistInvoice = (from a in invoices
-                                                      where a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= FromDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
+                                                      where a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD" && a.StatusCode != "LL" && a.InvoiceDate >= FromDate && a.Tenant == tenant //&& !a.IsAutoCredit && !a.IsClosed && !a.IsCancelled
                                                       group a by new
                                                       {
                                                           a.InvoiceDate.Value.Day,
@@ -516,7 +524,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                  ).ToList();
 
             List<MoneyStatusClass> datalistPayment = (from a in payments
-                                                      where a.RegisterDate >= FromDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR" //&& !a.IsClosed
+                                                      where a.RegisterDate >= FromDate && a.Tenant == tenant && a.StatusCode != "VD" && a.StatusCode != "DR" && a.StatusCode != "PR" //&& !a.IsClosed
                                                       group a by new
                                                       {
                                                           a.RegisterDate.Value.Day,
@@ -1221,7 +1229,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public List<DebtorsClass> GetDebtorExposure(int tenant, int currencyIndex)
         {
             IQueryable<ARInvoicePM> invoiceList = (from a in repository.context.ARInvoices
-                                                   where a.Tenant == tenant && (a.StatusCode != "DR" && a.IsConstituentInvoice != true && a.StatusCode != "LL" && a.StatusCode != "VD" && a.IsClosed == false)
+                                                   where a.Tenant == tenant && (a.StatusCode != "DR" && a.StatusCode != "PR" && a.IsConstituentInvoice != true && a.StatusCode != "LL" && a.StatusCode != "VD" && a.IsClosed == false)
                                                    select new ARInvoicePM()
                                                    {
                                                        AmountDue = a.AmountDue,
@@ -1281,7 +1289,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return (from a in repository.context.ARInvoices.Include("BillTo")
                     where a.Tenant == tenant
-                    && a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL"
+                    && a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL" && a.StatusCode != "PR"
                     && !a.IsAutoCredit
                     && !a.IsCancelled
                     && !a.IsClosed
@@ -1305,7 +1313,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         private List<DebtorsClass> GetDebtorsExposureForGridControl_OldStyle(int tenant, int currencyIndex)
         {
             List<ARInvoicePM> invoiceList = (from a in repository.context.ARInvoices
-                                             where a.Tenant == tenant && (a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && a.IsClosed == false)
+                                             where a.Tenant == tenant && (a.StatusCode != "VD" && a.IsConstituentInvoice != true && a.StatusCode != "PD" && a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && a.IsClosed == false)
                                              select new ARInvoicePM()
                                              {
                                                  AmountDueInLocalCurrency = a.AmountDueInLocalCurrency,
@@ -1413,7 +1421,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public int GetReadyForTransferInvoicesCount(int tenant)
         {
             int invoicesCount = (from a in repository.context.ARInvoices
-                                 where a.Tenant == tenant && (a.TransferStatusCode == "RD" || a.TransferStatusCode == "ET") && a.TransferTries < 5 && a.StatusCode != "DR" && a.StatusCode != "VD"
+                                 where a.Tenant == tenant && (a.TransferStatusCode == "RD" || a.TransferStatusCode == "ET") && a.TransferTries < 5 && a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD"
                                  select a).Count();
             return invoicesCount;
         }
@@ -1423,7 +1431,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
             var query = from a in repository.context.ARInvoices.Include("InvoiceCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch").Include("Confirmation")
-                        where a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && !a.IsClosed
+                        where a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "PR" && a.StatusCode != "VD" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && !a.IsClosed
                         select new ARInvoiceList()
                         {
                             AmountInInvoiceCurrency = a.AmountInInvoiceCurrency,
@@ -1539,6 +1547,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             HashSet<string> invoiceStatusCodes = new HashSet<string>();
             invoiceStatusCodes.Add("DR");
             invoiceStatusCodes.Add("LL");
+            invoiceStatusCodes.Add("PR");
 
             var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("Confirmation").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch").Include("ARInvoicesSignedStatus")
                          //join confirmationNumber in repository.context.ConfirmationNumberStatuses on entity.ConfirmationNumberStatus equals confirmationNumber.Code into joinedData
@@ -1704,7 +1713,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public IQueryable<ARInvoiceList> GetDigitalIQueryableEntityList(IQueryable<ARInvoice> iQueryable, int tenant = 0)
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            string[] invoiceStatusCodes = { "DR", "LL" };
+            string[] invoiceStatusCodes = { "DR", "LL", "PR" };
 
             var result = iQueryable.Include("BillTo")
                                     .Include("BillTo.PartnerType")
@@ -2434,7 +2443,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              InternalNotes = entity.InternalNotes,
                              InvoiceCurrencyId = entity.InvoiceCurrencyId,
                              InvoiceDate = entity.InvoiceDate,
-                             InvoiceNumber = entity.StatusCode != "DR" && entity.StatusCode != "LL" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
+                             InvoiceNumber = entity.StatusCode != "DR" && entity.StatusCode != "LL" && entity.StatusCode != "PR" ? entity.InvoiceNumber : (!string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id),
                              DraftNumber = !string.IsNullOrEmpty(entity.DraftNumber) ? entity.DraftNumber : entity.Id,
                              StatusCode = entity.StatusCode,
                              StatusName = entity.Status == null ? "" : entity.Status.Name,

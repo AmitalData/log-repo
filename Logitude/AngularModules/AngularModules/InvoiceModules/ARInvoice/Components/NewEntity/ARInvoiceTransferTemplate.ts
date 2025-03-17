@@ -260,7 +260,7 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
             isEnabled = false;
         }
 
-        else if (this.invoicePM.StatusCode == "DR" || this.invoicePM.StatusCode == "LL") {
+        else if (this.invoicePM.StatusCode == "DR" || this.invoicePM.StatusCode == "LL" || this.invoicePM.StatusCode == "PR") {
             isEnabled = false;
         }
 

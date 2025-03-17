@@ -402,7 +402,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     {
                         #region AR Invoices
                         ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
-                        myRecord.LineTypeCode = invoice.StatusCode == "DR" ? "FX" : "FC";
+                        myRecord.LineTypeCode = invoice.StatusCode == "DR" || invoice.StatusCode == "PR" ? "FX" : "FC";
                         myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                         myRecord.LongMaster = longMaster;
                         myRecord.Customer = myCustomer;
@@ -1019,7 +1019,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 foreach (ChargeTypeGroupClass item in lines_Grouped)
                                 {
                                     ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
-                                    myRecord.LineTypeCode = invoice.StatusCode == "DR" ? "FX" : "FC";
+                                    myRecord.LineTypeCode = invoice.StatusCode == "DR" || invoice.StatusCode == "PR" ? "FX" : "FC";
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                                     myRecord.LongMaster = longMaster;
                                     myRecord.Customer = myCustomer;

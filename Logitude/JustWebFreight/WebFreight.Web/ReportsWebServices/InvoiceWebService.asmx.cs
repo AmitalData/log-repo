@@ -262,7 +262,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 this.SetOriginalInvoiceNumber(currentInvoice, invoiceCotnext, invoicedataprovider);
 
-                if (currentInvoice.StatusCode == "DR")
+                if (currentInvoice.StatusCode == "DR" || currentInvoice.StatusCode == "PR")
                 {
                     invoicedataprovider.WaterMark = invoicedataprovider.Status;
                     invoicedataprovider.CopyName = invoicedataprovider.Status;
@@ -3123,7 +3123,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 this.SetOriginalInvoiceNumber(entityPOCO, invoiceCotnext, invoiceDataProvider);
 
-                if (entityPOCO.StatusCode == "DR")
+                if (entityPOCO.StatusCode == "DR" || entityPOCO.StatusCode == "PR")
                 {
                     invoiceDataProvider.WaterMark = invoiceDataProvider.Status;
                     invoiceDataProvider.CopyName = invoiceDataProvider.Status;

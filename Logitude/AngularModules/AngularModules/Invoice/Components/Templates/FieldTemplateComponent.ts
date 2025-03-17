@@ -180,7 +180,14 @@ export class FieldTemplateComponent extends BaseComponent {
                 window.Height = 150;
                 window.Show(messageText);
             }
+            else if (this.EntityPM.StatusCode == "PR") {
+                var messageText = "Cant add payment for processing invoice";
 
+                var window: MessageWindow = new MessageWindow();
+                window.Width = 300;
+                window.Height = 150;
+                window.Show(messageText);
+            }
             else if (this.EntityPM.AmountDue <= 0) {
                 var messageText = "Amount paid equals or bigger than invoice amount";
 

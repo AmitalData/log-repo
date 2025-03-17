@@ -104,7 +104,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
         //    isAddButtonEnabled = false;
         //}
 
-        else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "PR") {
             isAddButtonEnabled = false;
         }
 
@@ -141,7 +141,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
 
         this.LoadConnectedPayments();
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD") {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "PR") {
             isLoading = false;
         }
 
@@ -274,6 +274,12 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
 
         if (this.EntityPM.StatusCode == "DR") {
             var messageText = TextCodeTranslator.Translate("ARInvoice.M.CantAddPaymentForDraftInvoice");
+            var window = new MessageWindow();
+            window.Width = 300;
+            window.Show(messageText);
+        }
+        else if (this.EntityPM.StatusCode == "PR") {
+            var messageText = "Cant add payment for processing invoice";
             var window = new MessageWindow();
             window.Width = 300;
             window.Show(messageText);
