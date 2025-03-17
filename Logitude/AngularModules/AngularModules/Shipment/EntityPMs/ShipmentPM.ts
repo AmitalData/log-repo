@@ -1,7 +1,7 @@
 
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ShipmentFollowUpPM} from './ShipmentFollowUpPM';
 import {AWBOCIPM} from './AWBOCIPM';
 import {ShipmentPackagePM} from './ShipmentPackagePM';
@@ -31,12 +31,6 @@ export class ShipmentPM {
     public UIProperties: UIProperties;
     @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
     constructor() {
-
-        //for (var property in this) {
-        //    if (this.hasOwnProperty(property)) {
-        //        this[property] = null;
-        //    }
-        //}
 
         this.UIProperties = new UIProperties(this);
         this.IsDirty = false;

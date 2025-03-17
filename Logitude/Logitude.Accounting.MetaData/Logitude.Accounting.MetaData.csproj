@@ -86,6 +86,8 @@
     <None Include="EntityFiles\Aur_PaymentItem.lxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
+    <None Include="DBOthers\SProcedures\usp_UpdateLTForeign.dxml" />
+    <None Include="DBOthers\SProcedures\usp_UpdateLTLocal.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
     <Content Include="DBScripts\202204131020_AddInterestTransactionsForRegularJournals.axml" />
     <Content Include="DBScripts\20220912_0000_AddInterestsForCancelledARPayments.axml" />
