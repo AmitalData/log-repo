@@ -723,7 +723,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 450;
-            logWindow.Height = 400;
+            logWindow.Height = 450;
             logWindow.Title = windowTitle;
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe((event: any) => {
