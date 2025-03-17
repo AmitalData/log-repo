@@ -439,7 +439,7 @@ namespace Logitude.Server.Tools.QueueService
             }
         }
 
-        public QueueResponse ReceiveDetailsWithMultiThread(string objectTable, TimeSpan? serverWaitTime = null)
+        public QueueResponse ReceiveDetailsByTenant(string objectTable, TimeSpan? serverWaitTime = null)
         {
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
 
@@ -539,7 +539,7 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         using (SqlConnection cn = new SqlConnection(strConnString))
                         {
-                            SqlCommand cmd = new SqlCommand("[dbo].[usp_Queue_MultiThreadPeek]", cn);
+                            SqlCommand cmd = new SqlCommand("[dbo].[usp_Queue_Peek_ThreadPerTenant]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
                             SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);

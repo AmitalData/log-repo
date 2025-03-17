@@ -159,7 +159,7 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 try
                 {
                     _DbQueueService = new DbQueueService(selectedQueue, 0);
-                    response = _DbQueueService.ReceiveDetailsWithMultiThread(_ObjectTable,new TimeSpan(0, 0, 0, 5));
+                    response = _DbQueueService.ReceiveDetailsByTenant(_ObjectTable,new TimeSpan(0, 0, 0, 5));
                 }
                 catch (Exception)
                 {

@@ -1793,7 +1793,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             _freeTenantsDateTime = DateTime.Now;
                             queueservice.FreeTenants("Journal");
                         }
-                        response = queueservice.ReceiveDetailsWithMultiThread("Journal",new TimeSpan(0, 0, 0, 5));
+                        response = queueservice.ReceiveDetailsByTenant("Journal",new TimeSpan(0, 0, 0, 5));
                     }
                     catch (Exception)
                     {

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Procedure
   DBType="Main"
-  Name="usp_Queue_MultiThreadPeek"
+  Name="usp_Queue_Peek_ThreadPerTenant"
   Schema="dbo"
   Module="Accounting">
   <SqlScript>
   <![CDATA[
   
-CREATE OR ALTER procedure [dbo].[usp_Queue_MultiThreadPeek]
+CREATE OR ALTER procedure [dbo].[usp_Queue_Peek_ThreadPerTenant]
 (
 @MessageId  bigint output,
 @MessageBody  varchar(2000) output,
