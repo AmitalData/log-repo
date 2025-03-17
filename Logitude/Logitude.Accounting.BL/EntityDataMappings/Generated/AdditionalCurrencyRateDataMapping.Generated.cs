@@ -30,7 +30,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdatedByUserId, 
 	         SearchFields, 
 	         Name, 
-	         Value,
+	         Rate,
 	      }
 
 
@@ -45,7 +45,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdatedByUserId, 
 	         SearchFields, 
 	         Name, 
-	         Value,
+	         Rate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -89,9 +89,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.Name = entityPM.Name;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Value))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Rate))
             {
-				entityPOCO.Value = entityPM.Value;
+				entityPOCO.Rate = entityPM.Rate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -140,9 +140,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.Name = entityPOCO.Name;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Value))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Rate))
             {
-					entityPM.Value = entityPOCO.Value;
+					entityPM.Rate = entityPOCO.Rate;
             }
 
 		}
@@ -186,9 +186,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.Name = entityPM.Name;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Value))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Rate))
             {
-                oldEntityPM.Value = entityPM.Value;
+                oldEntityPM.Rate = entityPM.Rate;
             }
 			
 		}

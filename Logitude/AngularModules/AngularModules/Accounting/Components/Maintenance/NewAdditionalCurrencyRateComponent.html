@@ -19,7 +19,7 @@
                                     </td>
 
                                     <td style="width: 250px;">
-                                        <LogTextBox [ObjectFieldName]="'Name'" [InputType]="'text'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Name'" [InputType]="'nText'" [DataContext]="DataContext" [HideColumns]="true" [ObjectTableName]="ObjectTableName"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -30,11 +30,11 @@
 
                                 <tr class="FormFieldRow">
                                     <td>
-                                        <LogLabel [ObjectFieldName]="'Value'" [DataContext]="DataContext"  [ObjectTableName]="ObjectTableName"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'Rate'" [DataContext]="DataContext"  [ObjectTableName]="ObjectTableName"></LogLabel>
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'Value'" [InputType]="'double'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Rate'" [InputType]="'double'" [DataContext]="DataContext" [HideColumns]="true" [ObjectTableName]="ObjectTableName"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -69,7 +69,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button class="RedButton" (click)="OkButtonClicked()">{{ 'Accounting.General.B.OK' | TextCodeTranslationPipe }}</button>
+                            <button class="RedButton" (click)="SubmitChanges()">{{ 'Accounting.General.B.OK' | TextCodeTranslationPipe }}</button>
                         </td>
                     </tr>
                 </table>

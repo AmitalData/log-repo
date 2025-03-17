@@ -61,6 +61,7 @@ import { WarehousePM } from 'Common/EntityPMs/WarehousePM';
 import { take } from 'rxjs/operators';
 import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
 import { resolve } from 'cypress/types/bluebird';
+import { AdditionalCurrencyRateValidator } from 'Accounting/Validators/AdditionalCurrencyRateValidator';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -1738,6 +1739,18 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         if (this.EntityPM.IsDirty) {
 
             this.ValidationErrorsList = [];
+
+            this.SaveStart.emit(this.EntityPM)
+            if(this.ObjectTableName === "AdditionalCurrencyRate"){
+                const oldRate = this.EntityPM.OldEntityPM?.rate;
+                const newRate = this.EntityPM.Rate;
+                if (oldRate !== newRate) {
+                    const canContinue = await AdditionalCurrencyRateValidator.CheckIdenticalRateValue(this.EntityPM);
+                    if (!canContinue) {
+                        return;
+                    }
+                }
+            }
 
             if (!AppTool.IsNullOrEmpty(busyIndicatorText)) {
                 this.StartBusyIndicator(busyIndicatorText);

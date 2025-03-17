@@ -16,7 +16,7 @@ export class AdditionalCurrencyRateList {
 	UpdatedByUserId: string;
 	SearchFields: string;
 	Name: string;
-	Value: number;
+	Rate: number;
 	
 }
  

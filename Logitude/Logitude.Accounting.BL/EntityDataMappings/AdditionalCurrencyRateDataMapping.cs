@@ -19,6 +19,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(AdditionalCurrencyRatePM entityPM, AdditionalCurrencyRate entityPOCO)
         {
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Id = entityPM.Id;
+            }
         }
 
         public void CustomPOCOToPM(AdditionalCurrencyRatePM entityPM, AdditionalCurrencyRate entityPOCO)

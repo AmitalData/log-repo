@@ -41,8 +41,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
-        [Column("Value")]
-	    public double? Value { get; set; }
+        [Column("Rate")]
+	    public double? Rate { get; set; }
     }
 }
 	 

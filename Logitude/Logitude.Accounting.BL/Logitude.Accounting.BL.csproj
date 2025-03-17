@@ -935,6 +935,7 @@
     <Compile Include="EntityUpdateServices\Generated\Aur_PaymentItemUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\Aur_PaymentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\Aur_TimesheetUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\AdditionalCurrencyRateUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\AdditionalCurrencyRateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ChequeCounterSerialUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountMoreDataUpdateService.cs" />
@@ -1064,6 +1065,7 @@
     <Compile Include="Utils\ReconciliationStageBBatch.cs" />
     <Compile Include="Utils\ReconciliationStageCBatch.cs" />
     <Compile Include="Utils\Redempt_a_ChequeBatch.cs" />
+    <Compile Include="Validators\AdditionalCurrencyRateValidator.cs" />
     <Compile Include="Validators\UserDefinedReportValidator.cs" />
     <Compile Include="Validators\InterestReportValidator.cs" />
     <Compile Include="Validators\AccountingPeriodValidator.cs" />

@@ -716,10 +716,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Rate&quot;"
     DefaultText="&quot;Rate&quot;"
-    FullLocalDefaultText="&quot;BS64:IiDXoteo15og16HXldeSINep16LXqCI=&quot;"
+    FullLocalDefaultText="&quot;BS64:IiDXoteo15oi&quot;"
     ListFieldLable="&quot;RateListLable&quot;"
     ListLableDefaultText="&quot;Rate&quot;"
-    ListLocalDefaultText="&quot;BS64:IiDXoteo15og16HXldeSINep16LXqCI=&quot;"
+    ListLocalDefaultText="&quot;BS64:IiDXqdei16gi&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -784,11 +784,11 @@
     <QueryFilters />
   </Query>
   <Screen
-    Name="&quot;AdditionalCurrencyRate.HeaderScreen&quot;"
+    Name="&quot;HeaderScreen&quot;"
     ObjectTableName="&quot;AdditionalCurrencyRate&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;HeaderScreen&quot;"
+    Code="&quot;AdditionalCurrencyRate.HeaderScreen&quot;"
     NumberOfColumns="1"
     NumberOfRows="1">
     <ScreenFields>
@@ -796,15 +796,15 @@
         Column="0"
         Row="0"
         ObjectFieldName="&quot;Name&quot;"
-        ScreenName="AdditionalCurrencyRate.HeaderScreen" />
+        ScreenName="HeaderScreen" />
     </ScreenFields>
   </Screen>
   <Screen
-    Name="&quot;AdditionalCurrencyRate.GeneralTabScreen&quot;"
+    Name="&quot;GeneralTabScreen&quot;"
     ObjectTableName="&quot;AdditionalCurrencyRate&quot;"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;GeneralTabScreen&quot;"
+    Code="&quot;AdditionalCurrencyRate.GeneralTabScreen&quot;"
     NumberOfColumns="1"
     NumberOfRows="2">
     <ScreenFields>
@@ -812,12 +812,12 @@
         Column="0"
         Row="0"
         ObjectFieldName="&quot;Name&quot;"
-        ScreenName="AdditionalCurrencyRate.GeneralTabScreen" />
+        ScreenName="GeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="1"
-        ObjectFieldName="&quot;Value&quot;"
-        ScreenName="AdditionalCurrencyRate.GeneralTabScreen" />
+        ObjectFieldName="&quot;Rate&quot;"
+        ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>
   <Tab
@@ -825,12 +825,12 @@
     TabLocalName="&quot;BS64:Iteb15zXnNeZIg==&quot;"
     ObjectTableName="&quot;AdditionalCurrencyRate&quot;"
     Code="&quot;ACRG&quot;"
-    ControlPath="&quot;AdditionalCurrencyRateGeneralTabComponent&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
     TextCode="&quot;AdditionalCurrencyRate.TH.General&quot;"
     IsPackagable="true"
     IndexOrder="0"
-    HtmlComponentURL="&quot;./Accounting/Components/EditTabs/AdditionalCurrencyRate/AdditionalCurrencyRateGeneralTabComponent&quot;"
-    HtmlComponentName="&quot;AdditionalCurrencyRateGeneralTabComponent&quot;"
+    HtmlComponentURL="&quot;&quot;"
+    HtmlComponentName="&quot;&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
@@ -891,6 +891,24 @@
       Code="&quot;AdditionalCurrencyRate.NewButton&quot;"
       DefaultText="&quot;New Currency Rate&quot;"
       LocalDefaultText="&quot;BS64:Iteh15XXkiDXqdei16gg15fXk9epIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AdditionalCurrencyRate.O.AlreadyExistRate&quot;"
+      DefaultText="&quot;There are already currency rates for the currency rate type {name}. The change will only apply to future currency rates!&quot;"
+      LocalDefaultText="&quot;BS64:Itec16HXldeSINep16LXqCB7bmFtZX0g15vXkdeoINen15nXmdee15nXnSDXqdei16jXmdedLiDXlNep15nXoNeV15kg15nXl9eV15wg16jXpyDXotecINep16LXqNeZ150g16LXqteZ15PXmdeZ150hIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AdditionalCurrencyRate.O.RateRequired&quot;"
+      DefaultText="&quot;Rate is required&quot;"
+      LocalDefaultText="&quot;BS64:Itep16LXqCDXlNeV15Ag16nXk9eUINeX15XXkdeUIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AdditionalCurrencyRate.O.RateRange&quot;"
+      DefaultText="&quot;The rate must be within the allowed range of {min} to {max}&quot;"
+      LocalDefaultText="&quot;BS64:IteU16nXoteoINeX15nXmdeRINec15TXmdeV16og15HXmdefIHttaW59INecIHttYXh9Ig==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

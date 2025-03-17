@@ -204,25 +204,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private double? value ;
+	  private double? rate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public double? Value  
+       public double? Rate  
 	   {
 	    
 	     get
 		{
-		   return value;
+		   return rate;
 		 }
 		 set
 		 {
-		   if(value != value)
+		   if(rate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Value",OldValue=value,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Rate",OldValue=rate,NewValue=value,PropertyType="double?"};
 		    NotifyPropertyChanged(values);
-		   value=value;
+		   rate=value;
 		   }
 			
 		 }
