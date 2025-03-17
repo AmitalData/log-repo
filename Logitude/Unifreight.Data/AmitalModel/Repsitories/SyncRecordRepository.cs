@@ -117,7 +117,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             DateTime yesterday = DateTime.Now.AddDays(-1);
             syncDT = syncDT.AddSeconds(1);
 
-            IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
+            IEnumerable<SyncRecord> query = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
                 (syncRecord.FileNo == itemUpdate || syncRecord.Entname == itemUpdate) &&
                 syncRecord.IsSync == SyncRecordStatus.Synced &&
@@ -125,7 +125,9 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                 syncRecord.CreateDate > yesterday
             );
 
-            for (int i = 0; i < records.Count(); i++)
+            List<SyncRecord> records = query.ToList();
+
+            for (int i = 0; i < records.Count; i++)
                 records.ElementAt(i).IsSync = SyncRecordStatus.SyncedAndUpdated;
 
             context.SaveChanges();
