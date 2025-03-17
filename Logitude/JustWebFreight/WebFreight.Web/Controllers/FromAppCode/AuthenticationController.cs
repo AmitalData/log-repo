@@ -982,8 +982,12 @@ namespace WebFreight.Web
                     }
 
                     List<CompanyLogin> unliscened = loginsList.Where(s => s.LicensedUser == false && s.IsUser == true).ToList();
-
+                    
                     loginsList = loginsList.Where(s => s.LicensedUser == true || s.IsUser == false).OrderBy(c => c.CompanyName).ToList();
+                    if (loginParameters.IsCustomsBook)
+                    {
+                        loginsList = loginsList?.Where(s => SecurityUtility.CheckFeature("Customs.CB_CustomsItemComputedData", "CustomsBookFeature", s.Tenant)).ToList();
+                    }
 
                     if (!loginParameters.IsFromPLSignApp)
                     {

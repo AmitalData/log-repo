@@ -78,11 +78,9 @@ export class LoginComponent implements OnInit {
     }
 
     public LogInClicked() {
-        this.clearRouteReuseStrategy();
-
         this.ShowbusyIndicator = true;
         this.errorMessage = "";
-        const isCustomsBookSite = this.IsCustomsBookDomain();
+        const isCustomsBookSite = true;
 
         let LoginParams = {
             Email: this.Email,
@@ -103,7 +101,6 @@ export class LoginComponent implements OnInit {
         };
 
         this.loginExtendedService.PostUserValidation(LoginParams).subscribe((userData: any) => {
-
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 this.LoginFailed(userData);
                 this.ShowbusyIndicator = false;
@@ -113,47 +110,34 @@ export class LoginComponent implements OnInit {
     }
 
     private IsCustomsBookDomain() {
-        const cargoTrackingDomainKeyword = "customs-book";
         const domain = window.location.href;
-        if (domain.indexOf(cargoTrackingDomainKeyword) > -1) {
-            return true;
+        return domain?.indexOf("customs-book") > -1;
         }
-
-        return false;
-    }
 
     private LoginFailed(userData: any) {
         this.CaptchaKey = userData ? userData.CaptchaKey : "";
-
         if (userData && userData.ExceptionMessage) {
             alert(userData.ExceptionMessage);
         }
-
         if (userData.MustChangePassword) {
-            //Must Change Password
-            //this.errorMessage = "Must Change Password";
             this.router.navigate(["changepassword"], { queryParams: { email: this.Email } });
         } else if (userData.PasswordExpirationDateMessage) {
-            //Password Expired
             this.errorMessage = "Password Expired";
         }
         else {
             if (userData.InValidCaptcha) this.SetCaptchaImage(userData.CaptchaImage);
-
             this.SetErrorMessage(userData);
         }
     }
 
     private SetCaptchaImage(captchaImage) {
         if (this.IsShowAreaCaptcha) this.CaptchaTextValue = "";
-
         this.IsShowAreaCaptcha = true;
         this.CaptchaImageUrl = captchaImage;
     }
 
     private SetErrorMessage(userData: any) {
         this.errorMessage = "";
-
         if (userData.IpRestricted) this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";
         else if (userData.InActive) this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
         else if (userData.Unlicensed) this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
@@ -169,20 +153,22 @@ export class LoginComponent implements OnInit {
         let LogInToTenant = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
         SessionInfo.DisplayCookies = true;
         sessionStorage.setItem("DisplayCookies", JSON.stringify(true));
-        if (!LogInToTenant) {
+        
+        if(tenantList?.length > 1 && LoginParams.IsCustomsBook){
+            this.errorMessage = "Login failed! Feature installed on more than one company.";
+            this.ShowbusyIndicator = false;
+        }
+        else if (!LogInToTenant) {
             this.errorMessage = "Login failed! unauthorized user.";
             this.ShowbusyIndicator = false;
         }
         else {
-
             SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
             sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
-
             this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
                 this.ShowbusyIndicator = false;
                 SessionInfo.IsAdmin = userData.IsAdmin;
                 if (userData) {
-
                     SessionInfo.LoggedUserTenant = userData.Tenant;
                     if (SessionInfo.LoggedUserTenant != 0) {
                         SessionInfo.Token = userData.Token;
@@ -194,8 +180,6 @@ export class LoginComponent implements OnInit {
                                     .GetAllowedFeaturesForLoggedUser()
                                     .subscribe((myResponse: any) => {
                                         if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
-                                            // TODO: להחזיר שגיאה שאין הרשאה בדומה למערכת לוגיטיוד
-                                            // alert("You have no permission to access this feature");
                                             this.errorMessage = "You have no permission to access this feature";
                                             return;
                                         }
@@ -212,7 +196,6 @@ export class LoginComponent implements OnInit {
                     }
                 }
             });
-
             this.GetLoggedUserPM(LoginParams.Email, LogInToTenant.Tenant);
         }
     }
@@ -221,35 +204,21 @@ export class LoginComponent implements OnInit {
         this.loginExtendedService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) => {
             if (loggedUserPM) {
                 SessionInfo.LoggedUserPM = loggedUserPM;
-            } else {
-                this.GetLoggedContact();
             }
         });
     }
 
-    private GetLoggedContact() {
-        // this.cargoTrackingBrandingDataExtendedService.GetLoggedContact().subscribe((loggedContact: any) =>
-        // {
-        //     if (loggedContact) {
-        //         SessionInfo.LoggedContact = loggedContact;
-        //     }
-        // });
-    }
-
     private FillSessionInfoData(userData: any) {
-
         sessionStorage.setItem("Token", userData.Token);
         sessionStorage.setItem("LoggedUserTenant", userData.CurrentTenant);
         sessionStorage.setItem("LoggedUserEmail", userData.UserName);
         sessionStorage.setItem("LoggedUserId", userData.Id);
         sessionStorage.setItem("DocumentDownloadToken", userData.DocumentDownloadToken);
-
         SessionInfo.LoggedUserEmail = userData.UserName;
         SessionInfo.LoggedUserId = userData.Id;
         SessionInfo.LoggedUserTenant = userData.CurrentTenant;
         SessionInfo.Token = userData.Token;
         SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
-
     }
 
     private RouteToMainPage() {
@@ -263,11 +232,7 @@ export class LoginComponent implements OnInit {
     }
 
     public ForgotPasswordClicked() {
-        //this.Tenant = this.route.snapshot.queryParams?.tenant;
-        if (this.Tenant)
-            this.router.navigate(["resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
-        else
-            this.router.navigate(["resetpassword"]);
+        if (this.Tenant) this.router.navigate(["resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
+        else this.router.navigate(["resetpassword"]);
     }
-
 }
