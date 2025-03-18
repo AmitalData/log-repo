@@ -600,7 +600,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
-
                     if (isExportCloseFromMehes)
                     {
                         if (customResponse.Response.Error != null)
