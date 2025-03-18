@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "f2e2a1a9862d6c5335ee6ce38e39ca9e";
+		public const string HashString = "5435469b56ffbbdad122b77c2db51c41";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12397,6 +12397,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CardCountryCode",
 					  						ListPropertyPath =  "CardCountryCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -14671,6 +14672,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsOMarkedByAnother = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MarkedByAnother ", DefaultText = "There are movements that have been marked but have been adjusted at the same time by a user or in another session, the screen must be refreshed.",LocalDefaultText = @"ישנם תנועות שסומנו אך הותאמו במקביל על ידי משתמש או בסשן אחר , יש לבצע רענון למסך.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionInProgress", DefaultText = "There are Ledger Transaction in the process.",LocalDefaultText = @"יש התאמות בתהליך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsONoAddressToVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NoAddressToVendor", DefaultText = "To Vendor no country specified in default address",LocalDefaultText = @"לספק לא צוינה מדינה בכתובת ברירת המחדל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

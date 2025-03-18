@@ -8,7 +8,7 @@ import { VendorValidator } from 'Common/Validators/VendorValidator';
 
 export class APPaymentValidator {
     public Validate(entityPm: APPaymentPM) {
-        debugger
+        
         var validationResults = [];
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -107,7 +107,7 @@ export class APPaymentValidator {
         if (entityPm.SetApproved) {
             var vendorValidator: VendorValidator = new VendorValidator();
             if (!vendorValidator.IsVendorCountryValid(entityPm.VendorCountry)) {
-                validationResults.push("Vendor Country is required and cannot be empty, -1, or --");
+                validationResults.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor"));
             }
         }
         return validationResults;
