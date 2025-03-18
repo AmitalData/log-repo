@@ -940,6 +940,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.EntityPM.VendorBankAccountNumber = null;
             this.EntityPM.VendorSwift = null;
             this.EntityPM.VendorBankName = null;
+            this.EntityPM.VendorCountry = null
         }
         else {
             this.GLAccountId = list.GLAccountId;
@@ -949,6 +950,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.EntityPM.VendorBankAccountNumber = list.AccountNumber;
             this.EntityPM.VendorSwift = list.Swift;
             this.EntityPM.VendorBankName = list.BankName;
+            this.EntityPM.VendorCountry = list.CountryCode;
+
             if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                 this.PaymentCurrencyId = list.InvoiceCurrencyId;
             }

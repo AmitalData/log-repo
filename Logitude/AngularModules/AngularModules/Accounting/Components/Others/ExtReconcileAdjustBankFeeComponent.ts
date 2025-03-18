@@ -30,6 +30,7 @@ import { FullAccountingSettingList } from '../../EntityLists/FullAccountingSetti
 import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
 import { ExternalReconciliationExtendedPMService } from '../../Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
 import { ReconcileExternalPageLinePM } from '../../EntityPMs/ReconcileExternalPageLinePM';
+import { VendorValidator } from 'Common/Validators/VendorValidator';
 
 
 
@@ -105,6 +106,15 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
     set GLAccountId(value: string) {
         if (this.glAcccountId != value) {
             this.glAcccountId = value;
+          if(!AppTool.IsNullOrEmpty(this.glAcccountId) && this.glAccount.ChartOfAccountsTypeCode === "4"){
+            this.gLAccountPMService.get(this.glAcccountId).subscribe((myResponse: ServiceResponse) => {
+             if (!myResponse.HasError) {
+                var res = myResponse.Result;
+                this.GLAccount = res;
+
+               }
+            });
+          }
         }
     }
 
@@ -282,6 +292,13 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
     }
     FillErrors() {
         this.ValidationErrorsList = [];
+        if (this.glAccount !== null && this.glAccount.ChartOfAccountsTypeCode === "4") {
+           
+            var vendorValidator: VendorValidator = new VendorValidator();
+            if (!vendorValidator.IsVendorCountryValid(this.glAccount.CardCountryCode)) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor"));
+            }
+        }
         if (AppTool.IsNullOrEmpty(this.glAccount)) {
             //this.Year = new Date().getFullYear();
             this.ValidationErrorsList.push("GLAccount is Required");

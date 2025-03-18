@@ -30,6 +30,7 @@ import { APInvoicePMService } from '../../../../Invoice/Services/StandardPMs/API
 import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { FullAccountingSettingListService } from 'Accounting/Services/StandardLists/FullAccountingSettingListService';
+import { GLAccountPMService } from 'Accounting/Services/StandardPMs/GLAccountPMService';
 declare var window: any;
 
 @Component({
@@ -945,7 +946,7 @@ class JournalLineModel extends BaseComponent {
     ratesTableExtendedListService: RatesTableExtendedListService;
     _GLAccountExtendedListService: GLAccountExtendedListService;
     private glaccountListService:GLAccountListService;
-    // private CD: ChangeDetectorRef
+    gLAccountPMService: GLAccountPMService = new GLAccountPMService();
 
     public CreditAccountFilterItems: ApiQueryFilters;
     public DebitAccountFilterItems: ApiQueryFilters;
@@ -1119,6 +1120,7 @@ class JournalLineModel extends BaseComponent {
                 if(entity){
                     this.CreditAccount=entity;
                     this.CreditAccountName=this.CreditAccount.LocalName;
+                    this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
                 }
             });
         }
@@ -1128,11 +1130,13 @@ class JournalLineModel extends BaseComponent {
     set DebitAccountId(value: string) {
         if (this.JournalLinePM.DebitAccountId != value) {
             this.JournalLinePM.DebitAccountId = value;
-            this.glaccountListService.getSingle(value).subscribe((result:ServiceResponse)=>{
+            this.gLAccountPMService.get(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
                 if(entity){
                     this.DebitAccount=entity;
                     this.DebitAccountName=this.DebitAccount.LocalName;
+                    this.JournalLinePM.DebitAccountCountryCode = this.DebitAccount.CardCountryCode;
+                    this.JournalLinePM.DebitAccountCOACode = this.DebitAccount.ChartOfAccountsTypeCode;
                 }
             });
         }

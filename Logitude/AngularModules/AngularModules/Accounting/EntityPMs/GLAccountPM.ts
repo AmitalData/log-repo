@@ -923,6 +923,10 @@ export class GLAccountPM {
     public get MarkDate() { return this.markDate; }
     public set MarkDate(newValue: Date) { if (this.markDate != newValue) { this.markDate = newValue;  } }
      
+    private cardCountryCode: string;
+    public get CardCountryCode() { return this.cardCountryCode; }
+    public set CardCountryCode(newValue: string) { if (this.cardCountryCode != newValue) { this.cardCountryCode = newValue;  } }
+     
 	 
 
     public OldEntityPM: GLAccountPM;

@@ -3,6 +3,7 @@ import { JournalLinePM } from '../EntityPMs/JournalLinePM';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
+import { VendorValidator } from 'Common/Validators/VendorValidator';
 
 const approvedStatus = '2';
 export class JournalValidator
@@ -28,7 +29,7 @@ export class JournalValidator
     }
 
 
-    public static ValidateJournalLines(line: any) {
+    public static ValidateJournalLines(line: any , isApprove : boolean = false) {
         var errors = [];
         if (line) {
             if (line.ActionCode == null || line.ActionCode == undefined) {
@@ -72,7 +73,12 @@ export class JournalValidator
                     }
                 }
 
-
+                if(line.ActionCode == '2' && isApprove && line.DebitAccountCOACode == "4" && line.CreditAccountCOACode == "5"){
+                    var vendorValidator: VendorValidator = new VendorValidator();
+                    if (!vendorValidator.IsVendorCountryValid(line.DebitAccountCountryCode)) {
+                        errors.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor"));
+                    }
+                }
                 // Ref. + Due Dates
                 if (!line.DocumentDate) {
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseRefDate") + " " + line.Line  ); //You should choose Ref. Date for line
@@ -173,7 +179,7 @@ export class JournalValidator
 
         for (var line in entityPM.JournalLines) {
             var journalLine = entityPM.JournalLines[line];
-            result = JournalValidator.ValidateJournalLines(journalLine);
+            result = JournalValidator.ValidateJournalLines(journalLine ,entityPM.StatusCode =="6");
             this.FillErrorList(result);
         }
 

@@ -250,7 +250,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             DateFormat,
             ContactId,
 	         ContactName,
-            MarkDate
+            MarkDate,
+            CardCountryCode
         }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
