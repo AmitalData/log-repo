@@ -36,7 +36,6 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<TextCodeType> TextCodeTypes { get; }
         IDbSet<RatesTable> RatesTable { get; }
         IDbSet<AdditionalCurrencyRate> AdditionalCurrencyRates { get; }
-        IDbSet<CurrencyRate> CurrencyRates { get; }
         IDbSet<EventType> EventType { get; }
         IDbSet<EventRemark> EventRemarks { get; }
         IDbSet<TraceEvent> TraceEvent { get; }
