@@ -165,7 +165,6 @@
     <None Include="DBTables\AccountingIntegrityCheck.dxml" />
     <None Include="DBTables\AccountingNote.dxml" />
     <None Include="DBTables\AccountingPeriod.dxml" />
-    <None Include="DBTables\AdditionalCurrencyRate.dxml" />
     <None Include="DBTables\ARPaymentCheque.dxml" />
     <None Include="DBTables\ARPaymentChequeStatus.dxml" />
     <None Include="DBTables\ARPaymentsJournal.dxml" />
@@ -324,7 +323,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ElasticDemoGen.tt</DependentUpon>
     </Compile>
-    <None Include="EntityFiles\AdditionalCurrencyRate.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="EntityFiles\RevaluationStatus.lxml" />
     <None Include="EntityFiles\TaxDeductionReport.lxml" />

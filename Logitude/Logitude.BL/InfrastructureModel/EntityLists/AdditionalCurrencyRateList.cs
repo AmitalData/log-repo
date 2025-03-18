@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization; 
+using System.Runtime.Serialization;
 
-namespace Logitude.Accounting.Data.EntityLists
+namespace Logitude.BL.InfrastructureModel.EntityLists
 {
    [DataContract]
    public partial class AdditionalCurrencyRateList
@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string Name  { get; set; }
        [DataMember]
-       public double? Rate  { get; set; }
+       public double? RateCoefficient { get; set; }
    }
 
 }
