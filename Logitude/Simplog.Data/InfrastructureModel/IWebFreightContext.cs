@@ -7,8 +7,6 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
-//using WebFreight.Web.QuoteModel.EntityPOCOs;
-
 namespace Simplog.Data.InfrastructureModel
 {
     public interface IWebFreightContext : IContext

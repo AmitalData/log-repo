@@ -38,16 +38,13 @@ using Logitude.BL.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 { 
-
-    
     public partial class AdditionalCurrencyRatesController : ApiController
     {
-	  
-       
         public HttpResponseMessage GetSingle(string id)
         {
 		  try
@@ -69,11 +66,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-           
         }
-
-         
-		
 		
 	   public HttpResponseMessage Post(AdditionalCurrencyRatePM entityPM)
         {
@@ -94,15 +87,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AdditionalCurrencyRateService service = new AdditionalCurrencyRateService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 
-                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AdditionalCurrencyRate", 0, true);
-                        //string email = HttpContext.Current.User.Identity.Name;
-                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-                        //if (loggedContact != null)
-                        //{
-                           //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
-                        //}
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -135,20 +119,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AdditionalCurrencyRate", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("AdditionalCurrencyRate", entityPM.Tenant, authToken.Tenant);
+	                    SecurityUtility.AuthenticationOnEntityTenant("AdditionalCurrencyRate", entityPM.Tenant, authToken.Tenant);
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         AdditionalCurrencyRateService service = new AdditionalCurrencyRateService(MyContext, entityPM.Tenant);
                         service.Update(entityPM);
-                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AdditionalCurrencyRate", 0, true);
-                        //string email = HttpContext.Current.User.Identity.Name;
-                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-                        //if (loggedContact != null)
-                        //{
-                           //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
-                        //}
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);

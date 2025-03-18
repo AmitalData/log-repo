@@ -17,18 +17,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
     {
         AdditionalCurrencyRateRepository repository;
 
-        public AdditionalCurrencyRateQuery()
+        public AdditionalCurrencyRateQuery(int tenant = 0)
         {
-            repository = new AdditionalCurrencyRateRepository();
+            repository = tenant == 0
+                ? new AdditionalCurrencyRateRepository()
+                : new AdditionalCurrencyRateRepository(tenant);
         }
-        public AdditionalCurrencyRateQuery(int tenant)
-        {
-            repository = new AdditionalCurrencyRateRepository(tenant);
 
-        }
         public AdditionalCurrencyRateQuery(AdditionalCurrencyRateRepository additionalCurrencyRateRepository)
         {
-            repository = additionalCurrencyRateRepository;
+            repository = additionalCurrencyRateRepository ?? throw new ArgumentNullException(nameof(additionalCurrencyRateRepository));
         }
 
         public AdditionalCurrencyRatePM GetSinglePM(string id, int tenant)
