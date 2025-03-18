@@ -36,6 +36,8 @@ using Logitude.Customs.Data.EntityPOCOs;
 using System.Windows.Media.Effects;
 using System.Diagnostics;
 using Simplog.Global.Data.GlobalModel.Helpers;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -400,7 +402,12 @@ namespace WebFreight.Web.WcfApi
                     else
                     {
                         GlobalDB currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-                        connection.ConnectionString = currentDb.DBConnection;
+                        string DBConnection = currentDb.DBConnection;
+                        string[] sourceConnectionArray = DBConnection.Split(',');
+                        ConnectionStringArguments sourceConnectionStringArguments = GetConnectionStringArguments(sourceConnectionArray);
+                        string ConnectionString = BuildConnectionString(sourceConnectionStringArguments);
+                        
+                        connection.ConnectionString = ConnectionString;
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GlobalDB : " + connection.ConnectionString);
                         remark = "GlobalDB tenant=" + tenant.ToString()+ " " + connection.ConnectionString;
                     }
@@ -465,6 +472,26 @@ namespace WebFreight.Web.WcfApi
                 return (response);
             }
 
+        }
+        public string BuildConnectionString(ConnectionStringArguments connectionStringArguments)
+        {
+            string result = "Data Source=" + connectionStringArguments.Server +
+                            ";Initial Catalog=" + connectionStringArguments.Catalog +
+                            ";Integrated Security=False;Persist Security Info=True;User ID=" + connectionStringArguments.UserName +
+                            ";Password= " + connectionStringArguments.Password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            return result;
+        }
+        private ConnectionStringArguments GetConnectionStringArguments(string[] connectionArray)
+        {
+            ConnectionStringArguments connectionStringArguments = new ConnectionStringArguments()
+            {
+                Catalog = connectionArray[0],
+                UserName = connectionArray[1],
+                Password = connectionArray[2],
+                Server = connectionArray[3],
+            };
+
+            return connectionStringArguments;
         }
         public Response LGTQueryExample(string queryId, Dictionary<string, string> queryParams, int tenant)
         {
