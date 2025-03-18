@@ -80,7 +80,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public List<SyncRecord> GetUnsyncAndMarkAsInProcess(int tenant, string item)
         {
             DateTime yesterday = DateTime.Now.AddDays(-1);
-            DateTime date = DateTime.Now;
+            DateTime dateTimeNow = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
+            dateTimeNow = new DateTime(dateTimeNow.Year, dateTimeNow.Month, dateTimeNow.Day, dateTimeNow.Hour, dateTimeNow.Minute, dateTimeNow.Second, dateTimeNow.Millisecond);            
 
             IQueryable<SyncRecord> recordsQurey = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
@@ -96,7 +97,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             foreach (SyncRecord syncRecord in records)
             {
                 syncRecord.IsSync = SyncRecordStatus.Synced;
-                syncRecord.SyncDT = date;
+                syncRecord.SyncDT = dateTimeNow;
             }
 
             context.SaveChanges();
