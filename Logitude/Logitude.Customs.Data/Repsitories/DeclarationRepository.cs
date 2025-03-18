@@ -290,16 +290,7 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.Tenant == tenant && a.IsCancelled == false
                     select a).FirstOrDefault();
         }
-        public Declaration GetWaitingForHandleDeclarationAmendmentByCustomsFile(string customFileNo, int tenant)
-        {
-
-            return (from a in context.Declarations
-                    where (a.CustomFileNo == customFileNo && a.IsAmendment == true && a.AmendmentStatus == "6")
-                    && a.Tenant == tenant && a.IsCancelled == false
-                    select a).FirstOrDefault();
-        }
-
-
+     
         public int GetDeclarationMaxCancelRequestNumber(int tenant)
         {
             // && a.Id==id
