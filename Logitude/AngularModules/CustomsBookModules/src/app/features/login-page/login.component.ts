@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit {
     private IsCustomsBookDomain() {
         const domain = window.location.href;
         return domain?.indexOf("customs-book") > -1;
-        }
+    }
 
     private LoginFailed(userData: any) {
         this.CaptchaKey = userData ? userData.CaptchaKey : "";
@@ -153,8 +153,8 @@ export class LoginComponent implements OnInit {
         let LogInToTenant = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
         SessionInfo.DisplayCookies = true;
         sessionStorage.setItem("DisplayCookies", JSON.stringify(true));
-        
-        if(tenantList?.length > 1 && LoginParams.IsCustomsBook){
+
+        if (tenantList?.length > 1 && LoginParams.IsCustomsBook && !LogInToTenant) {
             this.errorMessage = "Login failed! Feature installed on more than one company.";
             this.ShowbusyIndicator = false;
         }
