@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { defer } from 'rxjs';
 
 @Injectable()
 export class ARInvoiceExtendedService {
@@ -10,19 +12,22 @@ export class ARInvoiceExtendedService {
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.HttpClient
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ARInvoice';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ARInvoiceExtended';
     }
 
-    getSingleByInvoiceNumber(number: number) {
-        var url = this._apiUrl + '?number=' + number + '&id=';
-
-        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-
-            pmresponse.Result = response;
-            return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+    getInvoiceSequenceStatus(fromDate: Date, toDate: Date) {
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+            return this._http.get(this._apiUrl + '/GetInvoiceSequenceStatus/?' + '&fromDate=' + fromDate.toISOString() + '&toDate=' + toDate.toISOString(), ServiceHelper.GetHttpHeaders())
+                .pipe(map((response: any) => {
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
+
+ 
 }

@@ -307,6 +307,20 @@ export class ReceivablePageComponent {
             });
         }
     }
+    ViewInvoiceSequence(){
+        
+
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1200;
+        logWindow.Height = 600;
+        logWindow.Title = TextCodeTranslator.Translate('ARInvoice.O.InvoiceSequence');
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => { });
+        logWindow.Show('.InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceSequenceListComponent');
+
+    }
 
     // // TODO: change the logic for ViewPayment Cheques
     ViewPaymentChequesQuery(args: string) {
