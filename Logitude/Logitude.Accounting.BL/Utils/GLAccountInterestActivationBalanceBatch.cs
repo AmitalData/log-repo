@@ -229,7 +229,8 @@ namespace Logitude.Accounting.BL.Utils
                     InterestTransactionQueryService myInterestTransactionService = new InterestTransactionQueryService(context);
                     InterestTransactionUpdateService myInterestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), _Tenant);
 
-
+                    var (amount_backward, backwardList) = ComputeValueAfter_AccDateBefore(context, _Tenant, gLAccountId,
+                            interestActivationDate, myInterestTransactionRepository, false);
 
                     if (ReportExists(gLAccountId, context, _Tenant))
                     {
@@ -257,6 +258,8 @@ namespace Logitude.Accounting.BL.Utils
                                  );
                         decimal amount_beforePre = 0m;
                         List<InterestTransactionBefore> before_listPre = calcBeforeInterestTransPre != null ? calcBeforeInterestTransPre.ToList() : new List<InterestTransactionBefore>();
+
+                        before_listPre.RemoveAll(item => backwardList.Any(b => b.Id == item.Id));
                         if (before_listPre != null && before_listPre.Count > 0)
                         {
                             decimal? amount_before_qm = before_listPre.Select(c => c.LocalAmount).Sum();
@@ -292,157 +295,44 @@ namespace Logitude.Accounting.BL.Utils
 
 
 
-                        ClearPreviousActivation(gLAccountId, myInterestTransactionRepository, myInterestTransactionService, myInterestTransactionUpdateService, gLAccountQueryService, gLAccountUpdateService, OPEN_, _Tenant);
+                    ClearPreviousActivation(gLAccountId, myInterestTransactionRepository, myInterestTransactionService, myInterestTransactionUpdateService, gLAccountQueryService, gLAccountUpdateService, OPEN_, _Tenant);
 
-                        var myGLAccountRepo = new GLAccountRepository(context);
+                    var myGLAccountRepo = new GLAccountRepository(context);
 
-                        var myJournalRepository = new JournalRepository(context);
-                        var myJournalLineRepository = new JournalLineRepository(context);
+                    var myJournalRepository = new JournalRepository(context);
+                    var myJournalLineRepository = new JournalLineRepository(context);
 
-                        TenantQuery tenantQuery = new TenantQuery(_Tenant);
-                        TenantPM tPM = tenantQuery.GetSinglePM(_Tenant);
-                        string accountingCurrencyId = tPM.CurrencyId;
-
-
-                        ///// 1. Compute BalanceInLocalCurrency
-
-                        Decimal balanceInLocalCurrency = gLAccountQueryService.GetTotalLocalBalance(gLAccountId, interestActivationDate, _Tenant);
+                    TenantQuery tenantQuery = new TenantQuery(_Tenant);
+                    TenantPM tPM = tenantQuery.GetSinglePM(_Tenant);
+                    string accountingCurrencyId = tPM.CurrencyId;
 
 
-                        ////////////
-                        /// 2.7. Compute our InterestReportId 
-                        string actionDateStr = actionDate.ToString("dd.MM.yyyy").Replace(".", String.Empty);
-                        string ourInterestReportId = OPEN_ + actionDateStr;
+                    ///// 1. Compute BalanceInLocalCurrency
+
+                    Decimal balanceInLocalCurrency = gLAccountQueryService.GetTotalLocalBalance(gLAccountId, interestActivationDate, _Tenant);
 
 
                     ////////////
-                    /// 2. Compute "After" interestActivationDate, that are open,
-                    /// WHERE Acc Date before interestActivationDate 
-                    /// AND intTrans.InterestValueDate >= interestActivationDate
-                     
-
-                        var journalAccEntityCodes = new HashSet<string> { AccountingEntityValues.Journal, AccountingEntityValues.Adjustment, AccountingEntityValues.BankAdjustment };
-                        var calcAfterInterestTrans =
-                            from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
-                                .Where(intTrans => intTrans.GLAccountId == gLAccountId
-                                                   && !intTrans.IsClosed
-                                                   && intTrans.InterestValueDate >= interestActivationDate)   //  ***** >= interestActivationDate
-                                                                                                              // Condition only matched for journalAccEntityCodes
-
-                            from j in context.Journals.Where(r => r.Tenant == _Tenant)
-                                .Where(jrec => journalAccEntityCodes.Contains(intTrans.AccountingEntityCode)
-                                    && jrec.Id == intTrans.EntityId)
-                                .DefaultIfEmpty() // if code not matched or no journal found, j is null
-
-                            from jl in context.JournalLines.Where(r => r.Tenant == _Tenant)
-                                .Where(jlrec => journalAccEntityCodes.Contains(intTrans.AccountingEntityCode)
-                                         && jlrec.JournalId == intTrans.EntityId
-                                         && jlrec.Line == intTrans.OriginalEntityLineNumber)
-                                .DefaultIfEmpty()
-
-                            where  // At least one of the following conditions is true:
-                                   // 1) Code not in journalAccEntityCodes
-                                !journalAccEntityCodes.Contains(intTrans.AccountingEntityCode)
-
-                                // 2) Journal line matched & its AccountingDate < interestActivationDate
-                                || (jl != null && jl.AccountingDate < interestActivationDate)               //  ***** < interestActivationDate
-
-                                // 3) No journal line matched & journal’s AccountingDate < interestActivationDate
-                                || (jl == null && j != null && j.AccountingDate < interestActivationDate)   //  ***** < interestActivationDate
-
-                            select new InterestTransactionBefore
-                            {
-                                Tenant = intTrans.Tenant,
-                                Id = intTrans.Id,
-                                LocalAmount = intTrans.LocalAmount,
-                                EntityId = intTrans.EntityId,
-                                AccountingEntityCode = intTrans.AccountingEntityCode,
-                            };
-                    List<InterestTransactionBefore> after_list = calcAfterInterestTrans != null ? calcAfterInterestTrans.ToList() : new List<InterestTransactionBefore>();
-
-                    decimal amount_after = 0m;
-
-                    if (after_list.Count > 0 )
-                    {
-                        List<InterestTransactionBefore> journalTransactions = after_list.Where(c => c.AccountingEntityCode == "1" || c.AccountingEntityCode == "10" || c.AccountingEntityCode == "12").ToList();
-                        if (journalTransactions.Count > 0)
-                        {
-                            decimal amount_j_qm = journalTransactions.Select(c => c.LocalAmount).Sum();
-                            amount_after += amount_j_qm;
-                        }
-
-
-                        List<InterestTransactionBefore> aRInvoiceTransactions = after_list.Where(c => c.AccountingEntityCode == "2").ToList();
-                        List<InterestTransactionBefore> aRPaymentTransactions = after_list.Where(c => c.AccountingEntityCode == "3").ToList();
-                        if (aRInvoiceTransactions.Count > 0 || aRPaymentTransactions.Count > 0)
-                        {    
-                            IInvoiceContext invoiceContext = InvoiceContext.GetContext(_Tenant);
-                            if (aRInvoiceTransactions.Count > 0)
-                            { 
-                                // Get all invoices that are before interestActivationDate
-                                var aRInvoiceRepository = new ARInvoiceRepository(invoiceContext);
-                                var invoiceIds = aRInvoiceTransactions
-                                    .Select(x => x.EntityId)
-                                    .Distinct()
-                                    .ToList();
-
-                                var preexistingInvoiceIds = aRInvoiceRepository
-                                    .GetInvoices()
-                                    .Where(inv => invoiceIds.Contains(inv.Id) && inv.InvoiceDate < interestActivationDate)   //  ***** < interestActivationDate
-                                    .Select(inv => inv.Id)
-                                    .ToHashSet();
-
-                                aRInvoiceTransactions = aRInvoiceTransactions
-                                    .Where(x => preexistingInvoiceIds.Contains(x.EntityId))
-                                    .ToList();
-
-                                if (aRInvoiceTransactions.Any())
-                                {
-                                    decimal amount_inv_qm = aRInvoiceTransactions.Select(c => c.LocalAmount).Sum();
-                                    amount_after += amount_inv_qm;
-                                }
-                            }
-
-                            if (aRPaymentTransactions.Count > 0)
-                            { 
-                                // Get all Payments that are before interestActivationDate
-                                var aRPaymentRepository = new ARPaymentRepository(invoiceContext);
-                                var paymentIds = aRPaymentTransactions
-                                    .Select(x => x.EntityId)
-                                    .Distinct()
-                                    .ToList();
-
-                                var preexistingPaymentIds = aRPaymentRepository
-                                    .GetARPayments()
-                                    .Where(pmt => paymentIds.Contains(pmt.Id) && pmt.RegisterDate < interestActivationDate)    //  ***** < interestActivationDate 
-                                    .Select(pmt => pmt.Id)
-                                    .ToHashSet();
-
-                                aRPaymentTransactions = aRPaymentTransactions
-                                    .Where(x => preexistingPaymentIds.Contains(x.EntityId))
-                                    .ToList();
-
-                                if (aRPaymentTransactions.Any())
-                                {
-                                    decimal amount_pay_qm = aRPaymentTransactions.Select(c => c.LocalAmount).Sum();
-                                    amount_after += amount_pay_qm;
-                                }
-                            }
-
-
-                        }
-
-
-                    }
-
-                    
+                    /// 2.7. Compute our InterestReportId 
+                    string actionDateStr = actionDate.ToString("dd.MM.yyyy").Replace(".", String.Empty);
+                    string ourInterestReportId = OPEN_ + actionDateStr;
 
 
 
-                        ////////////
-                        /// 3. Compute "Before" that are still open (to "close" them with "OPEN_")
 
-                        var calcBeforeInterestTrans =
+                    var (amount_after, forwardList) = ComputeValueAfter_AccDateBefore(context, _Tenant, gLAccountId,
+                            interestActivationDate, myInterestTransactionRepository, true);
+
+
+
+
+
+
+
+                    ////////////
+                    /// 3. Compute "Before" that are still open (to "close" them with "OPEN_")
+
+                    var calcBeforeInterestTrans =
                                  (
                                     from intTrans in myInterestTransactionRepository.GetAll(_Tenant)
                                         .Where(intTrans => intTrans.GLAccountId == gLAccountId
@@ -462,12 +352,14 @@ namespace Logitude.Accounting.BL.Utils
 
                         ////////////////
                         /// 4.Compute interestOpenBalance
-                        decimal interestOpenBalance = balanceInLocalCurrency - amount_after ; // nis
+                        decimal interestOpenBalance = balanceInLocalCurrency - amount_after + amount_backward ; // nis
 
-
+                    
+                        before_list.RemoveAll(item => backwardList.Any(b => b.Id == item.Id));
+                   
 
                         ////////////////
-                        /// 5.Update InterestTransaction
+                    /// 5.Update InterestTransaction
                         if (before_list != null && before_list.Count > 0)
                         {
                             int total_count = before_list.Count;
@@ -542,6 +434,137 @@ namespace Logitude.Accounting.BL.Utils
 
 
         }
+
+
+
+        private (decimal amountAfter, List<InterestTransactionBefore> resultingList) ComputeValueAfter_AccDateBefore(IAccountingContext context, int tenant, string gLAccountId,
+                        DateTime interestActivationDate, InterestTransactionRepository myInterestTransactionRepository, bool forward) // or else "backward"
+        // forward:  value >= interestActivationDate, reg date <  interestActivationDate
+        // backward: value <  interestActivationDate, reg date >= interestActivationDate
+        {
+            var journalAccEntityCodes = new HashSet<string>
+                    {
+                        AccountingEntityValues.Journal,
+                        AccountingEntityValues.Adjustment,
+                        AccountingEntityValues.BankAdjustment
+                    };
+
+            var calcAfterInterestTrans =
+                from intTrans in myInterestTransactionRepository.GetAll(tenant)
+                    .Where(intTrans => intTrans.GLAccountId == gLAccountId
+                           && !intTrans.IsClosed
+                           && (forward ? intTrans.InterestValueDate >= interestActivationDate : intTrans.InterestValueDate < interestActivationDate)) //  forward: >= interestActivationDate, backward:  < interestActivationDate 
+
+                    // Condition only matched for journalAccEntityCodes
+                from j in context.Journals.Where(r => r.Tenant == tenant)
+                    .Where(jrec => journalAccEntityCodes.Contains(intTrans.AccountingEntityCode)
+                        && jrec.Id == intTrans.EntityId)
+                    .DefaultIfEmpty()
+
+                from jl in context.JournalLines.Where(r => r.Tenant == tenant)
+                    .Where(jlrec => journalAccEntityCodes.Contains(intTrans.AccountingEntityCode)
+                             && jlrec.JournalId == intTrans.EntityId
+                             && jlrec.Line == intTrans.OriginalEntityLineNumber)
+                    .DefaultIfEmpty()
+
+                where // At least one of the following conditions is true:
+                      // 1) Code not in journalAccEntityCodes
+                    !journalAccEntityCodes.Contains(intTrans.AccountingEntityCode)
+
+                    // 2) Journal line matched & its AccountingDate < interestActivationDate (as forward) or >= interestActivationDate (as backward)
+                    || (jl != null && (forward ? jl.AccountingDate < interestActivationDate : jl.AccountingDate >= interestActivationDate))
+
+                    // 3) No journal line matched & journal’s AccountingDate < interestActivationDate (as forward) or >= interestActivationDate (as backward)
+                    || (jl == null && j != null && (forward ? j.AccountingDate < interestActivationDate : j.AccountingDate >= interestActivationDate))   
+
+                select new InterestTransactionBefore
+                {
+                    Tenant = intTrans.Tenant,
+                    Id = intTrans.Id,
+                    LocalAmount = intTrans.LocalAmount,
+                    EntityId = intTrans.EntityId,
+                    AccountingEntityCode = intTrans.AccountingEntityCode,
+                };
+
+            List<InterestTransactionBefore> after_list =
+                calcAfterInterestTrans?.ToList() ?? new List<InterestTransactionBefore>();
+
+            decimal amount_after = 0m;
+
+            var journalTransactions = new List<InterestTransactionBefore>();
+            var aRInvoiceTransactions = new List<InterestTransactionBefore>();
+            var aRPaymentTransactions = new List<InterestTransactionBefore>();
+
+            if (after_list.Count > 0)
+            {
+                journalTransactions = after_list
+                    .Where(c => journalAccEntityCodes.Contains(c.AccountingEntityCode)).ToList();
+                if (journalTransactions.Count > 0)
+                {
+                    amount_after += journalTransactions.Select(c => c.LocalAmount).Sum();
+                }
+
+                aRInvoiceTransactions =
+                    after_list.Where(c => c.AccountingEntityCode == AccountingEntityValues.ARInvoice).ToList();
+
+                aRPaymentTransactions =
+                    after_list.Where(c => c.AccountingEntityCode == AccountingEntityValues.ARPayment).ToList();
+
+                if (aRInvoiceTransactions.Count > 0 || aRPaymentTransactions.Count > 0)
+                {
+                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+
+                    if (aRInvoiceTransactions.Count > 0)
+                    {
+                        var aRInvoiceRepository = new ARInvoiceRepository(invoiceContext);
+                        var invoiceIds = aRInvoiceTransactions.Select(x => x.EntityId).Distinct().ToList();
+                        var preexistingInvoiceIds = aRInvoiceRepository.GetInvoices() // if !forward, consider them as "newly arrived invoices"
+                            .Where(inv => invoiceIds.Contains(inv.Id)
+                                          && (forward ? inv.InvoiceDate < interestActivationDate : inv.InvoiceDate >= interestActivationDate))
+                            .Select(inv => inv.Id)
+                            .ToHashSet();
+
+                        aRInvoiceTransactions = aRInvoiceTransactions
+                            .Where(x => preexistingInvoiceIds.Contains(x.EntityId))
+                            .ToList();
+
+                        if (aRInvoiceTransactions.Any())
+                        {
+                            amount_after += aRInvoiceTransactions.Select(c => c.LocalAmount).Sum();
+                        }
+                    }
+
+                    if (aRPaymentTransactions.Count > 0)
+                    {
+                        var aRPaymentRepository = new ARPaymentRepository(invoiceContext);
+                        var paymentIds = aRPaymentTransactions.Select(x => x.EntityId).Distinct().ToList();
+                        var preexistingPaymentIds = aRPaymentRepository.GetARPayments() // if !forward, consider them as "newly arrived payments"
+                            .Where(pmt => paymentIds.Contains(pmt.Id)
+                                          && (forward ? pmt.RegisterDate < interestActivationDate : pmt.RegisterDate >= interestActivationDate))
+                            .Select(pmt => pmt.Id)
+                            .ToHashSet();
+
+                        aRPaymentTransactions = aRPaymentTransactions
+                            .Where(x => preexistingPaymentIds.Contains(x.EntityId))
+                            .ToList();
+
+                        if (aRPaymentTransactions.Any())
+                        {
+                            amount_after += aRPaymentTransactions.Select(c => c.LocalAmount).Sum();
+                        }
+                    }
+                }
+            }
+            // Create union list of all three
+            var resultingList = new List<InterestTransactionBefore>();
+            resultingList.AddRange(journalTransactions);
+            resultingList.AddRange(aRInvoiceTransactions);
+            resultingList.AddRange(aRPaymentTransactions);
+
+            return (amount_after, resultingList);
+        }
+
+
 
 
         private void ClearPreviousActivation(string gLAccountId, InterestTransactionRepository myInterestTransactionRepository, 
