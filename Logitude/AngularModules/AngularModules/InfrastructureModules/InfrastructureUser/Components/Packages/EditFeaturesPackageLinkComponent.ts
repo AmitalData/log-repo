@@ -12,8 +12,8 @@ import { AppTool } from 'Infrastructure/Tools';
 export class EditFeaturesPackageLinkComponent {
     public ItemsSource: PackageFeatureClass[] = [];
     public ItemsSourceOriginal: PackageFeatureClass[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;
-    searchText: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;    
+    private searchTimeout: any; 
     constructor() {
 
     }
@@ -48,21 +48,17 @@ export class EditFeaturesPackageLinkComponent {
         });
     }
 
-    SearchFeatures(text: string) {
-        var data = this.ItemsSourceOriginal;
-        if (!AppTool.IsNullOrEmpty(text) && !AppTool.IsNullOrEmpty(data) && data.length > 0) {
-    
-            var tkn = setTimeout(() => {
-    
-                var filteredData = data.filter(d => {
-                    var searchField = d["Name"] ?? ""; 
-                    return searchField.toLowerCase().includes(text.trim().toLowerCase());
-                });    
-                this.ItemsSource = filteredData;    
-            }, 200);
+    SearchFeatures(text: string): void {
+        if (!AppTool.IsNullOrEmpty(text) && !AppTool.IsNullOrEmpty(this.ItemsSourceOriginal) && this.ItemsSourceOriginal.length > 0) {
+            const searchText = text.trim().toLowerCase();    
+            clearTimeout(this.searchTimeout);
+            this.searchTimeout = setTimeout(() => {
+                this.ItemsSource = this.ItemsSourceOriginal.filter(d => 
+                    typeof d["Name"] === "string" && d["Name"].toLowerCase().includes(searchText)
+                );
+            }, 200);        
         } else {
-            this.ItemsSource = this.ItemsSourceOriginal;
-        }
-    }
-    
+            this.ItemsSource = this.ItemsSourceOriginal;        
+        }   
+    }    
 }
