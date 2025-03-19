@@ -330,7 +330,7 @@ namespace Logitude.BL.Helpers
 
 
  
-        public void StartSignPDFInvoice(ARInvoice invocie, int tenant, ARInvoiceRepository repository,string contactEmail, FullAccountingSettingPM accountingSettings)
+        public void StartSignPDFInvoice(ARInvoice invoice, int tenant, ARInvoiceRepository repository,string contactEmail, FullAccountingSettingPM accountingSettings)
         {
 
             try
@@ -467,7 +467,7 @@ namespace Logitude.BL.Helpers
             }
         }
 
-         private void HSMSignatureFailed(ARInvoice invocie, HSMException ex, ARInvoiceRepository repository)
+         private void HSMSignatureFailed(ARInvoice invoice, HSMException ex, ARInvoiceRepository repository)
          {
              invoice.IsSigned = ARInvoiceSignedStatusValues.SigningFailed;
             repository.Update(invoice);
