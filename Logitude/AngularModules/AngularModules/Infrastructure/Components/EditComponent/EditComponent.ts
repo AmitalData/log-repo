@@ -42,7 +42,7 @@ import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlow
 //import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
-import { AdditionalCurrencyRateValidator } from 'Accounting/Validators/AdditionalCurrencyRateValidator';
+import { AdditionalCurrencyRateValidator } from 'Infrastructure/Validators/AdditionalCurrencyRateValidator';
 
 
 const InterestTransactionTabCode = 'GLIT';

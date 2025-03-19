@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class AdditionalCurrencyRateUpdateClass
    {  		
-		public const string HashString = "2baddf86430e74dcba3bec99b4d3520c";
+		public const string HashString = "54b6cd1ace4c3c57a28f9fbc40013dee";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -65,7 +65,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewAdditionalCurrencyRateComponent",
-			      				    LocalDefaultText =  "BS64:Iteh15XXkteZINep16LXqNeZ150g16DXldeh16TXmdedIg==",
+			      				    LocalDefaultText =  "סוגי שערים נוספים",
 			      				    DefaultText =  "Additional Currency Rates",
 			      				    Code =  "3eba",
 			      				    Name =  " Query Group",
@@ -645,7 +645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DefaultText =  "Rate Coefficient",
 					  						FullLocalDefaultText =  "מכפלה",
 					  						ListFieldLable =  "RateCoefficientListLable",
-					  						ListLableDefaultText =  "Rate",
+					  						ListLableDefaultText =  "Rate Coefficient",
 					  						ListLocalDefaultText =  "מכפלה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -689,7 +689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode AdditionalCurrencyRateTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.Q.allrates", DefaultText = @"All",LocalDefaultText = "BS64:IiDXm9ecINeh15XXkteZINep16LXqNeZ150i", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode AdditionalCurrencyRateTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.Q.allrates", DefaultText = @"All",LocalDefaultText = " כל סוגי שערים", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature AdditionalCurrencyRateFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalCurrencyRate.Q.allrates", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, NameTextCodeCode = "AdditionalCurrencyRateFeatures.allrates", NameTextCodeDefaultText = "allrates", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,AdditionalCurrencyRateObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -700,7 +700,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 			 QueryColumn allratesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allratesQuery.Id,QueryCode = allratesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "AdditionalCurrencyRate.Name" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn allratesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allratesQuery.Id,QueryCode = allratesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AdditionalCurrencyRate.Rate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn allratesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allratesQuery.Id,QueryCode = allratesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "AdditionalCurrencyRate.RateCoefficient" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn allratesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allratesQuery.Id,QueryCode = allratesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "AdditionalCurrencyRate.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -735,7 +735,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
       
              ScreenField AdditionalCurrencyRateAdditionalCurrencyRateGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = AdditionalCurrencyRateGeneralTabScreenScreen1.Id,ScreenCode = AdditionalCurrencyRateGeneralTabScreenScreen1.Code, ObjectFieldCode = "AdditionalCurrencyRate.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField AdditionalCurrencyRateAdditionalCurrencyRateGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AdditionalCurrencyRateGeneralTabScreenScreen1.Id,ScreenCode = AdditionalCurrencyRateGeneralTabScreenScreen1.Code, ObjectFieldCode = "AdditionalCurrencyRate.Rate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField AdditionalCurrencyRateAdditionalCurrencyRateGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = AdditionalCurrencyRateGeneralTabScreenScreen1.Id,ScreenCode = AdditionalCurrencyRateGeneralTabScreenScreen1.Code, ObjectFieldCode = "AdditionalCurrencyRate.RateCoefficient", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }
@@ -745,11 +745,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable AdditionalCurrencyRateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AdditionalCurrencyRate" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode AdditionalCurrencyRateGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.TH.General", DefaultText = "General",LocalDefaultText = "BS64:Iteb15zXnNeZIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode AdditionalCurrencyRateGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature AdditionalCurrencyRateGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalCurrencyRate.Tab.General", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, NameTextCodeCode = "AdditionalCurrencyRateFeatures.ACRG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AdditionalCurrencyRateObjectTable);
  
                  
-			   TextCode AdditionalCurrencyRateEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode AdditionalCurrencyRateEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature AdditionalCurrencyRateEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalCurrencyRate.Tab.Events", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, NameTextCodeCode = "AdditionalCurrencyRateFeatures.ACRE", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,AdditionalCurrencyRateObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -773,7 +773,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature AdditionalCurrencyRateFeature_AdditionalCurrencyRate_Features_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalCurrencyRate.Features.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, NameTextCodeCode = "AdditionalCurrencyRate.Features.Menu", NameTextCodeDefaultText = @"BS64:Iteh15XXkteZINep16LXqNeZ150g16DXldeh16TXmdedIg==" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AdditionalCurrencyRateObjectTable);
+		   Feature AdditionalCurrencyRateFeature_AdditionalCurrencyRate_Features_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AdditionalCurrencyRate.Features.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, NameTextCodeCode = "AdditionalCurrencyRate.Features.Menu", NameTextCodeDefaultText = @"סוגי שערים נוספים" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,AdditionalCurrencyRateObjectTable);
 
    
 	    
@@ -831,17 +831,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   ObjectTable AdditionalCurrencyRateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AdditionalCurrencyRate" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode AdditionalCurrencyRateTextCode_GeneralMCACCAdditionalCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.AdditionalCurrencyRate", DefaultText = "AdditionalCurrencyRate",LocalDefaultText = @"BS64:Iteh15XXkteZINep16LXqNeZ150g16DXldeh16TXmdedIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AdditionalCurrencyRateTextCode_GeneralMCACCAdditionalCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.AdditionalCurrencyRate", DefaultText = "AdditionalCurrencyRate",LocalDefaultText = @"סוגי שערים נוספים", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateONewAdditionalCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.NewAdditionalCurrencyRate", DefaultText = "New Currency Rate",LocalDefaultText = @"BS64:Iteh15XXkiDXqdei16gg15fXk9epIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateONewAdditionalCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.NewAdditionalCurrencyRate", DefaultText = "New Currency Rate",LocalDefaultText = @"סוג שער חדש", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.NewButton", DefaultText = "New Currency Rate",LocalDefaultText = @"BS64:Iteh15XXkiDXqdei16gg15fXk9epIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.NewButton", DefaultText = "New Currency Rate",LocalDefaultText = @"סוג שער חדש", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateOAlreadyExistRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.AlreadyExistRate", DefaultText = "There are already currency rates for the currency rate type {name}. The change will only apply to future currency rates!",LocalDefaultText = @"BS64:Itec16HXldeSINep16LXqCB7bmFtZX0g15vXkdeoINen15nXmdee15nXnSDXqdei16jXmdedLiDXlNep15nXoNeV15kg15nXl9eV15wg16jXpyDXotecINep16LXqNeZ150g16LXqteZ15PXmdeZ150hIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateOAlreadyExistRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.AlreadyExistRate", DefaultText = "There are already currency rates for the currency rate type {name}. The change will only apply to future currency rates!",LocalDefaultText = @"לסוג שער {name} כבר קיימים שערים. השינוי יחול רק על שערים עתידיים!", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateORateRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.RateRequired", DefaultText = "Rate is required",LocalDefaultText = @"BS64:Itep16LXqCDXlNeV15Ag16nXk9eUINeX15XXkdeUIg==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateORateRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.RateRequired", DefaultText = "Rate is required",LocalDefaultText = @"מכפלה הוא שדה חובה", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateORateRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.RateRange", DefaultText = "The rate must be within the allowed range of {min} to {max}",LocalDefaultText = @"BS64:IteU16nXoteoINeX15nXmdeRINec15TXmdeV16og15HXmdefIHttaW59INecIHttYXh9Ig==", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateORateRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.RateRange", DefaultText = "The rate must be within the allowed range of {min} to {max}",LocalDefaultText = @"ערך המכפלה חייב להיות בין {min} ל {max}", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

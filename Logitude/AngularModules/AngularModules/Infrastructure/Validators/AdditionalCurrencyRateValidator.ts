@@ -1,8 +1,8 @@
 import { AdditionalCurrencyRatePM } from '../EntityPMs/AdditionalCurrencyRatePM';
-import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
+import { TextCodeTranslator } from '../Utilities/TextCodeTranslator';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { AdditionalCurrencyRateListService } from 'Accounting/Services/StandardLists/AdditionalCurrencyRateListService';
+import { AdditionalCurrencyRateListService } from 'Infrastructure/Services/StandardLists/AdditionalCurrencyRateListService';
 
 export class AdditionalCurrencyRateValidator {
 
@@ -11,7 +11,7 @@ export class AdditionalCurrencyRateValidator {
 
             let filters = new ApiQueryFilters();
             filters.GetCount = true;
-            filters.addAdditionalFilter("Rate", entityPM.Rate, null, null, "Equals", false, false, false, "number");
+            filters.addAdditionalFilter("RateCoefficient", entityPM.RateCoefficient, null, null, "Equals", false, false, false, "number");
 
             const additionalCurrencyRateListService = new AdditionalCurrencyRateListService();
 

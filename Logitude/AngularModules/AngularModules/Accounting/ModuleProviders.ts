@@ -7,7 +7,6 @@ import { AccountingEntityListService } from './Services/StandardLists/Accounting
 import { AccountingPeriodListService } from './Services/StandardLists/AccountingPeriodListService';
 import { AutomaticReconcileListService } from './Services/StandardLists/AutomaticReconcileListService';
 import { AutomaticReconcileMethodListService } from './Services/StandardLists/AutomaticReconcileMethodListService';
-import { AdditionalCurrencyRateListService } from './Services/StandardLists/AdditionalCurrencyRateListService';
 import { Category1ListService } from './Services/StandardLists/Category1ListService';
 import { Category2ListService } from './Services/StandardLists/Category2ListService';
 import { Category3ListService } from './Services/StandardLists/Category3ListService';
@@ -60,7 +59,6 @@ import { TaxReportPMService } from './Services/StandardPMs/TaxReportPMService';
 import { InterestTransactionPMService } from './Services/StandardPMs/InterestTransactionPMService';
 import { AccountingPeriodPMService } from './Services/StandardPMs/AccountingPeriodPMService';
 import { AutomaticReconcileMethodPMService } from './Services/StandardPMs/AutomaticReconcileMethodPMService';
-import { AdditionalCurrencyRatePMService } from './Services/StandardPMs/AdditionalCurrencyRatePMService';
 import { Category1PMService } from './Services/StandardPMs/Category1PMService';
 import { Category2PMService } from './Services/StandardPMs/Category2PMService';
 import { Category3PMService } from './Services/StandardPMs/Category3PMService';
@@ -173,7 +171,6 @@ export class ModuleProviders {
             case "ARPaymentChequeStatusListService": { myResult = new ARPaymentChequeStatusListService(); break; }
 
             case "AutomaticReconcileMethodListService": { myResult = new AutomaticReconcileMethodListService(); break; }
-            case "AdditionalCurrencyRateListService": { myResult = new AdditionalCurrencyRateListService(); break; }
             case "Category1ListService": { myResult = new Category1ListService(); break; }
             case "Category2ListService": { myResult = new Category2ListService(); break; }
             case "Category3ListService": { myResult = new Category3ListService(); break; }
@@ -228,7 +225,6 @@ export class ModuleProviders {
 
             case "AccountingPeriodPMService": { myResult = new AccountingPeriodPMService(); break; }
             case "AutomaticReconcileMethodPMService": { myResult = new AutomaticReconcileMethodPMService(); break; }
-            case "AdditionalCurrencyRatePMService": { myResult = new AdditionalCurrencyRatePMService(); break; }
             case "Category1PMService": { myResult = new Category1PMService(); break; }
             case "Category2PMService": { myResult = new Category2PMService(); break; }
             case "Category3PMService": { myResult = new Category3PMService(); break; }

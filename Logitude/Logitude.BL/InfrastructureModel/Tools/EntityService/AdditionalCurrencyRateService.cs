@@ -75,6 +75,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private void SetUpdatedByUser()
         {
             var loggedUser = GetLoggedUser();
+            if (isNewEntity)
+            {
+                this.entityPM.CreatedByUserId = loggedUser != null ? loggedUser.Contact.Id : null;
+                this.entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+            }
             this.entityPM.UpdatedByUserId = loggedUser != null ? loggedUser.Contact.Id : null;
             this.entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
         }

@@ -9,6 +9,7 @@ import { RatesTablePM } from '../../Infrastructure/EntityPMs/RatesTablePM';
 import { TenantPMService } from './StandardPMs/TenantPMService';
 
 import { defer, of } from 'rxjs';
+import { CurrencyRatePM } from 'Infrastructure/EntityPMs/CurrencyRatePM';
 
 @Injectable()
 
@@ -246,6 +247,7 @@ export class LastRate {
     HistoryCount: number;
     UpdatedByUserId: string;
     UpdatedByUserNameName: string; 
+    CurrencyRates: CurrencyRatePM[];
 }
 export class AccountingCurrencyHelper {
     TenantPM: TenantPM;

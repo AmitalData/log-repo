@@ -10,15 +10,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
-import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
+import {ApiQueryFilters} from '../../DataContracts/ApiQueryFilters';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+import {InfraGenericFilter} from '../../Utilities/InfraGenericFilter';
+import {CachedDataManager} from '../../Utilities/CachedDataManager';
+import {ServiceHelper} from '../../Utilities/ServiceHelper';
+import {SessionLocator} from '../../Utilities/SessionLocator';
+import {SessionInfo} from '../../Utilities/SessionInfo';
+import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
+import {LocalStorageManager} from '../../Utilities/LocalStorageManager';
 import {AdditionalCurrencyRateList} from '../../EntityLists/AdditionalCurrencyRateList';
 
 @Injectable()
