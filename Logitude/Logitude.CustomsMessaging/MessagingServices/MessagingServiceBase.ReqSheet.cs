@@ -43,6 +43,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Server.Tools.FTP;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Reflection;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -905,7 +906,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 				
 					string ftpHostIP = pmCustomsPartnerFtp.MyFtpDetail.Host;
 					string ftpUserName = pmCustomsPartnerFtp.MyFtpDetail.UserName;
-					string ftpPrivateKeyPath = pmCustomsPartnerFtp.MyFtpDetail.Password ?? Path.Combine(Directory.GetCurrentDirectory(), "PRK.PPK");
+					string ftpPrivateKeyPath = pmCustomsPartnerFtp.MyFtpDetail.Password ?? Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "PRK.PPK");
 					string ftpFolderName = pmCustomsPartnerFtp.MyFtpDetail.Folder;
 					string p_message = "";
 					string p_status = "";
