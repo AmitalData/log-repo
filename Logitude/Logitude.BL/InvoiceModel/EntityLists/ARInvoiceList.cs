@@ -218,6 +218,9 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string ConfirmationNumberStatus { get; set; }
         public string ConfirmationNumberStatusName { get; set; }
         public string APIResponseToConfirmation { get; set; }
+        public string SequenceStatus { get; set; }
+        public string InvoiceNumberPart { get; set; }
+        public string InvoiceSeries { get; set; }
 
     }
 }
