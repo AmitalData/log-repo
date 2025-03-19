@@ -1,28 +1,15 @@
 
-import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component,  OnInit, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
-import { ReconciliationPM } from '../../EntityPMs/ReconciliationPM';
 import { JournalPM } from '../../EntityPMs/JournalPM';
 
-import { ReconciliationLinePM } from '../../EntityPMs/ReconciliationLinePM';
-import { LedgerTransactionList } from '../../EntityLists/LedgerTransactionList';
-import { AutomaticReconcileMethodList } from '../../EntityLists/AutomaticReconcileMethodList';
-import { LedgerTransactionPM } from '../../EntityPMs/LedgerTransactionPM';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
-import { ReconciliationExtendedPMService } from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';
-import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
-import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { AccountingPeriodListService } from '../../Services/StandardLists/AccountingPeriodListService';
 import { AccountingPeriodList } from '../../EntityLists/AccountingPeriodList';
 import { FullAccountingSettingListService } from '../../Services/StandardLists/FullAccountingSettingListService';
@@ -293,10 +280,10 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
     FillErrors() {
         this.ValidationErrorsList = [];
         if (this.glAccount !== null && this.glAccount.ChartOfAccountsTypeCode === "4") {
-           
+            const noAddressToVendor=TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
             var vendorValidator: VendorValidator = new VendorValidator();
             if (!vendorValidator.IsVendorCountryValid(this.glAccount.CardCountryCode)) {
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor"));
+                this.ValidationErrorsList.push(noAddressToVendor);
             }
         }
         if (AppTool.IsNullOrEmpty(this.glAccount)) {

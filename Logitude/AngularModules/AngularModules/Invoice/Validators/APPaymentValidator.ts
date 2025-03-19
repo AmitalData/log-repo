@@ -25,9 +25,7 @@ export class APPaymentValidator {
             if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
                 validationResults.push(TextCodeTranslator.Translate("APPayment.M.CantSetFutureDatePayment"));
             }
-            // if (DateTool.GetDateFromDate(entityPm.RegisterDate) > DateTool.GetDateFromDate(entityPm.ValueDate) && entityPm.PaymentMethodCode == "BT") { 
-            //     validationResults.push(TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate"));
-            // }
+           
         }
 
 
@@ -51,10 +49,7 @@ export class APPaymentValidator {
             }
         }
 
-        // if ((entityPm.PaymentMethodCode == "CH" || entityPm.PaymentMethodCode == "BT" || entityPm.PaymentMethodCode == "CC") && entityPm.ValueDate == null) {
-        //     validationResults.push(msg.replace("%FieldName", "Value Date"));
-
-        // }
+        
         if (entityPm.HasInvoicesErrors) {
             validationResults.push(TextCodeTranslator.Translate("APPayment.M.PaymentInvoicesHaveErrors"));
         }
@@ -105,9 +100,10 @@ export class APPaymentValidator {
             }
         }
         if (entityPm.SetApproved) {
-            var vendorValidator: VendorValidator = new VendorValidator();
+            const vendorValidator: VendorValidator = new VendorValidator();
+            const noAddressToVendor = TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
             if (!vendorValidator.IsVendorCountryValid(entityPm.VendorCountry)) {
-                validationResults.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor"));
+                validationResults.push(noAddressToVendor);
             }
         }
         return validationResults;

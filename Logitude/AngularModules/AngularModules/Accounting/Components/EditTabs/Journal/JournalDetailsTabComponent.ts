@@ -2,7 +2,6 @@ import {Component, OnInit,ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {JournalPM} from '../../../EntityPMs/JournalPM';
 import {JournalLinePM} from '../../../EntityPMs/JournalLinePM';
 import {JournalActionTypePM} from '../../../EntityPMs/JournalActionTypePM';
@@ -16,7 +15,6 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
-import {CurrencyPM} from '../../../../Common/EntityPMs/CurrencyPM';
 import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
