@@ -1,25 +1,14 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data;
- 
-namespace Logitude.Accounting.Data.EntityMapping
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+
+namespace Simplog.Data.InfrastructureModel.Mapping
 {
- 
     public class AdditionalCurrencyRateMap : EntityTypeConfiguration<AdditionalCurrencyRate>
     {
-	    string dbms;
         public AdditionalCurrencyRateMap()
         { 
-				this.ToTable("AdditionalCurrencyRates");
+			this.ToTable("AdditionalCurrencyRates");
 		
 		    this.HasKey(t => new { t.Id });
 	 
@@ -39,7 +28,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(100).IsUnicode(true);
 
-            this.Property(t => t.Rate).HasColumnName("Rate");
+            this.Property(t => t.RateCoefficient).HasColumnName("RateCoefficient");
         }
     }
 }

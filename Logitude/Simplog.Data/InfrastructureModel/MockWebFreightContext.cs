@@ -1207,6 +1207,11 @@ namespace Simplog.Data.InfrastructureModel
             }
         }
 
+        public IDbSet<AdditionalCurrencyRate> AdditionalCurrencyRates
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         List<EventType> eventTypes;
         MockObjectSet<EventType> eventTypesObjectSet;
         public IDbSet<EventType> EventType

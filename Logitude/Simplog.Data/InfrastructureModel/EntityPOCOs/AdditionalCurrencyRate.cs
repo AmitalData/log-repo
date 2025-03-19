@@ -1,23 +1,14 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ServiceModel.DomainServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
-namespace Logitude.Accounting.Data.EntityPOCOs
+namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
    
     public class AdditionalCurrencyRate
     {
-	 string dbms;
-
         [Key]
         [Column("Id")]
 	    public string Id { get; set; }
@@ -41,8 +32,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
-        [Column("Rate")]
-	    public double? Rate { get; set; }
+        [Column("RateCoefficient")]
+	    public double? RateCoefficient { get; set; }
     }
 }
 	 

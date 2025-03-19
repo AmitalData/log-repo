@@ -107,7 +107,6 @@
     <Compile Include="EntityKeys\AccountingEntityJournalKeys.cs" />
     <Compile Include="EntityKeys\AccountingIntegrityCheckKeys.cs" />
     <Compile Include="EntityKeys\AccountingNoteKeys.cs" />
-    <Compile Include="EntityKeys\AdditionalCurrencyRateKeys.cs" />
     <Compile Include="EntityKeys\ARPaymentsJournalKeys.cs" />
     <Compile Include="EntityKeys\Aur_ItemKeys.cs" />
     <Compile Include="EntityKeys\Aur_PaymentItemKeys.cs" />
@@ -158,7 +157,6 @@
     <Compile Include="EntityListQueryServices\AccountingEntityJournalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AccountingIntegrityCheckListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AccountingNoteListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\AdditionalCurrencyRateListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ARPaymentsJournalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Aur_ItemListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Aur_PaymentItemListQueryService.cs" />
@@ -175,7 +173,6 @@
     <Compile Include="EntityListQueryServices\Generated\AccountingEntityJournalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingIntegrityCheckListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingNoteListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AdditionalCurrencyRateListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ARPaymentsJournalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\Aur_ItemListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\Aur_PaymentItemListQueryService.Generated.cs" />
@@ -259,7 +256,6 @@
     <Compile Include="EntityLists\Generated\AccountingEntityJournalList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AccountingIntegrityCheckList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AccountingNoteList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\AdditionalCurrencyRateList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ARPaymentsJournalList.Generated.cs" />
     <Compile Include="EntityLists\Generated\Aur_ItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\Aur_PaymentItemList.Generated.cs" />
@@ -311,7 +307,6 @@
     <Compile Include="EntityMapping\AccountingEntityJournalMap.cs" />
     <Compile Include="EntityMapping\AccountingIntegrityCheckMap.cs" />
     <Compile Include="EntityMapping\AccountingNoteMap.cs" />
-    <Compile Include="EntityMapping\AdditionalCurrencyRateMap.cs" />
     <Compile Include="EntityMapping\ARPaymentsJournalMap.cs" />
     <Compile Include="EntityMapping\Aur_ItemMap.cs" />
     <Compile Include="EntityMapping\Aur_PaymentItemMap.cs" />
@@ -362,7 +357,6 @@
     <Compile Include="EntityPOCOs\AccountingEntityJournal.cs" />
     <Compile Include="EntityPOCOs\AccountingIntegrityCheck.cs" />
     <Compile Include="EntityPOCOs\AccountingNote.cs" />
-    <Compile Include="EntityPOCOs\AdditionalCurrencyRate.cs" />
     <Compile Include="EntityPOCOs\ARPaymentsJournal.cs" />
     <Compile Include="EntityPOCOs\Aur_Item.cs" />
     <Compile Include="EntityPOCOs\Aur_Payment.cs" />
@@ -422,7 +416,6 @@
      <Compile Include="Enums\JournalActionTypes.cs" />
      <Compile Include="Enums\RevaluationStatusEnum.cs" />
     <Compile Include="Repositories\AccountingEntityJournalRepository.cs" />
-    <Compile Include="Repositories\AdditionalCurrencyRateRepository.cs" />
     <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
     <Compile Include="Repositories\Aur_ItemRepository.cs" />
     <Compile Include="Repositories\Aur_PaymentItemRepository.cs" />
@@ -434,7 +427,6 @@
     <Compile Include="Repositories\ChequeCounterSerialRepository.cs" />
     <Compile Include="Repositories\CopyFromTenant0Repository.cs" />
     <Compile Include="Repositories\Generated\AccountingEntityJournalRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\AdditionalCurrencyRateRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\ARPaymentsJournalRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\Aur_ItemRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\Aur_PaymentItemRepository.Generated.cs" />
