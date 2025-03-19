@@ -176,11 +176,13 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public decimal AmountInNIS  { get; set; }
 
-        [DataMember]
+       [DataMember]
        public bool IsExternalEntity  { get; set; }
-        [DataMember]
+       [DataMember]
        public string BankName  { get; set; }
-    }
+       [DataMember]
+       public DateTime? ProcessStartDate  { get; set; }
+   }
 
 }
 	 

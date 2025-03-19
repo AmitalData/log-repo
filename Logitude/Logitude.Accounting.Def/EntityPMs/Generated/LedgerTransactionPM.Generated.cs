@@ -1753,7 +1753,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 }
 	   }
 
- 	  private bool isExternalEntity ;
+	  private bool isExternalEntity ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
@@ -1800,7 +1800,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
+	  private DateTime? processStartDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ProcessStartDate  
+	   {
+	    
+	     get
+		{
+		   return processStartDate;
+		 }
+		 set
+		 {
+		   if(processStartDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProcessStartDate",OldValue=processStartDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   processStartDate=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

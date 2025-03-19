@@ -85,8 +85,9 @@ export class LedgerTransactionList {
 	TaxReportId: string;
 	TaxReportNumber: string;
 	AmountInNIS: number;
- 	IsExternalEntity: boolean;
- 	BankName: string;
- 	
+	IsExternalEntity: boolean;
+	BankName: string;
+	ProcessStartDate: Date;
+	
 }
  
