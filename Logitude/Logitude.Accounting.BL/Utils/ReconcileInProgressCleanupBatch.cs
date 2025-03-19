@@ -1,30 +1,10 @@
-﻿using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.BL.DataContract;
-using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -50,49 +30,25 @@ namespace Logitude.Accounting.BL.Utils
             return _StatusCode;
         }
 
-        public void SetTotalFutureOpenChequesInLocalCurrency(int tenant = 0)
+        public void ResetInProgressTransactions(List<int> tenantsAccountingActivated)
         {
 
-            GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
-            List<GLAccount> accounts = gLAccountRepository.GetAllActivityAccountsByTenant(tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(0);
+            LedgerTransactionQueryService queryService = new LedgerTransactionQueryService(MyContext);
+            List<LedgerTransactionPM> ledgerTransactionInProgress = queryService.GetLedgerTransactionPMInProgress(tenantsAccountingActivated);
 
-            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            foreach (LedgerTransactionPM item in ledgerTransactionInProgress)
+            {        item.InProgressExternalReconcile = false;
+                    item.InReconcileProgress = false;
+                    item.ChangeSetOp = ChangeSetOperation.Update;
+             }
+            LedgerTransactionUpdateService service = new LedgerTransactionUpdateService(MyContext, new Dictionary<string, IContext>(), 0);
 
-            GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
-            GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(tenant);
-
-            foreach (var account in accounts)
+            foreach (LedgerTransactionPM item in ledgerTransactionInProgress)
             {
-                
-                    List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(account.Id, account.Tenant, isFuture: false, withoutDate: true);
-
-
-                    GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(account.Id, account.Tenant);
-                    GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetEntityPM(glAccountMoreData);
-                    if (moreDataPM != null) 
-                    {
-                        moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
-
-                        moreDataPM.TotFutureOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate > DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
-                        moreDataPM.TotalOpenChequesInLocalCur = allChecks.Where(x => x.PaymentValueDate <= DateTime.Today).Sum(x => (decimal?)x.CalculatedLocalAmount) ?? 0;
-
-
-                        GLAccountMoreDataUpdateService gLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), account.Tenant);
-                        gLAccountMoreDataUpdateService.Update(moreDataPM, true);
-
-                    }
-
-
-
-
-
+                service.Update(item, true);
             }
-
-
-
-
-
-
+            
         }
 
         

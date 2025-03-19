@@ -1416,6 +1416,20 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return ledgerTransactionPOCOs;
         }
 
+        public List<LedgerTransaction> GetLedgerTransactionsInProgress(List<int> tenantsAccountingActivated)
+        {
+            DateTime halfHourAgo = DateTime.Now.AddMinutes(-30);
+            List<LedgerTransaction> ledgerTransactionPOCOs =
+                (from a in context.LedgerTransactions
+                 where tenantsAccountingActivated.Contains(a.Tenant)
+                       && (a.InReconcileProgress || a.InProgressExternalReconcile)
+                       && (!a.IsReconciled && !a.IsExternalReconcile)
+                       && a.ProcessStartDate <= halfHourAgo
+                 select a).ToList();
+            return ledgerTransactionPOCOs;
+        }
+       
+
         public List<LedgerTransactionJournalLineLT> GetAPInvoiceLedgerTransactionsByIdList(List<String> ledgerTransactionIds, int tenant)
         {
 

@@ -38,15 +38,14 @@ namespace CommunicationWorkerRole.Tasks
                 }
                 _SB.Append(DateTime.Now.ToString()).Append("tenantsAccountingActivated:").Append(String.Join(",", tenantsAccountingActivated)).AppendLine();
 
-                //foreach (var tenant in tenantsAccountingActivated)
-                //{
-                   // _SB.Append(DateTime.Now.ToString()).Append("tenant:").Append(tenant).AppendLine();
+                
                     try
                     {
                         var reconcileInProgressCleanupBatch = new ReconcileInProgressCleanupBatch();
                         int tenant = this.Task != null ? this.Task.Tenant : 0;
-                        //FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency(tenant);
-                        //string responseText = FutureOpenChequesBatch.ResponseText();
+                      reconcileInProgressCleanupBatch.ResetInProgressTransactions(tenantsAccountingActivated):
+
+                       string responseText = reconcileInProgressCleanupBatch.ResponseText();
                         _SB.Append(DateTime.Now.ToString()).Append("responseText:").Append("").AppendLine();
                     }
                     catch (Exception ex)
@@ -56,7 +55,6 @@ namespace CommunicationWorkerRole.Tasks
                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", $"ReconcileInProgressCleanupTask()", null);
                     }
 
-                //}
             }
             finally
             {
@@ -65,7 +63,7 @@ namespace CommunicationWorkerRole.Tasks
                     throw new Exception(_SB.ToString());
                 }
             }
-            //base.StartTask();
+         
         }
 
     }
