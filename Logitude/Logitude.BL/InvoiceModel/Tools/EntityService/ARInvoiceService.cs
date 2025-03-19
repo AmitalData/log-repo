@@ -342,12 +342,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
 
             entityPM.PaidStatus = invoice.PaidStatus = SetPaidStatus();
-            if (CheckIfReportConnectedToInvoice(entityPM))
-            {
-                UpdateInterestReportStatus(entityPM, InterestReportStatusCodes.Invoiced);
-                throw new BusinessErrorException("An invoice has already been created for this report.");
-              
+            if (entityPM.ARInvoiceTypeCode == "IT") {
+                if (CheckIfReportConnectedToInvoice(entityPM))
+                {
+                    UpdateInterestReportStatus(entityPM, InterestReportStatusCodes.Invoiced);
+                    throw new BusinessErrorException("An invoice has already been created for this report.");
+
+                }
             }
+          
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
 
