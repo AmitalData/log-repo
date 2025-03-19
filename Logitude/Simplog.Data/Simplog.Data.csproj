@@ -848,6 +848,7 @@
     <Compile Include="InvoiceModel\EntityPOCOs\SATInvoiceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\QBOGlobalTaxCalculation.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATTransferStatus.cs" />
+    <Compile Include="InvoiceModel\Enums\ARInvoiceSignedStatusValues.cs" />
     <Compile Include="InvoiceModel\Mapping\ConfirmationNumberStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ConfirmationNumberDefaultMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APPaymentTransferStatusMap.cs" />
