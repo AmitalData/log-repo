@@ -170,4 +170,9 @@ export class ARInvoiceList {
 		ConfirmationNumberStatus: string;
 		ConfirmationNumberStatusName: string;
 	    APIResponseToConfirmation:string
+
+		SequenceStatus:string;
+	    InvoiceNumberPart:string;
+	    InvoiceSeries:string;
+
 }
