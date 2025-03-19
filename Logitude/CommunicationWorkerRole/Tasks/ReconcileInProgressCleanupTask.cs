@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CommunicationWorkerRole.Tasks
 {
@@ -43,9 +42,8 @@ namespace CommunicationWorkerRole.Tasks
                     {
                         var reconcileInProgressCleanupBatch = new ReconcileInProgressCleanupBatch();
                         int tenant = this.Task != null ? this.Task.Tenant : 0;
-                      reconcileInProgressCleanupBatch.ResetInProgressTransactions(tenantsAccountingActivated):
-
-                       string responseText = reconcileInProgressCleanupBatch.ResponseText();
+                         reconcileInProgressCleanupBatch.ResetInProgressTransactions(tenantsAccountingActivated);
+                         string responseText = reconcileInProgressCleanupBatch.ResponseText();
                         _SB.Append(DateTime.Now.ToString()).Append("responseText:").Append("").AppendLine();
                     }
                     catch (Exception ex)
