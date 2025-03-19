@@ -4,9 +4,11 @@ import { Validator } from '../../Infrastructure/Validators/Validator';
 import { APPaymentPM } from '../EntityPMs/APPaymentPM';
 import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { VendorValidator } from 'Common/Validators/VendorValidator';
 
 export class APPaymentValidator {
     public Validate(entityPm: APPaymentPM) {
+        
         var validationResults = [];
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -23,9 +25,7 @@ export class APPaymentValidator {
             if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
                 validationResults.push(TextCodeTranslator.Translate("APPayment.M.CantSetFutureDatePayment"));
             }
-            // if (DateTool.GetDateFromDate(entityPm.RegisterDate) > DateTool.GetDateFromDate(entityPm.ValueDate) && entityPm.PaymentMethodCode == "BT") { 
-            //     validationResults.push(TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate"));
-            // }
+           
         }
 
 
@@ -49,10 +49,7 @@ export class APPaymentValidator {
             }
         }
 
-        // if ((entityPm.PaymentMethodCode == "CH" || entityPm.PaymentMethodCode == "BT" || entityPm.PaymentMethodCode == "CC") && entityPm.ValueDate == null) {
-        //     validationResults.push(msg.replace("%FieldName", "Value Date"));
-
-        // }
+        
         if (entityPm.HasInvoicesErrors) {
             validationResults.push(TextCodeTranslator.Translate("APPayment.M.PaymentInvoicesHaveErrors"));
         }
@@ -102,7 +99,13 @@ export class APPaymentValidator {
                 validationResults.push("Credit Card Type Field is required");
             }
         }
-
+        if (entityPm.SetApproved) {
+            const vendorValidator: VendorValidator = new VendorValidator();
+            const noAddressToVendor = TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
+            if (!vendorValidator.IsVendorCountryValid(entityPm.VendorCountry)) {
+                validationResults.push(noAddressToVendor);
+            }
+        }
         return validationResults;
     }
 }
