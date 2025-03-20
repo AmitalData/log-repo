@@ -2036,7 +2036,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             this.arPaymentChequeOperationsService.GetCountOpenChequesByBankAccount(entityPM.Tenant, entityPM.Id).subscribe((result: any) => {
                 if (result > 0) {
                     this.StopBusyIndicator();
-                   debugger
+                   
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Width = 450;
                     confirmWindow.Height = 190;
