@@ -2646,7 +2646,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         var currentEditComponent = SessionLocator.SelectedSession.CurrentEditComponent;
         if(currentEditComponent != null)
         ServiceHelper.CheckIsLock(currentEditComponent.EntityId ,currentEditComponent.ObjectTableName)
-        else
+        else if(!AppTool.IsNullOrEmpty(this.EntityId) && !AppTool.IsNullOrEmpty(this.ObjectTableName))
         ServiceHelper.CheckIsLock(this.EntityId , this.ObjectTableName);
 
     }
