@@ -1215,7 +1215,7 @@ export class HomeComponent implements OnDestroy{
                     if(!this._AmitalBrowserInUse) {
                         this.SignoutClicked();
                     }
-                    else  if(this._AmitalBrowserInUse && (this.allowMutltiTabs || (this.Tabs[1]==this.SelectedTabItem && this.SelectedTabItem.SessionComponent && this.SelectedTabItem.SessionComponent.CurrentEditComponent==null)))
+                    else  if(this._AmitalBrowserInUse && (this.allowMutltiTabs || (this.Tabs[1] === this.SelectedTabItem && this.SelectedTabItem.SessionComponent && this.SelectedTabItem.SessionComponent.CurrentEditComponent === null)))
                     {   
                         this.AmitalBackButtonClicked();                     
                     }
