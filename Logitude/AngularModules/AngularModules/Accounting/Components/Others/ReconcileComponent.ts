@@ -1494,9 +1494,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             return showLocal ? 'סכום פתוח ' : 'Open transaction';
     }
     MustIgnoreItems: any[] = [];
-    onDataLoaded(rows: any) {
-        if (rows && rows.length > 0) {
-            rows.forEach(row => {
+    onDataLoaded() {
+        if (this.SelectedLines?.Collection && this.SelectedLines.Collection.length > 0) {
+            this.SelectedLines.Collection.forEach(row => {
                 if (this.IsReconcileButtonClicked && row?.rowData?.IsChecked) {
                     row.rowData.IsChecked = false;
                 }
@@ -1641,7 +1641,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     ReloadScreen() {
-        this.SelectedLines.Clear();
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
 
         this.CalculateTotals();
@@ -1878,6 +1877,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         this.ValidationErrorsList = mm.ErrorsArray.map(error =>
                             error === "GLAccounts.O.MarkedByAnother" ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ") : error
                         );
+                        this.SelectedLines.Clear();
                         this.ReloadScreen()
                         this.autoReconil = true
                     }
