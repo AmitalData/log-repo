@@ -1194,7 +1194,16 @@ export class HomeComponent implements OnDestroy{
            
            });
         }
-        
+
+        const closeWarningMessage = () => {          
+            confirmWindow.Close();    
+            this.WarningShown = false;
+            clearInterval(timer);
+            this.ResetTimer();  
+            ServiceHelper.DeleteGeneralLockBySessionId();
+                
+        }
+
         const timer = setInterval(() => {
   
                 if (remainingTime > 0) {
@@ -1202,8 +1211,19 @@ export class HomeComponent implements OnDestroy{
                     this.WarningShown = true; // עדכן שההודעה הוצגה
                     remainingTime--;
                 } else {
-                    clearInterval(timer);
-                    this.SignoutClicked();
+                    closeWarningMessage();
+                    if(!this._AmitalBrowserInUse) {
+                        this.SignoutClicked();
+                    }
+                    else  if(this._AmitalBrowserInUse && (this.allowMutltiTabs || (this.Tabs[1]==this.SelectedTabItem && this.SelectedTabItem.SessionComponent && this.SelectedTabItem.SessionComponent.CurrentEditComponent==null)))
+                    {   
+                        this.AmitalBackButtonClicked();                     
+                    }
+                    else {
+                          this.SelectedTabItem.SessionComponent.CurrentEditComponent.BackButtonClicked();
+                    }
+
+                   
                 }
         }, 1000);  // כל שנייה
     }
@@ -1888,9 +1908,7 @@ export class HomeComponent implements OnDestroy{
         ServiceHelper.OpenWindowWithParams(url, params);
     }
      SignoutClicked() {
-         SessionLocator.Index = 0;
-
-         ServiceHelper.DeleteGeneralLockBySessionId();
+        SessionLocator.Index = 0;
 
         SessionLocator.AllSessions.forEach((item) => {
             item.DestroySession();
