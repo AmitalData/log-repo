@@ -907,6 +907,7 @@
     <Compile Include="InfrastructureModel\EntityLists\ScreenSectionList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\AdditionalCurrencyRatePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ChildEntitiesCustomFieldPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\CurrencyRatePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationKeyPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EventRemarkPM.cs" />
@@ -928,6 +929,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\ScreenSectionPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\AdditionalCurrencyRateQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ChildEntitiesCustomFieldQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\CurrencyRateQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationKeyQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EventRemarkQueryService.cs" />
@@ -1001,6 +1003,7 @@
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\ImportingValidator\IDeploymentPackageImporterValidatingService.cs" />
     <Compile Include="InfrastructureModel\Services\PartnersObjectFieldService.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\AdditionalCurrencyRateMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\CurrencyRateMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomChildObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomFieldsMainObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationKeyMapping.cs" />
@@ -1012,6 +1015,7 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\EventRemarkMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ReferenceCustomObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\AdditionalCurrencyRateService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\CurrencyRateService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\CustomChildObjectService.cs" />
     <Compile Include="InfrastructureModel\Services\QuoteUpdateService.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ImageLibraryMapping.cs" />
@@ -1045,9 +1049,11 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationKeyService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
+    <Compile Include="InfrastructureModel\Tools\TraceEvents\CurrencyRateTracing.cs" />
     <Compile Include="InfrastructureModel\Tools\TraceEvents\AdditionalCurrencyRateTracing.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\AdditionalCurrencyRateValidating.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\DeploymentPackageValidating.cs" />
+    <Compile Include="InfrastructureModel\Tools\Validating\CurrencyRateValidating.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TasksSchedulerValidator.cs" />
     <Compile Include="IntegrationTestModel\EntityPMs\LocationsVariables.cs" />
     <Compile Include="IntegrationTestModel\EntityPMs\PartnersVariables.cs" />

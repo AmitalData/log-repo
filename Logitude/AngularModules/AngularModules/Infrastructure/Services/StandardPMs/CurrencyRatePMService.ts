@@ -10,26 +10,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
+import {Guid} from '../../Utilities/Guid';
+import {InfraSettings} from '../../Utilities/InfraSettings';
+import {ServiceHelper} from '../../Utilities/ServiceHelper';
+import {SessionInfo} from '../../Utilities/SessionInfo';
+import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
+import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
 
-import {AdditionalCurrencyRatePM} from '../../EntityPMs/AdditionalCurrencyRatePM';
+import {CurrencyRatePM} from '../../EntityPMs/CurrencyRatePM';
 
 
 @Injectable()
 
-export class AdditionalCurrencyRatePMService {
+export class CurrencyRatePMService {
  private _http: HttpClient;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/additionalcurrencyrates';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/currencyrates';      
     }
 
 	get(id: string) {       
@@ -42,7 +42,7 @@ export class AdditionalCurrencyRatePMService {
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
 				
-						var entity: AdditionalCurrencyRatePM;
+						var entity: CurrencyRatePM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
 						}
@@ -51,7 +51,7 @@ export class AdditionalCurrencyRatePMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AdditionalCurrencyRate", "GetSinglePM", 'id=' + id);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CurrencyRate", "GetSinglePM", 'id=' + id);
 				 
 						return serviceResponse;
 
@@ -61,7 +61,7 @@ export class AdditionalCurrencyRatePMService {
 		});                    
 	}
 
-	insert(entityPM: AdditionalCurrencyRatePM) {
+	insert(entityPM: CurrencyRatePM) {
  
 		var callTime = new Date();  
 		
@@ -69,12 +69,12 @@ export class AdditionalCurrencyRatePMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("AdditionalCurrencyRate", entityPM);
+			var errorsArray = validator.Validate("CurrencyRate", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: AdditionalCurrencyRatePM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: CurrencyRatePM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -82,12 +82,12 @@ export class AdditionalCurrencyRatePMService {
 
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: AdditionalCurrencyRatePM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: CurrencyRatePM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}						
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AdditionalCurrencyRate", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CurrencyRate", "SaveChanges", "");                    
 												                             
 							return serviceResponse;
 						}),
@@ -103,7 +103,7 @@ export class AdditionalCurrencyRatePMService {
 		});
 	}
 
-	update(entityPM: AdditionalCurrencyRatePM) {
+	update(entityPM: CurrencyRatePM) {
 
 		var callTime = new Date();     
 		
@@ -111,12 +111,12 @@ export class AdditionalCurrencyRatePMService {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("AdditionalCurrencyRate", entityPM);
+			var errorsArray = validator.Validate("CurrencyRate", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
-				var mappedEntity: AdditionalCurrencyRatePM = this.MapJsonToEntityPM(entityPM, false);
+				var mappedEntity: CurrencyRatePM = this.MapJsonToEntityPM(entityPM, false);
 				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
@@ -124,12 +124,12 @@ export class AdditionalCurrencyRatePMService {
                  
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: AdditionalCurrencyRatePM = this.MapJsonToEntityPM(pm, true, entityPM);
+								var mappedResult: CurrencyRatePM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
 							 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AdditionalCurrencyRate", "SaveChanges", "");                    
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CurrencyRate", "SaveChanges", "");                    
 					                           
 							return serviceResponse;
 						}),
@@ -147,12 +147,12 @@ export class AdditionalCurrencyRatePMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: AdditionalCurrencyRatePM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: CurrencyRatePM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new AdditionalCurrencyRatePM();
+            entityPM = new CurrencyRatePM();
 			entityPM.DisableMarkAsDirty = true;
         }
 
@@ -219,8 +219,8 @@ export class AdditionalCurrencyRatePMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: AdditionalCurrencyRatePM;
-			entityPM = new AdditionalCurrencyRatePM();
+		    var entityPM: CurrencyRatePM;
+			entityPM = new CurrencyRatePM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

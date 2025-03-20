@@ -1212,6 +1212,11 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
+        public IDbSet<CurrencyRate> CurrencyRates
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         List<EventType> eventTypes;
         MockObjectSet<EventType> eventTypesObjectSet;
         public IDbSet<EventType> EventType

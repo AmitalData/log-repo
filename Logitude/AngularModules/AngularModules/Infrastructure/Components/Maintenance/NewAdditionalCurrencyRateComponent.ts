@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {BaseComponent} from '../LogitudeComponents/BaseComponent';
+import {SessionLocator} from '../../Utilities/SessionLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {AdditionalCurrencyRatePM} from '../../EntityPMs/AdditionalCurrencyRatePM';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import { AdditionalCurrencyRatePMService } from '../../Services/StandardPMs/AdditionalCurrencyRatePMService';
-import { AdditionalCurrencyRateValidator } from 'Accounting/Validators/AdditionalCurrencyRateValidator';
+import { AdditionalCurrencyRateValidator } from 'Infrastructure/Validators/AdditionalCurrencyRateValidator';
 
 @Component({
     selector: 'NewAdditionalCurrencyRateComponent',
@@ -37,10 +37,10 @@ export class NewAdditionalCurrencyRateComponent extends BaseComponent{
         }
     }
 
-    get Rate() { return this.EntityPM.Rate; }
-    set Rate(value: number) {
-        if (this.EntityPM.Rate != value) {
-            this.EntityPM.Rate = value;
+    get RateCoefficient() { return this.EntityPM.RateCoefficient; }
+    set RateCoefficient(value: number) {
+        if (this.EntityPM.RateCoefficient != value) {
+            this.EntityPM.RateCoefficient = value;
         }
     }
 

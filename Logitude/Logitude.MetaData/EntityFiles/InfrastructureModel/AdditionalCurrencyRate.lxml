@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   NewWizardControlName="&quot;NewAdditionalCurrencyRateComponent&quot;"
-  LocalDefaultText="&quot;BS64:Iteh15XXkteZINep16LXqNeZ150g16DXldeh16TXmdedIg==&quot;"
+  LocalDefaultText="&quot;סוגי שערים נוספים&quot;"
   DefaultText="&quot;Additional Currency Rates&quot;"
   Code="&quot;3eba&quot;"
   Name="&quot; Query Group&quot;"
@@ -718,7 +718,7 @@
     DefaultText="&quot;Rate Coefficient&quot;"
     FullLocalDefaultText="&quot;מכפלה&quot;"
     ListFieldLable="&quot;RateCoefficientListLable&quot;"
-    ListLableDefaultText="&quot;Rate&quot;"
+    ListLableDefaultText="&quot;Rate Coefficient&quot;"
     ListLocalDefaultText="&quot;מכפלה&quot;"
     IsNullable="true"
     IsForeignKey="false"
@@ -748,7 +748,7 @@
   <Query
     Code="&quot;allrates&quot;"
     TextCode="&quot;All&quot;"
-    LocalTextCode="&quot;BS64:IiDXm9ecINeh15XXkteZINep16LXqNeZ150i&quot;"
+    LocalTextCode="&quot; כל סוגי שערים&quot;"
     QueryGroupCode="&quot;3eba&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;AdditionalCurrencyRate&quot;"
@@ -768,7 +768,7 @@
       <QueryColumn
         QueryCode="&quot;allrates&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Rate&quot;"
+        ObjectFieldName="&quot;RateCoefficient&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;allrates&quot;"
@@ -816,13 +816,13 @@
       <ScreenField
         Column="0"
         Row="1"
-        ObjectFieldName="&quot;Rate&quot;"
+        ObjectFieldName="&quot;RateCoefficient&quot;"
         ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>
   <Tab
     TabName="&quot;General&quot;"
-    TabLocalName="&quot;BS64:Iteb15zXnNeZIg==&quot;"
+    TabLocalName="&quot;כללי&quot;"
     ObjectTableName="&quot;AdditionalCurrencyRate&quot;"
     Code="&quot;ACRG&quot;"
     ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
@@ -835,7 +835,7 @@
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Events&quot;"
-    TabLocalName="&quot;BS64:IteQ15nXqNeV16LXmdedIg==&quot;"
+    TabLocalName="&quot;אירועים&quot;"
     ObjectTableName="&quot;AdditionalCurrencyRate&quot;"
     Code="&quot;ACRE&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;"
@@ -878,37 +878,37 @@
     <TextCode
       Code="&quot;General.MC.ACC.AdditionalCurrencyRate&quot;"
       DefaultText="&quot;AdditionalCurrencyRate&quot;"
-      LocalDefaultText="&quot;BS64:Iteh15XXkteZINep16LXqNeZ150g16DXldeh16TXmdedIg==&quot;"
+      LocalDefaultText="&quot;סוגי שערים נוספים&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;AdditionalCurrencyRate.O.NewAdditionalCurrencyRate&quot;"
       DefaultText="&quot;New Currency Rate&quot;"
-      LocalDefaultText="&quot;BS64:Iteh15XXkiDXqdei16gg15fXk9epIg==&quot;"
+      LocalDefaultText="&quot;סוג שער חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;AdditionalCurrencyRate.NewButton&quot;"
       DefaultText="&quot;New Currency Rate&quot;"
-      LocalDefaultText="&quot;BS64:Iteh15XXkiDXqdei16gg15fXk9epIg==&quot;"
+      LocalDefaultText="&quot;סוג שער חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;AdditionalCurrencyRate.O.AlreadyExistRate&quot;"
       DefaultText="&quot;There are already currency rates for the currency rate type {name}. The change will only apply to future currency rates!&quot;"
-      LocalDefaultText="&quot;BS64:Itec16HXldeSINep16LXqCB7bmFtZX0g15vXkdeoINen15nXmdee15nXnSDXqdei16jXmdedLiDXlNep15nXoNeV15kg15nXl9eV15wg16jXpyDXotecINep16LXqNeZ150g16LXqteZ15PXmdeZ150hIg==&quot;"
+      LocalDefaultText="&quot;לסוג שער {name} כבר קיימים שערים. השינוי יחול רק על שערים עתידיים!&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;AdditionalCurrencyRate.O.RateRequired&quot;"
       DefaultText="&quot;Rate is required&quot;"
-      LocalDefaultText="&quot;BS64:Itep16LXqCDXlNeV15Ag16nXk9eUINeX15XXkdeUIg==&quot;"
+      LocalDefaultText="&quot;מכפלה הוא שדה חובה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;AdditionalCurrencyRate.O.RateRange&quot;"
       DefaultText="&quot;The rate must be within the allowed range of {min} to {max}&quot;"
-      LocalDefaultText="&quot;BS64:IteU16nXoteoINeX15nXmdeRINec15TXmdeV16og15HXmdefIHttaW59INecIHttYXh9Ig==&quot;"
+      LocalDefaultText="&quot;ערך המכפלה חייב להיות בין {min} ל {max}&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
@@ -917,7 +917,7 @@
       Code="&quot;AdditionalCurrencyRate.Features.Menu&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;AdditionalCurrencyRate.Features.Menu&quot;"
-      FeatureDefaultText="&quot;BS64:Iteh15XXkteZINep16LXqNeZ150g16DXldeh16TXmdedIg==&quot;"
+      FeatureDefaultText="&quot;סוגי שערים נוספים&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

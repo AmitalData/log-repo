@@ -25,7 +25,6 @@ import {NewBankCodeComponent} from './Components/NewEntity/NewBankCodeComponent'
 import {NewBankAccountComponent} from './Components/NewEntity/NewBankAccountComponent';
 import {NewBankDepositComponent} from './Components/NewEntity/NewBankDepositComponent';
 
-import {NewAdditionalCurrencyRateComponent} from './Components/Maintenance/NewAdditionalCurrencyRateComponent';
 import {NewCategory1Component} from './Components/Maintenance/NewCategory1Component';
 import {NewCategory2Component} from './Components/Maintenance/NewCategory2Component';
 import {NewCategory3Component} from './Components/Maintenance/NewCategory3Component';
@@ -206,7 +205,6 @@ export const Components =
 
         //Maintenance
         NewCategory1Component,
-        NewAdditionalCurrencyRateComponent,
         NewCategory2Component,
         NewCategory3Component,
         NewCategory4Component,
@@ -386,7 +384,6 @@ export class ModuleDeclarations {
             case "CreateInterestReportsForCustomersComponent": { myResult = CreateInterestReportsForCustomersComponent; break; }
 
             //Maintenance
-            case "NewAdditionalCurrencyRateComponent": { myResult = NewAdditionalCurrencyRateComponent; break; }
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
             case "NewCategory2Component": { myResult = NewCategory2Component; break; }
             case "NewCategory3Component": { myResult = NewCategory3Component; break; }

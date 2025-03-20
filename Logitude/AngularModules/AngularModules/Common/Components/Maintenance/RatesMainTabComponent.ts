@@ -10,6 +10,8 @@ import {RatesTablePM} from '../../../Infrastructure/EntityPMs/RatesTablePM';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { AdditionalCurrencyRateListService } from 'Infrastructure/Services/StandardLists/AdditionalCurrencyRateListService';
+import { AdditionalCurrencyRateList } from 'Infrastructure/EntityLists/AdditionalCurrencyRateList';
 
 
 @Component({
@@ -27,6 +29,7 @@ export class RatesMainTabComponent extends BaseComponent {
     public DataContext: RatesMainTabComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
     IsAccountingActivated: boolean = false;
+    private CurrencyRateTypes: AdditionalCurrencyRateList[];
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -63,6 +66,7 @@ export class RatesMainTabComponent extends BaseComponent {
         entityPM.LogDateTime = DateTool.GetCurrentDateTimeAsUtc();
         itemComponent.EntityPM = entityPM;
         logitudeWindow.DataContext = itemComponent;
+        logitudeWindow.WindowArgs = { CurrencyRateTypes: this.CurrencyRateTypes }
         logitudeWindow.Show('./Common/Components/Maintenance/EditLastRateComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnEditWindowClosed($event));
     }
@@ -91,6 +95,7 @@ export class RatesMainTabComponent extends BaseComponent {
         else {
             var list: LastRate[] = new Array<LastRate>();
             var myService: CurrencyRatesService = new CurrencyRatesService();
+            const additionalCurrencyRateListService: AdditionalCurrencyRateListService = new AdditionalCurrencyRateListService();
             var loadingDate: Date = this.TodayDate;
             if (loadingDate == null) {
                 loadingDate = DateTool.GetCurrentDateAsUtc();
@@ -103,9 +108,15 @@ export class RatesMainTabComponent extends BaseComponent {
             myService.GetCurrenciesExchangeRateByValueDate(this.TenantPM.CurrencyId, loadingDate,true).subscribe((resp:any) => {
                 var result: ServiceResponse = resp;
                 if (!result.HasError) {
-                    result.Result.forEach(item => {
-                        var itemData: RatesItem = new RatesItem(item);
-                        this.ItemsSource.push(itemData);
+                    additionalCurrencyRateListService.getAll().subscribe((rateTypesResp:any) => {
+                        if (!rateTypesResp.HasError){
+                            this.CurrencyRateTypes = rateTypesResp.Result;
+                        }
+
+                        result.Result.forEach(item => {
+                            var itemData: RatesItem = new RatesItem(item);
+                            this.ItemsSource.push(itemData);
+                        });
                     });
                 }
                 //else {
