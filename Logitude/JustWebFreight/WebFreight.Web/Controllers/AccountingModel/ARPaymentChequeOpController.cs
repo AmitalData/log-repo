@@ -62,7 +62,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
-        public HttpResponseMessage GetCountOpenChequesByBankAccount(int tenant, string bankId, string bankBranch, string bankAccount)
+        public HttpResponseMessage GetCountOpenChequesByBankAccount(int tenant, string bankId)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 ARPaymentChequeQueryService arPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
-                var count = arPaymentChequeQueryService.GetOpenChequesByBankAccount(bankId, bankBranch, bankAccount, tenant);
+                var count = arPaymentChequeQueryService.GetOpenChequesByBankAccount(bankId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, count);
             }
 

@@ -105,7 +105,7 @@ namespace Logitude.Accounting.BL.Utils
             List<BankAccount> bankAccounts = bankAccountQueryService.GetFactoringBankAccounts(tenant);
             foreach (var bank in bankAccounts)
             {
-                List<ARPaymentChequePM> aRPaymentCheques = arPaymentChequeQueryService.GetOpenChequesByBankAccountInThePast(bank.BankCode.Code, bank.BranchNumber, bank.AccountNumber, bank.Tenant, valueDate);
+                List<ARPaymentChequePM> aRPaymentCheques = arPaymentChequeQueryService.GetOpenChequesByBankAccountInThePast( bank.Id,  bank.Tenant, valueDate);
                 bankDepositRedeemedChequesVerifyService.RedeemCheques(aRPaymentCheques, bank.Tenant);
             }
         }

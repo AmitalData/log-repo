@@ -217,18 +217,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
-        public  int GetOpenChequesByBankAccount(string bankId,string bankBranch, string bankAccount, int tenant)
+        public  int GetOpenChequesByBankAccount(string bankId, int tenant)
         {
 
             ARPaymentChequeRepository aRPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
-           return aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, bankBranch, bankAccount, tenant).Where(a=>a.ValueDate> DateTime.Now).Count();
+           return aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, tenant).Where(a=>a.ValueDate> DateTime.Now).Count();
          
         }
 
-        public List<ARPaymentChequePM> GetOpenChequesByBankAccountInThePast(string bankId, string bankBranch, string bankAccount, int tenant,DateTime valueDate)
+        public List<ARPaymentChequePM> GetOpenChequesByBankAccountInThePast(string bankId, int tenant,DateTime valueDate)
         {
             ARPaymentChequeRepository aRPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
-            var cheques = aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, bankBranch, bankAccount, tenant).Where(a => a.ValueDate <= valueDate).ToList();
+            var cheques = aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, tenant).Where(a => a.ValueDate <= valueDate).ToList();
             return cheques.Select(rec => GetEntityPM(rec)).ToList();
          }
     }
