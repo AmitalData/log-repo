@@ -1921,15 +1921,17 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     async CheckOpenCheques(entityPM: any): Promise<boolean> {
         this.CurrentSession.StartBusyIndicator("Check cheques");
         return new Promise<boolean>((resolve) => {
-            this.arPaymentChequeOperationsService.GetCountOpenChequesByBankAccount(entityPM.Tenant, entityPM.BankCode, entityPM.BranchNumber, entityPM.AccountNumber).subscribe((result: any) => {
+            this.arPaymentChequeOperationsService.GetCountOpenChequesByBankAccount(entityPM.Tenant, entityPM.Id).subscribe((result: any) => {
                 if (result > 0) {
                     this.StopBusyIndicator();
-    
+                   debugger
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Width = 450;
                     confirmWindow.Height = 190;
                     var message=entityPM.FactoringBank? "BankAccounts.O.AutoRedeemed":"BankAccounts.O.NotAutoRedeemed";
-                    confirmWindow.Show(TextCodeTranslator.Translate("BankAccounts.O.CountFutureChecks").replace("%X", result)+" ,"+TextCodeTranslator.Translate(message))
+                    var countFutureChecksText = TextCodeTranslator.Translate("BankAccounts.O.CountFutureChecks");
+                    countFutureChecksText = countFutureChecksText.replace("X%", result);
+                    confirmWindow.Show(countFutureChecksText+" ,"+TextCodeTranslator.Translate(message))
                     
                     confirmWindow.WindowClosed.subscribe(() => {
                         if (confirmWindow.Yes) {
