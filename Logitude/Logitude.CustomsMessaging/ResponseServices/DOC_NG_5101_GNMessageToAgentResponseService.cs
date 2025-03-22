@@ -593,7 +593,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void DoUpdateNotification(string notificationDefinitionCode, int tenant, string responseToMessage, string description, string typeCode)
+        private void DoUpdateNotification(string notificationDefinitionCode, int tenant, string responseToMessage, string description, string typeCode,string senderName=null)
         {
             LogMessagingUtil.Instance.AppendLine("New Message To Agent Request Notification");
 
@@ -609,6 +609,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.Description = description;
             newNotificationPM.Reference2Number = responseToMessage;
             newNotificationPM.DueDate = DateTime.Now;
+            newNotificationPM.SenderName = senderName;
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
             
             string customerId = null;
