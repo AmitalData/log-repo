@@ -127,6 +127,7 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableCodeValueWithSnapShot.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableNumberValueWithSnapshotView.dxml" />
+    <None Include="DBOthers\InvoiceModel\Procedures\usp_GetInvoiceSequenceStatus.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateARInvoiceTransferStatus.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\Trigger_AutomaticLastUpdateDateARInvoiceTransferStatus.dxml" />
     <None Include="DBOthers\InfrastructureModel\Views\DBA_View_AnalyzeQueues_ToBeDeleted.dxml" />

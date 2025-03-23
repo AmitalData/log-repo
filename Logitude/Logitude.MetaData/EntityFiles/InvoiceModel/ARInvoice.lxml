@@ -18149,6 +18149,10 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  
+  
+    
+  
   <field
     Id="&quot;570fbf01-a1fe-4b3b-9fd0-37aae5bc0d46&quot;"
     FieldName="&quot;SequenceStatus&quot;"
@@ -22189,6 +22193,7 @@
       LocalDefaultText="&quot;חשבונית דיגטלית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+
     <TextCode
       Code="&quot;ARInvoice.O.OriginalInvoiceNumber&quot;"
       DefaultText="&quot;OriginalInvoiceNumber&quot;"
@@ -22199,6 +22204,12 @@
       Code="&quot;ARInvoice.O.InvoiceSequence&quot;"
       DefaultText="&quot;Invoice Sequence&quot;"
       LocalDefaultText="&quot;רצף חשבוניות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.DatesMustBeInTheSameYear&quot;"
+      DefaultText="&quot;Dates Must Be In The Same Year&quot;"
+      LocalDefaultText="&quot;התאריכים חייבים להיות באותה שנה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

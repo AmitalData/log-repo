@@ -1228,6 +1228,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ScreenController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Services\ImporterEntityStatusesExtendedService.cs" />
     <Compile Include="Controllers\InfrastructureModel\Services\ImporterEventTypesExtendedService.cs" />
+    <Compile Include="Controllers\InvoiceModel\Extended\ARInvoiceExtendedController.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoicesSignedStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberDefaultViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberStatusViewsController.Generated.cs" />
