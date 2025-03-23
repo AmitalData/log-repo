@@ -21972,6 +21972,12 @@
       LocalDefaultText="&quot;רצף חשבוניות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.DatesMustBeInTheSameYear&quot;"
+      DefaultText="&quot;Dates Must Be In The Same Year&quot;"
+      LocalDefaultText="&quot;התאריכים חייבים להיות באותה שנה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

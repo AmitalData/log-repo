@@ -1,65 +1,122 @@
 
 <style>
-    .subTitle {
-        color: #1b90cb;
-        font-size: 16px;
-    }
-
-    .DisbleBox {
-        display: inline-block;
-        border: 1px solid #ffd800;
-        border-radius: 5px;
-        background: #faf5c0;
-        padding: 2px 10px;
-        margin: 5px;
-        color: gray;
-        font-family: sans-serif;
+    
+    .noselect {
+        -webkit-touch-callout: none; 
+        -webkit-user-select: none; 
+        -khtml-user-select: none; 
+        -moz-user-select: none; 
+        -ms-user-select: none; 
+        user-select: none; 
+                                  
     }
 </style>
-<table *ngIf="isLoaded">
-    <tr>
-        <td>
-            <div class="TableHolder">
-                <table>
-                    <tr style="height:25px">
-                        <!-- <td class="TabTitleRow" style="width:150px">
-                            {{'ARInvoice.O.InvoiceSequence'| TextCodeTranslationPipe}}
-                        </td> -->
+    <div 
+         style="position: absolute; top:0px; bottom:0; left:0; right:0; margin:auto; padding: 10px; background: white;border-radius:0 5px 5px 0;">
+        
 
-                     
-                    </tr>
-                    <tr [style.text-align]="isRTL ? 'right' : 'left'">
-                        <td  [style.bottom]="isRTL ? '10px' : '10px'"
-                             [style.right]="isRTL ? '80px' : '10px'"
-                             [style.left]="isRTL ? '0px' : '98%'">
+            <table class="noselect">
+                <tr style="height: 60px;">
+                    <td>
+                        <table>
+                            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;width: 100%;">
+                                <td>
+                                    <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td style="width: 60px; padding: 10px;">
+
+                                    <BackButton [Text]="BackBtnTitle" (click)="BackButtonClicked()"></BackButton>
+
+                                </td>
+                                <td style="width: 150px; padding: 10px; color: #1B90CB;">
+
+                                    <span style="font-size: 20px;">
+
+                                        {{'ARInvoice.O.InvoiceSequence' | TextCodeTranslationPipe}}
+
+                                    </span>
+
+                                </td>
+
+                                  
+                                <td style="padding: 10px;"></td>
+                            </tr>
+                        </table>
+                        <table>
                             
-                            <IconButton  [IsSmall]="true"  [Name]="'excel'"  (click)="ExportToExcelClick()" ></IconButton>
+                            <tr>
+                                <td style="width: 60px; padding: 10px;">
+                                    <div>
+                                        <IconButton class="excel" [Name]="'Excel'" (click)="ExportToExcelClick()"></IconButton>
+                                    </div>
+                                </td>
+                                <td style="width: 30px; padding: 10px;">
+                                    {{'Accounting.General.O.Datefrom' | TextCodeTranslationPipe}}
+                                </td>
+                                <td style="width: 120px; padding: 10px;">
+                                    <LogDatePicker [ObjectFieldName]="'FromDate'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [NoObjectField]="true" [ForceSubscribe]="true"
+                                        [DataContext]="DataContext" [HideColumns]="true"
+                                        [SelectedDateValue]="FromDate"></LogDatePicker>
+                                </td>
+                                <td style="width: 30px; padding: 10px;">
+                                    {{'Accounting.General.O.To' | TextCodeTranslationPipe}}
+                                </td>
+                                <td style="width: 120px; padding: 10px;">
+                                    <LogDatePicker [ObjectFieldName]="'ToDate'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [NoObjectField]="true" [ForceSubscribe]="true"
+                                        [DataContext]="DataContext" [HideColumns]="true"
+                                        [SelectedDateValue]="ToDate"></LogDatePicker>
+                                </td>
+                                <td style="padding: 10px;"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
 
-                        </td>
+                <tr style="height: 10px;">
+                    <td style="height: 10px;">
+                        <div></div>
+                    </td>
+                </tr>
 
-                    </tr>
 
-                    <tr class="FormFieldRow" style="height:1px">
-                        <td colspan="5" style="width: 100% ; height : 100%">
-                            <div class="CellContent" style="bottom: 5px;padding:5px">
-                                <logitude-grid GridWidth="100%" GridHeight="100%"
+
+
+
+
+                <tr style="height: 10px;">
+                    <td style="height: 10px;">
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr >
+                    <td colspan="5" class="CellStretch">
+                        <div class="CellContent">
+                         
+
+                                <logitude-grid [dataSource]="DataSource"
                                                [ObjectTable]="ObjectTableName"
-                                               [dataSource]="DataSource"
+                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                                [columns]="columns"
-                                               [autoLoad]="true"
-                                               [QueryChangeEvent]="onQueryChangeEvent"
                                                [IsCustomTemplate]="true">
                                 </logitude-grid>
-                                <div>
-                                </div>
+
+
+                            
                             </div>
-                        </td>
+                    </td>
+                </tr>
+            </table>
 
-                    </tr>
 
-                </table>
+      
+    </div>
 
-            </div>
-        </td>
-    </tr>
-</table>

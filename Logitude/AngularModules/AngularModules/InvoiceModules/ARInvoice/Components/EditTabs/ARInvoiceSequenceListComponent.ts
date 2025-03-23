@@ -1,20 +1,16 @@
-import {Component, OnInit, Output, EventEmitter,AfterViewInit,ChangeDetectorRef}  from '@angular/core';
-import {AppTool} from '../../../../Infrastructure/Tools';
+import {Component, OnInit, Output, EventEmitter,AfterViewInit,ChangeDetectorRef, ComponentRef}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 
-import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { ARInvoicePM } from 'Invoice/EntityPMs/ARInvoicePM';
 import { ARInvoiceList } from 'Invoice/EntityLists/ARInvoiceList';
-import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { ARInvoiceExtendedService } from 'Invoice/Services/ExtendedPMs/ARInvoiceExtendedService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
 
 
 @Component({
@@ -23,74 +19,68 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 })
 
 export class ARInvoiceSequenceListComponent extends BaseComponent implements OnInit,AfterViewInit {
-    @Output() onQueryChangeEvent = new EventEmitter();
     public EntityPM: ARInvoicePM = null;
     public ObjectTableName = "ARInvoice";
     public DataContext = this;
-    public filterAgrs: ApiQueryFilters;
 
  
     // Services
-    private _entityListService: EntityListService;
     public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent;
     public aRInvoiceExtendedService : ARInvoiceExtendedService =  new ARInvoiceExtendedService();
+    public ComponentRef: ComponentRef<ARInvoiceSequenceListComponent>;
+    public ValidationErrorsList: string[] = [];
 
-    // Filters
-    searchFieldFilter: FilterItem;
 
     public ItemsSource: ARInvoiceList[];
 
-    public UsingLogGridV2:boolean= false;
-    public isRTL: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
-    public IsExcelEnabled = true;
-    public IsFutureOpenCheques= false;
-    public IsUnpaidChecks= false;
-    public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
 
     constructor(private EntityResourceService: EntityResourceService, private CD: ChangeDetectorRef){
         super();
-        debugger;
         this.EntityResourceService.getEntityResourceByTableName("ARInvoice").subscribe(response => {
-            this.isLoaded = true;
-            if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-            this.UsingLogGridV2 = false;//SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0]? true : false;
-            this._entityListService = new EntityListService();
             this.LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
         });
        
     }
     
-    SetWindowArgs() {
-
-        this.LoadData();
-        // const fromDate = new Date();
-        // const toDate = new Date();
-        // fromDate.setMonth(fromDate.getMonth() - 1);
-        // const servicelink = "./Invoice/Services/ExtendedPMs/ARInvoiceExtendedService";
-        // return new Promise((resolve, reject) => {
-        //     SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
-        //         resolve(service.getInvoiceSequenceStatus( fromDate, toDate));
-        //     });
-        // });
-    }
+   
     ngOnInit() {
+        var lastmonth = new Date();
+        lastmonth.setMonth(lastmonth.getMonth() - 4);
+
+        if (lastmonth.getFullYear() < new Date().getFullYear()) {
+            const currentYear = new Date().getFullYear();
+
+            this.FromDate = new Date(Date.UTC(currentYear, 0, 1)); // Set to the first day of the year
+        } else {
+            this.FromDate = lastmonth;
+        }
+
+
+        this.ToDate = new Date();
         this.BuildColumns();
+
      }
+
+
+     BackButtonClicked() {
+        if (this.ComponentRef) {
+            this.ComponentRef.destroy();
+        }
+
+
+    }
  
  
      ngAfterViewInit() {
          this.CD.detectChanges();
      }
 
-    
+     RefreshBtnClick() {
 
-    LoadData() {
-        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters () });
+        setTimeout(() => {
+            this.MenuHeaderchangeevent.emit({});
+        }, 10);
     }
-
-  
-
 
   
     //#region Data Source
@@ -101,8 +91,13 @@ export class ARInvoiceSequenceListComponent extends BaseComponent implements OnI
     private fromDate: Date;
     public get FromDate() { return this.fromDate; }
     public set FromDate(value: Date) {
-        if (this.fromDate != value) {
+        if (this.fromDate !== value) {
             this.fromDate = value;
+        if(this.toDate !== undefined && this.toDate !== null)
+        {
+            this.Validate();
+        }
+            
 
         }
     }
@@ -110,10 +105,12 @@ export class ARInvoiceSequenceListComponent extends BaseComponent implements OnI
   private toDate: Date;
     public get ToDate() { return this.toDate; }
     public set ToDate(value: Date) {
-        if (this.toDate != value) {
+        if (this.toDate !== value) {
             this.toDate = value;
-           
-
+            if(this.toDate !== undefined && this.toDate !== null)
+            {
+                this.Validate(); 
+            }
         }
   }
     BuildColumns() {
@@ -133,7 +130,7 @@ export class ARInvoiceSequenceListComponent extends BaseComponent implements OnI
             FieldName: 'InvoiceNumberPart',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("ARInvoice.F.InvoiceNumberPart"), 
-            Styles: { width: '110px' }, // TASK 47563
+            Styles: { width: '110px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'InvoiceSequenceListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/InvoiceSequenceListTemplate',
@@ -181,60 +178,53 @@ export class ARInvoiceSequenceListComponent extends BaseComponent implements OnI
 
     }
 
+    Validate() {
+        this.ValidationErrorsList = [];
+
+        const fromYear = this.FromDate.getFullYear();
+        const toYear = this.ToDate.getFullYear();
+        if (fromYear !== toYear) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("ARInvoice.O.DatesMustBeInTheSameYear"));
+        }
+        else if(this.FromDate > this.ToDate) {
+
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+        }
+        if(this.ValidationErrorsList.length === 0)
+        {
+            this.RefreshBtnClick();
+        }
+        
+    }
    
     DataSource = {
         pageSize: 50,
         rowCount: null,
-        sortingCol: "InvoiceNumber",
-        sortingDir: "Descending",
 
-        getRows: (skip: number, take: number, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-            var tempo = this.getRows(skip, take, false, searchFields, filters); 
-            debugger
+
+        getRows: () => {
+            var tempo = this.getRows(); 
             return tempo;
         },
     };
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
- isLoaded: boolean = false;
-    getRows(skip, take, getCount: boolean, searchfields?: string,filters:ApiQueryFilters=null) {
-        debugger
-        //this.CurrentSession.StartBusyIndicator("Loading...");
-        const fromDate = new Date();
-        const toDate = new Date();
-        fromDate.setMonth(fromDate.getMonth() - 1);
+    getRows() {
+
         const servicelink = "./Invoice/Services/ExtendedPMs/ARInvoiceExtendedService";
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
-                resolve(service.getInvoiceSequenceStatus( fromDate, toDate));
+                resolve(service.getInvoiceSequenceStatus(this.fromDate, this.toDate));
             });
         });
-        // return this.aRInvoiceExtendedService.getInvoiceSequenceStatus(fromDate, toDate).subscribe((myResponse: ServiceResponse) => {
-        //     this.CurrentSession.StopBusyIndicator();
-        //     this.isLoaded = true;
-
-        // });
+        
 }
     ExportToExcelClick()
     {
-        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("ARInvoiceSequence",this.filterAgrs,this.QueryColumns,"SaveToMicrosoftExcel2007",true);
+        var url = ServiceHelper.GetLogitudeURL() + 'api/ARInvoiceExtended/GetInvoiceSequenceStatus2Excel?' + '&fromDate=' + this.fromDate.toISOString() + '&toDate=' + this.toDate.toISOString() + '&tenant=' + SessionLocator.Tenant;
+        window.open(url);
     }
 
-    // private CreateApiQueryFilters(take: any, skip: any) {
-    //     this.filterAgrs = new ApiQueryFilters();
-    //     this.filterAgrs.PageSize = take;
-    //     this.filterAgrs.PageIndex = skip;
-    //     this.filterAgrs.GetAll = false;
-    //     this.filterAgrs.GetCount = true;
-
-    //     this.filterAgrs.addAdditionalFilter("InvoiceNumber", this.fromDate, this.toDate, null, "Between", false, false, false, "DateTime"); 
-
-
-    // }
-
-    CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
-    }
-
+  
    
 }

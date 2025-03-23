@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { defer } from 'rxjs';
+import { ARInvoiceList } from 'Invoice/EntityLists/ARInvoiceList';
 
 @Injectable()
 export class ARInvoiceExtendedService {
@@ -22,12 +23,38 @@ export class ARInvoiceExtendedService {
             authHeader.append('Content-Type', 'application/json');
             return this._http.get(this._apiUrl + '/GetInvoiceSequenceStatus/?' + '&fromDate=' + fromDate.toISOString() + '&toDate=' + toDate.toISOString(), ServiceHelper.GetHttpHeaders())
                 .pipe(map((response: any) => {
-                    var serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = response;
+                    var _mappedListsArray: Array<ARInvoiceList> = [];
+                    if (serviceResponse.Result) {
+                        for (var key in serviceResponse.Result) {
+    
+                            var entity: ARInvoiceList;
+                            entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                            _mappedListsArray.push(entity);
+    
+                        }
+                    }
+    
+                    serviceResponse.Result = _mappedListsArray;
                     return serviceResponse;
                 }), catchError(ServiceHelper.HandleServiceError));
         });
     }
 
- 
+    MapJsonToEntityList(jsonList: any) {
+
+        var entityList: ARInvoiceList;
+        entityList = new ARInvoiceList();
+        var jsonListKeys = Object.keys(jsonList);
+
+        for (var key in jsonListKeys) {
+            var property = jsonListKeys[key];
+            entityList[property] = jsonList[property];
+        }
+
+
+        return entityList;
+    } 
 }
+ 
