@@ -40,6 +40,7 @@ using System.Web;
 using WebFreight.Web;
 using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
 using WebFreight.Web;
+//using Logitude.XSD.CW_API.ABM;
 using Logitude.BL.InvoiceModel.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
@@ -49,8 +50,6 @@ using Customer = Simplog.Data.CommonDataModel.EntityPOCOs.Customer;
 using DocumentType = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentType;
 using Contact = Simplog.Data.CommonDataModel.EntityPOCOs.Contact;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Simplog.Data.InvoiceModel.Enums;
-using System.Net.Configuration;
 
 namespace Logitude.BL.Helpers
 {
@@ -87,7 +86,7 @@ namespace Logitude.BL.Helpers
                 emailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId;
 
 
-                //---------------------------------------- 
+                //---------------------------------------- islam
                 DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(objectContext);
 
                 if (string.IsNullOrEmpty(userId))
@@ -105,6 +104,7 @@ namespace Logitude.BL.Helpers
                 DocumentsFiling newDocumentFiling = new DocumentsFiling() { DocumentTypeId = documentTypeId, EntityId = entityId, Tenant = tenant, ObjectTableId = objectTableId, ChildEntityId = childEntityId, ChildEntityReference = childReference, DirectionCode = "O" };
 
                 newDocumentFiling.Id = IdCounter.GetNumber("Document", tenant).ToString();
+             // newDocumentFiling.SecurityId = newDocumentFiling.Id + RandomString(10);
                 string com_id = newDocumentFiling.Id;        // Length = 30
                 string com_md5 = CreateMD5(com_id); // Length = 32 
                 string com_short = newDocumentFiling.Id.Substring(0, 8);
@@ -136,6 +136,9 @@ namespace Logitude.BL.Helpers
                     Error += "Entity of type " + eve.Entry.Entity.GetType().Name + " in state " + eve.Entry.State + " has the following validation errors:";
                     foreach (var ve in eve.ValidationErrors)
                     {
+                        //Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                        //ve.PropertyName, ve.ErrorMessage);
+
                         Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
                     }
                 }
@@ -180,6 +183,8 @@ namespace Logitude.BL.Helpers
                 byte[] inputBytes = System.Text.Encoding.Unicode.GetBytes(input);
 
                 byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                //return Convert.ToHexString(hashBytes); // .NET 5 +
 
                 //Convert the byte array to hexadecimal string prior to.NET 5
 
@@ -266,6 +271,7 @@ namespace Logitude.BL.Helpers
                     catch (Exception ex)
                     {
                         string data = "@ Tenant : " + tenant.Id + "@ DocumentId : " + document.Id + "@ Exception : " + ex.Message;
+                        //AzureLog.SaveLogsInStorage(data, "P", DateTime.Now, "", "", 0, "", "Encryption Document", null);
                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "EncryptionDocument:Tenant = " + tenant.Id + "@DocumentId=" + document.Id, null, null);
                     }
                 }
@@ -293,9 +299,6 @@ namespace Logitude.BL.Helpers
             return context.Database.Connection.ConnectionString;
         }
 
-      
-        
-        
 
         public void RetrySignature(string documentId, int tenant)
         {
@@ -329,7 +332,7 @@ namespace Logitude.BL.Helpers
 
 
 
-        public void StartSignPDFInvoice(ARInvoice invoice, int tenant, ARInvoiceRepository repository,string contactEmail, FullAccountingSettingPM accountingSettings)
+        public void StartSignPDFInvoice(ARInvoice invocie, int tenant, ARInvoiceRepository repository,string contactEmail, FullAccountingSettingPM accountingSettings)
         {
 
             try
@@ -345,7 +348,7 @@ namespace Logitude.BL.Helpers
 
 
                TenantRepository tenantRepository = new TenantRepository(tenant);
-                DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invoice.Id, tenant).FirstOrDefault();
+                DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invocie.Id, tenant).FirstOrDefault();
                 DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings.Id, tenant, "999G");
                 Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
                 ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
@@ -366,23 +369,23 @@ namespace Logitude.BL.Helpers
                     byte[] filedata = storageservice.Read(fileInfo);
 
                     byte[] signBytes = HSMSignFileService
-                        .SignCustomsRequest(tenant, invoice.Id, filedata, document.FileName, vatNumber, loggedcontact?.Id, accountingSettings);
-                    //invoice.IsSigned
+                        .SignCustomsRequest(tenant, invocie.Id, filedata, document.FileName, vatNumber, loggedcontact?.Id, accountingSettings);
+                    //invocie.IsSigned
 
                     if (signBytes != null)
                     {
                         storageservice.Write(signBytes, fileInfo);
-                        APInvoiceHelper.AddCommunicationLog("D", invoice, signBytes.ToString(), "ARInvoice", invoice?.Id, "signBytes is ok", Tenant);
+                        APInvoiceHelper.AddCommunicationLog("D", invocie, signBytes.ToString(), "ARInvoice", invocie?.Id, "signBytes is ok", Tenant);
 
-                        this.HSMSignatureSucceeded(invoice, repository, contactEmail, document, myDocumentFilings.Id, accountingSettings);
+                        this.HSMSignatureSucceeded(invocie, repository, contactEmail, document, myDocumentFilings.Id, accountingSettings);
                        
                         
                     }
                     else
                     {
-                        APInvoiceHelper.AddCommunicationLog("F", invoice, signBytes.ToString(), "ARInvoice", invoice?.Id, "signBytes is empty", Tenant);
+                        APInvoiceHelper.AddCommunicationLog("F", invocie, signBytes.ToString(), "ARInvoice", invocie?.Id, "signBytes is empty", Tenant);
 
-                        throw new HSMException($"{invoice?.Id},response: Result.Content.ReadAsByteArrayAsync().Result is empty", "Fails");
+                        throw new HSMException($"{invocie?.Id},response: Result.Content.ReadAsByteArrayAsync().Result is empty", "Fails");
                     }
                 }
                 else
@@ -392,14 +395,14 @@ namespace Logitude.BL.Helpers
             }
             catch(HSMException ex)
             {
-                APInvoiceHelper.AddCommunicationLog("F", invoice, ex.Message, "ARInvoice", invoice.Id, "HSM Signature Failed", tenant);
+                APInvoiceHelper.AddCommunicationLog("F", invocie, ex.Message, "ARInvoice", invocie.Id, "HSM Signature Failed", tenant);
 
-                this.HSMSignatureFailed(invoice, ex, repository);
+                this.HSMSignatureFailed(invocie, ex, repository);
                                  
             }
             catch (Exception ex)
             {
-                APInvoiceHelper.AddCommunicationLog("F", invoice, ex.Message, "ARInvoice", invoice.Id, "HSM Signature Failed", tenant);
+                APInvoiceHelper.AddCommunicationLog("F", invocie, ex.Message, "ARInvoice", invocie.Id, "HSM Signature Failed", tenant);
 
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
                 ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "ProccessHSMSign-MarkExportSignTaskAsDone", "", null);
@@ -408,82 +411,25 @@ namespace Logitude.BL.Helpers
             }
         }
 
-
-
-        public bool CheckPDFInvoiceInStorage_Inner(ARInvoice invoice, int tenant, ARInvoiceRepository repository, string contactEmail, FullAccountingSettingPM accountingSettings)
+        private void HSMSignatureFailed(ARInvoice invocie,HSMException ex, ARInvoiceRepository repository)
         {
-            bool rv = false;
-             
-
-            try
-            {
-
-                ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
-
-                DocumentRepository documentRepository = new DocumentRepository(commoncontext);
-                DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
-                DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
-                DocumentOutCopyQuery DocumentOutCopyQuery = new DocumentOutCopyQuery(tenant);
-
-
-                TenantRepository tenantRepository = new TenantRepository(tenant);
-                DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invoice.Id, tenant).FirstOrDefault();
-                DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings.Id, tenant, "999G");
-                Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
-                ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
-                var vatNumber = tenantRepository.GetSingleByTenant(tenant).VatNumber;
-
-                if (document != null)
-                {
-                    Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
-                    {
-                        FileName = document.Id,
-                        FolderName = document.Folder,
-                        Extension = document.Extension,
-                        Tenant = tenant,
-                        FileSize = document.FileSize,
-                    };
-
-                    Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-
-                    bool fileExists = storageservice.FileExists(fileInfo);
-                    return fileExists;
-                }
-                else
-                {
-                    throw new ArgumentNullException("There is no document");
-                }
-                
-            }
-            catch (Exception ex)
-            {
-                APInvoiceHelper.AddCommunicationLog("F", invoice, ex.Message, "ARInvoice", invoice.Id, "Check PDF Invoice In Storage Failed", tenant);
-
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
-                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "CheckPDFInvoiceInStorage", "", null);
-                return false;
-
-            }
-        }
-
-        private void HSMSignatureFailed(ARInvoice invoice, HSMException ex, ARInvoiceRepository repository)
-        {
-            invoice.IsSigned = ARInvoiceSignedStatusValues.SigningFailed;
-            repository.Update(invoice);
+           invocie.IsSigned = "2";//FALID
+            repository.Update(invocie);
             repository.SubmitChanges();
-             this.CreateEvent("HSMF", invoice, "חתימת החשבונית לא  צלחה"+ ex);
-            this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+ invoice.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex, invoice.Tenant, invoice.Id);
+             this.CreateEvent("HSMF", invocie, "חתימת החשבונית לא  צלחה"+ ex);
+            this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+invocie.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex, invocie.Tenant, invocie.Id);
         }
 
 
-        private void HSMSignatureSucceeded(ARInvoice invoice, ARInvoiceRepository repository,string contactEmail,Document document,string  DocumentFilingId ,FullAccountingSettingPM accountingSettings)
+        private void HSMSignatureSucceeded(ARInvoice invocie, ARInvoiceRepository repository,string contactEmail,Document document,string  DocumentFilingId ,FullAccountingSettingPM accountingSettings)
         {
 
-            invoice.IsSigned = ARInvoiceSignedStatusValues.SignedButNotYetSent;
-            repository.Update(invoice);
+            invocie.IsSigned = "1";
+            repository.Update(invocie);
             repository.SubmitChanges();
-            this.CreateEvent("HSMS", invoice, DocumentFilingId + "החשבונית נחתמה בהצלחה :");
-            this.SendToEmailContact(contactEmail, invoice, document, DocumentFilingId, repository, invoice.Tenant, accountingSettings);
+            this.CreateEvent("HSMS", invocie, DocumentFilingId + "החשבונית נחתמה בהצלחה :");
+         //   this.SendEmailAlert("libby@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר" + invocie.InvoiceNumber + "<br /><br />מצורפת השגיאה " );
+            this.SendToEmailContact(contactEmail, invocie, document, DocumentFilingId, repository, invocie.Tenant, accountingSettings);
 
         }
         public void SendSignInterestInvoices(string[] selectedList ,int tenant)
@@ -506,13 +452,13 @@ namespace Logitude.BL.Helpers
                 {
                     try
                     {
-                        ARInvoice invoice = repository.GetSingleARInvoice(item, tenant);
-                        DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invoice?.Id, tenant).FirstOrDefault();
+                        ARInvoice invocie = repository.GetSingleARInvoice(item, tenant);
+                        DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invocie?.Id, tenant).FirstOrDefault();
                         DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings?.Id, tenant, "999G");
                         Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
-                        string contactEmail = this.IsSignatureHtmlPresentByBillToId(invoice?.BillToId, tenant);
+                        string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie?.BillToId, tenant);
                         if (!string.IsNullOrEmpty(contactEmail))
-                            this.SendToEmailContact(contactEmail, invoice, document, myDocumentFilings?.Id, repository, tenant, accountingSettings);
+                            this.SendToEmailContact(contactEmail, invocie, document, myDocumentFilings?.Id, repository, tenant, accountingSettings);
                     }
                     catch (Exception ex)
                     {
@@ -528,13 +474,13 @@ namespace Logitude.BL.Helpers
             }
                     
         }
-        private void CreateEvent(string eventCode,ARInvoice arinvoice, string Notes = null)
+        private void CreateEvent(string eventCode,ARInvoice arinvocie, string Notes = null)
         {
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(Tenant);
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
-                EntityId = arinvoice.Id,
-                Tenant = arinvoice.Tenant,
+                EntityId = arinvocie.Id,
+                Tenant = arinvocie.Tenant,
                 UserId = loggedContact.Id,
                 ObjectTableName = "ARInvoice",
                 EventTypeCode = eventCode,
@@ -574,7 +520,7 @@ namespace Logitude.BL.Helpers
         }
 
 
-        private void SendToEmailContact(string email, ARInvoice arinvoice,Document document,string DocumentFilingId, ARInvoiceRepository repository,int tenant,FullAccountingSettingPM accountingSettings)
+        private void SendToEmailContact(string email, ARInvoice arinvocie,Document document,string DocumentFilingId, ARInvoiceRepository repository,int tenant,FullAccountingSettingPM accountingSettings)
         {
             string loggedUserEmail = null;
             try
@@ -611,44 +557,50 @@ namespace Logitude.BL.Helpers
                  string subject = accountingSettings?.InvoiceNotes?? "חשבונית חתומה";
                 Document documentInterestReport = new Document();
                 string documentInterestReportId = "";
-                if (this.isInterestReport && arinvoice.ARInvoiceTypeCode=="IT")
+                if (this.isInterestReport && arinvocie.ARInvoiceTypeCode=="IT")
                 {
-                    documentInterestReportId = this.GetDocumentInterestReportId(arinvoice.Id, tenant);
+                    documentInterestReportId = this.GetDocumentInterestReportId(arinvocie.Id, tenant);
                     subject = accountingSettings?.InterestInvoiceNotes;
                 }
                 
-                 string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, subject += " " + arinvoice.InvoiceNumber, null, null, userId, arinvoice.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null,loggedUserEmail);
+                 string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, subject += " " + arinvocie.InvoiceNumber, null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null,loggedUserEmail);
                  if (!string.IsNullOrEmpty(documentId))
                 {
-                    arinvoice.IsSigned = ARInvoiceSignedStatusValues.SignedAndSentByEmail;
-                    repository.Update(arinvoice);
+                    arinvocie.IsSigned = "3";
+                    repository.Update(arinvocie);
                     repository.SubmitChanges();
                 }
                 else
                 {
-                    string mess = "Error while sending signed invoice " + arinvoice.InvoiceNumber;
-                    APInvoiceHelper.AddCommunicationLog("F", arinvoice, mess, "ARInvoice", arinvoice.Id, "Send Html Document Failed", tenant);
+                    string mess = "Error while sending signed invoice " + arinvocie.InvoiceNumber;
+                    APInvoiceHelper.AddCommunicationLog("F", arinvocie, mess, "ARInvoice", arinvocie.Id, "Send Html Document Failed", tenant);
                     NetCommonHelper.Logger.DevLog.Instance.WriteError(mess);
-                    arinvoice.IsSigned = ARInvoiceSignedStatusValues.SignedButSendingByEmailFailed;
-                    repository.Update(arinvoice);
+                    arinvocie.IsSigned = "4";
+                    repository.Update(arinvocie);
                     repository.SubmitChanges();
                 }
             }
             catch(Exception e)
             {
-                arinvoice.IsSigned = ARInvoiceSignedStatusValues.SignedButSendingByEmailFailed;
-                repository.Update(arinvoice);
+                arinvocie.IsSigned = "4";
+                repository.Update(arinvocie);
                 repository.SubmitChanges();
-                APInvoiceHelper.AddCommunicationLog("F", arinvoice, e.Message, "ARInvoice", arinvoice.Id, "Send Invoice Failed", tenant);
+                APInvoiceHelper.AddCommunicationLog("F", arinvocie, e.Message, "ARInvoice", arinvocie.Id, "Send Invoice Failed", tenant);
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
         }
         public string SendHtmlDocument(byte[] htmlData, string internalDocumentId, string externalDocumentId, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string entityId, string objectTableId, string attachments, string entityReference, string from, string replyTo,string loggedUserEmail)
         {
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            //ShipmentsContext shipmentsContext = new ShipmentsContext();
             DocumentOutRepository internalDocRep = new DocumentOutRepository(context);
             DocumentRepository documentRep = new DocumentRepository(context);
 
+
+
+            //DocumentType documentType = (from d in context.DocumentTypes
+            //                             where d.Id == documentTypeId && d.Tenant == tenant
+            //                             select d).FirstOrDefault();
 
 
             DocumentOut internalDocument = internalDocRep.GetSingleDocumentOut(internalDocumentId, tenant);
@@ -661,6 +613,7 @@ namespace Logitude.BL.Helpers
                     documentOutCopies = documentoutCopyRep.GetDocumentOutCopyByDocumentOutId(internalDocument.Id, tenant);
                 }
 
+                //internalDocument.DocumentId = document.Id;
                 internalDocument.IssuedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 internalDocument.IssuedByUserId = userId;
                 internalDocument.Issued = true;
@@ -682,7 +635,26 @@ namespace Logitude.BL.Helpers
             documentRep.SubmitChanges();
             internalDocRep.SubmitChanges();
 
+            //if (!WebFreightEntryPoint.UsingAzure)
+            //{
+            //    try
+            //    {
+            //        string filePath = Server.MapPath(".");
+            //        filePath += "\\UserUploads\\";
+            //        filePath += document.Id;
+            //        filePath += ".html";
 
+            //        FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+            //        BinaryWriter bw = new BinaryWriter(fs);
+            //        bw.Write(htmlData);
+            //        bw.Close();
+            //    }
+            //    catch
+            //    {
+            //    }
+            //}
+            //else // In Azure
+            //{
             try
             {
                 string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(document.Id + ".html", document.Folder);
@@ -699,13 +671,30 @@ namespace Logitude.BL.Helpers
 
                 };
                 storageservice.Write(htmlData, fileInfo);
+                //string filename = document.Id + ".html";
+                // CloudBlobContainer blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
+                //var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder));
 
+
+                //using (Stream memstream = blobfile.OpenWrite())
+                //{
+                //    memstream.Write(htmlData, 0, htmlData.Length);
+                //    memstream.Close();
+                //    //memstream.Write(htmlData, 0, htmlData.Length);
+                //    //blobfile.UploadFromStream(memstream);
+                //}
             }
             catch
             {
             }
 
+            // }
 
+
+
+            // Send Html Document by email
+            // SendHtmlDocumentByEmail(ToEmail, Subject, CC, filePath);
+            //============================
 
             // Save Html to CommunicationLog
 
@@ -746,6 +735,7 @@ namespace Logitude.BL.Helpers
 
 
 
+            //EventTracer.CreateTraceEvent(new TraceEvent(), "CRCR", currency.Tenant, contact.Id, currency.Id, null, "Currency", null, null, false);
 
             context.CommunicationLogs.Add(log);
             try
@@ -846,14 +836,14 @@ namespace Logitude.BL.Helpers
             return document.Id;
         }
 
-        public string GetDocumentInterestReportId(string ARInvoiceId,int tenant)
+        public string GetDocumentInterestReportId(string ARInvocieId,int tenant)
         {
             ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             DocumentRepository documentRepository = new DocumentRepository(commoncontext);
             DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
             InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
-            InterestReport interestReport = interestReportRepository.GetSingleByARInvoiceId(ARInvoiceId, tenant);
+            InterestReport interestReport = interestReportRepository.GetSingleByARInvoiceId(ARInvocieId, tenant);
             DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(interestReport.Id, tenant).FirstOrDefault();
             return   documentRepository.GetSingleDocument(tenant, myDocumentFilings?.DocumentId)?.Id;
 
@@ -867,53 +857,22 @@ namespace Logitude.BL.Helpers
 
 
             var documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
-            ARInvoice invoice = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
+            ARInvoice invocie = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
 
-            if (invoice != null)
+            if (invocie != null)
             {
-                string contactEmail = this.IsSignatureHtmlPresentByBillToId(invoice.BillToId, tenant);
+                string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie.BillToId, tenant);
                 if (!string.IsNullOrEmpty(contactEmail))
                 {
-                    this.CreatePdfDoc(documentsFiling, invoice.Id, invoice.Tenant, "ARInvoice", true);
-                    if (this.isInterestReport && invoice.ARInvoiceTypeCode == "IT")
+                    this.CreatePdfDoc(documentsFiling, invocie.Id, invocie.Tenant, "ARInvoice", true);
+                    if (this.isInterestReport && invocie.ARInvoiceTypeCode == "IT")
                     {
-                        this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id);
+                        this.CreateDocumentInterestReport(invocie.Tenant, invocie.Id);
                     }
-                    this.StartSignPDFInvoice(invoice, invoice.Tenant, repository, contactEmail, accountingSettings);
+                    this.StartSignPDFInvoice(invocie, invocie.Tenant, repository, contactEmail, accountingSettings);
                 }
 
             }
-
-        }
-
-
-        public bool CheckPDFInvoiceInStorage(string documentOutId, int tenant, FullAccountingSettingPM accountingSettings)
-        {
-
-            bool rv = false;
-
-            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
-            ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
-
-
-            var documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
-            ARInvoice invoice = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
-
-            if (invoice != null)
-            {
-                string contactEmail = this.IsSignatureHtmlPresentByBillToId(invoice.BillToId, tenant);
-                if (!string.IsNullOrEmpty(contactEmail))
-                {
-                    this.CreatePdfDoc(documentsFiling, invoice.Id, invoice.Tenant, "ARInvoice", true);
-                    if (this.isInterestReport && invoice.ARInvoiceTypeCode == "IT")
-                    {
-                        this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id);
-                    }
-                   rv = this.CheckPDFInvoiceInStorage_Inner(invoice, invoice.Tenant, repository, contactEmail, accountingSettings);
-                }
-
-            }
-            return rv;
 
         }
 
@@ -924,6 +883,7 @@ namespace Logitude.BL.Helpers
             if (string.IsNullOrEmpty(Billto)) return "";
             Simplog.Data.CommonDataModel.EntityPOCOs.Card myCard = (from card in objectContext.Cards
                                    where card.Id == Billto
+                                   // join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
                                    select card).FirstOrDefault();
             string email = "";
             if (myCard != null && !string.IsNullOrEmpty(myCard.EmailForSendingSingArinvoice))
@@ -966,7 +926,7 @@ namespace Logitude.BL.Helpers
 
         }
 
-        public void CreateDocumentInterestReport(int tenant, string arinvoiceId)
+        public void CreateDocumentInterestReport(int tenant, string arinvocieId)
         {
             ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
@@ -978,7 +938,7 @@ namespace Logitude.BL.Helpers
             InterestReport interestReport = new InterestReport();
 
             string documentTypeId = DocumentTypeService.GetDocumentTypeByCode("ITDT", tenant).Id;
-            interestReport = interestReportRepository.GetSingleByARInvoiceId(arinvoiceId, tenant);
+            interestReport = interestReportRepository.GetSingleByARInvoiceId(arinvocieId, tenant);
             DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(interestReport.Id, null, documentTypeId, tenant);
             if (documentOutPM == null)
             {
