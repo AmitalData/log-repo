@@ -3461,8 +3461,13 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
         }
     }
     OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {
-        console.log("OnSelectedItemChanged > ", selectedRow);
+        console.log("OnSelectedItemChanged > ", selectedRow);        
+        let isDirty : boolean = this.EntityPM.IsDirty;
         selectedRow.entityPM.DocumentFilingId = this.DocumentFilingId;
+        if(!isDirty){
+            selectedRow.entityPM.IsDirty = false;
+            this.EntityPM.IsDirty = false;
+        }
 
         if (selectedRow.entityPM.OcrHeight != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrHeight) && selectedRow.entityPM.OcrPageNumber != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrPageNumber) && selectedRow.entityPM.OcrTop != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrTop)) {
             DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
