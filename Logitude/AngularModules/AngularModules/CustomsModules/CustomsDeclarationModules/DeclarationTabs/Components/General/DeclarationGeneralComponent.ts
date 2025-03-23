@@ -363,8 +363,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
     OkButtonClicked() {
         if (!this.IsDisplayOnly) {
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.declarationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
                 var res = response.Result;
+                this.CurrentSession.StopBusyIndicator();
                 if (response.HasError) {
                     this.XMLErrors = [];
                     this.XMLErrors = response.ErrorsArray;
@@ -373,7 +375,6 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                 }
             });
         }
-
     }
     //#endregion
 
