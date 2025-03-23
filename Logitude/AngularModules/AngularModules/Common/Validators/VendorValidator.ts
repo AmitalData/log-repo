@@ -1,4 +1,6 @@
-﻿export class VendorValidator {
+﻿import { AppTool } from "Infrastructure/Tools";
+
+export class VendorValidator {
     public  Validate(entityPM: any) {
 
 
@@ -6,6 +8,6 @@
     }
 
     public IsVendorCountryValid(VendorCountry : string) : boolean {
-        return VendorCountry !== null && VendorCountry !== "1" && VendorCountry !== "--";
+        return !AppTool.IsNullOrUndefined(VendorCountry) && VendorCountry !== "1" && VendorCountry !== "--" && !AppTool.IsNullOrEmpty(VendorCountry);
     }
 }

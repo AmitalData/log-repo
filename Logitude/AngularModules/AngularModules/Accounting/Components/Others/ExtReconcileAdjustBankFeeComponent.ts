@@ -93,7 +93,7 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
     set GLAccountId(value: string) {
         if (this.glAcccountId != value) {
             this.glAcccountId = value;
-          if(!AppTool.IsNullOrEmpty(this.glAcccountId) && this.glAccount.ChartOfAccountsTypeCode === "4"){
+          if(!AppTool.IsNullOrEmpty(this.glAcccountId)){
             this.gLAccountPMService.get(this.glAcccountId).subscribe((myResponse: ServiceResponse) => {
              if (!myResponse.HasError) {
                 var res = myResponse.Result;
@@ -297,10 +297,7 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
 
             this.ValidationErrorsList.push("Accounting Date is Required");
 
-        } else {
-            this.ValidationErrorsList = [];
-
-        }
+        } 
     }
     OkButtonClicked() {
         this.FillErrors();
