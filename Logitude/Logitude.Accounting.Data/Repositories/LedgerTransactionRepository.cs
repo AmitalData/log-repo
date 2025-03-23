@@ -1720,6 +1720,21 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
 
         }
+        public List<LedgerTransaction> GetLedgerTransactionsByJournalIdsNotExcluded(List<string> journalIds, int tenant)
+        {
+
+
+            return (from a in context.LedgerTransactions.Include("Account")
+                    join jl in context.JournalLines
+                        on new { a.JournalId, a.JournalLineNumber }
+                        equals new { jl.JournalId, JournalLineNumber = jl.Line }
+                    where journalIds.Contains(a.JournalId)
+                          && a.Tenant == tenant
+                          && jl.ExcludeFromTaxReport != true
+                    select a).ToList();
+
+
+        }
         public List<LedgerTransaction> GetLedgerTransactionsByJournalIdsAndAccountId(List<string> journalIds, string accountId, int tenant)
         {
 
