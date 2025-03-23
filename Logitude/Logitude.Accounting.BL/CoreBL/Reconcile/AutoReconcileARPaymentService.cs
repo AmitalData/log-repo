@@ -30,9 +30,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
         
        public string GetReconcileMethodCode(GLAccountPM glAccountBillTO, string paymentCurrencyId)
         {
-               GLAccountCurrencyQueryService gLAccountCurrencyQuery = new GLAccountCurrencyQueryService(glAccountBillTO.Tenant);
-               return  gLAccountCurrencyQuery.GetReconcileMethodCodeByCurrencyAndGLAccountId(glAccountBillTO.Id, paymentCurrencyId, glAccountBillTO.Tenant);
-          }
+            GLAccountCurrencyQueryService gLAccountCurrencyQuery = new GLAccountCurrencyQueryService(glAccountBillTO.Tenant);
+            var result = gLAccountCurrencyQuery.GetReconcileMethodCodeByCurrencyAndGLAccountId(glAccountBillTO.Id, paymentCurrencyId, glAccountBillTO.Tenant);
+            return string.IsNullOrEmpty(result) ? glAccountBillTO.ReconcileMethodCode : result;
+        }
 
    
         public void InsertJournalReconcile()
