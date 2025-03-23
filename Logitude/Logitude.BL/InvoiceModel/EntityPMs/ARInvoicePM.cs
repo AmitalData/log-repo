@@ -22,6 +22,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string InvoiceNumber { get; set; }
         public string ARInvoiceTypeCode { get; set; }
         public string ARInvoiceTypeName { get; set; }
+        public string SequenceStatus { get; set; }
+        public string InvoiceNumberPart { get; set; }
+        public string InvoiceSeries { get; set; }
 
 
         public string MainEntityStatus { get; set; }
