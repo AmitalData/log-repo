@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
+using DemoCSTimbraCFDI;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -53,6 +54,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             var poco = repository.GetEntityByCurrencyAndGLAccountId(accountId, currencyId, tenant);
             return GetEntityPM(poco);
+        }
+
+        public string GeReconcileMethodCodeByCurrencyAndGLAccountId(string accountId, string currencyId, int tenant)
+        {
+
+            var ReconcileMethodCode = repository.GeReconcileMethodCodeByCurrencyAndGLAccountId(accountId, currencyId, tenant);
+            return ReconcileMethodCode;
         }
 
         public GLAccountCurrencyPM GetEntityByGLAccountId(string accountId, int tenant)
