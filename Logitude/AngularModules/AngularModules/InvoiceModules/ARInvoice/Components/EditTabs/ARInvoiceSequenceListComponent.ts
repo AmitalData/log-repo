@@ -45,7 +45,7 @@ export class ARInvoiceSequenceListComponent extends BaseComponent implements OnI
    
     ngOnInit() {
         var lastmonth = new Date();
-        lastmonth.setMonth(lastmonth.getMonth() - 4);
+        lastmonth.setMonth(lastmonth.getMonth() - 1);
 
         if (lastmonth.getFullYear() < new Date().getFullYear()) {
             const currentYear = new Date().getFullYear();

@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { defer } from 'rxjs';
 import { ARInvoiceList } from 'Invoice/EntityLists/ARInvoiceList';
 
@@ -18,9 +17,6 @@ export class ARInvoiceExtendedService {
 
     getInvoiceSequenceStatus(fromDate: Date, toDate: Date) {
         return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
             return this._http.get(this._apiUrl + '/GetInvoiceSequenceStatus/?' + '&fromDate=' + fromDate.toISOString() + '&toDate=' + toDate.toISOString(), ServiceHelper.GetHttpHeaders())
                 .pipe(map((response: any) => {
                     var serviceResponse: ServiceResponse;
