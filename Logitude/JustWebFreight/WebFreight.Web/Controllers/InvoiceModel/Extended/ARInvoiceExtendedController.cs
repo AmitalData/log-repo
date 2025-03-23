@@ -2,7 +2,6 @@
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -13,14 +12,9 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityLists;
-using Simplog.Server.Infrastructure.DataContracts;
-using WebFreight.Web.Controllers.CustomsModel.Extended;
 using WebFreight.Web.DataContracts;
-using Logitude.Customs.Data;
 using System.IO;
 using System.Net.Http.Headers;
-using WebFreight.Web.CustomWebServices.BL.XLSExport;
-using Logitude.Customs.Data.EntityListQueryServices;
 using System.Data;
 
 
