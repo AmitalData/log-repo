@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "a1e48f9f9b4eede912dcff09511eacf1";
+		public const string HashString = "339fa79e1f1562f92e64c6480de12dee";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17049,6 +17049,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceOOriginalInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.OriginalInvoiceNumber", DefaultText = "OriginalInvoiceNumber",LocalDefaultText = @"מספר חשבונית מקורית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOInvoiceSequence = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.InvoiceSequence", DefaultText = "Invoice Sequence",LocalDefaultText = @"רצף חשבוניות", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceODatesMustBeInTheSameYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.DatesMustBeInTheSameYear", DefaultText = "Dates Must Be In The Same Year",LocalDefaultText = @"התאריכים חייבים להיות באותה שנה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
