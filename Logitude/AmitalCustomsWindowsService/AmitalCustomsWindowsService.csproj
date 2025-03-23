@@ -374,6 +374,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tester\MSSQL.sql" />
+    <Content Include="PRK.PPK">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="WorkerRoleName.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

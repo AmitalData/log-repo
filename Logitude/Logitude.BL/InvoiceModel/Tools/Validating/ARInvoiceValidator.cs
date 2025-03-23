@@ -549,7 +549,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         throw new ApplicationException("Wrong Line Local Amount");
                     }
-                    if (IsFullAccountingActivated(entityPM.Tenant) && item.ForiegnExchangeRate != null)
+                    if (IsFullAccountingActivated(entityPM.Tenant) && item.ForiegnExchangeRate != null && !entityPM.IsExternalEntity)
                     {
                         CheckForeignAmountForInvoiceLineFullAccounting(item);
                     }
@@ -569,7 +569,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         //   if (item.InvoiceCurrencyExchangeRate == null) item.InvoiceCurrencyExchangeRate = entityPM.InvoiceCurrencyExchangeRate;
                         //  lineInvoiceAmount_Computed = IsFullAccountingActivated(entityPM.Tenant) ? MethodHelper.Round(item.ForiegnCurrencyAmount * item.InvoiceCurrencyExchangeRate, 2) : lineInvoiceAmount_Computed;
-                        if (IsFullAccountingActivated(entityPM.Tenant))
+                        if (IsFullAccountingActivated(entityPM.Tenant) && !entityPM.IsExternalEntity)
                         {
                             CheckFullAccountingLineLocalAmount(item);
                         }
@@ -696,14 +696,25 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                 ProfitVatableAmount = MethodHelper.Round(Item.ProfitCurrencyAmount, 2),
                             };
 
-                            record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
-                            record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
-                            record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
+                        // Calculate the Local VAT amount
+                        record.LocalVATAmount = record.LocalVatableAmount * record.VatPercent / 100;
 
-                            sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
-                            sumOfVATsAmounts_Local += record.LocalVATAmount;
-                            sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
-                        }
+                        // Calculate the Invoice Currency VAT amount
+                        record.InvoiceCurrencyVATAmount = record.InvoiceCurrencyVatableAmount * record.VatPercent / 100;
+
+                        // Calculate the Profit Currency VAT amount
+                        record.ProfitCurrencyVATAmount = record.ProfitVatableAmount * record.VatPercent / 100;
+
+                        // Accumulate the VAT amounts
+                        sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
+                        sumOfVATsAmounts_Local += record.LocalVATAmount;
+                        sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
+
+                        // Round the VAT amounts to 2 decimal places
+                        record.LocalVATAmount = MethodHelper.Roundd(record.LocalVATAmount, 2);
+                        record.InvoiceCurrencyVATAmount = MethodHelper.Roundd(record.InvoiceCurrencyVATAmount, 2);
+                        record.ProfitCurrencyVATAmount = MethodHelper.Roundd(record.ProfitCurrencyVATAmount, 2);
+                    }
 
                         Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
                         Amount_Local = MethodHelper.Round(subTotal_Local + sumOfVATsAmounts_Local, 2);
@@ -753,11 +764,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     double computedInvoiceAmount = (double)(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate.Value);
                     localAmount_Computed = MethodHelper.Round(localAmount_Computed, 2);
                     var difference = Math.Abs((double)(localAmount - localAmount_Computed));
-                    if (localAmount != localAmount_Computed && difference > 0.011)
+                    if (localAmount != localAmount_Computed && difference > 0.011 && !entityPM.IsExternalEntity)
                     {
                         throw new ApplicationException("Wrong Invoice Local Amount");
                     }
-                    if (IsFullAccountingActivated(entityPM.Tenant))
+                    if (IsFullAccountingActivated(entityPM.Tenant) && !entityPM.IsExternalEntity)
                     {
                         computedInvoiceAmount = Math.Round(computedInvoiceAmount, 2);
                         if (Math.Abs((double)(computedInvoiceAmount - localAmount)) >= 0.1)
