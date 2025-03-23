@@ -178,7 +178,7 @@ export class VDKFilterComponent extends BaseComponent {
         this.queryFilterItems.push(new QueryFilterItem("BranchId", this.BranchId, "String"));
         this.queryFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId, "String"));
         this.queryFilterItems.push(new QueryFilterItem("EntityStatus", this.EntityStatus, "String"));
-        this.queryFilterItems.push(new QueryFilterItem("SupplierId", this.supplierId, "String"));
+        this.queryFilterItems.push(new QueryFilterItem("SupplierId", this.SupplierId, "String"));
         this.queryFilterItems.push(new QueryFilterItem("IncludeOperationalClose", this.IncludeOperationalClose, "boolean"));
         return this.queryFilterItems;
     }

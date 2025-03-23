@@ -1,13 +1,9 @@
-declare var window: any;
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow'
 import {ReportFliter} from '../Filters/ReportFliter';
 import {QueryFilterItem} from '../Filters/QueryFilterItem';
-import {Component, OnInit, Output, ElementRef}  from '@angular/core';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {Component, OnInit}  from '@angular/core';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';

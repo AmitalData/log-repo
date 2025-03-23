@@ -1,5 +1,4 @@
-
-import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component ,ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ReportFliter } from '../../Filters/ReportFliter';
@@ -7,16 +6,9 @@ import { QueryFilterItem } from '../../Filters/QueryFilterItem';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { AdvancedDatePickerResolverComponent } from '../../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
-import { reject } from 'q';
 import { CodeNameClass } from 'Infrastructure/DataContracts/CodeNameClass';
-import { TaxReportExtendedPMService } from 'Accounting/Services/ExtendedPMs/TaxReportExtendedPMService';
-import { TaxReportPM } from 'Accounting/EntityPMs/TaxReportPM';
-import { Operators } from 'Accounting/DataContracts/Operators';
 import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewComponent';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { AppTool } from 'Infrastructure/Tools';
@@ -176,7 +168,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                     this.NumberOfYear = queryFilterItem.FieldValue;
                     break;
                 case "ChartOfAccountsIdList":
-                    {{
+                    {
                         this.selectedChartOfAccounts = queryFilterItem.FieldValue;
                         if(this.selectedChartOfAccounts?.length>0 )
                             this.chartOfAccountsComboBoxValue="NotAll";
@@ -184,7 +176,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                             this.chartOfAccountsComboBoxValue="All";
                         break;
     
-                    }}
+                    }
                                  
             }
                   
@@ -262,10 +254,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
 
         return queryFilterItem;
     }
-    ClearFields(){
-       
-
-    }
+    
 }
 
 

@@ -1,5 +1,4 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { AppTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ReportFliter } from '../../../Components/Filters/ReportFliter';
@@ -335,10 +334,6 @@ export class VendorChargesAnalysisFilterComponent extends BaseComponent {
                 case "DateType":
                     this.BuildDateFilter(queryFilterItem.FieldValue);
                     break;
-                case "IsLocalCurrency":
-                    this.SelectedCurrencyCode = queryFilterItem.FieldValue ?? this.LocalCurrencyCode;
-                    break;
-                
                 case "OperationalType":
                     this.SelectedOperationalCode = queryFilterItem.FieldValue ?? this.LocalCurrencyCode;
                     break;

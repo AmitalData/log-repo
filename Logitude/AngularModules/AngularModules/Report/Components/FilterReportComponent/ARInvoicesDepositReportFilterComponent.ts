@@ -5,11 +5,8 @@ import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {ParticipantList} from '../../EntityLists/ParticipantList';
+import {FormGroup} from '@angular/forms';
 import {AppTool} from '../../../Infrastructure/Tools';
-import {CodeNameClass} from './CodeNameClass';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 
@@ -130,16 +127,7 @@ export class ARInvoicesDepositReportFilterComponent extends BaseComponent implem
         this.FromDate = this.SetDate(Year, month - 1, 1);
         this.ToDate = this.SetDate(Year, month, daysofmonth);
     }
-
-
-
-
-
-
-
-
-
-
+    
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }

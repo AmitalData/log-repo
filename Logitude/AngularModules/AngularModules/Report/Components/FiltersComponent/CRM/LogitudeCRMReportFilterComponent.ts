@@ -1,5 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { Component} from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
@@ -7,8 +6,6 @@ import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewCompone
 import { TenantPM } from 'Common/EntityPMs/TenantPM';
 import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
 import { CodeNameClass } from 'Report/Components/FilterReportComponent/CodeNameClass';
-import { ReportsDomainService } from 'Report/Services/ReportsDomainService';
-import { OpportunityTypePMService } from 'CRM/Services/StandardPMs/OpportunityTypePMService';
 import { OpportunityTypeListService } from 'CRM/Services/StandardLists/OpportunityTypeListService';
 import { OpportunityTypeList } from 'CRM/EntityLists/OpportunityTypeList';
 import { PaymentChannelListService } from 'Infrastructure/Services/StandardLists/PaymentChannelListService';
@@ -80,8 +77,8 @@ export class LogitudeCRMReportFilterComponent extends BaseComponent {
                 var item = new CodeNameClass();
                 item.Code = i.Id;
                 item.Name = i.Name;
-                item.Checked = this.SelectedItem == "All" ? true || this.SelectedItem.indexOf(i.Id) > -1:false;
-                this.FilterdOpportunityTypeList.push(i);
+                item.Checked = this.SelectedItem == "All" || this.SelectedItem.indexOf(i.Id) > -1;
+               this.FilterdOpportunityTypeList.push(item);
             }
         });
         this.FilterdOpportunityTypeList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });

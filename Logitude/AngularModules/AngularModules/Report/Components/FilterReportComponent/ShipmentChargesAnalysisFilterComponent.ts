@@ -1,17 +1,12 @@
-declare var System: any;
-declare var window: any;
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {Component, OnInit, Output, ElementRef}  from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {ParticipantList} from '../../EntityLists/ParticipantList';
+import {Component, OnInit}  from '@angular/core';
 import {CodeNameClass} from '../../../Infrastructure/DataContracts/CodeNameClass';
-import {AppTool, DateTool, DateParts} from '../../../Infrastructure/Tools';
+import {AppTool} from '../../../Infrastructure/Tools';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
@@ -271,7 +266,7 @@ export class ShipmentChargesAnalysisFilterComponent extends BaseComponent implem
                 case "PayablesType":
                     this.FillFiltersList(queryFilterItem.FieldValue);
                     break;
-                case "IsProfitCurrecny":
+                case "IsProfitCurrency":
                     this.ProfitCurrencyCode = queryFilterItem.FieldValue ?? this.LocalCurrencyCode;
                     break;
                 
@@ -341,7 +336,7 @@ export class ShipmentChargesAnalysisFilterComponent extends BaseComponent implem
 
         this.queryFilterItem = new QueryFilterItem();
         this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IsProfitCurrecny";
+        this.queryFilterItem.FieldName = "IsProfitCurrency";
         this.queryFilterItem.FieldValue = IsProfitCurrency;
         this.queryFilterItem.Operator = "Equals";
         this.queryFilterItems.push(this.queryFilterItem);

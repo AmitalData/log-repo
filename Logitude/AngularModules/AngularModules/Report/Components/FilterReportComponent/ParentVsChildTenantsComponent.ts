@@ -120,16 +120,16 @@ export class ParentVsChildTenantsComponent extends BaseComponent implements OnIn
     }
     RunReport(isloading: boolean) {
         
-            var reportFliter = new ReportFliter();
-            reportFliter.Tenant = SessionLocator.Tenant;
-            reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-            reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-            reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-            reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-            reportFliter.NumberOfPage = 1;
-            reportFliter.ProcessType = "GenerateReport";
+            var reportFilter = new ReportFliter();
+            reportFilter.Tenant = SessionLocator.Tenant;
+            reportFilter.QueryFilterItemLists = this.GetQueryFilterItems();
+            reportFilter.FilterControlName = this.ReportsPreview.FilterControlName;
+            reportFilter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+            reportFilter.ReportCode = this.ReportsPreview.Report.Code;
+            reportFilter.NumberOfPage = 1;
+            reportFilter.ProcessType = "GenerateReport";
 
-            this.ReportsPreview.GenerateReport(reportFliter, isloading);
+            this.ReportsPreview.GenerateReport(reportFilter, isloading);
       
     }
 

@@ -139,9 +139,6 @@ export class VehiclesFilterComponent extends BaseComponent {
                 case "Packagetype":
                     this.PackageTypeId = queryFilterItem.FieldValue;
                     break;   
-                case "CustomerId":
-                    this.CustomerId = queryFilterItem.FieldValue;
-                    break; 
                 case "BillToId":
                     this.CustomerId = queryFilterItem.FieldValue;
                     break; 

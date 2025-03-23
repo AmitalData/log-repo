@@ -3,13 +3,9 @@ import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent'
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {Component, OnInit, Output, ElementRef}  from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {ParticipantList} from '../../EntityLists/ParticipantList';
+import {Component, OnInit}  from '@angular/core';
+import {FormGroup} from '@angular/forms';
 import {AppTool} from '../../../Infrastructure/Tools';
-import {CodeNameClass} from './CodeNameClass';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 
@@ -53,24 +49,13 @@ export class CASSReportFilterComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        //if (!this.ReportsPreview.FilterConrolHeight) {
-        //    this.ReportsPreview.SetFilterCotrolHeight(80);
-        //}
-        //else {
-
-
-        //    var month = new Date().getMonth();
-        //    var Year = new Date().getFullYear();
-        //    var daysofmonth = this.daysInMonth(new Date());
-        //    this.FromDate = this.SetDate(Year, month - 1, 1);            
-        //    this.ToDate = this.SetDate(Year, month, daysofmonth);
-        //}
+      
     }    
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
     public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true,customerId: string=null,IncludeOperationalyClosed:boolean=false) {
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
         this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
@@ -133,14 +118,9 @@ export class CASSReportFilterComponent extends BaseComponent implements OnInit {
 
     RunReport(isloading: boolean) {
 
-
-
-
         if (this.ValidateSelectedFilters()) {
 
-            
-
-
+            this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
             this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
@@ -187,7 +167,6 @@ export class CASSReportFilterComponent extends BaseComponent implements OnInit {
         this.queryFilterItem.FieldValue = this.MainCarriageCarrierId;
         this.queryFilterItem.Operator = "Equals";
         this.queryFilterItems.push(this.queryFilterItem);            
-        this.reportFliter = new ReportFliter();
         return this.queryFilterItems;
 
     }
