@@ -988,7 +988,30 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	    }
+        private bool? excludeFromTaxReport ;
+
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool? ExcludeFromTaxReport
+        {
+
+            get
+            {
+                return excludeFromTaxReport;
+            }
+            set
+            {
+                if (excludeFromTaxReport != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "ExcludeFromTaxReport", OldValue = excludeFromTaxReport, NewValue = value, PropertyType = "bool?" };
+                    NotifyPropertyChanged(values);
+                    excludeFromTaxReport = value;
+                }
+
+            }
+        }
+    }
    
 }
 	 

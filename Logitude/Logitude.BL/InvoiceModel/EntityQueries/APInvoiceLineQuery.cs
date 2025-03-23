@@ -11,6 +11,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -189,6 +190,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 PrepaidCollectId = a.PrepaidCollectId,
                                 ContainerTypeId = a.ContainerTypeId,
                                 Quantity = a.Quantity,
+                                ExcludeFromTaxReport = a.ExcludeFromTaxReport,
                             }).ToList();
 
                 ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);

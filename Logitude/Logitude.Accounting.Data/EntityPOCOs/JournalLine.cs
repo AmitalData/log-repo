@@ -89,6 +89,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual JournalActionType JournalActionType { get; set; }
         [Column("ConfirmationNumber")]
 	    public string ConfirmationNumber { get; set; }
+        [Column("ExcludeFromTaxReport")]
+        public bool? ExcludeFromTaxReport { get; set; }
     }
 }
 	 

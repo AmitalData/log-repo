@@ -82,5 +82,6 @@
         public int? Quantity { get; set; }
         public double? ForiegnAmountWithRecognizedVat { get; set; }
         public double? LocalAmountWithVatRecognized { get; set; }
+        public bool? ExcludeFromTaxReport { get; set; }
     }
 }
