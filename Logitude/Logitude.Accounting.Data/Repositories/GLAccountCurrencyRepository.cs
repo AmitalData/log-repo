@@ -81,6 +81,16 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).FirstOrDefault();
         }
 
+        public string GetReconcileMethodCodeByCurrencyAndGLAccountId(string accountId, string currencyId, int tenant)
+        {
+
+            return (from a in context.GLAccountCurrencies
+                    join b in context.GLAccounts on a.GLAccountId equals b.Id
+                    where a.MainGLAccountId == accountId && a.CurrencyId == currencyId && a.Tenant == tenant
+
+                    select b.ReconcileMethodCode).FirstOrDefault();
+        }
+
 
         public GLAccountCurrency GetEntityByGLAccountId(string accountId,  int tenant)
         {

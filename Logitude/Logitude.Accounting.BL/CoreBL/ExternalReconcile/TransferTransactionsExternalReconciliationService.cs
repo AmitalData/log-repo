@@ -206,7 +206,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
 
             GLAccountPM glaccount = GetGLAccount(tenant, externalRecoPM.GLAccountId);
-            autoRecoService.InitMust(glaccount, journalPM, AutoReconcileRecordList, "2");
+            autoRecoService.InitMust(glaccount, journalPM, AutoReconcileRecordList, "2", journalPM.CurrencyId);
             autoRecoService.InsertJournalReconcile();
         }
 

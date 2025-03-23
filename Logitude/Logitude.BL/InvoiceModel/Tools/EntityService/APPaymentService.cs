@@ -1389,7 +1389,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 );
                 if (AutoReconcileRecordList.Count > 0)
                 {
-                    AutoReconcileARPaymentServiceExt.InitMust(paymentGLAccount, journal, AutoReconcileRecordList, "4");// APInvoice
+                    AutoReconcileARPaymentServiceExt.InitMust(paymentGLAccount, journal, AutoReconcileRecordList, "4", paymentPM.PaymentCurrencyId);// APInvoice
                     AutoReconcileARPaymentServiceExt.InsertJournalReconcile();
                 }
 

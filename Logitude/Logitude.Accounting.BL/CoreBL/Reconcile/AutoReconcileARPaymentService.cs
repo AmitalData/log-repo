@@ -1,32 +1,38 @@
-﻿using Logitude.Accounting.Data.Repositories;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.BLExt;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.Reconcile
 {
     public class AutoReconcileService : IAutoReconcileServiceExt
     {
-        private GLAccountPM _GLAccountBillTO;
+        public GLAccountPM _GLAccountBillTO;
         private JournalPM _JournalARPayment;
         private List<AutoReconcileRecord>  _AutoReconcileRecordList;
         private string _accountingEntityCode;
+        private string _paymentCurrencyId;
+        private string _reconcileMethodCode;
 
-        public void InitMust(GLAccountPM glAccountBillTO, JournalPM journalARPayment, List<AutoReconcileRecord> AutoReconcileRecordList, string accountingEntityCode)
+        public void InitMust(GLAccountPM glAccountBillTO, JournalPM journalARPayment, List<AutoReconcileRecord> AutoReconcileRecordList, string accountingEntityCode, string paymentCurrencyId)
         {
             this._GLAccountBillTO = glAccountBillTO;
             this._JournalARPayment = journalARPayment;
-            _AutoReconcileRecordList = AutoReconcileRecordList;//theEntityPm.PaymentInvoices.Select(r => r.ARInvoiceId).ToList();
+            _AutoReconcileRecordList = AutoReconcileRecordList;
             _accountingEntityCode = accountingEntityCode;
+            _paymentCurrencyId= paymentCurrencyId;
+            _reconcileMethodCode = (bool)glAccountBillTO.IsMultiCurrency ? GetReconcileMethodCode(glAccountBillTO, paymentCurrencyId) : glAccountBillTO.ReconcileMethodCode;
         }
         
-
+       public string GetReconcileMethodCode(GLAccountPM glAccountBillTO, string paymentCurrencyId)
+        {
+               GLAccountCurrencyQueryService gLAccountCurrencyQuery = new GLAccountCurrencyQueryService(glAccountBillTO.Tenant);
+               return  gLAccountCurrencyQuery.GetReconcileMethodCodeByCurrencyAndGLAccountId(glAccountBillTO.Id, paymentCurrencyId, glAccountBillTO.Tenant);
+          }
 
    
         public void InsertJournalReconcile()
@@ -34,28 +40,20 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
            
 
 
-            List<ReconciliationLinePM> ReconciliationLines = GetReconciliationLines(_AutoReconcileRecordList, _GLAccountBillTO.Id, _JournalARPayment .Tenant);
+            List<ReconciliationLinePM> ReconciliationLines = GetReconciliationLines(_AutoReconcileRecordList, _GLAccountBillTO.Id, _JournalARPayment .Tenant,_GLAccountBillTO.IsMultiCurrency, _paymentCurrencyId);
             
-            //journal.JournalLines.GroupBy(r=>r.)
-            if (_GLAccountBillTO.ReconcileMethodCode == ((int)ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString()
-        ) //Local Currency
+           
+            if (_reconcileMethodCode == ((int)ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString()
+        ) 
             {
                    var sumLocal = _JournalARPayment.JournalLines.Where(r => r.CreditAccountId == _GLAccountBillTO.Id && r.ActionCode == "1").Sum(r => r.LocalAmount); // 1- Credit
-
-                //if (sumLocal != ReconciliationLines.Sum(r => r.ReconciliationAmount))
-                //{
-                //    throw new ApplicationException("(sumLocal != ReconciliationLines.Sum(r => r.ReconciliationAmount))");
-                //}
+                              
             }
             else
             {
                 string glAccountCurrencyId = _GLAccountBillTO.CurrencyId;
                 var sumForeign = _JournalARPayment.JournalLines.Where(r => r.CreditAccountId == _GLAccountBillTO.Id && r.ActionCode == "1").Sum(r => r.ForeignAmount); // 1- Credit
-                //if (sumForeign != ReconciliationLines.Sum(r => r.ReconciliationAmount))
-                //{
-                //    throw new ApplicationException("(sumForeign != ReconciliationLines.Sum(r => r.ReconciliationAmount))");
-                //}
-
+              
                 if (ReconciliationLines.Select(r => r.CurrencyId).Distinct().Count() > 1)
                 {
                     throw new ApplicationException("only 1 currency");
@@ -78,7 +76,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                    );
             _JournalARPayment .JournalReconciles.AddRange(listJournalReconciles);
         }
-        private List<ReconciliationLinePM> GetReconciliationLines(List<AutoReconcileRecord> autoReconcileRecordList, string glAccountBillTOId, int tenant)
+        private List<ReconciliationLinePM> GetReconciliationLines(List<AutoReconcileRecord> autoReconcileRecordList, string glAccountBillTOId, int tenant,bool? isMultiCurrency,string currencyId)
         {
             if (!autoReconcileRecordList.Any())
             {
@@ -93,7 +91,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
 
             var myLedgerTransactionRepository = new LedgerTransactionRepository(tenant);
 
-            FillRowsWithJournalId(autoReconcileRecordList, glAccountBillTOId, tenant, myLedgerTransactionRepository);
+            FillRowsWithJournalId(autoReconcileRecordList, glAccountBillTOId, tenant, myLedgerTransactionRepository, isMultiCurrency, currencyId);
 
 
             if (autoReconcileRecordList.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionID)))
@@ -115,11 +113,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
             .ToList();
 
 
-            
-            if (!ledgerListNotReconcile.Any())
-            {
-              //  throw new ApplicationException($"Does have any Ledger/ Already Reconcile!! .GetQByJournalIds({idList}, tenant).Where(r => r.AccountId == {glAccountBillTOId}).Where(r => !r.IsReconciled).Where(r => !r.InReconcileProgress)");
-            }
 
             var lineCounter = 1;
             var myReconciliationLines = new List<ReconciliationLinePM>();
@@ -144,13 +137,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                         Line = lineCounter++,
                         CurrencyId = currentLedger.OpenAmountCurrencyId,
                         TransactionId = currentLedger.Id,
-                        //ReconciliationAmount = current.Value, //selectedTransaction.OpenAmount,
-                        //IsPartial = (current.Value < currentLedger.OpenAmount)//false//selectedTransaction.IsPartial;
+                     
                     };
 
 
-                    if (_GLAccountBillTO.ReconcileMethodCode == ((int)ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString()
-        ) //Local Currency
+                    if (_reconcileMethodCode == ((int)ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString()) 
                     {
 
                         if (Math.Abs(autoReconcileRecord.LocalAmountToReconcile) > Math.Abs(currentLedger.OpenAmount))
@@ -182,21 +173,28 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
 
         }
 
-        private static void FillRowsWithJournalId(List<AutoReconcileRecord> autoReconcileRecordList, string glAccountBillTOId, int tenant, LedgerTransactionRepository myLedgerTransactionRepository)
+        private static void FillRowsWithJournalId(List<AutoReconcileRecord> autoReconcileRecordList, string glAccountBillTOId, int tenant, LedgerTransactionRepository myLedgerTransactionRepository,bool? isMultiCurrency,string currencyId)
         {
             var rowsWithJournalIdOnly = autoReconcileRecordList
                                         .Where(r => string.IsNullOrWhiteSpace(r.LedgerTransactionID) && !string.IsNullOrWhiteSpace(r.JournalId))
                                         .ToList();
             if (rowsWithJournalIdOnly.Count > 0)
             {
-
+                List<string> listOfGlaccountIds = new List<string>();
                 var listOfJournalIds = rowsWithJournalIdOnly.Select(r => r.JournalId).ToList();
+                if ((bool)isMultiCurrency)
+                {
+                    GLAccountCurrencyQueryService gLAccountCurrencyQuery = new GLAccountCurrencyQueryService(tenant);
+                    GLAccountCurrencyPM gLAccountCurrency = gLAccountCurrencyQuery.GetEntityByCurrencyAndGLAccountId(glAccountBillTOId, currencyId, tenant);
+                    listOfGlaccountIds.Add(gLAccountCurrency?.GLAccountId);
+                }
+                listOfGlaccountIds.Add(glAccountBillTOId);
 
 
                 var qLedgerOfBilltoByJournalId
                     = myLedgerTransactionRepository
                     .GetQByJournalIds(listOfJournalIds, tenant)
-                    .Where(r => r.AccountId == glAccountBillTOId);
+                    .Where(r => listOfGlaccountIds.Contains(r.AccountId));
                 var LedgerOfBilltoByJournalIdList = qLedgerOfBilltoByJournalId.ToList();
                 if (!LedgerOfBilltoByJournalIdList.Any())
                 {
