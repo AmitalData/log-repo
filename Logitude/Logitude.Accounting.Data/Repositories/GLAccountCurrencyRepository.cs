@@ -81,7 +81,7 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).FirstOrDefault();
         }
 
-        public string GeReconcileMethodCodeByCurrencyAndGLAccountId(string accountId, string currencyId, int tenant)
+        public string GetReconcileMethodCodeByCurrencyAndGLAccountId(string accountId, string currencyId, int tenant)
         {
 
             return (from a in context.GLAccountCurrencies

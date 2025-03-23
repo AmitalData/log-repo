@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
        public string GetReconcileMethodCode(GLAccountPM glAccountBillTO, string paymentCurrencyId)
         {
                GLAccountCurrencyQueryService gLAccountCurrencyQuery = new GLAccountCurrencyQueryService(glAccountBillTO.Tenant);
-               return  gLAccountCurrencyQuery.GeReconcileMethodCodeByCurrencyAndGLAccountId(glAccountBillTO.Id, paymentCurrencyId, glAccountBillTO.Tenant);
+               return  gLAccountCurrencyQuery.GetReconcileMethodCodeByCurrencyAndGLAccountId(glAccountBillTO.Id, paymentCurrencyId, glAccountBillTO.Tenant);
           }
 
    
@@ -137,13 +137,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
                         Line = lineCounter++,
                         CurrencyId = currentLedger.OpenAmountCurrencyId,
                         TransactionId = currentLedger.Id,
-                        //ReconciliationAmount = current.Value, //selectedTransaction.OpenAmount,
-                        //IsPartial = (current.Value < currentLedger.OpenAmount)//false//selectedTransaction.IsPartial;
+                     
                     };
 
 
-                    if (_reconcileMethodCode == ((int)ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString()
-        ) //Local Currency
+                    if (_reconcileMethodCode == ((int)ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString()) 
                     {
 
                         if (Math.Abs(autoReconcileRecord.LocalAmountToReconcile) > Math.Abs(currentLedger.OpenAmount))

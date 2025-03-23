@@ -56,11 +56,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return GetEntityPM(poco);
         }
 
-        public string GeReconcileMethodCodeByCurrencyAndGLAccountId(string accountId, string currencyId, int tenant)
+        public string GetReconcileMethodCodeByCurrencyAndGLAccountId(string accountId, string currencyId, int tenant)
         {
-
-            var ReconcileMethodCode = repository.GeReconcileMethodCodeByCurrencyAndGLAccountId(accountId, currencyId, tenant);
-            return ReconcileMethodCode;
+            return repository.GetReconcileMethodCodeByCurrencyAndGLAccountId(accountId, currencyId, tenant);
         }
 
         public GLAccountCurrencyPM GetEntityByGLAccountId(string accountId, int tenant)
