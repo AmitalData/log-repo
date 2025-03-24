@@ -450,7 +450,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 entityPM.ExternalAttachmentId = documentIn.Code + "-" + entityPM.DocumentVersion;//entityPM.DocumentsFilingCode + "-" + entityPM.DocumentVersion;
             }
-            ObjectTableRepository objecttableRep = new ObjectTableRepository(0);
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objectTable = objecttableRep.GetObjectTableById(documentIn.ObjectTableId, 0);
 #if true//cloudExc 11:22 ‎24/‎08/‎2016
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
