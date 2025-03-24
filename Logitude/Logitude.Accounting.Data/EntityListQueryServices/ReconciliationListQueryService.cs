@@ -229,11 +229,17 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         public List<ReconciliationList> GetReconciliationsByJournalId(string journalId, int tenant)
         {
-            IQueryable<Reconciliation> reconciliationQuery = from r in context.Reconciliations
-                                                             join rl in context.ReconciliationLines on r.Id equals rl.ReconciliationId
-                                                             join lt in context.LedgerTransactions on rl.TransactionId equals lt.Id
-                                                             where lt.JournalId == journalId && rl.Tenant == tenant
-                                                             select r;
+            IQueryable<Reconciliation> reconciliationQuery = context.Reconciliations
+                .Join(context.ReconciliationLines,
+                      r => r.Id,
+                      rl => rl.ReconciliationId,
+                      (r, rl) => new { r, rl })
+                .Join(context.LedgerTransactions,
+                      x => x.rl.TransactionId,
+                      lt => lt.Id,
+                      (x, lt) => new { x.r, x.rl, lt })
+                .Where(x => x.lt.JournalId == journalId && x.rl.Tenant == tenant)
+                .Select(x => x.r);
 
             IQueryable<ReconciliationList> reconciliationListQuery = this.GetIqueryableList(reconciliationQuery);
             List<ReconciliationList> rvList = reconciliationListQuery.ToList();
