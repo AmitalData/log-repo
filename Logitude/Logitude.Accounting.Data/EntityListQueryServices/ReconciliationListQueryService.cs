@@ -18,6 +18,8 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Server.Tools.Helpers;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity;
+using Logitude.Accounting.Data.EntityMapping;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
@@ -225,7 +227,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return recoList;
         }
 
-       
+        public List<ReconciliationList> GetReconciliationsByJournalId(string journalId, int tenant)
+        {
+            IQueryable<Reconciliation> reconciliationQuery = from r in context.Reconciliations
+                                                             join rl in context.ReconciliationLines on r.Id equals rl.ReconciliationId
+                                                             join lt in context.LedgerTransactions on rl.TransactionId equals lt.Id
+                                                             where lt.JournalId == journalId && rl.Tenant == tenant
+                                                             select r;
+
+            IQueryable<ReconciliationList> reconciliationListQuery = this.GetIqueryableList(reconciliationQuery);
+            List<ReconciliationList> rvList = reconciliationListQuery.ToList();
+            return rvList;
+        }
+
+
     }
 
 
