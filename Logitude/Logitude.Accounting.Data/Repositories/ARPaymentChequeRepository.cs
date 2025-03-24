@@ -92,7 +92,21 @@ namespace Logitude.Accounting.Data.Repositories
                 context.ARPaymentCheques.Remove(entity);
             }
         }
-
+        public List<ARPaymentCheque> GetOpenChequesByBankAccount(string bankId, int tenant)
+        {
+            return context.BankDeposits
+                .Join(context.BankDepositLines,
+                    deposit => deposit.Id,
+                    line => line.DepositId,
+                    (deposit, line) => new { deposit, line })
+                .Join(context.ARPaymentCheques,
+                    combined => combined.line.ARPaymentChequeId,
+                    cheque => cheque.Id,
+                    (combined, cheque) => new { combined.deposit, combined.line, cheque })
+                .Where(a => a.deposit.DepositBankAccountId == bankId && a.deposit.Tenant == tenant && (a.cheque.StatusCode == "2" || a.cheque.StatusCode == "3"))
+                .Select(b => b.cheque)
+                .ToList();
+        }
         public bool IsChequeExists(string paymentId, string arPaymentChequesId, int tenant)
         {
             return context.ARPaymentCheques.Any(a => a.PaymentId == paymentId && a.Id == arPaymentChequesId && a.Tenant == tenant);
