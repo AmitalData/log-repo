@@ -142,7 +142,7 @@ namespace Logitude.Accounting.BL.Utils
                             List<string> gLAccountIdList;
                             gLAccountIdList = gLAccountQueryService.GetNextGLAccountIdByTypeControlNoParent(tenant, accountTypeCode, false, LastMadeGLAccountId, MaxGLAccountsPerQuery);
 
-                            if (gLAccountIdList != null && gLAccountIdList.Count > 0)
+                            if (gLAccountIdList != null && gLAccountIdList.Any())
                             {
                                 _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
                                 gLAccountIdList.ForEach(accId =>
@@ -157,7 +157,7 @@ namespace Logitude.Accounting.BL.Utils
                             List<string> gLAccountIdList;
                             gLAccountIdList = gLAccountQueryService.GetNextGLAccountIdByTypeControlDescendant(tenant, accountTypeCode, false, LastMadeGLAccountId, MaxGLAccountsPerQuery);
 
-                            if (gLAccountIdList != null && gLAccountIdList.Count > 0)
+                            if (gLAccountIdList != null && gLAccountIdList.Any())
                             {
                                 _MyResult.LastMadeGLAccountId = gLAccountIdList.Last();
                                 gLAccountIdList.ForEach(accId =>
@@ -260,9 +260,9 @@ namespace Logitude.Accounting.BL.Utils
                         List<InterestTransactionBefore> before_listPre = calcBeforeInterestTransPre != null ? calcBeforeInterestTransPre.ToList() : new List<InterestTransactionBefore>();
 
                         before_listPre.RemoveAll(item => backwardList.Any(b => b.Id == item.Id));
-                        if (before_listPre != null && before_listPre.Count > 0)
+                        if (before_listPre != null && before_listPre.Any())
                         {
-                            decimal? amount_before_qm = before_listPre.Select(c => c.LocalAmount).Sum();
+                            decimal? amount_before_qm = before_listPre.Sum(c => c.LocalAmount);
                             amount_beforePre = amount_before_qm.HasValue ? amount_before_qm.Value : 0m;
                         }
 
@@ -270,7 +270,7 @@ namespace Logitude.Accounting.BL.Utils
 
                         ////////////////
                         /// 5.Update InterestTransaction
-                        if (before_listPre != null && before_listPre.Count > 0)
+                        if (before_listPre != null && before_listPre.Any())
                         {
                             int total_count = before_listPre.Count;
                             int count = 0;
@@ -360,7 +360,7 @@ namespace Logitude.Accounting.BL.Utils
 
                         ////////////////
                     /// 5.Update InterestTransaction
-                        if (before_list != null && before_list.Count > 0)
+                        if (before_list != null && before_list.Any())
                         {
                             int total_count = before_list.Count;
                             int count = 0;
@@ -495,13 +495,13 @@ namespace Logitude.Accounting.BL.Utils
             var aRInvoiceTransactions = new List<InterestTransactionBefore>();
             var aRPaymentTransactions = new List<InterestTransactionBefore>();
 
-            if (after_list.Count > 0)
+            if (after_list.Any())
             {
                 journalTransactions = after_list
                     .Where(c => journalAccEntityCodes.Contains(c.AccountingEntityCode)).ToList();
-                if (journalTransactions.Count > 0)
+                if (journalTransactions.Any())
                 {
-                    amount_after += journalTransactions.Select(c => c.LocalAmount).Sum();
+                    amount_after += journalTransactions.Sum(c => c.LocalAmount);
                 }
 
                 aRInvoiceTransactions =
@@ -510,14 +510,14 @@ namespace Logitude.Accounting.BL.Utils
                 aRPaymentTransactions =
                     after_list.Where(c => c.AccountingEntityCode == AccountingEntityValues.ARPayment).ToList();
 
-                if (aRInvoiceTransactions.Count > 0 || aRPaymentTransactions.Count > 0)
+                if (aRInvoiceTransactions.Any() || aRPaymentTransactions.Any())
                 {
                     IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
 
-                    if (aRInvoiceTransactions.Count > 0)
+                    if (aRInvoiceTransactions.Any())
                     {
                         var aRInvoiceRepository = new ARInvoiceRepository(invoiceContext);
-                        var invoiceIds = aRInvoiceTransactions.Select(x => x.EntityId).Distinct().ToList();
+                        var invoiceIds = aRInvoiceTransactions.Select(x => x.EntityId).Distinct().ToHashSet();
                         var preexistingInvoiceIds = aRInvoiceRepository.GetInvoices() // if !forward, consider them as "newly arrived invoices"
                             .Where(inv => invoiceIds.Contains(inv.Id)
                                           && (forward ? inv.InvoiceDate < interestActivationDate : inv.InvoiceDate >= interestActivationDate))
@@ -530,14 +530,14 @@ namespace Logitude.Accounting.BL.Utils
 
                         if (aRInvoiceTransactions.Any())
                         {
-                            amount_after += aRInvoiceTransactions.Select(c => c.LocalAmount).Sum();
+                            amount_after += aRInvoiceTransactions.Sum(c => c.LocalAmount);
                         }
                     }
 
-                    if (aRPaymentTransactions.Count > 0)
+                    if (aRPaymentTransactions.Any())
                     {
                         var aRPaymentRepository = new ARPaymentRepository(invoiceContext);
-                        var paymentIds = aRPaymentTransactions.Select(x => x.EntityId).Distinct().ToList();
+                        var paymentIds = aRPaymentTransactions.Select(x => x.EntityId).Distinct().ToHashSet();
                         var preexistingPaymentIds = aRPaymentRepository.GetARPayments() // if !forward, consider them as "newly arrived payments"
                             .Where(pmt => paymentIds.Contains(pmt.Id)
                                           && (forward ? pmt.RegisterDate < interestActivationDate : pmt.RegisterDate >= interestActivationDate))
@@ -550,16 +550,15 @@ namespace Logitude.Accounting.BL.Utils
 
                         if (aRPaymentTransactions.Any())
                         {
-                            amount_after += aRPaymentTransactions.Select(c => c.LocalAmount).Sum();
+                            amount_after += aRPaymentTransactions.Sum(c => c.LocalAmount);
                         }
                     }
                 }
             }
             // Create union list of all three
-            var resultingList = new List<InterestTransactionBefore>();
-            resultingList.AddRange(journalTransactions);
-            resultingList.AddRange(aRInvoiceTransactions);
-            resultingList.AddRange(aRPaymentTransactions);
+            var resultingList = journalTransactions
+            .Concat(aRInvoiceTransactions)
+            .Concat(aRPaymentTransactions).ToList();
 
             return (amount_after, resultingList);
         }
@@ -590,7 +589,7 @@ namespace Logitude.Accounting.BL.Utils
 
 
 
-            if (before_list != null &&  before_list.Count > 0) 
+            if (before_list != null &&  before_list.Any()) 
             {
                 int total_count = before_list.Count;
                 int count = 0;
