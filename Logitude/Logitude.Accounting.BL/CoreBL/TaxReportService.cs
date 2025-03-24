@@ -62,8 +62,8 @@ namespace Logitude.Accounting.BL.CoreBL
         public static string FilePath = @"E:\PCN874.txt";
         private static Simplog.Data.CommonDataModel.EntityPOCOs.Card card;
         private static List<CustomTaxReportData> ledgerTransactons;
-        private static List<LedgerTransaction> journalsTransactions;
-        private static List<LedgerTransaction> journalsTransactionsNotExcluded;
+        private static HashSet<LedgerTransaction> journalsTransactions;
+        private static HashSet<LedgerTransaction> journalsTransactionsNotExcluded;
         private static List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards;
         private static List<GLAccountPM> oppositeAccounts;
         private static List<GLAccountPM> gLAccounts;
@@ -220,10 +220,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
             List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
             List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
-            journalsTransactions = ledgerTransactionRepository.GetLedgerTransactionsByJournalIds(JournalIds, tenant);
-            journalsTransactionsNotExcluded = ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsNotExcluded(JournalIds, tenant);
 
-            bool isEquipment = false;
+
+
+            (journalsTransactions, journalsTransactionsNotExcluded) =
+                ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsCombined(JournalIds, tenant);
+
+
             List<string> glAccountIds = journalsTransactions.Select(d => d.AccountId).ToList();
             List<string> oppositeglAccountIds = ledgerTransactons.Select(d => d.OppositGLAccount).ToList();
             gLAccountCurrencies = gLAccountCurrencyQueryService.GetGLAccountCurrenciesByAccountIds(tenant, oppositeglAccountIds);
