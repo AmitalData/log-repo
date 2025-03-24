@@ -17,8 +17,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class ContactPasswordListQueryService  : BaseEntityListQueryService<ContactPasswordList,POCO.ContactPassword,  ContactPasswordKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ContactPassword> contextEntity => (context as IAmitalCloudContext).ContactPasswords;
-		public ContactPasswordListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+	    protected override System.Data.Entity.IDbSet<POCO.ContactPassword> contextEntity => (context as IGlobalContext).ContactPasswords;
+		public ContactPasswordListQueryService(int tenant) : base(GlobalContext.GetContext(tenant)) { }
         public ContactPasswordList GetSingle(string email)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

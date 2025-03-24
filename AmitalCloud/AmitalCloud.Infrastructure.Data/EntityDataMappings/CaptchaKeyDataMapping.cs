@@ -27,12 +27,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 
         public void CustomPMToPOCO(CaptchaKeyPM entityPM, POCO.CaptchaKey entityPOCO)
         {
-            //throw new NotImplementedException();
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.Id = entityPM.Id;
+            }
         }
 
         public void CustomPOCOToPM(CaptchaKeyPM entityPM, POCO.CaptchaKey entityPOCO)
         {
-            //throw new NotImplementedException();
         }
    }
 

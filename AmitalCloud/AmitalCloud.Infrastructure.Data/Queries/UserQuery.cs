@@ -215,6 +215,20 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         //    return "";
         //}
 
+        public static bool isUserAdmin(string email, int tenant)
+        {
+            UserRepository userRepository = new UserRepository(tenant);
+            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, false);
+            if (loggedUser != null && loggedUser.UserRoles != null)
+            {
+                if (loggedUser.UserRoles.Contains("Administrator"))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         #region Get Single User
         public UserPM GetSinglePM(string id, int tenant) => GetSinglePMFromCache(a => (a.Tenant == tenant || a.Tenant == 0) && a.Id == id, "UserPM" + id + tenant);

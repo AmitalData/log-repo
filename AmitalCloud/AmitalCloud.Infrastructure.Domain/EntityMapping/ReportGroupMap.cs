@@ -26,12 +26,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.DropCdropCode).HasColumnName("DropCdropCode").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            this.Property(t => t.DropCdropEnglishname).HasColumnName("DropCdropEnglishname").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            this.Property(t => t.DropCdropLocalname).HasColumnName("DropCdropLocalname").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
             this.Property(t => t.OrderNumber).HasColumnName("OrderNumber").IsRequired();
 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);

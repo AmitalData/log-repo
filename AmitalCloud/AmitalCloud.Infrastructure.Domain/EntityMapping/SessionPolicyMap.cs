@@ -18,7 +18,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public SessionPolicyMap()
         { 
-				this.ToTable("sessionpolicies");
+				this.ToTable("SessionPolicies");
 		
 		    this.HasKey(t => new { t.Id });
 	 

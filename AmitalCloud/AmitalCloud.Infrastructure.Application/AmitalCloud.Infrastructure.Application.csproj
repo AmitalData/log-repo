@@ -911,6 +911,7 @@
     <Compile Include="EntityUpdateServices\Generated\APILogsDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\APILogsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AuditLogUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AuthenticationTokenUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AutomationHistoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AutomationLastUpdateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AutomationResultEmailRecipientUpdateService.Generated.cs" />

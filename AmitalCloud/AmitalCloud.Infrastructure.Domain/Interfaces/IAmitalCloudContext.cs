@@ -277,7 +277,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<WeightUnit> WeightUnits { get; }
 		 IDbSet<WorkerRoleName> WorkerRoleNames { get; }
 	        //IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
-        IDbSet<ObjectField> ObjectFieldsDbSet { get; }
          void DetectChanges();
 
     }

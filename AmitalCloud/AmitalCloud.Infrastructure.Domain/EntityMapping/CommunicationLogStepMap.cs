@@ -34,7 +34,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.Status).HasColumnName("Status").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.Log).HasColumnName("Log").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.Log).HasColumnName("Log").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.StartDate).HasColumnName("StartDate").IsRequired();
 

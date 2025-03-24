@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ContactPasswordQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ContactPassword,ContactPasswordKeys<string>,ContactPasswordPM,ContactPasswordList,string>
+   public partial class ContactPasswordQueryService: BaseEntityQueryService<IGlobalContext,POCO.ContactPassword,ContactPasswordKeys<string>,ContactPasswordPM,ContactPasswordList,string>
    {
-        public ContactPasswordQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public ContactPasswordQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContactPassword>(context),new ContactPasswordDataMapping()) {}
+        public ContactPasswordQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public ContactPasswordQueryService(IGlobalContext context) : base(new Repository<POCO.ContactPassword>(context),new ContactPasswordDataMapping()) {}
 		public  ContactPasswordPM GetSingle(string email,bool getComposition, bool getFromCache) => base.GetSingle(new ContactPasswordKeys<string>(){ Email = email }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContactPassword,string> GetKeys(POCO.ContactPassword entityPOCO) => new ContactPasswordKeys<string>() { Email = entityPOCO.Email,  };
    }

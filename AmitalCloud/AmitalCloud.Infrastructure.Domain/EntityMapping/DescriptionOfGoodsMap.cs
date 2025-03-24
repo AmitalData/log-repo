@@ -33,6 +33,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.DescriptionOfGood).HasColumnName("DescriptionOfGood").IsRequired().HasMaxLength(500).IsUnicode(false);
+
+            // Properties
+            this.Property(t => t.Id)
+                .IsRequired()
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.Name)
+                .IsRequired()
+                .HasMaxLength(40)
+                .IsUnicode(false);
+
+            this.Property(t => t.DescriptionOfGood)
+                .IsRequired()
+                .HasMaxLength(1000)
+                .IsUnicode(true);
         }
     }
 }
