@@ -657,8 +657,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public set isAllSelected(v: boolean) {
         this._isAllSelected = v;
         if (v) {
-            //this.GetFirst5000LedgerForReconciliation();
-            // Take selcted lines by defualt = 500 ; if toggle feature is active = 2000
+           
             if (this.firstMark) {
                 this.firstMark = false;
                 this.UpdateIsMark();
@@ -2184,6 +2183,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 this.dateFilter = new FilterItem(this.SelectedDateType.FieldName, new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
             else
                 this.dateFilter = null;
+            this._isAllSelected = false;
             this.ReloadScreen();
         }
     }
@@ -2197,6 +2197,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 this.dateFilter = new FilterItem(this.SelectedDateType.FieldName, new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
             else
                 this.dateFilter = null;
+            this._isAllSelected = false;
             this.ReloadScreen();
         }
     }
