@@ -3,8 +3,7 @@ import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent'
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
-import {Component, OnInit, Output, ElementRef}  from '@angular/core';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {Component}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 @Component({

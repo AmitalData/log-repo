@@ -117,14 +117,12 @@ export class ArchivoExportadoComponent extends BaseComponent implements OnInit {
                 case "IncludeDraftInvoices":
                     this.IncludeDraftInvoices = queryFilterItem.FieldValue;
                     break;
-                case "IncludeDraftInvoices":
-                    this.IncludeDraftInvoices = queryFilterItem.FieldValue;
-                    break;
                 case "SelectedCurrencyCode":
                     this.SelectedCurrencyCode=queryFilterItem.FieldValue;
                     break;
                case "IsLocalCurrency":
                    this.SelectedCurrencyCode = queryFilterItem.FieldValue ?? this.LocalCurrencyCode ;
+                     break;
             }
 
 

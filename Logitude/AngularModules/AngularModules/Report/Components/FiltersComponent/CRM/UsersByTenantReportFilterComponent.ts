@@ -1,7 +1,5 @@
 ﻿import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
-import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../../Components/Filters/QueryFilterItem';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
@@ -114,10 +112,8 @@ export class UsersByTenantReportFilterComponent extends BaseComponent implements
     
         }
     }
-    ValidateSelectedFilters(){
-        return true;
-    }
-    RunButtonClicked(arg: boolean) {
+   
+    RunButtonClicked(_: boolean) {
       
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;

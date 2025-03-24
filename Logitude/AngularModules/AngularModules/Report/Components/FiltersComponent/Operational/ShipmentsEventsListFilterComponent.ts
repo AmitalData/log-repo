@@ -4,10 +4,6 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ReportFliter } from '../../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
 import { Component } from '@angular/core';
-import { DateTool } from '../../../../Infrastructure/Tools';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { DashBoardFilters } from '../../../../Infrastructure/DataContracts/Dashboard/DashboardFilters';
-import { AppTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 @Component({
 
@@ -136,7 +132,6 @@ export class ShipmentsEventsListFilterComponent extends BaseComponent {
     RunReport(isloading: boolean) {
 
 
-        //this.SetUIProperties();
         if (this.ValidateSelectedFilters()) {
 
             this.reportFliter = new ReportFliter();
