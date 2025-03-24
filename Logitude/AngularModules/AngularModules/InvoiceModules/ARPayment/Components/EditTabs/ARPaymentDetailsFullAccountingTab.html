@@ -754,10 +754,10 @@
                             <table>
                                 <tr>
                                     <td style="width: 1px;">
-                                        {{'ARPayment.S.Details.ARInvoices' | TextCodeTranslationPipe}}
+                                        {{ (EntityPM?.StatusCode !== 'AD' ? 'ARPayment.S.Details.ARInvoices' : 'Accounting.General.O.ManageReconciliation')| TextCodeTranslationPipe }}
                                     </td>
                                     <td style="width: 1px; padding-left: 5px;">
-                                        ({{TransactionsList?.Length}})
+                                        ({{(EntityPM?.StatusCode !== 'AD' ? TransactionsList?.Length : reconciliationsCount)}})
                                     </td>
                                     <!--    <td> <span class="HiddenBtn" (click)="GetData()">R</span></td>-->
                                     <td width="5px"></td>
@@ -783,8 +783,8 @@
                         </td>
                     </tr>
 
-                    <!-- Edit Grid -->
-                    <tr>
+                    <!-- Edit Grid Invoices-->
+                    <tr *ngIf="EntityPM?.StatusCode!== 'AD'">
                         <td>
                             <div class="MediaFill">
                                 <logitude-edit-grid [IsReadOnly]="IsGridReadOnly || IsDisplayOnly" GridWidth="100%"
@@ -957,6 +957,29 @@
                         </td>
                     </tr>
 
+                    <!-- Edit Grid reconciliations -->
+                   
+                    <tr *ngIf="EntityPM?.StatusCode === 'AD'">
+                        <td colspan="5" style="height: 100%;">
+
+                            <div class="GeneratedGridContainer">
+                                <logitude-grid #DataGrid GridWidth="100%" 
+                                               GridHeight="100%" 
+                                               [ObjectTable]="'Reconciliation'" 
+                                               [dataSource]="ReconciliationDataSource"
+                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent" 
+                                               [columns]="reconciliationColumns" 
+                                               [autoLoad]="true" 
+                                               [QueryChangeEvent]="onQueryChangeEvent"
+                                               (rowSelectedEvent)="onReconciliationSelected($event)"
+                                               (CountReady)="onCountReadyReconciliation($event)"
+                                               [IsCustomTemplate]="true">
+                                </logitude-grid>
+                            </div>
+                        </td>
+                    </tr>
+
+                   
                 </table>
             </div>
         </td>
