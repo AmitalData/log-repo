@@ -49,9 +49,9 @@ using Customer = Simplog.Data.CommonDataModel.EntityPOCOs.Customer;
 using DocumentType = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentType;
 using Contact = Simplog.Data.CommonDataModel.EntityPOCOs.Contact;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
- using Simplog.Data.InvoiceModel.Enums;
+using Simplog.Data.InvoiceModel.Enums;
 using System.Net.Configuration;
- 
+
 namespace Logitude.BL.Helpers
 {
     public class DocumentHelper
@@ -329,7 +329,6 @@ namespace Logitude.BL.Helpers
 
 
 
- 
         public void StartSignPDFInvoice(ARInvoice invoice, int tenant, ARInvoiceRepository repository,string contactEmail, FullAccountingSettingPM accountingSettings)
         {
 
@@ -411,10 +410,10 @@ namespace Logitude.BL.Helpers
 
 
 
-         public bool CheckPDFInvoiceInStorage_Inner(ARInvoice invoice, int tenant, ARInvoiceRepository repository, string contactEmail, FullAccountingSettingPM accountingSettings)
-         {
+        public bool CheckPDFInvoiceInStorage_Inner(ARInvoice invoice, int tenant, ARInvoiceRepository repository, string contactEmail, FullAccountingSettingPM accountingSettings)
+        {
             bool rv = false;
-
+             
 
             try
             {
@@ -454,7 +453,7 @@ namespace Logitude.BL.Helpers
                 {
                     throw new ArgumentNullException("There is no document");
                 }
-
+                
             }
             catch (Exception ex)
             {
@@ -467,22 +466,22 @@ namespace Logitude.BL.Helpers
             }
         }
 
-         private void HSMSignatureFailed(ARInvoice invoice, HSMException ex, ARInvoiceRepository repository)
-         {
-             invoice.IsSigned = ARInvoiceSignedStatusValues.SigningFailed;
+        private void HSMSignatureFailed(ARInvoice invoice, HSMException ex, ARInvoiceRepository repository)
+        {
+            invoice.IsSigned = ARInvoiceSignedStatusValues.SigningFailed;
             repository.Update(invoice);
-             repository.SubmitChanges();
-              this.CreateEvent("HSMF", invoice, "חתימת החשבונית לא  צלחה"+ ex);
+            repository.SubmitChanges();
+             this.CreateEvent("HSMF", invoice, "חתימת החשבונית לא  צלחה"+ ex);
             this.SendEmailAlert("ohad@amital.co.il", "  חתימה בHSM נכשלה", " חתימת החשבונית נכשלה &ensp;&ensp;&ensp; חשבונית מספר"+ invoice.InvoiceNumber+ "<br /><br />מצורפת השגיאה "+ex, invoice.Tenant, invoice.Id);
-         }
+        }
 
 
         private void HSMSignatureSucceeded(ARInvoice invoice, ARInvoiceRepository repository,string contactEmail,Document document,string  DocumentFilingId ,FullAccountingSettingPM accountingSettings)
-        { 
+        {
 
-             invoice.IsSigned = ARInvoiceSignedStatusValues.SignedButNotYetSent;
+            invoice.IsSigned = ARInvoiceSignedStatusValues.SignedButNotYetSent;
             repository.Update(invoice);
-             repository.SubmitChanges();
+            repository.SubmitChanges();
             this.CreateEvent("HSMS", invoice, DocumentFilingId + "החשבונית נחתמה בהצלחה :");
             this.SendToEmailContact(contactEmail, invoice, document, DocumentFilingId, repository, invoice.Tenant, accountingSettings);
 
