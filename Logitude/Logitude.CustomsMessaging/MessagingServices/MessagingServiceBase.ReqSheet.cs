@@ -1271,14 +1271,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 exceptionMessage = defaultMessage;
             }
-
-            if (exceptionMessage.Contains("Please Contact ESB Administrator"))
-            {
-                int tenant = requestParams?.Tenant == null ? 0 : requestParams.Tenant;
-                string msg = TextCodesTranslator.TranslateText("Customs.Declaration.O.ESBmsg", tenant) + "\n";
-                string tempExceptionMessage = exceptionMessage;
-                exceptionMessage = msg + tempExceptionMessage;
-            }
             responseData = new TResponseData() { Succeeded = false, HasException = true, UserMessage = "SendWS failed:" + exceptionMessage };
 
             MemoryStream memTResponseData = null;
