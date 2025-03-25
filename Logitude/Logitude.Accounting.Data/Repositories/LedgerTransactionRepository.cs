@@ -105,6 +105,11 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                     select a);
 
         }
+        public IQueryable<LedgerTransaction> GetByJournalAndAccountId(string journalId, string accountId, int tenant)
+        {
+            return context.LedgerTransactions
+                          .Where(a => a.JournalId == journalId && a.AccountId == accountId && a.Tenant == tenant);
+        }
         public IQueryable<LedgerTransaction> GetByJournalAndReference1(string journalId, string reference1, int tenant)
         {
 
