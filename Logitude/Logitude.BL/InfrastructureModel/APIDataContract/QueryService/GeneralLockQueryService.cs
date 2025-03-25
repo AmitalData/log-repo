@@ -104,6 +104,8 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 		}
 		public void DeleteGeneralLockByEntity(int tenant, string entityId, string objectTableName, string sessionId)
 		{
+			if (string.IsNullOrEmpty(entityId) || string.IsNullOrEmpty(objectTableName)) return;
+
 			ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
 
 			ObjectTablePM objectTable = tablesQuery.GetObjectTableByNameOrId(objectTableName, tenant);
