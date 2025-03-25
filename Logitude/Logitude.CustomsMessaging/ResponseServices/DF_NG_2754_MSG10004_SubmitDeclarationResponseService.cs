@@ -94,8 +94,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 }
             }
-            
+
             // Sending Auto Restore Declaration Request #113942
+            if (_MyDeclarationPM.DeclarationNumber == null)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Canceled because of declaration number not exist!");
+                throw new Exception("Sending Restore Declaration Request Canceled because of declaration number not exist!");
+            }
             DeclarationRestoreResponseData declarationRestoreResponseData = RestoreDeclarationRequest(requestParams);
 
             base.OnRequestFail(customResponse, requestParams);
