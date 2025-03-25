@@ -1271,6 +1271,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 exceptionMessage = defaultMessage;
             }
+
+            if (exceptionMessage.Contains("Please Contact ESB Administrator"))
+            {
+                int tenant = requestParams?.Tenant == null ? 0 : requestParams.Tenant;
+                string msg = "יש לפנות למוקד מלמ - שער עולמי טלפון 03-5312222 שלוחה 1 \n";
+                exceptionMessage = msg + exceptionMessage;
+            }
             responseData = new TResponseData() { Succeeded = false, HasException = true, UserMessage = "SendWS failed:" + exceptionMessage };
 
             MemoryStream memTResponseData = null;
