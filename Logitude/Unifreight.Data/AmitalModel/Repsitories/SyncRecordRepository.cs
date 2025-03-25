@@ -86,7 +86,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             IQueryable<SyncRecord> recordsQurey = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
                 (syncRecord.IsSync == SyncRecordStatus.InQueue || syncRecord.IsSync == SyncRecordStatus.Synced) &&
-                (syncRecord.FileNo == item || syncRecord.Entname == item) &&
+                (syncRecord.FileNo == item) &&
                 syncRecord.CreateDate > yesterday
             );
 
@@ -147,12 +147,13 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return record.SyncDT ?? DateTime.Now;
         }
 
-        public List<SyncRecord> GetAndMarkNewSyncRecord()
+        public List<SyncRecord> GetAndMarkNewSyncRecord(List<int> tenants)
         {
             DateTime yesterday = DateTime.Now.AddDays(-1);
 
-            IEnumerable<SyncRecord> query = context.SyncRecord.Where(syncRecord =>
-                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday).Take(1000);
+            IEnumerable<SyncRecord> query = context.SyncRecord
+                .Where(syncRecord => syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday && tenants.Contains(syncRecord.Tenant))
+                .Take(1000);
 
             logger.WriteDebug($"SyncRecord, GetAndMarkNewSyncRecord db: {context.GetConnection().Database}");
 
