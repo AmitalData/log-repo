@@ -1,5 +1,5 @@
 declare var window: any;
-import {Component, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef, ChangeDetectorRef}  from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef, ChangeDetectorRef, Output, EventEmitter}  from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../Components/Filters/ReportFliter';
 import {ReportService} from '../../Common/Services/ExtendedLists/ReportService';
