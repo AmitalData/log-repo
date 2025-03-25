@@ -36,7 +36,7 @@
   InActive="false"
   IsSaveButtonVisible="true"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"

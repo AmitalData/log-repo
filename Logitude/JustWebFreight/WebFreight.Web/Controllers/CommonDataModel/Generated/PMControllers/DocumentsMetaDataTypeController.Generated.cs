@@ -57,6 +57,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("DocumentsMetaDataType", "READ", authToken.Tenant);
                 DocumentsMetaDataTypeQuery documentsMetaDataTypeQuery = new DocumentsMetaDataTypeQuery(authToken.Tenant);
                 DocumentsMetaDataTypePM documentsMetaDataTypePM = documentsMetaDataTypeQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -87,6 +88,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("DocumentsMetaDataType", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("DocumentsMetaDataType", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         DocumentsMetaDataTypeService service = new DocumentsMetaDataTypeService(MyContext, entityPM.Tenant);
@@ -133,6 +136,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("DocumentsMetaDataType", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("DocumentsMetaDataType", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "DocumentsMetaDataType" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "DocumentsMetaDataTypePM" + entityPM.Id + entityPM.Tenant;

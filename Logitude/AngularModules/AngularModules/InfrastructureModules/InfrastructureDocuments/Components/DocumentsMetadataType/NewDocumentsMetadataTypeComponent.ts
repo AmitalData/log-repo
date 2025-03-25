@@ -8,6 +8,7 @@ export class NewDocumentsMetadataTypeComponent {
     constructor() { }
 
     ngOnInit(): void {
+        const a = 1;
         // Initialization logic here
     }
 }

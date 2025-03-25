@@ -32,12 +32,12 @@ export class DocumentsMetaDataTypeListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/documentsmetadatatypeviews';  
     }
 
-	getSingle(code: string) {
+	getSingle(id: string) {
 
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class DocumentsMetaDataTypeListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DocumentsMetaDataType", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DocumentsMetaDataType", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),
@@ -62,6 +62,7 @@ export class DocumentsMetaDataTypeListService {
 	}
 
 	getAll() {
+
 		var callTime = new Date();
 
 		return defer(() => {
@@ -83,7 +84,7 @@ export class DocumentsMetaDataTypeListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DocumentsMetaDataType", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DocumentsMetaDataType", "GetAllLists", ""); 
 
 						return serviceResponse;
 					}),
@@ -93,6 +94,7 @@ export class DocumentsMetaDataTypeListService {
 	}
 	
 	getByFilters(filters: ApiQueryFilters) {
+		
 		var callTime = new Date();       
 		var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);

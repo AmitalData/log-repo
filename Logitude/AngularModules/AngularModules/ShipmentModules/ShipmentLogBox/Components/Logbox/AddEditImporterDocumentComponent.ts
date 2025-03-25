@@ -503,7 +503,7 @@ export class AddEditImporterDocumentComponent implements OnInit {
         if (this.DocumentTypeMetaDataList) {
             this.DocumentTypeMetaDataList.forEach((item) => {
                 //if (item.DocumentsFilingMetaDataValuePM && !AppTool.IsNullOrEmpty(item.DocumentsFilingMetaDataValuePM.MetaDataValue)) {
-                this.EntityPm.DocumentsFilingMetaDataValues.push(item.DocumentsFilingMetaDataValuePM);
+                this.EntityPm.DocumentsFilingMetaDataValues.push((<any>item).DocumentsFilingMetaDataValuePM);
                 //}
             });
         }

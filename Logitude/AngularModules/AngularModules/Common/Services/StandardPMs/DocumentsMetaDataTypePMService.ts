@@ -29,7 +29,7 @@ export class DocumentsMetaDataTypePMService {
 	private _apiUrl: string;
 	constructor() {
 		this._http = ServiceHelper.HttpClient;
-		this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/documentsMetaDataType';
+		this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/documentsMetaDataTypes';
 	}
 
 	get(id: string) {

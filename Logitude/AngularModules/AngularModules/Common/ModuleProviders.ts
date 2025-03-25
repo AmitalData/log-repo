@@ -231,6 +231,7 @@ import { CarrierServiceLineListService } from './Services/StandardLists/CarrierS
 import { WarehouseMenuButtonsHandler } from './Components/MenuButtons/WarehouseMenuButtonsHandler';
 import {ResponsibilityListService } from './Services/StandardLists/ResponsibilityListService';
 import { DocumentsMetaDataTypeListService } from './Services/StandardLists/DocumentsMetaDataTypeListService';
+import { DocumentsMetaDataTypePMService } from './Services/StandardPMs/DocumentsMetaDataTypePMService';
  
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -466,6 +467,7 @@ export class ModuleProviders {
             case "PortGroupPMService": { myResult = new PortGroupPMService(); break; }
             case "ResponsibilityListService": { myResult = new ResponsibilityListService(); break; }
             case "DocumentsMetaDataTypeListService": { myResult = new DocumentsMetaDataTypeListService(); break; }
+            case "DocumentsMetaDataTypePMService": { myResult = new DocumentsMetaDataTypePMService(); break; }
          }
 
         return myResult;
