@@ -96,6 +96,7 @@
     <None Include="DBOthers\Views\AllARPaymentChequesViews.dxml" />
     <None Include="DBOthers\Views\LedgerTransactionsDeductionViews.dxml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
+    <None Include="DBScripts\202503021302_NewAgingReport.sxml" />
     <None Include="DBScripts\202405131200_CreateSchemaQueryReports.sxml" />
     <None Include="DBScripts\202403031201_ChartOfAccountsEnglishName.sxml" />
     <None Include="DBScripts\202403111553_ChequeCounterSerialAddLine.sxml" />
