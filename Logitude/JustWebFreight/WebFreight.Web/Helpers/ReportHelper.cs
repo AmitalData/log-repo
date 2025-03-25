@@ -1914,9 +1914,10 @@ namespace WebFreight.Web.Helpers
         }
         public List<ISlvLeaf> GetPropertyNames(string dataProviderName, List<ISlvLeaf> mylist)
         {
-            
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"dataProviderName: {dataProviderName}");
             //var D = Assembly.GetAssembly(typeof(LogitudeCRMReportDataProvider)).GetTypes().Where(T => T.IsSubclassOf(typeof(LogitudeCRMReportDataProvider)));
             Type t = Type.GetType(dataProviderName);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(message: $"dataProvider type: {t?.FullName}");
             var properties1 = t.GetProperties();
 
             foreach (var property in properties1)
