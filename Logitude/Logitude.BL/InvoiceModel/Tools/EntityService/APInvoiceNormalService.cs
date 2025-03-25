@@ -607,6 +607,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         throw new ApplicationException(msg);
                     }
                 }
+                if (this.invoice.StatusCode == APInvoiceStatusCodes.Void)
+                {
+                    bool throwException = false;
+
+                    if (string.IsNullOrEmpty(this.entityPM.StatusCode) || this.entityPM.StatusCode != APInvoiceStatusCodes.Void)
+                    {
+                        throwException = true;
+                    }
+
+                    else if (this.entityPM.SetApproved)
+                    {
+                        throwException = true;
+                    }
+
+                    if (throwException)
+                    {
+                        string msg = "This invoice is already void";
+                        if (!string.IsNullOrEmpty(this.invoice.ApprovedByUserId))
+                        {
+                            ContactRepository contactRepository = new ContactRepository(tenant);
+                            Contact myContact = contactRepository.GetSingleContact(this.invoice.ApprovedByUserId, tenant);
+
+                            if (myContact != null)
+                            {
+                                msg += " by " + myContact.EnglishName;
+                            }
+                        }
+
+                        throw new ApplicationException(msg);
+                    }
+                }
             }
         }
 
