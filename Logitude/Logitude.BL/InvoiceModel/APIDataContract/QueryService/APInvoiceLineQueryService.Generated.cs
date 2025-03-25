@@ -23,6 +23,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel;
+using Logitude.Server.Tools;
 
  namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 { 
@@ -108,8 +109,10 @@ using Simplog.Data.InvoiceModel;
 			       
 					   				   }
 				   
-				   temp.Quantity = item.Quantity;					
-					MyList.Add(temp);
+				   temp.Quantity = item.Quantity;
+					temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
+
+                    MyList.Add(temp);
 				}
 					
 				   return MyList;
@@ -372,10 +375,17 @@ using Simplog.Data.InvoiceModel;
 					{							
 						temp.Quantity = item.Quantity;
 
-										}  
+										}
 
-										   
-						MyList.Add(temp);
+
+                    if (!IsUpdate)
+                    {
+                        temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
+
+                    }
+
+
+                    MyList.Add(temp);
 					}
 						
 					return MyList;
