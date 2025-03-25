@@ -545,7 +545,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (ledgerTransactionPM.OpenAmount == 0)
                     {
                         invoice.IsClosed = true;
-                        invoice.StatusCode = "PD";
+                        if (invoice.StatusCode != "VD") invoice.StatusCode = "PD";
                     }
                     else if (Math.Abs(ledgerTransactionPM.OpenAmount) < transactionAmount)
                     {
