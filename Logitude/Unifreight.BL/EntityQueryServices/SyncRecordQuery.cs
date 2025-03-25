@@ -126,25 +126,21 @@ namespace Unifreight.BL.EntityQueryServices
                 return null;
             }
 
-            bool isCloseTeable = syncRecord.KeyVal == "ALL";
-
             string query = $"SELECT * FROM {syncRecord.Entname}";
 
             if (syncRecord.Entname.ToLower() == "ccumshgr")
                 query += " WHERE FILE_NO = '" + syncRecord.FileNo + "'";
-            else if (!isCloseTeable)
+            else
                 query += " WHERE " + syncRecord.KeyVal.Replace(",", " and ").Replace("=NULL", " is null ");
 
-            SqlConnection conn =
-                (isCloseTeable ? CommonDataContext.GetContext(syncRecord.Tenant) as IContext : repository.Context as IContext)
-                .GetActiveDbContext().Database.Connection as SqlConnection;
+            SqlConnection conn = (repository.Context as IContext).GetActiveDbContext().Database.Connection as SqlConnection;
             conn.Open();
             SqlDataReader dataReader = new SqlCommand(query, conn).ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(dataReader);
             conn.Close();
 
-            if (dt.Rows.Count != 1 && !isCloseTeable && syncRecord.Entname.ToLower() != "ccumshgr")
+            if (dt.Rows.Count != 1 && syncRecord.Entname.ToLower() != "ccumshgr")
             {
                 DevLog.Instance.WriteError($"record not found once for table: {syncRecord.Entname: name} and keyVal: {syncRecord.KeyVal.Replace(",", " and ")}");
                 return null;
@@ -162,7 +158,7 @@ namespace Unifreight.BL.EntityQueryServices
 
         public DateTime? GetLastSyncDate(int tenant, string fileNo) => SyncRecordCache.GetLastSyncDate(fileNo, tenant);
 
-        public List<SyncRecord> GetAndMarkNewSyncRecord() => repository.GetAndMarkNewSyncRecord();
+        public List<SyncRecord> GetAndMarkNewSyncRecord(List<int> tenants) => repository.GetAndMarkNewSyncRecord(tenants);
 
         public void UpdateStatus(List<SyncRecord> records, int status) => repository.UpdateStatus(records, status);
 

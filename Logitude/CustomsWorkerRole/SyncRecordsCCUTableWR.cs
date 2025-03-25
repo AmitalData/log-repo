@@ -20,6 +20,8 @@ namespace CustomsWorkerRole
     {
         private bool isFirstTime = true;
         private static readonly string lockKey = "SyncRecordsCCUTableWR";
+        private List<int> tennats;
+        private static int mainTennat = 0;
 
         public override void WorkOnce()
         {
@@ -29,16 +31,35 @@ namespace CustomsWorkerRole
 
                 isFirstTime = false;
 
-                double sendSyncRecoredToUnifreightQueueInterval = 30000;
-                if (double.TryParse(ConfigurationManager.AppSettings["sendSyncRecoredToUnifreightQueueInterval"], out double configuredInterval))
-                    sendSyncRecoredToUnifreightQueueInterval = configuredInterval;
-                Scheduler(SendSyncRecoredToUnifreightQueue, sendSyncRecoredToUnifreightQueueInterval, "SendSyncRecoredToUnifreightQueue");
-
-                double returnToQueueInterval = 600000;
-                if (double.TryParse(ConfigurationManager.AppSettings["ReturnToQueueInterval"], out double configuredInterval2))
-                    returnToQueueInterval = configuredInterval2;
-                Scheduler(ReturnToQueue, returnToQueueInterval, "ReturnToQueue");
+                InitScheduler();
+                InitTenants();
             }
+        }
+
+        private void InitScheduler()
+        {
+            double sendSyncRecoredToUnifreightQueueInterval = 30000;
+            if (double.TryParse(ConfigurationManager.AppSettings["sendSyncRecoredToUnifreightQueueInterval"], out double configuredInterval))
+                sendSyncRecoredToUnifreightQueueInterval = configuredInterval;
+
+            Scheduler(SendSyncRecoredToUnifreightQueue, sendSyncRecoredToUnifreightQueueInterval, "SendSyncRecoredToUnifreightQueue");
+            
+            double returnToQueueInterval = 600000;
+            if (double.TryParse(ConfigurationManager.AppSettings["ReturnToQueueInterval"], out double configuredInterval2))
+                returnToQueueInterval = configuredInterval2;
+
+            Scheduler(ReturnToQueue, returnToQueueInterval, "ReturnToQueue");        
+        }
+
+        private void InitTenants()
+        {
+            bool haveTenantDB = int.TryParse(ConfigurationManager.AppSettings["TenantDB"], out int TenantDB);
+            tennats = haveTenantDB ?
+                new List<int>() { TenantDB } :
+                CustomsSettingQueryService.GetNotSeperatedDB().Select(x => x.Tenant).ToList();
+
+            if(haveTenantDB)
+                mainTennat = TenantDB;
         }
 
         public void SendSyncRecoredToUnifreightQueue()
@@ -55,7 +76,7 @@ namespace CustomsWorkerRole
 
                     Lock();
 
-                    List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
+                    List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord(tennats);
 
                     if (records == null || records.Count == 0)
                     {
@@ -64,9 +85,7 @@ namespace CustomsWorkerRole
                         return;
                     }
 
-                    DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
-
-                    records = records.Concat(InsertRecordsForCloseTables(syncRecordQuery, records)).ToList();
+                    DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);                    
 
                     IEnumerable<IGrouping<int, SyncRecord>> RecordsGroupByTenants = records.GroupBy(record => record.Tenant);
 
@@ -115,47 +134,13 @@ namespace CustomsWorkerRole
         private static void Lock()
         {
             var concurrentKiller = new ConcurrentKiller();
-            concurrentKiller.FreeLockIfCreated15MinOld(lockKey, 0);
-            concurrentKiller.LockOrCrashOnCommitDueUnique(lockKey, 0);
+            concurrentKiller.FreeLockIfCreated15MinOld(lockKey, mainTennat);
+            concurrentKiller.LockOrCrashOnCommitDueUnique(lockKey, mainTennat);
         }
 
         private static void Unlock()
         {
-            new ConcurrentKiller().FreeLock(lockKey, 0);
-        }
-
-        private static List<SyncRecord> InsertRecordsForCloseTables(SyncRecordQuery syncRecordQuery, List<SyncRecord> records)
-        {
-            IEnumerable<SyncRecord> tenant0CloseTableRecords = records.Where(record => record.KeyVal == "ALL" && record.Tenant == 0);
-            List<SyncRecord> newRecords = new List<SyncRecord>();
-            List<SyncRecord> RemoveRecords = new List<SyncRecord>();
-            List<int> tenantIds = CacheHelper.GetFromCache("TenantIdsForClosedTables", () => new CustomsSettingQueryService(0).GetAll().Select(x => x.Tenant).ToList());
-
-            tenant0CloseTableRecords.ForEach(record =>
-            {
-                RemoveRecords.Add(record);
-
-                tenantIds.ForEach(tenantId =>
-                {
-                    newRecords.Add(new SyncRecord
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        FileNo = record.FileNo,
-                        KeyVal = record.KeyVal,
-                        Tenant = tenantId,
-                        IsSync = record.IsSync,
-                        CreateDate = DateTime.UtcNow,
-                        Entname = record.Entname,
-                        SyncDT = record.SyncDT,
-                        TrigAction = record.TrigAction,
-                    });
-                });
-            });
-
-            RemoveRecords.ForEach(record => records.Remove(record));
-            syncRecordQuery.Add(newRecords);
-            syncRecordQuery.Remove(RemoveRecords);
-            return newRecords;
+            new ConcurrentKiller().FreeLock(lockKey, mainTennat);
         }
 
         private void Scheduler(Action actionAsync, double time, string actionName = null)
@@ -187,27 +172,17 @@ namespace CustomsWorkerRole
             string queueName = "externaltasksqueue" + tenant + priority;
             string cacheName = "SyncRecordsCCUTableWR.DbQueueService." + queueName;
             string subjectUnifreightTables = "Sync Unifreight Table";
-            string subjectCloseTables = "Sync close Table";
             string storageFolder = "ExternalTasksQueue";
             string actionUnifreightTables = "SyncUnifreightTable";
-            string actionCloseTables = "SyncCloseTables";
             string tableName = "SyncRecord";
             string fileNos = string.Join(",", records
                 .Where(record => record.KeyVal != "ALL").ToList()
                 .ConvertAll(record => record.FileNo.Trim())
                 .Distinct());
-            string tablesName = string.Join(",", records
-                .Where(record => record.KeyVal == "ALL").ToList()
-                .ConvertAll(record => record.Entname.Trim())
-                .Distinct());
 
-            DevLog.Instance.WriteInfo("SendToQueue, fileNos: " + fileNos + ", closeTables: " + tablesName + ", tenant: " + tenant);
+            DevLog.Instance.WriteInfo("SendToQueue, fileNos: " + fileNos + ", tenant: " + tenant);
 
-            if (fileNos.Length > 0)
-                UnifreightQueueService.Insert(tenant, priority, queueName, subjectUnifreightTables, storageFolder, actionUnifreightTables, tableName, fileNos);
-
-            if (tablesName.Length > 0)
-                UnifreightQueueService.Insert(tenant, priority, queueName, subjectCloseTables, storageFolder, actionCloseTables, tableName, tablesName);
+            UnifreightQueueService.Insert(tenant, priority, queueName, subjectUnifreightTables, storageFolder, actionUnifreightTables, tableName, fileNos);
         }
 
         public void ReturnToQueue()
