@@ -56,11 +56,18 @@ namespace Logitude.BL.Security
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
-                        loggedContact = new ContactQuery(tenant).GetSingleByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
+                    string userEmail = AuthenticationUtil.AuthenticatedUserEmail;
+                    if (!string.IsNullOrEmpty(userEmail))
+                    {
+                        loggedContact = new ContactQuery(tenant).GetSingleByEmail(userEmail, tenant)
+                                        ?? (tenant != 0 ? new ContactQuery(tenant).GetSingleByEmail(userEmail, 0) : null);
+                    }
                     else
-                        loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
+                    {
+                        loggedContact = new ContactQuery(tenant).GetSingleByEmail($"system@tenant{tenant}.com", tenant);
+                    }
                 }
+
             }
             catch { }
             
