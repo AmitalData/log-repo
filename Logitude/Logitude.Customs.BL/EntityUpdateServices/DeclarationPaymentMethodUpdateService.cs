@@ -23,6 +23,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityParentPM.PaymentMethodLastLineNumber += 1;
             entityPM.Line = entityParentPM.PaymentMethodLastLineNumber;
         }
+        protected override void OnUpdating(DeclarationPaymentMethodPM entityPM)
+        {
+            if(entityPM.InternalBankId == "")
+            {
+                entityPM.InternalBankId = null;
+            }
+            base.OnUpdating(entityPM);
+        }
 
         protected override void AfterUpdating(DeclarationPaymentMethodPM entityPM,DeclarationPaymentPM entityParentPM)
         {

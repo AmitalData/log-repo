@@ -11,6 +11,7 @@ using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -47,16 +48,17 @@ namespace Logitude.Customs.Data.Repsitories
 
         public string GetDefaultValue(string Distr, string DefaultTypeCode, string BranchCode, string CardCode, int Tenant)
         {
-            var query =  
-                (from a in context.DefaultValues.Include("Branch")
-                    join b in context.DefaultTypes
-                    on a.DefaultTypeId equals b.Id
-                    join Card in context.Cards
-                    on a.CardId equals Card.Id into qCards
-                    from Card in qCards.DefaultIfEmpty()
-                    where a.Distr == Distr && (a.Branch.Code == BranchCode || BranchCode == "NON") && (Card.Code == CardCode || CardCode == "NON")  && a.Tenant == Tenant && b.Code == DefaultTypeCode
-                    select a.DefValue).FirstOrDefault();
-            return query;
+            var query = from a in context.DefaultValues.Include("Branch")
+                         join b in context.DefaultTypes on a.DefaultTypeId equals b.Id
+                        join card in context.Cards on a.CardId equals card.Id into qCards
+                        from card in qCards.DefaultIfEmpty()
+                        where a.Distr == Distr
+                              && a.Tenant == Tenant
+                              && b.Code == DefaultTypeCode
+                              && (BranchCode == "NON" || a.Branch.Code == BranchCode)
+                              && (CardCode == "NON" || card.Code == CardCode)
+                        select a.DefValue;
+            return query.FirstOrDefault();
         }
 
         public string GetDefaultByCardId(string Distr, string DefaultTypeCode, string BranchCode, string CardId, int Tenant)
