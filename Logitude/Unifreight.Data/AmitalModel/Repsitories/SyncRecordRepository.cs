@@ -77,7 +77,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             throw new NotImplementedException();
         }
 
-        public List<SyncRecord> GetUnsyncAndMarkAsInProcess(int tenant, string item)
+        public List<SyncRecord> GetUnsyncAndMarkAsInProcess(int tenant, string item, bool allTask)
         {
             DateTime yesterday = DateTime.Now.AddDays(-1);
             DateTime dateTimeNow = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
@@ -85,7 +85,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             IQueryable<SyncRecord> recordsQurey = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
-                (syncRecord.IsSync == SyncRecordStatus.InQueue || syncRecord.IsSync == SyncRecordStatus.Synced) &&
+                (allTask ? syncRecord.IsSync < SyncRecordStatus.SyncedAndUpdated : (syncRecord.IsSync == SyncRecordStatus.InQueue || syncRecord.IsSync == SyncRecordStatus.Synced)) &&
                 (syncRecord.FileNo == item) &&
                 syncRecord.CreateDate > yesterday
             );
@@ -112,6 +112,11 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             return groupRecord;
         }
+
+        public int GetFileNo(int tenant, int customsFileNo) =>
+            context.CCUFILEMs.Where(file => file.TENANT == tenant && file.CUSTOMFILENO == customsFileNo)
+                .Select(file => file.FILENO)
+                .FirstOrDefault();
 
         public void UpdateSyncDate(string itemUpdate, DateTime syncDT, int tenant)
         {
