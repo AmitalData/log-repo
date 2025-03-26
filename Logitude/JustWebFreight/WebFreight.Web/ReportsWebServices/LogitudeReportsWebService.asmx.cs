@@ -10644,92 +10644,23 @@ namespace WebFreight.Web.ReportsWebServices
 
 
 
-            List<RevenueExpenseReportM> ChartOfAccount5s = result.Where(d => d.ChartOfAcountName5 != "").ToList();
-            if (ChartOfAccount5s.Count > 0)
+            #region ChartOfAccount1s_RevExp
+            List<RevenueExpenseReportM> ChartOfAccount1s = result.Where(d => d.ChartOfAcountName1 != "").ToList();
+            if (ChartOfAccount1s.Count > 0)
             {
-                foreach (var item in ChartOfAccount5s)
+                foreach (var item in ChartOfAccount1s)
                 {
                     ResultList record = new ResultList()
                     {
-                        Id = item.ChartOfAcount5,
-                        Name = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5,
-                        AccountDisplayNumber = item.ChartOfAcountCode5,
-                        AccountName = item.ChartOfAcountName5,
+                        Id = item.ChartOfAcount1,
+                        Name = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1,
+                        AccountDisplayNumber = item.ChartOfAcountCode1,
+                        AccountName = item.ChartOfAcountName1,
                         Number = null,
-                        ParentId = item.ChartOfAcount4,
+                        ParentId = item.ChartOfAcountType,
                         Balance = item.LocalCloseBalancePeriod1,
-                        EnglishName = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5English
-                    };
-
-
-
-                    var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
-
-                    if (duplicated == null)
-                    {
-                        totalData.ResultList.Add(record);
-                    }
-
-
-                }
-            }
-
-            List<RevenueExpenseReportM> ChartOfAccount4s = result.Where(d => d.ChartOfAcountName4 != "").ToList();
-            if (ChartOfAccount4s.Count > 0)
-            {
-                foreach (var item in ChartOfAccount4s)
-                {
-                    ResultList record = new ResultList()
-                    {
-                        Id = item.ChartOfAcount4,
-                        Name = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4,
-                        AccountDisplayNumber = item.ChartOfAcountCode4,
-                        AccountName = item.ChartOfAcountName4,
-                        Number = null,
-                        ParentId = item.ChartOfAcount3,
-                        Balance = item.LocalCloseBalancePeriod1,
-                        EnglishName = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4English,
-                    };
-
-                    if (record.Balance == null)
-                    {
-                        bool exist = GLAccountParents.Contains(record.Id);
-                        if (!exist)
-                        {
-
-                            var child = totalData.ResultList.Where(d => d.ParentId == record.Id).FirstOrDefault();
-                            if (child != null)
-                            {
-                                record.Balance = child.Balance;
-                            }
-                        }
-                    }
-
-                    var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
-
-                    if (duplicated == null)
-                    {
-                        totalData.ResultList.Add(record);
-                    }
-
-                }
-            }
-
-            List<RevenueExpenseReportM> ChartOfAccount3s = result.Where(d => d.ChartOfAcountName3 != "").ToList();
-            if (ChartOfAccount3s.Count > 0)
-            {
-                foreach (var item in ChartOfAccount3s)
-                {
-                    ResultList record = new ResultList()
-                    {
-                        Id = item.ChartOfAcount3,
-                        Name = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3,
-                        AccountDisplayNumber = item.ChartOfAcountCode3,
-                        AccountName = item.ChartOfAcountName3,
-                        Number = null,
-                        ParentId = item.ChartOfAcount2,
-                        Balance = item.LocalCloseBalancePeriod1,
-                        EnglishName = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3English,
+                        EnglishName = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1English,
+                        Type = "ChartOfAccount",
                     };
                     if (record.Balance == null)
                     {
@@ -10751,10 +10682,11 @@ namespace WebFreight.Web.ReportsWebServices
                         totalData.ResultList.Add(record);
                     }
 
-
                 }
             }
+            #endregion
 
+            #region ChartOfAccount2s_RevExp
             List<RevenueExpenseReportM> ChartOfAccount2s = result.Where(d => d.ChartOfAcountName2 != "").ToList();
             if (ChartOfAccount2s.Count > 0)
             {
@@ -10771,6 +10703,7 @@ namespace WebFreight.Web.ReportsWebServices
                         ParentId = item.ChartOfAcount1,
                         Balance = item.LocalCloseBalancePeriod1,
                         EnglishName = item.ChartOfAcountCode2 + "-" + item.ChartOfAcountName2English,
+                        Type = "ChartOfAccount",
                     };
 
                     if (record.Balance == null)
@@ -10796,22 +10729,25 @@ namespace WebFreight.Web.ReportsWebServices
 
                 }
             }
+            #endregion
 
-            List<RevenueExpenseReportM> ChartOfAccount1s = result.Where(d => d.ChartOfAcountName1 != "").ToList();
-            if (ChartOfAccount1s.Count > 0)
+            #region ChartOfAccount3s_RevExp
+            List<RevenueExpenseReportM> ChartOfAccount3s = result.Where(d => d.ChartOfAcountName3 != "").ToList();
+            if (ChartOfAccount3s.Count > 0)
             {
-                foreach (var item in ChartOfAccount1s)
+                foreach (var item in ChartOfAccount3s)
                 {
                     ResultList record = new ResultList()
                     {
-                        Id = item.ChartOfAcount1,
-                        Name = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1,
-                        AccountDisplayNumber = item.ChartOfAcountCode1,
-                        AccountName = item.ChartOfAcountName1,
+                        Id = item.ChartOfAcount3,
+                        Name = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3,
+                        AccountDisplayNumber = item.ChartOfAcountCode3,
+                        AccountName = item.ChartOfAcountName3,
                         Number = null,
-                        ParentId = item.ChartOfAcountType,
+                        ParentId = item.ChartOfAcount2,
                         Balance = item.LocalCloseBalancePeriod1,
-                        EnglishName = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1English,
+                        EnglishName = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3English,
+                        Type = "ChartOfAccount",
                     };
                     if (record.Balance == null)
                     {
@@ -10833,8 +10769,87 @@ namespace WebFreight.Web.ReportsWebServices
                         totalData.ResultList.Add(record);
                     }
 
+
                 }
             }
+            #endregion
+
+            #region ChartOfAccount4s_RevExp
+            List<RevenueExpenseReportM> ChartOfAccount4s = result.Where(d => d.ChartOfAcountName4 != "").ToList();
+            if (ChartOfAccount4s.Count > 0)
+            {
+                foreach (var item in ChartOfAccount4s)
+                {
+                    ResultList record = new ResultList()
+                    {
+                        Id = item.ChartOfAcount4,
+                        Name = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4,
+                        AccountDisplayNumber = item.ChartOfAcountCode4,
+                        AccountName = item.ChartOfAcountName4,
+                        Number = null,
+                        ParentId = item.ChartOfAcount3,
+                        Balance = item.LocalCloseBalancePeriod1,
+                        EnglishName = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4English,
+                        Type = "ChartOfAccount",
+                    };
+
+                    if (record.Balance == null)
+                    {
+                        bool exist = GLAccountParents.Contains(record.Id);
+                        if (!exist)
+                        {
+
+                            var child = totalData.ResultList.Where(d => d.ParentId == record.Id).FirstOrDefault();
+                            if (child != null)
+                            {
+                                record.Balance = child.Balance;
+                            }
+                        }
+                    }
+
+                    var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                    if (duplicated == null)
+                    {
+                        totalData.ResultList.Add(record);
+                    }
+
+                }
+            }
+            #endregion
+
+            #region ChartOfAccount5s_RevExp
+            List<RevenueExpenseReportM> ChartOfAccount5s = result.Where(d => d.ChartOfAcountName5 != "").ToList();
+            if (ChartOfAccount5s.Count > 0)
+            {
+                foreach (var item in ChartOfAccount5s)
+                {
+                    ResultList record = new ResultList()
+                    {
+                        Id = item.ChartOfAcount5,
+                        Name = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5,
+                        AccountDisplayNumber = item.ChartOfAcountCode5,
+                        AccountName = item.ChartOfAcountName5,
+                        Number = null,
+                        ParentId = item.ChartOfAcount4,
+                        Balance = item.LocalCloseBalancePeriod1,
+                        EnglishName = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5English,
+                        Type = "ChartOfAccount",
+                    };
+
+
+
+                    var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
+
+                    if (duplicated == null)
+                    {
+                        totalData.ResultList.Add(record);
+                    }
+
+
+                }
+            }
+            #endregion
 
             revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.ChartofaccountType;
             try
@@ -10865,6 +10880,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             }
 
+            RecalculateParentTotals(totalData);
 
             totalData.ResultList.OrderBy(d => d.Name);
 
@@ -12138,6 +12154,8 @@ namespace WebFreight.Web.ReportsWebServices
                 parentRecord.ForeignDebit = relatedRecords.Sum(c => c.ForeignDebit);
                 parentRecord.ForeignOpenBalance = relatedRecords.Sum(c => c.ForeignOpenBalance);
 
+                parentRecord.Balance = relatedRecords.Sum(c => c.Balance);
+
             }
         }
 
@@ -12163,6 +12181,8 @@ namespace WebFreight.Web.ReportsWebServices
                     parentRecord.ForeignDebit += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.ForeignDebit);
                     parentRecord.ForeignOpenBalance += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.ForeignOpenBalance);
 
+                    parentRecord.Balance += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.Balance);
+
                 }
             }
         }
@@ -12185,6 +12205,8 @@ namespace WebFreight.Web.ReportsWebServices
                         item.ForeignCredit = 0m;
                         item.ForeignDebit = 0m;
                         item.ForeignOpenBalance = 0m;
+
+                        item.Balance = 0m;
                     }
                 }        
 

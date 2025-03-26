@@ -294,7 +294,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     }
                 case "exceptional":
                     {
-                        ThrowValidationError("InterestReport.O.NoExceptionalBasePeriod&quot", tenant, true);
+                        ThrowValidationError("InterestReport.O.NoExceptionalBasePeriod", tenant, true);
                         break;
                         //string message = TextCodesTranslator.TranslateText("InterestReport.O.NoExceptionalBasePeriod&quot", tenant, true);
                         //throw new ApplicationException(message);
