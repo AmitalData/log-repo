@@ -2868,12 +2868,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralODollarRateUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DollarRateUpdated", DefaultText = "The dollar exchange rate was last updated on",LocalDefaultText = @"שער מטבע הדולר עודכן לאחרונה בתאריך ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
-}
+   	    
+        }
 
     
-
    }
     
 }
