@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.Security
 {
@@ -34,6 +35,25 @@ namespace Logitude.BL.Security
             return loggedContact;
 
         }
+
+        public Contact GetLoggedContactsIncludingCustomerCareForWR(int tenant)
+        {
+            string userIdentityName;
+
+            string userEmailSetByReportWR = AuthenticationUtil.AuthenticatedUserEmail;
+            if (userEmailSetByReportWR == null)
+                return null;
+            userIdentityName = userEmailSetByReportWR;
+            string key = $"GetLoggedContactsIncludingCustomerCareForWR({userIdentityName}{tenant})";
+            var loggedContact = CacheManager.GetOrInsertNewObject<Contact>(key, () =>
+            {
+                var res = GetLoggedContactIncludingCustomerCareNoValidCache(tenant);
+                return res;
+            }, true);
+            return loggedContact;
+
+        }
+
         ContactPM GetLoggedContactNoValidCache(int tenant)
         {
             ContactPM loggedContact=null;
@@ -75,5 +95,19 @@ namespace Logitude.BL.Security
             loggedContact = loggedContact ?? new ContactPM() { DontShowLocal = true };
             return loggedContact;
         }
+
+
+        public Contact GetLoggedContactIncludingCustomerCareNoValidCache(int tenant)
+        {
+            string userEmail = AuthenticationUtil.AuthenticatedUserEmail;
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return new Contact() { DontShowLocalLabels = true };
+            }
+
+            Contact loggedContact = new ContactQuery(tenant).GetContactByEmail(userEmail, tenant);
+            return loggedContact ?? new Contact() { DontShowLocalLabels = true };
+        }
+
     }
 }
