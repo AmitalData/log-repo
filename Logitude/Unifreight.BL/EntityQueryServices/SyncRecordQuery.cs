@@ -53,10 +53,18 @@ namespace Unifreight.BL.EntityQueryServices
             return a;
         }
 
-        public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item)
+        public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item, int? customsFileNo, bool allTask)
         {
             List<SyncRecord> notExistsRecord = new List<SyncRecord>();
-            List<SyncRecord> groupRecord = repository.GetUnsyncAndMarkAsInProcess(tenant, item);
+            
+            if(customsFileNo.HasValue)
+            {
+                item = repository.GetFileNo(tenant, customsFileNo.Value).ToString();
+                if(string.IsNullOrEmpty(item))
+                    throw new Exception($"fileNo for customsFileNo {customsFileNo} and tenant {tenant} not found");
+            }
+
+            List<SyncRecord> groupRecord = repository.GetUnsyncAndMarkAsInProcess(tenant, item, allTask);
             AddGGGQC(groupRecord);
 
             List<EntityRecord> entityRecords = groupRecord.Select(syncRecord =>
