@@ -29,7 +29,7 @@ export class RatesMainTabComponent extends BaseComponent {
     public DataContext: RatesMainTabComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
     IsAccountingActivated: boolean = false;
-    private CurrencyRateTypes: AdditionalCurrencyRateList[];
+    public CurrencyRateTypes: AdditionalCurrencyRateList[];
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
