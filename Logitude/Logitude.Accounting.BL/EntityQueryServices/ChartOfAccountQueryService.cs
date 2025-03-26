@@ -40,8 +40,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             // chartOfAccounts ids list are selected from filter in UI.
              if (chartOfAccounts != null && chartOfAccounts.Count > 0)
              {
-                qBase = qBase.Where(i => chartOfAccounts.Any(item => item == i.Id));
-            }
+                qBase = qBase.Where(i => chartOfAccounts.Contains(i.Id));
+			}
 
             var qL1 = qBase
             .Where(chartOA => chartOA.ParentId == null)
