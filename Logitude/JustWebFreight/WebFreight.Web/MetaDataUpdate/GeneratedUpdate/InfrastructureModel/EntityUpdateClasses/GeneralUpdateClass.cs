@@ -720,7 +720,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_SHLOGANDMOBILE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHLOGANDMOBILE", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SHLOGANDMOBILE", NameTextCodeDefaultText = @"Shared Logistics and Mobile" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-		   Feature GeneralFeature_invoiceConfirmationNumber = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "invoiceConfirmationNumber", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SHAAMTOKEN", NameTextCodeDefaultText = @"SHAAM Token " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_General_Features_ReleaseSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.ReleaseSettings", FeatureTypeCode = "MENU", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.ReleaseSettings", NameTextCodeDefaultText = @"Release Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
@@ -2862,12 +2861,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOPostponedCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PostponedCheques", DefaultText = "Postponed Cheques",LocalDefaultText = @"המחאות דחויות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMCTokenManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.TokenManagement", DefaultText = "Token Management",LocalDefaultText = @"", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode GeneralTextCode_GeneralMCLogs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Logs", DefaultText = "Logs",LocalDefaultText = @"", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode GeneralTextCode_GeneralMCShaamTokenManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ShaamTokenManagement", DefaultText = "SHAAM Token Management",LocalDefaultText = @"", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
+ 		 
  		   TextCode GeneralTextCode_GeneralOMine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Mine", DefaultText = "Mine",LocalDefaultText = @"שלי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOConfirmationNumberValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ConfirmationNumberValidation", DefaultText = "Confirmation Number is required for a apinvoice",LocalDefaultText = @"עבור חשבונית ספק נדרש מספר הקצאה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
