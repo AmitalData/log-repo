@@ -41,7 +41,7 @@ namespace Logitude.Customs.BL.BL
         }
         public void CheckAndSendMessageis(DeclarationCourierStatusPM declarationCourierStatusPM)
         {
-            return;
+            
             if (!_featureSendManifest && !_featureSendDeclaration && !_featureSendPayment)
             {
                 return;
