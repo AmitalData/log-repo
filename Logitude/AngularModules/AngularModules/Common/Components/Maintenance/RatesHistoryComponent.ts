@@ -21,7 +21,7 @@ export class RatesHistoryComponent extends BaseComponent {
 
     public ItemsSource: RatesItem[] = [];
     public LastRate: LastRate = new LastRate();
-    private CurrencyRateTypes: AdditionalCurrencyRateList[];
+    public CurrencyRateTypes: AdditionalCurrencyRateList[];
     private RatesTableListService: RatesTableListService;
     public count: number = 0;
     private CurrentSession = SessionLocator.SelectedSession;
