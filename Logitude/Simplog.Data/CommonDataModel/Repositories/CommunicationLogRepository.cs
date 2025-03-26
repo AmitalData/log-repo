@@ -176,10 +176,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
 
         }
-        public CommunicationLog GetCommunicationLogByEntityIdAndSubject(string entityId, string subject, int tenant)
+        public CommunicationLog GetCommunicationLogByEntityIdAndSubject(string entityId, string subject, int tenant, string commLogId =null)
         {
             return (from a in context.CommunicationLogs
-                    where a.EntityId == entityId  && a.Tenant == tenant && a.Subject == subject
+                    where a.EntityId == entityId  && a.Tenant == tenant && a.Subject == subject && a.Id != commLogId
                     select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
 
         }
