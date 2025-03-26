@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Procedure
   DBType="Main" Name="usp_UpdateLTLocal" Schema="dbo" Module="Accounting">
-  >
   <SqlScript>
     <![CDATA[
 CREATE OR ALTER PROCEDURE [dbo].[usp_UpdateLTLocal]
