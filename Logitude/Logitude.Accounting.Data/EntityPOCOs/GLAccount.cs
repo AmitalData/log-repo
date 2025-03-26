@@ -76,6 +76,12 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ReconcileMethodCode { get; set; }
 	      
         public virtual ReconcileMethod ReconcileMethod { get; set; }
+
+        [ForeignKey("AdditionalCurrencyRate")]
+        [Column("ExchangeRateId")]
+        public string ExchangeRateId { get; set; }
+
+        public virtual AdditionalCurrencyRate ExchangeRate { get; set; }
         [ForeignKey("ControlAccount")]
         [Column("ControlAccountId")]
 	    public string ControlAccountId { get; set; }

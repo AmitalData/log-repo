@@ -29,6 +29,10 @@ using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.Enums;
+using Logitude.BL.InfrastructureModel.EntityLists;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -109,6 +113,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CurrencyCode);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CurrencySign);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ReconcileMethodName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.ExchangeRateName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.RevenueExpenseName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ChartOfAccountsName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ChartOfAccountsTypeName);
@@ -208,6 +213,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 ReconcileMethodQueryService reconcileMethodQueryService = new ReconcileMethodQueryService(entityPOCO.Tenant);
                 ReconcileMethodPM reconcileMethod = reconcileMethodQueryService.GetSingle(entityPOCO.ReconcileMethodCode, false, true);
                 if (reconcileMethod != null) entityPM.ReconcileMethodName = (showLocals ? reconcileMethod.LocalName : reconcileMethod.EnglishName);
+            }
+            if (entityPOCO.ReconcileMethodCode != null)
+            {
+                AdditionalCurrencyRateRepository AdditionalCurrencyRateRepository = new AdditionalCurrencyRateRepository(entityPOCO.Tenant);
+                AdditionalCurrencyRate additionalCurrencyRate = AdditionalCurrencyRateRepository.GetSingle(entityPOCO.ExchangeRateId,entityPOCO.Tenant);
+                if (additionalCurrencyRate != null) entityPM.ExchangeRateName = additionalCurrencyRate.Name;
             }
 
             if (entityPOCO.AutomaticReconcileId != null)

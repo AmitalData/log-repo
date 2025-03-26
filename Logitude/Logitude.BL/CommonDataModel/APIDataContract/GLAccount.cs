@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.Data;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,6 +28,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public Currency Currency { get; set; }
         public ReconcileMethod ReconcileMethod { get; set; }
         public ChartOfAccount ChartOfAccount { get; set; }
+        public AdditionalCurrencyRate ExchangeRate { get; set; }
+
     }
 
     public class ReconcileMethod
@@ -61,6 +64,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
 
         public string CurrencyId { get; set; }
         public string ReconcileMethodCode { get; set; }
+        public string ExchangeRateId { get; set; }
+
         public string ChartOfAccountCode { get; set; }
     }
 

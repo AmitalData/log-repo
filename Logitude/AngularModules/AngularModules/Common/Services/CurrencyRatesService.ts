@@ -76,6 +76,37 @@ export class CurrencyRatesService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetCurrenciesExchangeRateByCurrencyId(currencyId: string,pageSize:Number,pageIndex:Number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetCurrenciesExchangeRateByCurrencyId?currencyId=' + currencyId + '&pageSize=' + pageSize + '&pageIndex=' + pageIndex;
+
+        return defer(() => {
+
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();;
+                serviceResponse = response as ServiceResponse;
+                var allLists = serviceResponse.Result;
+                var _mappedListsArray: Array<LastRate> = [];
+
+                for (var key in allLists) {
+
+                    var entity: LastRate;
+                    entity = this.MapJsonToEntityList(allLists[key]);
+                    _mappedListsArray.push(entity);
+
+                }
+
+                serviceResponse.Count = serviceResponse.Count;
+                serviceResponse.Result = _mappedListsArray;
+
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     GetRatesByValueDate(currencyId: string, date: Date) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

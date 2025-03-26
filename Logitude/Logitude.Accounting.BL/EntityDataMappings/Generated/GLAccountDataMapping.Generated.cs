@@ -37,8 +37,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ChartOfAccountsId, 
 	         Inactive, 
 	         ChartOfAccountsTypeCode, 
-	         ReconcileMethodCode, 
-	         ControlAccountId, 
+	         ReconcileMethodCode,
+            ExchangeRateId,
+             ControlAccountId, 
 	         AutomaticReconcileId, 
 	         PreviousEnglishName, 
 	         PreviousEnglishNameChangeDate, 
@@ -116,8 +117,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ChartOfAccountsTypeName, 
 	         CurrencyCode, 
 	         ReconcileMethodCode, 
-	         ReconcileMethodName, 
-	         ControlAccountId, 
+	         ReconcileMethodName,
+            ExchangeRateId,
+            ExchangeRateName,
+			ControlAccountId, 
 	         ControlAccountName, 
 	         ControlAccountNumber, 
 	         ActiveStatusName, 
@@ -339,8 +342,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.ReconcileMethodCode = entityPM.ReconcileMethodCode;
 			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControlAccountId))
+
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExchangeRateId))
+            {
+                entityPOCO.ExchangeRateId = entityPM.ExchangeRateId;
+            }
+
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControlAccountId))
             {
 				entityPOCO.ControlAccountId = entityPM.ControlAccountId;
 			}
@@ -676,8 +684,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.ReconcileMethodCode = entityPOCO.ReconcileMethodCode;
             }
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExchangeRateId))
+            {
+                entityPM.ExchangeRateId = entityPOCO.ExchangeRateId;
+            }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ControlAccountId))
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.ControlAccountId))
             {
 					entityPM.ControlAccountId = entityPOCO.ControlAccountId;
             }
@@ -1004,8 +1016,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.ReconcileMethodCode = entityPM.ReconcileMethodCode;
             }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControlAccountId))
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExchangeRateId))
+            {
+                oldEntityPM.ExchangeRateId = entityPM.ExchangeRateId;
+            }
+
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ControlAccountId))
             {
                 oldEntityPM.ControlAccountId = entityPM.ControlAccountId;
             }

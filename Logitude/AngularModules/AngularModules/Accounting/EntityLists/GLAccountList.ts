@@ -31,6 +31,9 @@ export class GLAccountList {
 	CurrencyCode: string;
 	ReconcileMethodCode: string;
 	ReconcileMethodName: string;
+	ExchangeRateId: string;
+	ExchangeRateName: string;
+
 	ControlAccountId: string;
 	ControlAccountName: string;
 	ControlAccountNumber: string;
