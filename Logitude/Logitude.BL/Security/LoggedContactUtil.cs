@@ -56,7 +56,7 @@ namespace Logitude.BL.Security
 
         ContactPM GetLoggedContactNoValidCache(int tenant)
         {
-            ContactPM loggedContact=null;
+            ContactPM loggedContact = null;
             try
             {
                 if (HttpContext.Current != null)
@@ -76,26 +76,18 @@ namespace Logitude.BL.Security
                 }
                 else
                 {
-                    string userEmail = AuthenticationUtil.AuthenticatedUserEmail;
-                    if (!string.IsNullOrEmpty(userEmail))
-                    {
-                        loggedContact = new ContactQuery(tenant).GetSingleByEmail(userEmail, tenant)
-                                        ?? (tenant != 0 ? new ContactQuery(tenant).GetSingleByEmail(userEmail, 0) : null);
-                    }
+                    if (!string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
+                        loggedContact = new ContactQuery(tenant).GetSingleByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
                     else
-                    {
-                        loggedContact = new ContactQuery(tenant).GetSingleByEmail($"system@tenant{tenant}.com", tenant);
-                    }
+                        loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
                 }
-
             }
             catch { }
-            
+
 
             loggedContact = loggedContact ?? new ContactPM() { DontShowLocal = true };
             return loggedContact;
         }
-
 
         public Contact GetLoggedContactIncludingCustomerCareNoValidCache(int tenant)
         {
