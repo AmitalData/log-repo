@@ -62,7 +62,11 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ReconcileMethodCode  { get; set; }
        [DataMember]
        public string ReconcileMethodName  { get; set; }
-       [DataMember]
+        [DataMember]
+        public string ExchangeRateId { get; set; }
+        [DataMember]
+        public string ExchangeRateName { get; set; }
+        [DataMember]
        public string ControlAccountId  { get; set; }
        [DataMember]
        public string ControlAccountName  { get; set; }

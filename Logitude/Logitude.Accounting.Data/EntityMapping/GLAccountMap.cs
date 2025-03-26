@@ -68,7 +68,9 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.ReconcileMethodCode).HasColumnName("ReconcileMethodCode").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.ControlAccountId).HasColumnName("ControlAccountId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ReconcileMethodCode).HasColumnName("ExchangeRateId").HasMaxLength(15).IsUnicode(false);
+
+           this.Property(t => t.ControlAccountId).HasColumnName("ControlAccountId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.AutomaticReconcileId).HasColumnName("AutomaticReconcileId").HasMaxLength(15).IsUnicode(false);
 

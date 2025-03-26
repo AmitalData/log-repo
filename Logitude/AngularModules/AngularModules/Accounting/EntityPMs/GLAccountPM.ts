@@ -143,7 +143,17 @@ export class GLAccountPM {
     private reconcileMethodName: string;
     public get ReconcileMethodName() { return this.reconcileMethodName; }
     public set ReconcileMethodName(newValue: string) { if (this.reconcileMethodName != newValue) { this.reconcileMethodName = newValue; this.MarkAsDirty("ReconcileMethodName"); } }
+
+    private exchangeRateId: string;
+    public get ExchangeRateId() { return this.exchangeRateId; }
+    public set ExchangeRateId(newValue: string) { if (this.exchangeRateId != newValue) { this.exchangeRateId = newValue; this.MarkAsDirty("ExchangeRateId"); } }
        
+	 
+    private exchangeRateName: string;
+    public get ExchangeRateName() { return this.exchangeRateName; }
+    public set ExchangeRateName(newValue: string) { if (this.exchangeRateName != newValue) { this.exchangeRateName = newValue; this.MarkAsDirty("ExchangeRateName"); } }
+       
+
 	 
     private controlAccountId: string;
     public get ControlAccountId() { return this.controlAccountId; }

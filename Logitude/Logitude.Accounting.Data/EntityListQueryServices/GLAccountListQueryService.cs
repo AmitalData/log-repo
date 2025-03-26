@@ -335,6 +335,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              RevenueExpenseName = a.RevenueExpense != null ? a.RevenueExpense.EnglishName : null,
                              ReconcileMethodName = a.ReconcileMethod != null ? a.ReconcileMethod.EnglishName : null,
                              ReconcileMethodLocalName = a.ReconcileMethod != null ? a.ReconcileMethod.LocalName : null,
+                             ExchangeRateId = a.ExchangeRateId,
+                             ExchangeRateName = a.ExchangeRate != null ? a.ExchangeRate.Name : null,
+
                              CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
                              ChartOfAccountsTypeName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
                              ChartOfAccountsTypeEnglishName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
