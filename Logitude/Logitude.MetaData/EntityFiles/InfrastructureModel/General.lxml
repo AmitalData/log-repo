@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;4432&quot;"
+  Code="&quot;2c48&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -3037,8 +3037,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.JournalNoRef&quot;"
-      DefaultText="&quot;Journal No. / Ref.&quot;"
-      LocalDefaultText="&quot;מספר פקודת יומן/ אסמכתא&quot;"
+      DefaultText="&quot;Journal No. / Ref./ Amount&quot;"
+      LocalDefaultText="&quot;מס פקודת יומן/ אסמכתא/ סכום&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

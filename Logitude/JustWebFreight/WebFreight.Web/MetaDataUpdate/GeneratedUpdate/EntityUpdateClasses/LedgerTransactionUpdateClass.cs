@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "4c9bee339f467b72ac238321b5c1f3e0";
+		public const string HashString = "e03e6b109ce5ad5f3417162da2b624b2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1606,10 +1606,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Journal No. / Reference",
+					  						DefaultText =  "Journal No. / Reference / Amount",
 					  						FullLocalDefaultText =  "מס פקודת יומן/ אסמכתא/ סכום",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Journal No. / Reference",
+					  						ListLableDefaultText =  "Journal No. / Reference / Amount",
 					  						ListLocalDefaultText =  "מס פקודת יומן/ אסמכתא/ סכום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
