@@ -122,7 +122,7 @@ export class AddEditUserPackageComponent extends BaseComponent {
         });
     }
 
-    CancelButtonClicked() {
+    CancelButtonClicked() {        
         if (this.IsEditMode) {
             this.RejectChanges();
         }

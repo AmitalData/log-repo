@@ -169,9 +169,9 @@ namespace Simplog.Global.Data.GlobalModel.Helpers
             return db;
         }
          
-        public static GlobalDB GetSingleGlobalDB()
+        public static GlobalDB GetSingleGlobalDBOracle()
         {
-            int tenant = SettingUtil.GetCurrentTenant();
+            int tenant = 0;
             string name = "TenantDB," + "GetSingleGlobalDB";
             
             GlobalDB db = null;
