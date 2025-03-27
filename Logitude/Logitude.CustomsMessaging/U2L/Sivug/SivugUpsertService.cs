@@ -1325,12 +1325,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                                                              + freightAmount.SIFAmount + ") into decimal");
                         }
                     }
-                    else if (
-                        !string.IsNullOrEmpty(freightAmount.SIFCurrencyTypeCode)
-                        || (string.IsNullOrEmpty(freightAmount.SIFCurrencyTypeCode)
-                            && this._MySupplierInvoicePM.ChangeSetOp == ChangeSetOperation.Insert)
-                    )
-                    {
+                    else 
+                    if (!string.IsNullOrEmpty(freightAmount.SIFCurrencyTypeCode) && this._MySupplierInvoicePM.ChangeSetOp == ChangeSetOperation.Insert){
                         var supplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM();
                         if (decimal.TryParse(freightAmount.SIFAmount, out decimal decimal1))
                         {
