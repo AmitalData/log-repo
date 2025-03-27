@@ -7,6 +7,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
+using Logitude.BL.CommonDataModel.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -69,6 +70,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.CustomsInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.CustomsInvoiceTemplateId : null;
             entityCard.ConsolidationInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ConsolidationInvoiceTemplateId : null;
             entityCard.ManifestInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ManifestInvoiceTemplateId : null;
+            entityCard.ExternalSystem = entityPM.IsHybrid ? HybridExternalSystem.HybridExternalSystemCode : null;
 
             entityPOCO.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
             entityPOCO.Field2 = entityPM.Field2 != null ? entityPM.Field2.Value : null;

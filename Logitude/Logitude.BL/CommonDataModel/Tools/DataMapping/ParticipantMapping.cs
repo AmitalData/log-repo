@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
@@ -55,6 +56,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.BankAddress = entityPM.BankAddress;
             entityCard.IBANNumber = entityPM.IBANNumber;
             entityCard.Swift = entityPM.Swift;
+            entityCard.ExternalSystem = entityPM.IsHybrid ? HybridExternalSystem.HybridExternalSystemCode : null;
 
             if (!entityPM.IsFirstContactToAdd)
             {

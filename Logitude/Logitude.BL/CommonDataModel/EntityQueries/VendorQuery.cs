@@ -568,6 +568,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  Field48 = customFieldsMainObject != null ? customFieldsMainObject.Field48 : null,
                                                  Field49 = customFieldsMainObject != null ? customFieldsMainObject.Field49 : null,
                                                  Field50 = customFieldsMainObject != null ? customFieldsMainObject.Field50 : null,
+                                                 ExternalSystem = a.Card.ExternalSystem,
                                              });
 
 

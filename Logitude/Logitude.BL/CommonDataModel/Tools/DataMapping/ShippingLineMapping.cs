@@ -7,6 +7,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
+using Logitude.BL.CommonDataModel.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -72,6 +73,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.IsSendingByBillOfLading = entityPM.IsSendingByBillOfLading;
             entityPOCO.IsAutomaticRequestsSent = entityPM.IsAutomaticRequestsSent;
             entityPOCO.IsSupportsContainerTracking = entityPM.IsSupportsContainerTracking;
+            entityCard.ExternalSystem = entityPM.IsHybrid ? HybridExternalSystem.HybridExternalSystemCode : null;
 
             entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entityCard.SATCustomerName = entityPM.SATReceptorName;

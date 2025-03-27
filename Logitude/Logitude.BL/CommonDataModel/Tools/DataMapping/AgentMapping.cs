@@ -7,6 +7,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
+using Logitude.BL.CommonDataModel.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -92,6 +93,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;
             }
+            entityCard.ExternalSystem = entityPM.IsHybrid ? HybridExternalSystem.HybridExternalSystemCode : null;
 
             BuildSearchFields(entityPM, entityCard);
         }
