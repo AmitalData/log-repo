@@ -1259,12 +1259,16 @@ namespace WebFreight.Web.Helpers
                                       ? column.ObjectFieldListLabelTextCodeCode
                                      : column.ObjectFieldFullNameTextCodeCode;
 
-                        bool showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+
+                        bool showLocals = HttpContext.Current != null
+                            ? LoggedContactResolver.GetLoggedContactShowLocal(tenant)
+                            : LoggedContactResolver.GetContactIncludingCustomerCareShowLocal(tenant);
                         if (text != null)
                         {
                              text = TextCodesTranslator.TranslateText(text, 0, showLocals);
                             if (string.IsNullOrEmpty(text) && !string.IsNullOrEmpty(column.DisplayText))
                                 text = column.DisplayText;
+
 
 
                         }

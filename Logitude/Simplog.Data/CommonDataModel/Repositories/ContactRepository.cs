@@ -589,7 +589,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return contacts?.Id.ToString(); 
         }
 
-
+        public Contact GetContactByEmail(string email, int tenant)
+        {
+            return context.Contacts
+            .Where(a => (a.Tenant == tenant || a.Tenant == 0) && a.Email == email.ToLower())
+            .FirstOrDefault();
+        }
 
     }
 }
