@@ -13,6 +13,7 @@ using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.APIDataContract;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
@@ -60,7 +61,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public string ReconcileMethodName { get; set; }
 
-      public AdditionalCurrencyRate ExchangeRate { get; set; }
+      public ExchangeRate ExchangeRate { get; set; }
 
       public string ExchangeRateName { get; set; }
 

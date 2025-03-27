@@ -735,7 +735,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private List<QueueTask> CreateQueueTasks(GLAccountPM glaccounPM)
         {
             APIDataContract.ApiV1.GLAccount gLAccount = GetMappedGLAccountDataContract(glaccounPM);
-
             string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(gLAccount);
 
             List<QueueTask> queue1Tasks = new List<QueueTask>

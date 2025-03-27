@@ -28,7 +28,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public Currency Currency { get; set; }
         public ReconcileMethod ReconcileMethod { get; set; }
         public ChartOfAccount ChartOfAccount { get; set; }
-        public AdditionalCurrencyRate ExchangeRate { get; set; }
+        public ExchangeRate ExchangeRate { get; set; }
 
     }
 
@@ -38,6 +38,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public string Code { get; set; }
         public string EnglishName { get; set; }
         public string LocalName { get; set; }
+    }
+    public class ExchangeRate
+    {
+        [XmlAttribute]
+        public string RateCoefficient { get; set; }
+        public string Name { get; set; }
     }
 
     public class ChartOfAccount

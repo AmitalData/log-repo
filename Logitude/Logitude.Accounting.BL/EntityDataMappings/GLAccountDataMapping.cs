@@ -214,7 +214,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 ReconcileMethodPM reconcileMethod = reconcileMethodQueryService.GetSingle(entityPOCO.ReconcileMethodCode, false, true);
                 if (reconcileMethod != null) entityPM.ReconcileMethodName = (showLocals ? reconcileMethod.LocalName : reconcileMethod.EnglishName);
             }
-            if (entityPOCO.ReconcileMethodCode != null)
+            if (entityPOCO.ExchangeRateId != null)
             {
                 AdditionalCurrencyRateRepository AdditionalCurrencyRateRepository = new AdditionalCurrencyRateRepository(entityPOCO.Tenant);
                 AdditionalCurrencyRate additionalCurrencyRate = AdditionalCurrencyRateRepository.GetSingle(entityPOCO.ExchangeRateId,entityPOCO.Tenant);

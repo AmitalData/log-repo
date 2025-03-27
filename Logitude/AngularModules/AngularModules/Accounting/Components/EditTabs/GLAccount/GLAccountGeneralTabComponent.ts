@@ -432,10 +432,11 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.EntityPM.ReconcileMethodCode = value;
         }
     }
-    get ExchangeRateId() { return this.EntityPM.ReconcileMethodCode; }
+    get ExchangeRateId() { return this.EntityPM.ExchangeRateId; }
     set ExchangeRateId(value: string) {
         if (this.EntityPM.ExchangeRateId != value) {
-            this.EntityPM.ExchangeRateId = value;
+            
+           this.EntityPM.ExchangeRateId = value;
         }
     }
 
