@@ -111,7 +111,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                      PartnerTypeId = a.Card.PartnerTypeId,
                                      Code = a.Card.Code,
-                                     GLAccountId=a.Card.GLAccountId
+                                     GLAccountId=a.Card.GLAccountId,
+                                     ExternalSystem = a.Card.ExternalSystem,
                                  },
                                  BillToId = a.Card.BillToId,
                                  ImageDetailId = a.Card.ImageDetailId,
@@ -224,6 +225,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      SendingInterestReport = a.Card.SendingInterestReport,
                                      PartnerTypeId = a.Card.PartnerTypeId,
                                      Code = a.Card.Code,
+                                     ExternalSystem = a.Card.ExternalSystem,
                                  },
                                  BillToId = a.Card.BillToId,
                                  ImageDetailId = a.Card.ImageDetailId,

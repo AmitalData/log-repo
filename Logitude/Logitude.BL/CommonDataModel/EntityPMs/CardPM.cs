@@ -244,6 +244,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool SendingInterestReport { get; set; }
          public bool IsFromGlaAccountUpdate { get; set; }
         public bool IsExcludeCard { get; set; }
- 
+        public string ExternalSystem { get; set; }
+
     }
 }

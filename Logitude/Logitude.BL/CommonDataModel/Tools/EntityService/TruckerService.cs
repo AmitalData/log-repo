@@ -277,6 +277,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 entityCard.EmailForSendingSingArinvoice = entityPM.Card != null ? entityPM.Card?.EmailForSendingSingArinvoice : null ;
                 entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport;
+                entityCard.ExternalSystem = entityPM.Card != null ? entityPM.Card.ExternalSystem : entityCard.ExternalSystem;
             }
         }
 

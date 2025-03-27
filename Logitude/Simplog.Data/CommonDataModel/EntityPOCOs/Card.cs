@@ -169,5 +169,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual DocumentTypeTemplate ManifestInvoiceTemplate { get; set; }
         public string EmailForSendingSingArinvoice { get; set; }
         public bool SendingInterestReport { get; set; }
+        public string ExternalSystem { get; set; }
     }
 }

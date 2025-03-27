@@ -101,7 +101,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                                              EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                                              SendingInterestReport=a.Card.SendingInterestReport,
-                                                             GLAccountId   =a.Card.GLAccountId
+                                                             GLAccountId   =a.Card.GLAccountId,
+                                                             ExternalSystem = a.Card.ExternalSystem,
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,
@@ -196,6 +197,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              Code = a.Card.Code,
                                                              EmailForSendingSingArinvoice=a.Card.EmailForSendingSingArinvoice,
                                                              SendingInterestReport=a.Card.SendingInterestReport,
+                                                             ExternalSystem = a.Card.ExternalSystem,
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,
@@ -289,7 +291,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              SendingInterestReport = a.Card.SendingInterestReport,
                                                              PartnerTypeId = a.Card.PartnerTypeId,
                                                              Code = a.Card.Code,
-                                                            
+                                                             ExternalSystem = a.Card.ExternalSystem,
+
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,
@@ -617,6 +620,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                                              EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                                              SendingInterestReport = a.Card.SendingInterestReport,
+                                                             ExternalSystem = a.Card.ExternalSystem,
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CollectorId = a.Card.CollectorId,
