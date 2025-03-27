@@ -622,13 +622,18 @@ export class InvoiceQueueComponent
         let allInvoices = this.getDefaultAllInvoices();
     
         // Regular expressions to extract each section from the XML string
+        const statusesMatch = xmlString.match(/<Statuses>[\s\S]*?<\/Statuses>/);
         const invoiceLinesMatch = xmlString.match(/<InvoiceLines>[\s\S]*?<\/InvoiceLines>/);
         const integratedInvoicesMatch = xmlString.match(/<IntegratedInvoices[\s\S]*?\/>/);
         const invoicesMatch = xmlString.match(/<Invoices>[\s\S]*?<\/Invoices>/);
         const messagesMatch = xmlString.match(/<Messages[\s\S]*?\/>/);
         const generalDetailsMatch = xmlString.match(/<GeneralDetails>[\s\S]*?<\/GeneralDetails>/);
     
-        // Parse and extract data for each section if available
+        if (statusesMatch) {
+            const statusesDoc = parser.parseFromString(statusesMatch[0], 'application/xml');
+            allInvoices.Statuses = this.extractStatuses(statusesDoc);
+        }
+
         if (invoiceLinesMatch) {
             const invoiceLinesDoc = parser.parseFromString(invoiceLinesMatch[0], 'application/xml');
             allInvoices.InvoiceLines = this.extractInvoiceLines(invoiceLinesDoc);
