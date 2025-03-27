@@ -2902,7 +2902,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
             TextCode GeneralTextCode_NewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.NewReport", DefaultText = "New Report", LocalDefaultText = @"דוח חדש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-
         }
     }
 }
