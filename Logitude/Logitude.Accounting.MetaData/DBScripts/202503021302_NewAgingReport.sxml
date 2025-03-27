@@ -17,7 +17,7 @@ GO
 
 
 
-CREATE PROCEDURE [dbo].[usp_NewAgingReport]
+create or alter procedure  [dbo].[usp_NewAgingReport]
     @AccountID VARCHAR(50) = NULL,
     @InputDate DATE = NULL,
     @Tenant INT,
@@ -238,9 +238,10 @@ INNER JOIN
       AND jl.ActionCode = '1'
       AND j.IsLedgerCreated = 1
       AND jl.DueDate > GETDATE()
-	  
+	  AND (@AccountID IS NULL OR jl.CreditAccountId = @AccountID) 
+
     GROUP BY jl.CreditAccountId
-) AS FUTQ 
+)  FUTQ ON FUTQ.CreditAccountId = GL.ID
 
 LEFT JOIN 
     (SELECT TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
