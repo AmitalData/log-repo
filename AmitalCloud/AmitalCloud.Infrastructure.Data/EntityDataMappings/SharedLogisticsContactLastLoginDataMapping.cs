@@ -22,18 +22,21 @@ using AmitalCloud.Infrastructure.Data;
 namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 {
    
-   public partial class UserLoginLogDataMapping: IMapping<UserLoginLogPM, POCO.UserLoginLog ,UserLoginLogList >
+   public partial class SharedLogisticsContactLastLoginDataMapping: IMapping<SharedLogisticsContactLastLoginPM, POCO.SharedLogisticsContactLastLogin ,SharedLogisticsContactLastLoginList >
    {
 
-        public void CustomPMToPOCO(UserLoginLogPM entityPM, POCO.UserLoginLog entityPOCO)
+        public void CustomPMToPOCO(SharedLogisticsContactLastLoginPM entityPM, POCO.SharedLogisticsContactLastLogin entityPOCO)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                entityPOCO.Id = entityPM.Id;
+                entityPOCO.PartnerTypeId = entityPM.PartnerTypeId;
+                entityPOCO.ContactId = entityPM.ContactId;
+                entityPOCO.CardId = entityPM.CardId;
+                entityPOCO.Via = entityPM.Via;
             }
         }
 
-        public void CustomPOCOToPM(UserLoginLogPM entityPM, POCO.UserLoginLog entityPOCO)
+        public void CustomPOCOToPM(SharedLogisticsContactLastLoginPM entityPM, POCO.SharedLogisticsContactLastLogin entityPOCO)
         {
         }
    }

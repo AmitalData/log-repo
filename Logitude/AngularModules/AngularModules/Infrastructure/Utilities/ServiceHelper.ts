@@ -99,6 +99,8 @@ export class ServiceHelper {
                     ServiceHelper.LogServiceError("There seems to be an Internet Connection Problem" + additionalDetails, "net::ERR_CONNECTION_REFUSED", false);//("net::ERR_CONNECTION_REFUSED", "net::ERR_CONNECTION_REFUSED");
                 }
                 else if (error.status == 500) {
+                    console.log(error);
+                    response.ErrorsArray.push(error?.statusText);
                     try {
                         var errorObject = JSON.parse(error["_body"]);
                         ServiceHelper.LogServiceError(errorObject.Message + " " + errorObject.ExceptionMessage, errorObject.StackTrace);

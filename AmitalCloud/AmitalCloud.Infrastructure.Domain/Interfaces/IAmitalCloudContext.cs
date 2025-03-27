@@ -224,6 +224,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<SatisfactionSurvey> SatisfactionSurveys { get; }
 		 IDbSet<SchedulerProcedure> SchedulerProcedure { get; }
 		 IDbSet<ScreenSection> ScreenSections { get; }
+		 IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; }
 		 IDbSet<SharedLogisticsInvitationStatus> SharedLogisticsInvitationStatus { get; }
 		 IDbSet<SharedLogisticsSetting> SharedLogisticsSettings { get; }
 		 IDbSet<ShippingAgent> ShippingAgents { get; }

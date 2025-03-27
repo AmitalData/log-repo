@@ -116,7 +116,6 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<Screen> Screens  {  get; set; }
 	public IDbSet<ScreenField> ScreenFields  {  get; set; }
 	public IDbSet<ScreenModification> ScreenModifications  {  get; set; }
-	public IDbSet<Setting> Settings  {  get; set; }
 	public IDbSet<SharedUserQuery> shareduserqueries  {  get; set; }
 	public IDbSet<SmallDocument> SmallDocuments  {  get; set; }
 	public IDbSet<SpecialService> SpecialServices  {  get; set; }

@@ -22,8 +22,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.CdropId).HasColumnName("CdropId").IsRequired().HasMaxLength(128).IsUnicode(true);
-
             this.Property(t => t.WebTokenLifeTimeInMinutes).HasColumnName("WebTokenLifeTimeInMinutes").IsRequired();
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

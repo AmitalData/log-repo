@@ -215,19 +215,32 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         //    return "";
         //}
 
-        public static bool isUserAdmin(string email, int tenant)
+        public static bool isUserAdmin(string email, int tenant, IAmitalCloudContext amitalCloudContext)
         {
-            UserRepository userRepository = new UserRepository(tenant);
-            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, email, tenant, false);
-            if (loggedUser != null && loggedUser.UserRoles != null)
-            {
-                if (loggedUser.UserRoles.Contains("Administrator"))
-                {
-                    return true;
-                }
-            }
+            // todo:
+            //List<User> entities = new Repository<User>(amitalCloudContext).GetMulti(record => record.Contact.Email == email && (record.Tenant == tenant || record.Tenant == 0), "Contact");
+            //var asd = amitalCloudContext.Contacts.FirstOrDefault();
+            //Contact loggedContact = new Repository<Contact>(amitalCloudContext).GetMulti(a => a.Tenant == tenant).FirstOrDefault();
+            /* SqlException: Invalid column name 'Card_Id'.
+Invalid column name 'Customer_Id'.
+Invalid column name 'AccountingPartner_Id'.
+Invalid column name 'Agent_Id'.
+Invalid column name 'CustomAgent_Id'.
+Invalid column name 'ShippingAgent_Id'.
+Invalid column name 'Participant_Id'.
+Invalid column name 'Trucker_Id'.
+Invalid column name 'Vendor_Id'.
+Invalid column name 'Warehouse_Id'.
+            */
 
-            return false;
+           List <User> entities = (from record in amitalCloudContext.Users
+                                   join contact in amitalCloudContext.Contacts on record.Id equals contact.Id
+                                   where contact.Email == email && (record.Tenant == tenant || record.Tenant == 0)
+                                   select record).ToList();
+
+            User loggedUser = entities.Where(a => a.Tenant == tenant).FirstOrDefault() ?? entities.Where(a => a.Tenant == 0).FirstOrDefault();
+
+            return loggedUser?.UserRoles != null && loggedUser.UserRoles.Contains("Administrator");
         }
 
         #region Get Single User

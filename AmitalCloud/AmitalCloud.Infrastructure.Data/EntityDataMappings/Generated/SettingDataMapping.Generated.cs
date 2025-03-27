@@ -59,9 +59,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         StorageServiceMode, 
 	         IsUpgradingChamp, 
 	         HtmlVersion, 
-	         DropQboconsumerkey, 
-	         DropQboapptoken, 
-	         DropQboconsumersecretkey, 
 	         AndroidAppLink, 
 	         IOSAppLink, 
 	         AndroidPodAppMinimumVersion, 
@@ -83,10 +80,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         INTTRAProdFTPHost, 
 	         INTTRATestFTPHost, 
 	         OceanInsightsToken, 
-	         DropIsfullbuilddwrunning, 
-	         DropIsincrementaldwrunning, 
 	         EmailSendingQuota, 
-	         DropDwnextruntime, 
 	         ChampTestAPIURL, 
 	         ChampTestAPIPassword, 
 	         ChampProdAPIURL, 
@@ -119,8 +113,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         WorkflowStorageAccountKey, 
 	         WindWardSettings, 
 	         ExportUrl, 
-	         LogitudeIISURL, 
-	         DropAmitaltenant,	      }
+	         LogitudeIISURL,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -159,9 +152,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         StorageServiceMode, 
 	         IsUpgradingChamp, 
 	         HtmlVersion, 
-	         DropQboconsumerkey, 
-	         DropQboapptoken, 
-	         DropQboconsumersecretkey, 
 	         AndroidAppLink, 
 	         IOSAppLink, 
 	         AndroidPodAppMinimumVersion, 
@@ -183,10 +173,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         INTTRAProdFTPHost, 
 	         INTTRATestFTPHost, 
 	         OceanInsightsToken, 
-	         DropIsfullbuilddwrunning, 
-	         DropIsincrementaldwrunning, 
 	         EmailSendingQuota, 
-	         DropDwnextruntime, 
 	         ChampTestAPIURL, 
 	         ChampTestAPIPassword, 
 	         ChampProdAPIURL, 
@@ -219,8 +206,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         WorkflowStorageAccountKey, 
 	         WindWardSettings, 
 	         ExportUrl, 
-	         LogitudeIISURL, 
-	         DropAmitaltenant,	      }
+	         LogitudeIISURL,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(SettingPM entityPM, POCO.Setting entityPOCO)
@@ -259,9 +245,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageServiceMode)) { entityPOCO.StorageServiceMode = entityPM.StorageServiceMode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUpgradingChamp)) { entityPOCO.IsUpgradingChamp = entityPM.IsUpgradingChamp;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HtmlVersion)) { entityPOCO.HtmlVersion = entityPM.HtmlVersion;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropQboconsumerkey)) { entityPOCO.DropQboconsumerkey = entityPM.DropQboconsumerkey;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropQboapptoken)) { entityPOCO.DropQboapptoken = entityPM.DropQboapptoken;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropQboconsumersecretkey)) { entityPOCO.DropQboconsumersecretkey = entityPM.DropQboconsumersecretkey;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AndroidAppLink)) { entityPOCO.AndroidAppLink = entityPM.AndroidAppLink;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IOSAppLink)) { entityPOCO.IOSAppLink = entityPM.IOSAppLink;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AndroidPodAppMinimumVersion)) { entityPOCO.AndroidPodAppMinimumVersion = entityPM.AndroidPodAppMinimumVersion;}
@@ -283,10 +266,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.INTTRAProdFTPHost)) { entityPOCO.INTTRAProdFTPHost = entityPM.INTTRAProdFTPHost;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.INTTRATestFTPHost)) { entityPOCO.INTTRATestFTPHost = entityPM.INTTRATestFTPHost;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OceanInsightsToken)) { entityPOCO.OceanInsightsToken = entityPM.OceanInsightsToken;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropIsfullbuilddwrunning)) { entityPOCO.DropIsfullbuilddwrunning = entityPM.DropIsfullbuilddwrunning;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropIsincrementaldwrunning)) { entityPOCO.DropIsincrementaldwrunning = entityPM.DropIsincrementaldwrunning;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EmailSendingQuota)) { entityPOCO.EmailSendingQuota = entityPM.EmailSendingQuota;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropDwnextruntime)) { entityPOCO.DropDwnextruntime = entityPM.DropDwnextruntime;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChampTestAPIURL)) { entityPOCO.ChampTestAPIURL = entityPM.ChampTestAPIURL;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChampTestAPIPassword)) { entityPOCO.ChampTestAPIPassword = entityPM.ChampTestAPIPassword;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChampProdAPIURL)) { entityPOCO.ChampProdAPIURL = entityPM.ChampProdAPIURL;}
@@ -320,7 +300,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WindWardSettings)) { entityPOCO.WindWardSettings = entityPM.WindWardSettings;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportUrl)) { entityPOCO.ExportUrl = entityPM.ExportUrl;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LogitudeIISURL)) { entityPOCO.LogitudeIISURL = entityPM.LogitudeIISURL;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropAmitaltenant)) { entityPOCO.DropAmitaltenant = entityPM.DropAmitaltenant;}
 					}
 		public void POCOToPM(SettingPM entityPM, POCO.Setting entityPOCO)
         {
@@ -464,18 +443,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.HtmlVersion = entityPOCO.HtmlVersion;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropQboconsumerkey))
-            {
-					entityPM.DropQboconsumerkey = entityPOCO.DropQboconsumerkey;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropQboapptoken))
-            {
-					entityPM.DropQboapptoken = entityPOCO.DropQboapptoken;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropQboconsumersecretkey))
-            {
-					entityPM.DropQboconsumersecretkey = entityPOCO.DropQboconsumersecretkey;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AndroidAppLink))
             {
 					entityPM.AndroidAppLink = entityPOCO.AndroidAppLink;
@@ -560,21 +527,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.OceanInsightsToken = entityPOCO.OceanInsightsToken;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropIsfullbuilddwrunning))
-            {
-					entityPM.DropIsfullbuilddwrunning = entityPOCO.DropIsfullbuilddwrunning;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropIsincrementaldwrunning))
-            {
-					entityPM.DropIsincrementaldwrunning = entityPOCO.DropIsincrementaldwrunning;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EmailSendingQuota))
             {
 					entityPM.EmailSendingQuota = entityPOCO.EmailSendingQuota;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropDwnextruntime))
-            {
-					entityPM.DropDwnextruntime = entityPOCO.DropDwnextruntime;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChampTestAPIURL))
             {
@@ -707,10 +662,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LogitudeIISURL))
             {
 					entityPM.LogitudeIISURL = entityPOCO.LogitudeIISURL;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropAmitaltenant))
-            {
-					entityPM.DropAmitaltenant = entityPOCO.DropAmitaltenant;
             }
 		}
 		public void PMToOldPM(SettingPM entityPM, SettingPM oldEntityPM)
@@ -852,18 +803,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.HtmlVersion = entityPM.HtmlVersion;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropQboconsumerkey))
-            {
-                oldEntityPM.DropQboconsumerkey = entityPM.DropQboconsumerkey;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropQboapptoken))
-            {
-                oldEntityPM.DropQboapptoken = entityPM.DropQboapptoken;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropQboconsumersecretkey))
-            {
-                oldEntityPM.DropQboconsumersecretkey = entityPM.DropQboconsumersecretkey;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AndroidAppLink))
             {
                 oldEntityPM.AndroidAppLink = entityPM.AndroidAppLink;
@@ -948,21 +887,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.OceanInsightsToken = entityPM.OceanInsightsToken;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropIsfullbuilddwrunning))
-            {
-                oldEntityPM.DropIsfullbuilddwrunning = entityPM.DropIsfullbuilddwrunning;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropIsincrementaldwrunning))
-            {
-                oldEntityPM.DropIsincrementaldwrunning = entityPM.DropIsincrementaldwrunning;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EmailSendingQuota))
             {
                 oldEntityPM.EmailSendingQuota = entityPM.EmailSendingQuota;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropDwnextruntime))
-            {
-                oldEntityPM.DropDwnextruntime = entityPM.DropDwnextruntime;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChampTestAPIURL))
             {
@@ -1095,10 +1022,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LogitudeIISURL))
             {
                 oldEntityPM.LogitudeIISURL = entityPM.LogitudeIISURL;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropAmitaltenant))
-            {
-                oldEntityPM.DropAmitaltenant = entityPM.DropAmitaltenant;
             }
 					}
 		public void POCOToList(POCO.Setting entityPOCO, SettingList entityList)

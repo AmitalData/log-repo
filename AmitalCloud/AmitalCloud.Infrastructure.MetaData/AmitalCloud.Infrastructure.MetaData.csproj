@@ -232,7 +232,7 @@
     <None Include="EntityFiles\AutoCreated\ScreenField.lxml" />
     <None Include="EntityFiles\AutoCreated\ScreenModification.lxml" />
     <None Include="EntityFiles\GlobalModel\SessionPolicy.lxml" />
-    <None Include="EntityFiles\AutoCreated\Setting.lxml" />
+    <None Include="EntityFiles\GlobalModel\Setting.lxml" />
     <None Include="EntityFiles\AutoCreated\SharedUserQuery.lxml" />
     <None Include="EntityFiles\AutoCreated\SmallDocument.lxml" />
     <None Include="EntityFiles\AutoCreated\SpecialService.lxml" />
@@ -451,6 +451,7 @@
     <None Include="EntityFiles\ReportsTemplatesVersion.lxml" />
     <None Include="EntityFiles\Restriction.lxml" />
     <None Include="EntityFiles\Role.lxml" />
+    <None Include="EntityFiles\SharedLogisticsContactLastLogin.lxml" />
     <None Include="EntityFiles\ShippingAgent.lxml" />
     <None Include="EntityFiles\ShippingLine.lxml" />
     <None Include="EntityFiles\State.lxml">

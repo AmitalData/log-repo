@@ -16,17 +16,28 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-    public class SessionPolicy : BaseEntity
+    public class SharedLogisticsContactLastLogin : BaseEntity
 	{
-	        new const bool hasTenant = false;  
 		
-           [Column("WebTokenLifeTimeInMinutes")]
-	    public int WebTokenLifeTimeInMinutes { get; set; }
-     
-	    public int WebTokenExpirationWarningInMinutes { get; set; }
+           [Column("Tenant")]
+	    public int Tenant { get; set; }
      [Key]
-        [Column("Id")]
-	    public string Id { get; set; }
+        [ForeignKey("Contact")]
+        [Column("ContactId")]
+	    public string ContactId { get; set; }
+	      
+        public virtual Contact Contact { get; set; }
+     [Key]
+        [Column("CardId")]
+	    public string CardId { get; set; }
+     [Key]
+        [Column("PartnerTypeId")]
+	    public string PartnerTypeId { get; set; }
+     [Key]
+        [Column("Via")]
+	    public string Via { get; set; }
+        [Column("LoginDateTime")]
+	    public DateTime? LoginDateTime { get; set; }
     }
 }
 	 

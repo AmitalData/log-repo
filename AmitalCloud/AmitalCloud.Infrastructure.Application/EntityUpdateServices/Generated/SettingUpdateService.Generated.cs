@@ -22,17 +22,17 @@ using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class SettingUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Setting,SettingPM,IEntityPM,SettingList,string>
+   public partial class SettingUpdateService:BaseEntityUpdateService<GlobalContext,POCO.Setting,SettingPM,IEntityPM,SettingList,string>
    {
    			
-        public SettingUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public SettingUpdateService(IGlobalContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base((GlobalContext)mainContext,additionalContexts, tenant)
         {
             Mapping = new SettingDataMapping();
-            Repository = new Repository<POCO.Setting>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Setting>((GlobalContext)mainContext);
         }
-        public SettingUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public SettingUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public SettingUpdateService(int tenant) : this(GlobalContext.GetContext(tenant), null, tenant) {}
+        public SettingUpdateService(IGlobalContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Setting,string> GetKeys(SettingPM entityPM) => new SettingKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(SettingPM entityPM)
 		{

@@ -101,12 +101,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.HtmlVersion).HasColumnName("HtmlVersion").IsRequired().HasMaxLength(10).IsUnicode(false);
 
-            this.Property(t => t.DropQboconsumerkey).HasColumnName("DropQboconsumerkey").IsRequired().HasMaxLength(100).IsUnicode(false);
-
-            this.Property(t => t.DropQboapptoken).HasColumnName("DropQboapptoken").IsRequired().HasMaxLength(100).IsUnicode(false);
-
-            this.Property(t => t.DropQboconsumersecretkey).HasColumnName("DropQboconsumersecretkey").IsRequired().HasMaxLength(100).IsUnicode(false);
-
             this.Property(t => t.AndroidAppLink).HasColumnName("AndroidAppLink").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
             this.Property(t => t.IOSAppLink).HasColumnName("IOSAppLink").IsRequired().HasMaxLength(1000).IsUnicode(false);
@@ -149,13 +143,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.OceanInsightsToken).HasColumnName("OceanInsightsToken").IsRequired().HasMaxLength(200).IsUnicode(false);
 
-            this.Property(t => t.DropIsfullbuilddwrunning).HasColumnName("DropIsfullbuilddwrunning").IsRequired();
-
-            this.Property(t => t.DropIsincrementaldwrunning).HasColumnName("DropIsincrementaldwrunning").IsRequired();
-
             this.Property(t => t.EmailSendingQuota).HasColumnName("EmailSendingQuota").IsRequired();
-
-            this.Property(t => t.DropDwnextruntime).HasColumnName("DropDwnextruntime").IsRequired();
 
             this.Property(t => t.ChampTestAPIURL).HasColumnName("ChampTestAPIURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
@@ -231,8 +219,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.ExportUrl).HasColumnName("ExportUrl").IsRequired().HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.LogitudeIISURL).HasColumnName("LogitudeIISURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
-
-            this.Property(t => t.DropAmitaltenant).HasColumnName("DropAmitaltenant").IsRequired();
         }
     }
 }

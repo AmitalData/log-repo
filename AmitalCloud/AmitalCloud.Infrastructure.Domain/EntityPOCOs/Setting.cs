@@ -91,12 +91,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public bool IsUpgradingChamp { get; set; }
         [Column("HtmlVersion")]
 	    public string HtmlVersion { get; set; }
-        [Column("DropQboconsumerkey")]
-	    public string DropQboconsumerkey { get; set; }
-        [Column("DropQboapptoken")]
-	    public string DropQboapptoken { get; set; }
-        [Column("DropQboconsumersecretkey")]
-	    public string DropQboconsumersecretkey { get; set; }
         [Column("AndroidAppLink")]
 	    public string AndroidAppLink { get; set; }
         [Column("IOSAppLink")]
@@ -139,14 +133,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string INTTRATestFTPHost { get; set; }
         [Column("OceanInsightsToken")]
 	    public string OceanInsightsToken { get; set; }
-        [Column("DropIsfullbuilddwrunning")]
-	    public bool? DropIsfullbuilddwrunning { get; set; }
-        [Column("DropIsincrementaldwrunning")]
-	    public bool? DropIsincrementaldwrunning { get; set; }
         [Column("EmailSendingQuota")]
 	    public int EmailSendingQuota { get; set; }
-        [Column("DropDwnextruntime")]
-	    public DateTime? DropDwnextruntime { get; set; }
         [Column("ChampTestAPIURL")]
 	    public string ChampTestAPIURL { get; set; }
         [Column("ChampTestAPIPassword")]
@@ -213,8 +201,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string ExportUrl { get; set; }
         [Column("LogitudeIISURL")]
 	    public string LogitudeIISURL { get; set; }
-        [Column("DropAmitaltenant")]
-	    public int? DropAmitaltenant { get; set; }
     }
 }
 	 

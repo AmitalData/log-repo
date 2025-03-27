@@ -417,6 +417,7 @@
     <Compile Include="EntityListQueryServices\Generated\ScreenSectionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SessionPolicyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SettingListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SharedLogisticsContactLastLoginListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsInvitationStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedUserQueryListQueryService.Generated.cs" />
@@ -819,6 +820,7 @@
     <Compile Include="EntityQueryServices\Generated\ScreenSectionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SessionPolicyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SharedLogisticsContactLastLoginQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SharedLogisticsInvitationStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SharedLogisticsSettingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SharedUserQueryQueryService.Generated.cs" />
@@ -1207,6 +1209,7 @@
     <Compile Include="EntityUpdateServices\Generated\ScreenUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SessionPolicyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SettingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SharedLogisticsContactLastLoginUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SharedLogisticsInvitationStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SharedLogisticsSettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SharedUserQueryUpdateService.Generated.cs" />

@@ -281,6 +281,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
 	            modelBuilder.Configurations.Add(new SatisfactionSurveyMap());
 	            modelBuilder.Configurations.Add(new SchedulerProcedureMap());
 	            modelBuilder.Configurations.Add(new ScreenSectionMap());
+	            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
 	            modelBuilder.Configurations.Add(new SharedLogisticsInvitationStatusMap());
 	            modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
 	            modelBuilder.Configurations.Add(new ShippingAgentMap());
@@ -852,6 +853,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
 	public IDbSet<SatisfactionSurvey> SatisfactionSurveys  {  get; set; }
 	public IDbSet<SchedulerProcedure> SchedulerProcedure  {  get; set; }
 	public IDbSet<ScreenSection> ScreenSections  {  get; set; }
+	public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins  {  get; set; }
 	public IDbSet<SharedLogisticsInvitationStatus> SharedLogisticsInvitationStatus  {  get; set; }
 	public IDbSet<SharedLogisticsSetting> SharedLogisticsSettings  {  get; set; }
 	public IDbSet<ShippingAgent> ShippingAgents  {  get; set; }

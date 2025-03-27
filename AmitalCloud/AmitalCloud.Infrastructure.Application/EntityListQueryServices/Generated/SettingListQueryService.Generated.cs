@@ -17,8 +17,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class SettingListQueryService  : BaseEntityListQueryService<SettingList,POCO.Setting,  SettingKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.Setting> contextEntity => (context as IAmitalCloudContext).Settings;
-		public SettingListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+	    protected override System.Data.Entity.IDbSet<POCO.Setting> contextEntity => (context as IGlobalContext).Settings;
+		public SettingListQueryService(int tenant) : base(GlobalContext.GetContext(tenant)) { }
         public SettingList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

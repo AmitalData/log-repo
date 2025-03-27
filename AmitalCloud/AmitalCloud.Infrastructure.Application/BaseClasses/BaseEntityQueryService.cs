@@ -122,6 +122,39 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             }
             return entityPMs;
         }
+        public List<TEntityPM> GetMultiFromCache(string cacheKey, Expression<Func<TEntityPOCO, bool>> predicate, string include = null)
+        {
+            List<TEntityPM> entityPMs;
+
+            cacheKey = $"TEntityPMGetMulti_({cacheKey};{include ?? string.Empty})";
+            var cacheObj = CacheManager.CacheWrapper.Get(cacheKey);
+            if (cacheObj != null)
+            {
+                entityPMs = (List<TEntityPM>)cacheObj;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(include))
+                {
+                    entityPMs = Repository.GetMulti<TEntityPM>(predicate, include);
+                }
+                else
+                {
+                    entityPMs = Repository.GetMulti<TEntityPM>(predicate);
+                }
+
+                if (entityPMs != null)
+                {
+                    CacheManager.CacheWrapper.Insert(cacheKey, entityPMs);
+                }
+                else
+                {
+                    CacheManager.CacheWrapper.Insert(cacheKey, new NullCache());
+                }
+            }
+            return entityPMs;
+        }
+        public TEntityPOCO GetFirst() => Repository.GetFirst();
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate)
         => Repository.GetMulti<TEntityPM>(predicate);
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, string include)

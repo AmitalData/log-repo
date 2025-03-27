@@ -31,10 +31,10 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public static GlobalDB GetGlobalDBByTenant(int tenant) => ConfigurationManager.AppSettings.Get("ENVIROMENT") == "azure app service" ? GetGlobalDbFromEnviroment() : GetByGlobalTenant(tenant);
         private static GlobalDB GetByGlobalTenant(int tenant)
         {
-            tenant = SettingUtil.GetCurrentTenant();
             IGlobalContext context = GlobalContext.GetContext();
             GlobalTenant globaltenant = new Repository<GlobalTenant>(context).GetAll(0, true).Where(a => a.Id == tenant).FirstOrDefault();
-            return new Repository<GlobalDB>(context).GetAll(0, true).Where(a => a.Id == globaltenant.GlobalDBId).FirstOrDefault();
+            string usedTenant = globaltenant != null ? globaltenant.GlobalDBId : tenant.ToString();
+            return new Repository<GlobalDB>(context).GetAll(0, true).Where(a => a.Id == usedTenant).FirstOrDefault();
         }
         private static GlobalDB GetGlobalDbFromEnviroment()
         {

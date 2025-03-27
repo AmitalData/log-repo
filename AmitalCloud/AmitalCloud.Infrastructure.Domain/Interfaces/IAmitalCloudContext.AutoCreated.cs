@@ -106,7 +106,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<Screen> Screens { get; }
 		 IDbSet<ScreenField> ScreenFields { get; }
 		 IDbSet<ScreenModification> ScreenModifications { get; }
-		 IDbSet<Setting> Settings { get; }
 		 IDbSet<SharedUserQuery> shareduserqueries { get; }
 		 IDbSet<SmallDocument> SmallDocuments { get; }
 		 IDbSet<SpecialService> SpecialServices { get; }

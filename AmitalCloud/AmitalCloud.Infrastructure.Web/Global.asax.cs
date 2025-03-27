@@ -9,6 +9,8 @@ using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using System.Globalization;
 using AmitalCloud.Infrastructure.Data.Security;
+using AmitalCloud.Infrastructure.Application.EntityQueryServices;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 namespace AmitalCloud.Infrastructure.WebAPI
 {
@@ -21,6 +23,7 @@ namespace AmitalCloud.Infrastructure.WebAPI
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
                 AmitalCloudSettings.DatabaseManagementSystem = dbms;
                 AmitalCloudSettings.DebugKey = System.Configuration.ConfigurationManager.AppSettings.Get("DebugKey");
+                FillAppSettings();
             }
 
             CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
@@ -63,21 +66,8 @@ namespace AmitalCloud.Infrastructure.WebAPI
                 Response.End();
             }
 
-            if (AmitalCloudSettings.IsCostomsDeploy)
-            {
-                var he = new CultureInfo("he-IL");
-                he.DateTimeFormat.DateSeparator = ".";
-                he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";
-                System.Threading.Thread.CurrentThread.CurrentCulture = he;
-
-                if (_IAmDebuging_StopOpenNewThreads)
-                {
-                    HttpContext.Current.Response.End();
-                }
-            }
-
             string clientmode = System.Configuration.ConfigurationManager.AppSettings.Get("clientMode");
-            if (clientmode == "angular" && SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development)) //islam: please don't remark this !!!!!!!!!!!!!!
+            if (clientmode == "angular" && SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
             {
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "http://localhost:4200");
                 HttpContext.Current.Response.AddHeader("Access-Control-Expose-Headers", "http://localhost:4200");
@@ -114,5 +104,73 @@ namespace AmitalCloud.Infrastructure.WebAPI
             }
         }
 
+        private void FillAppSettings()
+        {
+            SettingQueryService settingQueryService = new SettingQueryService(0);
+            SettingPM setting = settingQueryService.GetSingle("1", false, true);
+            AmitalCloudSettings.Id = setting.Id;
+            AmitalCloudSettings.ChampEnv = setting.ChampEnv;
+            AmitalCloudSettings.ChampURL = setting.ChampURL;
+            AmitalCloudSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+            AmitalCloudSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+            AmitalCloudSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+            AmitalCloudSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
+            AmitalCloudSettings.CustomerCareIP = setting.CustomerCareIP;
+            AmitalCloudSettings.DeploymentStage = setting.DeploymentStage;
+            AmitalCloudSettings.IsLogEnabled = setting.IsLogEnabled;
+            AmitalCloudSettings.LogitudeURL = setting.LogitudeURL;
+            AmitalCloudSettings.TotangoServiceId = setting.TotangoServiceId;
+            AmitalCloudSettings.UsingAzure = setting.UsingAzure;
+            AmitalCloudSettings.StorageAccountKey = setting.StorageAccountKey;
+            AmitalCloudSettings.StorageAccountName = setting.StorageAccountName;
+            AmitalCloudSettings.StorageType = setting.StorageType;
+            AmitalCloudSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
+            AmitalCloudSettings.AutoSignupEmail = setting.AutoSignupEmail;
+            AmitalCloudSettings.AutoSignupPassword = setting.AutoSignupPassword;
+            AmitalCloudSettings.ForceHttps = setting.ForceHttps;
+            AmitalCloudSettings.CheckConnectionURL = setting.CheckConnectionURL;
+            AmitalCloudSettings.AndroidSharedAppMinimumVersion = setting.AndroidSharedAppMinimumVersion;
+            AmitalCloudSettings.IOSSharedAppMinimumVersion = setting.IOSSharedAppMinimumVersion;
+            AmitalCloudSettings.WorkEnvironment = setting.WorkEnvironment;
+            AmitalCloudSettings.LogoCode = setting.LogoCode;
+            AmitalCloudSettings.EnableHybridQueue = setting.EnableHybridQueue;
+            AmitalCloudSettings.EmailAlertSignature = setting.EmailAlertSignature;
+            AmitalCloudSettings.IOSAppLink = setting.IOSAppLink;
+            AmitalCloudSettings.AndroidAppLink = setting.AndroidAppLink;
+            AmitalCloudSettings.AndroidPodAppMinimumVersion = setting.AndroidPodAppMinimumVersion;
+            AmitalCloudSettings.IOSPodAppMinimumVersion = setting.IOSPodAppMinimumVersion;
+            AmitalCloudSettings.MinimumOutlookVersion = setting.MinimumOutlookVersion;
+            AmitalCloudSettings.ABMProductId = setting.ABMProductId;
+            AmitalCloudSettings.AzureFolderName = setting.AzureFolderName;
+            AmitalCloudSettings.SignAppVersion = setting.SignAppVersion;
+            AmitalCloudSettings.ReportsRunUsingWR = setting.ReportsRunUsingWR;
+            AmitalCloudSettings.SMSServiceUserId = setting.SMSServiceUserId;
+            AmitalCloudSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
+            AmitalCloudSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
+            AmitalCloudSettings.GLSHKEnv = setting.GLSHKEnv;
+            AmitalCloudSettings.GLSHKURL = setting.GLSHKURL;
+            AmitalCloudSettings.NotificationHubName = setting.NotificationHubName;
+            AmitalCloudSettings.NotificationHubConnectionString = setting.NotificationHubConnectionString;
+            AmitalCloudSettings.DomainName = setting.DomainName;
+            AmitalCloudSettings.ProductName = setting.ProductName;
+            AmitalCloudSettings.QueueServiceMode = setting.QueueServiceMode;
+            AmitalCloudSettings.StorageServiceMode = setting.StorageServiceMode;
+            AmitalCloudSettings.DropboxAppKey = setting.DropboxAppKey;
+            AmitalCloudSettings.DropboxAppSecret = setting.DropboxAppSecret;
+            AmitalCloudSettings.OceanInsightsToken = setting.OceanInsightsToken;
+            AmitalCloudSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
+            AmitalCloudSettings.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
+            AmitalCloudSettings.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
+            AmitalCloudSettings.OITenantNumber = setting.OITenantNumber;
+            AmitalCloudSettings.AzurePrincipalSecretKey = setting.AzurePrincipalSecretKey;
+            AmitalCloudSettings.DNSZone = setting.DNSZone;
+            AmitalCloudSettings.DNSIPAddress = setting.DNSIPAddress;
+            AmitalCloudSettings.WorkflowStorageAccountName = setting.WorkflowStorageAccountName;
+            AmitalCloudSettings.WorkflowStorageAccountKey = setting.WorkflowStorageAccountKey;
+            AmitalCloudSettings.System2RedirectFraction = setting.System2RedirectFraction;
+            AmitalCloudSettings.WindWardSettings = setting.WindWardSettings;
+            AmitalCloudSettings.LogitudeIISURL = setting.LogitudeIISURL;
+            AmitalCloudSettings.TempStorageConnection = setting.TempStorageConnection;
+        }
     }
 }

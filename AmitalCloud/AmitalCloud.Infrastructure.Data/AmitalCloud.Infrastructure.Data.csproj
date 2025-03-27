@@ -759,6 +759,7 @@
     <Compile Include="EntityDataMappings\Generated\ScreenSectionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SessionPolicyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SharedLogisticsContactLastLoginDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedLogisticsInvitationStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedLogisticsSettingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedUserQueryDataMapping.Generated.cs" />
@@ -960,6 +961,7 @@
     <Compile Include="EntityDataMappings\ScreenSectionDataMapping.cs" />
     <Compile Include="EntityDataMappings\SessionPolicyDataMapping.cs" />
     <Compile Include="EntityDataMappings\SettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SharedLogisticsContactLastLoginDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedLogisticsInvitationStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedLogisticsSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedUserQueryDataMapping.cs" />

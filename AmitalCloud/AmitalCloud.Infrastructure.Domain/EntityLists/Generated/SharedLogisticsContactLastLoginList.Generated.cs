@@ -18,27 +18,16 @@ using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
    [DataContract]
-   public partial class SessionPolicyList   
+   public partial class SharedLogisticsContactLastLoginList   
    {
        #region Constructors
-       public SessionPolicyList() : base() {}
-       public SessionPolicyList(POCO.SessionPolicy entity) : base()
+       public SharedLogisticsContactLastLoginList() : base() {}
+       public SharedLogisticsContactLastLoginList(POCO.SharedLogisticsContactLastLogin entity) : base()
        {
-          WebTokenLifeTimeInMinutes  = entity.WebTokenLifeTimeInMinutes;
-          WebTokenExpirationWarningInMinutes  = entity.WebTokenExpirationWarningInMinutes;
-          Id  = entity.Id;
        }
        #endregion Constructors
        #region Properties
-          [DataMember]
-       public int WebTokenLifeTimeInMinutes  { get; set; }
-       [DataMember]
-       public int WebTokenExpirationWarningInMinutes  { get; set; }
-
-       [Key]
-       [DataMember]
-       public string Id  { get; set; }
-         #endregion Properties
+            #endregion Properties
    }
 
 }

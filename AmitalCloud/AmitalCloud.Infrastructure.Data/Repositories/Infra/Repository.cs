@@ -140,6 +140,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                 throw new Exception(_errorMessage, dbEx);
             }
         }
+        public TEntity GetFirst() => GetAll(0, true).FirstOrDefault();
         public List<TEntity> GetAll(int tenant) => GetQuery(tenant).ToList();
         protected IQueryable<TEntity> GetQuery(int tenant)
         {
@@ -154,6 +155,8 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public List<TEntity> GetAll(int tenant, bool fromCache = false)
         {
+            //todo: temp. error: GetCacheKey calls GetDB that calls GetCacheKey
+            fromCache = false;
             if (fromCache)
             {
                 return GetFromCache(tenant);
