@@ -54,6 +54,10 @@ using Logitude.BL.Helpers.ExportServer;
 using Newtonsoft.Json;
 using Logitude.Server.Tools.QueueService;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Accounting.Data.Enums;
+using Logitude.Server.Tools.Models;
+using AccountingEntityValues = Logitude.BL.InvoiceModel.CloseTables.AccountingEntityValues;
+
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -679,6 +683,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (entityPM.IsAutoCredit)
             {
                 entityPM.SetApproved = false;
+            }
+            if (entityPM.ARInvoiceTypeCode == "IT")
+            {
+                if (CheckIfReportConnectedToInvoice(entityPM))
+                {
+                    UpdateInterestReportStatus(entityPM, InterestReportStatusCodes.Invoiced);
+                    throw new BusinessErrorException("An invoice has already been created for this report.");
+
+                }
             }
 
             this.isApprovingInvoice = entityPM.SetApproved;
@@ -1436,12 +1449,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         documentOutRepository.SubmitChanges();
                     }
 
-                    //DateTime startTime = DateTime.Now;
-                    //DateTime endTime = DateTime.Now;
-                    //int executionTime = (int)((endTime.Ticks - startTime.Ticks) / TimeSpan.TicksPerMillisecond);
-
-                    //string logMessage = "Set DocumentOut NeedsRebuild: StartTime = " + startTime.ToString() + ", EndTime = " + endTime.ToString() + ", ExecutionTime: " + executionTime.ToString();
-                    //AzureLog.SaveLogsInStorage(logMessage, "VD", DateTime.Now, "", "", 0, loggedContactId, loggedContactName, HttpContext.Current.Request.UserHostAddress);
                 }
             }
 
@@ -4714,7 +4721,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 //send to queue
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ARInvoiceApproveWR", entityPM.Tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "ARInvoiceId", entityPM.Id }, { "Tenant", tenant.ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() 
+                {
+                    { "ARInvoiceId", entityPM.Id }, 
+                    { "Tenant", tenant.ToString() },
+                    { "BatchIdFromInterestInvoice", entityPM.BatchTaskExecutionId }
+
+                }, tenant);
             }
         }
 

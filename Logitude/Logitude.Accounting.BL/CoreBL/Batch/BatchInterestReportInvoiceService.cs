@@ -270,7 +270,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             AuthenticationUtil.AuthenticatedUserEmail = email;
 
             InterestReportInvoiceMapping interestReportInvoiceMapping = new InterestReportInvoiceMapping();
-            ARInvoicePM aRInvoicePM = interestReportInvoiceMapping.MapARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM);
+            ARInvoicePM aRInvoicePM = interestReportInvoiceMapping.MapARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM, BatchTaskExecution.Id);
             aRInvoicePM.InvoiceDate = interestReportArgs.InvoiceDate;
             ARInvoiceEntityPM aRInvoiceEntityPM = interestReportInvoiceMapping.MapARInvoiceEntity(interestReportArgs, InterestReportObjectTableId);
             ARInvoiceLinePM aRInvoiceLinePM = interestReportInvoiceMapping.MapARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM);

@@ -20,7 +20,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 {
     public class InterestReportInvoiceMapping
     {
-        public ARInvoicePM MapARInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport, TenantPM tenantPM, UserPM userPM, CardPM cardPM)
+        public ARInvoicePM MapARInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport, TenantPM tenantPM, UserPM userPM, CardPM cardPM, string batchTaskId = null)
         {
             var CreditAllotmentCommission = interestReport.CalCreditAllotmentCommission != null ? interestReport.CalCreditAllotmentCommission : 0;
             var calculatedPostponedChequesCommision = interestReport.CalculatedPostponedChequesCommision != null ? interestReport.CalculatedPostponedChequesCommision : 0;
@@ -56,10 +56,10 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             aRInvoicePM.Description = null;
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
-            //aRInvoicePM.SetApproved = true;
             aRInvoicePM.StatusCode = "PR";
             aRInvoicePM.HasInterestFeature = true;
             aRInvoicePM.InvoiceDate = interestReportArgs.InvoiceDate;
+            aRInvoicePM.BatchTaskExecutionId = batchTaskId;
             if (!string.IsNullOrEmpty(cardPM.SATPaymentMethodCode))
             {
                 aRInvoicePM.SATPaymentMethodCode = cardPM.SATPaymentMethodCode;

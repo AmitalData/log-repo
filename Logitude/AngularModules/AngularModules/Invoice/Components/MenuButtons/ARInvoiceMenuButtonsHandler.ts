@@ -914,7 +914,6 @@ export class ARInvoiceMenuButtonsHandler {
     ProceedToApprove(msg: string) {
         
         this.EntityPM.SetVoided = false;
-        //this.EntityPM.SetApproved = false;
         this.EntityPM.StatusCode = 'PR';
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelDraft = false;
