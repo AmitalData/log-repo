@@ -23,7 +23,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             //var stringDate = DateTime.Now.ToString(format);
             var dateTime = DateTime.UtcNow;//DateTime.ParseExact(stringDate, format, new CultureInfo("en-US"));
             string datetimeoffset = "datetimeoffset" + tenant;
-            if (CacheManager.CacheWrapper != null && false)
+            if (CacheManager.CacheWrapper != null)
             {
                 if (CacheManager.CacheWrapper.Get(datetimeoffset) == null)
                 {

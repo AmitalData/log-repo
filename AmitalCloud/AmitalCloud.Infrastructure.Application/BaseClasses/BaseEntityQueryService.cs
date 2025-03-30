@@ -42,7 +42,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             if (getFromCache && (CacheManager.CacheWrapper != null))
             {
                 string cacheKey = $"TEntityPMGetSingle_({entityKeys.GetEntityPMName()}_{entityKeys.GetFullKey()}_{getComposition})";
-                var cacheObj = CacheManager.CacheWrapper.Get(cacheKey);
+                var cacheObj = CacheManager.CacheWrapper.Get(cacheKey, Tenant);
                 if (cacheObj != null)
                 {
                     EntityPM = (TEntityPM)cacheObj;

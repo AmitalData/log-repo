@@ -102,7 +102,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
         public List<T> Get<T>(int tenant)
         {
-            return (List<T>)Get(GetCacheKey<T>(tenant));
+            return (List<T>)cache.Get(GetCacheKey<T>(tenant));
         }
         public object Invalidate<T>(int tenant)
         {
@@ -154,9 +154,13 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                         string cacheKey = $"Token_({token})";
                         tenant = ((AuthenticationToken)cache.Get(cacheKey)).Tenant;
                     }
+                    else
+                    {
+                        tenant = 0;
+                    }
                 }
             }
-            List<GlobalTenant> globalTenants = (List<GlobalTenant>)Get(GetCacheKey<GlobalTenant>(null));
+            List<GlobalTenant> globalTenants = (List<GlobalTenant>)cache.Get(GetCacheKey<GlobalTenant>(null));
             return globalTenants.Where(a=>a.Id == tenant).FirstOrDefault().GlobalDBId;
         }
     }
