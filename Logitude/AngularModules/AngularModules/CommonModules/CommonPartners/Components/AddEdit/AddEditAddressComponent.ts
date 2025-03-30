@@ -134,6 +134,9 @@ export class AddEditAddressComponent implements OnInit {
                     }
                 }
             }
+            if (AppTool.IsNullOrEmpty(this.EntityPM.CountryId)) {
+                this.errors.push(msg.replace("%FieldName", "Country"));
+            }
         }
 
         isValid = this.errors.length == 0 ? true : false;
