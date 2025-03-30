@@ -85,10 +85,10 @@ GenerateAllControllers("../EntityFiles","../../AmitalCloud.Invoice.Web","AmitalC
  
 
 // Generate Commmon TS files---------------------------------------------------------------------------------------------------------------
-GenerateAllPMTS("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Invoices/EntityPMs");
-GenerateAllListTS("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Invoices/EntityLists");
-GenerateAllServices("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Invoices/Services/StandardPMs","Invoices");
-GenerateAllListServices("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Invoices/Services/StandardLists","Invoices");
+//GenerateAllPMTS("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Invoices/EntityPMs");
+//GenerateAllListTS("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Invoices/EntityLists");
+//GenerateAllServices("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Invoices/Services/StandardPMs","Invoices");
+//GenerateAllListServices("../EntityFiles","../../../Logitude/AngularModules/AngularModules/Invoices/Services/StandardLists","Invoices");
 
 
 
