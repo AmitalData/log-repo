@@ -4,32 +4,22 @@
 <#@ Assembly Name="System.Core.dll" #>
 <#@ Assembly Name="Microsoft.CSharp.dll" #>
 <#@ Assembly Name="System.Linq.dll" #> 
-
 <#@ Import Namespace="System.Xml" #>
 <#@ Import Namespace="System.Xml.Linq" #>
 <#@ Import Namespace="System.Linq" #>
-
 <#@ output extension=".cs" #>
 <#@ import Namespace="System.Collections.Generic" #>
 <#@ import Namespace="System.IO" #>
 <#@ import Namespace="System.Windows" #>  
-
 <# 
-
-//	GenerateIContext("../EntityFiles","../../AmitalCloud.Invoice.Data/Context","InvoiceContext");
-//	GenerateContext("../EntityFiles","../../AmitalCloud.Invoice.Data/Context","InvoiceContext");
  #>
- 
 <#+
-Dictionary<string,string> NamespacesDictionary;
-dynamic contextnamespacestring;
- 
-public void GenerateIContext(string sourceFolder,string destinationFolder,string contextname)
+
+public void GenerateExtendedIContext(string sourceFolder,string destinationFolder,string contextname,string fileName,string POCOnamespace)
 {
- contextnamespacestring = GetContextNameSpace(destinationFolder);
+ string contextnamespacestring = ExtendedGetContextNameSpace(destinationFolder);
  string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
  string sourceFilePath = Path.Combine(templateDirectory, sourceFolder);
- string pocosspacestring = contextnamespacestring.ToString().Substring(0,contextnamespacestring.ToString().LastIndexOf('.')).Replace("Data","Domain") + ".EntityPOCOs;";
 
 #>
 //------------------------------------------------------------------------------
@@ -41,10 +31,9 @@ public void GenerateIContext(string sourceFolder,string destinationFolder,string
 //-----
 using System.Data.Entity;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = <#= POCOnamespace #>;
 namespace <#= contextnamespacestring #>
 {
-
     public partial interface I<#= contextname #> : IContext
     {
 <#+
@@ -52,47 +41,33 @@ namespace <#= contextnamespacestring #>
        <#+
 foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 {
-
     var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-	GenerateIDbSet(file);
+	ExtendedGenerateIDbSet(file);
 }
-
 #>
- 
-         void DetectChanges();
-
     }
 }
 <#+
-
-SaveContextOutput(destinationFolder+"/I"+contextname+".cs");
- 
+ExtendedSaveContextOutput(destinationFolder+"/I"+ contextname + "_" + fileName+".cs");
 }
 #>
 
 <#+
-void SaveContextOutput(string outputFileName)
+void ExtendedSaveContextOutput(string outputFileName)
   {
       string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
       string outputFilePath = Path.Combine(templateDirectory, outputFileName);
-	 // if(!File.Exists(outputFilePath))
-    //{
 	  var manager = Manager.Create(Host, GenerationEnvironment);
 	  manager.CreateTestFile(outputFilePath,this.GenerationEnvironment.ToString().Trim('\n'));
-      //File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString().Trim('\n' ));
-
       this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
-    //}
   }
 #>
 
 <#+  
 
-private void GenerateIDbSet(string xmlFilePath)
+private void ExtendedGenerateIDbSet(string xmlFilePath)
 {
-	 
-    var entity = FromEntityFile(xmlFilePath);
-   
+    var entity = ExtendedFromEntityFile(xmlFilePath);
             if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
       	{
 	    	if(entity.IsMetadataOnlyTable == "true")
@@ -100,28 +75,22 @@ private void GenerateIDbSet(string xmlFilePath)
 	    		return;
 	    	}
 	    } 
-
-
 	 string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
 	if(tableName.Contains("."))
     {
 		tableName = tableName.ToString().Split('.')[1];
 		dBTableName = dBTableName.ToString().Split('.')[1];
-          
     }
-
 	#>
 	 IDbSet<POCO.<#= tableName #>> <#= dBTableName #> { get; }
 	<#+
-    
 }
- 
 #>
 
 <#+
 //Create an elastic object
-private dynamic FromEntityFile(string file)
+private dynamic ExtendedFromEntityFile(string file)
 {
    var path= Host.ResolvePath(file);
    return XDocument.Load(path).Root.ToElastic();
@@ -131,7 +100,7 @@ private dynamic FromEntityFile(string file)
 
 <#+
 
-public dynamic GetContextNameSpace(string destinationFolder)
+private string ExtendedGetContextNameSpace(string destinationFolder)
 {
 	string spacestring = "";
 	string[] path = destinationFolder.Split('/');
@@ -154,13 +123,11 @@ public dynamic GetContextNameSpace(string destinationFolder)
 
 <#+
 
-private void GenerateContext(string sourceFolder,string destinationFolder,string contextname)
+private void GenerateExtendedContext(string sourceFolder,string destinationFolder,string contextname,string fileName,string POCOnamespace)
 {
-	contextnamespacestring = GetContextNameSpace(destinationFolder);
+	string contextnamespacestring = ExtendedGetContextNameSpace(destinationFolder);
  string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
  string sourceFilePath = Path.Combine(templateDirectory, sourceFolder);
-
-string pocosspacestring = contextnamespacestring.ToString().Substring(0,contextnamespacestring.ToString().LastIndexOf('.')).Replace("Data","Domain") + ".EntityPOCOs;";
 string dataprojectnamespace = contextnamespacestring.ToString().Substring(0,contextnamespacestring.ToString().LastIndexOf('.')) + ";";
 string mappingsspacestring = contextnamespacestring.ToString().Substring(0,contextnamespacestring.ToString().LastIndexOf('.')).Replace("Data","Domain") + ".EntityMapping;";
 #>
@@ -171,126 +138,26 @@ string mappingsspacestring = contextnamespacestring.ToString().Substring(0,conte
 //     the code is regenerated.
 // </auto-generated>
 //-----
-using AmitalCloud.Infrastructure.Data.BaseClasses;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Enums;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityMapping;
-using AmitalCloud.Invoice.Domain.Interfaces;
-using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using POCO = <#= pocosspacestring #>
+using POCO = <#= POCOnamespace #> ;
 
 namespace <#= contextnamespacestring #>
 {
-   public partial class <#= contextname #>: DbContextBase, I<#= contextname #>
+   public partial class <#= contextname #>
     {
-		private int _tenant;	
-		public int Tenant { get => _tenant;  }
-		private <#= contextname #>(string nameOrConnectionString,int tenant) : base(nameOrConnectionString)
-        {
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.AutoDetectChangesEnabled = false;
-            Database.SetInitializer<<#= contextname #>>(null);
-			_tenant = tenant;
-        }
-        public static I<#= contextname #> GetContext(int tenant) =>new <#= contextname #>(GlobalDbHelper.GetGlobalDB(tenant).DBConnection,tenant);
-
-		protected override AmitalCloudDBSchema AmitalCloudDBSchema
-        {
-            get { return AmitalCloudDBSchema.AMITAL_MAIN; }
-        }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-//		    if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
-//            {
-//                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
-//                config.Workarounds.DisableQuoting = true;
-//                config.Workarounds.IgnoreSchemaName = true;
-//            }
-
-            Database.SetInitializer<<#= contextname #>>(null);
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-			<#+
-foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
-{
-
-    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-	GenerateEntityMapForContext(file);
-}
-
-#>
-
-			<#+
-				foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
-				{
-
-					var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-					GenerateDecimalFields(file);
-				} 
-		#><#+
-			 #>
-			#region Manually Added Mapping
-            #endregion
-            base.OnModelCreating(modelBuilder);
-        }
-
-        public void SetAsModified(object entity)
-        {
-            this.Entry(entity).State = EntityState.Modified;
-        }
-
-        public void DetectChanges()
-        {
-            this.ChangeTracker.DetectChanges();
-        }
-
-        public override int SaveChanges()
-        {
-		    DetectChanges();
-		    return base.SaveChanges();
-       
-	    }
-
-        public DbConnection GetConnection()
-		{
-			return this.Database.Connection;
-		}
-
-		public DbContext GetActiveDbContext()
-		{
-			return this;
-		}
-		void IContext.Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
  
 <#+
 
 foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 {
-
     var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-	GenerateIDbSetForContext(file);
+	ExtendedGenerateIDbSetForContext(file);
 }
-	  //public IDbSet<PhysicalCheck> PhysicalChecks
-      //  {
-        //    get; set;
-       // }
-
 #>
-  
  }
-
-
 }
 <#+     
-
-
-	SaveContextOutput(destinationFolder+"/"+contextname+".cs");
+	ExtendedSaveContextOutput(destinationFolder+"/"+contextname +"_"+fileName+".cs");
 }
 
 
@@ -298,9 +165,9 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 #>
 
 <#+ 
-private void GenerateDecimalFields(string xmlFilePath)
+private void ExtendedGenerateDecimalFields(string xmlFilePath)
 {
-	var entity = FromEntityFile(xmlFilePath);
+	var entity = ExtendedFromEntityFile(xmlFilePath);
    
 	 string tableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
@@ -345,10 +212,10 @@ private void GenerateDecimalFields(string xmlFilePath)
 
 <#+  
 
-private void GenerateIDbSetForContext(string xmlFilePath)
+private void ExtendedGenerateIDbSetForContext(string xmlFilePath)
 {
 	 
-    var entity = FromEntityFile(xmlFilePath);
+    var entity = ExtendedFromEntityFile(xmlFilePath);
    
           
           
@@ -371,12 +238,7 @@ private void GenerateIDbSetForContext(string xmlFilePath)
     }
 
 	#>
-
-	 public IDbSet<POCO.<#= tableName #>> <#= dBTableName #> 
-	 {
-	      get; set;
-	 
-	 }
+	 public IDbSet<POCO.<#= tableName #>> <#= dBTableName #>  { get; set;}
 	<#+
     
 }
@@ -387,10 +249,10 @@ private void GenerateIDbSetForContext(string xmlFilePath)
 
 <#+  
 
-private void GenerateEntityMapForContext(string xmlFilePath)
+private void ExtendedGenerateEntityMapForContext(string xmlFilePath)
 {
 	 
-    var entity = FromEntityFile(xmlFilePath);
+    var entity = ExtendedFromEntityFile(xmlFilePath);
             if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
       	{
 	    	if(entity.IsMetadataOnlyTable == "true")

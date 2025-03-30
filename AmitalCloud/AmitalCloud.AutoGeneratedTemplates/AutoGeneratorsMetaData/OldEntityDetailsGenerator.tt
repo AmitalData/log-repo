@@ -1,0 +1,493 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="Microsoft.CSharp.dll" #>
+<#@ Assembly Name="System.Linq.dll" #> 
+<#@ Assembly name="$(SolutionDir)packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll" #>
+<#@ Import Namespace="System.Xml" #>
+<#@ Import Namespace="System.Xml.Linq" #>
+<#@ Import Namespace="System.Linq" #>
+<#@ Import Namespace="AmazedSaint.Elastic" #>
+<#@ Import Namespace="AmazedSaint.Elastic.Lib" #>
+<#@ output extension=".cs" #>
+<#@ import Namespace="System.Collections.Generic" #>
+<#@ import Namespace="System.IO" #>
+<#@ import Namespace="System.Windows" #>  
+
+<#+
+//Create an elastic object
+private XElement FromDetailsClassFile(string file)
+{
+   var path= Host.ResolvePath(file);
+   return XDocument.Load(path).Root;//.Root.ToElastic();
+}
+
+#>
+
+<#+
+
+dynamic detailsnamespacestring;
+dynamic modelFolderName;
+public void GenerateAllCloseTableDetailsEnumsClasss(string sourceFolder,string destinationFolder,string modelName)
+{
+	 
+	 this.modelFolderName = modelName;
+ detailsnamespacestring = GetCloseTableDetailsEnumClassNameSpace(destinationFolder);
+ string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+ string sourceFilePath = Path.Combine(templateDirectory, sourceFolder);
+
+foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+{
+
+    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+	string filename = fileNameWithoutExtension+"Details.Generated.cs";
+	GenerateDetailsClass(file,destinationFolder+"/DetailsClassesGenerated/"+filename);
+	 
+}
+
+foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+{
+
+    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+	string filename = fileNameWithoutExtension+"Struct.Generated.cs";
+	GenerateEnumClass(file,destinationFolder+"/EnumGenerated/"+filename);
+	 
+}
+ 
+}
+#>
+
+<#+  
+
+public void GenerateDetailsClass(string xmlFilePath,string outputFilePath)
+{
+	
+	//var Fullentity = FromFile(xmlFilePath);
+	if(string.IsNullOrEmpty(detailsnamespacestring))
+    {
+		detailsnamespacestring = GetCloseTableDetailsEnumClassNameSpace(outputFilePath);
+    }
+    XElement entity = FromDetailsClassFile(xmlFilePath);
+	var CloseTableCode = entity.Attribute(XName.Get("CloseTableCode"));
+	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
+	string IsCLosed = entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'); 
+    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null)
+    {
+		 WriteDetailsClassMethod(entity); 
+         SaveDetailsClassOutput(outputFilePath);
+    }
+	
+    
+}
+
+public void GenerateEnumClass(string xmlFilePath,string outputFilePath)
+{
+	
+	 
+	if(string.IsNullOrEmpty(detailsnamespacestring))
+    {
+		detailsnamespacestring = GetCloseTableDetailsEnumClassNameSpace(outputFilePath);
+    }
+    XElement entity = FromDetailsClassFile(xmlFilePath);
+    string IsCLosed = entity.Attribute(XName.Get("IsClosed")).Value.Trim('"'); 
+	var CloseTableCode = entity.Attribute(XName.Get("CloseTableCode"));
+	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
+    if (IsCLosed == "true" && CloseTableCode != null && CloseTableName != null)
+    {
+		 WriteEnumMethod(entity);
+		 SaveEnumClassOutput(outputFilePath);
+    }
+   
+    
+}
+ 
+#>
+
+<#+
+
+public dynamic GetCloseTableDetailsEnumClassNameSpace(string destinationFolder)
+{
+	string spacestring = "";
+	string[] path = destinationFolder.Split('/');
+	foreach(string dir in path)
+    {
+		if(dir != "..")
+        {
+			spacestring += dir + ".";
+        }
+    }
+
+	
+	spacestring = spacestring.ToString().Trim('.');
+ 
+	return spacestring;
+}
+
+#>
+
+<#+
+void SaveDetailsClassOutput(string outputFileName)
+  {
+      string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+      string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+	  
+	    var manager = Manager.Create(Host, GenerationEnvironment);
+	    manager.CreateTestFile(outputFilePath,this.GenerationEnvironment.ToString());
+	    this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+     
+  }
+
+  void SaveEnumClassOutput(string outputFileName)
+  {
+      string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+      string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+	 
+	    var manager = Manager.Create(Host, GenerationEnvironment);
+	    manager.CreateTestFile(outputFilePath,this.GenerationEnvironment.ToString());
+	    this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+     
+  }
+#>
+
+<#+
+    //List<XElement> POCOFields = new List<XElement>();
+	//List<XElement> PMFields = new List<XElement>();
+ 
+ private void WriteDetailsClassMethod(XElement entity)
+{
+    bool HasCode = false;
+	//POCOFields = new List<XElement>();
+	//PMFields = new List<XElement>();
+	    // foreach(var field in entity.Elements("field"))  
+		// { 
+		//	  if(field.Attribute(XName.Get("HasDataBaseField")) != null)
+          //    {
+			//	  if(field.Attribute(XName.Get("HasDataBaseField")).Value.ToLower() == "true")
+              //    {
+				//	  POCOFields.Add(field);
+                  //} 
+              //}
+         //}
+
+		//foreach(var field in entity.Elements("field"))  
+		// { 
+		//	 if(field.Attribute(XName.Get("HasPMField")) != null)
+        //      {
+		//		  if(field.Attribute(XName.Get("HasPMField")).Value.ToLower() == "true")
+        //          {
+		//			  PMFields.Add(field);
+        //          } 
+        //      } 
+        // }
+
+		string IsMetadataOnlyTable = (entity.Attribute(XName.Get("IsMetadataOnlyTable")) != null?entity.Attribute(XName.Get("IsMetadataOnlyTable")).Value.Trim('"'):"false");
+   
+      	 
+	    	if(IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+		
+		foreach(var field in entity.Elements("field"))  
+		 { 
+		 if(field.Attribute(XName.Get("FieldName")) != null)
+              {
+				 if(field.Attribute(XName.Get("FieldName")).Value.ToLower() == "\"code\"")
+                 {
+				     HasCode = true;
+                 } 
+              }  
+         }
+	string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.Trim('"');
+	string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.Trim('"');
+	string schema ="";
+	 
+	if(tableName.ToString().Trim('"').Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+        
+    }
+	string pmName = tableName+ "PM";
+	 string pocosspacestring = detailsnamespacestring.ToString().Substring(0,detailsnamespacestring.ToString().LastIndexOf('.')) + ".EntityPOCOs;";
+	 
+	  string entityPMsPath=detailsnamespacestring.ToString().Substring(0,detailsnamespacestring.ToString().LastIndexOf('.')) + ".EntityPMs;";
+	if(pocosspacestring.Contains("Accounting"))
+	{
+	   entityPMsPath="Logitude.Accounting.Def.EntityPMs;";
+	}
+
+		
+	if(pocosspacestring.Contains("Customs"))
+	{
+	   entityPMsPath="Logitude.Customs.Def.EntityPMs;";
+	}
+
+	if(pocosspacestring.Contains("CargoTracking"))
+	{
+	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
+	}
+	if(pocosspacestring.Contains("QuoteOPM"))
+	{
+	   entityPMsPath="Amital.QuoteOPM.Def.EntityPMs;";
+	}
+	string pmsspacestring =   entityPMsPath;
+	 string dataprojectnamespace = "Simplog.Data." + modelFolderName + ";";//detailsnamespacestring.ToString().Substring(0,detailsnamespacestring.ToString().LastIndexOf('.')).Replace("BL","Data;");
+	 
+	 pocosspacestring = "Simplog.Data." + modelFolderName + ".EntityPOCOs;";//pocosspacestring.Replace("BL","Data");
+
+	 if(modelFolderName == "GlobalModel"){
+			pocosspacestring = "Simplog.Global.Data.GlobalModel.EntityPOCOs;";
+			dataprojectnamespace =  "Simplog.Global.Data.GlobalModel;";
+	 }
+   #>
+
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a logitude.
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
+//---
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using <#= pocosspacestring #>
+using <#= pmsspacestring #> 
+using <#= dataprojectnamespace #>
+
+namespace <#= detailsnamespacestring.Replace(".CloseTable","").TrimEnd('s') #>
+{
+   public class <#=tableName #>Details : <#=tableName #>, ICloseTable<<#=tableName #>, <#=tableName #>Details>
+   {
+       public List<<#=tableName #>Details> GetAll()
+       {
+		    var all = new List<<#=tableName #>Details>(); <#+
+	    
+        foreach(var Records in entity.Elements("Records")) 
+		{ 
+           foreach(var Record in Records.Elements("Record")) 
+		   { 
+			   #> 
+            all.Add(new <#=tableName #>Details()
+            {    <#+
+			   foreach (var Att in Record.Attributes())
+		       {  
+			   #>
+
+                <#= Att.Name #> = <#= Att.Value #>, <#+
+               }
+			   #>
+
+			});
+			<#+
+               }
+        }
+		#>
+
+            return all;
+       }
+
+	    public void MapPoco(<#=tableName #> newPoco)
+        {   <#+
+		       var OuterRecord = entity.Elements("Records").FirstOrDefault();
+               if (OuterRecord != null)
+               {
+		          var Record = OuterRecord.Elements("Record").FirstOrDefault();
+                   if (Record != null)
+                   {
+		               foreach (var Att in Record.Attributes())
+		               {
+ 
+                    if (Att.Name != "SearchFields")
+                    {
+		        #>
+
+		    newPoco.<#= Att.Name #> = this.<#= Att.Name #>; <#+
+                    }
+                    else
+                    {
+     	        #>
+
+			newPoco.<#= Att.Name #> = GetSearchFields(this);  <#+
+                    }
+				#> <#+
+                       }
+                   }
+               }
+		       
+			    
+			   #> 
+        }
+
+		public string GetSearchFields(<#=tableName #> rec)
+        {   <#+
+			  string Temp = "return string.Empty;";
+		       OuterRecord = entity.Elements("Records").FirstOrDefault();
+               if (OuterRecord != null)
+               {
+		          var Record = OuterRecord.Elements("Record").FirstOrDefault();
+                   if (Record != null)
+                   {
+					   Temp = "return String.Concat(";
+		               foreach (var Att in Record.Attributes())
+		               {
+                           if (Att.Name != "SearchFields")
+                           {
+		                       Temp += "rec." + Att.Name + "," + "\",\"" + ",";
+                           } 
+                       }
+					   Temp = Temp.TrimEnd(',');
+					   Temp += ");";
+					   
+                   }
+               }
+          #>
+
+           <#=Temp #>
+        }<#+ 
+		if(HasCode == false){
+		#>
+
+		public string Code
+        {
+            get
+            {
+                return this.Id;
+            }
+            set
+            {
+                this.Id = value;
+            }
+        }<#+
+		}
+		#>
+
+   }
+}
+
+<#+
+}
+#>
+
+
+<#+
+  
+ private void WriteEnumMethod(dynamic entity)
+{
+	//POCOFields = new List<XElement>();
+	//PMFields = new List<XElement>();
+	// foreach(var field in entity.Elements("field"))  
+	//	 { 
+	//		  if(field.Attribute(XName.Get("HasDataBaseField")) != null)
+    //          {
+	//			  if(field.Attribute(XName.Get("HasDataBaseField")).Value.ToLower() == "true")
+    //              {
+	//				  POCOFields.Add(field);
+    //              } 
+    //          }
+    //     }
+
+	//	foreach(var field in entity.Elements("field"))  
+	//	 { 
+	//		 if(field.Attribute(XName.Get("HasPMField")) != null)
+    //          {
+	//			  if(field.Attribute(XName.Get("HasPMField")).Value.ToLower() == "true")
+    //              {
+	//				  PMFields.Add(field);
+    //              } 
+    //          } 
+    //      }
+	string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.Trim('"');
+	string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.Trim('"');
+	string CloseTableCode = entity.Attribute(XName.Get("CloseTableCode")).Value.Trim('"');
+	string CloseTableName = entity.Attribute(XName.Get("CloseTableName")).Value.Trim('"');
+	string schema ="";
+	 
+	if(tableName.ToString().Trim('"').Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+        
+    }
+	string pmName = tableName+ "PM";
+	 string pocosspacestring = detailsnamespacestring.ToString().Substring(0,detailsnamespacestring.ToString().LastIndexOf('.')) + ".EntityPOCOs;";
+	 string pmsspacestring = detailsnamespacestring.ToString().Substring(0,detailsnamespacestring.ToString().LastIndexOf('.')) + ".EntityPMs;";
+
+	 string dataprojectnamespace = detailsnamespacestring.ToString().Substring(0,detailsnamespacestring.ToString().LastIndexOf('.')).Replace("BL","Data;");
+	 
+	 pocosspacestring = pocosspacestring.Replace("BL","Data");
+   #>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a logitude.
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
+//---
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+ 
+namespace <#= detailsnamespacestring.Replace(".CLoseTable","") #>
+{
+    public struct <#=tableName #>Values
+    {   <#+
+	    
+        foreach(var Records in entity.Elements("Records")) 
+		{	List<string> AddedNames = new List<string>();
+           foreach(var Record in Records.Elements("Record")) 
+		   { 
+			   string CTName = "";
+		       string CTCode = "";
+			   foreach (var Att in Record.Attributes())
+		       {   
+                   if (Att.Name == CloseTableName)
+                   {
+		              CTName = Att.Value;
+                   }
+				   else if (Att.Name == CloseTableCode)
+                   {
+		              CTCode = Att.Value;
+                   } 
+               }
+			   if (!string.IsNullOrEmpty(CTName) && !string.IsNullOrEmpty(CTCode))
+                   { 
+				   string GCTName = CTName.Replace(" ","").Trim('"').Replace(",","").Replace("'","").Replace("-","").Replace("(","").Replace(")","").Replace("/","").Replace("’","").Replace("“","").Replace("”","").Replace("—","").Replace(".","");
+				   GCTName  = GCTName.TrimStart('3');
+				   // string GCTName =  Regex.Replace(CTName, @"[^a-zA-Z_]+", "",
+                            //   RegexOptions.None, TimeSpan.FromSeconds(1.5));
+				   if(AddedNames.Contains(GCTName))
+				   {
+						GCTName = GCTName + AddedNames.Where(f=>f == GCTName).Count();
+						
+				   }
+				   else
+					AddedNames.Add(GCTName);
+			   #>
+
+       public const string <#=GCTName #> = <#= CTCode #>;  <#+
+					   
+                   }
+			    CTName = "";
+				   CTCode = "";
+           }
+        }
+				#>
+
+    }
+}
+
+<#+
+}
+#>
