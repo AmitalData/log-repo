@@ -13,6 +13,8 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { AppTool } from 'Infrastructure/Tools';
+
 
 export class CustomsSettingPM {
       
@@ -212,14 +214,11 @@ export class CustomsSettingPM {
     private courierDocToken: string;
     public get CourierDocToken() { return this.courierDocToken; }
     public set CourierDocToken(newValue: string) { if (this.courierDocToken != newValue) { this.courierDocToken = newValue; this.MarkAsDirty("CourierDocToken"); } }
+       
+	 
     private forbiddenSigns: string;
     public get ForbiddenSigns() { return this.forbiddenSigns; }
     public set ForbiddenSigns(newValue: string) { if (this.forbiddenSigns != newValue) { this.forbiddenSigns = newValue; this.MarkAsDirty("ForbiddenSigns"); } }
-       
-	 
-    private myCustomURL: string;
-    public get MyCustomURL() { return this.myCustomURL; }
-    public set MyCustomURL(newValue: string) { if (this.myCustomURL != newValue) { this.myCustomURL = newValue; this.MarkAsDirty("MyCustomURL"); } }
        
 	 
 
@@ -230,8 +229,10 @@ export class CustomsSettingPM {
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
+ 	
         this.IsDirty = true;
 		  	
+		 
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CustomsSetting");
@@ -250,4 +251,4 @@ export class CustomsSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

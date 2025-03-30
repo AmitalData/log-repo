@@ -1000,7 +1000,12 @@
       Code="&quot;JAM&quot;"
       Name="&quot;Journal Approval MultiThreading&quot;"
       SearchFields="&quot;JAM, Journal Approval MultiThreading&quot;"
-      Description="&quot;Journal Approval MultiThreading 2&quot;" />
+      Description="&quot;Journal Approval MultiThreading&quot;" />
+    <Record
+      Code="&quot;TXD&quot;"
+      Name="&quot;Tax Deduction Report by Withholding and Bank Accounts&quot;"
+      SearchFields="&quot;TXD, Tax Deduction Report by Withholding and Bank Accounts&quot;"
+      Description="&quot;Tax Deduction Report by Withholding and Bank Accounts&quot;" />
     <Record
       SearchFields="&quot;UAD, Update GLA Aging Data using WR&quot;"
       Code="&quot;UAD&quot;"

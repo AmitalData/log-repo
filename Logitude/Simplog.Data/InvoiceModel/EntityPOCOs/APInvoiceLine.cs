@@ -38,6 +38,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string ContainerTypeId { get; set; }
         public int? Quantity { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
+        public bool? ExcludeFromTaxReport { get; set; }
 
         [ForeignKey("ForiegnCurrencyId")]
         public virtual Currency Currency { get; set; }

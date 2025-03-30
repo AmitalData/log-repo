@@ -40,7 +40,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(LedgerTransactionPM entityPM)
         {
-            FillSearchFields(entityPM);
 
             if (entityPM.IsReconciled == null)
             {
@@ -58,6 +57,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.Mark == true && (entityPM.IsReconciled || entityPM.InReconcileProgress))
             {
                 entityPM.Mark = false;
+            }
+            if (entityPM.Mark == false)
+            {
+                entityPM.AmountToReconcile = 0m;
             }
         }
 
@@ -208,15 +211,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        private void FillSearchFields(LedgerTransactionPM entityPM)
-        {
-
-            var fieldsToMap = new[] { "ForeignAmountCreditWithSign", "IsForeignAmountCreditPos", "ForeignAmountDebit", "IsLocalAmountCreditPos", "LocalAmountDebit", "Reference2", "Reference1", "JournalNumber" };
-            entityPM.SearchFields = string.Join(",", fieldsToMap
-             .Select(field => entityPM.GetType().GetProperty(field, BindingFlags.Public | BindingFlags.Instance)
-              ?.GetValue(entityPM)?.ToString() ?? ""));
-
-        }
+        
 
         internal void UpdateBankAccount(LedgerTransactionPM entityPM)
         {
@@ -336,6 +331,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                     item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     item.InReconcileProgress = /*true*/ Value_inReconcileProgress;
+                    item.ProcessStartDate = Value_inReconcileProgress ? DateTime.Now : (DateTime?)null;
+
                 }
                 bool supperssSaveOnUpdateMultiDueIsFaster = true;
                 this.UpdateMulti(pmList, new List<LedgerTransactionPM>(), new EntityPM(), !supperssSaveOnUpdateMultiDueIsFaster);
@@ -363,6 +360,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 item.InProgressExternalReconcile = /*true*/ Value_ExternalReconcileInProgress;
+                item.ProcessStartDate = Value_ExternalReconcileInProgress ? DateTime.Now : (DateTime?)null;
             }
             bool supperssSaveOnUpdateMultiDueIsFaster = true;
             this.UpdateMulti(pmList, new List<LedgerTransactionPM>(), new EntityPM(), !supperssSaveOnUpdateMultiDueIsFaster);

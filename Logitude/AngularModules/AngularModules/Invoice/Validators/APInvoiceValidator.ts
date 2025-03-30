@@ -2,20 +2,10 @@ import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTrans
 import { AppTool, DateTool, ArrayTool } from '../../Infrastructure/Tools';
 import { Validator } from '../../Infrastructure/Validators/Validator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { InvoiceTool } from "../Tools";
-import { CurrencyList } from '../../Common/EntityLists/CurrencyList';
 import { VatTypeList } from '../../Common/EntityLists/VatTypeList';
-import { AccountingSystemList } from '../../Common/EntityLists/AccountingSystemList';
-import { ARInvoiceLinePM } from '../EntityPMs/ARInvoiceLinePM';
-import { InvoiceTotalsClass } from '../Args';
-import { AccountingSystemListService } from '../../Common/Services/StandardLists/AccountingSystemListService';
-import { CurrencyListService } from '../../Common/Services/StandardLists/CurrencyListService';
-import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
-import { GroupByPipe } from '../../Infrastructure/Pipes/GroupByPipe';
 import { APInvoicePM } from '../EntityPMs/APInvoicePM';
-import { VATTypesGroupPM } from '../../Common/EntityPMs/VATTypesGroupPM';
 import { VatTypesValidator } from '../../Infrastructure/Validators/VatTypesValidator';
-import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 export class APInvoiceValidator {
     private Errors: string[] = [];
@@ -43,9 +33,9 @@ export class APInvoiceValidator {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ConfirmationNumber) && (this.EntityPM.ConfirmationNumber.length < 9 || this.EntityPM.ConfirmationNumber.length > 30)) {
             this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.ConfirmationNumberLength"));
         }
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && entityPM.VendorCountry === "ISRAEL") {
-            if (AppTool.IsNullOrEmpty(entityPM.VATNumber)) {
-                this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VATNumber")));
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
+            if (AppTool.IsNullOrEmpty(entityPM.VATNumber) && (this.EntityPM.VendorCountry === "IL"|| this.EntityPM.VendorCountry === null)) {
+                this.Errors.push(this.message.replace("%FieldName", "Vat Number"));
             }
         }
 

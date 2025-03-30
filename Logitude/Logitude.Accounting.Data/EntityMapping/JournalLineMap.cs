@@ -77,6 +77,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.ActionId).HasColumnName("ActionId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ConfirmationNumber).HasColumnName("ConfirmationNumber").HasMaxLength(30).IsUnicode(true);
+
+            this.Property(t => t.ExcludeFromTaxReport).HasColumnName("ExcludeFromTaxReport");
         }
     }
 }

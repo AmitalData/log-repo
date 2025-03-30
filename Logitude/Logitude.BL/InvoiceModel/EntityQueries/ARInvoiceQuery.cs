@@ -22,6 +22,7 @@ using Simplog.Server.Infrastructure.DataContracts.Models;
 using Logitude.BL.InvoiceModel.CustomFilters;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using System.Data.SqlClient;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -2664,6 +2665,51 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                  select a).FirstOrDefault();
             return invoice != null ? invoice.ARInvoiceTypeCode : null;
         }
+
+        public List<ARInvoiceList> GetInvoiceSequenceStatus(int tenant, DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                List<ARInvoiceList> results = new List<ARInvoiceList>();
+                string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+                using (SqlConnection connection = new SqlConnection(strConnString))
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "usp_GetInvoiceSequenceStatus";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@Tenant", tenant);
+                    command.Parameters.AddWithValue("@FromDate", fromDate);
+                    command.Parameters.AddWithValue("@ToDate", toDate);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var result = new ARInvoiceList
+                            {
+                                InvoiceSeries = reader["Series"] != DBNull.Value ? (string)reader["Series"] : null,
+                                InvoiceNumberPart = reader["InvoiceNumberPart"] != DBNull.Value ? (string)reader["InvoiceNumberPart"] : null,
+                                InvoiceNumber = reader["OriginalInvoiceNumber"] != DBNull.Value ? (string)reader["OriginalInvoiceNumber"] : null,
+                                SequenceStatus = reader["SequenceStatus"] != DBNull.Value ? (string)reader["SequenceStatus"] : null,
+                                InvoiceDate = (DateTime)reader["InvoiceDate"]
+                            };
+                            results.Add(result);
+                        }
+                    }
+                    connection.Close();
+                }
+
+                return results;
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         #region Digital Portal 
 

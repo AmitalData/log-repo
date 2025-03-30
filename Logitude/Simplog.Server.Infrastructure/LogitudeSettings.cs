@@ -164,6 +164,7 @@ namespace Simplog.Server.Infrastructure
 		public static string WindWardSettings { get; set; }
 		public static string LogitudeIISURL { get; set; }
         public static string TempStorageConnection { get; set; }
+        public static string CustomURL { get; set; }
     }
 
 	public class LogitudeCustomsSettingsM

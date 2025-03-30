@@ -66,6 +66,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         NoOfCourierHawbWithoutDelivery, 
 	         EffectiveFlight, 
 	         SentDeclarationStatus,
+	         CourierMasterPaymentStatusCd,
 	      }
 
 
@@ -144,6 +145,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsCourierMissingClassification, 
 	         EffectiveFlight, 
 	         SentDeclarationStatus,
+	         CourierMasterPaymentStatusCd,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -335,6 +337,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SentDeclarationStatus))
             {
 				entityPOCO.SentDeclarationStatus = entityPM.SentDeclarationStatus;
+			}
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierMasterPaymentStatusCd))
+            {
+				entityPOCO.CourierMasterPaymentStatusCd = entityPM.CourierMasterPaymentStatusCd;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -532,6 +538,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 					entityPM.SentDeclarationStatus = entityPOCO.SentDeclarationStatus;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierMasterPaymentStatusCd))
+            {
+					entityPM.CourierMasterPaymentStatusCd = entityPOCO.CourierMasterPaymentStatusCd;
+            }
+
+		
 
 		}
 
@@ -723,6 +735,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 oldEntityPM.SentDeclarationStatus = entityPM.SentDeclarationStatus;
             }
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierMasterPaymentStatusCd))
+            {
+                oldEntityPM.CourierMasterPaymentStatusCd = entityPM.CourierMasterPaymentStatusCd;
+            }
+			
+		
 			
 		}
 

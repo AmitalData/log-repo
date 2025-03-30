@@ -176,7 +176,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                                     case "6":
                                         GLAccountPM controlPM;
-                                        gLAccountPM.AccountTypeCode = "4";
+                                        gLAccountPM.AccountTypeCode = "4";   
                                         if (_controlAccounts.ContainsKey(chart.Id))
                                         {
                                             controlPM = (GLAccountPM)_controlAccounts[chart.Id];

@@ -338,8 +338,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             List<FeaturePM> allFeatures = new List<FeaturePM>();
             List<string> allowedPackages = new List<string>();
 
-            ContactTenantRepository contactTenantsRepository = new ContactTenantRepository(this.repository.context);
-            ContactTenantRoleRepository contactTenantRolesRepository = new ContactTenantRoleRepository(this.repository.context);
+            ContactTenantRepository contactTenantsRepository = new ContactTenantRepository(tenant);
+            ContactTenantRoleRepository contactTenantRolesRepository = new ContactTenantRoleRepository(tenant);
             ContactTenantQuery contactTenantQuery = new ContactTenantQuery(contactTenantsRepository);
             ContactTenantRoleQuery contactTenantRoleQuery = new ContactTenantRoleQuery(contactTenantRolesRepository);
             ContactTenantPM contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, tenant);
@@ -348,8 +348,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    contactTenantsRepository = new ContactTenantRepository(this.repository.context);
-                    contactTenantRolesRepository = new ContactTenantRoleRepository(this.repository.context);
+                    contactTenantsRepository = new ContactTenantRepository(0);
+                    contactTenantRolesRepository = new ContactTenantRoleRepository(0);
 
                     contactTenantQuery = new ContactTenantQuery(contactTenantsRepository);
                     contactTenantRoleQuery = new ContactTenantRoleQuery(contactTenantRolesRepository);

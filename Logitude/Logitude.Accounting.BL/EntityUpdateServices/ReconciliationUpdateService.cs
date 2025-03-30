@@ -546,6 +546,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (FeatureToggleHelper.HasFeatureToggle("ILO", ledgerTransactionPM.Tenant) && ledgerTransactionPM.SourceTypeCode == "4")
                 {
                     IInvoiceContext invoiceContext = InvoiceContext.GetContext(ledgerTransactionPM.Tenant);
+
                     var invoiceRepository = new APInvoiceRepository(invoiceContext);
                     APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(invoiceRepository);
                     APInvoicePM invoice = aPInvoiceQuery.GetSinglePM(ledgerTransactionPM.SourceId, ledgerTransactionPM.Tenant);
@@ -554,14 +555,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     var transactionAmount = account.ReconcileMethodCode == ReconcileMethodValues.LocalCurrency ? ledgerTransactionPM.LocalAmountCredit : ledgerTransactionPM.ForeignAmountCredit;
                     if (ledgerTransactionPM.OpenAmount == 0)
                     {
-                         //***102417/
-                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo("APINV_PD:ReconciliationUpdateService.UpdateLedgerTransaction: APInvoice status 'Paid' Inv No. " + invoice.InvoiceNumber.ToString()
-                         //   + ", HasFeatureToggle 'ILO'"
-                            + ", old status= " + invoice.StatusCode
-                            + ", ledgerTransactionPM.Id= " + ledgerTransactionPM.Id.ToString()
-                            + ", reconciliationLine.ReconciliationId= " + reconciliationLine.ReconciliationId.ToString());
-                         invoice.IsClosed = true;
-                        invoice.StatusCode = "PD";
+                        invoice.IsClosed = true;
+                        if (invoice.StatusCode != "VD") invoice.StatusCode = "PD";
                     }
                     else if (Math.Abs(ledgerTransactionPM.OpenAmount) < transactionAmount)
                     {

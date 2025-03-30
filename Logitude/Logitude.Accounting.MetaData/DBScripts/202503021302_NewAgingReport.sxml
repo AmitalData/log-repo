@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_NewAgingReport"
+  Schema="dbo"
+  Module="Accounting">
+	<SqlScript>
+		<![CDATA[
+/****** Object:  StoredProcedure [dbo].[usp_NewAgingReport]    Script Date: 02/03/2025 13:05:22 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+
+create or alter procedure  [dbo].[usp_NewAgingReport]
+    @AccountID VARCHAR(50) = NULL,
+    @InputDate DATE = NULL,
+    @Tenant INT,
+    @ChartOfAccountsTypeCode INT = NULL,
+    @AccountTypeCode INT = NULL,
+    @SalesmanId VARCHAR(50) = NULL,
+    @CollectorId VARCHAR(50) = NULL,
+    @CategoryValue VARCHAR(50) = NULL,
+    @CategoryName VARCHAR(50) = NULL,
+    @ChartOfAccountsId VARCHAR(50) = NULL,
+    @CurrencyFilterSelectedValue VARCHAR(50) = null,
+	 @CurrencyId VARCHAR(50)=NULL
+
+   
+AS
+BEGIN
+     IF @InputDate IS NULL
+    BEGIN
+        SET @InputDate = GETDATE();
+    END
+	CREATE TABLE #TemporaryTable (
+    CreditLimit float(18),
+    InsuredcreditLimit decimal(18,2),
+    SalesmanUserId VARCHAR(15),
+    CollectorId VARCHAR(15),
+    AccountCurrencyCode VARCHAR(3),
+    TotalOpenShipments decimal(18,2),
+    TotFutureOpenChequesInLocalCur DECIMAL(18, 2),
+    DisplayNumber VARCHAR(15),
+    LocalName NVARCHAR(210),
+    EnglishName VARCHAR(75),
+    ID VARCHAR(15),
+    Minus30Days DECIMAL(30, 2),
+    Minus60Days DECIMAL(30, 2),
+    Minus90Days DECIMAL(30, 2),
+    Minus120Days DECIMAL(30, 2),
+    Minus150Days DECIMAL(30, 2),
+    Minus180Days DECIMAL(30, 2),
+    Past DECIMAL(30, 2),
+    Plus30Days DECIMAL(30, 2),
+    Plus60Days DECIMAL(30, 2),
+    Plus90Days DECIMAL(30, 2),
+    Future DECIMAL(30, 2),
+    ExternalTransactionsTotal DECIMAL(30, 2),
+   TotalForeign DECIMAL(30, 2),
+    BalanceInLocalCurrency DECIMAL(30, 2)
+   
+);
+
+
+INSERT INTO #TemporaryTable
+
+ SELECT  
+    
+	MAX(C.CreditLimit) AS CreditLimit ,
+	MAX(C.InsuredcreditLimit) AS InsuredcreditLimit,
+	MAX(GL.SalesmanUserId) AS SalesmanUserId,
+	MAX(GL.CollectorId) AS CollectorId,
+	MAX(CURRENCY.Code) AS AccountCurrencyCode,
+	MAX(C.TotalOpenShipments) AS TotalOpenShipments,
+	MAX(FUTQ.TotFutureOpenChequesInLocalCur) AS TotFutureOpenChequesInLocalCur,
+	MAX(GL.DisplayNumber) AS DisplayNumber,
+	MAX(GL.LocalName) AS LocalName,
+	MAX(GL.EnglishName) AS EnglishName,
+	
+	MAX(GL.Id)AS ID,
+    SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) <= 30 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Minus30Days,
+    
+    SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 31 AND 60 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Minus60Days,
+    
+    SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 61 AND 90 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Minus90Days,
+    
+    SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 91 AND 120 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Minus120Days,
+    
+    SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 121 AND 150 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Minus150Days,
+    
+    SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 151 AND 180 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Minus180Days,
+    
+    SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) > 180 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Past,
+    
+   
+    
+    SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 1 AND 30 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Plus30Days,
+    
+    SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 31 AND 60 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Plus60Days,
+	 SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -61 AND 90 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Plus90Days,
+    
+    SUM(CASE 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) > 60 THEN 
+            CASE 
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                ELSE T.OpenAmount
+            END
+        ELSE 0 
+    END) AS Future,
+
+	(SELECT SUM(trans.LocalAmountCredit)
+     FROM LedgerTransactions trans
+     JOIN Journals jrn ON trans.JournalId = jrn.Id
+     WHERE 
+         jrn.ExternalSystem IS NOT NULL
+         AND trans.AccountId = T.AccountId  
+         AND trans.Tenant = @Tenant
+         AND trans.DueDate > @InputDate 
+         AND trans.LocalAmountCredit != 0
+    ) AS ExternalTransactionsTotal,
+
+	SUM(CASE 
+    WHEN T.CreateDate < @InputDate THEN (T.ForeignAmountDebit - T.ForeignAmountCredit) 
+    ELSE 0 
+     END) AS TotalForeign,
+   SUM(CASE 
+      WHEN T.CreateDate < @InputDate THEN (T.LocalAmountDebit - T.LocalAmountCredit) 
+     ELSE 0 
+    END) AS BalanceInLocalCurrency
+ 
+   
+FROM 
+    GLACCOUNTS GL
+LEFT JOIN 
+    (SELECT * FROM LedgerTransactions WHERE tenant = @Tenant AND IsReconciled = 0 AND IsExternalReconcile=0) T ON GL.Id = T.ACCOUNTID
+INNER JOIN 
+    TENANTS TEN ON GL.tenant = TEN.Id
+	LEFT JOIN
+(
+    SELECT 
+        jl.CreditAccountId,
+        COALESCE(SUM(DISTINCT jl.LocalAmount), 0) AS TotFutureOpenChequesInLocalCur
+    FROM JournalLines jl
+    JOIN Journals j 
+        ON jl.JournalId = j.Id
+    JOIN ARPaymentCheques arpch 
+        ON j.AccountingEntityId = arpch.PaymentId
+    WHERE 
+	  j.Tenant = @Tenant and
+	  j.AccountingEntityCode = '3'
+      AND jl.ActionCode = '1'
+      AND j.IsLedgerCreated = 1
+      AND jl.DueDate > GETDATE()
+	  AND (@AccountID IS NULL OR jl.CreditAccountId = @AccountID) 
+
+    GROUP BY jl.CreditAccountId
+)  FUTQ ON FUTQ.CreditAccountId = GL.ID
+
+LEFT JOIN 
+    (SELECT TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
+	 C ON GL.CardsDataId = C.Id
+	 LEFT JOIN 
+(SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant) 
+     CURRENCY ON GL.CurrencyId = CURRENCY.Id 
+WHERE 
+    GL.tenant = @Tenant 
+	
+	AND (@AccountID IS NULL OR GL.ID = @AccountID) 
+    AND GL.Inactive = 0 
+    AND ( @AccountTypeCode IS NULL OR GL.AccountTypeCode = @AccountTypeCode )
+    AND ( @ChartOfAccountsTypeCode IS NULL OR GL.ChartOfAccountsTypeCode = @ChartOfAccountsTypeCode )
+    AND (@SalesmanId IS NULL OR GL.SalesmanUserId = @SalesmanId) 
+    AND (@CollectorId IS NULL OR GL.CollectorId = @CollectorId)
+    AND (@ChartOfAccountsId IS NULL OR GL.ChartOfAccountsId = @ChartOfAccountsId)
+    AND (
+        (@CategoryName IS NULL OR 
+        (@CategoryName = 'Category1Id' AND GL.Category1Id = @CategoryValue) OR 
+        (@CategoryName = 'Category2Id' AND GL.Category2Id = @CategoryValue) OR
+        (@CategoryName = 'Category3Id' AND GL.Category3Id = @CategoryValue) OR
+        (@CategoryName = 'Category4Id' AND GL.Category4Id = @CategoryValue) OR
+        (@CategoryName = 'Category5Id' AND GL.Category5Id = @CategoryValue))
+    )
+GROUP BY 
+   T.Tenant, T.AccountId,t.CurrencyId
+
+SELECT t.*,
+CONTACT_Collector.EnglishName AS AccountCollectorName, 
+	CONTACT_Collector.LocalName AS AccountCollectorLocalName, 
+	CONTACT_Salesman.EnglishName AS AccountSalesmanName, 
+	CONTACT_Salesman.LocalName AS AccountSalesmanLocalName
+	FROM #TemporaryTable T
+LEFT JOIN 
+
+ (SELECT Id, EnglishName, LocalName ,Tenant FROM Contacts  WHERE InActive=0) 
+     CONTACT_Salesman ON CONTACT_Salesman.Tenant=@Tenant AND  T.SalesmanUserId = CONTACT_Salesman.Id 
+LEFT JOIN 
+(SELECT Id, EnglishName, LocalName,Tenant FROM Contacts WHERE InActive=0) 
+     CONTACT_Collector ON   CONTACT_Collector.Tenant=@Tenant AND  T.CollectorId = CONTACT_Collector.Id 
+	 order by t.ID 
+	  DROP TABLE  #TemporaryTable 
+END;
+
+	
+GO
+
+
+
+]]>
+	</SqlScript>
+	<OracleScript>
+	</OracleScript>
+</Procedure>

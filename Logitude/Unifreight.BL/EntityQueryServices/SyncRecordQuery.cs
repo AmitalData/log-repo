@@ -53,10 +53,18 @@ namespace Unifreight.BL.EntityQueryServices
             return a;
         }
 
-        public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item)
+        public List<EntityRecord> GetUnsyncRecordsAndMarkAsInProcess(int tenant, string item, int? customsFileNo, bool allTask)
         {
             List<SyncRecord> notExistsRecord = new List<SyncRecord>();
-            List<SyncRecord> groupRecord = repository.GetUnsyncAndMarkAsInProcess(tenant, item);
+            
+            if(customsFileNo.HasValue)
+            {
+                item = repository.GetFileNo(tenant, customsFileNo.Value).ToString();
+                if(string.IsNullOrEmpty(item))
+                    throw new Exception($"fileNo for customsFileNo {customsFileNo} and tenant {tenant} not found");
+            }
+
+            List<SyncRecord> groupRecord = repository.GetUnsyncAndMarkAsInProcess(tenant, item, allTask);
             AddGGGQC(groupRecord);
 
             List<EntityRecord> entityRecords = groupRecord.Select(syncRecord =>
@@ -126,25 +134,21 @@ namespace Unifreight.BL.EntityQueryServices
                 return null;
             }
 
-            bool isCloseTeable = syncRecord.KeyVal == "ALL";
-
             string query = $"SELECT * FROM {syncRecord.Entname}";
 
             if (syncRecord.Entname.ToLower() == "ccumshgr")
                 query += " WHERE FILE_NO = '" + syncRecord.FileNo + "'";
-            else if (!isCloseTeable)
+            else
                 query += " WHERE " + syncRecord.KeyVal.Replace(",", " and ").Replace("=NULL", " is null ");
 
-            SqlConnection conn =
-                (isCloseTeable ? CommonDataContext.GetContext(syncRecord.Tenant) as IContext : repository.Context as IContext)
-                .GetActiveDbContext().Database.Connection as SqlConnection;
+            SqlConnection conn = (repository.Context as IContext).GetActiveDbContext().Database.Connection as SqlConnection;
             conn.Open();
             SqlDataReader dataReader = new SqlCommand(query, conn).ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(dataReader);
             conn.Close();
 
-            if (dt.Rows.Count != 1 && !isCloseTeable && syncRecord.Entname.ToLower() != "ccumshgr")
+            if (dt.Rows.Count != 1 && syncRecord.Entname.ToLower() != "ccumshgr")
             {
                 DevLog.Instance.WriteError($"record not found once for table: {syncRecord.Entname: name} and keyVal: {syncRecord.KeyVal.Replace(",", " and ")}");
                 return null;
@@ -162,7 +166,7 @@ namespace Unifreight.BL.EntityQueryServices
 
         public DateTime? GetLastSyncDate(int tenant, string fileNo) => SyncRecordCache.GetLastSyncDate(fileNo, tenant);
 
-        public List<SyncRecord> GetAndMarkNewSyncRecord() => repository.GetAndMarkNewSyncRecord();
+        public List<SyncRecord> GetAndMarkNewSyncRecord(List<int> tenants) => repository.GetAndMarkNewSyncRecord(tenants);
 
         public void UpdateStatus(List<SyncRecord> records, int status) => repository.UpdateStatus(records, status);
 

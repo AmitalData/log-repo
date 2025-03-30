@@ -86,13 +86,17 @@
     <None Include="EntityFiles\Aur_PaymentItem.lxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
+    <None Include="DBOthers\SProcedures\usp_UpdateLTForeign.dxml" />
+    <None Include="DBOthers\SProcedures\usp_UpdateLTLocal.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
     <Content Include="DBScripts\202204131020_AddInterestTransactionsForRegularJournals.axml" />
     <Content Include="DBScripts\20220912_0000_AddInterestsForCancelledARPayments.axml" />
     <Content Include="DBScripts\20220721_164759_ARInvoiceOppositeJournalCreditLinesNewLogic.axml" />
     <Content Include="DBScripts\202207041224_ARInvoiceOppositeJournalCreditLines.axml" />
     <None Include="DBOthers\Views\AllARPaymentChequesViews.dxml" />
+    <None Include="DBOthers\Views\LedgerTransactionsDeductionViews.dxml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
+    <None Include="DBScripts\202503021302_NewAgingReport.sxml" />
     <None Include="DBScripts\202405131200_CreateSchemaQueryReports.sxml" />
     <None Include="DBScripts\202403031201_ChartOfAccountsEnglishName.sxml" />
     <None Include="DBScripts\202403111553_ChequeCounterSerialAddLine.sxml" />
@@ -166,6 +170,7 @@
     <None Include="DBScripts\202405021130_UpdateObjectField_DisplayInRequiredFields.sxml" />
     <None Include="DBScripts\20250202_Create_PIX_GLAccounts_ChartOfAccountsTypeCode.sxml" />
     <None Include="DBScripts\20250202_Create_PIX_Journals_ExternalSystem.sxml" />
+    <None Include="DBScripts\20250311_Create_PIX_LedgerTransactions_Tenant_LocalAmountDebit_AccountingDate.sxml" />
     <None Include="DBScripts\27092023_FillDefaultHeaderColor.sxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />

@@ -10,6 +10,8 @@ import {RatesTablePM} from '../../../Infrastructure/EntityPMs/RatesTablePM';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { AdditionalCurrencyRateListService } from 'Infrastructure/Services/StandardLists/AdditionalCurrencyRateListService';
+import { AdditionalCurrencyRateList } from 'Infrastructure/EntityLists/AdditionalCurrencyRateList';
 
 
 @Component({
@@ -27,6 +29,7 @@ export class RatesMainTabComponent extends BaseComponent {
     public DataContext: RatesMainTabComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
     IsAccountingActivated: boolean = false;
+    public CurrencyRateTypes: AdditionalCurrencyRateList[];
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -46,7 +49,7 @@ export class RatesMainTabComponent extends BaseComponent {
         logWindow.Width = 600;
         logWindow.Height = 400;
         logWindow.Title = windowTitle;
-        logWindow.WindowArgs = item.LastRate;
+        logWindow.WindowArgs = { LastRate: item.LastRate, CurrencyRateTypes: this.CurrencyRateTypes };
         logWindow.Show('./Common/Components/Maintenance/RatesHistoryComponent');
     }
 
@@ -63,6 +66,7 @@ export class RatesMainTabComponent extends BaseComponent {
         entityPM.LogDateTime = DateTool.GetCurrentDateTimeAsUtc();
         itemComponent.EntityPM = entityPM;
         logitudeWindow.DataContext = itemComponent;
+        logitudeWindow.WindowArgs = { CurrencyRateTypes: this.CurrencyRateTypes }
         logitudeWindow.Show('./Common/Components/Maintenance/EditLastRateComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnEditWindowClosed($event));
     }
@@ -91,29 +95,33 @@ export class RatesMainTabComponent extends BaseComponent {
         else {
             var list: LastRate[] = new Array<LastRate>();
             var myService: CurrencyRatesService = new CurrencyRatesService();
+            const additionalCurrencyRateListService: AdditionalCurrencyRateListService = new AdditionalCurrencyRateListService();
             var loadingDate: Date = this.TodayDate;
             if (loadingDate == null) {
                 loadingDate = DateTool.GetCurrentDateAsUtc();
             }
-
-            if (loadingDate != null) {
-                //loadingDate = Date.SpecifyKind(loadingDate, Date.UTC);
-            }
-
+           
             myService.GetCurrenciesExchangeRateByValueDate(this.TenantPM.CurrencyId, loadingDate,true).subscribe((resp:any) => {
                 var result: ServiceResponse = resp;
                 if (!result.HasError) {
-                    result.Result.forEach(item => {
-                        var itemData: RatesItem = new RatesItem(item);
-                        this.ItemsSource.push(itemData);
+                    additionalCurrencyRateListService.getAll().subscribe((rateTypesResp:any) => {
+                        if (!rateTypesResp.HasError){
+                            this.CurrencyRateTypes = rateTypesResp.Result;
+                        }
+
+                        result.Result.forEach(item => {
+                            var itemData: RatesItem = new RatesItem(item);
+                            this.ItemsSource.push(itemData);
+                        });
                     });
                 }
-                //else {
-                //    var errors = result.ErrorsArray;
-                //}
+                
             });
         }
     }    
+    GetFoundRate(currencyRates: any[], AdditionalCurrencyRateId: number): any {
+        return Array.isArray(currencyRates) ? currencyRates.find(rate => rate.AdditionalCurrencyRateId === AdditionalCurrencyRateId) : undefined;
+    }
 }
 
 export class RatesItem extends BaseComponent implements OnInit {
@@ -124,8 +132,11 @@ export class RatesItem extends BaseComponent implements OnInit {
     public ObjectTableName = "RatesTable";
     public DataContext: RatesItem = this;
     IsAccountingActivated: boolean = false;
+    public CurrencyRates = [];
+
     constructor(entityPM: LastRate) {
         super();
+        this.CurrencyRates = entityPM.CurrencyRates;
         this.LastRate = entityPM;
         this.TenantPM = SessionLocator.TenantPM;
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
@@ -139,6 +150,8 @@ export class RatesItem extends BaseComponent implements OnInit {
         this.EntityPM.ForeignCurrencyId = this.LastRate.ForeignCurrencyId;
         this.EntityPM.LogDateTime = DateTool.GetCurrentDateAsUtc();
         this.EntityPM.ValueDate = DateTool.GetCurrentDateAsUtc();
+ 
+                  
     }
 
     ngOnInit() {
@@ -218,6 +231,13 @@ export class RatesItem extends BaseComponent implements OnInit {
 
     set CurrentRate(value: number) {
         this.LastRate.Rate = value;
+    }
+    get UpdatedByUserName() {
+        return this.LastRate.UpdatedByUserNameName;
+    }
+
+    set UpdatedByUserName(value: string) {
+        this.LastRate.UpdatedByUserNameName = value;
     }
 
     get Unit() {

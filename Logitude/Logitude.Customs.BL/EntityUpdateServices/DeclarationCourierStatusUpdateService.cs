@@ -274,7 +274,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             string logData = "";
             try
             {
-                if (!String.IsNullOrWhiteSpace(entityPOCO.CourierPaymentStatusCode) && String.IsNullOrWhiteSpace(entityPM.CourierPaymentStatusCode))
+                if (entityPM.DocumentStatusCode == "I" || entityPM.DocumentStatusCode == "X")
+                {
+					logData = $"DeclarationCourierStatus OnUpdating entityPM.DocumentStatusCode: {entityPM.DocumentStatusCode} DeclarationId: {entityPM.DeclarationId} CallStack: {new StackTrace().ToString()}";
+					NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logData);
+				}
+				if (!String.IsNullOrWhiteSpace(entityPOCO.CourierPaymentStatusCode) && String.IsNullOrWhiteSpace(entityPM.CourierPaymentStatusCode))
                 {
                     logData = $"CourierPaymentStatusCode was {entityPOCO.CourierPaymentStatusCode}, and changed to null";
                     LogitudeSettings.HandleLogMe("CourierPaymentStatusCode " + logData, false, "DeclarationCourierStatus.CourierPaymentStatusCode", stopLogAt);
@@ -348,6 +353,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void AfterUpdating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
             LogMessagingUtil.Instance.AppendLine("DeclarationCourierStatusPM.DocumentStatusCode: " + entityPM.DocumentStatusCode);
+            AutomatedCustomsMessagingService automatedCustomsMessagingService = new AutomatedCustomsMessagingService(entityPM.Tenant);
+
+			automatedCustomsMessagingService.CheckAndSendMessageis(entityPM);
         }
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)

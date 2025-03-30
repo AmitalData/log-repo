@@ -8,7 +8,8 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.Gl
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Data.Entity;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -38,7 +39,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public RatesTablePM GetSinglePM(string id, int tenent)
         {
-            RatesTablePM instance = (from a in repository.context.RatesTable.Include("ForeignCurrency")
+            RatesTablePM instance = (from a in repository.context.RatesTable.Include(a => a.ForeignCurrency)
                                      where a.Tenant == tenent
                                      && a.Id == id
                                      select new RatesTablePM()
@@ -58,7 +59,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
         public IQueryable<RatesTableList> GetIQueryableEntityList(IQueryable<RatesTable> iQueryable)
         {
-            IQueryable<RatesTableList> result = from entity in iQueryable.Include("ForeignCurrency").Include("UpdatedByUser").Include("UpdatedByUser.Contact")
+            IQueryable<RatesTableList> result = from entity in iQueryable.Include(a => a.ForeignCurrency).Include(a=>a.UpdatedByUser).Include(a=> a.UpdatedByUser.Contact)
                                                 select new RatesTableList()
                                                 {
                                                     Id = entity.Id,
@@ -81,7 +82,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         /* Last Rates */
         public LastRate GetLastRecord(int tenant, string foreignCurrencyId, string baseCurrencyId)
         {
-            List<RatesTable> myList = (from r in repository.context.RatesTable.Include("ForeignCurrency")
+            List<RatesTable> myList = (from r in repository.context.RatesTable.Include(a => a.ForeignCurrency)
                                        where r.Tenant == tenant 
                                        && r.ForeignCurrencyId == foreignCurrencyId 
                                        && r.BaseCurrencyId == baseCurrencyId select r).OrderByDescending(r => r.ValueDate).ToList();
@@ -117,7 +118,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 DateTime? iDateValue = date.Value.Date;
 
-                IQueryable<RatesTable> iQuery = from r in repository.context.RatesTable.Include("ForeignCurrency")
+                IQueryable<RatesTable> iQuery = from r in repository.context.RatesTable.Include(a => a.ForeignCurrency)
                                                 where r.Tenant == tenant
                                                 && r.BaseCurrencyId == baseCurrencyId
                                                 && r.ForeignCurrencyId == foreignCurrencyId
@@ -162,6 +163,31 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return myResult;
         }
 
+
+        public IQueryable<LastRate> GetCurrenciesExchangeRateByCurrencyId(int tenant, string foreignCurrencyId)
+        {
+            return repository.context.RatesTable
+                   .Include(r => r.ForeignCurrency).Include(a => a.UpdatedByUser).Include(a => a.UpdatedByUser.Contact)
+                 .Where(r => r.Tenant == tenant && r.ForeignCurrencyId == foreignCurrencyId && r.ValueDate != null)
+                 .OrderByDescending(r => r.LogDateTime)
+                 .Select(r => new LastRate
+                 {
+                     Id = r.Id,
+                     Tenant = r.Tenant,
+                     ValueDate = r.ValueDate,
+                     Rate = r.Rate,
+                     Unit = r.Unit,
+                     ForeignCurrencyId = r.ForeignCurrency.Id,
+                     ForeignCurrencyCode = r.ForeignCurrency.Code,
+                     ForeignCurrencyName = r.ForeignCurrency.EnglishName,
+                     LogDateTime = r.LogDateTime,
+                     BaseCurrencyId = r.BaseCurrencyId,
+                     UpdatedByUserName = r.UpdatedByUser != null ? r.UpdatedByUser.Contact.EnglishName : null,
+                 });
+
+        }
+
+
         public double getCurrencyRateAccordingUnit(RatesTable ratesTable)
         {
             if(ratesTable.Unit != null)
@@ -203,7 +229,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             RatesTablePM myResult = null;
 
             RatesTable lastRecord =
-                (from r in repository.context.RatesTable.Include("ForeignCurrency")
+                (from r in repository.context.RatesTable.Include(a=>a.ForeignCurrency)
                  where r.Tenant == tenant
                  && r.ForeignCurrencyId == foreignCurrencyId
                  && r.BaseCurrencyId == baseCurrencyId
@@ -214,7 +240,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             if (lastRecord == null)
             {
                 lastRecord =
-                    (from r in repository.context.RatesTable.Include("ForeignCurrency")
+                    (from r in repository.context.RatesTable.Include(a => a.ForeignCurrency)
                      where r.Tenant == tenant
                      && r.ForeignCurrencyId == foreignCurrencyId
                      && r.BaseCurrencyId == baseCurrencyId
@@ -226,7 +252,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 DateTime? lastExistingDateTime = lastRecord.ValueDate;
                 RatesTable resultRecord =
-                    (from r in repository.context.RatesTable.Include("ForeignCurrency")
+                    (from r in repository.context.RatesTable.Include(a => a.ForeignCurrency)
                      where r.Tenant == tenant
                      && r.ForeignCurrencyId == foreignCurrencyId
                      && r.BaseCurrencyId == baseCurrencyId

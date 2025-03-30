@@ -55,6 +55,10 @@ using Newtonsoft.Json;
 using System.Text.Json;
 using Logitude.Server.Tools.TreeFilterQuery.Expression;
 using NetCommonHelper.Logger;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Server.Tools.Models;
+using Logitude.Accounting.Data.Enums;
+using AccountingEntityValues = Logitude.BL.InvoiceModel.CloseTables.AccountingEntityValues;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -338,7 +342,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
 
             entityPM.PaidStatus = invoice.PaidStatus = SetPaidStatus();
+            if (entityPM.ARInvoiceTypeCode == "IT") {
+                if (CheckIfReportConnectedToInvoice(entityPM))
+                {
+                    UpdateInterestReportStatus(entityPM, InterestReportStatusCodes.Invoiced);
+                    throw new BusinessErrorException("An invoice has already been created for this report.");
 
+                }
+            }
+          
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
 
@@ -363,14 +375,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.InvoiceEntities != null && entityPM.InvoiceEntities.Count > 0) logtext += ", Interest Report Id" + entityPM.InvoiceEntities[0].EntityId;
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
-               if (CheckIfReportConnectedToInvoice(entityPM))
-                {
-                    UpdateInterestReportStatus(entityPM, "2");
-
-                    invoiceRepository.Remove(invoice);
-                    invoiceRepository.SubmitChanges();
-                    return;
-                }
+         
                     
                this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);

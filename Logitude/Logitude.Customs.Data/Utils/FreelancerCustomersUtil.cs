@@ -114,13 +114,17 @@ namespace Logitude.Customs.Data.Utils
 
                 /// 2- maintain users from the DB
                 customersList.Clear();
-                if (codesList.Count > 0)
+                CustomerRepository custRepo = new CustomerRepository(user.Tenant);
+
+                foreach (string code in codesList)
                 {
-                    foreach (string code in codesList)
+                    Customer customer = (custSettings != null && !custSettings.IsConnectedToUniFreight)
+                        ? custRepo.GetSingleCustomer(code, tenant, false)
+                        : custRepo.GetSingleCustomerByCode(code, user.Tenant, false);
+
+                    if (customer != null)
                     {
-                        CustomerRepository custRepo = new CustomerRepository(user.Tenant);
-                        Customer customer = custRepo.GetSingleCustomerByCode(code, user.Tenant, false);
-                        if (customer != null) customersList.Add(customer);
+                        customersList.Add(customer);
                     }
                 }
 

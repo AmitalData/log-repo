@@ -4,6 +4,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../../Components/Filters/QueryFilterItem';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     
@@ -80,10 +81,55 @@ export class ArchivoExportadoComponent extends BaseComponent implements OnInit {
             this.splitByCharges = value;
         }
     }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) {
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
 
-    RunButtonClicked() {
-        this.SetUIProperties();
+        if (this.IsSchedulerReport) {
+            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+        }
+        else {
+            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+        }
 
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "IncludeEstimations":
+                    this.IncludeEstimations = queryFilterItem.FieldValue;
+                    break;
+                case "IncludeDraftInvoices":
+                    this.IncludeDraftInvoices = queryFilterItem.FieldValue;
+                    break;
+                case "SelectedCurrencyCode":
+                    this.SelectedCurrencyCode=queryFilterItem.FieldValue;
+                    break;
+               case "IsLocalCurrency":
+                   this.SelectedCurrencyCode = queryFilterItem.FieldValue ?? this.LocalCurrencyCode ;
+                     break;
+            }
+
+
+
+        }
+    }
+    ValidateSelectedFilters(){
         var errors: string[] = [];
 
         if (AppTool.IsNullOrEmpty(this.FromDate)) {
@@ -91,22 +137,32 @@ export class ArchivoExportadoComponent extends BaseComponent implements OnInit {
         }
 
         this.ValidationErrorsList = errors;
+        return errors.length == 0;
+    }
+    RunButtonClicked() {
+        this.SetUIProperties();
 
-        if (errors.length == 0) {
-            var myFilterItems: QueryFilterItem[] = [];
-            myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
-            myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
-            myFilterItems.push(new QueryFilterItem("IsLocalCurrency", this.SelectedCurrencyCode == this.LocalCurrencyCode ? true : false));
-            myFilterItems.push(new QueryFilterItem("SelectedCurrencyCode", this.SelectedCurrencyCode));
-            myFilterItems.push(new QueryFilterItem("IncludeDraftInvoices", this.IncludeDraftInvoices));
-            myFilterItems.push(new QueryFilterItem("IncludeEstimations", this.IncludeEstimations));
-            myFilterItems.push(new QueryFilterItem("SplitByCharges", this.SplitByCharges));
+       
 
+        if (this.ValidateSelectedFilters()) {
+           
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
-            myReportFliter.QueryFilterItemLists = myFilterItems;
+            myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.RunReportEvent.emit(myReportFliter);
         }
+    }
+    GetQueryFilterItems(){
+        var myFilterItems: QueryFilterItem[] = [];
+        myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
+        myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
+        myFilterItems.push(new QueryFilterItem("IsLocalCurrency", this.SelectedCurrencyCode == this.LocalCurrencyCode ? true : false));
+        myFilterItems.push(new QueryFilterItem("SelectedCurrencyCode", this.SelectedCurrencyCode));
+        myFilterItems.push(new QueryFilterItem("IncludeDraftInvoices", this.IncludeDraftInvoices));
+        myFilterItems.push(new QueryFilterItem("IncludeEstimations", this.IncludeEstimations));
+        myFilterItems.push(new QueryFilterItem("SplitByCharges", this.SplitByCharges));
+        return myFilterItems;
+
     }
 }

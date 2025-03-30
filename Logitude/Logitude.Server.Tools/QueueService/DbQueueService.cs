@@ -650,7 +650,7 @@ namespace Logitude.Server.Tools.QueueService
                 return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
             }
 
-             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
+             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(60); }
 
             long messageId = -1;
 

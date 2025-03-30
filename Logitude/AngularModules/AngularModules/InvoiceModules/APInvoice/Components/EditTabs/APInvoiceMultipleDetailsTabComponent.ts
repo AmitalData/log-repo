@@ -150,7 +150,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     SetUIProperties_VatNumber() {
         var isFieldRequired = false;
 
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && this.EntityPM.VendorCountry === "ISRAEL") {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
                 isFieldRequired = true;
                 isFieldRequired = true;

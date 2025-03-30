@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated> CustomClassesGenerator.tt
 //---
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using POCO = Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data;
@@ -99,9 +99,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.MaxSISendInteractive).HasColumnName("MaxSISendInteractive");
 
             this.Property(t => t.CourierDocToken).HasColumnName("CourierDocToken").HasMaxLength(1024).IsUnicode(false);
-            this.Property(t => t.ForbiddenSigns).HasColumnName("ForbiddenSigns").HasMaxLength(128).IsUnicode(true);
 
-            this.Property(t => t.MyCustomURL).HasColumnName("MyCustomURL").HasMaxLength(128).IsUnicode(false);
+            this.Property(t => t.ForbiddenSigns).HasColumnName("ForbiddenSigns").HasMaxLength(128).IsUnicode(true);
         }
     }
 }

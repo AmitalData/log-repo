@@ -401,10 +401,16 @@ export class LedgerTransactionPM {
     private isExternalEntity: boolean;
     public get IsExternalEntity() { return this.isExternalEntity; }
     public set IsExternalEntity(newValue: boolean) { if (this.isExternalEntity != newValue) { this.isExternalEntity = newValue; this.MarkAsDirty("IsExternalEntity"); } }
-
+       
+	 
     private bankName: string;
     public get BankName() { return this.bankName; }
     public set BankName(newValue: string) { if (this.bankName != newValue) { this.bankName = newValue; this.MarkAsDirty("BankName"); } }
+       
+	 
+    private processStartDate: Date;
+    public get ProcessStartDate() { return this.processStartDate; }
+    public set ProcessStartDate(newValue: Date) { if (this.processStartDate != newValue) { this.processStartDate = newValue; this.MarkAsDirty("ProcessStartDate"); } }
        
 	 
 

@@ -479,6 +479,8 @@ export class TablePackageFeatureClass {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Edit " + typeCode + " Features";
         logWindow.WindowArgs = { Items: myFeaturesItems };
+        logWindow.Height=700;
+        
         logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/Packages/EditFeaturesPackageLinkComponent');
 
         logWindow.WindowClosed.subscribe(s => {

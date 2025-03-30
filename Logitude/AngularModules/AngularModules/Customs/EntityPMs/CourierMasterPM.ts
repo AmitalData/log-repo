@@ -382,6 +382,10 @@ export class CourierMasterPM {
     private sentDeclarationStatus: boolean;
     public get SentDeclarationStatus() { return this.sentDeclarationStatus; }
     public set SentDeclarationStatus(newValue: boolean) { if (this.sentDeclarationStatus != newValue) { this.sentDeclarationStatus = newValue; this.MarkAsDirty("SentDeclarationStatus"); } }
+
+    private courierMasterPaymentStatusCd: string;
+    public get CourierMasterPaymentStatusCd() { return this.courierMasterPaymentStatusCd; }
+    public set CourierMasterPaymentStatusCd(newValue: string) { if (this.courierMasterPaymentStatusCd != newValue) { this.courierMasterPaymentStatusCd = newValue; this.MarkAsDirty("CourierMasterPaymentStatusCd"); } }
        
 	 
 
@@ -412,4 +416,4 @@ export class CourierMasterPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

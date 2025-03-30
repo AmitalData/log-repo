@@ -962,9 +962,17 @@ namespace Logitude.Infrastructure.BL
                 Code = "JAM", 
                 Name = "Journal Approval MultiThreading", 
                 SearchFields = "JAM, Journal Approval MultiThreading", 
-                Description = "Journal Approval MultiThreading 2", 
+                Description = "Journal Approval MultiThreading", 
 			});
-			 
+
+            all.Add(new ToggleDetails()
+            {
+                SearchFields = "TXD, Tax Deduction Report by Withholding and Bank Accounts",
+                Code = "TXD",
+                Description = "Tax Deduction Report by Withholding and Bank Accounts",
+                Name = "Tax Deduction Report by Withholding and Bank Accounts",
+            });
+
             all.Add(new ToggleDetails()
             {    
                 SearchFields = "UAD, Update GLA Aging Data using WR", 

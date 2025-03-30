@@ -16,7 +16,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentValidator), "IsShipmentValid")]
-    public class ShipmentPM//: EntityPMBase
+    public class ShipmentPM 
     {
         [Key]
         public string Id { get; set; }

@@ -121,6 +121,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
     };
 
+    private MaxAdditionalCurrencyRate = 4;
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
     public IsShowTipArea: boolean = false;
@@ -3150,6 +3151,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                         isEnabled = false;
                     }
                 }
+                else if (this.ObjectTableName == "AdditionalCurrencyRate") {
+                    isEnabled = this.CheckNewAdditionalCurrencyRateButton();
+                }
 
                 if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
                     isEnabled = false;
@@ -3163,6 +3167,20 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         this.IsNewEntityButtonDisabled = !isEnabled;
     }
+
+    private CheckNewAdditionalCurrencyRateButton() {
+        if (this.dataSource.rowCount !== null) {
+            return this.dataSource.rowCount < this.MaxAdditionalCurrencyRate;
+        }
+        const interval = setInterval(() => {
+            if (this.dataSource.rowCount !== null) {
+                clearInterval(interval);
+                this.SetNewEntityButtonDisabled();
+            }
+          }, 1000);
+        return false;
+    }
+
     private SetNewEntityButtonVisibility() {
 
         var isVisible = true;
@@ -3589,6 +3607,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.WindowArgs = windowArgs;
                         break;
                     }
+                case "AdditionalCurrencyRate":
                 case "InterestReport":
                     {
                         logWindow.Width = 400;
@@ -3671,7 +3690,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.Height = 300;
                 }
             }
-
+            else if (this.ObjectTableName == "AdditionalCurrencyRate") {
+                str = TextCodeTranslator.Translate("AdditionalCurrencyRate.O.NewAdditionalCurrencyRate");
+            }
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
                 str = this.NewButtonLable;
             }

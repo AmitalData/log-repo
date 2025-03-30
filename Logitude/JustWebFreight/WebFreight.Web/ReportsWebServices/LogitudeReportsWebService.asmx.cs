@@ -7626,7 +7626,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_ReceivablesType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ReceivablesType").FirstOrDefault();
             QueryFilterItem filterItem_PayablesType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "PayablesType").FirstOrDefault();
             QueryFilterItem filterItem_ChargesTypeId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChargesTypeId").FirstOrDefault();
-            QueryFilterItem filterItem_IsProfitCurrecny = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsProfitCurrecny").FirstOrDefault();
+            QueryFilterItem filterItem_IsProfitCurrecny = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsProfitCurrency").FirstOrDefault();
             QueryFilterItem filterItem_CurrencyCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyCode").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;

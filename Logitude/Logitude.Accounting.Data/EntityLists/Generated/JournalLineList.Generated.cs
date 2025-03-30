@@ -99,7 +99,11 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ActionId  { get; set; }
        [DataMember]
        public string ConfirmationNumber  { get; set; }
-   }
+       [DataMember]
+       public string DebitAccountCountryCode  { get; set; }
+       [DataMember]
+       public bool? ExcludeFromTaxReport { get; set; }
+    }
 
 }
 	 
