@@ -215,34 +215,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         //    return "";
         //}
 
-        public static bool isUserAdmin(string email, int tenant, IAmitalCloudContext amitalCloudContext)
-        {
-            // todo:
-            //List<User> entities = new Repository<User>(amitalCloudContext).GetMulti(record => record.Contact.Email == email && (record.Tenant == tenant || record.Tenant == 0), "Contact");
-            //var asd = amitalCloudContext.Contacts.FirstOrDefault();
-            //Contact loggedContact = new Repository<Contact>(amitalCloudContext).GetMulti(a => a.Tenant == tenant).FirstOrDefault();
-            /* SqlException: Invalid column name 'Card_Id'.
-Invalid column name 'Customer_Id'.
-Invalid column name 'AccountingPartner_Id'.
-Invalid column name 'Agent_Id'.
-Invalid column name 'CustomAgent_Id'.
-Invalid column name 'ShippingAgent_Id'.
-Invalid column name 'Participant_Id'.
-Invalid column name 'Trucker_Id'.
-Invalid column name 'Vendor_Id'.
-Invalid column name 'Warehouse_Id'.
-            */
-
-           List <User> entities = (from record in amitalCloudContext.Users
-                                   join contact in amitalCloudContext.Contacts on record.Id equals contact.Id
-                                   where contact.Email == email && (record.Tenant == tenant || record.Tenant == 0)
-                                   select record).ToList();
-
-            User loggedUser = entities.Where(a => a.Tenant == tenant).FirstOrDefault() ?? entities.Where(a => a.Tenant == 0).FirstOrDefault();
-
-            return loggedUser?.UserRoles != null && loggedUser.UserRoles.Contains("Administrator");
-        }
-
         #region Get Single User
         public UserPM GetSinglePM(string id, int tenant) => GetSinglePMFromCache(a => (a.Tenant == tenant || a.Tenant == 0) && a.Id == id, "UserPM" + id + tenant);
         //public UserPM UserCustomDataMappingAndValidatin(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.User MyEntity, int Tenant, string ComputingPartnerName = "")

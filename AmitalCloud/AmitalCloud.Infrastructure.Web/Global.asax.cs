@@ -7,7 +7,6 @@ using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Helpers;
-using System.Globalization;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;

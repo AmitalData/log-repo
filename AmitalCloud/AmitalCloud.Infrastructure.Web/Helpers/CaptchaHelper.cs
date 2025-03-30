@@ -20,53 +20,38 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
         {
             int fontsize = 17;
             System.Drawing.Font font = new System.Drawing.Font(
-              new FontFamily("Times New Roman"),
-                  ((float)fontsize),
-                  FontStyle.Bold | FontStyle.Italic,    // + obviously doesn't work, but what am I meant to do?
-            GraphicsUnit.Pixel
+                new FontFamily("Times New Roman"),
+                ((float)fontsize),
+                FontStyle.Bold | FontStyle.Italic,
+                GraphicsUnit.Pixel
             );
 
             int height = 30;
-
             int width = 90;
 
             Bitmap bmp = new Bitmap(width, height);
-
             RectangleF rectf = new RectangleF(10, 5, 0, 0);
-
             Graphics g = Graphics.FromImage(bmp);
 
             g.Clear(Color.White);
 
-
-            //    // Fill in the background.
             Rectangle rect = new Rectangle(0, 0, 100, 30);
             HatchBrush hatchBrush = new HatchBrush(HatchStyle.SmallConfetti, Color.LightGray, Color.White);
             g.FillRectangle(hatchBrush, rect);
-
             g.SmoothingMode = SmoothingMode.AntiAlias;
-
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
             g.DrawString(code, font, Brushes.Green, rectf);
-
             g.DrawRectangle(new Pen(Color.Transparent), 1, 1, width - 2, height - 2);
-
             g.Flush();
-
 
             MemoryStream ms = new MemoryStream();
             bmp.Save(ms, ImageFormat.Jpeg);
-
             g.Dispose();
 
-
             byte[] byteImage = ms.ToArray();
-            string base64String = Convert.ToBase64String(byteImage); //here you should get a base64 string
-            base64String = "data:image/" + "Jpeg" + ";base64," + base64String;
-
+            string base64String = Convert.ToBase64String(byteImage);
+            base64String = $"data:image/Jpeg;base64,{base64String}";
 
             return base64String;
         }
@@ -118,17 +103,13 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             data.InValidCaptcha = true;
             data.CaptchaImage = GenerateCaptchaImage(captchaKey.Code);
             data.CaptchaKey = captchaKey.Id;
-
-
         }
 
         public static Random random = new Random();
         public static string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+            return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
         }
-
     }
 }

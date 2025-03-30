@@ -145,8 +145,11 @@
     <Compile Include="DataContracts\LoginParameters.cs" />
     <Compile Include="Helpers\AmitalCloudSettingConfigration.cs" />
     <Compile Include="Helpers\Authentication.cs" />
-    <Compile Include="Helpers\AuthenticationMixPanelService.cs" />
+    <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
     <Compile Include="Helpers\CaptchaHelper.cs" />
+    <Compile Include="Helpers\MixPanel\MixPanelEvent.cs" />
+    <Compile Include="Helpers\MixPanel\MixPanelEventTracker.cs" />
+    <Compile Include="Helpers\MixPanel\TrackingEventProperty.cs" />
     <Compile Include="Helpers\PasswordParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
