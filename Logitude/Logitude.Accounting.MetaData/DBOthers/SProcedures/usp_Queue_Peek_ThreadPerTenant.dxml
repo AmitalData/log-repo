@@ -22,18 +22,24 @@ begin
 BEGIN TRAN
 			Declare @frequency INTEGER
 			set @frequency = 60
-			SELECT TOP 1 @MessageId=[Id],@Tenant=Tenant,@MessageBody=MessageBody,@RetryNumber=RetryNumber
-										FROM [dbo].[QueueMessages] WITH (UPDLOCK, READPAST,ROWLOCK)
-												WHERE ((@ObjectTable != 'ARInvoice' and [NextRunDateTime] <= getdate()) 
-												OR (@ObjectTable = 'ARInvoice' and [CreateDateTime] <= getdate()))
-														and [Status] = @WatingStatus
-														and QueueDefinitionCode = @QueueDefinitionCode
-														and Tenant in (select Tenant from TenantIdleStatuses with (UPDLOCK, READPAST,ROWLOCK) where Idle = 0 and ObjectTable = @ObjectTable)
-												ORDER BY 
-												CASE 
-												WHEN @ObjectTable = 'ARInvoice' THEN [CreateDateTime]
-												ELSE [NextRunDateTime]
-												END ASC;
+			SELECT TOP 1
+				@MessageId = qm.[Id],
+				@Tenant = qm.Tenant,
+				@MessageBody = qm.MessageBody,
+				@RetryNumber = qm.RetryNumber
+				FROM [dbo].[QueueMessages] qm WITH (UPDLOCK, READPAST, ROWLOCK)
+				JOIN [dbo].[TenantIdleStatuses] tis WITH (UPDLOCK, READPAST, ROWLOCK)
+				ON qm.Tenant = tis.Tenant AND tis.ObjectTable = @ObjectTable AND tis.Idle = 0
+				WHERE
+				qm.QueueDefinitionCode = @QueueDefinitionCode
+				AND qm.Status = @WatingStatus
+				AND (
+				(@ObjectTable = 'ARInvoice' AND qm.CreateDateTime <= GETDATE())
+				OR (@ObjectTable != 'ARInvoice' AND qm.NextRunDateTime <= GETDATE())
+				)
+				ORDER BY
+				CASE WHEN @ObjectTable = 'ARInvoice' THEN qm.CreateDateTime
+				ELSE qm.NextRunDateTime END ASC;
 												
 			IF (@MessageId IS NOT NULL)
 			BEGIN
