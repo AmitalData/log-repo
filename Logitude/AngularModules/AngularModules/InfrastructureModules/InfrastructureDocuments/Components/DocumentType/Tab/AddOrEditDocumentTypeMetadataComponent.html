@@ -13,7 +13,7 @@
         <LogLabel [DataContext]="documentTypeMetaData" [ObjectFieldName]="'Mandatory'" [ObjectTableName]='tableName'>
         </LogLabel>
         <CheckBox [IsChecked]="documentTypeMetaData['Mandatory']"
-            (Checked)="documentTypeMetaData['Mandatory'] = $event;" [ngClass]='{"error": error}'>
+            (Checked)="documentTypeMetaData['Mandatory'] = $event;">
         </CheckBox>
     </div>
 
