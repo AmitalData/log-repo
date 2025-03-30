@@ -217,39 +217,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         #region Get Single User
         public UserPM GetSinglePM(string id, int tenant) => GetSinglePMFromCache(a => (a.Tenant == tenant || a.Tenant == 0) && a.Id == id, "UserPM" + id + tenant);
-        //public UserPM UserCustomDataMappingAndValidatin(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.User MyEntity, int Tenant, string ComputingPartnerName = "")
-        //{
-        //    try
-        //    {
-        //        var temp =  !string.IsNullOrEmpty(MyEntity.Id)
-        //            ? this.GetSinglePM(MyEntity.Id, Tenant)
-        //            : this.GetSingleUserPMByCode(MyEntity.ExternalCode, Tenant, false);
-        //        if (temp != null)
-        //        {
-        //            if (string.IsNullOrEmpty(temp.Id))
-        //            {
-        //                temp.Id = MyEntity.Id;
-        //            }
-        //            if (string.IsNullOrEmpty(temp.Code))
-        //            {
-        //                temp.Code = MyEntity.ExternalCode;
-        //            }
-        //            if (string.IsNullOrEmpty(temp.EnglishName))
-        //            {
-        //                temp.EnglishName = MyEntity.EnglishName;
-        //            }
-        //            if (string.IsNullOrEmpty(temp.LocalName))
-        //            {
-        //                temp.LocalName = MyEntity.LocalName;
-        //            }
-        //        }
-        //        return temp;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
         //------
         #endregion Get Single User
 

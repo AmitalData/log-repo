@@ -34,7 +34,7 @@ namespace AmitalCloud.Infrastructure.Data.Counters
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
                     cmd.CommandText =
-                        DBHelpers.DbContextBaseUtil.GetStoredProcedureName("GetNextGlobalTenantId", AmitalCloudDBSchema.LOGITUDE_GLOBAL,
+                        DBHelpers.DbContextBaseUtil.GetStoredProcedureName("GetNextGlobalTenantId", AmitalCloudDBSchema.AMITAL_GLOBAL,
                         cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
 

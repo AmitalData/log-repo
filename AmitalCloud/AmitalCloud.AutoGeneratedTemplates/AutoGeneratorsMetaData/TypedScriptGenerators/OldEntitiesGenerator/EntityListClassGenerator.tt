@@ -27,9 +27,7 @@ public void GenerateAllListTS(string xmlFilesSourceFolder,string classFilesSourc
 
 
 	//======================================== classes .cs
-
-	//string pmsourceFolderPath = "../../../../Logitude.BL/CommonDataModel/EntityPMs";
-	//string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+	
     string classSourceFilePath = Path.Combine(templateDirectory, classFilesSourceFolder);
 	string classesDirectoryFinalPath = System.IO.Path.GetFullPath(classSourceFilePath);
 
@@ -147,8 +145,6 @@ private void PrintListProperty(CodeElement element,CodeProperty property)
  
  private string GetListClassDataType(CodeProperty property)
         {
-				//System.Collections.Generic.List<Logitude.BL.CommonDataModel.EntityPMs.AddressPM>
-	            //System.DateTime?
 
 			string fullTypeName = property.Type.AsString;
 			string typecode = "";

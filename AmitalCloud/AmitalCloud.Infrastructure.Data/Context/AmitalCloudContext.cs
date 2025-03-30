@@ -63,7 +63,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
         }
 		protected override AmitalCloudDBSchema AmitalCloudDBSchema
         {
-            get { return AmitalCloudDBSchema.LOGITUDE_MAIN; }
+            get { return AmitalCloudDBSchema.AMITAL_MAIN; }
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

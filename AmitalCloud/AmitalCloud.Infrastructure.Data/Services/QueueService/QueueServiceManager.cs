@@ -36,32 +36,13 @@ namespace AmitalCloud.Infrastructure.Data.Services
             }
             if (AmitalCloudSettings.IsCostomsDeploy)
             {
-                var uri = new Uri(AmitalCloudSettings.LogitudeURL);
+                var uri = new Uri(AmitalCloudSettings.AmitalURL);
                 var branch = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
                 queueName = AmitalCloudSettings.StorageAccountName + "_Customs" +
                     //customsDeploymentStage.ToString() + 
                     branch + "_" + savequeueName;
             }
-            /*
-            var customsDeploymentStage = SettingUtil.GetCustomsDeploymentStage();
-            switch (customsDeploymentStage)
-            {
-                case SettingUtil.CustomsDeploymentStage.Test:
-                case SettingUtil.CustomsDeploymentStage.Pilot:
-
-                    var uri = new Uri(AmitalCloudSettings.LogitudeURL);
-                    var branch = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
-                    queueName = AmitalCloudSettings.StorageAccountName + "_Customs" + customsDeploymentStage.ToString() + branch + "_" + savequeueName;
-                    break;
-                case SettingUtil.CustomsDeploymentStage.Production:
-                                                         //queueName = "Customs" + customsDeploymentStage.ToString() + "_" + savequeueName;
-                    queueName = AmitalCloudSettings.StorageAccountName + "_Customs" + customsDeploymentStage.ToString() + "_" + savequeueName;
-                    break;
-
-                default:
-                    break;
-            }
-             */
+           
 
             return queueName;
 

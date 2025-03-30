@@ -13,7 +13,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         //public static bool IsLogEnabled = true;
         // public static bool InAzureStorage = false; // when true, Azure storage will be used
         // public static bool IsStaging = false; // Use online staging for testing.
-        //public static string DeploymentStage = "Dev";//Dev//Test1//LogitudeTest//Simplog//Test1//logitudetest2//amital
+        //public static string DeploymentStage = "Dev";//Dev//Test1//Simplog//Test1//amital
         //public static bool UsingAzure = true; // when true, Use Azure methods
         //*****Test Branch******
         //int tt = 1;
@@ -66,7 +66,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
             if (AmitalCloudSettings.IsCostomsDeploy)
             {
-                var uri = new Uri(AmitalCloudSettings.LogitudeURL);
+                var uri = new Uri(AmitalCloudSettings.AmitalURL);
                 var branch = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
                 queueName = AmitalCloudSettings.StorageAccountName + "_Customs" +
                     branch + "_" + savequeueName;

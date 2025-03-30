@@ -176,7 +176,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                 myContactInfo = new ContactInformation()
                 {
                     ContactEmail = email,
-                    IsLogitudeAdmin = true,
+					IsAmitalAdmin = true,
                     PackagesCodes = allPackages,
                 };
             }
@@ -220,14 +220,14 @@ namespace AmitalCloud.Infrastructure.Data.Security
                                 }
                             }
                         }
-                        bool isLogitudeAdmin = false;
+                        bool IsAmitalAdmin = false;
                         if (tenant != 0)
                         {
-                            User user = GetUserByMail(email, AmitalCloudSettings.LogitudeCRMTenantNumber, context);
+                            User user = GetUserByMail(email, AmitalCloudSettings.AmitalCRMTenantNumber, context);
                             if (user != null)
                             {
-                                tenant = AmitalCloudSettings.LogitudeCRMTenantNumber;
-                                isLogitudeAdmin = true;
+                                tenant = AmitalCloudSettings.AmitalCRMTenantNumber;
+								IsAmitalAdmin = true;
                             }
                         }
                         RoleQuery roleQuery = new RoleQuery(tenant);
@@ -246,7 +246,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                         {
                             Tenant = contact.Tenant,
                             ContactEmail = contact.Email,
-                            IsLogitudeAdmin = isLogitudeAdmin,
+							IsAmitalAdmin = IsAmitalAdmin,
                             RolesIds = allRolesIds,
                             PackagesCodes = allPackages,
                             DontShowLocalLabels = contact.DontShowLocalLabels
@@ -289,7 +289,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                     myContactInfo = new ContactInfo()
                     {
                         ContactEmail = email,
-                        IsLogitudeAdmin = true,
+                        IsAmitalAdmin = true,
                         PackagesCodes = GetAllPackagesCodes(email, tenant, false),
                     };
                 }
@@ -333,14 +333,14 @@ namespace AmitalCloud.Infrastructure.Data.Security
                                     }
                                 }
                             }
-                            bool isLogitudeAdmin = false;
+                            bool IsAmitalAdmin = false;
                             if (tenant != 0)
                             {
-                                User user = GetUserByMail(email, AmitalCloudSettings.LogitudeCRMTenantNumber, context);
+                                User user = GetUserByMail(email, AmitalCloudSettings.AmitalCRMTenantNumber, context);
                                 if (user != null)
                                 {
-                                    tenant = AmitalCloudSettings.LogitudeCRMTenantNumber;
-                                    isLogitudeAdmin = true;
+                                    tenant = AmitalCloudSettings.AmitalCRMTenantNumber;
+									IsAmitalAdmin = true;
                                 }
                             }
                             RoleQuery roleQuery = new RoleQuery(tenant);
@@ -358,7 +358,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                             {
                                 Tenant = contact.Tenant,
                                 ContactEmail = contact.Email,
-                                IsLogitudeAdmin = isLogitudeAdmin,
+								IsAmitalAdmin = IsAmitalAdmin,
                                 RolesIds = allRolesIds,
                                 PackagesCodes = GetAllPackagesCodes(email, tenant, isCustomerCare),
                             };
@@ -394,7 +394,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                 ContactInfo myContactInfo = GetContactInfo(email, tenant);
                 if (myContactInfo != null)
                 {
-                    if (myContactInfo.IsLogitudeAdmin)// || myContactInfo.IsApi)
+                    if (myContactInfo.IsAmitalAdmin)// || myContactInfo.IsApi)
                     {
                         isAllowed = true;
                     }
@@ -700,7 +700,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
                 }
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = AmitalCloudSecurityUtility.getLoggedDomain();
-                if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
+                if (!url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
@@ -818,7 +818,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
 
                 if (myContactInfo != null)
                 {
-                    if (myContactInfo.IsLogitudeAdmin)
+                    if (myContactInfo.IsAmitalAdmin)
                     {
                         exists = true;
                     }

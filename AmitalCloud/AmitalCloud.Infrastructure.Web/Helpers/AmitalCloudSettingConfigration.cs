@@ -6,7 +6,7 @@ public static class AmitalCloudSettingConfigration
 {
     public static string GetWorkEnvironment()
     {
-        if (string.IsNullOrEmpty(AmitalCloudSettings.WorkEnvironment)) return "logitude";
+        if (string.IsNullOrEmpty(AmitalCloudSettings.WorkEnvironment)) return "Amital";
         return IsLogBoxEnvironment() ? GetLogboxWorkEnvironment() : AmitalCloudSettings.WorkEnvironment;
     }
 
