@@ -200,6 +200,24 @@ export class LoginComponent implements OnInit {
             this.StartLoginProcess();
          }     
         
+         if(isDevMode()) {
+            (async ()=>{
+                this.Email = 'qa@amital.co.il'
+                this.Password = 'Test2024!';
+                this.LoginClicked();
+                
+                while(!this.TenantList?.length)
+                    await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
+                
+                this.SelectedCompany = this.TenantList.find(d => d.Tenant == 0); // UNF 512.1 ACC Tracking
+                // this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1191); //unifright 59 accounting
+                // this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1106); // yaron accounting
+                // this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1053); // tttest
+                
+                this.ContinueClicked()
+            })()
+        }
+
     }
    
     IsShowLoginForm: boolean = false;

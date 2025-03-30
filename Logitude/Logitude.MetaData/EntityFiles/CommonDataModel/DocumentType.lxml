@@ -4904,7 +4904,7 @@
     Code="&quot;DTMD&quot;"
     ControlPath="&quot;Simplog.Infrastructure.Views.Documents.DocumentTypes.DocumentTypeMetadataControl&quot;"
     TextCode="&quot;DocumentType.TH.Metadata&quot;"
-    IsPackagable="false"
+    IsPackagable="true"
     IndexOrder="0"
     HtmlComponentURL="&quot;./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/Tab/DocumentTypeMetadataComponent&quot;"
     HtmlComponentName="&quot;DocumentTypeMetadataComponent&quot;"

@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentsMetaDataTypeUpdateClass
    {  		
-		public const string HashString = "e1d3bd4bcc195fb907771bda7c2b04e5";
+		public const string HashString = "9ad0119937379a4ed0f7ee6218c09d46";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -98,7 +98,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -698,8 +698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   ObjectTable DocumentsMetaDataTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentsMetaDataType" && d.Tenant == 0).FirstOrDefault(); 
 
 		   Feature DocumentsMetaDataTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsMetaDataType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsMetaDataTypeObjectTable);
-		   Feature DocumentsMetaDataTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsMetaDataType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsMetaDataTypeObjectTable);
-		   Feature DocumentsMetaDataTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsMetaDataType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsMetaDataTypeObjectTable);
+ 		   Feature DocumentsMetaDataTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsMetaDataType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsMetaDataTypeObjectTable);
 		   Feature DocumentsMetaDataTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DocumentsMetaDataTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsMetaDataType.Features.PackageFeature", NameTextCodeDefaultText = "DocumentsMetaDataType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DocumentsMetaDataTypeObjectTable);    
 	    
 		}
