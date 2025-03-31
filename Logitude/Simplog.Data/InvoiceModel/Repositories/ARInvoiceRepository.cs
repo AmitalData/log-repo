@@ -524,16 +524,8 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                       && !a.IsConstituentInvoice
                                       select a.AmountDueInLocalCurrency).Sum();
 
-            //double? autoCredit = (from a in context.ARInvoices
-            //                      where a.BillToId == customerid && a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "PD" && a.StatusCode != "VD" && a.IsClosed != true && !a.IsAutoCredit && a.ARInvoiceTypeCode == "CD" && !a.IsCancelled
-            //                      select a.AmountDueInLocalCurrency).Sum();
-
-
-            double? result = openarinvioces;// != null ? openarinvioces : 0;
-            //if (autoCredit != null)
-            //{
-            //    result = openarinvioces - autoCredit;
-            //}
+            double? result = openarinvioces;
+           
             return result != null ? result.Value : 0;
         }
       

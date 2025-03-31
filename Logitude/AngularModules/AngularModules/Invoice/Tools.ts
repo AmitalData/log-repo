@@ -10,7 +10,6 @@ import {ServiceResponse} from '../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
-import { CardPM } from '../Common/EntityPMs/CardPM';
 import { InvoiceDomainService } from '../Invoice/Services/InvoiceDomainService';
 
 export class InvoiceTool {

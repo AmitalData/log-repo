@@ -11,7 +11,6 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
@@ -99,10 +98,6 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
         else if (this.EntityPM.IsConstituentInvoice) {
             isAddButtonEnabled = false;
         }
-
-        //else if (this.EntityPM.ARInvoiceTypeCode == "CD") {
-        //    isAddButtonEnabled = false;
-        //}
 
         else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode === "DR" || this.EntityPM.StatusCode === "PR") {
             isAddButtonEnabled = false;

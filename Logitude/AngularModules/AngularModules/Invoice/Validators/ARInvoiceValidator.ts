@@ -2,9 +2,7 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {Validator} from '../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
-import {InvoiceTool} from "../Tools";
 import {ARInvoicePM} from '../EntityPMs/ARInvoicePM';
-//import {InvoiceTotalsClass} from '../Args';
 import {VatTypeList} from '../../Common/EntityLists/VatTypeList';
 import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidator';
 import { EntityListService } from '../../Infrastructure/Services/EntityListService';

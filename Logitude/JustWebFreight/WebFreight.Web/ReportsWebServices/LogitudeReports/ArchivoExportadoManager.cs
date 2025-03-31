@@ -1009,12 +1009,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             if (isAddingInvoice)
                             {
                                 Card myCard = allCards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
-                                //Branch myBranch = allBranchs.Where(d => d.Id == invoice.BranchId).FirstOrDefault();
                                 Contact myContact = allContacts.Where(d => d.Id == invoice.CreatedByUserId).FirstOrDefault();
                                 Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
 
                                 List<ChargeTypeGroupClass> lines_Grouped = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
-                                //List<ChargeTypeGroupClass> lines_Grouped2 = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id).ToList();
 
                                 foreach (ChargeTypeGroupClass item in lines_Grouped)
                                 {

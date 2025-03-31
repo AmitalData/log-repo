@@ -16,7 +16,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
-//using System.Reflection.Emit;
 using System.Text;
 using System.Threading;
 using Logitude.Server.Tools.QueueService;
@@ -1314,17 +1313,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         break;
                 }
-
-                ///message.SafeComplete();
-                //throw;
+                
             }
             catch (Exception ex)
             {
                 OnException(myDbQueueService, message, qpJournalId, tenant, ex);
-                //LogMessagingUtil.Instance.AppendLine(MessageId.ToString() + " " + ex.Message);
-                //ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "AccountingJournalApproveWR: ProcessMessage() Method", null);
-                ///message.SafeComplete();
-                //throw;
             }
             return isSubmitApprove;
 

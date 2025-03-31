@@ -28,8 +28,7 @@ using Logitude.BL.InvoiceModel;
 
 namespace WebFreight.Web.InvoiceModel.DomainServices
 {
-    // TODO: Create methods containing your application logic.
-    //[RequiresAuthentication]
+
     [EnableClientAccess()]
     public partial class InvoiceDomainService : LogitudeDomainService
     {

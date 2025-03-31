@@ -44,7 +44,6 @@ namespace Logitude.Server.Tools.Helpers
                 scope1.Complete();
             }
 
-            // to be deleted
             if (counterDef == null)
             {
                 if (counterCode == "MAST" || counterCode == "SHIP" || counterCode == "QUOT")
@@ -57,7 +56,6 @@ namespace Logitude.Server.Tools.Helpers
                     }
                 }
             }
-            //******
 
             string prefix = null;
             if (counterDef.UniquePerPrefix)
@@ -74,7 +72,7 @@ namespace Logitude.Server.Tools.Helpers
 
             int startNumber = counterDef.StartNumber;
             string number = null;
-            string strConnString = GetConnection(tenant);//ConfigurationManager.ConnectionStrings["str"].ConnectionString;
+            string strConnString = GetConnection(tenant);
             string counterLastNumberValue = string.Empty;
             if (FeatureToggleHelper.HasFeatureToggle("LCP", tenant))
             {
@@ -123,16 +121,10 @@ namespace Logitude.Server.Tools.Helpers
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
                     cmd.CommandText =
-                        //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "." +  "usp_GetNextTableNumberValue";
-                        DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableNumberValue", LogitudeDBSchema.LOGITUDE_MAIN,
-                        cmd.Connection.ConnectionString);
+                    DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableNumberValue", LogitudeDBSchema.LOGITUDE_MAIN,
+                    cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    /*
-                     v_pLastValue OUT NUMBER,
---    v_pTenant      IN NUMBER,
---    v_pCounterId   IN NVARCHAR2,
---    v_pPrefix      IN NVARCHAR2,
---    v_pStartNumber IN NUMBER */
+
                     try
                     {
                         OracleParameter lastValuePar = new OracleParameter("v_pLastValue", OracleDbType.Number);
@@ -171,7 +163,6 @@ namespace Logitude.Server.Tools.Helpers
                         cn.Open();
                         cmd.ExecuteNonQuery();
                         cn.Close();
-                        //number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
                         counterLastNumberValue = cmd.Parameters["v_pLastValue"].Value.ToString();
 
 
@@ -189,16 +180,10 @@ namespace Logitude.Server.Tools.Helpers
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    //SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableNumberValue", cn);
-                    //List<int> newSPTenants = new List<int>()
-                    //{
-                    //    1,42,1330,2573
-                    //};
-                    //if (newSPTenants.Where(a=>a == tenant).Count() > 0)
-                    //{
+                    
                     string procedureName = string.IsNullOrEmpty(branchCounterCode)   ? "dbo.usp_GetNextTableNumberValueWithSnapshotView" : "dbo.usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot";
                     SqlCommand cmd = new SqlCommand(procedureName, cn);
-                    //}
+
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     SqlParameter lastValuePar = new SqlParameter("@pLastValue", SqlDbType.Int);
@@ -242,7 +227,6 @@ namespace Logitude.Server.Tools.Helpers
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
-                    //number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["@pLastValue"].Value : counterDef.Prefix + cmd.Parameters["@pLastValue"].Value);
                     counterLastNumberValue = cmd.Parameters["@pLastValue"].Value.ToString();
                     if(saveCounter)
                     {
@@ -276,15 +260,8 @@ namespace Logitude.Server.Tools.Helpers
         {
             string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
             string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
-
-
-            //if (!string.IsNullOrEmpty(counterPrefix))
-            //{
-            //number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
-
-            //[MM],[YY] or [YYYY],[B]
+         
             ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
-            //YYYShipEEE (15 - 9) + 3 
             if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue + counterSuffix).Length < counterDef.CounterSize.Value)
             {
                 int sizeOfStartNumber = (counterDef.CounterSize.Value - (counterPrefix + counterSuffix).Length);
@@ -323,13 +300,9 @@ namespace Logitude.Server.Tools.Helpers
 
         public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
         {
-            //ObjectTabelRepository tablesRepository = new ObjectTabelRepository();
-            //ObjectTablePM table = tablesRepository.GetObjectTableByCode(objectTableName, tenant);
-
             CounterDefinitionRepository counterDefinitionRep = new CounterDefinitionRepository(tenant);
             CounterRepository counterRepository = new CounterRepository(tenant);
             Counter counter = counterRepository.GetCounterByCode(counterCode, tenant);
-            //string objectTableId = counter.ObjectTableId;
             string counterId = counter.Id;
 
             List<CounterDefinition> tableCounters = counterDefinitionRep.GetCounterDefinitionsByCounterId(counterId, tenant).ToList();
@@ -339,7 +312,6 @@ namespace Logitude.Server.Tools.Helpers
             string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
 
             ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
-            //ResolveCounterPrefixVariables(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
 
             return counterPrefix;
         }
@@ -349,7 +321,6 @@ namespace Logitude.Server.Tools.Helpers
             GlobalDB currentDb;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                //GlobalDBRep = new GlobalDBRepository();
                 currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
 
             }
@@ -359,7 +330,7 @@ namespace Logitude.Server.Tools.Helpers
             DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
-            return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
+            return context.Database.Connection.ConnectionString;
         }
 
         public static void SaveCounter(string counterStateId, int tenant, string objectTableId, string lastValue)
