@@ -2200,7 +2200,6 @@
     <Compile Include="Interfaces\IInfrastructureClassLevelValidator.cs" />
     <Compile Include="Interfaces\IInfrastructureValidationClass.cs" />
     <Compile Include="Interfaces\ILoggedContactUtil.cs" />
-    <Compile Include="Interfaces\ILogitudeAuthenticationService.cs" />
     <Compile Include="Interfaces\IMapping.cs" />
     <Compile Include="Interfaces\IObjectFieldPropertyGetter.cs" />
     <Compile Include="Interfaces\IObjectTablePropertyGetter.cs" />

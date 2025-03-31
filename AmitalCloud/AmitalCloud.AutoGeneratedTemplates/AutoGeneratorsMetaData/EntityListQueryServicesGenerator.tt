@@ -1,0 +1,675 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="Microsoft.CSharp.dll" #>
+<#@ Assembly name="$(SolutionDir)packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll" #>
+
+<#@ Import Namespace="System.Xml" #>
+<#@ Import Namespace="System.Xml.Linq" #>
+<#@ Import Namespace="AmazedSaint.Elastic" #>
+<#@ Import Namespace="AmazedSaint.Elastic.Lib" #>
+<#@ output extension=".cs" #>
+<#@ import Namespace="System.IO" #>
+<#@ import Namespace="System.Collections.Generic" #>
+ 
+<#+
+
+dynamic querylistservicenamespacestring;
+public void GenerateAllListQueryServices(string sourceFolder,string destinationFolder,string contextName)
+{
+ 
+ querylistservicenamespacestring = GetListQueryServiceNameSpace(destinationFolder);
+ string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+ string outputFilePath = Path.Combine(templateDirectory, sourceFolder);
+foreach (string file in Directory.EnumerateFiles(outputFilePath, "*.lxml"))
+{
+
+    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+	GenerateEntityListQueryService(file,destinationFolder+"/Generated/"+fileNameWithoutExtension+"ListQueryService.Generated.cs",contextName,false);
+}
+
+foreach (string file in Directory.EnumerateFiles(outputFilePath, "*.lxml"))
+{
+
+    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+	GenerateEntityListQueryService(file,destinationFolder+"/"+fileNameWithoutExtension+"ListQueryService.cs",contextName,true);
+}
+ 
+}
+#>
+
+<#+  
+
+public void GenerateEntityListQueryService(string xmlFilePath,string outputFilePath,string contextName,bool isCustom)
+{
+	if(string.IsNullOrEmpty(querylistservicenamespacestring))
+    {
+		querylistservicenamespacestring = GetListQueryServiceNameSpace(outputFilePath);
+    }
+
+var entity = FromEntityListQueryServiceFile(xmlFilePath);
+		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
+      	{
+	    	if(entity.IsMetadataOnlyTable == "true")
+	    	{
+	    		return;
+	    	}
+	    } 
+ if( entity.NoObjectTable.GetType() == typeof(string))
+	{
+		if(entity.NoObjectTable == "true")
+		{
+			return;
+		}
+	}
+ 
+	if(isCustom)
+    {
+		 string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+         string filepath = Path.Combine(templateDirectory, outputFilePath);
+	     bool generate = true;
+		 generate = !File.Exists(filepath);
+       
+		if(generate)
+         {
+		      WriteCustomEntityListQueryServiceMethod(entity,contextName);
+			  SaveEntityListQueryServiceOutput(outputFilePath);
+         }
+    }
+	else
+    {
+      WriteEntityListQueryServiceMethod(entity,contextName);
+      SaveEntityListQueryServiceOutput(outputFilePath);
+    }
+
+ }
+#>
+
+<#+
+
+public dynamic GetListQueryServiceNameSpace(string destinationFolder)
+{
+	string spacestring = "";
+	string[] path = destinationFolder.Split('/');
+	foreach(string dir in path)
+    {
+		if(dir != "..")
+        {
+			spacestring += dir + ".";
+        }
+    }
+
+	spacestring = spacestring.ToString().Trim('.');
+
+	return spacestring;
+}
+
+#>
+
+<#+
+void SaveEntityListQueryServiceOutput(string outputFileName)
+  {
+      string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+      string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+    
+	  var manager = Manager.Create(Host, GenerationEnvironment);
+	  manager.CreateTestFile(outputFilePath,this.GenerationEnvironment.ToString());
+	  this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+  }
+#>
+
+<#+	
+private void WriteCustomEntityListQueryServiceMethod(dynamic entity,dynamic contextName)
+{
+	string tableName = entity.ObjectTableName.Trim('"');
+	string dBTableName = entity.DBTableName.Trim('"');
+	bool iscustoms = false;
+	if(tableName.ToString().Trim('"').Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+		iscustoms =  true;
+          
+    }
+
+	 Dictionary<string,string> primaryKeys = new Dictionary<string,string>();
+	 bool hasTenant = false;
+		 foreach(var field in entity["field"])
+		 {
+		  if( field.IsPrimaryKey.GetType() == typeof(string))
+			{
+				if(field.IsPrimaryKey.ToString() == "true")
+				{ 
+					 primaryKeys.Add(field.FieldName.Trim('"'),GetDataType(field));
+
+					//keysstring += field.FieldName.Trim('"') + " = "+field.FieldName.Trim('"').ToLower() + ", ";
+					//primarykeyParam += GetDataType(field)+ " " + field.FieldName.Trim('"').ToLower() + ", ";
+					 
+				}
+			}
+
+			if( field.FieldName.ToString().Trim('"') == "Tenant")
+			{
+				 hasTenant = true;
+			 
+			}
+		 }
+
+		 string tenantParamValue="";
+		 string tenantParam ="";
+		 string tenantCondition = "";
+		 string tenantKeyCondition = "";
+		 string getalltenantCondition = "";
+		 if(hasTenant)
+         {
+			 tenantParam = ", int tenant";
+			 tenantCondition = "&& a.Tenant == tenant";
+			 getalltenantCondition = "\n                   where a.Tenant == tenant";
+
+		     tenantKeyCondition = "&& a.Tenant == keys.Tenant";
+			 tenantParamValue=",tenant";
+         }
+
+
+	string parententity = "object";
+	string parentKeys = tableName + "Keys";
+	if(entity.ParentTableName.GetType() == typeof(string))
+    {
+		parententity = entity.ParentTableName +"PM";
+		parentKeys =entity.ParentTableName + "Keys";
+    }
+
+    string listName = tableName + "List";
+ 
+	string keysName = tableName+"Keys";
+	string pocosspacestring = querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityPOCOs;";
+	string listsspacestring =   querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityLists;";
+	string contextsspacestring = querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ";";
+	if (querylistservicenamespacestring.Contains("Shipment."))
+	{ 
+		contextsspacestring =  querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ".Context;"; 
+	}
+
+	#>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a logitude.
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
+//---
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
+using System.Threading.Tasks;
+<#+
+}
+#>
+using System.Xml.Serialization;
+
+using POCO = <#= pocosspacestring #>
+using <#= listsspacestring #>
+using <#= contextsspacestring #>
+
+namespace <#= querylistservicenamespacestring #>
+{ 
+
+    public partial class <#= listName #>QueryService
+    {
+	    private IQueryable<<#= listName #>> GetIqueryableList(IQueryable<POCO.<#= tableName #>> iQueryable)
+        {
+		IQueryable<<#= listName #>> query = (from a in iQueryable
+                                            select new <#= listName #>()
+											{
+                     <#+                                 
+		foreach(var field in entity["field"])
+		 {
+			  bool generateInList = false;
+                if( field.GenerateInList.GetType() == typeof(string))
+           {
+             generateInList = (field.GenerateInList == "true");
+                 
+                 }
+
+		  /*if( field.DisplayInList.GetType() == typeof(string))
+           {
+             if(field.DisplayInList == "false" && generateInList == false)
+               {
+                  
+               }
+           }*/
+
+		if( field.HasDataBaseField.GetType() == typeof(string))
+			{
+				if(field.HasDataBaseField == "true" && generateInList == true)
+				{ 
+					if( field.FieldName.GetType() == typeof(string))
+		         	{ 
+					#>
+
+					                          <#= field.FieldName.Trim('"')  #> = a.<#= field.FieldName.Trim('"')  #>,
+					<#+
+                    }
+				}
+			}
+		 }#>
+
+		                    	            });
+            return query;
+		}
+
+		private IQueryable<POCO.<#= tableName #>> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<POCO.<#= tableName #>> iQueryable<#=tenantParam#>)
+        {
+			throw new NotImplementedException();
+		}
+		<#+
+	if(!iscustoms)
+    {
+	 #>
+		private IQueryable<POCO.<#= tableName #>> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<POCO.<#= tableName #>> iQueryable<#=tenantParam#>)
+        {
+			return iQueryable;
+		}
+		
+		<#+
+	}#>
+	}
+
+
+}
+	<#+
+}
+
+#>
+
+
+<#+
+ private void WriteEntityListQueryServiceMethod(dynamic entity,dynamic contextName)
+{
+	bool iscustoms = false;
+    string tableName = entity.ObjectTableName.Trim('"');
+	string dBTableName = entity.DBTableName.Trim('"');
+	if(tableName.ToString().Trim('"').Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+        iscustoms = true;  
+    }
+
+	string parententity = "object";
+	string parentKeys = tableName + "Keys";
+	if(entity.ParentTableName.GetType() == typeof(string))
+    {
+		parententity = entity.ParentTableName +"PM";
+		parentKeys =entity.ParentTableName + "Keys";
+    }
+
+    string listName = tableName + "List";
+ 
+	string keysName = tableName+"Keys";
+	string contextspacestring = querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ";";
+	if (querylistservicenamespacestring.Contains("Shipment."))
+	{ 
+		contextspacestring =  querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ".Context;"; 
+	}
+	string pocosspacestring = querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityPOCOs;";
+	string listsspacestring =   querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityLists;";
+	//string mappingspacestring =   querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityDataMappings;";
+	//string repspacestring =   querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ".Repsitories;";
+	//string keysspacestring =   querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityKeys;";
+	//string contextspacestring =   queryservicenamespacestring.ToString().Substring(0,queryservicenamespacestring.ToString().LastIndexOf('.')) + ".Context;";
+
+	//string dataprojectnamespace = querylistservicenamespacestring.ToString().Substring(0,querylistservicenamespacestring.ToString().LastIndexOf('.')).Replace("BL","Data;");
+
+	//repspacestring = repspacestring.Replace("BL","Data");
+	//keysspacestring = keysspacestring.Replace("BL","Data");
+	//pocosspacestring = pocosspacestring.Replace("BL","Data");
+	 string sortbycolumnname="";
+	 string sortbydirection = "OrderBy";
+	 if(entity.SortingByObjectField.GetType() == typeof(string))
+	 {
+		 sortbycolumnname = entity.SortingByObjectField.Trim('"');
+     }
+	  if(entity.SortingByDirection.GetType() == typeof(string))
+	 {
+		 if(entity.SortingByDirection.Trim('"') == "Descending")
+		 {
+			 sortbydirection = "OrderByDescending";
+		 }
+     }
+
+	
+
+	  string sortbyDriection="";
+	 if(entity.SortingByDirection.GetType() == typeof(string))
+	 {
+		 sortbyDriection = entity.SortingByDirection.Trim('"');
+     }
+
+	 if(string.IsNullOrEmpty(sortbycolumnname))
+     {
+		 sortbycolumnname = entity["field"][0].FieldName.Trim('"');
+     }
+
+
+	  Dictionary<string,string> primaryKeys = new Dictionary<string,string>();
+	  string keysstring = "";
+	   
+	  bool hasTenant = false;
+		 foreach(var field in entity["field"])
+		 {
+		  if( field.IsPrimaryKey.GetType() == typeof(string))
+			{
+				if(field.IsPrimaryKey.ToString() == "true")
+				{ 
+					 primaryKeys.Add(field.FieldName.Trim('"'),GetDataType(field));
+
+					//keysstring += field.FieldName.Trim('"') + " = "+field.FieldName.Trim('"').ToLower() + ", ";
+					//primarykeyParam += GetDataType(field)+ " " + field.FieldName.Trim('"').ToLower() + ", ";
+					 
+				}
+			}
+
+			if( field.FieldName.ToString().Trim('"') == "Tenant")
+			{
+				 hasTenant = true;
+			 
+			}
+		 }
+
+
+		 string tenantParamValue="";
+		 string tenantParam ="";
+		 string tenantCondition = "";
+		 string tenantKeyCondition = "";
+		 string getalltenantCondition = "";
+		 if(hasTenant)
+         {
+			 tenantParam = ", int tenant";
+			 tenantCondition = "&& a.Tenant == tenant";
+			 getalltenantCondition = "\n                   where a.Tenant == tenant";
+
+			 if(entity.TenantZeroData?.GetType() == typeof(string) && entity.TenantZeroData == "true")
+			 {
+				getalltenantCondition += " || a.Tenant == 0";
+			 }
+
+		     tenantKeyCondition = "&& a.Tenant == keys.Tenant";
+			 tenantParamValue=",tenant";
+         }
+
+		 string primarykeyParam="";
+		 string primarykeyCondition = "";
+		// string keyprimarykeyCondition = "";
+		 foreach(string key in primaryKeys.Keys)
+         {
+			 primarykeyParam += primaryKeys[key]+ " " + key.ToLower() + ", ";
+			 primarykeyCondition += " a." + key +" == "  + key.ToLower() +" &&";
+			// keyprimarykeyCondition += " a." + key +" == a."  + key +" &&";
+         }
+		 
+		 primarykeyParam = primarykeyParam.TrimEnd(' ').TrimEnd(',');
+		 primarykeyCondition = primarykeyCondition.TrimEnd('&').TrimEnd('&').Trim(' ');
+		// keyprimarykeyCondition = keyprimarykeyCondition.TrimEnd('&').TrimEnd('&').Trim(' ');
+		  
+     
+   #>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a logitude.
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
+//---
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
+using System.Threading.Tasks;
+<#+
+}
+#>
+using System.Xml.Serialization;
+
+using POCO = <#= pocosspacestring #>
+using <#= listsspacestring #>
+using <#= contextspacestring #>
+namespace <#= querylistservicenamespacestring #>
+{ 
+
+    public partial class <#= listName #>QueryService
+    {
+         private I<#= contextName #> context;
+        public <#= listName #>QueryService(I<#= contextName #> context)
+        {
+            this.context = context;
+        }
+
+        public List<<#= listName #>> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<<#= listName #>> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<POCO.<#= tableName #>> iQueryable = (from a in context.<#= dBTableName #>
+                                              <#= getalltenantCondition #> select a);
+            <#+
+         if (!iscustoms)
+         {
+            #>
+			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable<#=tenantParamValue#>);
+			<#+
+         }
+			#>
+			iQueryable = ApplyCustomFilters(queryOperations, iQueryable<#=tenantParamValue#>);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+
+            iQueryable = filter.GetFilteredQuery<POCO.<#= tableName #>>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<<#= listName #>> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<<#= listName #>>(query2, treeFilterQueryArgs);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(<#= listName #>).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> <#= tableName #>ObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("<#= entity.ObjectTableName.Trim('"') #>",tenant).ToList();
+
+                ObjectField objectField = (from a in <#= tableName #>ObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<<#= listName #>, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<<#= listName #>, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<<#= listName #>, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+						case "datetime2": 
+                            {
+                                query2 = sortClass.GetSorterQuery<<#= listName #>, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<<#= listName #>, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<<#= listName #>, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<<#= listName #>, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.<#=sortbydirection#>(d => d.<#= sortbycolumnname #>);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.<#=sortbydirection#>(d => d.<#= sortbycolumnname #>);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<<#= listName #>> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public <#= listName #> GetSingle(<#= primarykeyParam #>)
+        {
+            IQueryable<POCO.<#= tableName #>> <#= tableName #>Query = (from a in context.<#= dBTableName #>
+                                                       where <#= primarykeyCondition #>
+                                                       select a);
+
+             
+            IQueryable<<#= listName #>> <#= listName #>Query = GetIqueryableList( <#= tableName #>Query);
+            <#= listName #> <#= listName #> = <#= listName #>Query.FirstOrDefault();
+            return <#= listName #>;
+           
+        }
+
+
+		
+        public int GetListCount(QueryOperations queryOperations<#= tenantParam #> ){
+		 		  return GetListCount(queryOperations<#= tenantParamValue #>, new TreeFilterQueryArgs());
+
+		 }
+
+
+
+
+
+
+
+
+        public int GetListCount(QueryOperations queryOperations<#= tenantParam #>  ,TreeFilterQueryArgs treeFilterQueryArgs )
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<POCO.<#= tableName #>> iQueryable = (from a in context.<#= dBTableName #> <#= getalltenantCondition #> select a);
+
+			  <#+
+         if (!iscustoms)
+         {
+            #>
+			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable<#=tenantParamValue#>);
+			<#+
+         }
+			#>
+			iQueryable = ApplyCustomFilters(queryOperations, iQueryable<#=tenantParamValue#>);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<POCO.<#= tableName #>>(nonListQueryOperation, iQueryable);
+
+
+
+            IQueryable<<#= listName #>> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<<#= listName #>>(query2, treeFilterQueryArgs);
+
+            int count = query2.Count();
+            return count;
+        }
+
+
+    }
+}
+	 <#+
+
+
+
+}
+
+#>
+
+
+
+
+
+
+
+<#+
+//Create an elastic object
+private dynamic FromEntityListQueryServiceFile(string file)
+{
+   var path= Host.ResolvePath(file);
+   return XDocument.Load(path).Root.ToElastic();
+}
+
+#>

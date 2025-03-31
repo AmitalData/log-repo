@@ -112,13 +112,13 @@ namespace AmitalCloud.Infrastructure.WebAPI
             AmitalCloudSettings.CustomerCareIP = setting.CustomerCareIP;
             AmitalCloudSettings.DeploymentStage = setting.DeploymentStage;
             AmitalCloudSettings.IsLogEnabled = setting.IsLogEnabled;
-            AmitalCloudSettings.LogitudeURL = setting.LogitudeURL;
+            AmitalCloudSettings.AmitalURL = setting.LogitudeURL;
             AmitalCloudSettings.TotangoServiceId = setting.TotangoServiceId;
             AmitalCloudSettings.UsingAzure = setting.UsingAzure;
             AmitalCloudSettings.StorageAccountKey = setting.StorageAccountKey;
             AmitalCloudSettings.StorageAccountName = setting.StorageAccountName;
             AmitalCloudSettings.StorageType = setting.StorageType;
-            AmitalCloudSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
+            AmitalCloudSettings.AmitalCRMTenantNumber = setting.LogitudeCRMTenantNumber;
             AmitalCloudSettings.AutoSignupEmail = setting.AutoSignupEmail;
             AmitalCloudSettings.AutoSignupPassword = setting.AutoSignupPassword;
             AmitalCloudSettings.ForceHttps = setting.ForceHttps;
@@ -154,7 +154,7 @@ namespace AmitalCloud.Infrastructure.WebAPI
             AmitalCloudSettings.OceanInsightsToken = setting.OceanInsightsToken;
             AmitalCloudSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
             AmitalCloudSettings.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
-            AmitalCloudSettings.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
+            AmitalCloudSettings.AmitalCloudAmitalTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
             AmitalCloudSettings.OITenantNumber = setting.OITenantNumber;
             AmitalCloudSettings.AzurePrincipalSecretKey = setting.AzurePrincipalSecretKey;
             AmitalCloudSettings.DNSZone = setting.DNSZone;
@@ -163,7 +163,7 @@ namespace AmitalCloud.Infrastructure.WebAPI
             AmitalCloudSettings.WorkflowStorageAccountKey = setting.WorkflowStorageAccountKey;
             AmitalCloudSettings.System2RedirectFraction = setting.System2RedirectFraction;
             AmitalCloudSettings.WindWardSettings = setting.WindWardSettings;
-            AmitalCloudSettings.LogitudeIISURL = setting.LogitudeIISURL;
+            AmitalCloudSettings.AmitalIISURL = setting.LogitudeIISURL;
             AmitalCloudSettings.TempStorageConnection = setting.TempStorageConnection;
         }
     }

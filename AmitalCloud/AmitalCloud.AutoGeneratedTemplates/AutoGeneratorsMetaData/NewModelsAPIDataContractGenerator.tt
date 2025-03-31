@@ -1,0 +1,702 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="Microsoft.CSharp.dll" #>
+<#@ Assembly Name="System.Linq.dll" #> 
+<#@ Assembly name="$(SolutionDir)packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll" #>
+<#@ Import Namespace="System.Xml" #>
+<#@ Import Namespace="System.Xml.Linq" #>
+<#@ Import Namespace="System.Linq" #>
+<#@ Import Namespace="AmazedSaint.Elastic" #>
+<#@ Import Namespace="AmazedSaint.Elastic.Lib" #>
+<#@ output extension=".cs" #>
+<#@ import Namespace="System.Collections.Generic" #>
+<#@ import Namespace="System.IO" #>
+<#@ import Namespace="System.Windows" #>  
+<#  #>
+
+
+<#+
+
+dynamic NSString;
+dynamic EntityPMsNameSpace;
+dynamic myfileNameWithoutExtension;
+Dictionary<string,string> MyaddedProperties = new	Dictionary<string,string>();
+public void GenerateNewModelsApiDataContracts(string sourceFolder,string destinationFolder,string ServicedestinationFolder,string contextName,string PMsNameSpace = "")
+{
+	 
+	 EntityPMsNameSpace = PMsNameSpace;
+ NSString = GetApiDataContractNameSpace(destinationFolder);
+ string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+ string sourceFilePath = Path.Combine(templateDirectory, sourceFolder);
+
+foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+{
+
+    myfileNameWithoutExtension = Path.GetFileNameWithoutExtension(file); 
+	GenerateApiDataContract(file,destinationFolder+"/",ServicedestinationFolder+"/",contextName);
+}
+
+ 
+}
+#>
+
+
+
+<#+  
+
+public void GenerateApiDataContract(string xmlFilePath,string outputFilePath,string ServiceoutputFilePath,string contextName)
+{
+	
+	MyaddedProperties = new	Dictionary<string,string>();
+	if(string.IsNullOrEmpty(NSString))
+    {
+		NSString = GetApiDataContractNameSpace(outputFilePath);
+    }
+    XElement entity = ReadFromFile(xmlFilePath);
+	var DataContracts = entity.Elements("DataContracts").FirstOrDefault();
+	
+	if (DataContracts != null)
+    { 
+	    foreach(XElement DC in DataContracts.Elements("DataContract")) 
+		{  
+		   //WriteAddFeaturesAndTextCodesMethod(entity,Query,ObjectTbl,i);
+		   WriteApiDataContractMethod(DC);
+		   var Name = ((XElement)DC).Attributes().Where(a => a.Name == "Name").FirstOrDefault(); 
+	       string DCName =  Name != null ? Name.Value.Trim('"') : "";
+		   SaveApiDataContractOutput(outputFilePath+DCName+".Generated.cs");
+        }
+
+		foreach(XElement DC in DataContracts.Elements("DataContract")) 
+		{  
+		   //WriteAddFeaturesAndTextCodesMethod(entity,Query,ObjectTbl,i);
+		   
+          
+			   WriteApiDataContractQueryServiceMethod(DC,entity,contextName);
+			   var Name = ((XElement)DC).Attributes().Where(a => a.Name == "Name").FirstOrDefault(); 
+			   string DCName =  Name != null ? Name.Value.Trim('"') : "";
+			   SaveApiDataContractServiceOutput(ServiceoutputFilePath+"/QueryService/"+DCName+"QueryService.Generated.cs");
+		   
+        }
+ 
+        
+		
+	} 
+}
+ 
+ public dynamic GetApiDataContractNameSpace(string destinationFolder)
+{
+	string spacestring = "";
+	string[] path = destinationFolder.Split('/');
+	foreach(string dir in path)
+    {
+		if(dir != "..")
+        {
+			spacestring += dir + ".";
+        }
+    }
+
+	
+	spacestring = spacestring.ToString().Trim('.');
+ 
+	return spacestring;
+}
+
+private dynamic ReadFromFile(string file)
+{
+    var path= Host.ResolvePath(file);
+   return XDocument.Load(path).Root;//.Root.ToElastic();
+}
+
+void SaveApiDataContractOutput(string outputFileName)
+  { 
+      string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+      string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+	
+
+	   var manager = Manager.Create(Host, GenerationEnvironment);
+	  manager.CreateTestFile(outputFilePath,this.GenerationEnvironment.ToString().Trim('\n'));
+	  this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+  }
+  void SaveApiDataContractServiceOutput(string outputFileName)
+  { 
+      string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+      string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+	
+
+	   var manager = Manager.Create(Host, GenerationEnvironment);
+	  manager.CreateTestFile(outputFilePath,this.GenerationEnvironment.ToString().Trim('\n'));
+	  this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+  }
+#>
+
+
+<#+
+private void WriteApiDataContractQueryServiceMethod(dynamic entity,dynamic Mainentity,string contextName)
+{
+   var Name = ((XElement)entity).Attributes().Where(a => a.Name == "Name").FirstOrDefault(); 
+   var Version = ((XElement)entity).Attributes().Where(a => a.Name == "Version").FirstOrDefault();
+   var IsClosed = ((XElement)Mainentity).Attributes().Where(a => a.Name == "IsClosed").FirstOrDefault().Value; 
+   var CPName = ((XElement)entity).Attributes().Where(a => a.Name == "ComputingPartnerName").FirstOrDefault(); 
+   var TableName = ((XElement)Mainentity).Attributes().Where(a => a.Name == "DBTableName").FirstOrDefault().Value;
+    var ObjectTableName = ((XElement)Mainentity).Attributes().Where(a => a.Name == "ObjectTableName").FirstOrDefault().Value.Trim('"'); 
+	string DCName =  Name != null ? Name.Value.Trim('"') : "";//entity.Name.Trim('"');
+	if(DCName == "PickUp"){
+	ObjectTableName = "ShipmentPickUp";
+	}
+	if(DCName == "Delivery"){
+	ObjectTableName = "ShipmentDelivery";
+	}
+	string DCVersion =  Version != null ? Version.Value.Trim('"') : "";//entity.Name.Trim('"');
+	string ComputingPartnerName =  CPName != null ? CPName.Value.Trim('"') : "";//entity.CPName.Trim('"');
+	string pocosspacestring = NSString.Substring(0,NSString.LastIndexOf('.')) + ".EntityPOCOs;";
+	string pmspacestring = EntityPMsNameSpace + ";";//NSString.Substring(0,NSString.LastIndexOf('.')) + ".EntityPMs;";
+	string servicespacestring = NSString.Substring(0,NSString.LastIndexOf('.')) + ".EntityUpdateServices;";
+	string queriesspacestring = NSString.Substring(0,NSString.LastIndexOf('.')) + ".EntityQueryServices"; 
+	string myspacestring = NSString.Substring(0,NSString.LastIndexOf('.')).Replace(".BL",".Data;"); //"Simplog.Data." + NSString.Split('.')[2] + ";"; 
+	string ContextName = contextName;//NSString.Split('.')[2].Replace("Model","") +(ObjectTableName == "Quote" ? "sContext":"Context"); 
+	string ServiceName = ObjectTableName + "Service";
+	string QueryName = ObjectTableName + "QueryService";
+	string MapId = "false";
+	 var IsComposition = ((XElement)Mainentity).Attributes().Where(a => a.Name == "IsComposition").FirstOrDefault().Value;
+		   
+#>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a logitude.
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
+//---
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.APIDataContract.<#= DCVersion #>;
+using Logitude.BL.QuoteModel.APIDataContract.<#= DCVersion #>;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.APIDataContract.<#= DCVersion #>;
+using Logitude.BL.ShipmentsModel.APIDataContract.<#= DCVersion #>;
+using Logitude.BL.Helpers;
+using <#=pmspacestring#>
+using <#=servicespacestring#>
+using <#=queriesspacestring#>;
+using <#=myspacestring#>
+
+ namespace <#= NSString #>.<#= DCVersion #>
+{ 
+   public partial class <#=DCName #>QueryService
+   {
+   <#+if(IsComposition == "false" && IsClosed != "true")
+		   {#>
+
+		I<#= ContextName #>  context;
+		//<#= ServiceName #> service; 
+		<#+}#>
+
+		<#=queriesspacestring#>.<#= QueryName #> query; 
+
+        public <#=DCName #>QueryService(int tenant)
+        {
+		<#+if(IsComposition == "false" && IsClosed != "true")
+		   {#>
+		    context = <#= ContextName #>.GetContext(tenant); 
+			//service = new <#= ServiceName #>(context, tenant); <#+}#>
+
+			query = new <#=queriesspacestring#>.<#= QueryName #>(tenant);
+        }
+
+		<#+  foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes
+		 {
+			 var IsKey = ((XElement)field).Attributes().Where(a => a.Name == "IsKey").FirstOrDefault().Value;
+			 var FieldName = ((XElement)field).Attributes().Where(a => a.Name == "FieldName").FirstOrDefault().Value.Trim('"');
+			 string type = GetmyDataType(field);
+			 //var FieldsDataType = ((XElement)field).Attributes().Where(a => a.Name == "FieldsDataType").FirstOrDefault().Value;
+			
+			 if(IsKey == "true" && IsComposition == "false"){ #>
+
+		public <#=DCName #> Get<#=DCName #>By<#=FieldName#>(<#=type#> <#=FieldName#>,int Tenant)
+        { 
+		    try
+            {
+
+				<#+if(FieldName != "Id" && IsClosed != "true"){#>
+
+				var temp = query.GetSinglePMBy<#=FieldName#>(<#=FieldName#>,Tenant);<#+}else{#>
+
+				var temp = query.GetSinglePM(<#=FieldName#>,Tenant);<#+}#>
+				
+				 if (temp == null)
+                    throw new ApplicationException("<#=ObjectTableName#> with <#=FieldName#> " + <#=FieldName#> + " doesn't exist");
+
+				return <#=DCName #>DataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		<#+
+		}}#>
+
+		public <#+if(IsComposition == "true"){#>List<<#+}#><#=DCName #><#+if(IsComposition == "true"){#>><#+}#> <#=DCName #>DataMapping(<#+if(IsComposition == "true"){#>List<<#+}#><#=ObjectTableName#>PM<#+if(IsComposition == "true"){#>><#+}#> MyEntityPM,int Tenant,string ComputingPartnerName = "")
+        {
+		    try
+            {
+				   <#+if(IsComposition == "true"){#>
+
+				var MyList = new List<<#=DCName #>>();
+				foreach (var item in MyEntityPM)
+				{
+				   <#+}#>
+
+				   var temp = new <#=DCName #>(); <#+       int i = 0;
+							 foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes
+							 {
+							 string type = GetmyDataType(field);
+							  var IsMulti = ((XElement)field).Attributes().Where(a => a.Name == "IsMulti").FirstOrDefault().Value; 
+							 string IsCustomType = ((XElement)field).Attributes().Where(a => a.Name == "IsCustomType").FirstOrDefault().Value;
+							 var temp = ((XElement)field).Attributes().Where(a => a.Name == "IgnoreCustomTypeCheck").FirstOrDefault();
+							 string IgnoreCustomTypeCheck = "false";
+							 if(temp != null){
+							 IgnoreCustomTypeCheck = temp.Value;
+							 }
+							  var IsCloseField = "false";
+									var tempo = ((XElement)field).Attributes().Where(a => a.Name == "IsCloseField").FirstOrDefault();
+									if(tempo != null){
+									IsCloseField = ((XElement)field).Attributes().Where(a => a.Name == "IsCloseField").FirstOrDefault().Value;
+									}
+							 var DCFieldName = ((XElement)field).Attributes().Where(a => a.Name == "DCFieldName").FirstOrDefault().Value.Trim('"');
+							 var FieldName = ((XElement)field).Attributes().Where(a => a.Name == "FieldName").FirstOrDefault().Value.Trim('"');
+							 var IsSpecialField = ((XElement)field).Attributes().Where(a => a.Name == "IsSpecialField").FirstOrDefault().Value;
+							  var myBool = ((XElement)field).Attributes().Where(a => a.Name == "IsManualMapping").FirstOrDefault();
+							 var IsManualMapping = "false";
+							 if(myBool != null){
+							 IsManualMapping = myBool.Value;
+							 }
+							 if(IsCustomType == "true" || IgnoreCustomTypeCheck == "true"){  
+							 if(IsMulti == "true"){#>
+
+				if(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#> != null <#+if(IgnoreCustomTypeCheck == "false"){#>&& <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>.Count > 0<#+}#>)
+				{
+					 <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>QueryService <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#> = new <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>QueryService(Tenant);
+					 temp.<#=DCFieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMapping(<#+if(IsManualMapping == "true" && IsMulti == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>,<#+}#><#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,Tenant);
+				}
+
+							 <#+} else {#>
+
+<#+if(type != "List<CustomField>"){#>			  
+				   if(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#> != null)
+				   {
+					   <#=type#>QueryService <#=type#>Service<#=i#> = new <#=type#>QueryService(Tenant);
+					   <#+if(IsManualMapping == "true"){#>
+					   temp.<#=DCFieldName#> = <#=type#>Service<#=i#>.<#=type.Replace("List<","").Replace(">","")#>CustomDataMapping(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,Tenant); 
+			       
+					   <#+}else{#>
+					   temp.<#=DCFieldName#> = <#=type#>Service<#=i#>.Get<#=type#>By<#+if(FieldName.Contains("Code") || IsCloseField == "true"){#>Code<#+}else{#>Id<#+}#>(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,Tenant); 
+			       
+					   <#+}#>
+				   }
+<#+}else{#>
+				
+				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"<#=ObjectTableName#>");
+				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
+				 
+<#+}#>
+				   <#+
+							 i++;}}
+							 else
+							 {
+							 if(IsSpecialField == "true"){ #>
+
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.<#=DCFieldName#> = helper.GetComputingPartnerCodeTranslation(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,ComputingPartnerName,"<#=ObjectTableName#>");  <#+}else{#>
+
+				   temp.<#=DCFieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>;<#+}
+			   
+							 }}#>
+					<#+if(IsComposition == "true"){#>
+
+					MyList.Add(temp);
+				}
+					<#+}#>
+
+				   return <#+if(IsComposition == "true"){#>MyList<#+}else{#>temp<#+}#>;
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        } 
+
+		public <#+if(IsComposition == "true"){#>List<<#+}#><#=ObjectTableName#>PM<#+if(IsComposition == "true"){#>><#+}#> <#=DCName #>DataMappingAndValidatin(<#+if(IsComposition == "true"){#>List<<#+}#><#=DCName #><#+if(IsComposition == "true"){#>><#+}#> MyEntity,int Tenant,string ComputingPartnerName = "")
+        {
+		    try
+            {
+				   <#+if(IsComposition == "true"){#>
+
+				var MyList = new List<<#=ObjectTableName#>PM>();
+				foreach (var item in MyEntity)
+				{
+					   <#+}#>
+
+					var temp = new <#=ObjectTableName#>PM();
+					<#+
+					var MyErrorField = "";
+					var Keys = new List<string>();
+					var Count = 0;
+					var HasCompositKey = "false";
+					var KeysAsParam = "";
+					   foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes
+					   {
+					       var IsCompositKey = "false";
+					       var CompositKey = ((XElement)field).Attributes().Where(a => a.Name == "IsCompositKey").FirstOrDefault();
+						   if(CompositKey != null){
+						      IsCompositKey = ((XElement)field).Attributes().Where(a => a.Name == "IsCompositKey").FirstOrDefault().Value;
+						   }
+						   var FieldName = ((XElement)field).Attributes().Where(a => a.Name == "FieldName").FirstOrDefault().Value.Trim('"');
+						   if(IsCompositKey == "true"){
+						        Count = Count + 1;
+								HasCompositKey = "true";
+								if(IsComposition == "true"){KeysAsParam = KeysAsParam + "item." + FieldName + ",";}else{KeysAsParam = KeysAsParam + "MyEntity." + FieldName + ",";}
+						        Keys.Add(FieldName);
+						   }
+					   }
+					   foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes
+					   {
+						var FieldName = ((XElement)field).Attributes().Where(a => a.Name == "FieldName").FirstOrDefault().Value.Trim('"');
+						var IsCloseField = "false";
+						var temp = ((XElement)field).Attributes().Where(a => a.Name == "IsCloseField").FirstOrDefault();
+						if(temp != null){
+						IsCloseField = ((XElement)field).Attributes().Where(a => a.Name == "IsCloseField").FirstOrDefault().Value;
+						}
+						var DCFieldName = ((XElement)field).Attributes().Where(a => a.Name == "DCFieldName").FirstOrDefault().Value.Trim('"');
+						var IsKey = ((XElement)field).Attributes().Where(a => a.Name == "IsKey").FirstOrDefault().Value;
+						var IsSpecialField = ((XElement)field).Attributes().Where(a => a.Name == "IsSpecialField").FirstOrDefault().Value;
+						var IsCompositKey = "false";
+					       var CompositKey = ((XElement)field).Attributes().Where(a => a.Name == "IsCompositKey").FirstOrDefault();
+						   if(CompositKey != null){
+						      IsCompositKey = ((XElement)field).Attributes().Where(a => a.Name == "IsCompositKey").FirstOrDefault().Value;
+						   }
+				
+						     if(FieldName == "Id" && (Keys == null || Keys.Count == 0)){
+								  MyErrorField = DCFieldName;#>
+							  
+					if (!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#+if(FieldName.Contains("Code") || DCFieldName.Contains("Code") || IsCloseField == "true"){#>Code<#+}else{#>Id<#+}#>))
+					{
+						temp = query.GetSinglePM(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#+if(FieldName.Contains("Code") || DCFieldName.Contains("Code") || IsCloseField == "true"){#>Code<#+}else{#>Id<#+}#><#+if(IsClosed == "false"){#>, Tenant<#+}#>);
+					} 
+					<#+}
+								  if(IsKey == "true" && IsSpecialField == "false" && FieldName != "Id" && (Keys == null || Keys.Count == 0)){
+								  MyErrorField = DCFieldName;#>
+					if (!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>))
+					{
+						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#><#+if(IsClosed == "false"){#>, Tenant<#+}#>);
+					} <#+}
+					 if(IsCompositKey == "true" && IsSpecialField == "false" &&  Keys != null && Keys.Count > 0 && HasCompositKey == "true"){
+					  MyErrorField = KeysAsParam;#>
+
+					if (!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>))
+					{
+						temp = query.GetSingle(<#=KeysAsParam#>false,false);
+					}
+					<#+}
+					HasCompositKey = "false";
+					if(IsSpecialField == "true"){#>
+
+					if (!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>))
+					{
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>,ComputingPartnerName,"<#=ObjectTableName#>");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("<#=ObjectTableName#> with Partner Code " + <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#> + " doesn't match any record");
+						}
+						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(MyCode<#+if(IsClosed == "false"){#>, Tenant<#+}#>);
+						
+						
+					}
+					
+					   <#+}
+					   }#>
+					   
+					if(temp == null)
+					{<#+
+					     if(Keys.Count == 0)
+						 {
+					#>
+
+					    throw new ApplicationException("<#=ObjectTableName#> with <#=MyErrorField#> " + <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=MyErrorField#> + " doesn't exist");
+						<#+
+						}
+						else
+						{
+						#>
+
+						throw new ApplicationException("<#=ObjectTableName#> with provided keys doesn't exist");
+						<#+
+						}
+						#>
+
+					} <#+
+			     
+								 foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes
+								 {
+								 //int i = 0;
+								 string type = GetmyDataType(field);
+								 var IsMulti = ((XElement)field).Attributes().Where(a => a.Name == "IsMulti").FirstOrDefault().Value; 
+						 
+								 string IsCustomType = ((XElement)field).Attributes().Where(a => a.Name == "IsCustomType").FirstOrDefault().Value;
+								  var CustomNameTemp = ((XElement)field).Attributes().Where(a => a.Name == "CloseTableCode").FirstOrDefault();
+								 string CustomName = "null";
+								 if(CustomNameTemp != null){
+								 CustomName = CustomNameTemp.Value.Trim('"');
+								 }
+								 var temp = ((XElement)field).Attributes().Where(a => a.Name == "IgnoreCustomTypeCheck").FirstOrDefault();
+								 string IgnoreCustomTypeCheck = "false";
+								 if(temp != null){
+								 IgnoreCustomTypeCheck = temp.Value;
+								 }
+								 var DCFieldName = ((XElement)field).Attributes().Where(a => a.Name == "DCFieldName").FirstOrDefault().Value.Trim('"');
+								 var FieldName = ((XElement)field).Attributes().Where(a => a.Name == "FieldName").FirstOrDefault().Value.Trim('"');
+								 var IsKey = ((XElement)field).Attributes().Where(a => a.Name == "IsKey").FirstOrDefault().Value;
+								 var IsCloseField = "false";
+									var tempo = ((XElement)field).Attributes().Where(a => a.Name == "IsCloseField").FirstOrDefault();
+									if(tempo != null){
+									IsCloseField = ((XElement)field).Attributes().Where(a => a.Name == "IsCloseField").FirstOrDefault().Value;
+									}
+								 var myBool = ((XElement)field).Attributes().Where(a => a.Name == "IsManualMapping").FirstOrDefault();
+								 var IsManualMapping = "false";
+								 if(myBool != null){
+								 IsManualMapping = myBool.Value;
+								 }
+								 if(IsCustomType == "true" || IgnoreCustomTypeCheck == "true"){
+								 if(IsMulti == "true"){  #>
+
+					if(<#+if(IsComposition == "true"){#>temp<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#> != null <#+if(IgnoreCustomTypeCheck == "false"){#>&& <#+if(IsComposition == "true"){#>temp<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>.Count > 0<#+}#>)
+					{
+						<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>QueryService <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#> = new <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>QueryService(Tenant);
+						temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){#>temp<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName);
+					}
+
+								 <#+} else {#>
+<#+if(type != "List<CustomField>"){#>
+
+					<#=type#>QueryService <#=DCFieldName#><#=type#>Service = new <#=type#>QueryService(Tenant);
+					if(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#> != null)
+					{
+						var my<#=DCFieldName#>PM = <#=DCFieldName#><#=type#>Service.<#=type#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true" && IsMulti == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant<#+if(IsManualMapping == "false"){#>,ComputingPartnerName<#+}#>);
+						<#+
+						if(type != "CustomField" && CustomName == "null")
+						{
+						#>
+						if(my<#=DCFieldName#>PM != null)
+						{
+							temp.<#=FieldName#> = my<#=DCFieldName#>PM.<#+if(FieldName.Contains("Code") || IsCloseField == "true"){#>Code<#+}else{#>Id<#+}#>;
+						}
+						<#+
+						}
+						else if(CustomName != "null"){#>
+						if(my<#=DCFieldName#>PM != null)
+						{
+							temp.<#=FieldName#> = my<#=DCFieldName#>PM.<#=CustomName#>;
+						}
+						<#+}else{
+						#>
+						temp.<#=FieldName#> = my<#=DCFieldName#>PM;
+						<#+
+						 }
+						#> 
+					}
+<#+}else{#>
+
+				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"<#=ObjectTableName#>");
+				if (<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#> != null)
+				{
+					 customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
+				}		
+<#+}#>			
+					<#+
+								 }}
+								 else
+								 { 
+								 if(FieldName == "Id" || FieldName == "Code"){#>
+
+					if(string.IsNullOrEmpty(temp.<#=FieldName#>))
+					{
+						temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
+					}<#+}
+								 else{#>
+
+					temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;<#+}
+								 }}#>
+					   <#+if(IsComposition == "true"){#>
+
+						MyList.Add(temp);
+					}
+						<#+}#>
+
+					   return <#+if(IsComposition == "true"){#>MyList<#+}else{#>temp<#+}#>;
+		    }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            } 
+        }
+		 
+   }
+}
+<#+
+}
+
+ private void WriteApiDataContractMethod(dynamic entity)
+{
+    var Name = ((XElement)entity).Attributes().Where(a => a.Name == "Name").FirstOrDefault(); 
+	string DCName =  Name != null ? Name.Value.Trim('"') : "";//entity.Name.Trim('"');
+	 var Version = ((XElement)entity).Attributes().Where(a => a.Name == "Version").FirstOrDefault();
+	 string DCVersion =  Version != null ? Version.Value.Trim('"') : "";//entity.Name.Trim('"');
+	  
+   #>
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a logitude.
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
+//---
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.BL.CommonDataModel.APIDataContract.<#=DCVersion#>;
+using Logitude.BL.QuoteModel.APIDataContract.<#=DCVersion#>; 
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.APIDataContract.<#=DCVersion#>;
+using Logitude.BL.ShipmentsModel.APIDataContract.<#= DCVersion #>;
+using System.Xml.Serialization;
+
+namespace <#= NSString #>.<#=DCVersion#>
+{
+   
+    public partial class <#=DCName #>
+    {
+
+	<#+  foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes
+		 {
+			 WritemyProperty(field);
+		 } #>
+    }
+} <#+
+    
+	} 
+
+#>
+
+
+<#+
+
+public void WritemyProperty(dynamic field)
+{
+ var DCFieldName = ((XElement)field).Attributes().Where(a => a.Name == "DCFieldName").FirstOrDefault().Value.Trim('"'); 
+dynamic fieldName = GetmyPropertyName(DCFieldName);
+var temp = ((XElement)field).Attributes().Where(a => a.Name == "IsAttribute").FirstOrDefault();
+var IsAttribute = "false";
+if(temp != null){
+IsAttribute = temp.Value;
+} 
+string type = GetmyDataType(field);
+#>
+    <#+if(IsAttribute == "true"){#>
+
+	[XmlAttribute]<#+}#>
+
+    public <#= type #> <#= fieldName #> { get; set; }
+<#+  
+}
+#>
+
+<#+
+
+
+#>
+
+
+<#+		
+
+private string GetmyPropertyName(dynamic property)
+{
+	return property.ToString().Trim('"') as string;
+}
+
+#>
+
+<#+
+
+  private string GetmyDataType(dynamic field,bool isListClass = false)
+        {
+			
+			string typecode = ((XElement)field).Attributes().Where(a => a.Name == "FieldsDataType").FirstOrDefault().Value.Trim('"');
+			string IsNullable = ((XElement)field).Attributes().Where(a => a.Name == "IsNullable").FirstOrDefault().Value;
+			string IsCustomType = ((XElement)field).Attributes().Where(a => a.Name == "IsCustomType").FirstOrDefault().Value;
+			
+			string result = "string";
+            if (typecode == "Boolean")
+            {
+                result = "bool";
+            }
+            if (typecode == "Integer" || typecode == "UnsInteger")
+            {
+                result = "int";
+            }
+
+            if (typecode == "Date" || typecode == "DateTime")
+            {
+                result = "DateTime";
+            }
+
+            if (typecode == "Double" || typecode == "SigDouble")
+            {
+                result = "double";
+            }
+
+			 if (typecode == "Decimal" || typecode == "UnsDecimal")
+            {
+                result = "decimal";
+            }
+			if(typecode == "List")
+            {
+				result = typecode;
+            }
+
+			if(typecode == "Byte[]")
+            {
+				result = "byte[]";
+            }
+			if(IsCustomType == "true")
+            {
+				result = typecode;
+            }
+            //string isNullable = field.IsNullable as string;
+		  if(IsNullable == "true" && result != "string" && IsCustomType != "true")
+		  {
+			  result = result + "?";
+          }
+		  return result;
+
+        }
+#>

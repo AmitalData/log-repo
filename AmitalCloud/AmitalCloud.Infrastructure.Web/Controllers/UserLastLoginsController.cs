@@ -80,7 +80,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         }
         private string GetWorkEnvironment()
         {
-            if (string.IsNullOrEmpty(AmitalCloudSettings.WorkEnvironment)) return "logitude";
+            if (string.IsNullOrEmpty(AmitalCloudSettings.WorkEnvironment)) return "Amital";
             return SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox) ? HttpContext.Current.Request.Url.Host.ToLower().Contains(".logbox.") ? "logbox" : "privatelabel" : AmitalCloudSettings.WorkEnvironment;
 
         }

@@ -2,6 +2,6 @@
 {
     public enum AmitalCloudDBSchema
     {
-        none, LOGITUDE_GLOBAL, LOGITUDE_MAIN, LOGITUDE_LOGS, AMITAL_DB
+        none, AMITAL_GLOBAL, AMITAL_MAIN, AMITAL_LOGS, AMITAL_DB
     }
 }

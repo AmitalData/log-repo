@@ -177,7 +177,6 @@
   <ItemGroup>
     <Compile Include="AmitalCloudSettings.cs" />
     <Compile Include="ApplicationAppInfo.cs" />
-    <Compile Include="Azure\AzureRedisCacheDetails.cs" />
     <Compile Include="Azure\BlobExtensions.cs" />
     <Compile Include="Azure\CommunicationLogsAzure.cs" />
     <Compile Include="Azure\CommunicationLogsAzureContext.cs" />

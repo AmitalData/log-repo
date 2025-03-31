@@ -93,7 +93,7 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
             catch (DbUpdateException dbu)
             {
                 FormatDbUpdateException(dbu);
-                if (this.AmitalCloudDBSchema == AmitalCloudDBSchema.LOGITUDE_MAIN)
+                if (this.AmitalCloudDBSchema == AmitalCloudDBSchema.AMITAL_MAIN)
                 {
                     if (AmitalCloudSettings.HandleDbExceptionInject != null)
                     {
@@ -108,7 +108,7 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
             }
             catch (Exception e)
             {
-                if (this.AmitalCloudDBSchema != AmitalCloudDBSchema.LOGITUDE_LOGS && AmitalCloudSettings.HandleDbExceptionInject != null)
+                if (this.AmitalCloudDBSchema != AmitalCloudDBSchema.AMITAL_LOGS && AmitalCloudSettings.HandleDbExceptionInject != null)
                 {
                     AmitalCloudSettings.HandleDbExceptionInject(e, "SaveChanges:Exception", GetString4LogGroupBy(saveChangeLogger, Environment.StackTrace.ToString()));
                 }

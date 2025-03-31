@@ -44,7 +44,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
             var comId = Guid.NewGuid();
             var client = new UploadClient<RequestPutStreamByTenantComIdM_V1, ResponsePutStreamByTenantComIdM_V1>();
-            var OnPremiseFillingService = AmitalCloudSettings.GetLogitudeCustomsSettingsMInject(fileInfo.Tenant).OnPremiseFillingService;
+            var OnPremiseFillingService = AmitalCloudSettings.GetAmitalCustomsSettingsMInject(fileInfo.Tenant).OnPremiseFillingService;
             var UFileVer = fileInfo.UFileVer ?? 1;
             res = client.Upload(OnPremiseFillingService, 60, new RequestPutStreamByTenantComIdM_V1()
             {
@@ -128,7 +128,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                 var DownloadClient = new DownloadClient<ReqBase64StringByFolderTenantComIdM_V1, ResBase64StringByFolderTenantComIdM_V1>();
 
 
-                var OnPremiseFillingService = AmitalCloudSettings.GetLogitudeCustomsSettingsMInject(fileInfo.Tenant).OnPremiseFillingService;
+                var OnPremiseFillingService = AmitalCloudSettings.GetAmitalCustomsSettingsMInject(fileInfo.Tenant).OnPremiseFillingService;
                 //OnPremiseFillingService = @"http://itzik-7-new:5057/Unifreight/FilingManagerSplit/basic";
 
                 res = DownloadClient.Download(OnPremiseFillingService, reqBase64StringByFolderTenantComIdM_V1);
@@ -170,7 +170,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     currPage = CurrPage
                 };
                 var DownloadClient = new DownloadClient<ReqGetPageTiffAsB64FromTarByTenantComIdPageM_V1, ResGetPageTiffAsB64FromTarByTenantComIdPageM_V1>();
-                var OnPremiseFillingService = AmitalCloudSettings.GetLogitudeCustomsSettingsMInject(tenant).OnPremiseFillingService;
+                var OnPremiseFillingService = AmitalCloudSettings.GetAmitalCustomsSettingsMInject(tenant).OnPremiseFillingService;
                 res = DownloadClient.Download(OnPremiseFillingService, reqGetPageTiffAsB64FromTarByTenantComIdPageM_V1);
                 if (res == null)
                 {

@@ -38,7 +38,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                 //todo: check if this is needed
                 //TenantManagmentPrivateLabelsPM privatelabel = null;
                 //var url = AmitalCloudSecurityUtility.getLoggedDomain();
-                //if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
+                //if (!url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 //{
                 //    TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(tenant);
                 //    privatelabel = query.GetSingleActivePMByUrl_Cache(url);

@@ -69,14 +69,6 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public static string GetData(CommunicationLog myCommLog)
         {
-
-            //ContainerAccessor.InitContainer("fs");
-            //IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            //string testfile = "Holaaaaaaa!";
-            //byte[] data = System.Text.Encoding.ASCII.GetBytes(testfile);
-            //Logitude.Server.Tools.BlobServiceReference.Response repsonse = storageservice.Write(data, @"test9.txt");
-
-
             string xmlfile;
             if (myCommLog == null)
             {
@@ -474,7 +466,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn as OracleConnection;
-                    cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("usp_UpdateQueueCommunicationLo", AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                    cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("usp_UpdateQueueCommunicationLo", AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
 
 
