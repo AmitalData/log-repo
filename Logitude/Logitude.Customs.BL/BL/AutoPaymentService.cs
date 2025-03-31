@@ -1082,10 +1082,11 @@ namespace Logitude.Customs.BL.BL
 			{
 
 				CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
-				DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParamsCredit.Tenant);
-				DeclarationPM declarationPM = declarationQueryService.GetSingle(requestParamsCredit.AppicationId, false, false);
-				if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
-				{
+				CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(this.customContext);
+				CustomsSettingPM customsSetting = customsSettingQuery.GetSingleByTenant(this._tenant);
+
+				if (customsSetting != null && customsSetting.IsConnectedToUniFreight)
+				 {
 					try
 					{
 						//ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(requestParamsCredit.PBId, "שליחת בקשת העברה לגובה");
