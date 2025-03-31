@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
+using System.ComponentModel.DataAnnotations;
 
-namespace Logitude.BL.ShipmentsModel.EntityLists
+namespace AmitalCloud.Shipment.Domain.EntityLists
 {
-    public class INTTRASIStatusList
+    public class FHLStatusList
     {
         [Key]
         public string Code { get; set; }

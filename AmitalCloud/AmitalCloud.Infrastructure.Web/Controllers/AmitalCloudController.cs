@@ -13,7 +13,6 @@ using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
-    [RoutePrefix("api/LogitudeApplication")]
     public class AmitalCloudController : ApiController
     {
         public HttpResponseMessage GetCheckIsupgradingSystem()

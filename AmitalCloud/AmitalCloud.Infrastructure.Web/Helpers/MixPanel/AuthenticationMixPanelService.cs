@@ -27,7 +27,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.MixPanel
 
         private static bool CanCreateLoginEvent(LoginParameters parameters)
         {
-            return AmitalCloudSettings.LogitudeURL != "http://localhost:9996" && (AmitalCloudSettingConfigration.IsLogBoxEnvironment() || parameters.IsCargoTracking);
+            return AmitalCloudSettings.AmitalURL != "http://localhost:9996" && (AmitalCloudSettingConfigration.IsLogBoxEnvironment() || parameters.IsCargoTracking);
         }
 
         private static MixPanelEvent BuildMixPanelLoginEvent(LoginParameters parameters, int tenant)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace Logitude.BL.ShipmentsModel.EntityLists
+namespace AmitalCloud.Shipment.Domain.EntityLists
 {
     public class AWBStatusList
     {

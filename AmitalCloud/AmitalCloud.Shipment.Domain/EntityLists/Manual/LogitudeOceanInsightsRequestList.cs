@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace Logitude.BL.ShipmentsModel.EntityLists
+namespace AmitalCloud.Shipment.Domain.EntityLists
 {
     public class LogitudeOceanInsightsRequestList
     {

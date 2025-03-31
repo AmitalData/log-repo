@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Logitude.BL.ShipmentsModel.EntityLists
+namespace AmitalCloud.Shipment.Domain.EntityLists
 {
-    public class ShipmentReceivableLineStatusList
+    public class ShipmentPayableAmountTypeList
     {
         [Key]
         public string Code { get; set; }
         public string Name { get; set; }
-        public string SearchFields { get; set; }
+
     }
 }

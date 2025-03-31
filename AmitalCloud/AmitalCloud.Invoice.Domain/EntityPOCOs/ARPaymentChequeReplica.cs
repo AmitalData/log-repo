@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using Logitude.Accounting.Data.EntityPOCOs;
+
 namespace AmitalCloud.Invoice.Domain.EntityPOCOs
 {
     public class ARPaymentChequeReplica : BaseEntity

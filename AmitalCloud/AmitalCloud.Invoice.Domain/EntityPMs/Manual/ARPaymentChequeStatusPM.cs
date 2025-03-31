@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
-using Logitude.Accounting.Data.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityPMs
 {

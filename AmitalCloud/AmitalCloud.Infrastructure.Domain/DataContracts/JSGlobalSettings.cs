@@ -13,7 +13,7 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
         public JSGlobalSettings(Setting mySetting) 
         {
             Id = mySetting.Id;
-            LogitudeURL = mySetting.LogitudeURL;
+            AmitalURL = mySetting.LogitudeURL;
             LogoCode = mySetting.LogoCode;
             WorkEnvironment = mySetting.WorkEnvironment;
             SameUserLoginEnabled = (bool)mySetting.SameUserLoginEnabled;
@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
             DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
             DeploymentStage = mySetting.DeploymentStage;
             ReleaseNotesURL = mySetting.ReleaseNotesURL;
-            LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
+			AmitalDemoTenants = mySetting.LogitudeDemoTenants;
             TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
             ReleaseDateString = mySetting.ReleaseDateString;
             DNSZone = mySetting.DNSZone;
@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
 
         [Key]
         public string Id { get; set; }
-        public string LogitudeURL { get; set; }
+        public string AmitalURL { get; set; }
         public string LogoCode { get; set; }
         public string WorkEnvironment { get; set; } //customs,main....
         public bool SameUserLoginEnabled { get; set; }
@@ -42,7 +42,7 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }
         public string ReleaseNotesURL { get; set; }
-        public string LogitudeDemoTenants { get; set; }
+        public string AmitalDemoTenants { get; set; }
         public DateTime? TMPersonalAccessExpirationDate { get; set; }
         public string ReleaseDateString { get; set; }
         public string DNSZone { get; set; }

@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 
-namespace Logitude.Accounting.Def.EntityPMs
+namespace AmitalCloud.Invoice.Domain.EntityPMs
 {
    //[CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
    [DataContract]

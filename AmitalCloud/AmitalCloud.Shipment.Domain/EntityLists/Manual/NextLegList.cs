@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Logitude.BL.ShipmentsModel.EntityLists
+namespace AmitalCloud.Shipment.Domain.EntityLists
 {
-    public class PickUpDeliveryTypeList
+    public class NextLegList
     {
         [Key]
         public string Code { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
-namespace Logitude.Accounting.Data.EntityPOCOs
+namespace AmitalCloud.Invoice.Domain.EntityPOCOs
 {
    
     public class BankAccount

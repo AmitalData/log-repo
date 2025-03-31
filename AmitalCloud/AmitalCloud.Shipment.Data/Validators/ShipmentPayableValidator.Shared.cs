@@ -1,5 +1,4 @@
 ﻿
-//using Logitude.BL.ShipmentsModel.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using System.ComponentModel.DataAnnotations;
 
