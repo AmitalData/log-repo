@@ -17,9 +17,7 @@ using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
-    [RoutePrefix("api/ngMetaData")] // Sets "api/ngMetaData" as the base URL for all actions
-    // [Route("api/ngMetaData")]
-    //[RoutePrefix("ngMetaData")] // No "api" in the prefix
+    [RoutePrefix("api/ngMetaData")]
     public class MetaDataController : ApiController
     {
         [OperationContract]
