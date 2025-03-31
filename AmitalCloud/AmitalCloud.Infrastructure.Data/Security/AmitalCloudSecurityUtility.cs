@@ -377,7 +377,11 @@ namespace AmitalCloud.Infrastructure.Data.Security
                         }
                     }
                 }
-                CacheManager.CacheWrapper.Insert(cacheKey, myContactInfo, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+
+                if (myContactInfo != null)
+                {
+                    CacheManager.CacheWrapper.Insert(cacheKey, myContactInfo, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
             }
             return myContactInfo;
         }
@@ -478,7 +482,11 @@ namespace AmitalCloud.Infrastructure.Data.Security
 
         private static Contact GetSingleContactByEmail(int tenant, string email, IAmitalCloudContext context)
         {
-            return new Repository<Contact>(context).GetMulti(a => a.Email == email && a.Tenant == tenant).FirstOrDefault();
+            List<Contact> entities = new Repository<Contact>(context).GetMulti(a => a.Email == email && (a.Tenant == tenant || a.Tenant == 0));
+
+            Contact contact = entities.Where(a => a.Tenant == tenant).FirstOrDefault() ?? entities.Where(a => a.Tenant == 0).FirstOrDefault();
+
+            return contact;
         }
 
         private static List<string> GetAllPackagesCodes(string email, int tenant, bool isCustomerCare)

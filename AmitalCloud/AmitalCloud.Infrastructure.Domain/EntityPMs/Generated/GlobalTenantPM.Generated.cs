@@ -16,6 +16,7 @@ using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 
 
@@ -25,25 +26,35 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [DataContract]
    public partial class GlobalTenantPM : BaseEntityPM   {
    #region Constructors
-   public GlobalTenantPM() : base() {} 
-   public GlobalTenantPM(POCO.GlobalTenant entity) : base()
-   {
-		_id = entity.Id;
-		_globalDBId = entity.GlobalDBId;
-		_globaldb = entity.GlobalDB !=null ? new GlobalDBPM(entity.GlobalDB) : null;
+   private readonly POCO.GlobalTenant _entity;
+   public GlobalTenantPM() : base() {}
+
+        public GlobalTenantPM(POCO.GlobalTenant entity) : base()
+		{
+			_id = entity.Id;
+			_globalDBId = entity.GlobalDBId;
+			_globaldb = entity.GlobalDB != null ? new GlobalDBPM(entity.GlobalDB) : null;
 			_companyName = entity.CompanyName;
-		_version = entity.Version;
-		_isActive = entity.IsActive;
-		_tTY = entity.TTY;
-		_privateLabelId = entity.PrivateLabelId;
-		_tenantmanagmentprivatelabels = entity.TenantManagmentPrivateLabels !=null ? new TenantManagmentPrivateLabelsPM(entity.TenantManagmentPrivateLabels) : null;
+			_version = entity.Version;
+			_isActive = entity.IsActive;
+			_tTY = entity.TTY;
+			_privateLabelId = entity.PrivateLabelId;
+			_tenantmanagmentprivatelabels = entity.TenantManagmentPrivateLabels != null ? new TenantManagmentPrivateLabelsPM(entity.TenantManagmentPrivateLabels) : null;
 			_lastUpdateDate = entity.LastUpdateDate;
-		//globalContacts = entity.GlobalContacts != null ? entity.GlobalContacts.Select(a=>new GlobalContactPM(a)).ToList() : null;
-		//tenantManagements = entity.TenantManagements != null ? entity.TenantManagements.Select(a=>new TenantManagementPM(a)).ToList() : null;
-   }
-   #endregion Constructors
-   #region Properties
-   	  private int _id ;
+
+			globalContacts = entity.GlobalContacts != null ? entity.GlobalContacts.Select(a =>
+			{
+				a.GlobalTenant = null;
+				return new GlobalContactPM(a);
+			}).ToList() : null;
+		}
+
+        // globalContacts = entity.GlobalContacts != null ? entity.GlobalContacts.Select(a => new GlobalContactPM(a)).ToList() : null;
+        //tenantManagements = entity.TenantManagements != null ? entity.TenantManagements.Select(a=>new TenantManagementPM(a)).ToList() : null;
+
+        #endregion Constructors
+        #region Properties
+        private int _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -198,10 +209,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 	   {
 	        get
              {
-                 if (globalContacts == null)
-                 {
-                     globalContacts = new List<GlobalContactPM>();
-                 }
+                if (globalContacts == null && _entity.GlobalContacts != null)
+                {
+					globalContacts = _entity.GlobalContacts.Select(a => new GlobalContactPM(a)).ToList();
+                }
                  return globalContacts;
               }
              set { globalContacts = value; }

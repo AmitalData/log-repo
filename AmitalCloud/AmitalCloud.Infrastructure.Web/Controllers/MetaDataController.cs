@@ -17,6 +17,9 @@ using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
+    [RoutePrefix("api/ngMetaData")] // Sets "api/ngMetaData" as the base URL for all actions
+    // [Route("api/ngMetaData")]
+    //[RoutePrefix("ngMetaData")] // No "api" in the prefix
     public class MetaDataController : ApiController
     {
         [OperationContract]
@@ -109,6 +112,9 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
 
         public List<TextCodePM> GetTenantTextCodes(int tenant)
         => new TextCodeQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetMulti(a => a.Tenant == tenant, "").ToList();
+
+        [HttpGet]
+        [Route("")]
         [OperationContract]
         [WebGet(UriTemplate = "getloggeduserpm/{tenant}/{useremail}/{getloggeduser}")]
         public UserPM GetLoggedUserPM(int tenant, string useremail, bool getloggeduser)

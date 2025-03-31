@@ -43,18 +43,13 @@ namespace AmitalCloud.Infrastructure.WebAPI
                     HttpContext.Current.Items.Add("authToken", authToken);
                     HttpContext.Current.Items.Add("Tenant", authToken.Tenant);
 
-                    if (!authToken.APIToken)
+                    if (!authToken.APIToken && !authToken.InActive)
                     {
-                        if (!authToken.InActive)
-                        {
-                            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
-                        }
+                        HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
                     }
                 }
             }
         }
-
-        bool _IAmDebuging_StopOpenNewThreads = false;
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {

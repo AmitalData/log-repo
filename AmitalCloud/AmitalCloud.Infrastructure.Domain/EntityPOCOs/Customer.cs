@@ -165,7 +165,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	      
         public virtual User SalesmanUser { get; set; }
 		public virtual ICollection<Address> Addresses { get; set; }
-		public virtual ICollection<Contact> Contacts { get; set; }
         [ForeignKey("ActivatedByUser")]
         [Column("ActivatedByUserId")]
 	    public string ActivatedByUserId { get; set; }
