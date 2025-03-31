@@ -16,6 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
+	[Table("RecurringPeriods")]
     public class RecurringPeriod : BaseEntity
 	{
 	        new const bool hasTenant = false;  

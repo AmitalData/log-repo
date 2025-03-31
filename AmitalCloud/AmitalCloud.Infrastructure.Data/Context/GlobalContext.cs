@@ -32,7 +32,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
         }
         public static IGlobalContext OverrideIGlobalContextFake { get; set; }
 
-        public static IGlobalContext GetContext(int? ConnectionLifetime = null, bool? suppressPool = null)
+        internal static IGlobalContext GetContext(int? ConnectionLifetime = null, bool? suppressPool = null)
         {
             if (OverrideIGlobalContextFake != null)
             {

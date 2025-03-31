@@ -9,7 +9,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
     {
         DbConnection GetConnection();
         DbContext GetActiveDbContext();
-        void SetAsModified(object entity);
+        internal void SetAsModified(object entity);
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         Task<int> SaveChangesAsync();
         void Dispose(bool disposing);

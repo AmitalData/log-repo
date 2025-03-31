@@ -9,8 +9,7 @@ using System;
 using System.Threading.Tasks;
 using System.Data.Entity.ModelConfiguration;
 using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System.ComponentModel.DataAnnotations.Schema;
-
+ 
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {
  
@@ -18,27 +17,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
     {
 	    string dbms;
         public GlobalTenantMap()
-        {
-            this.HasKey(t => t.Id);
-            this.Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            this.Property(t => t.GlobalDBId).IsRequired().HasMaxLength(15).IsUnicode(true);
-            this.Property(t => t.CompanyName).IsRequired().HasMaxLength(100).IsUnicode(true);
-            this.Property(t => t.TTY).HasMaxLength(33).IsUnicode(false);
-            this.Property(t => t.PrivateLabelId).HasMaxLength(15).IsUnicode(false);
+        { 
+				this.ToTable("GlobalTenants");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
 
-            // Table & Column Mappings
-            this.ToTable("GlobalTenants");
-            this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.GlobalDBId).HasColumnName("GlobalDBId");
-            this.Property(t => t.CompanyName).HasColumnName("CompanyName");
-            this.Property(t => t.Version).HasColumnName("Version");
-            this.Property(t => t.IsActive).HasColumnName("IsActive");
-            this.Property(t => t.TTY).HasColumnName("TTY");
-            this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId");
+            this.Property(t => t.GlobalDBId).HasColumnName("GlobalDBId").IsRequired().HasMaxLength(15).IsUnicode(true);
 
-            // Relationships
-            this.HasRequired(t => t.GlobalDB).WithMany().HasForeignKey(d => d.GlobalDBId);
-            this.HasOptional(t => t.TenantManagmentPrivateLabels).WithMany().HasForeignKey(d => d.PrivateLabelId);
+            this.Property(t => t.CompanyName).HasColumnName("CompanyName").IsRequired().HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.Version).HasColumnName("Version").IsRequired();
+
+            this.Property(t => t.IsActive).HasColumnName("IsActive").IsRequired();
+
+            this.Property(t => t.TTY).HasColumnName("TTY").IsRequired().HasMaxLength(33).IsUnicode(false);
+
+            this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate").IsRequired();
         }
     }
 }

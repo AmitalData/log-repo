@@ -20,10 +20,11 @@ using Logitude.Customs.Data;
  
 namespace Logitude.Customs.Data.EntityMapping
 {
- 
+   
     public class BankMap : EntityTypeConfiguration<POCO.Bank>
     {
 	    string dbms;
+
         public BankMap()
         { 
 			  this.ToTable("Banks", "Customs");
