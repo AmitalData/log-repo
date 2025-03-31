@@ -20,7 +20,6 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Context;
-using System;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
@@ -38,7 +37,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 		protected override IEntityKeyFields<POCO.TenantAdditionalData,int> GetKeys(TenantAdditionalDataPM entityPM) => new TenantAdditionalDataKeys<int>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(TenantAdditionalDataPM entityPM)
 		{
-			entityPM.Id = Convert.ToInt32(IdCounter.GetNumber("TenantAdditionalData", entityPM.Tenant)); 
+			entityPM.Id = IdCounter.GetNumber("TenantAdditionalData", entityPM.Tenant); 
 		}
 		protected override void FillDefaultValuesOnUpdate(TenantAdditionalDataPM entityPM)
         {       

@@ -16,6 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
+	[Table("UserPermittedBranches")]
     public class UserPermittedBranch : BaseEntity
 	{
 		
@@ -32,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("BranchId")]
 	    public string BranchId { get; set; }
 	      
-        public virtual Branch BRANCHES { get; set; }
+        public virtual BRANCHES BRANCHES { get; set; }
      [Key]
         [Column("Id")]
 	    public string Id { get; set; }

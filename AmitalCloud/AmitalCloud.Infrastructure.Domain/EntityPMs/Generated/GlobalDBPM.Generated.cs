@@ -25,26 +25,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    [DataContract]
    public partial class GlobalDBPM : BaseEntityPM   {
    #region Constructors
-   public GlobalDBPM() : base() {}
-		public GlobalDBPM(POCO.GlobalDB entity) : base()
-		{
-			Init(entity);
-		}
+   public GlobalDBPM() : base() {} 
+   public GlobalDBPM(POCO.GlobalDB entity) : base()
+   {
+		_id = entity.Id;
+		_dBConnection = entity.DBConnection;
+		_isUpgrading = entity.IsUpgrading;
+		_isActive = entity.IsActive;
+		_sharedDWConnection = entity.SharedDWConnection;
+		_secondaryAzureDBConnection = entity.SecondaryAzureDBConnection;
+		_isBlocking = entity.IsBlocking;
+		globalTenants = entity.GlobalTenants != null ? entity.GlobalTenants.Select(a=>new GlobalTenantPM(a)).ToList() : null;
+   }
    #endregion Constructors
-		public GlobalDBPM Init(POCO.GlobalDB entity)
-        {
-            _id = entity.Id;
-            _dBConnection = entity.DBConnection;
-            _isUpgrading = entity.IsUpgrading;
-            _isActive = entity.IsActive;
-            _sharedDWConnection = entity.SharedDWConnection;
-            _secondaryAzureDBConnection = entity.SecondaryAzureDBConnection;
-            _isBlocking = entity.IsBlocking;
-            globalTenants = entity.GlobalTenants != null ? entity.GlobalTenants.Select(a => new GlobalTenantPM(a)).ToList() : null;
-			return this;
-        }
-        #region Properties
-        private string _id ;
+   #region Properties
+   	  private string _id ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -16,6 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
+	[Table("EventTypeCategories")]
     public class EventTypeCategory : BaseEntity
 	{
 	        new const bool hasTenant = false;  

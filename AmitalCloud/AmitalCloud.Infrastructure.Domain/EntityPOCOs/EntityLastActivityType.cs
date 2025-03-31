@@ -16,6 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
+	[Table("EntityLastActivityTypes")]
     public class EntityLastActivityType : BaseEntity
 	{
 	        new const bool hasTenant = false;  
@@ -25,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Code { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
-		//public virtual ICollection<EntityLastActivity> EntityLastActivitys { get; set; }
+		public virtual ICollection<EntityLastActivity> EntityLastActivitys { get; set; }
     }
 }
 	 

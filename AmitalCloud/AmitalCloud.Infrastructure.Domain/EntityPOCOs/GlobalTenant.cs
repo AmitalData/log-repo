@@ -16,6 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
+	[Table("GlobalTenants")]
     public class GlobalTenant : BaseEntity
 	{
 	        new const bool hasTenant = false;  
@@ -44,7 +45,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("LastUpdateDate")]
 	    public DateTime? LastUpdateDate { get; set; }
 		public virtual ICollection<GlobalContact> GlobalContacts { get; set; }
-		//public virtual ICollection<TenantManagement> TenantManagements { get; set; }
-	}
+		public virtual ICollection<TenantManagement> TenantManagements { get; set; }
+    }
 }
 	 

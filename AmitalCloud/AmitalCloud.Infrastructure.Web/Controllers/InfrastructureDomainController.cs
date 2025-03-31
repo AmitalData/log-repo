@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net;
-using System.Web;
-using System.Web.Http;
-using System.Transactions;
-using AmitalCloud.Infrastructure.Data.Security;
-using AmitalCloud.Infrastructure.Web.Helpers;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
+﻿using AmitalCloud.Infrastructure.Application.EntityListQueryServices;
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Data.Queries;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Application.EntityListQueryServices;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Web.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
@@ -29,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 string loggedUserEmail = AuthenticationTokenRepository.GetSingleTokenFromCache(token).Email;
-                ContactPM contact = new ContactQueryService(tenant).GetMulti(a => a.Email == loggedUserEmail && a.Tenant == tenant,"").FirstOrDefault();
+                ContactPM contact = new ContactQueryService(tenant).GetMulti(a => a.Email == loggedUserEmail && a.Tenant == tenant, "").FirstOrDefault();
                 string loggedUserId = contact?.Id;
                 FeatureQuery featureQuery = new FeatureQuery(tenant);
                 LoggedUserFeatures loggedUserFeatures = featureQuery.GetAllowedFeaturesForLoggedUser(loggedUserId, tenant);
@@ -71,9 +68,9 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                    int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                    List<FeatureToggleList> myResult = new FeatureToggleListQueryService(tenant).GetList(tenant).Where(a=>a.Inactive==false).ToList();
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                List<FeatureToggleList> myResult = new FeatureToggleListQueryService(tenant).GetList(tenant).Where(a => a.Inactive == false).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
             catch (Exception ex)
             {
@@ -87,10 +84,10 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 string loggedUserEmail = AuthenticationTokenRepository.GetSingleTokenFromCache(token).Email;
-                    //ICRMContext crmContext = CRMContext.GetContext(tenant);
-                    //CRMFilterSettingListQueryService listService = new CRMFilterSettingListQueryService(crmContext);
-                    //List<CRMFilterSettingList> myResult = listService.GetList(tenant);
-                    return Request.CreateResponse(HttpStatusCode.OK, new List<string>());
+                //ICRMContext crmContext = CRMContext.GetContext(tenant);
+                //CRMFilterSettingListQueryService listService = new CRMFilterSettingListQueryService(crmContext);
+                //List<CRMFilterSettingList> myResult = listService.GetList(tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, new List<string>());
             }
 
             catch (Exception ex)

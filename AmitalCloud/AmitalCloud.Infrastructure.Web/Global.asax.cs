@@ -1,11 +1,11 @@
-﻿using AmitalCloud.Shipment.WebAPI;
-using System.Web;
-using System;
-using System.Web.Http;
-using AmitalCloud.Infrastructure.Data;
+﻿using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Shipment.WebAPI;
+using System;
+using System.Web;
+using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.WebAPI
 {

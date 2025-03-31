@@ -16,6 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
+	[Table("TenantManagements")]
     public class TenantManagement : BaseEntity
 	{
 	        new const bool hasTenant = false;  
@@ -175,11 +176,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("IsMultiPackage")]
 	    public bool IsMultiPackage { get; set; }
      [Key]
-        //[ForeignKey("GlobalTenant")]
+        [ForeignKey("GlobalTenant")]
         [Column("Id")]
 	    public int Id { get; set; }
 	      
-        //public virtual GlobalTenant GlobalTenant { get; set; }
+        public virtual GlobalTenant GlobalTenant { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
         [Column("PackageCode")]

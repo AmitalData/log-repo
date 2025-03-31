@@ -1132,7 +1132,6 @@
     <Compile Include="Queries\CardContactAdditionalServiceQuery.cs" />
     <Compile Include="Queries\CardContactProductQuery.cs" />
     <Compile Include="Queries\ContactQuery.cs" />
-    <Compile Include="Exceptions\APIException.cs" />
     <Compile Include="Exceptions\BusinessErrorException.cs" />
     <Compile Include="Queries\ContactTenantQuery.cs" />
     <Compile Include="Queries\ContactTenantRoleQuery.cs" />

@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <Configurations>All Projects;Debug;None;Release</Configurations>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\Library\Bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyTitle>AmitalCloud.Infrastructure.Application</AssemblyTitle>
+    <Product>AmitalCloud.Infrastructure.Application</Product>
+    <Copyright>Copyright ©  2024</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AmitalCloud.Infrastructure.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntityQueryServices\Manual\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Domain\AmitalCloud.Infrastructure.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.5.1" />
+    <PackageReference Include="Marvin.JsonPatch" Version="2.2.1" />
+    <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.4.3" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="EntityQueryServices\Manual\AdvancedQueryFilterQueryService.cs" />
+    <Compile Remove="EntityQueryServices\Manual\GlobalContactQueryService.cs" />
+    <Compile Remove="EntityQueryServices\Manual\ScreenFieldQueryService.cs" />
+    <Compile Remove="EntityQueryServices\Manual\ScreenQueryService.cs" />
+    <Compile Remove="EntityQueryServices\Manual\TenantSettingQueryService.cs" />
+  </ItemGroup>
+</Project>

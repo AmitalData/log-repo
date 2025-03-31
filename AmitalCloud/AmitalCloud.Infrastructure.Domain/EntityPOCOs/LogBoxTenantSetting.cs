@@ -16,6 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
+	[Table("LogBoxTenantSettings")]
     public class LogBoxTenantSetting : BaseEntity
 	{
 	        new const bool hasTenant = false;  

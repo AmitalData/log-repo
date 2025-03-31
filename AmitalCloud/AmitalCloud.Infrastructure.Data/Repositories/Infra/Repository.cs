@@ -25,11 +25,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         protected System.Data.Entity.IDbSet<TEntity> DbSet => _dbSet;
         protected IContext DbContext => _dbContext;
 
-        public Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
+        internal Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
         {
             _unitOfWork = unitOfWork;
         }
-        public Repository(IContext dbContext)
+        internal Repository(IContext dbContext)
         {
             _isDisposed = false;
             _dbContext = dbContext;

@@ -16,6 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
+	[Table("PrepaidCollects")]
     public class PrepaidCollect : BaseEntity
 	{
 	        new const bool hasTenant = false;  

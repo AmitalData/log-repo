@@ -1,9 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
@@ -12,18 +8,6 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     {
 
         public string GetSettingsLoginCode(int myDummyInteger, string myDummyString)
-        {
-            string myResult = "";
-            IGlobalContext globalContext = GlobalContext.GetContext();
-            Setting mySettings = globalContext.Settings.FirstOrDefault();
-            if (mySettings == null)
-            {
-                return myResult;
-            }
-            myResult = mySettings.LogoCode;
-            return myResult;
-        }
-
-
+        => new SettingQueryService(0).GetMulti(a => true, a => a.LogoCode).FirstOrDefault();
     }
 }
