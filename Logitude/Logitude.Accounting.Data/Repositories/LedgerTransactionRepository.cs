@@ -1804,35 +1804,34 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         }
 
 
-        public IQueryable<LedgerTransactionDeductionDTO> GetTransactionsDeductionDTO(
+        public IQueryable<LedgerTransactionDeductionDTO> GetTransactionsDeductionDTO1(
             string whAccountId,
             DateTime startDate,
             DateTime endDate,
             int tenant)
         {
-            var query =
-                from a in context.LedgerTransactionsDeductionView
-                where a.Tenant == tenant
-                      && (a.ChartOfAccountsTypeCode == ChartOfAccountsTypes.Banks || a.AccountId == whAccountId)
-                      && a.AccountingDate >= startDate
-                      && a.AccountingDate <= endDate
-                select new LedgerTransactionDeductionDTO
-                {
-                    Id = a.Id,
-                    AccountId = a.AccountId,
-                    OppositeAccountId = a.OppositeAccountId,
-                    JournalId = a.JournalId,
-                    JournalLineNumber = a.JournalLineNumber,
-                    LocalAmountDebit = a.LocalAmountDebit ?? 0m,
-                    LocalAmountCredit = a.LocalAmountCredit ?? 0m,
-                    Reference1 = a.Reference1,
-                    AccountingDate = a.AccountingDate,
-                    Tenant = a.Tenant
-                };
-
-            return query;
+            return context.LedgerTransactionsDeductionView
+                        .Where(a =>
+                        a.Tenant == tenant &&
+                        (a.ChartOfAccountsTypeCode == ChartOfAccountsTypes.Banks || a.AccountId == whAccountId) &&
+                        a.AccountingDate >= startDate &&
+                        a.AccountingDate <= endDate)
+                        .Select(a => new LedgerTransactionDeductionDTO
+                        {
+                            Id = a.Id,
+                            AccountId = a.AccountId,
+                            OppositeAccountId = a.OppositeAccountId,
+                            JournalId = a.JournalId,
+                            JournalLineNumber = a.JournalLineNumber,
+                            LocalAmountDebit = a.LocalAmountDebit ?? 0m,
+                            LocalAmountCredit = a.LocalAmountCredit ?? 0m,
+                            Reference1 = a.Reference1,
+                            AccountingDate = a.AccountingDate,
+                            Tenant = a.Tenant
+                        });
         }
 
+    
         public List<LedgerTransaction> GetTransactionsBySourceId(string sourceId, string sourceTypeCode, int tenant)
         {
             return (from transaction in context.LedgerTransactions
