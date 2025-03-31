@@ -1319,9 +1319,6 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         }
         public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromTo(string accountId, DateTime fromDate, DateTime toDate, int tenant)
         {
-            if (context == null) {
-                currentContext = AccountingContext.GetContext(tenant); 
-            }
 
             var q = (from r in context.LedgerTransactions
                      where r.AccountId == accountId && r.AccountingDate >= fromDate && r.AccountingDate <= toDate && r.Tenant == tenant
