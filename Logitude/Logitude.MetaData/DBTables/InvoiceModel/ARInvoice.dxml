@@ -877,6 +877,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsApprovalFailed"
+    Type="bit"
+    DefaultValue="false">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"

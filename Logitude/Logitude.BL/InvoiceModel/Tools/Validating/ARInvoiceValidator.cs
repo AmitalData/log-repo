@@ -1131,6 +1131,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                                              && a.IsInvoiceNumberManuallySet == false
                                                              && a.IsExternalEntity == false
                                                              && a.StatusCode != "DR"
+                                                             && a.StatusCode != "PR"
                                                              && a.StatusCode != "VD"
                                                              && a.InvoiceNumber != a.Id
                                                              && (HasInterestFeature? a.ARInvoiceTypeCode == "IT": a.ARInvoiceTypeCode != "IT")

@@ -193,75 +193,13 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*2*) interestReport.Id=" + interestReport.Id);
                     throw ex;
                 }
-                if (!String.IsNullOrEmpty(aRInvoicePM.InvoiceNumber))
-                {
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        try
-                        {
-                            BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
-                            UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
-                            SignInvoice(aRInvoicePM, interestReportArgs.Tenant);
-                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
-                            scope.Complete();
-                        }
-                        catch (Exception ex)
-                        {
-                            scope.Dispose();
-                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*4*) interestReport.Id=" + interestReport.Id);
-
-                            throw;
-                        }
-                    }
-                }
+                
             }
 
         }
-        private void SignInvoice(ARInvoicePM aRInvoicePM, int tenant)
-        {
-            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
-            DocumentHelper DocumentHelper = new DocumentHelper();
-            DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
-            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery((int)tenant);
-            ARInvoiceQueryService ARInvoiceService = new ARInvoiceQueryService(tenant);
-
-            FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
-            string aRInvoicePMId = ARInvoiceService.GetARInvoiceByInvoiceNumber(aRInvoicePM.InvoiceNumber, tenant)?.Id;
-            string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant("999G", (int)Tenant);
-            DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(aRInvoicePMId, null, documentTypeId, tenant);
-
-            if (accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) && !string.IsNullOrEmpty(accountingSettings.HSMaddress) && !string.IsNullOrEmpty(accountingSettings.HSMtoken))
-                DocumentHelper.Sign(documentOutPM.Id, tenant, accountingSettings);
-
-        }
-
-
-        private void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM, InterestReportPM interestReport)
-        {
-            string ARInvoiceChildEntityReference = !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) ? aRInvoicePM.InvoiceNumber : "Draft: " + aRInvoicePM.DraftNumber;
-            BuildDocument(aRInvoicePM.Id, "999G", ARInvoiceObjectTableId, ARInvoiceChildEntityReference);
-            BuildDocument(interestReport.Id, "ITDT", InterestReportObjectTableId, interestReport.ReportNumber);
-        }
-        private void BuildDocument(string EntityId, string DocumentCode, string ObjecTableId, string ChildEntityReference)
-        {
-            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery((int)Tenant);
-            string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant(DocumentCode, (int)Tenant);
-            BuildDocsOutService buildDocsOutService = new BuildDocsOutService();
-            BuildDocsOutArgs buildDocsOutArgs = new BuildDocsOutArgs()
-            {
-                EntityId = EntityId,
-                Tenant = Tenant,
-                ChildEntityId = null,
-                LoggedUserId = userPM.Id,
-                ChildEntityReference = ChildEntityReference,
-                ChildObjectTableId = null,
-                ObjectTableId = ObjecTableId,
-                DocumentTypeId = documentTypeId,
-            };
-
-            buildDocsOutService.BuildDocsOut(buildDocsOutArgs);
-
-        }
+       
+    
+        
         private void CheckVatNumber(int Tenant, ARInvoicePM aRInvoicePM)
         {
             bool isFieldRequired = false;
@@ -335,7 +273,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             AuthenticationUtil.AuthenticatedUserEmail = email;
 
             InterestReportInvoiceMapping interestReportInvoiceMapping = new InterestReportInvoiceMapping();
-            ARInvoicePM aRInvoicePM = interestReportInvoiceMapping.MapARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM);
+            ARInvoicePM aRInvoicePM = interestReportInvoiceMapping.MapARInvoice(interestReportArgs, interestReport, tenantPM, userPM, cardPM, BatchTaskExecution.Id);
             aRInvoicePM.InvoiceDate = interestReportArgs.InvoiceDate;
             ARInvoiceEntityPM aRInvoiceEntityPM = interestReportInvoiceMapping.MapARInvoiceEntity(interestReportArgs, InterestReportObjectTableId);
             ARInvoiceLinePM aRInvoiceLinePM = interestReportInvoiceMapping.MapARInvoiceLine(interestReport, tenantPM, chargesType, vatTypePercentagePM);
