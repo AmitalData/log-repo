@@ -160,6 +160,7 @@ using WebFreight.Web.Helpers;
 
                         // Last in a period
                         var lastLineInPeriod = periodLineList.Last();
+                        lastLineInPeriod.Date = period.ToDate;
                         lastLineInPeriod.Notes = TranslateTextsClass.Translate("Accounting.General.O.TotalInterest", tenant);
                         lastLineInPeriod.LineType = InterestPeriodLineTypes.LastInPeriod;
                         lastLineInPeriod.TotalToDate = period.TotalLocalAmount;
@@ -236,6 +237,7 @@ using WebFreight.Web.Helpers;
             InterestReportFlatLine rv = new InterestReportFlatLine();
             rv.LineNo = ++flatLineCounter;
             rv.LineType = InterestPeriodLineTypes.End;
+            rv.Date = interestReportPM.InterestReportLinesByDates.Max(l => l.ToDate);
             if (interestReportPM != null)
             {
                 rv.Notes = TranslateTextsClass.Translate("Accounting.General.O.ReportTotalInterest", interestReportPM.Tenant);
