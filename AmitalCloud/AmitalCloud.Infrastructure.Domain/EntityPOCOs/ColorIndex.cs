@@ -27,7 +27,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Color { get; set; }
         [Column("Rowid")]
 	    public string Rowid { get; set; }
-		public virtual ICollection<Contact> Contacts { get; set; }
     }
 }
 	 

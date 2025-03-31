@@ -152,9 +152,13 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     if (!string.IsNullOrEmpty(token))
                     {
                         string cacheKey = $"Token_({token})";
-                        tenant = ((AuthenticationToken)cache.Get(cacheKey)).Tenant;
+                        var authenticationToken = (AuthenticationToken)cache.Get(cacheKey);
+                        if (authenticationToken?.Tenant != null)
+                        {
+                            tenant = authenticationToken.Tenant;
+                        }
                     }
-                    else
+                    if (tenant == -1)
                     {
                         tenant = 0;
                     }

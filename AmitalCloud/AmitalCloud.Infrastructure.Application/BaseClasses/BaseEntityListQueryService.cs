@@ -140,7 +140,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             return GetIqueryableList(Query().Where(key.Predicate)).FirstOrDefault();
         }
         protected IQueryable<TEntity> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<TEntity> iQueryable) => iQueryable;
-        protected IQueryable<TEntity> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<TEntity> iQueryable) => throw new NotImplementedException();
+        protected virtual IQueryable<TEntity> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<TEntity> iQueryable) => iQueryable;
         private IQueryable<TEntity> Query() => (from a in contextEntity select a);
         protected abstract IDbSet<TEntity> contextEntity { get; }
         //protected abstract IQueryable<TEntityList> GetIqueryableList(IQueryable<TEntity> iQueryable);

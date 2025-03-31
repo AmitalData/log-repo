@@ -88,7 +88,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_accountmanageruser = entity.AccountManagerUser !=null ? new UserPM(entity.AccountManagerUser) : null;
 			_salesmanUserId = entity.SalesmanUserId;
 		addresses = entity.Addresses != null ? entity.Addresses.Select(a=>new AddressPM(a)).ToList() : null;
-		contacts = entity.Contacts != null ? entity.Contacts.Select(a=>new ContactPM(a)).ToList() : null;
 		_activatedByUserId = entity.ActivatedByUserId;
 		_activatedbyuser = entity.ActivatedByUser !=null ? new UserPM(entity.ActivatedByUser) : null;
 			_setAsInactiveByUserId = entity.SetAsInactiveByUserId;
@@ -1028,37 +1027,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
                  return  deletedAddresses;
               }
              set {  deletedAddresses = value; }
-	    }
-	   private List<ContactPM> contacts;
-	 
-		     
-	   [Include]
-	   [Association("CustomerPMContactPM", "Id","CardId")]
-	   [DataMember]
-	   public virtual List<ContactPM> Contacts  
-	   {
-	        get
-             {
-                 if (contacts == null)
-                 {
-                     contacts = new List<ContactPM>();
-                 }
-                 return contacts;
-              }
-             set { contacts = value; }
-	    }
-	   private List<ContactPM>  deletedContacts;
-	   public virtual List<ContactPM> DeletedContacts  
-	   {
-	        get
-             {
-                 if ( deletedContacts == null)
-                 {
-                      deletedContacts = new List<ContactPM>();
-                 }
-                 return  deletedContacts;
-              }
-             set {  deletedContacts = value; }
 	    }
 	   private List<SharedLogisticContactPM> sharedLogisticContacts;
 	    

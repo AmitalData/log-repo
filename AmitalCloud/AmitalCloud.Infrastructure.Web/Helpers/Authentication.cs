@@ -459,19 +459,20 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                             string token = AuthenticationUtil.GenerateToken();
 
                             AuthenticationTokenUpdateService authenticationUpdateService = new AuthenticationTokenUpdateService(globalContext);
-                            AuthenticationTokenPM authentication = new AuthenticationTokenPM() { CreateDate = DateTime.Now, Email = email, Password = hashedPassword, Token = token, Tenant = user.CurrentTenant, ClientType = parameters.IsMobileLogin ? "Mobile" : parameters.ClientType, ChangeSetOp = ChangeSetOperation.Insert };
+                            AuthenticationToken authentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = email, Password = hashedPassword, Token = token, Tenant = user.CurrentTenant, ClientType = parameters.IsMobileLogin ? "Mobile" : parameters.ClientType };
                             if (!user.KeepUserLoggedIn && authentication.ClientType == "Web" && user.WebTokenLifeTimeInMinutes != 0) authentication.ExpirationDate = DateTime.Now.AddMinutes(user.WebTokenLifeTimeInMinutes);
-                            authenticationUpdateService.Update(authentication, true);
+                            AddAuthenticationToken(authentication, authenticationUpdateService);
                             user.Token = token;
 
                             #region Document Token
-                            AuthenticationTokenPM authenticationDocument = new AuthenticationTokenPM() { CreateDate = DateTime.Now, ExpirationDate = DateTime.Now.AddMinutes(15), Email = email, Password = hashedPassword, Token = AuthenticationUtil.GenerateToken(), Tenant = user.CurrentTenant, ClientType = "DocumentDownload", ChangeSetOp = ChangeSetOperation.Insert };
-                            authenticationUpdateService.Update(authenticationDocument, true);
+                            AuthenticationToken authenticationDocument = new AuthenticationToken() { CreateDate = DateTime.Now, ExpirationDate = DateTime.Now.AddMinutes(15), Email = email, Password = hashedPassword, Token = AuthenticationUtil.GenerateToken(), Tenant = user.CurrentTenant, ClientType = "DocumentDownload" };
+                            AddAuthenticationToken(authenticationDocument, authenticationUpdateService);
                             user.DocumentDownloadToken = authenticationDocument.Token;
+
                             if (parameters.GetInvalidDocumentToken)
                             {
-                                AuthenticationTokenPM invalidDocumentToken = new AuthenticationTokenPM() { CreateDate = DateTime.Now, ExpirationDate = DateTime.Now.AddMinutes(-5), Email = email, Password = hashedPassword, Token = AuthenticationUtil.GenerateToken(), Tenant = user.CurrentTenant, ClientType = "DocumentDownload", ChangeSetOp = ChangeSetOperation.Insert };
-                                authenticationUpdateService.Update(invalidDocumentToken, true);
+                                AuthenticationToken invalidDocumentToken = new AuthenticationToken() { CreateDate = DateTime.Now, ExpirationDate = DateTime.Now.AddMinutes(-5), Email = email, Password = hashedPassword, Token = AuthenticationUtil.GenerateToken(), Tenant = user.CurrentTenant, ClientType = "DocumentDownload" };
+                                AddAuthenticationToken(invalidDocumentToken, authenticationUpdateService);
                                 user.InvalidDocumentToken = invalidDocumentToken.Token;
                             }
                             #endregion
@@ -498,6 +499,16 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
             AuthenticationMixPanelService.CreateLoginEventForMixPanel(parameters, tenant);
             return user;
+        }
+
+        private void AddAuthenticationToken(AuthenticationToken authentication, AuthenticationTokenUpdateService authenticationUpdateService)
+        {
+            AuthenticationTokenPM authenticationPM = new AuthenticationTokenPM(authentication);
+            authenticationPM.ChangeSetOp = ChangeSetOperation.Insert;
+            authenticationUpdateService.Update(authenticationPM, true);
+
+            string cacheKey = $"Token_({authentication.Token})";
+            HttpContext.Current.Cache.Insert(cacheKey, authentication, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
         }
 
         private void MapHasLogboxAccessPrivateLabelTenants(List<CompanyLogin> loginsList, List<string> logboxAccessiblePrivateLabelTenantsIds)
@@ -1389,31 +1400,9 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
         private bool IsUserAdmin(string email, int tenant, IAmitalCloudContext amitalCloudContext)
         {
-            //todo
-            //UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
-            //List<UserPM> entities = userQueryService.GetMulti(record => record.Contact.Email == email && (record.Tenant == tenant || record.Tenant == 0), "Contact");
-
-            //var asd = amitalCloudContext.Contacts.FirstOrDefault();
-            //Contact loggedContact = new Repository<Contact>(amitalCloudContext).GetMulti(a => a.Tenant == tenant).FirstOrDefault();
-            /* SqlException: Invalid column name 'Card_Id'.
-Invalid column name 'Customer_Id'.
-Invalid column name 'AccountingPartner_Id'.
-Invalid column name 'Agent_Id'.
-Invalid column name 'CustomAgent_Id'.
-Invalid column name 'ShippingAgent_Id'.
-Invalid column name 'Participant_Id'.
-Invalid column name 'Trucker_Id'.
-Invalid column name 'Vendor_Id'.
-Invalid column name 'Warehouse_Id'.
-            */
-
-            List<User> entities = (from record in amitalCloudContext.Users
-                                   join contact in amitalCloudContext.Contacts on record.Id equals contact.Id
-                                   where contact.Email == email && (record.Tenant == tenant || record.Tenant == 0)
-                                   select record).ToList();
-
-            User loggedUser = entities.Where(a => a.Tenant == tenant).FirstOrDefault() ?? entities.Where(a => a.Tenant == 0).FirstOrDefault();
-
+            UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
+            List<UserPM> entities = userQueryService.GetMulti(record => record.Contact.Email == email && (record.Tenant == tenant || record.Tenant == 0), "Contact");
+            UserPM loggedUser = entities.Where(a => a.Tenant == tenant).FirstOrDefault() ?? entities.Where(a => a.Tenant == 0).FirstOrDefault();
             return loggedUser?.UserRoles != null && loggedUser.UserRoles.Contains("Administrator");
         }
     }

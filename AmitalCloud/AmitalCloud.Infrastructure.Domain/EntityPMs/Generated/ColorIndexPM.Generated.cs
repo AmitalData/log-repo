@@ -31,7 +31,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_indexNumber = entity.IndexNumber;
 		_color = entity.Color;
 		_rowid = entity.Rowid;
-		contacts = entity.Contacts != null ? entity.Contacts.Select(a=>new ContactPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -84,37 +83,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	   private List<ContactPM> contacts;
-	 
-		     
-	   [Include]
-	   [Association("ContactColorIndex", "IndexNumber","Indexcolor")]
-	   [DataMember]
-	   public virtual List<ContactPM> Contacts  
-	   {
-	        get
-             {
-                 if (contacts == null)
-                 {
-                     contacts = new List<ContactPM>();
-                 }
-                 return contacts;
-              }
-             set { contacts = value; }
-	    }
-	   private List<ContactPM>  deletedContacts;
-	   public virtual List<ContactPM> DeletedContacts  
-	   {
-	        get
-             {
-                 if ( deletedContacts == null)
-                 {
-                      deletedContacts = new List<ContactPM>();
-                 }
-                 return  deletedContacts;
-              }
-             set {  deletedContacts = value; }
-	    }
 	 }
 #endregion Properties
 }

@@ -505,12 +505,17 @@ export class ServiceHelper {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()                
+                //'Accept': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken(),
+                //'workerrolename': "development"
             })
         };
 
         if (!AppTool.IsNullOrEmpty(SessionLocator.WorkerRoleName))
             httpOptions.headers = httpOptions.headers.append('workerrolename', SessionLocator.WorkerRoleName);
+          //  httpOptions.headers = httpOptions.headers.set('workerrolename', SessionLocator.WorkerRoleName);
+
+            //console.log(SessionLocator.WorkerRoleName);
 
         return httpOptions;
     }
