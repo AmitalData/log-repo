@@ -470,6 +470,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     get BillToId() { return this.EntityPM.BillToId; }
     set BillToId(newValue: string) {
         if (this.EntityPM.BillToId != newValue) {
+            debugger;
             this.EntityPM.BillToId = newValue;
             this.EntityPM.CustomerRef = null;
             this.SetUIProperties_BillToAddress();
@@ -956,9 +957,13 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
 
             else {
-                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.InvoiceCurrencyId)[0];
-                if (lastRate != null) {
-                    myRate = lastRate.Rate;
+                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.InvoiceCurrencyId);
+                if (lastRate) {
+                    const customRate = this.glaccount?.ExchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        : null;
+
+                    myRate = customRate ?? lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
             }
@@ -976,9 +981,13 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
 
             else {
-                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
-                if (lastRate != null) {
-                    myResult = lastRate.Rate;
+                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
+                if (lastRate) {
+                    const customRate = this.glaccount?.ExchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        : null;
+
+                        myResult = customRate ?? lastRate.Rate;
                 }
             }
         }

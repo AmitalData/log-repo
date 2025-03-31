@@ -569,11 +569,17 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
 
             else {
-                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.PaymentCurrencyId)[0];
-                if (lastRate != null) {
-                    myRate = lastRate.Rate;
+                
+                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.PaymentCurrencyId);
+                if (lastRate) {
+                    const customRate = this.glaccount?.ExchangeRateId 
+                    ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount?.ExchangeRateId)?.Rate 
+                    : null;
+                    myRate = customRate?? lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
-                }
+            
+                } 
+                
             }
         }
 
@@ -599,10 +605,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 }
 
                 if (this.LastRatesList) {
-                    var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
-                    if (lastRate != null) {
-                        result = lastRate.Rate;
-                    }
+                    const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
+                    if (lastRate) {
+                        const customRate = this.glaccount?.ExchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        : null;
+                         result = customRate ?? lastRate.Rate;
+                
+                   } 
                 }
             }
         }
@@ -620,10 +630,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
             else {
                 if (this.LastRatesList) {
-                    var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
-                    if (lastRate != null) {
-                        result = lastRate.ValueDate;
-                    }
+                    const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
+                    if (lastRate) {
+                        const customRate = this.glaccount?.ExchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        : null;
+                         result = customRate ?? lastRate.Rate;
+                     } 
                 }
             }
         }
@@ -998,6 +1011,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     vendorGLAccount: GLAccountList;
     deductionFileNumber: string;
+    glaccount: GLAccountList;
     GetConnectedGLAccount() {
         let etext: string;
         etext = TextCodeTranslator.Translate("Accounting.General.O.VendorWithCustomerGLAccount");
@@ -1016,7 +1030,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.deductionFileNumber = gla ? gla.DeductionFileNumber : null;
                     this.EntityPM.ExcludeFromDeductionReport = gla.ExcludeFromDeductionReport;
                     this.EntityPM.VendorGLAccountId = gla.Id;
-
+                    this.glaccount = gla;
 
                     if (gla.AccountTypeCode == "2") {
                         this.TabWarnings.push(etext);

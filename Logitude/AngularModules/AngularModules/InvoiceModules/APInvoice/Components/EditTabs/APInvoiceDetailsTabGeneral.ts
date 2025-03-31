@@ -420,9 +420,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
 
             else {
-                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.InvoiceCurrencyId)[0];
-                if (lastRate != null) {
-                    myRate = lastRate.Rate;
+                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.InvoiceCurrencyId);
+                if (lastRate) {
+                    const customRate = this.glaccount?.ExchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        : null;
+
+                    myRate = customRate ?? lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
             }
@@ -440,9 +444,12 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
 
             else {
-                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
-                if (lastRate != null) {
-                    myResult = lastRate.Rate;
+                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
+                if (lastRate) {
+                    const customRate = this.glaccount?.ExchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        : null;
+                        myResult =customRate ?? lastRate.Rate;
                 }
             }
         }

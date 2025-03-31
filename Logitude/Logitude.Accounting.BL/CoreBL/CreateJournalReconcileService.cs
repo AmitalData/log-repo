@@ -114,14 +114,11 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                     theCurrencyId = theJournalLineCurrencyId;
-                    RatesTablePM rate = null;
-                    rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,
-                       //@now  
-                       AccountDate //Ohad :By aAccounting date
-                       );
+                    double? rate = null;
+                    rate = ratesTableQuery.GetLastRecordByValueDateAndExchangeRateId(tenant, theCurrencyId, accountingCurrencyId,AccountDate ,glPM.Id);
                     if (rate == null && theCurrencyId == accountingCurrencyId)
                     {
-                        rate = new RatesTablePM() { Rate = 1 };/// ON THE HOUSE !?!?!?
+                        rate = 1 ;
                     }
 
 
@@ -134,18 +131,18 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                    decimal totForeign;//= totReconciliationAmount / (decimal)rate.Rate.GetValueOrDefault();
+                    decimal totForeign;
                     decimal totReconciliationLocalAmount;
                     bool useLocalRecoMethod = (glPM.ReconcileMethodCode == "0");
                     if (useLocalRecoMethod)
                     {
                         totReconciliationLocalAmount = totReconciliationAmountFromUnknownCurrency;
-                        totForeign = totReconciliationLocalAmount / (decimal)rate.Rate.GetValueOrDefault();
+                        totForeign = totReconciliationLocalAmount / (decimal)rate.GetValueOrDefault();
                     }
                     else
                     {
                         totForeign = totReconciliationAmountFromUnknownCurrency;
-                        totReconciliationLocalAmount = totForeign * (decimal)rate.Rate.GetValueOrDefault();
+                        totReconciliationLocalAmount = totForeign * (decimal)rate.GetValueOrDefault();
                     }
 
                     JournalPM journal = new JournalPM()

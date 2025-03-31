@@ -1323,15 +1323,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                     myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) =>
                                     {
                                         if (!myResponse.HasError) {
-                                            var glaccount: GLAccountPM = myResponse.Result;
-                                            this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
-                                            this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
+                                            this.glaccount = myResponse.Result;
+                                            this.EntityPM.GLAccountRecoMethodCode = this.glaccount.ReconcileMethodCode;
+                                            this.EntityPM.GLAccountCurrencyCode = this.glaccount.CurrencyCode;
                                             this.SetAmountCurrencyCode();
                                             this.ComputeLocalAmount();
                                             this.SetPaymentAmount();
-
-                                            if (glaccount != null && !glaccount.IsMultiCurrency) {
-                                                this.PaymentCurrencyId = glaccount.CurrencyId;
+                                             
+                                            if (this.glaccount != null && !this.glaccount.IsMultiCurrency) {
+                                                this.PaymentCurrencyId = this.glaccount.CurrencyId;
                                             }
                                         }
                                     });
@@ -1456,9 +1456,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     var myGLAccountPMService = new GLAccountPMService();
                     myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
-                            var glaccount: GLAccountPM = myResponse.Result;
-                            if (glaccount != null && !glaccount.IsMultiCurrency && (this.EntityPM.BankTransferPaymentArguments && !this.EntityPM.BankTransferPaymentArguments.CurrencyId)) {
-                                this.PaymentCurrencyId = glaccount.CurrencyId;
+                            this.glaccount = myResponse.Result;
+                            if (this.glaccount != null && !this.glaccount.IsMultiCurrency && (this.EntityPM.BankTransferPaymentArguments && !this.EntityPM.BankTransferPaymentArguments.CurrencyId)) {
+                                this.PaymentCurrencyId = this.glaccount.CurrencyId;
                             }
                         }
                     });
@@ -1680,11 +1680,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
 
             else {
-                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.PaymentCurrencyId)[0];
-                if (lastRate != null) {
-                    myRate = lastRate.Rate;
+                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.PaymentCurrencyId);
+                if (lastRate) {
+                    const customRate = this.glaccount?.ExchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        : null;
+
+                    myRate = customRate ?? lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
+                
             }
         }
 
@@ -1705,11 +1710,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
 
             else {
+                
                 if (this.LastRatesList) {
-                    var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
-                    if (lastRate != null) {
-                        result = lastRate.Rate;
+                    const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
+                    if (lastRate) {
+                        const customRate = this.glaccount?.ExchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        : null;
+                        result = customRate ?? lastRate.Rate;
+
+
                     }
+                   
                 }
             }
         }

@@ -10,6 +10,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Data.Entity;
+using Logitude.BL.CommonDataModel.APIDataContract;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -142,7 +143,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                     if (myRecord != null)
                     {
-                        myResult = new LastRate()
+                        CurrencyRateRepository currencyRateRepository = new CurrencyRateRepository(tenant);
+                         myResult = new LastRate()
                         {
                             Id = myRecord.Id,
                             Tenant = myRecord.Tenant,
@@ -155,6 +157,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                             LogDateTime = myRecord.LogDateTime,
                             HistoryCount = iQuery.Count(),
                             BaseCurrencyId = baseCurrencyId,
+                            CurrencyRates= currencyRateRepository.GetSingleByExchangeRateId(myRecord.Id)
                         };
                     }
                 }
@@ -279,5 +282,97 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return myResult;
         }
+
+        public double? GetLastRecordByValueDateAndExchangeRateId(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime? date, string glaccountId)
+        {
+            var glAccountQueryService = new GLAccountQueryService(tenant);
+            var exchangeRateId = glAccountQueryService.GetExchangeRateIdById(glaccountId, tenant);
+            if (exchangeRateId == null)
+                return GetLastRateByValueDate(tenant, foreignCurrencyId, baseCurrencyId, date)?.Rate;
+
+            var lastRecord = repository.context.RatesTable
+                .Include(r => r.ForeignCurrency)
+                .Join(repository.context.CurrencyRates,
+                      r => r.Id,
+                      er => er.ExchangeRateId,
+                      (r, er) => new { r, er })
+                .Join(repository.context.AdditionalCurrencyRates,
+                      re => re.er.AdditionalCurrencyRateId,
+                      b => b.Id,
+                      (re, b) => new { re.r, re.er, b })
+                .Where(reb => reb.r.Tenant == tenant
+                              && reb.r.ForeignCurrencyId == foreignCurrencyId
+                              && reb.r.BaseCurrencyId == baseCurrencyId
+                              && reb.r.ValueDate <= date
+                              && reb.er.AdditionalCurrencyRateId == exchangeRateId)
+                .OrderByDescending(reb => reb.r.ValueDate)
+                .Select(reb => new
+                {
+                    RateTable = reb.r,
+                    RateValue = reb.er.Rate
+                })
+                .FirstOrDefault();
+
+            if (lastRecord == null)
+            {
+                lastRecord = repository.context.RatesTable
+                    .Include(r => r.ForeignCurrency)
+                    .Join(repository.context.CurrencyRates,
+                          r => r.Id,
+                          er => er.ExchangeRateId,
+                          (r, er) => new { r, er })
+                    .Join(repository.context.AdditionalCurrencyRates,
+                          re => re.er.AdditionalCurrencyRateId,
+                          b => b.Id,
+                          (re, b) => new { re.r, re.er, b })
+                    .Where(reb => reb.r.Tenant == tenant
+                                  && reb.r.ForeignCurrencyId == foreignCurrencyId
+                                  && reb.r.BaseCurrencyId == baseCurrencyId
+                                  && reb.er.AdditionalCurrencyRateId == exchangeRateId)
+                    .OrderByDescending(reb => reb.r.ValueDate)
+                    .ThenByDescending(reb => reb.r.LogDateTime)
+                    .Select(reb => new
+                    {
+                        RateTable = reb.r,
+                        RateValue = reb.er.Rate
+                    })
+                    .FirstOrDefault();
+            }
+
+            if (lastRecord != null)
+            {
+                DateTime? lastExistingDateTime = lastRecord.RateTable.ValueDate;
+                var resultRecord = repository.context.RatesTable
+                    .Include(r => r.ForeignCurrency)
+                    .Join(repository.context.CurrencyRates,
+                          r => r.Id,
+                          er => er.ExchangeRateId,
+                          (r, er) => new { r, er })
+                    .Join(repository.context.AdditionalCurrencyRates,
+                          re => re.er.AdditionalCurrencyRateId,
+                          b => b.Id,
+                          (re, b) => new { re.r, re.er, b })
+                    .Where(reb => reb.r.Tenant == tenant
+                                  && reb.r.ForeignCurrencyId == foreignCurrencyId
+                                  && reb.r.BaseCurrencyId == baseCurrencyId
+                                  && reb.r.ValueDate == lastExistingDateTime
+                                  && reb.er.AdditionalCurrencyRateId == exchangeRateId)
+                    .OrderByDescending(reb => reb.r.LogDateTime)
+                    .Select(reb => new
+                    {
+                        RateTable = reb.r,
+                        RateValue = reb.er.Rate
+                    })
+                    .FirstOrDefault();
+
+                if (resultRecord?.RateTable != null)
+                {
+                    return (double?)resultRecord?.RateValue ?? resultRecord.RateTable?.Rate;
+                }
+            }
+
+            return null;
+        }
+
     }
 }
