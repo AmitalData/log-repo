@@ -278,8 +278,13 @@ namespace ConsoleApp1
             string propertyName = ConvertName(columnInfo.ColumnName);
             //string isPrimaryKey = columnInfo.IsPrimary ? "true" : "false";
             string isNullable = columnInfo.IsNullable ? "true" : "false";
+            string isMaxLength = columnInfo.MaxLength == -1 ? "true" : "false";
             string fieldDataType = columnInfo.DataType;
-            //int length = columnInfo.MaxLength != null ? columnInfo.MaxLength.Value : 0;
+            int length = columnInfo.MaxLength != null ? columnInfo.MaxLength.Value : 0;
+            if (length == -1)
+            {
+                length = 1000;
+            }
             if (DataTypes.ContainsKey(fieldDataType))
             {
                 fieldDataType = DataTypes[fieldDataType];
@@ -314,7 +319,7 @@ namespace ConsoleApp1
             element.Add(new XAttribute("ObjectTableName", ConvertName(columnInfo.TableName)));
             element.Add(new XAttribute("FieldsDataType", fieldDataType));
             //element.Add(new XAttribute("DataTypeCode" , fieldDataType));
-            element.Add(new XAttribute("MaxLength", columnInfo.MaxLength != null ? columnInfo.MaxLength.Value : 0));
+            element.Add(new XAttribute("MaxLength", length));
             element.Add(new XAttribute("IsRequiered", "true"));
             element.Add(new XAttribute("IsCustom", "false"));
             element.Add(new XAttribute("MinLength", "0"));
@@ -322,7 +327,7 @@ namespace ConsoleApp1
             element.Add(new XAttribute("CanFilter", "false"));
             element.Add(new XAttribute("DisplayOnly", "false"));
             element.Add(new XAttribute("SystemRequired", "false"));
-            element.Add(new XAttribute("SystemMaxLength", "0"));
+            element.Add(new XAttribute("SystemMaxLength", length));
             element.Add(new XAttribute("DisplayInList", "true"));
             element.Add(new XAttribute("IsCustomFilter", "false"));
             element.Add(new XAttribute("Operator", " & quot;StartsWith&quot;"));
@@ -356,7 +361,7 @@ namespace ConsoleApp1
             element.Add(new XAttribute("IsNullable", isNullable));
             element.Add(new XAttribute("IsPrimaryKey", columnInfo.IsPrimary ? "true" : "false"));
             element.Add(new XAttribute("NumberOfDigits", "0"));
-            element.Add(new XAttribute("IsMaxLength", "false"));
+            element.Add(new XAttribute("IsMaxLength", isMaxLength));
             element.Add(new XAttribute("AllowedinAutomationConditions", "false"));
             element.Add(new XAttribute("AutomationEmailRecipient", "false"));
             element.Add(new XAttribute("CanAutomateSetValue", "false"));
