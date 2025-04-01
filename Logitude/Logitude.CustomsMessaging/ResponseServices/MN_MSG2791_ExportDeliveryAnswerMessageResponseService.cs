@@ -26,6 +26,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.Global
 using Simplog.Data.CommonDataModel.Repositories;
 using UnifreightIIG.Common.MessageLib.ExportStorage.MN2791;
 using Logitude.Customs.BL.TraceEvents;
+using Logitude.BL.Security;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -42,7 +43,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
 
-            if (setting.IsConnectedToUniFreight == true)
+            if (SecurityUtility.CheckFeature("Customs.Declaration", "ExportDeclaration", requestParams.Tenant) != true)
             {
                 this.MyResponseData = new INF_MSG_GenericResponseData();
                 this.MyResponseData.Succeeded = true;
