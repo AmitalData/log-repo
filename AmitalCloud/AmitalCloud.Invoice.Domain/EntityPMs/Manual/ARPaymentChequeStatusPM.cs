@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Invoice.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Invoice.Domain.EntityPMs
 {

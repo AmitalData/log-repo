@@ -212,7 +212,6 @@
     <Compile Include="EntityLists\Generated\ShipmentUnassignedFieldList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SpecialServicesTypeList.Generated.cs" />
     <Compile Include="EntityLists\Manual\AWBStatusList.cs" />
-    <Compile Include="EntityLists\Manual\ContainerFollowUpList.cs" />
     <Compile Include="EntityLists\Manual\DigitalShipmentList.cs" />
     <Compile Include="EntityLists\Manual\FHLStatusList.cs" />
     <Compile Include="EntityLists\Manual\FWBStatusList.cs" />
