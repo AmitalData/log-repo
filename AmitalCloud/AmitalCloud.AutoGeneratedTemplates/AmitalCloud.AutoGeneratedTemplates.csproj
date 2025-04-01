@@ -78,27 +78,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityUpdateServicesGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\APIDataContractGenerator2.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>APIDataContractGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\CopyDXMLGenerator.cs">
-      <DependentUpon>CopyDXMLGenerator.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\NewModelsAPIDataContractGenerator.cs">
-      <DependentUpon>NewModelsAPIDataContractGenerator.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\APIDataContractGenerator.cs" />
-    <Compile Include="AutoGeneratorsMetaData\APIDataContractGenerator1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>APIDataContractGenerator.tt</DependentUpon>
-    </Compile>
     <Compile Include="AutoGeneratorsMetaData\EntityControllerGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,25 +88,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityDataMappingsGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityDetailsGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityDetailsGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityDomainServiceGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityDomainServiceGenerator.tt</DependentUpon>
-    </Compile>
     <Compile Include="AutoGeneratorsMetaData\Amital\EntityKeysGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityKeysGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityListQueryServicesGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityListQueryServicesGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="AutoGeneratorsMetaData\Amital\EntityListsGenerator.cs">
       <AutoGen>True</AutoGen>
@@ -149,35 +113,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityPOCOsGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityQueryServicesGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityQueryServicesGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\EntityUpdateServicesGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityUpdateServicesGenerator.tt</DependentUpon>
-    </Compile>
     <Compile Include="AutoGeneratorsMetaData\MetadataClassesGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MetadataClassesGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\OldEntityControllerGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OldEntityControllerGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\OldEntityDetailsGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OldEntityDetailsGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\OLDMetadataClassesGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OLDMetadataClassesGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="AutoGeneratorsMetaData\Amital\RepositoriesGenerator.cs">
       <AutoGen>True</AutoGen>
@@ -204,16 +143,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityPMServiceGenerator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGeneratorsMetaData\TypedScriptGenerators\OldEntitiesGenerator\EntityListClassGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityListClassGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\TypedScriptGenerators\OldEntitiesGenerator\EntityPMClassGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityPMClassGenerator.tt</DependentUpon>
-    </Compile>
     <Compile Include="Tools\GeneralToolsTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -223,11 +152,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TSToolsTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="AutoGeneratorsMetaData\UpdateClassesGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UpdateClassesGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -243,21 +167,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityDataMappingsGenerator.cs</LastGenOutput>
     </None>
-    <None Include="AutoGeneratorsMetaData\EntityDetailsGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityDetailsGenerator.cs</LastGenOutput>
-    </None>
-    <None Include="AutoGeneratorsMetaData\EntityDomainServiceGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityDomainServiceGenerator.cs</LastGenOutput>
-    </None>
     <None Include="AutoGeneratorsMetaData\Amital\EntityKeysGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityKeysGenerator.cs</LastGenOutput>
-    </None>
-    <None Include="AutoGeneratorsMetaData\EntityListQueryServicesGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityListQueryServicesGenerator.cs</LastGenOutput>
     </None>
     <None Include="AutoGeneratorsMetaData\Amital\EntityListsGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -275,29 +187,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityPOCOsGenerator.cs</LastGenOutput>
     </None>
-    <None Include="AutoGeneratorsMetaData\EntityQueryServicesGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityQueryServicesGenerator.cs</LastGenOutput>
-    </None>
-    <None Include="AutoGeneratorsMetaData\EntityUpdateServicesGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityUpdateServicesGenerator.cs</LastGenOutput>
-    </None>
     <None Include="AutoGeneratorsMetaData\Manager.ttinclude" />
     <None Include="AutoGeneratorsMetaData\Amital\RepositoriesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RepositoriesGenerator.cs</LastGenOutput>
     </None>
-    <None Include="AutoGeneratorsMetaData\UpdateClassesGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>UpdateClassesGenerator.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AutoGeneratorsMetaData\NewModelsAPIDataContractGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>NewModelsAPIDataContractGenerator.cs</LastGenOutput>
-    </None>
     <None Include="AutoGeneratorsMetaData\Amital\EntityQueryServicesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityQueryServicesGenerator.cs</LastGenOutput>
@@ -330,29 +226,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityControllerGenerator.cs</LastGenOutput>
     </Content>
-    <None Include="AutoGeneratorsMetaData\APIDataContractGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>APIDataContractGenerator2.cs</LastGenOutput>
-    </None>
-    <None Include="AutoGeneratorsMetaData\CopyDXMLGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CopyDXMLGenerator.cs</LastGenOutput>
-    </None>
     <Content Include="AutoGeneratorsMetaData\MetadataClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MetadataClassesGenerator.cs</LastGenOutput>
-    </Content>
-    <Content Include="AutoGeneratorsMetaData\OldEntityControllerGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>OldEntityControllerGenerator.cs</LastGenOutput>
-    </Content>
-    <Content Include="AutoGeneratorsMetaData\OldEntityDetailsGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>OldEntityDetailsGenerator.cs</LastGenOutput>
-    </Content>
-    <Content Include="AutoGeneratorsMetaData\OLDMetadataClassesGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>OLDMetadataClassesGenerator.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGeneratorsMetaData\TypedScriptGenerators\EntityListGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -369,16 +245,6 @@
     <Content Include="AutoGeneratorsMetaData\TypedScriptGenerators\EntityPMServiceGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityPMServiceGenerator.cs</LastGenOutput>
-    </Content>
-    <Content Include="AutoGeneratorsMetaData\TypedScriptGenerators\OldEntitiesGenerator\EntityListClassGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastOutputs>.\EntityListClassGenerator.cs</LastOutputs>
-      <LastGenOutput>EntityListClassGenerator.cs</LastGenOutput>
-    </Content>
-    <Content Include="AutoGeneratorsMetaData\TypedScriptGenerators\OldEntitiesGenerator\EntityPMClassGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityPMClassGenerator.cs</LastGenOutput>
-      <LastOutputs>.\EntityPMClassGenerator.cs</LastOutputs>
     </Content>
     <Content Include="Tools\GeneralToolsTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
