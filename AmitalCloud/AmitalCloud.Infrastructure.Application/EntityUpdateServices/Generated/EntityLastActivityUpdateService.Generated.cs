@@ -10,7 +10,6 @@ using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
 using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
@@ -20,28 +19,26 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Context;
-using System;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CardSearchUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CardSearch,CardSearchPM,IEntityPM,CardSearchList,int>
+   public partial class EntityLastActivityUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.EntityLastActivity,EntityLastActivityPM,IEntityPM,EntityLastActivityList,string>
    {
    			
-        public CardSearchUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        public EntityLastActivityUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
         {
-            Mapping = new CardSearchDataMapping();
-            Repository = new Repository<POCO.CardSearch>((AmitalCloudContext)mainContext);
+            Mapping = new EntityLastActivityDataMapping();
+            Repository = new Repository<POCO.EntityLastActivity>((AmitalCloudContext)mainContext);
         }
-        public CardSearchUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CardSearchUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
-		protected override IEntityKeyFields<POCO.CardSearch,int> GetKeys(CardSearchPM entityPM) => new CardSearchKeys<int>() { Id = entityPM.Id };
-		protected override void FillDefaultValuesOnCreate(CardSearchPM entityPM)
+        public EntityLastActivityUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
+        public EntityLastActivityUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+		protected override IEntityKeyFields<POCO.EntityLastActivity,string> GetKeys(EntityLastActivityPM entityPM) => new EntityLastActivityKeys<string>() { Id = entityPM.Id };
+protected override void FillDefaultValuesOnCreate(EntityLastActivityPM entityPM)
 		{
-			entityPM.Id =Convert.ToInt32( IdCounter.GetNumber("CardSearch", entityPM.Tenant)); 
 		}
-		protected override void FillDefaultValuesOnUpdate(CardSearchPM entityPM)
-        {       
-           		}
+		protected override void FillDefaultValuesOnUpdate(EntityLastActivityPM entityPM)
+		{
+		}
 	}
 }

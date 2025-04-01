@@ -32,7 +32,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_userId = entity.UserId;
 		_branchId = entity.BranchId;
-		_branches = entity.BRANCHES !=null ? new BRANCHESPM(entity.BRANCHES) : null;
+		_branches = entity.BRANCHES !=null ? new BranchPM(entity.BRANCHES) : null;
 			_id = entity.Id;
    }
    #endregion Constructors
@@ -101,10 +101,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private BRANCHESPM _branches;
+		private BranchPM _branches;
 		[Include]
         [DataMember]
-        public virtual BRANCHESPM BRANCHES 
+        public virtual BranchPM BRANCHES 
 		{ 
 		get { return _branches; } 
 		set { _branches = value; }

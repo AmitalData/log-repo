@@ -14,30 +14,36 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-	[Table("UserPermittedBranches")]
-    public class UserPermittedBranch : BaseEntity
+	[Table("EntityLastActivities")]
+    public class EntityLastActivity : BaseEntity
 	{
 		
-           [Column("CdropId")]
-	    public string CdropId { get; set; }
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [ForeignKey("ObjectTable")]
+        [Column("ObjectTableId")]
+	    public string ObjectTableId { get; set; }
+	      
+        public virtual ObjectTable ObjectTable { get; set; }
         [ForeignKey("User")]
         [Column("UserId")]
 	    public string UserId { get; set; }
 	      
         public virtual User User { get; set; }
-        [ForeignKey("BRANCHES")]
-        [Column("BranchId")]
-	    public string BranchId { get; set; }
+        [Column("ActivityDate")]
+	    public DateTime ActivityDate { get; set; }
+        [Column("EntityId")]
+	    public string EntityId { get; set; }
+        [ForeignKey("ActivityType")]
+        [Column("ActivityTypeCode")]
+	    public string ActivityTypeCode { get; set; }
 	      
-        public virtual Branch BRANCHES { get; set; }
-     [Key]
-        [Column("Id")]
-	    public string Id { get; set; }
+        public virtual EntityLastActivityType ActivityType { get; set; }
     }
 }
 	 
