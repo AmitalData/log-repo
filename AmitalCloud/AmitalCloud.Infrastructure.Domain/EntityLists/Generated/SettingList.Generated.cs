@@ -59,9 +59,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           StorageServiceMode  = entity.StorageServiceMode;
           IsUpgradingChamp  = entity.IsUpgradingChamp;
           HtmlVersion  = entity.HtmlVersion;
-          DropQboconsumerkey  = entity.DropQboconsumerkey;
-          DropQboapptoken  = entity.DropQboapptoken;
-          DropQboconsumersecretkey  = entity.DropQboconsumersecretkey;
           AndroidAppLink  = entity.AndroidAppLink;
           IOSAppLink  = entity.IOSAppLink;
           AndroidPodAppMinimumVersion  = entity.AndroidPodAppMinimumVersion;
@@ -83,10 +80,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           INTTRAProdFTPHost  = entity.INTTRAProdFTPHost;
           INTTRATestFTPHost  = entity.INTTRATestFTPHost;
           OceanInsightsToken  = entity.OceanInsightsToken;
-          DropIsfullbuilddwrunning  = entity.DropIsfullbuilddwrunning;
-          DropIsincrementaldwrunning  = entity.DropIsincrementaldwrunning;
           EmailSendingQuota  = entity.EmailSendingQuota;
-          DropDwnextruntime  = entity.DropDwnextruntime;
           ChampTestAPIURL  = entity.ChampTestAPIURL;
           ChampTestAPIPassword  = entity.ChampTestAPIPassword;
           ChampProdAPIURL  = entity.ChampProdAPIURL;
@@ -120,7 +114,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           WindWardSettings  = entity.WindWardSettings;
           ExportUrl  = entity.ExportUrl;
           LogitudeIISURL  = entity.LogitudeIISURL;
-          DropAmitaltenant  = entity.DropAmitaltenant;
        }
        #endregion Constructors
        #region Properties
@@ -197,12 +190,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string HtmlVersion  { get; set; }
        [DataMember]
-       public string DropQboconsumerkey  { get; set; }
-       [DataMember]
-       public string DropQboapptoken  { get; set; }
-       [DataMember]
-       public string DropQboconsumersecretkey  { get; set; }
-       [DataMember]
        public string AndroidAppLink  { get; set; }
        [DataMember]
        public string IOSAppLink  { get; set; }
@@ -245,13 +232,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string OceanInsightsToken  { get; set; }
        [DataMember]
-       public bool? DropIsfullbuilddwrunning  { get; set; }
-       [DataMember]
-       public bool? DropIsincrementaldwrunning  { get; set; }
-       [DataMember]
        public int EmailSendingQuota  { get; set; }
-       [DataMember]
-       public DateTime? DropDwnextruntime  { get; set; }
        [DataMember]
        public string ChampTestAPIURL  { get; set; }
        [DataMember]
@@ -318,8 +299,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string ExportUrl  { get; set; }
        [DataMember]
        public string LogitudeIISURL  { get; set; }
-       [DataMember]
-       public int? DropAmitaltenant  { get; set; }
          #endregion Properties
    }
 

@@ -24,7 +24,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public SessionPolicyList() : base() {}
        public SessionPolicyList(POCO.SessionPolicy entity) : base()
        {
-          CdropId  = entity.CdropId;
           WebTokenLifeTimeInMinutes  = entity.WebTokenLifeTimeInMinutes;
           WebTokenExpirationWarningInMinutes  = entity.WebTokenExpirationWarningInMinutes;
           Id  = entity.Id;
@@ -32,8 +31,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        #endregion Constructors
        #region Properties
           [DataMember]
-       public string CdropId  { get; set; }
-       [DataMember]
        public int WebTokenLifeTimeInMinutes  { get; set; }
        [DataMember]
        public int WebTokenExpirationWarningInMinutes  { get; set; }

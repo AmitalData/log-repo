@@ -31,7 +31,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("AddedManually")]
 	    public bool AddedManually { get; set; }
 		public virtual ICollection<Address> Addresses { get; set; }
-		public virtual ICollection<Contact> Contacts { get; set; }
         [Column("FirmCode")]
 	    public string FirmCode { get; set; }
         [ForeignKey("WarehouseType")]

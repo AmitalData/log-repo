@@ -1,6 +1,8 @@
 using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -31,10 +33,15 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public static GlobalDB GetGlobalDBByTenant(int tenant) => ConfigurationManager.AppSettings.Get("ENVIROMENT") == "azure app service" ? GetGlobalDbFromEnviroment() : GetByGlobalTenant(tenant);
         private static GlobalDB GetByGlobalTenant(int tenant)
         {
-            tenant = SettingUtil.GetCurrentTenant();
-            IGlobalContext context = GlobalContext.GetContext();
+            IGlobalContext context = (IGlobalContext)CacheManager.CacheWrapper.Get("globalContext");
+            if (context == null)
+            {
+                context = GlobalContext.GetContext();
+                CacheManager.CacheWrapper.Insert("globalContext", context, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+            }
             GlobalTenant globaltenant = new Repository<GlobalTenant>(context).GetAll(0, true).Where(a => a.Id == tenant).FirstOrDefault();
-            return new Repository<GlobalDB>(context).GetAll(0, true).Where(a => a.Id == globaltenant.GlobalDBId).FirstOrDefault();
+            string usedTenant = globaltenant != null ? globaltenant.GlobalDBId : tenant.ToString();
+            return new Repository<GlobalDB>(context).GetAll(0, true).Where(a => a.Id == usedTenant).FirstOrDefault();
         }
         private static GlobalDB GetGlobalDbFromEnviroment()
         {

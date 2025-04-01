@@ -24,12 +24,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string DropCdropId { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [Column("DropCdropCode")]
-	    public string DropCdropCode { get; set; }
-        [Column("DropCdropEnglishname")]
-	    public string DropCdropEnglishname { get; set; }
-        [Column("DropCdropLocalname")]
-	    public string DropCdropLocalname { get; set; }
         [Column("OrderNumber")]
 	    public int OrderNumber { get; set; }
      [Key]

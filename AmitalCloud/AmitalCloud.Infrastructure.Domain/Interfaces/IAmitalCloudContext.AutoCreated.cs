@@ -17,7 +17,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<AutomationHistory> AutomationHistorys { get; }
 		 IDbSet<AutomationLastUpdate> AutomationLastUpdates { get; }
 		 IDbSet<BlobFile> BlobFiles { get; }
-		 IDbSet<CaptchaKey> CaptchaKeys { get; }
 		 IDbSet<CardContact> CardContacts { get; }
 		 IDbSet<CategoryType> CategoryTypes { get; }
 		 IDbSet<ChangePasswordLog> ChangePasswordLogs { get; }
@@ -28,7 +27,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<ContactLastLogin> ContactLastLogins { get; }
 		 IDbSet<ContactLoginLog> ContactLoginLogs { get; }
 		 IDbSet<ContactMobileDevice> ContactMobileDevices { get; }
-		 IDbSet<ContactPassword> ContactPasswords { get; }
 		 IDbSet<ContactTenant> ContactTenants { get; }
 		 IDbSet<ContactTenantRole> ContactTenantRoleset { get; }
 		 IDbSet<ConvertProgramInfo> ConvertProgramInfoes { get; }
@@ -65,7 +63,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<EntityDate> EntityDates { get; }
 		 IDbSet<EntityLastActivityType> EntityLastActivityTypes { get; }
 		 IDbSet<EntityLastUpdate> EntityLastUpdates { get; }
-		 IDbSet<FailedLoginLog> FailedLoginLogs { get; }
 		 IDbSet<FailedTokenLog> FailedTokenLogs { get; }
 		 IDbSet<Feature> Features { get; }
 		 IDbSet<FeatureChange> FeatureChanges { get; }
@@ -109,8 +106,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<Screen> Screens { get; }
 		 IDbSet<ScreenField> ScreenFields { get; }
 		 IDbSet<ScreenModification> ScreenModifications { get; }
-		 IDbSet<SessionPolicy> sessionpolicies { get; }
-		 IDbSet<Setting> Settings { get; }
 		 IDbSet<SharedUserQuery> shareduserqueries { get; }
 		 IDbSet<SmallDocument> SmallDocuments { get; }
 		 IDbSet<SpecialService> SpecialServices { get; }

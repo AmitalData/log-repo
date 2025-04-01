@@ -26,14 +26,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		     None,  
 	         CdropId, 
 	         Tenant, 
-	         CdropIp, 
-	         CdropBrowser, 
 	         ContactId, 
 	         GMTDateTime, 
 	         LocalDateTime, 
-	         CdropComputerid, 
-	         CdropContactagent, 
-	         CdropVia, 
 	         Id, 
 	         IP, 
 	         Browser, 
@@ -45,14 +40,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		     None,  
 	         CdropId, 
 	         Tenant, 
-	         CdropIp, 
-	         CdropBrowser, 
 	         ContactId, 
 	         GMTDateTime, 
 	         LocalDateTime, 
-	         CdropComputerid, 
-	         CdropContactagent, 
-	         CdropVia, 
 	         Id, 
 	         IP, 
 	         Browser, 
@@ -65,14 +55,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
         {
 			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropId)) { entityPOCO.CdropId = entityPM.CdropId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropIp)) { entityPOCO.CdropIp = entityPM.CdropIp;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropBrowser)) { entityPOCO.CdropBrowser = entityPM.CdropBrowser;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId)) { entityPOCO.ContactId = entityPM.ContactId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GMTDateTime)) { entityPOCO.GMTDateTime = entityPM.GMTDateTime;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalDateTime)) { entityPOCO.LocalDateTime = entityPM.LocalDateTime;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropComputerid)) { entityPOCO.CdropComputerid = entityPM.CdropComputerid;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropContactagent)) { entityPOCO.CdropContactagent = entityPM.CdropContactagent;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropVia)) { entityPOCO.CdropVia = entityPM.CdropVia;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IP)) { entityPOCO.IP = entityPM.IP;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Browser)) { entityPOCO.Browser = entityPM.Browser;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComputerId)) { entityPOCO.ComputerId = entityPM.ComputerId;}
@@ -89,14 +74,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.Tenant = entityPOCO.Tenant;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropIp))
-            {
-					entityPM.CdropIp = entityPOCO.CdropIp;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropBrowser))
-            {
-					entityPM.CdropBrowser = entityPOCO.CdropBrowser;
-            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContactId))
             {
 					entityPM.ContactId = entityPOCO.ContactId;
@@ -108,18 +85,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalDateTime))
             {
 					entityPM.LocalDateTime = entityPOCO.LocalDateTime;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropComputerid))
-            {
-					entityPM.CdropComputerid = entityPOCO.CdropComputerid;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropContactagent))
-            {
-					entityPM.CdropContactagent = entityPOCO.CdropContactagent;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropVia))
-            {
-					entityPM.CdropVia = entityPOCO.CdropVia;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
             {
@@ -157,14 +122,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropIp))
-            {
-                oldEntityPM.CdropIp = entityPM.CdropIp;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropBrowser))
-            {
-                oldEntityPM.CdropBrowser = entityPM.CdropBrowser;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId))
             {
                 oldEntityPM.ContactId = entityPM.ContactId;
@@ -176,18 +133,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalDateTime))
             {
                 oldEntityPM.LocalDateTime = entityPM.LocalDateTime;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropComputerid))
-            {
-                oldEntityPM.CdropComputerid = entityPM.CdropComputerid;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropContactagent))
-            {
-                oldEntityPM.CdropContactagent = entityPM.CdropContactagent;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropVia))
-            {
-                oldEntityPM.CdropVia = entityPM.CdropVia;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IP))
             {
@@ -234,26 +179,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CdropId)) //T4 find type == nText 
             {
                 entityPM.CdropId = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropId));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.CdropIp)) //T4 find type == nText 
-            {
-                entityPM.CdropIp = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropIp));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.CdropBrowser)) //T4 find type == nText 
-            {
-                entityPM.CdropBrowser = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropBrowser));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.CdropComputerid)) //T4 find type == nText 
-            {
-                entityPM.CdropComputerid = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropComputerid));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.CdropContactagent)) //T4 find type == nText 
-            {
-                entityPM.CdropContactagent = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropContactagent));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.CdropVia)) //T4 find type == nText 
-            {
-                entityPM.CdropVia = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropVia));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.ContactAgent)) //T4 find type == nText 
             {

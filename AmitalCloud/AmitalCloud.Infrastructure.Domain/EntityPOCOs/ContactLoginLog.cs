@@ -24,10 +24,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string CdropId { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [Column("CdropIp")]
-	    public string CdropIp { get; set; }
-        [Column("CdropBrowser")]
-	    public string CdropBrowser { get; set; }
         [ForeignKey("Contact")]
         [Column("ContactId")]
 	    public string ContactId { get; set; }
@@ -37,12 +33,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public DateTime? GMTDateTime { get; set; }
         [Column("LocalDateTime")]
 	    public DateTime? LocalDateTime { get; set; }
-        [Column("CdropComputerid")]
-	    public string CdropComputerid { get; set; }
-        [Column("CdropContactagent")]
-	    public string CdropContactagent { get; set; }
-        [Column("CdropVia")]
-	    public string CdropVia { get; set; }
      [Key]
         [Column("Id")]
 	    public string Id { get; set; }

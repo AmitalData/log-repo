@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace Logitude.Accounting.Data.EntityPOCOs
+namespace AmitalCloud.Invoice.Domain.EntityPOCOs
 {
    
     public class ARPaymentChequeStatus

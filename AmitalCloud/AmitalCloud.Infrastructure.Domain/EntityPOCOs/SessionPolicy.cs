@@ -21,9 +21,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	{
 	        new const bool hasTenant = false;  
 		
-           [Column("CdropId")]
-	    public string CdropId { get; set; }
-        [Column("WebTokenLifeTimeInMinutes")]
+           [Column("WebTokenLifeTimeInMinutes")]
 	    public int WebTokenLifeTimeInMinutes { get; set; }
      
 	    public int WebTokenExpirationWarningInMinutes { get; set; }

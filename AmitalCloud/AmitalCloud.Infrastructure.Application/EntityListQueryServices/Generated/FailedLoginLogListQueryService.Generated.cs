@@ -17,8 +17,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class FailedLoginLogListQueryService  : BaseEntityListQueryService<FailedLoginLogList,POCO.FailedLoginLog,  FailedLoginLogKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.FailedLoginLog> contextEntity => (context as IAmitalCloudContext).FailedLoginLogs;
-		public FailedLoginLogListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+	    protected override System.Data.Entity.IDbSet<POCO.FailedLoginLog> contextEntity => (context as ISystemLogContext).FailedLoginLogs;
+		public FailedLoginLogListQueryService(int tenant) : base(SystemLogContext.GetContext(tenant)) { }
         public FailedLoginLogList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

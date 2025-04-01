@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class SettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Setting,SettingKeys<string>,SettingPM,SettingList,string>
+   public partial class SettingQueryService: BaseEntityQueryService<IGlobalContext,POCO.Setting,SettingKeys<string>,SettingPM,SettingList,string>
    {
-        public SettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public SettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Setting>(context),new SettingDataMapping()) {}
+        public SettingQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public SettingQueryService(IGlobalContext context) : base(new Repository<POCO.Setting>(context),new SettingDataMapping()) {}
 		public  SettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new SettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Setting,string> GetKeys(POCO.Setting entityPOCO) => new SettingKeys<string>() { Id = entityPOCO.Id,  };
    }

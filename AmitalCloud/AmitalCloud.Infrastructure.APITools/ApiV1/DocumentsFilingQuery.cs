@@ -514,9 +514,7 @@ namespace AmitalCloud.Infrastructure.APITools.ApiV1
         //                               }).ToList();
         //    }
 
-        //    //Islam: this code caused an exception in logitude!!! if you want to add a code like this which is only required for customs please check the settings.deployment first
-        //    //ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-
+        
         //    var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
         //    DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
         //    //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
@@ -3051,7 +3049,7 @@ namespace AmitalCloud.Infrastructure.APITools.ApiV1
                     var DocumentsFilingList = (from a in repository.GetByEntityAndChiled(objectTable.Id, declarationId, objectTableCertificate.Id, certificateOfOriginId, tenant, documentTypeId)
                                                select a.DocumentId);
 
-                    if (!AmitalCloudSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight)
+                    if (!AmitalCloudSettings.GetAmitalCustomsSettingsMInject(tenant).IsConnectedToUniFreight)
                     {
 
                         return DocumentsFilingList.ToList();

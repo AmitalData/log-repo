@@ -26,9 +26,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        {
           DropCdropId  = entity.DropCdropId;
           Tenant  = entity.Tenant;
-          DropCdropCode  = entity.DropCdropCode;
-          DropCdropEnglishname  = entity.DropCdropEnglishname;
-          DropCdropLocalname  = entity.DropCdropLocalname;
           OrderNumber  = entity.OrderNumber;
           Id  = entity.Id;
           Code  = entity.Code;
@@ -41,12 +38,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string DropCdropId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
-       [DataMember]
-       public string DropCdropCode  { get; set; }
-       [DataMember]
-       public string DropCdropEnglishname  { get; set; }
-       [DataMember]
-       public string DropCdropLocalname  { get; set; }
        [DataMember]
        public int OrderNumber  { get; set; }
 

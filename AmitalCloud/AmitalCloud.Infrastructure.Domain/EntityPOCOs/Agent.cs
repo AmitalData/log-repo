@@ -35,7 +35,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("RegulatedAgentCode")]
 	    public string RegulatedAgentCode { get; set; }
 		public virtual ICollection<Address> Addresses { get; set; }
-		public virtual ICollection<Contact> Contacts { get; set; }
         [Column("AgentSharedLogisticsKey")]
 	    public string AgentSharedLogisticsKey { get; set; }
         [Column("IsCreditLimitEnabled")]

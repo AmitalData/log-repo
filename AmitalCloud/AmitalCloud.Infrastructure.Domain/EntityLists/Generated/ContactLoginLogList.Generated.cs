@@ -26,14 +26,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        {
           CdropId  = entity.CdropId;
           Tenant  = entity.Tenant;
-          CdropIp  = entity.CdropIp;
-          CdropBrowser  = entity.CdropBrowser;
           ContactId  = entity.ContactId;
           GMTDateTime  = entity.GMTDateTime;
           LocalDateTime  = entity.LocalDateTime;
-          CdropComputerid  = entity.CdropComputerid;
-          CdropContactagent  = entity.CdropContactagent;
-          CdropVia  = entity.CdropVia;
           Id  = entity.Id;
           IP  = entity.IP;
           Browser  = entity.Browser;
@@ -48,21 +43,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public string CdropIp  { get; set; }
-       [DataMember]
-       public string CdropBrowser  { get; set; }
-       [DataMember]
        public string ContactId  { get; set; }
        [DataMember]
        public DateTime? GMTDateTime  { get; set; }
        [DataMember]
        public DateTime? LocalDateTime  { get; set; }
-       [DataMember]
-       public string CdropComputerid  { get; set; }
-       [DataMember]
-       public string CdropContactagent  { get; set; }
-       [DataMember]
-       public string CdropVia  { get; set; }
 
        [Key]
        [DataMember]

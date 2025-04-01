@@ -7,7 +7,7 @@ namespace AmitalCloud.Infrastructure.Data
     public class AmitalCloudSettings
     {
         public static string Id { get; set; }
-        public static string LogitudeURL { get; set; }
+        public static string AmitalURL { get; set; }
         public static string ChampURL { get; set; }
         public static string ChampTestAPIURL { get; set; }
         public static string ChampTestAPIPassword { get; set; }
@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Data
         public static string StorageAccountName { get; set; }
         public static string StorageAccountKey { get; set; }
         public static string StorageType { get; set; }
-        public static int LogitudeCRMTenantNumber { get; set; }
+        public static int AmitalCRMTenantNumber { get; set; }
         public static string AutoSignupEmail { get; set; }
         public static string AutoSignupPassword { get; set; }
         public static bool ForceHttps { get; set; }
@@ -63,7 +63,7 @@ namespace AmitalCloud.Infrastructure.Data
         public static string CPUIntensiveWebServicesURL { get; set; }
 
         public static string AmitalCloudEnvironmentURL { get; set; }
-        public static string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
+        public static string AmitalCloudAmitalTenantPrimaryKey { get; set; }
         public static int OITenantNumber { get; set; }
         public static bool IsCostomsDeploy
         {
@@ -79,7 +79,7 @@ namespace AmitalCloud.Infrastructure.Data
         public static Func<int, string> GetUserNameInject { get; set; }
         // this project no need but in FilingManager is must 
         public static Func<int, string> GetUnfDBConnectionInfoFromTenantInject { get; set; }// this project no need but in FilingManager is must 
-        public static Func<int, AmitalCloudCustomsSettingsM> GetLogitudeCustomsSettingsMInject { get; set; }
+        public static Func<int, AmitalCloudCustomsSettingsM> GetAmitalCustomsSettingsMInject { get; set; }
         public static Action<Exception, string, string> HandleDbExceptionInject { get; set; }
 
         public static Action<bool, bool> HandleBuildObjectTablesZipFilesData_Inject { get; set; }
@@ -117,7 +117,7 @@ namespace AmitalCloud.Infrastructure.Data
             oraCSB.Server = "10.10.10.67";
             oraCSB.Port = 1521;
             oraCSB.Sid = "amital";
-            oraCSB.UserId = "LOGITUDE_MAIN";
+            oraCSB.UserId = "AMITAL_MAIN";
             oraCSB.Password = "ORACLE";
             OracleConnection myConnection = new OracleConnection(oraCSB.ConnectionString);
 
@@ -154,7 +154,7 @@ namespace AmitalCloud.Infrastructure.Data
         public static string WorkflowStorageAccountName { get; set; }
         public static string WorkflowStorageAccountKey { get; set; }
         public static string WindWardSettings { get; set; }
-        public static string LogitudeIISURL { get; set; }
+        public static string AmitalIISURL { get; set; }
         public static string TempStorageConnection { get; set; }
     }
 

@@ -270,7 +270,7 @@
     <Compile Include="EntityPMs\Generated\SATInvoiceStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SATPaymentMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SATTransferStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Manual\LedgerTransactionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Manual\LedgerTransactionPM.cs" />
     <Compile Include="EntityPMs\Manual\QuickbooksSyncRequestTicketPM.cs" />
     <Compile Include="EntityPOCOs\AccountingPaymentMethod.cs" />
     <Compile Include="EntityPOCOs\AccountingSystemsSetting.cs" />

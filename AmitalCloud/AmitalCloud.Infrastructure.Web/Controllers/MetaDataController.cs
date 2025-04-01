@@ -16,6 +16,7 @@ using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
+    [RoutePrefix("api/ngMetaData")]
     public class MetaDataController : ApiController
     {
         [OperationContract]
@@ -36,7 +37,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                 //todo: check if this is needed
                 //TenantManagmentPrivateLabelsPM privatelabel = null;
                 //var url = AmitalCloudSecurityUtility.getLoggedDomain();
-                //if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
+                //if (!url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 //{
                 //    TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(tenant);
                 //    privatelabel = query.GetSingleActivePMByUrl_Cache(url);
@@ -108,6 +109,9 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
 
         public List<TextCodePM> GetTenantTextCodes(int tenant)
         => new TextCodeQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetMulti(a => a.Tenant == tenant, "").ToList();
+
+        [HttpGet]
+        [Route("")]
         [OperationContract]
         [WebGet(UriTemplate = "getloggeduserpm/{tenant}/{useremail}/{getloggeduser}")]
         public UserPM GetLoggedUserPM(int tenant, string useremail, bool getloggeduser)

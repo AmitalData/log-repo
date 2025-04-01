@@ -23,7 +23,7 @@ namespace AmitalCloud.Infrastructure.APITools.Helpers
 
         public APIConnectionHelper()
         {
-            string baseurl = AmitalCloudSettings.LogitudeURL;
+            string baseurl = AmitalCloudSettings.AmitalURL;
 
 #if DEBUG
             baseurl = "http://localhost:9996/";

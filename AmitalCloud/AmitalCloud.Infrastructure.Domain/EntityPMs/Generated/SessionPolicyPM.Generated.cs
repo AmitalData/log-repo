@@ -28,30 +28,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public SessionPolicyPM() : base() {} 
    public SessionPolicyPM(POCO.SessionPolicy entity) : base()
    {
-		_cdropId = entity.CdropId;
 		_webTokenLifeTimeInMinutes = entity.WebTokenLifeTimeInMinutes;
 		_webTokenExpirationWarningInMinutes = entity.WebTokenExpirationWarningInMinutes;
 		_id = entity.Id;
    }
    #endregion Constructors
    #region Properties
-   	  private string _cdropId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CdropId  
-	   {
-	     get { return _cdropId; }
-		 set
-		 {
-		   if(_cdropId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropId",OldValue=_cdropId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _cdropId=value;
-		   }
-		 }
-	   }
-	  private int _webTokenLifeTimeInMinutes ;
+   	  private int _webTokenLifeTimeInMinutes ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
        public int WebTokenLifeTimeInMinutes  

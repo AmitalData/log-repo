@@ -67,7 +67,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_aWBNumber = entity.AWBNumber;
 		_tenant = entity.Tenant;
 		_currenttenant = entity.CurrentTenant !=null ? new TenantPM(entity.CurrentTenant) : null;
-			_responseDocumentId = entity.ResponseDocumentId;
+			_isSecured = entity.IsSecured;
+		_responseDocumentId = entity.ResponseDocumentId;
 		_responsedocument = entity.ResponseDocument !=null ? new DocumentPM(entity.ResponseDocument) : null;
 			_childEntityId = entity.ChildEntityId;
 		_childObjectTableId = entity.ChildObjectTableId;
@@ -665,6 +666,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _currenttenant; } 
 		set { _currenttenant = value; }
 		}
+	  private bool _isSecured ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSecured  
+	   {
+	     get { return _isSecured; }
+		 set
+		 {
+		   if(_isSecured != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecured",OldValue=_isSecured,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isSecured=value;
+		   }
+		 }
+	   }
 	  private string _responseDocumentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

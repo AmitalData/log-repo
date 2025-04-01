@@ -10,7 +10,6 @@ using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
-    [RoutePrefix("api/LogitudeApplication")]
     public class AmitalCloudController : ApiController
     {
         public HttpResponseMessage GetCheckIsupgradingSystem()

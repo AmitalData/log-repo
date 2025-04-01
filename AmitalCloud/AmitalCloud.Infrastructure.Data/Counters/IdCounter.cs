@@ -38,7 +38,7 @@ namespace AmitalCloud.Infrastructure.Data.Counters
                         OracleCommand cmd = new OracleCommand();
                         cmd.Connection = cn;
                         cmd.CommandText =
-                    DBHelpers.DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", AmitalCloudDBSchema.LOGITUDE_MAIN,
+                    DBHelpers.DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", AmitalCloudDBSchema.AMITAL_MAIN,
                         cmd.Connection.ConnectionString);
                         cmd.CommandType = CommandType.StoredProcedure;
                         /*
@@ -148,8 +148,8 @@ namespace AmitalCloud.Infrastructure.Data.Counters
 
                             cmd.Connection = cn;
                             cmd.CommandText =
-                            //Enums.AmitalCloudDBSchema.LOGITUDE_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
-                            DBHelpers.DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdsRange", AmitalCloudDBSchema.LOGITUDE_MAIN,
+							//Enums.AmitalCloudDBSchema.AMITAL_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
+							DBHelpers.DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdsRange", AmitalCloudDBSchema.AMITAL_MAIN,
                             cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -290,8 +290,8 @@ namespace AmitalCloud.Infrastructure.Data.Counters
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
                             cmd.CommandText =
-                            //Enums.AmitalCloudDBSchema.LOGITUDE_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
-                            DBHelpers.DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", AmitalCloudDBSchema.LOGITUDE_MAIN,
+							//Enums.AmitalCloudDBSchema.AMITAL_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
+							DBHelpers.DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", AmitalCloudDBSchema.AMITAL_MAIN,
                             cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
                             /*

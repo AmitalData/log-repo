@@ -140,6 +140,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                 throw new Exception(_errorMessage, dbEx);
             }
         }
+        public TEntity GetFirst() => GetAll(0, true).FirstOrDefault();
         public List<TEntity> GetAll(int tenant) => GetQuery(tenant).ToList();
         protected IQueryable<TEntity> GetQuery(int tenant)
         {
