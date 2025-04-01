@@ -48,7 +48,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.Address2).HasColumnName("Address2").IsRequired().HasMaxLength(150).IsUnicode(false);
 
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsRequired().HasMaxLength(-1).IsUnicode(false);
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsRequired().IsMaxLength().IsUnicode(false);
         }
     }
 }

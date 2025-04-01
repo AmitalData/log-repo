@@ -16,7 +16,6 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-	[Table("ANALYZEQUEUESTATUS")]
     public class AnalyzeQueueStatus : BaseEntity
 	{
 	        new const bool hasTenant = false;  

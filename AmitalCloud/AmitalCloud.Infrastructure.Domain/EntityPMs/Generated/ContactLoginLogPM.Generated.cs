@@ -31,7 +31,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_cdropId = entity.CdropId;
 		_tenant = entity.Tenant;
 		_contactId = entity.ContactId;
-		_gMTDateTime = entity.GMTDateTime;
+		_contact = entity.Contact !=null ? new ContactPM(entity.Contact) : null;
+			_gMTDateTime = entity.GMTDateTime;
 		_localDateTime = entity.LocalDateTime;
 		_id = entity.Id;
 		_iP = entity.IP;
@@ -90,6 +91,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ContactPM _contact;
+		[Include]
+        [DataMember]
+        public virtual ContactPM Contact 
+		{ 
+		get { return _contact; } 
+		set { _contact = value; }
+		}
 	  private DateTime? _gMTDateTime ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

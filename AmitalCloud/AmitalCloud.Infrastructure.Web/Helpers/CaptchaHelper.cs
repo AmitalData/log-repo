@@ -1,6 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Application.EntityUpdateServices;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Enums;
@@ -56,12 +55,12 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             return base64String;
         }
 
-        public bool CheckCaptchaCodeValidated(string code, string Key, IGlobalContext globalContext, string userCaptchaKey = null, bool withoutCheckUsed = false)
+        public bool CheckCaptchaCodeValidated(string code, string Key, string userCaptchaKey = null, bool withoutCheckUsed = false)
         {
             bool result = false;
             if (!string.IsNullOrEmpty(Key))
             {
-                CaptchaKeyQueryService captchaKeyQueryService = new CaptchaKeyQueryService(globalContext);
+                CaptchaKeyQueryService captchaKeyQueryService = new CaptchaKeyQueryService(0);
 
                 CaptchaKeyPM captchaKey = !withoutCheckUsed ? captchaKeyQueryService.GetMulti(d => d.Id == Key && !d.IsUsed).FirstOrDefault() : captchaKeyQueryService.GetSingle(Key, false, false);
                 if (captchaKey != null)
@@ -75,7 +74,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                     }
 
                     captchaKey.IsUsed = true;
-                    CaptchaKeyUpdateService captchaKeyUpdateService = new CaptchaKeyUpdateService(globalContext);
+                    CaptchaKeyUpdateService captchaKeyUpdateService = new CaptchaKeyUpdateService(0);
                     captchaKey.ChangeSetOp = ChangeSetOperation.Update;
                     captchaKeyUpdateService.Update(captchaKey, true);
                 }

@@ -47,13 +47,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.DirectionId).HasColumnName("DirectionId").IsRequired().HasMaxLength(1).IsFixedLength();
 
             this.Property(t => t.VersionId).HasColumnName("VersionId").HasMaxLength(15).IsUnicode(false);
-
-            // Relationships
-            this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedBy);
-            this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedBy);
-            this.HasRequired(t => t.Direction).WithMany().HasForeignKey(d => d.DirectionId);
-            this.HasRequired(t => t.DeploymentPackagesVersion).WithMany().HasForeignKey(d => d.VersionId);
-
         }
     }
 }

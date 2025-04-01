@@ -344,7 +344,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	  private string _followUpAutomationFailedXml ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
        public string FollowUpAutomationFailedXml  
 	   {
@@ -360,7 +361,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 }
 	   }
 	  private string _setSLAAutomationFailedXml ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
        public string SetSLAAutomationFailedXml  
 	   {

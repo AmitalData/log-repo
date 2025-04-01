@@ -9,9 +9,9 @@ using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Data.Services;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Web.DataContracts;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using AmitalCloud.Infrastructure.Web.Helpers.MixPanel;
@@ -19,30 +19,27 @@ using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Transactions;
 using System.Web;
 using System.Web.Security;
-using System.Transactions;
-using System.Linq.Expressions;
 
 namespace AmitalCloud.Infrastructure.Application.Helpers
 {
     public class Authentication
     {
-        readonly IGlobalContext globalContext;
-        IAmitalCloudContext amitalCloudContext;
         readonly private GlobalContactQueryService globalContactQueryService;
         readonly private ContactPasswordQueryService contactPasswordQueryService;
         readonly private TenantManagementQueryService tenantManagementQueryService;
+        readonly private int tenant;
 
         public Authentication(int tenant)
         {
-            globalContext = GlobalContext.GetContext();
-            amitalCloudContext = AmitalCloudContext.GetContext(tenant);
-
-            globalContactQueryService = new GlobalContactQueryService(globalContext);
-            contactPasswordQueryService = new ContactPasswordQueryService(globalContext);
-            tenantManagementQueryService = new TenantManagementQueryService(globalContext);
+            globalContactQueryService = new GlobalContactQueryService(tenant);
+            contactPasswordQueryService = new ContactPasswordQueryService(tenant);
+            tenantManagementQueryService = new TenantManagementQueryService(tenant);
+            this.tenant = tenant;
         }
 
         public UserData AuthenticateUser(LoginParameters loginParameters)
@@ -52,9 +49,9 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
             url = url.Split(':')[0];
 
-            if (!loginParameters.IsFromPLSignApp  && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
+            if (!loginParameters.IsFromPLSignApp && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
             {
-                TenantManagmentPrivateLabelsQueryService tenantManagmentPrivateLabelsQueryService = new TenantManagmentPrivateLabelsQueryService(globalContext);
+                TenantManagmentPrivateLabelsQueryService tenantManagmentPrivateLabelsQueryService = new TenantManagmentPrivateLabelsQueryService(tenant);
                 privatelabel = tenantManagmentPrivateLabelsQueryService.GetMulti(a => a.PrivateLabelUrl == url && a.InActive == false).FirstOrDefault();
             }
             DateTime DateBeforePostUserValidation = DateTime.Now;
@@ -64,10 +61,10 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             List<CompanyLogin> loginsList = new List<CompanyLogin>();
             ContactPasswordPM contactPassword = null;
 
-            CardQueryService cardQueryService = new CardQueryService(amitalCloudContext);
-            TenantQueryService tenantQueryService = new TenantQueryService(amitalCloudContext);
-            UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
-            GlobalTenantQueryService globalTenantQueryService = new GlobalTenantQueryService(globalContext);
+            CardQueryService cardQueryService = new CardQueryService(tenant);
+            TenantQueryService tenantQueryService = new TenantQueryService(tenant);
+            UserQueryService userQueryService = new UserQueryService(tenant);
+            GlobalTenantQueryService globalTenantQueryService = new GlobalTenantQueryService(tenant);
 
             data = CheckCaptchaState(loginParameters);
             if (!data.HasError)
@@ -121,7 +118,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 {
                     GlobalTenantPM globalTenant = globalTenantQueryService.GetSingle(contact.GlobalTenantId, false, true);
 
-                    if (contact.IsUser && !customerCare && !distributor && 
+                    if (contact.IsUser && !customerCare && !distributor &&
                         ((!loginParameters.IsCargoTracking || !loginParameters.IsCustomsBook || (loginParameters.IsCustomsBook && FeatureToggleHelper.HasFeatureToggle("LCB", contact.GlobalTenantId)))
                             || (loginParameters.IsCargoTracking && FeatureToggleHelper.HasFeatureToggle("LCT", contact.GlobalTenantId))))
                     {
@@ -135,10 +132,10 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                     {
                         TenantPM currentTenant = tenantQueryService.GetSingle(contact.GlobalTenantId, false, true);
 
-                        if ((loginParameters.IsMobileLogin && currentTenant.IsMobileActivated) 
+                        if ((loginParameters.IsMobileLogin && currentTenant.IsMobileActivated)
                             || (!loginParameters.IsMobileLogin && (currentTenant.IsWebAccessActivated || currentTenant.IsCargoTrackWebAccessActivated || currentTenant.IsDigitalPortalAccessActivated)))
                         {
-                            CardContactQueryService cardContactQueryService = new CardContactQueryService(amitalCloudContext);
+                            CardContactQueryService cardContactQueryService = new CardContactQueryService(tenant);
                             List<CardContactPM> cardcontactsList = cardContactQueryService.GetMulti(c => c.ContactId == contact.Id && c.InternetAccess == true && c.Tenant == contact.GlobalTenantId);
 
                             cardcontactsList.ForEach(cardContact =>
@@ -172,10 +169,20 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
                     if (isValidPrivateLabel || !isInvalidAccess)
                     {
-                        data = LoginUser(new LoginParameters() { Email = email, Password = password, IsUser = companyAccess.IsUser, CardId = companyAccess.CardId,
-                            CardType = companyAccess.CardType, ByToken = loginParameters.ByToken, IsMobileLogin = loginParameters.IsMobileLogin, 
-                            GetToken = loginParameters.GetToken, IsAngularLogin = loginParameters.IsAngularLogin, InternalLoginValidationCall = true, 
-                            ClientType = loginParameters.ClientType }, companyAccess.Tenant);
+                        data = LoginUser(new LoginParameters()
+                        {
+                            Email = email,
+                            Password = password,
+                            IsUser = companyAccess.IsUser,
+                            CardId = companyAccess.CardId,
+                            CardType = companyAccess.CardType,
+                            ByToken = loginParameters.ByToken,
+                            IsMobileLogin = loginParameters.IsMobileLogin,
+                            GetToken = loginParameters.GetToken,
+                            IsAngularLogin = loginParameters.IsAngularLogin,
+                            InternalLoginValidationCall = true,
+                            ClientType = loginParameters.ClientType
+                        }, companyAccess.Tenant);
                     }
                     else
                     {
@@ -214,10 +221,20 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                     if (temp.Count == 1)
                     {
                         CompanyLogin companyAccess = temp.First();
-                        data = LoginUser(new LoginParameters() { Email = email, Password = password, IsUser = companyAccess.IsUser, CardId = companyAccess.CardId, 
-                            CardType = companyAccess.CardType, ByToken = loginParameters.ByToken, IsMobileLogin = loginParameters.IsMobileLogin, 
-                            GetToken = loginParameters.GetToken, IsAngularLogin = loginParameters.IsAngularLogin, InternalLoginValidationCall = true,
-                            ClientType = loginParameters.ClientType }, companyAccess.Tenant);
+                        data = LoginUser(new LoginParameters()
+                        {
+                            Email = email,
+                            Password = password,
+                            IsUser = companyAccess.IsUser,
+                            CardId = companyAccess.CardId,
+                            CardType = companyAccess.CardType,
+                            ByToken = loginParameters.ByToken,
+                            IsMobileLogin = loginParameters.IsMobileLogin,
+                            GetToken = loginParameters.GetToken,
+                            IsAngularLogin = loginParameters.IsAngularLogin,
+                            InternalLoginValidationCall = true,
+                            ClientType = loginParameters.ClientType
+                        }, companyAccess.Tenant);
                         data.CompanyLogins = temp;
                         data.ContactsCount = 1;
                     }
@@ -325,7 +342,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                             CaptchaHelper captchaHelper = new CaptchaHelper();
                             captchaHelper.AddCaptchaKey(loginParameters.Email, data, "Login");
 
-                            UpdateContactPassword(contactPassword, new ContactPasswordUpdateService(globalContext), captchaKey: data.CaptchaKey);
+                            UpdateContactPassword(contactPassword, new ContactPasswordUpdateService(tenant), captchaKey: data.CaptchaKey);
                         }
                     }
                 }
@@ -361,13 +378,9 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 customerCare = false;
                 bool distributor = false;
                 UserPM amitalUser = null;
-
                 // when accessing from authenticateUser, the context may be regarding another tenant, so need to create a new context
-                amitalCloudContext = AmitalCloudContext.GetContext(tenant);
-                UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
-
+                UserQueryService userQueryService = new UserQueryService(tenant);
                 GlobalContactPM contact = globalContactQueryService.GetMulti(d => d.GlobalTenantId == 0 && d.Email.ToLower() == parameters.Email.ToLower() && d.InActive == false).FirstOrDefault();
-
                 if (contact != null)
                 {
                     amitalUser = userQueryService.GetSingle(contact.Id, false, false);
@@ -419,7 +432,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 user.Technology = "AG";
 
                 #region KeepUserLoggedIn
-                TenantLoginPolicyQueryService securityPolicyQueryService = new TenantLoginPolicyQueryService(amitalCloudContext);
+                TenantLoginPolicyQueryService securityPolicyQueryService = new TenantLoginPolicyQueryService(tenant);
                 TenantLoginPolicyPM securityPolicy = securityPolicyQueryService.GetMulti(d => d.Tenant == tenant, "LoginPolicy").FirstOrDefault();
 
                 if (securityPolicy != null)
@@ -444,7 +457,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                         if (!parameters.ByToken)
                         {
                             string hashedPassword = "";
-                            ContactPassword contactPasswordPOCO = AuthenticationUtil.VerifyContactPassword(parameters.Email, parameters.Password, globalContext);
+                            ContactPassword contactPasswordPOCO = AuthenticationUtil.VerifyContactPassword(parameters.Email, parameters.Password);
                             if (contactPasswordPOCO != null)
                             {
                                 contactPassword = new ContactPasswordPM(contactPasswordPOCO);
@@ -458,7 +471,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
                             string token = AuthenticationUtil.GenerateToken();
 
-                            AuthenticationTokenUpdateService authenticationUpdateService = new AuthenticationTokenUpdateService(globalContext);
+                            AuthenticationTokenUpdateService authenticationUpdateService = new AuthenticationTokenUpdateService(tenant);
                             AuthenticationToken authentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = email, Password = hashedPassword, Token = token, Tenant = user.CurrentTenant, ClientType = parameters.IsMobileLogin ? "Mobile" : parameters.ClientType };
                             if (!user.KeepUserLoggedIn && authentication.ClientType == "Web" && user.WebTokenLifeTimeInMinutes != 0) authentication.ExpirationDate = DateTime.Now.AddMinutes(user.WebTokenLifeTimeInMinutes);
                             AddAuthenticationToken(authentication, authenticationUpdateService);
@@ -491,7 +504,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 }
 
                 user.HtmlVersion = GetHtmlVersion();
-                user.IsAdmin = IsUserAdmin(email, tenant, amitalCloudContext) || customerCare;
+                user.IsAdmin = IsUserAdmin(email, tenant) || customerCare;
             }
 
             int executionTime = (int)((DateTime.Now.Ticks - DateBeforePostLoginData.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -555,7 +568,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
             if (contact != null)
             {
-                UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
+                UserQueryService userQueryService = new UserQueryService(tenant);
                 amitalUser = userQueryService.GetSingle(contact.Id, false, false);
 
                 if (amitalUser?.Tenant == 0)
@@ -581,7 +594,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 if (!customerCare || IscustomerCareIpAuthenticated())
                 {
                     string pass = isHashPassword ? hashedPassword : password;
-                    ContactPassword contactPasswordPOCO = AuthenticationUtil.VerifyContactPassword(name, pass, globalContext, isHashPassword);
+                    ContactPassword contactPasswordPOCO = AuthenticationUtil.VerifyContactPassword(name, pass, isHashPassword);
 
                     if (contactPasswordPOCO != null)
                     {
@@ -615,7 +628,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                                 }
                             }
 
-                            ContactPasswordUpdateService contactPasswordUpdateService = new ContactPasswordUpdateService(globalContext);
+                            ContactPasswordUpdateService contactPasswordUpdateService = new ContactPasswordUpdateService(tenant);
 
                             if (member != null)
                             {
@@ -624,7 +637,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                                     UpdateContactPassword(contactPassword, contactPasswordUpdateService, numberOfRetries: 0);
                                 }
 
-                                RoleQuery roleQuery = new RoleQuery(amitalCloudContext);
+                                RoleQuery roleQuery = new RoleQuery(tenant);
                                 List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.GlobalTenantId).ToList();
                                 List<RolePM> allCustomRoles = allRoles.Where(d => d.IsCustomRole == true).ToList();
 
@@ -813,7 +826,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                     }
 
                     string SimplogGuid = Guid.NewGuid().ToString("N");
-                    userData = $"{member.Email}:{member.Id}" + (card != null? $":{card.Id}:{card.PartnerTypeId}": "") + $":{SimplogGuid}";
+                    userData = $"{member.Email}:{member.Id}" + (card != null ? $":{card.Id}:{card.PartnerTypeId}" : "") + $":{SimplogGuid}";
                 }
             }
 
@@ -898,19 +911,19 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                         return false;
                     }
 
-                    ContactQueryService contactQueryService = new ContactQueryService(amitalCloudContext);
+                    ContactQueryService contactQueryService = new ContactQueryService(tenant);
                     ContactPM loggedContact = contactQueryService.GetSingle(amitalUser.Id, false, false);
 
                     TwoFactorAuthenticationDevicePM device = null;
                     if (!string.IsNullOrEmpty(TwoFactorkey))
                     {
-                        TwoFactorAuthenticationDeviceQueryService twoFactorAuthenticationDeviceQueryService = new TwoFactorAuthenticationDeviceQueryService(amitalCloudContext);
+                        TwoFactorAuthenticationDeviceQueryService twoFactorAuthenticationDeviceQueryService = new TwoFactorAuthenticationDeviceQueryService(tenant);
                         List<TwoFactorAuthenticationDevicePM> devices = twoFactorAuthenticationDeviceQueryService.GetMulti(record => record.InActive == false && record.UserId == loggedContact.Id && record.Tenant == tenant);
 
                         device = devices.FirstOrDefault(d => TwoFactorkey.Contains(d.TwoFactorkey));
                     }
 
-                    TwoFactorAuthenticationDeviceUpdateService twoFactorAuthenticationDeviceUpdateService = new TwoFactorAuthenticationDeviceUpdateService(amitalCloudContext);
+                    TwoFactorAuthenticationDeviceUpdateService twoFactorAuthenticationDeviceUpdateService = new TwoFactorAuthenticationDeviceUpdateService(tenant);
 
                     if (device == null || (device != null && device.InActive))
                     {
@@ -1019,19 +1032,19 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                     if (contactPassword.LockDateTime > dateNowBefor5Minutes) isCheckCaptchaCode = true;
                     if (!isCheckCaptchaCode)
                     {
-                        int countCaptchaKey = globalContext.CaptchaKeys.Where(a => a.Email == loginParameters.Email && a.Activity == "Login" && a.CreateDate >= dateNowBefor5Minutes).Count();
+                        int countCaptchaKey = new CaptchaKeyQueryService(0).GetMulti(a => a.Email == loginParameters.Email && a.Activity == "Login" && a.CreateDate >= dateNowBefor5Minutes).Count();
                         if (countCaptchaKey >= 5) isCheckCaptchaCode = true;
                     }
                 }
 
                 string userCaptchaKey = contactPassword?.CaptchaKey;
 
-                if (isCheckCaptchaCode && !captchaHelper.CheckCaptchaCodeValidated(loginParameters.CaptchaCode, loginParameters.CaptchaKey, globalContext, userCaptchaKey, withoutCheckUsed))
+                if (isCheckCaptchaCode && !captchaHelper.CheckCaptchaCodeValidated(loginParameters.CaptchaCode, loginParameters.CaptchaKey, userCaptchaKey, withoutCheckUsed))
                 {
                     captchaHelper.AddCaptchaKey(loginParameters.Email, data, "Login");
                     if (contactPassword != null)
                     {
-                        UpdateContactPassword(contactPassword, new ContactPasswordUpdateService(globalContext), captchaKey: data.CaptchaKey);
+                        UpdateContactPassword(contactPassword, new ContactPasswordUpdateService(tenant), captchaKey: data.CaptchaKey);
                     }
                 }
             }
@@ -1043,7 +1056,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             List<string> logboxAccessiblePrivateLabelTenantsIds = new List<string>();
             if (url.Contains("system.logbox.co.il") || url.Contains("pre.logbox.co.il") || url.Contains("localhost"))
             {
-                TenantManagmentPrivateLabelsQueryService tenantManagmentPrivateLabelsQueryService = new TenantManagmentPrivateLabelsQueryService(globalContext);
+                TenantManagmentPrivateLabelsQueryService tenantManagmentPrivateLabelsQueryService = new TenantManagmentPrivateLabelsQueryService(tenant);
                 logboxAccessiblePrivateLabelTenantsIds = tenantManagmentPrivateLabelsQueryService.GetMulti(a => a.InActive == false && a.HasLogboxAccess, a => a.Id);
             }
             return logboxAccessiblePrivateLabelTenantsIds;
@@ -1091,7 +1104,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             }
 
             string pass = isHashPassword ? hashedPassword : password;
-            ContactPassword contactPasswordPOCO = AuthenticationUtil.VerifyContactPassword(email, pass, globalContext, isHashPassword);
+            ContactPassword contactPasswordPOCO = AuthenticationUtil.VerifyContactPassword(email, pass, isHashPassword);
 
             if (contactPasswordPOCO != null)
             {
@@ -1104,7 +1117,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 UserPM amitalUser = null;
                 if (contact != null)
                 {
-                    UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
+                    UserQueryService userQueryService = new UserQueryService(tenant);
                     amitalUser = userQueryService.GetSingle(contact.Id, false, false);
                     if (amitalUser?.Tenant == 0)
                     {
@@ -1129,7 +1142,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 if (contactPassword != null)
                 {
                     contactPassword.NumberOfRetries++;
-                    UpdateContactPassword(contactPassword, new ContactPasswordUpdateService(globalContext), contactPassword.NumberOfRetries);
+                    UpdateContactPassword(contactPassword, new ContactPasswordUpdateService(tenant), contactPassword.NumberOfRetries);
                 }
                 else userData.Param1 = true;
 
@@ -1176,7 +1189,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
             if (IsLocked != null || NumberOfRetries != null)
             {
-                UpdateContactPassword(contact, new ContactPasswordUpdateService(globalContext), NumberOfRetries, IsLocked);
+                UpdateContactPassword(contact, new ContactPasswordUpdateService(tenant), NumberOfRetries, IsLocked);
             }
         }
 
@@ -1204,7 +1217,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                     Folder = "MobileSMS",
                     ChangeSetOp = ChangeSetOperation.Insert,
                 };
-                DocumentUpdateService documentUpdateService = new DocumentUpdateService(amitalCloudContext);
+                DocumentUpdateService documentUpdateService = new DocumentUpdateService(tenant);
                 documentUpdateService.Update(document, true);
 
                 string subject = "Two-Factor Authentication Verification SMS";
@@ -1230,7 +1243,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                     IsSecured = true,
                     ChangeSetOp = ChangeSetOperation.Insert
                 };
-                CommunicationLogUpdateService communicationLogUpdateService = new CommunicationLogUpdateService(amitalCloudContext);
+                CommunicationLogUpdateService communicationLogUpdateService = new CommunicationLogUpdateService(tenant);
                 communicationLogUpdateService.Update(commLog, true);
 
                 BlobFileInfo fileInfo = new BlobFileInfo()
@@ -1311,7 +1324,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
         private string GetHtmlVersion()
         {
-            SettingQueryService settingQueryService = new SettingQueryService(globalContext);
+            SettingQueryService settingQueryService = new SettingQueryService(tenant);
             Setting mySettings = settingQueryService.GetFirst();
             return mySettings?.HtmlVersion ?? "";
         }
@@ -1330,8 +1343,8 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
         private void SetSessionPolicy(UserData data)
         {
-            SessionPolicyQueryService sessionPolicyQueryService = new SessionPolicyQueryService(globalContext);
-            SessionPolicy sessionPolicy  = sessionPolicyQueryService.GetFirst();
+            SessionPolicyQueryService sessionPolicyQueryService = new SessionPolicyQueryService(tenant);
+            SessionPolicy sessionPolicy = sessionPolicyQueryService.GetFirst();
             if (sessionPolicy != null)
             {
                 data.WebTokenLifeTimeInMinutes = sessionPolicy.WebTokenLifeTimeInMinutes;
@@ -1398,9 +1411,9 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             contactPasswordUpdateService.Update(contactPassword, true);
         }
 
-        private bool IsUserAdmin(string email, int tenant, IAmitalCloudContext amitalCloudContext)
+        private bool IsUserAdmin(string email, int tenant)
         {
-            UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
+            UserQueryService userQueryService = new UserQueryService(tenant);
             List<UserPM> entities = userQueryService.GetMulti(record => record.Contact.Email == email && (record.Tenant == tenant || record.Tenant == 0), "Contact");
             UserPM loggedUser = entities.Where(a => a.Tenant == tenant).FirstOrDefault() ?? entities.Where(a => a.Tenant == 0).FirstOrDefault();
             return loggedUser?.UserRoles != null && loggedUser.UserRoles.Contains("Administrator");

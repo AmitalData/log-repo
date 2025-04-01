@@ -131,7 +131,7 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<TriggerType> TriggerTypes  {  get; set; }
 	public IDbSet<UserLastLogin> UserLastLogins  {  get; set; }
 	public IDbSet<UserLoginLog> UserLoginLogs  {  get; set; }
-	//public IDbSet<UserPermittedBranch> UserPermittedBranches  {  get; set; }
+	public IDbSet<UserPermittedBranch> UserPermittedBranches  {  get; set; }
 	public IDbSet<UserPermittedProduct> UserPermittedProducts  {  get; set; }
 	public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays  {  get; set; }
 	public IDbSet<ValidationType> ValidationTypes  {  get; set; }
