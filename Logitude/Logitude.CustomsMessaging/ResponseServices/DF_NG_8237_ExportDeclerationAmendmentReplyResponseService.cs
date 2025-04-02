@@ -588,16 +588,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 mydDclarationErrorPointerService._declarationErrorPointer.Entitites.Exists(x =>
                                 (x.FieldErrors != null && x.FieldErrors.Any(y => y.ListVersionID == "1")) || (x.EntityErrors != null && x.EntityErrors.Any(y => y.ListVersionID == "1"))))
                             HasErors = true;
-
-                        if (_MyDeclarationPM.AmendmentStatus == "4")
+                    }
+                    if (_MyDeclarationPM.AmendmentStatus == "4")
+                    {
+                        if (_MyDeclarationPM.ReplacingRepairRequest != null)
                         {
-                            if (_MyDeclarationPM.ReplacingRepairRequest != null)
-                            {
-                                var declarationAmendment = myDeclarationQueryService.GetSingle(_MyDeclarationPM.ReplacingRepairRequest, false, false);
-                                declarationAmendment.AmendmentStatus = _MyDeclarationPM.AmendmentStatus;
-                                declarationAmendment.AmendmentErrorXml = this._MyDeclarationPM.AmendmentErrorXml;
-                                myDeclarationUpdateService.Update(declarationAmendment, false);
-                            }
+                            DeclarationPM declarationAmendment = myDeclarationQueryService.GetDeclarationAmendmentByAmendmentRequestNumber(_MyDeclarationPM.Tenant, _MyDeclarationPM.ReplacingRepairRequest);
+                            declarationAmendment.AmendmentStatus = _MyDeclarationPM.AmendmentStatus;
+                            declarationAmendment.AmendmentErrorXml = this._MyDeclarationPM.AmendmentErrorXml;
+                            declarationAmendment.ChangeSetOp = ChangeSetOperation.Update;
+                            myDeclarationUpdateService.Update(declarationAmendment, false);
                         }
                     }
                     if (isExportCloseFromMehes)

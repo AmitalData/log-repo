@@ -1673,10 +1673,15 @@ namespace Logitude.Customs.Data.Repsitories
 
             return declaration;
         }
+        public Declaration GetDeclarationAmendmentByAmendmentRequestNumber(int tenant,string requestNumber)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
-        
-        
-
+            Declaration declaration = (from a in context.Declarations
+                                              where a.Tenant == tenant && a.AmendmentRequestNumber == requestNumber
+                                       select a).FirstOrDefault();
+            return declaration;
+        }
     }
 
 
