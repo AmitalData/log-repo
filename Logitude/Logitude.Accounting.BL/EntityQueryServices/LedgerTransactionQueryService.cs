@@ -1087,6 +1087,29 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return invoicesTransactions;
         }
 
+
+        public List<LedgerTransaction> GetTransactionsDeduction(string whAccountId, DateTime startDate, DateTime endDate, int tenant)
+        {
+            var dto = this.repository.GetTransactionsDeductionDTO(whAccountId, startDate, endDate, tenant).ToList();
+            if (!dto.Any())
+            {
+                return new List<LedgerTransaction>();
+            }
+            return dto.Select(x => new LedgerTransaction()
+            {
+                Id = x.Id,
+                AccountId = x.AccountId,
+                OppositeAccountId = x.OppositeAccountId,
+                JournalId = x.JournalId,
+                JournalLineNumber = x.JournalLineNumber ?? 0,
+                LocalAmountCredit = x.LocalAmountCredit,
+                LocalAmountDebit = x.LocalAmountDebit,
+                Reference1 = x.Reference1,
+                AccountingDate = x.AccountingDate,
+                Tenant = x.Tenant,
+            }).ToList();
+
+        }
         private List<LedgerTransactionJournalLineLT> FillTransactionsReconciliationNumbersLT(List<LedgerTransactionJournalLineLT> invoicesTransactions, int tenant)
         {
             List<ReconciliationLinePM> recoLines = GetReconciliationLinesForTransactionsLT(tenant, invoicesTransactions);
