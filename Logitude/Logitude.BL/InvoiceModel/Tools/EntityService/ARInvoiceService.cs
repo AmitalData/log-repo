@@ -369,11 +369,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                if (CheckIfReportConnectedToInvoice(entityPM))
                 {
                     string status = "2";
-                    if (entityPM.StatusCode == "PR")
-                    {
-                        status = "8";
-                    }
-                    UpdateInterestReportStatus(entityPM, status);
+                   UpdateInterestReportStatus(entityPM, status);
 
                     invoiceRepository.Remove(invoice);
                     invoiceRepository.SubmitChanges();
@@ -387,11 +383,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
 
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
+            this.InsertToQueue();
 
         }
         private bool CheckIfReportConnectedToInvoice(ARInvoicePM theEntityPM)
         {
-
+            entityPM.InterestReportNumber = theEntityPM.InvoiceEntities[0]?.EntityReference;
             IInterestReportsConnectedInvoiceUpdateServiceExt InterestReportsConnectedInvoiceUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportsConnectedInvoiceUpdateServiceExt), "InterestReportsConnectedInvoiceUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportsConnectedInvoiceUpdateServiceExt;
             return  InterestReportsConnectedInvoiceUpdate.CheckInterestReportsConnected(theEntityPM.InvoiceEntities[0].EntityId, tenant, null);
 
@@ -882,6 +879,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.AfterServiceFinished();
+            this.InsertToQueue();
         }
 
         private bool IsSendInvoiceSATCancellation(bool discardStatus)
@@ -4716,19 +4714,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.OnVoidingInvoise();
                 this.OnResendToSAT();
             }
-            if(entityPM.StatusCode == "PR")
-            {
-                //send to queue
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("ARInvoiceApproveWR", entityPM.Tenant);
-                queueservice.Send(new Dictionary<string, string>() 
-                {
-                    { "ARInvoiceId", entityPM.Id }, 
-                    { "Tenant", tenant.ToString() },
-                    { "BatchIdFromInterestInvoice", entityPM.BatchTaskExecutionId }
-
-                }, tenant);
-            }
+           
         }
 
         private void SendInvoiceToSAT()
@@ -5226,6 +5212,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             });
         }
 
+        public void InsertToQueue()
+        {
+            if (entityPM.StatusCode == "PR")
+            {
+                //send to queue
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ARInvoiceApproveWR", entityPM.Tenant);
+                queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "ARInvoiceId", entityPM.Id },
+                    { "Tenant", tenant.ToString() },
+                    { "BatchIdFromInterestInvoice", entityPM.BatchTaskExecutionId }
+
+                }, tenant);
+            }
+        }
         public void SignInvoice(ARInvoicePM aRInvoicePM, int tenant)
         {
             IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
