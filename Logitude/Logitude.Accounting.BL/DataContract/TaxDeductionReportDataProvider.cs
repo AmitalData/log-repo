@@ -500,16 +500,19 @@ namespace Logitude.Accounting.BL.DataContract
                 })
                 .ToList();
 
-            createdLines = new HashSet<LedgerTransaction>();
+            var processedKeys = new HashSet<string>();
+            
 
             foreach (var group in groupedCreditTransactions)
             {
-                
-                if (createdLines.Any(d => d.JournalId == group.JournalId && d.AccountId == group.OppositeAccountId && d.Reference1 == group.Reference1))
+                var groupKey = $"{group.OppositeAccountId}~{group.JournalId}~{group.Reference1}";
+                if (processedKeys.Contains(groupKey)) 
                     continue;
 
+                processedKeys.Add(groupKey);
+
+
                 var firstTransaction = group.Transactions.First();
-                createdLines.Add(firstTransaction);
 
                 var taxDeductionReportLine = new TaxDeductionReportLine
                 {
@@ -602,21 +605,18 @@ namespace Logitude.Accounting.BL.DataContract
 
         private string GetVendorIdFromCreditLine(LedgerTransaction transaction)
         {
-            CardList vendor = null;
-            string vendorGLAccountId = null;
             if (transaction.OppositeAccountId != null)
             {
 
-                vendor = transactionsVendors.Where(d => d.GLAccountId == transaction.OppositeAccountId).FirstOrDefault();
+                var vendorDict = transactionsVendors.ToDictionary(v => v.GLAccountId);  
 
-                if (vendor == null)
-                {
-                   vendorGLAccountId = transaction.OppositeAccountId;
-                }
-                else vendorGLAccountId = vendor.GLAccountId;
+                vendorDict.TryGetValue(transaction.OppositeAccountId, out var vendor);
+                return vendor?.GLAccountId ?? transaction.OppositeAccountId;
             }
-            return vendorGLAccountId;
+            else
+                return null;
         }
+
         private string GetVendorIdByMainAccount(string accountId)
         {
             GLAccountList account = transactionsOppositGLAccounts.Where(d => d.Id == accountId).FirstOrDefault(); 
