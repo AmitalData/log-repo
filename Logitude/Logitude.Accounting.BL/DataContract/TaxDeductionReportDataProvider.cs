@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using System.Web.Util;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.Data.Enums;
+using Logitude.BL.InvoiceModel.CloseTables;
 
 namespace Logitude.Accounting.BL.DataContract
 {
@@ -290,7 +291,10 @@ namespace Logitude.Accounting.BL.DataContract
                                                         || a.AccountingCancelationDate.Value.Year == a.RegisterDate.Value.Year && a.AccountingCancelationDate.Value.Month == a.RegisterDate.Value.Month
                                                    )
                                              )
-                                         && (a.StatusCode == "VD" || a.StatusCode == "AD" || a.StatusCode == "CL" || a.StatusCode == "PR")
+                                         && (a.StatusCode == APPaymentStatusValues.Void 
+                                          || a.StatusCode == APPaymentStatusValues.Approved 
+                                          || a.StatusCode == APPaymentStatusValues.Closed 
+                                          || a.StatusCode == APPaymentStatusValues.Printed)
                                         select a).ToList();
             payments = getAPPaymentsWithGLAccountsAndVendor(payments);
             return payments;
@@ -671,7 +675,7 @@ namespace Logitude.Accounting.BL.DataContract
                                                  && !(a.AccountingCancelationDate.Value.Year == a.RegisterDate.Value.Year 
                                                         && a.AccountingCancelationDate.Value.Month == a.RegisterDate.Value.Month
                                                      )
-                                                 && a.StatusCode == "VD" && a.DontIncludeInDeductionReport == false
+                                                 && a.StatusCode == APPaymentStatusValues.Void && a.DontIncludeInDeductionReport == false
                                                  select a).ToList();
             cancelledPayments = getAPPaymentsWithGLAccountsAndVendor(cancelledPayments);
             return cancelledPayments;
