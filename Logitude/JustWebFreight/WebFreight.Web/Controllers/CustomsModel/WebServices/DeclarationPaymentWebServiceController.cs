@@ -105,7 +105,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 						dF_NG_2754_MSG10004_ImportDeclarationResponseService.SendPaymentIsCheckFileCredit(isCheckFileCredit, declarationPM, declarationPaymentPM, dbContext, checkFileCrediteReq.LoggingUserId, checkFileCrediteReq.LoggingObjectTableId);
 						break;
 				}
-				
+				Communications.UpdateCommunicationLogStatus(comunicationLog.Id, comunicationLog.Tenant, null, "D", response, null);
+
 
 				return Request.CreateResponse(HttpStatusCode.OK, "OK");
             }
