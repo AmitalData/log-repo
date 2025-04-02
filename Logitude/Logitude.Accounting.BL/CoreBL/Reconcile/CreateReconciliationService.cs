@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
         private static Object thisLock = new Object();
-        public RecoCallback CreateReconciliation(ReconciliationPM reconciliationPM,string commLogId = null)
+        public RecoCallback CreateReconciliation(ReconciliationPM reconciliationPM, string exceptCommLogId = "")
         {
             // changeset
             if (reconciliationPM.ChangeSetOp != ChangeSetOperation.Insert)
@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 using (TransactionScope scope = TransactionFactory.GetNewReadUncommittedTransaction())
                 {
-                    var ledgerTransactionInProgress = CheckIfAnotherReconciliationInProgress(reconciliationPM, commLogId);
+                    var ledgerTransactionInProgress = CheckIfAnotherReconciliationInProgress(reconciliationPM, exceptCommLogId);
                     if (ledgerTransactionInProgress)
                     {
                         throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.LedgerTransactionInProgress", 0, LoggedContactResolver.GetLoggedContactShowLocal(reconciliationPM.Tenant)));
@@ -309,12 +309,12 @@ namespace Logitude.Accounting.BL.CoreBL
             LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(reconciliationPM.Tenant);
             return transactionQueryService.CheckAnyLedgerTransactionReconciledByIdList(transactionsIds, reconciliationPM.Tenant);
         }
-        private bool CheckIfAnotherReconciliationInProgress(ReconciliationPM entityPm, string commLogId = null)
+        private bool CheckIfAnotherReconciliationInProgress(ReconciliationPM entityPm, string exceptCommLogId = "")
         {
             ICommonDataContext context = CommonDataContext.GetContext(entityPm.Tenant);
             CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
-            CommunicationLog commLog = communicationLogRep.GetCommunicationLogByEntityIdAndSubject(entityPm.AccountId, "Create internal Reconciliation", entityPm.Tenant, commLogId);
-            if (commLog != null && commLog.CommunicationStatusTypeCode == "W")
+            CommunicationLog commLog = communicationLogRep.GetCommunicationLogByEntityIdAndSubject(entityPm.AccountId, "Create internal Reconciliation", entityPm.Tenant, exceptCommLogId, "W");
+            if (commLog != null)
             {
                 return true;
             }
