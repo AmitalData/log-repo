@@ -33,7 +33,7 @@ export function FillCurrencyRatesDetails(CurrencyRateRunInBatchDetails: Currency
 export function FillRequestSheets(currencyRateRunInBatchDetails: CurrencyRateRunInBatchDetails) {
   
        cy.FillLogLov(CurrencyRateRunInBatchSelectors.ManageCustomsRequests,currencyRateRunInBatchDetails.ManageCustomsRequests,true);
-    
+       cy.wait(10000);
     // cy.get(CurrencyRateRunInBatchSelectors.ManageCustomsRequests).type(currencyRateRunInBatchDetails.ManageCustomsRequests);
     cy.Click(CurrencyRateRunInBatchSelectors.RequestStatus,null);
     cy.get(CurrencyRateRunInBatchSelectors.CheckAll).click({force: true});
