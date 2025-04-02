@@ -848,7 +848,7 @@ namespace Logitude.Customs.BL.BL
 				{
 					this.paymentPM.PaymentDate = customFileCreditResponseData.PaymentDateTime;
 				}
-				this.paymentPM.FuturePaymentDateTime = null;
+				this.paymentPM.FuturePaymentDateTime = newDate;
 				SetFuturePaymentTime(null);
 
 			}
@@ -2779,7 +2779,7 @@ public class PaymentMethodModel : DeclarationPaymentMethodPM
 								{
 									agentBanks = response.FindAll(d => d.PayerTypeCode == "3" && !d.InActive);
 									//fill the LOV
-									BanksList = (List<CustomBankList>)connectedBanks.Concat(agentBanks);
+									BanksList = (List<CustomBankList>)connectedBanks.Concat(agentBanks).ToList();
 
 									//select bank
 									if (InternalBankId != null)
