@@ -144,12 +144,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         }
 
 
-      public bool IsMulti(string AccountId, int Tenant)
+        public bool IsMultiByInternal(string internalNumber, int Tenant)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(AccountId))
-                    throw new ArgumentException("AccountId cannot be null or empty.", nameof(AccountId));
+                if (string.IsNullOrWhiteSpace(internalNumber))
+                    throw new ArgumentException("Internal Number cannot be null or empty.", nameof(internalNumber));
 
                 if (Tenant <= 0)
                     throw new ArgumentException("Invalid Tenant ID.", nameof(Tenant));
@@ -157,7 +157,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
 
                 accountingContext = AccountingContext.GetContext(Tenant);
                 var isMultiCurrency = accountingContext.GLAccounts
-                    .Where(a => a.Id == AccountId && a.Tenant == Tenant)
+                    .Where(a => a.InternalNumber == internalNumber && a.Tenant == Tenant)
                     .Select(a => a.IsMultiCurrency)
                     .FirstOrDefault();
 
