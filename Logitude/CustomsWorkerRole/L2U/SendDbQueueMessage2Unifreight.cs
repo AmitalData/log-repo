@@ -28,7 +28,7 @@ namespace CustomsWorkerRole.L2U
         public override bool DoAction(string urouterParams)
                 {
             //implement the code to send the xml file to amital;
-
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_Tenant);
             string P_MOREPARAMS = "";
             string P_XML_DATA = "";
             string P_MESSAGE = "";
@@ -38,11 +38,12 @@ namespace CustomsWorkerRole.L2U
                 throw new ArgumentNullException("SendFileToAmitalService():xmlfile is null");
             }
             string uniTester = "";
-            P_XML_DATA = SendMessageToUServerUtil.SendMessageToUServer(_Tenant, urouterParams, out P_MESSAGE, out uniTester);
+            if (setting.IsConnectedToUniFreight == true)
+                P_XML_DATA = SendMessageToUServerUtil.SendMessageToUServer(_Tenant, urouterParams, out P_MESSAGE, out uniTester);
             //_WaitingCommLog.Logs += "UServer did not return response ";
             _WaitingCommLog.Logs += P_XML_DATA + Environment.NewLine;
             _WaitingCommLog.Logs += uniTester;
-            if (String.IsNullOrWhiteSpace(P_XML_DATA))
+            if (setting.IsConnectedToUniFreight == true && String.IsNullOrWhiteSpace(P_XML_DATA))
             {
                 _WaitingCommLog.Logs += "UServer did not return response ";
                 return false;    

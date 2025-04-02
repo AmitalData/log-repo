@@ -22,7 +22,8 @@ namespace CustomsWorkerRole.L2U
         public override bool DoAction(string urouterParams)
                 {
             //implement the code to send the xml file to amital;
-
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_Tenant);
+            
             string P_MOREPARAMS = "";
             string P_XML_DATA = "";
             string P_MESSAGE = "";
@@ -32,34 +33,13 @@ namespace CustomsWorkerRole.L2U
                 throw new ArgumentNullException("SendFileToAmitalService():xmlfile is null");
             }
             string uniTester = "";
-            P_XML_DATA = SendMessageToUServerUtil.SendMessageToUServer(_Tenant, urouterParams, out P_MESSAGE, out uniTester);
-#if false
-		  
+            if (setting.IsConnectedToUniFreight == true)
+                P_XML_DATA = SendMessageToUServerUtil.SendMessageToUServer(_Tenant, urouterParams, out P_MESSAGE, out uniTester);
 
-            var setting = CustomsSettingQueryService.GetSettingByTenant(_Tenant);
-            if (setting==null)
-            {
-                throw new Exception("no definition !!  CustomsSettingQueryService.GetSettingByTenant " + _Tenant ); 
-            }
-            if (string.IsNullOrWhiteSpace(setting.UServerServiceAddress ))
-            {
-                throw new Exception("no UServerServiceAddress definition !!  CustomsSettingQueryService.GetSettingByTenant " + _Tenant ); 
-            }
-
-
-            var myUServerDNS = "UNIV55";// setting.UServerDNS;
-            var myUServerPort = "8055";// setting.UServerPort;
-            //http://univ55:8055/
-            var myUServerUtil = new UServerUtil(//myUServerDNS, myUServerPort); ;
-                setting.UServerServiceAddress ,setting.
-
-
-            myUServerUtil.DoIt(urouterParams, ref P_MOREPARAMS, out P_XML_DATA, out P_MESSAGE);
-#endif
             //_WaitingCommLog.Logs += "UServer did not return response ";
             _WaitingCommLog.Logs += P_XML_DATA + Environment.NewLine;
             _WaitingCommLog.Logs += uniTester;
-            if (String.IsNullOrWhiteSpace(P_XML_DATA))
+            if (setting.IsConnectedToUniFreight == true && String.IsNullOrWhiteSpace(P_XML_DATA))
             {
                 _WaitingCommLog.Logs += "UServer did not return response ";
                 return false;    
