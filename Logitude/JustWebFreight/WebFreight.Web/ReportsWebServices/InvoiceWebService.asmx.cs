@@ -90,19 +90,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (myInvoice != null)
             {
-                if (myInvoice.IsConsolidationInvoice)
-                {
-                    dataProvider = GetConsolidationInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
-                }
-                else if (myInvoice.IsGeneralInvoice)
-                {
-                    dataProvider = GetConsolidationInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
-                }
-                else
-                {
-                    dataProvider = GetARInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
-                }
-
+                dataProvider = GetARInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
+               
                 this.FillDocumentCustomFields(myInvoice, dataProvider, documentTypeCopyId, tenant);
             }
 
