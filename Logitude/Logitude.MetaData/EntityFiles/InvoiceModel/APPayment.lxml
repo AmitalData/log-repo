@@ -8635,6 +8635,7 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     DisplayInRequiredFields="false"
+
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -9666,8 +9667,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;APPayment.M.PaymentAmountPaidCantBeBigger&quot;"
-      DefaultText="&quot;Payment Amount Paid can't be bigger than Payment Amount&quot;"
-      LocalDefaultText="&quot;הסכום ששולם לא יכול להיות גדול מהסכום לתשלום&quot;"
+      DefaultText="&quot;The reconsilation amount can't be bigger than Payment Amount&quot;"
+      LocalDefaultText="&quot;הסכום שהותאם לא יכול להיות גדול מהסכום לתשלום&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
