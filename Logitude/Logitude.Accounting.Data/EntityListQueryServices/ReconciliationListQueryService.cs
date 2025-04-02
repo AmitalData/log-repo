@@ -239,7 +239,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                       lt => lt.Id,
                       (x, lt) => new { x.r, x.rl, lt })
                 .Where(x => x.lt.JournalId == journalId && x.rl.Tenant == tenant)
-                .Select(x => x.r);
+                .Select(x => x.r)
+                .Distinct(); 
 
             IQueryable<ReconciliationList> reconciliationListQuery = this.GetIqueryableList(reconciliationQuery);
             List<ReconciliationList> rvList = reconciliationListQuery.ToList();
