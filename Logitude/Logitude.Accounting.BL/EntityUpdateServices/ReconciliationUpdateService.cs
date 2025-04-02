@@ -207,7 +207,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                         {
                                             throw new ApplicationException("A/P Invoice " + lt.SourceNumber + " cannot compute status");
                                         }
-                                        if (newStatus != aPInvoicePM.StatusCode && !String.IsNullOrEmpty(newStatus))
+                                        if (aPInvoicePM.StatusCode != "VD" && newStatus != aPInvoicePM.StatusCode && !String.IsNullOrEmpty(newStatus))
                                         {
                                             DateTime stopLogAt = new DateTime(2023, 06, 01);
                                             string text = "ReconciliationUpdateService.OnUpdating(*1*) Set APInvoicePM.StatusCode: " + aPInvoicePM.Id + " old : " + aPInvoicePM.StatusCode + " new : " + newStatus;
@@ -584,7 +584,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     : unmatchedTransactions.Sum(x => x.ForeignAmountCredit) + updatedLedgerTransactions.Sum(x => x.ForeignAmountCredit);
 
                 invoice.IsClosed = totalOpenAmount == 0;
-                invoice.StatusCode = totalOpenAmount == 0 ? "PD"
+                if (invoice.StatusCode != "VD") invoice.StatusCode = totalOpenAmount == 0 ? "PD"
                     : Math.Abs(ledgerTransactionPM.OpenAmount) < totalAmount ? "PP" : "AD";
 
                 SecurityUtility.IsWorkerRoleCall = true;

@@ -160,7 +160,7 @@ namespace Logitude.Accounting.BL.Utils
                     {
 
                         //APInvoice_LT_DTO one_item = aPInvoice_LT_list.Where(item => item.APInvoiceId == aPInvoicePM.Id).FirstOrDefault();
-                        if (one_item != null)
+                        if (one_item != null && one_item.APInvoiceStatusCode != "VD")
                         {
                             bool toUpdate = false;
                             string newStatusCode = "";
