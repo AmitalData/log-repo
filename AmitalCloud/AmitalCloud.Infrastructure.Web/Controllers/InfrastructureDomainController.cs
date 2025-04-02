@@ -29,8 +29,10 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 string loggedUserEmail = AuthenticationTokenRepository.GetSingleTokenFromCache(token).Email;
-                ContactPM contact = new ContactQueryService(tenant).GetMulti(a => a.Email == loggedUserEmail && a.Tenant == tenant,"").FirstOrDefault();
-                string loggedUserId = contact?.Id;
+
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                string loggedUserId = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant)?.Id;
+
                 FeatureQuery featureQuery = new FeatureQuery(tenant);
                 LoggedUserFeatures loggedUserFeatures = featureQuery.GetAllowedFeaturesForLoggedUser(loggedUserId, tenant);
                 List<FeaturePM> myResult1 = loggedUserFeatures.Features;

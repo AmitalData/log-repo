@@ -5,7 +5,6 @@ using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
 using System.Collections.Generic;
@@ -48,18 +47,13 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             try
             {
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                JSGlobalSettings myResult;
-                //todo: 
-                //SettingRepository mySettingRepository = new SettingRepository();
-                Setting mySetting = null;// mySettingRepository.GetSingleSetting("1");
-                if (mySetting == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, new JSGlobalSettings(new Setting()));
-                }
-                myResult = new JSGlobalSettings(mySetting);
+                SettingQueryService settingQueryService = new SettingQueryService(tenant);
+                SettingPM mySetting = settingQueryService.GetSingle("1", false, true);
+
+                JSGlobalSettings myResult = new JSGlobalSettings(mySetting);
                 if (AmitalCloudSettings.IsCostomsDeploy)
                 {
-                    myResult.ProductInfo = AmitalCloudSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
+                    myResult.ProductInfo = AmitalCloudSettings.ProductInfo;
                     myResult.ProductMessage = AmitalCloudSettings.ProductMessage;
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -85,7 +79,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             try
             {
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                return Request.CreateResponse(HttpStatusCode.OK, new TenantSettingQueryService(tenant).GetMulti(a => a.Tenant == tenant, "ObjectTable").ToList());
+                return Request.CreateResponse(HttpStatusCode.OK, new TenantSettingQueryService(tenant).GetMulti(a => a.Tenant == tenant));
             }
             catch (Exception ex)
             {

@@ -30,14 +30,12 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 Role myRole = (from d in context.Roles where d.Id == myRoleId select d).FirstOrDefault();
 
-                List<FeaturePM> allFeatures = new List<FeaturePM>();
+                List<Feature> allFeatures = new List<Feature>();
                 List<RoleFeature> allRoleFeatures = new List<RoleFeature>();
                 List<PackageFeature> allPackageFeatures = new List<PackageFeature>();
 
                 #region allFeatures
-                allFeatures = (from a in context.Features.Include("NameTextCode")
-                               where (a.Tenant == 0 || a.Tenant == tenant)
-                               select new FeaturePM(a)).ToList();
+                allFeatures = repository.GetMulti(a => a.Tenant == 0 || a.Tenant == tenant).ToList();
                 #endregion
 
                 #region allRoleFeatures
@@ -89,13 +87,13 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 {
                     foreach (PackageFeature item in allPackageFeatures)
                     {
-                        FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
+                        Feature myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
                         if (myFeature != null)
                         {
                             if (!allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).Any())
                             {
                                 //myFeature.PackageCode = item.PackageCode;
-                                allAllowedPackageFeatures.Add(myFeature);
+                                allAllowedPackageFeatures.Add(new FeaturePM(myFeature));
                             }
                         }
                     }
@@ -105,7 +103,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 {
                     foreach (RoleFeature item in allRoleFeatures)
                     {
-                        FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
+                        Feature myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
                         if (myFeature != null)
                         {
                             if (!myResult.Where(d => d.Id == myFeature.Id).Any())
@@ -119,14 +117,14 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                     {
                                         //myFeature.Exists = true;
                                         //myFeature.PackageCode = myAllowedPackageFeature.PackageCode;
-                                        myResult.Add(myFeature);
+                                        myResult.Add(new FeaturePM(myFeature));
                                     }
                                 }
 
                                 else
                                 {
                                     //myFeature.Exists = true;
-                                    myResult.Add(myFeature);
+                                    myResult.Add(new FeaturePM(myFeature));
                                 }
                             }
                         }
@@ -212,9 +210,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             if (contactTenantRoles.Count > 0)
             {
                 List<string> allRolesIds = contactTenantRoles.Select(s => s.RoleId).ToList();
-                List<RolePM> allCustomRoles = new Repository<Role>(context)
-                    .GetMulti(a => allRolesIds.Contains(a.Id) && a.IsCustomRole == true, a => new RolePM(a));
-                foreach (RolePM item in allCustomRoles)
+                List<Role> allCustomRoles = new Repository<Role>(context)
+                    .GetMulti(a => allRolesIds.Contains(a.Id) && a.IsCustomRole == true);
+                foreach (Role item in allCustomRoles)
                 {
                     if (allRolesIds.Contains(item.ParentRoleId))
                     {

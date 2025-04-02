@@ -21,11 +21,13 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class MetaDataController : ApiController
     {
         [OperationContract]
+        [Route("")]
         [WebGet(UriTemplate = "getadvancequeryfilterspms/{tenant}")]
         public List<AdvancedQueryFilterPM> GetAdvanceQueryFiltersPMs(int tenant)
         => new AdvancedQueryFilterQueryService(tenant).GetMulti(a=> (a.Tenant == tenant || a.Tenant == 0) && a.IsPredefined == true
                 , "ObjectField,Query,Query.ObjectTable").ToList();
         [OperationContract]
+        [Route("")]
         [WebGet(UriTemplate = "GetTenantLanguageTranslations/{tenant}")]
         public List<Translation> GetTenantLanguageTranslations(int tenant)
         {
@@ -93,9 +95,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             return AllTranslations;
         }
         [OperationContract]
+        [Route("")]
         [WebGet(UriTemplate = "gettranslations/{translationTenant}")]
         public List<Translation> GetTranslations(int translationTenant) => GetTenantLanguageTranslations(translationTenant);
         [OperationContract]
+        [Route("")]
         [WebGet(UriTemplate = "GetTenantObjectFields/{loggedTenant}")]
         public List<ObjectFieldPM> GetTenantObjectFields(int loggedTenant)
         {
@@ -108,6 +112,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
 
         }
 
+        [Route("")]
         public List<TextCodePM> GetTenantTextCodes(int tenant)
         => new TextCodeQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetMulti(a => a.Tenant == tenant, "").ToList();
 
@@ -130,22 +135,26 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }
             return null;
         }
+        [Route("")]
         public List<ScreenFieldPM> GetAllScreenFieldsByTenant(int tenant, string screenfields)
         {
             tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
             return new ScreenFieldQueryService(tenant).GetMulti(a => a.Tenant == tenant, "ObjectField,Screen,Screen.ObjectTable").ToList();
 
         }
+        [Route("")]
         public List<ScreenPM> GetAllScreensByTenant(int tenant, string screens)
         {
             tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
             return new ScreenQueryService(tenant).GetMulti(a => a.Tenant == tenant, "ObjectTable");
         }
+        [Route("")]
         public List<ObjectTableTabPM> GetAllObjectTableTabsByTenant(int tenant, string objecttabletabs)
         {
             tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
             return new ObjectTableTabQueryService(tenant).GetMulti(a => a.Tenant == tenant, "ObjectTable").ToList();
         }
+        [Route("")]
         public List<ObjectTablePM> GetAllObjectTables(int tenant, string objecttables)
         {
             tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
@@ -157,12 +166,14 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             ResponseFormat = WebMessageFormat.Json,
             Method = "GET"
         )]
+        [Route("")]
         public List<MenusTablePM> GetAllMenusTablesByTenant(int tenant, string menustables)
         {
             tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
             return new MenusTableQueryService(tenant).GetMulti(a => a.Tenant == tenant, "").ToList();
         }
         [OperationContract]
+        [Route("")]
         [WebGet(UriTemplate = "getallstatuses/{tenant}/{inActive}/{dumb2}")]
         public HttpResponseMessage GetAllStatusesByTenant(int tenant, bool inActive, string dumb2)
         {
@@ -177,12 +188,14 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }
         }
         [OperationContract]
+        [Route("")]
         [WebGet(UriTemplate = "getalldirections/{tenant}/{dummy2}")]
         public List<DirectionPM> GetAllDirections(int tenant, string dummy2)
         {
             return new DirectionQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetMulti(a => true, "").ToList();
         }
         [OperationContract]
+        [Route("")]
         [WebGet(UriTemplate = "getalltransportmodes/{tenant}/{dummy}")]
         public List<TransportModePM> GetAllTransportModes(int tenant, string dummy)
         => new TransportModeQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetMulti(a => true, "").ToList();

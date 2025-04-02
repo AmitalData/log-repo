@@ -45,7 +45,14 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                 var cacheObj = CacheManager.CacheWrapper.Get(cacheKey, Tenant);
                 if (cacheObj != null)
                 {
-                    EntityPM = (TEntityPM)cacheObj;
+                    if (cacheObj.GetType() == typeof(NullCache))
+                    {
+                        EntityPM = default(TEntityPM);
+                    }
+                    else
+                    {
+                        EntityPM = (TEntityPM)cacheObj;
+                    }
                 }
                 else
                 {

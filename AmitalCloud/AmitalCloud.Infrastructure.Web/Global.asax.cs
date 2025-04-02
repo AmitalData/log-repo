@@ -10,6 +10,8 @@ using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery;
 
 namespace AmitalCloud.Infrastructure.WebAPI
 {
@@ -23,9 +25,12 @@ namespace AmitalCloud.Infrastructure.WebAPI
                 AmitalCloudSettings.DatabaseManagementSystem = dbms;
                 AmitalCloudSettings.DebugKey = System.Configuration.ConfigurationManager.AppSettings.Get("DebugKey");
                 FillAppSettings();
+                LogitudeSettings_AmitalInit();
             }
 
             CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
+
+            LoggedContactResolver.RegisterLoggedContactUtil();
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
@@ -165,6 +170,26 @@ namespace AmitalCloud.Infrastructure.WebAPI
             AmitalCloudSettings.WindWardSettings = setting.WindWardSettings;
             AmitalCloudSettings.AmitalIISURL = setting.LogitudeIISURL;
             AmitalCloudSettings.TempStorageConnection = setting.TempStorageConnection;
+        }
+
+        private static void LogitudeSettings_AmitalInit()
+        {
+            Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
+
+            Func<int> getTenantFromToken = () =>
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                return authToken.Tenant;
+            };
+
+            InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, AmitalCloudSecurityUtility.CheckContactFeature,
+                () => (new ByteCompressorUtil()) as IByteCompressorUtil,
+                //new IISManager(),
+                //() => (new IHtmlEditorHelper()) as IHtmlEditorHelper,
+                //() => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService,
+                //() => (new EntityGetReflectorService()) as IEntityGetReflectorService,
+                () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
         }
     }
 }

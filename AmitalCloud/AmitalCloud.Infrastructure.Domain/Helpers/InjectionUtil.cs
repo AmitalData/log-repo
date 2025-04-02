@@ -90,10 +90,10 @@ namespace AmitalCloud.Infrastructure.Domain.Helpers
             Func<int> getTenantFromToken,
             Action<string, string, int, string> checkContactFeature,
             Func<IByteCompressorUtil> iByteCompressorUtilProvider,
-            I_IISManager myIISManager,
-            Func<IHtmlEditorHelper> myIHtmlEditorHelper,
-            Func<IEntityUpdateReflectorService> myEntityUpdateReflectorService,
-            Func<IEntityGetReflectorService> myEntityGetReflectorService,
+            //I_IISManager myIISManager,
+            //Func<IHtmlEditorHelper> myIHtmlEditorHelper,
+            //Func<IEntityUpdateReflectorService> myEntityUpdateReflectorService,
+            //Func<IEntityGetReflectorService> myEntityGetReflectorService,
             Func<ITreeFilterQueryService> treeFilterQueryService
             )
         {
@@ -106,10 +106,10 @@ namespace AmitalCloud.Infrastructure.Domain.Helpers
 
             _Instance = new InjectionUtil(CreateAmitalRestrictOwnerModelService, getTenantFromToken, checkContactFeature);
             _Instance._ByteCompressorUtilProvider = iByteCompressorUtilProvider;
-            _Instance._HtmlEditorHelper = myIHtmlEditorHelper;
-            _Instance._IISManager = myIISManager;
-            _Instance._EntityUpdateReflectorService = myEntityUpdateReflectorService;
-            _Instance.entityGetReflectorService = myEntityGetReflectorService;
+            //_Instance._HtmlEditorHelper = myIHtmlEditorHelper;
+            //_Instance._IISManager = myIISManager;
+            //_Instance._EntityUpdateReflectorService = myEntityUpdateReflectorService;
+            //_Instance.entityGetReflectorService = myEntityGetReflectorService;
             _Instance.treeFilterQueryService = treeFilterQueryService;
 
 

@@ -151,6 +151,22 @@
     <Compile Include="Helpers\MixPanel\MixPanelEventTracker.cs" />
     <Compile Include="Helpers\MixPanel\TrackingEventProperty.cs" />
     <Compile Include="Helpers\PasswordParameter.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Expression\OperatorExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Expression\PartnerEntityExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Expression\WhereExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\CustomFieldExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\DateGroupFilterExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\IQueryTreeFilterExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\JavaScriptSerializerExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\PartnerEntityQueryFilterExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\PartnerEntityResloveFieldValueExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\QueryTreeFilterInterpreter.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\QueryTreeFilterResetValueExpresion.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\QueryTreeFilterValidateExpresion.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Iterator\QueryTreeFilterCollection.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Iterator\QueryTreeFilterIterator.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Services\QueryTreeFilterFieldValueResolver.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\TreeFilterQueryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
