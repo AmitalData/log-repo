@@ -711,7 +711,6 @@
                                                             </td>
 
                                                             <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'BT' && !EntityPM.BankTransferPaymentArguments" style="width:50px">
-                                                                <!-- [style.float]="isRTL ? 'left' : 'right'" -->
                                                                 <div *ngIf="EntityPM.StatusCode =='DR' && (EntityPM.ARPaymentBankTranfers.length === 0 || EntityPM.ARPaymentBankTranfers.length === 1)">
                                                                     <IconButton [ngStyle]="{'position': (isRTL) ? 'relative' : 'initial', 'left': (isRTL) ? '35px' : '0px'}"
                                                                                 [Name]="'Add'" [IsSmall]="true" (click)="AddBankTransfersButtonClicked()"></IconButton>
@@ -759,20 +758,13 @@
                                     <td style="width: 1px; padding-left: 5px;">
                                         ({{TransactionsList?.Length}})
                                     </td>
-                                    <!--    <td> <span class="HiddenBtn" (click)="GetData()">R</span></td>-->
                                     <td width="5px"></td>
-                                    <!-- <td *ngIf="isMultipleCheques " style="width:20px">
-                                        <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.CantPerformReconciliation' | TextCodeTranslationPipe}}" />
-                                    </td> -->
-                                    <td *ngIf="EntityPM.ARPaymentBankTranfers.length > 1 " style="width:20px">
-                                        <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.ReconciliationInMultipleTransfers' | TextCodeTranslationPipe }}" />
-                                    </td>
+                                    
                                     <td>
                                         <div></div>
                                     </td>
 
                                     <td style="width:200px;">
-                                        <!-- <SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="SearchTextKeyUp($event)" [PlaceHolder]="'ARPayment.M.SearchByMsg' | TextCodeTranslationPipe"></SearchTextBox> -->
                                     </td>
 
                                     <td style="width: 5px;">
@@ -796,7 +788,7 @@
                                             <log-cell-template [IgnoreMods]="true">
                                                 <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount != 0"
                                                           (Checked)="item.IsChecked = $event"
-                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly) && !isMultipleBankTransfers">
+                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly)">
                                                 </CheckBox>
                                             </log-cell-template>
                                         </ng-template>
