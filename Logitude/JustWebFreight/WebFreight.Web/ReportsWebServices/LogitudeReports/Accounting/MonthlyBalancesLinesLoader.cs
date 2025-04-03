@@ -41,6 +41,7 @@ using System.Data.Common;
 using System.Transactions;
 using static Logitude.Customs.BL.Messaging.Amital.UnifreightQInvoiceList;
 using NPOI.SS.Formula.Functions;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -185,7 +186,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     connection.Close();
                 }
                 var ac = new AccountBalanceByDateCodeService(null, tenant, results.Select(a => a.AccountId).FirstOrDefault(), results.Select(a => a.AccountId).AsQueryable<string>());
-                ac.CalculateBalance(true, "1", new DateTime(year, 1, 1), false, false, true, false, false);
+                ac.CalculateBalance(true, GLAccountTotalDateTypeValues.Accountingdate, new DateTime(year, 1, 1), false, false, true, false, false);
 				foreach (var result in results)
 				{
 					var CurrencySumUntillMounth = ac.AccountBalance.verbose.CurrencySumUntillMounth.Where(A => A.AccountId == result.AccountId).FirstOrDefault();
