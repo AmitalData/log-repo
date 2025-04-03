@@ -1804,7 +1804,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         }
 
 
-        public IQueryable<LedgerTransactionDeductionDTO> GetTransactionsDeductionDTO1(
+        public IQueryable<LedgerTransactionDeductionDTO> GetTransactionsDeductionDTO(
             string whAccountId,
             DateTime startDate,
             DateTime endDate,
