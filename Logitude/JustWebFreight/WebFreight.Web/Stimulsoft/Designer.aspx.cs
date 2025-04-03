@@ -246,7 +246,7 @@ namespace WebFreight.Web.Stimulsoft
 
                     CreateBusinessObject(child, variable.children);
                 }
-                else if (businessObject.Columns.ToList().Any(col => col.Name == variable.content))
+                else if (businessObject.Columns.ToList().Any(col => col.Name == variable.content) || variable.type.FullName.Contains("System.") == false)
                     return;
                 else
                     businessObject.Columns.Add(new StiDataColumn(variable.content, variable.type));
