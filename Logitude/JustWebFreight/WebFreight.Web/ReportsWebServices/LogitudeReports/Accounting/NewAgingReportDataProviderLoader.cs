@@ -165,17 +165,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                
                 case "Debtors":
-                    return agingDataLine.Where(line =>SumOfBalance(line) > 0).ToList();
+                    return agingDataLine.Where(line =>SumOfPastBalance(line) > 0).ToList();
                 case "DebtBetween":
-                 return agingDataLine.Where(line => SumOfBalance(line) > FromBalanceFilterValue && SumOfBalance(line) < ToBalanceFilterValue).ToList();
+                 return agingDataLine.Where(line => SumOfPastBalance(line) > FromBalanceFilterValue && SumOfPastBalance(line) < ToBalanceFilterValue).ToList();
                 case "BalanceDiffersFrom0":
-                    return agingDataLine.Where(line =>  SumOfBalance(line) != 0).ToList();
+                    return agingDataLine.Where(line => SumOfPastBalance(line) != 0).ToList();
                 default:
                     return agingDataLine;
             }
 
         }
-        public decimal? SumOfBalance(NewAgingPeriod agingDataLine)
+        public decimal? SumOfPastBalance(NewAgingPeriod agingDataLine)
         {
             return (agingDataLine.Minus180Days ?? 0) +
                    (agingDataLine.Minus150Days ?? 0) +
@@ -186,7 +186,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                    (agingDataLine.Past ?? 0);
         }
 
-        public decimal? SumOfBalanceInLocalCurrency(NewAgingPeriod agingDataLine)
+        public decimal? SumOfBalance(NewAgingPeriod agingDataLine)
         {
             return (agingDataLine.Future ?? 0) +
                    (agingDataLine.Plus90Days ?? 0) +
