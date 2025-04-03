@@ -54,8 +54,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private NewAccountingAgingDataProvider SetAccountingAgingDataLine(NewAccountingAgingDataProvider dataProvider)
         {
             List<NewAgingPeriod> AgingDataLine = GetAccountingAgingDataLineByFilter();
-            FilterByObligo(GetFilterValue<string>("Obligo"), AgingDataLine);
-            FilterByBalance(GetFilterValue<string>("BalanceFilter"), AgingDataLine);
+            AgingDataLine= FilterByObligo(GetFilterValue<string>("Obligo"), AgingDataLine);
+            AgingDataLine =FilterByBalance(GetFilterValue<string>("BalanceFilter"), AgingDataLine);
 
             dataProvider.AgingPeriods = SortAccountingAgingDataLines(AgingDataLine); 
            
@@ -100,14 +100,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 AccountEnglishName = reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
                                 AccountLocalName = reader["LocalName"] != DBNull.Value ? (string)reader["LocalName"] : null,
                                AccountDisplayNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
-                                BalanceInLocalCurrency = reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : 0,
                                 CreditLimit = reader["CreditLimit"] != DBNull.Value ? (decimal?)Convert.ToDecimal(reader["CreditLimit"]) : 0,
                                 InsuredCreditLimit = reader["InsuredCreditLimit"] != DBNull.Value ? (decimal?)reader["InsuredCreditLimit"] : 0,
                                 TotalOpenShipments = reader[ "TotalOpenShipments"] != DBNull.Value ? (decimal?)reader["TotalOpenShipments"] : 0,
                               TotalFutureOpenCheques = reader["TotFutureOpenChequesInLocalCur"] != DBNull.Value ? (decimal?)reader["TotFutureOpenChequesInLocalCur"] : 0,
                                ExternalTransactionsTotal= reader["ExternalTransactionsTotal"] != DBNull.Value ? (decimal?)reader["ExternalTransactionsTotal"] : 0,
-                                TotalLocal= reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : 0,
-                                AccountingBalance= reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : 0,
                                AccountSalesmanName = reader["AccountSalesmanName"] != DBNull.Value ? (string)reader["AccountSalesmanName"] : null,
                               AccountSalesmanLocalName = reader["AccountSalesmanLocalName"] != DBNull.Value ? (string)reader["AccountSalesmanLocalName"] : null,
                                AccountCollectorName = reader["AccountCollectorName"] != DBNull.Value ? (string)reader["AccountCollectorName"] : null,
@@ -122,8 +119,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                  Past = reader["Past"] != DBNull.Value ? (decimal?)reader["Past"] : 0,
                                 Plus30Days = reader["Plus30Days"] != DBNull.Value ? (decimal?)reader["Plus30Days"] : 0,
                                 Plus60Days = reader["Plus60Days"] != DBNull.Value ? (decimal?)reader["Plus60Days"] : 0,
-                                  Plus90Days = reader["Plus90Days"] != DBNull.Value ? (decimal?)reader["Plus90Days"] : 0,                             
+                                  Plus90Days = reader["Plus90Days"] != DBNull.Value ? (decimal?)reader["Plus90Days"] : 0,
+                                Future = reader["Future"] != DBNull.Value ? (decimal?)reader["Future"] : 0,
                             };
+                            result.BalanceInLocalCurrency = SumOfBalanceInLocalCurrency(result);
+                            result.TotalLocal = result.BalanceInLocalCurrency;
+                            result.AccountingBalance = result.BalanceInLocalCurrency;
                             results.Add(result);
                         }
                     }
@@ -140,24 +141,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
 
 
-        private void FilterByObligo(string obligoOperator, List<NewAgingPeriod> agingDataLine)
+        private List<NewAgingPeriod> FilterByObligo(string obligoOperator, List<NewAgingPeriod> agingDataLine)
         {
             switch (obligoOperator)
             {
                 case "GreaterThan":
-                    agingDataLine = agingDataLine.Where(line => line.Obligo > 0).ToList();
-                    break;
+                    return agingDataLine.Where(line => line.Obligo > 0).ToList();
                 case "LessThan":
-                    agingDataLine = agingDataLine.Where(line => line.Obligo < 0).ToList();
-                    break;
+                    return agingDataLine.Where(line => line.Obligo < 0).ToList();
+                   
                 case "NotEqual":
-                    agingDataLine = agingDataLine.Where(line => line.Obligo != 0).ToList();
-                    break;
+                    return agingDataLine.Where(line => line.Obligo != 0).ToList();
                 default:
-                    break;
+                    return agingDataLine;
             }
         }
-        private void FilterByBalance(string balanceFilter, List<NewAgingPeriod> agingDataLine)
+        private List<NewAgingPeriod> FilterByBalance(string balanceFilter, List<NewAgingPeriod> agingDataLine)
         {
             var ToBalanceFilterValue=GetFilterValue<decimal>("ToBalanceFilterValue");
             var FromBalanceFilterValue = GetFilterValue<decimal>("FromBalanceFilterValue");
@@ -166,16 +165,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                
                 case "Debtors":
-                    agingDataLine = agingDataLine.Where(line =>SumOfBalance(line) > 0).ToList();
-                    break;
+                    return agingDataLine.Where(line =>SumOfBalance(line) > 0).ToList();
                 case "DebtBetween":
-                 agingDataLine = agingDataLine.Where(line => SumOfBalance(line) > FromBalanceFilterValue && SumOfBalance(line) < ToBalanceFilterValue).ToList();
-                    break;
+                 return agingDataLine.Where(line => SumOfBalance(line) > FromBalanceFilterValue && SumOfBalance(line) < ToBalanceFilterValue).ToList();
                 case "BalanceDiffersFrom0":
-                    agingDataLine = agingDataLine.Where(line =>  SumOfBalance(line) != 0).ToList();
-                    break;
+                    return agingDataLine.Where(line =>  SumOfBalance(line) != 0).ToList();
                 default:
-                    break;
+                    return agingDataLine;
             }
 
         }
@@ -188,6 +184,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                    (agingDataLine.Minus60Days ?? 0) +
                    (agingDataLine.Minus30Days ?? 0) +
                    (agingDataLine.Past ?? 0);
+        }
+
+        public decimal? SumOfBalanceInLocalCurrency(NewAgingPeriod agingDataLine)
+        {
+            return (agingDataLine.Future ?? 0) +
+                   (agingDataLine.Plus90Days ?? 0) +
+                   (agingDataLine.Plus60Days ?? 0) +
+                   (agingDataLine.Plus30Days ?? 0) +
+                   (agingDataLine.Past ?? 0) +
+                   (agingDataLine.Minus180Days ?? 0) +
+                   (agingDataLine.Minus150Days ?? 0) +
+                   (agingDataLine.Minus120Days ?? 0) +
+                   (agingDataLine.Minus90Days ?? 0) +
+                   (agingDataLine.Minus60Days ?? 0) +
+                   (agingDataLine.Minus30Days ?? 0);
         }
         private List<NewAgingPeriod> SortAccountingAgingDataLines(List<NewAgingPeriod> agingDataLine)
         {
