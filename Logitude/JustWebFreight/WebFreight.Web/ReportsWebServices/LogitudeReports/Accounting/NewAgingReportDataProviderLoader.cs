@@ -186,7 +186,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                    (agingDataLine.Past ?? 0);
         }
 
-        public decimal? SumOfBalance(NewAgingPeriod agingDataLine)
+        public decimal? SumOfBalanceInLocalCurrency(NewAgingPeriod agingDataLine)
         {
             return (agingDataLine.Future ?? 0) +
                    (agingDataLine.Plus90Days ?? 0) +
