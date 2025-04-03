@@ -845,11 +845,11 @@ export class HomeComponent implements OnDestroy{
         }
     }
     
-    keepReportPanelOpen() {
+    KeepReportPanelOpen() {
         this.IsReportPanelVisible = true;
     }
 
-    closeReportPanel() {
+    CloseReportPanel() {
         if(!this.isPinned)
            this.IsReportPanelVisible = false;
     }

@@ -30,9 +30,7 @@ import { HomeComponent } from "Infrastructure/Components/HomeComponent/HomeCompo
 export class ReportMenuComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     @Output() PinnedChanged = new EventEmitter<boolean>();
-    @Output() NumberDoneReports = new EventEmitter<number>();
-    private numberDoneReports = 0;
-
+    @Output() CloseMenu = new EventEmitter<ReportFilterItem>();
     public RelatedReport: ReportFilterItem[];
     SelectedReport: ReportFilterItem;
     private relatedReportSubject = new BehaviorSubject<ReportFilterItem[]>([]);
@@ -50,21 +48,10 @@ export class ReportMenuComponent implements OnDestroy {
         
         this.reportService.relatedReportSubject.subscribe(reportList => {
             var updatedReportList: ReportFilterItem[] = reportList.map(report => {
-               // const filterValues: ReportFliter = this.ConvertXmlToObject(report.ReportFilterXML);
                 return {
                     reportExecutionLogPM: report,
                     filters:null
-                    //  filterValues.QueryFilterItemLists
-                    //     .filter((filter: QueryFilterItem) => filter.FieldValue !== null && filter.FieldValue !== undefined && filter.FieldValue !== '')
-                    //     .map((filter: QueryFilterItem) => {
-                    //         let fieldValue = filter.FieldValue;
-                    //         if (filter.FieldDataType === 'Date' && fieldValue) {
-                    //             fieldValue = DateTool.GetDateFormats(fieldValue).DateString.replace(/\//g, '-');
-                    //         }
-                    //         return `${filter.FieldName} :${fieldValue}`;
-                    //     })
-                    //     .join(', ')
-                    //     .toString()
+                    
                 };
             });
             this.relatedReportSubject.next(updatedReportList);
@@ -141,13 +128,13 @@ export class ReportMenuComponent implements OnDestroy {
     reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
     ReportTemplates = null;
     ViewReport(relatedRep: ReportFilterItem) {
-
+       
         this.reportPMService.get(relatedRep.reportExecutionLogPM.ReportId).subscribe((response: ServiceResponse) => {
             if (response.Result) {
                 if (!response.HasError) {
                     this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(relatedRep.reportExecutionLogPM.ReportId).subscribe((myResponse: ServiceResponse) => {
                         if (myResponse.HasError) return;
-
+                        this.CloseMenu.emit();
                         this.ReportTemplates = myResponse.Result;
                         this.LoadReportsPreviewComponent(relatedRep.reportExecutionLogPM, response.Result);
 
