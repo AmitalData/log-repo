@@ -880,7 +880,7 @@
   <Column
     Name="IsApprovalFailed"
     Type="bit"
-    DefaultValue="false">
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>

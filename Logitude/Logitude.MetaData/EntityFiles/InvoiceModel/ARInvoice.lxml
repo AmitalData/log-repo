@@ -19549,7 +19549,78 @@
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
-    <QueryColumns />
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;IsPrinted&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;IsSigned&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;InvoiceNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;BillToName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;DueDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;AmountDue&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
     <QueryFilters>
       <QueryFilter
         QueryCode="&quot;Failed Invoice&quot;"
