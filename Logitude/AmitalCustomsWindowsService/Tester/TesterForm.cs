@@ -73,7 +73,7 @@ namespace AmitalCustomsWindowsService.Tester
         private static void GetENV()
         {
 
-            var pmCustomsSetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(1);
+            var pmCustomsSetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(16);
             var jsonSetting = ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(jsonSetting);
         }

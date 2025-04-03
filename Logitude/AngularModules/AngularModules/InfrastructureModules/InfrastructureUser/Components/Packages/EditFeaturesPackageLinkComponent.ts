@@ -49,9 +49,9 @@ export class EditFeaturesPackageLinkComponent {
     }
 
     SearchFeatures(text: string): void {
+        clearTimeout(this.searchTimeout);
         if (!AppTool.IsNullOrEmpty(text) && !AppTool.IsNullOrEmpty(this.ItemsSourceOriginal) && this.ItemsSourceOriginal.length > 0) {
-            const searchText = text.trim().toLowerCase();    
-            clearTimeout(this.searchTimeout);
+            const searchText = text.trim().toLowerCase();                
             this.searchTimeout = setTimeout(() => {
                 this.ItemsSource = this.ItemsSourceOriginal.filter(d => 
                     typeof d["Name"] === "string" && d["Name"].toLowerCase().includes(searchText)
