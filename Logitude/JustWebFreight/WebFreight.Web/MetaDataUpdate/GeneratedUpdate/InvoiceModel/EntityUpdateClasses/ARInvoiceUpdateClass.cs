@@ -90,7 +90,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
    {  		
 
 
-		public const string HashString = "17a3b057dd3701496b391f90d901f138";
+		public const string HashString = "b11edca9e91444412d56291b34bb5184";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16184,6 +16184,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			  Query FailedInvoiceQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_15.Id, NameTextCodeCode = ARInvoiceTextCode_15.Code, ObjectTableName = "ARInvoice", Code = "Failed Invoice",  QueryGroupCode = "INVC", IndexOrder = 15, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_15.Id,FeatureUniqeCode= ARInvoiceFeature_15.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
+			 QueryColumn FailedInvoiceQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ARInvoice.IsPrinted" , ColumnWidth = 30 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ARInvoice.IsSigned" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ARInvoice.IsSignedName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ARInvoice.Sent" , ColumnWidth = 30 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ARInvoice.InvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ARInvoice.ARInvoiceTypeName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARInvoice.BillToName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARInvoice.StatusName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ARInvoice.DueDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ARInvoice.InvoiceCurrencyCode" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ARInvoice.AmountInInvoiceCurrency" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ARInvoice.AmountDue" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ARInvoice.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ARInvoice.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
+
              AdvancedQueryFilter FailedInvoiceQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARInvoice.IsApprovalFailed", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
