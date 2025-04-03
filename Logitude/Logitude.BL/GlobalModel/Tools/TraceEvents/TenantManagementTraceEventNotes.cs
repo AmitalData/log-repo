@@ -52,8 +52,11 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                     notes.AppendLine(CollectionsEqual(entityPM, property));
                     continue;
                 }
-
-                object pocoInstance = new object[] { poco, tenant, globalTenant, LBtenantsetting }.FirstOrDefault(x => x.GetType().GetProperty(property.Name) != null);
+                object pocoInstance;
+                if (LBtenantsetting == null)
+                     pocoInstance = new object[] { poco, tenant, globalTenant }.FirstOrDefault(x => x.GetType().GetProperty(property.Name) != null);
+                else
+                     pocoInstance = new object[] { poco, tenant, globalTenant, LBtenantsetting }.FirstOrDefault(x => x.GetType().GetProperty(property.Name) != null);
                 if (pocoInstance == null)
                     continue;
 
@@ -151,6 +154,8 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
             List<Type> types = new List<Type>();
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
+                if (assembly.FullName.StartsWith("Microsoft")  || assembly.FullName.StartsWith("System"))
+                    continue;
                 try
                 {
                     types.AddRange(assembly.GetTypes());
@@ -175,7 +180,8 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
             }
 
 
-            Type entityClrType = types.Where(t => t.Name == entityName).Last();
+            Type entityClrType = types.Where(t => t.Name == entityName && t.FullName.Contains("EntityPOCOs")).Last();
+
             if (entityClrType == null)
                 throw new InvalidOperationException($"CLR type for entity '{entityName}' not found.");
 
