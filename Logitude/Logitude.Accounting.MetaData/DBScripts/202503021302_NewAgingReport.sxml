@@ -6,18 +6,10 @@
   Module="Accounting">
 	<SqlScript>
 		<![CDATA[
-/****** Object:  StoredProcedure [dbo].[usp_NewAgingReport]    Script Date: 02/03/2025 13:05:22 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 
 
 
-
-
-create or alter procedure  [dbo].[usp_NewAgingReport]
+create or ALTER PROCEDURE [dbo].[usp_NewAgingReport]
     @AccountID VARCHAR(50) = NULL,
     @InputDate DATE = NULL,
     @Tenant INT,
@@ -33,6 +25,7 @@ create or alter procedure  [dbo].[usp_NewAgingReport]
 
    
 AS
+
 BEGIN
      IF @InputDate IS NULL
     BEGIN
@@ -63,7 +56,6 @@ BEGIN
     Future DECIMAL(30, 2),
     ExternalTransactionsTotal DECIMAL(30, 2),
    TotalForeign DECIMAL(30, 2),
-    BalanceInLocalCurrency DECIMAL(30, 2)
    
 );
 
@@ -85,7 +77,7 @@ INSERT INTO #TemporaryTable
 	
 	MAX(GL.Id)AS ID,
     SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) <= 30 THEN 
+      WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 0 AND 30 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
@@ -157,7 +149,7 @@ INSERT INTO #TemporaryTable
    
     
     SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 1 AND 30 THEN 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -30 AND 0 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
@@ -167,7 +159,7 @@ INSERT INTO #TemporaryTable
     END) AS Plus30Days,
     
     SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 31 AND 60 THEN 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -60 AND -31 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
@@ -176,7 +168,7 @@ INSERT INTO #TemporaryTable
         ELSE 0 
     END) AS Plus60Days,
 	 SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -61 AND 90 THEN 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -90 AND -61 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
@@ -186,7 +178,7 @@ INSERT INTO #TemporaryTable
     END) AS Plus90Days,
     
     SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) > 60 THEN 
+        WHEN DATEDIFF(day, T.DueDate, @InputDate) < -90 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
@@ -205,15 +197,12 @@ INSERT INTO #TemporaryTable
          AND trans.DueDate > @InputDate 
          AND trans.LocalAmountCredit != 0
     ) AS ExternalTransactionsTotal,
-
+    
 	SUM(CASE 
     WHEN T.CreateDate < @InputDate THEN (T.ForeignAmountDebit - T.ForeignAmountCredit) 
     ELSE 0 
-     END) AS TotalForeign,
-   SUM(CASE 
-      WHEN T.CreateDate < @InputDate THEN (T.LocalAmountDebit - T.LocalAmountCredit) 
-     ELSE 0 
-    END) AS BalanceInLocalCurrency
+     END) AS TotalForeign
+   
  
    
 FROM 
@@ -223,7 +212,7 @@ LEFT JOIN
 INNER JOIN 
     TENANTS TEN ON GL.tenant = TEN.Id
 	LEFT JOIN
-(
+	 (
     SELECT 
         jl.CreditAccountId,
         COALESCE(SUM(DISTINCT jl.LocalAmount), 0) AS TotFutureOpenChequesInLocalCur
@@ -233,7 +222,7 @@ INNER JOIN
     JOIN ARPaymentCheques arpch 
         ON j.AccountingEntityId = arpch.PaymentId
     WHERE 
-	  j.Tenant = @Tenant and
+	  j.Tenant = 74 and
 	  j.AccountingEntityCode = '3'
       AND jl.ActionCode = '1'
       AND j.IsLedgerCreated = 1
@@ -242,14 +231,13 @@ INNER JOIN
 
     GROUP BY jl.CreditAccountId
 )  FUTQ ON FUTQ.CreditAccountId = GL.ID
-
 LEFT JOIN 
     (SELECT TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
 	 C ON GL.CardsDataId = C.Id
 	 LEFT JOIN 
 (SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant) 
      CURRENCY ON GL.CurrencyId = CURRENCY.Id 
-WHERE 
+     WHERE 
     GL.tenant = @Tenant 
 	
 	AND (@AccountID IS NULL OR GL.ID = @AccountID) 
@@ -268,7 +256,11 @@ WHERE
         (@CategoryName = 'Category5Id' AND GL.Category5Id = @CategoryValue))
     )
 GROUP BY 
-   T.Tenant, T.AccountId,t.CurrencyId
+   T.Tenant, T.AccountId,
+    CASE 
+        WHEN (Gl.ReconcileMethodCode = 1 and gl.IsMultiCurrency =1) THEN T.CurrencyId
+        ELSE null 
+    END
 
 SELECT t.*,
 CONTACT_Collector.EnglishName AS AccountCollectorName, 
