@@ -206,8 +206,8 @@ export class LoginComponent implements OnInit {
     }
 
     async developerLogin() {
-        this.Email = 'itzik@amital.co.il'
-        this.Password = 'xhx@word3';
+        this.Email = 'eloncustomercare@mail.com'
+        this.Password = 'SHIRl$1806';
         this.LoginClicked();
 
         while(!this.TenantList?.length)
