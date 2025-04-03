@@ -893,25 +893,29 @@ namespace Logitude.BL.Helpers
             bool rv = false;
 
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
-            ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+            ARInvoiceRepository repository = new ARInvoiceRepository(invoiceContext);
 
 
             var documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
-            ARInvoice invoice = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
-
-            if (invoice != null)
+            if (documentsFiling != null)
             {
-                string contactEmail = this.IsSignatureHtmlPresentByBillToId(invoice.BillToId, tenant);
-                if (!string.IsNullOrEmpty(contactEmail))
-                {
-                    this.CreatePdfDoc(documentsFiling, invoice.Id, invoice.Tenant, "ARInvoice", true);
-                    if (this.isInterestReport && invoice.ARInvoiceTypeCode == "IT")
-                    {
-                        this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id);
-                    }
-                   rv = this.CheckPDFInvoiceInStorage_Inner(invoice, invoice.Tenant, repository, contactEmail, accountingSettings);
-                }
+                ARInvoice invoice = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
 
+                if (invoice != null)
+                {
+                    string contactEmail = this.IsSignatureHtmlPresentByBillToId(invoice.BillToId, tenant);
+                    if (!string.IsNullOrEmpty(contactEmail))
+                    {
+                        this.CreatePdfDoc(documentsFiling, invoice.Id, invoice.Tenant, "ARInvoice", true);
+                        if (this.isInterestReport && invoice.ARInvoiceTypeCode == "IT")
+                        {
+                            this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id);
+                        }
+                        rv = this.CheckPDFInvoiceInStorage_Inner(invoice, invoice.Tenant, repository, contactEmail, accountingSettings);
+                    }
+
+                }
             }
             return rv;
 
