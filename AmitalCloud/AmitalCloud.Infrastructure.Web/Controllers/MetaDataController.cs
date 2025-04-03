@@ -1,6 +1,6 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
@@ -12,7 +12,6 @@ using System.Net;
 using System.Net.Http;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Web;
 using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
@@ -21,85 +20,43 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class MetaDataController : ApiController
     {
         [OperationContract]
-        [Route("")]
+        [Route("GetAdvanceQueryFiltersPMs")]
         [WebGet(UriTemplate = "getadvancequeryfilterspms/{tenant}")]
         public List<AdvancedQueryFilterPM> GetAdvanceQueryFiltersPMs(int tenant)
-        => new AdvancedQueryFilterQueryService(tenant).GetMulti(a=> (a.Tenant == tenant || a.Tenant == 0) && a.IsPredefined == true
-                , "ObjectField,Query,Query.ObjectTable").ToList();
+        {
+            tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+            return new AdvancedQueryFilterQueryService(tenant).GetMulti(a => (a.Tenant == tenant || a.Tenant == 0) && a.IsPredefined == true,
+                "ObjectField,Query,Query.ObjectTable").ToList();
+
+        }
+
         [OperationContract]
-        [Route("")]
+        [Route("GetTenantLanguageTranslations")]
         [WebGet(UriTemplate = "GetTenantLanguageTranslations/{tenant}")]
         public List<Translation> GetTenantLanguageTranslations(int tenant)
         {
             tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
             List<Translation> AllTranslations = new List<Translation>();
-            TenantPM tenantPM = new TenantQueryService(tenant).GetSingle(tenant, true, true);
-            if (!string.IsNullOrEmpty(tenantPM.Language) && tenantPM.Language.ToLower() != "en" && tenantPM.Language != "english")
+            TenantPM tenantPM = new TenantQueryService(tenant).GetSingle(tenant, false, true);
+            if (tenantPM != null && !string.IsNullOrEmpty(tenantPM.Language) && tenantPM.Language.ToLower() != "en" && tenantPM.Language != "english")
             {
-                AllTranslations = new TranslationRepository(tenant).GetTranslationsByLanguageCode(tenantPM.Language, tenant);
-                //todo: check if this is needed
-                //TenantManagmentPrivateLabelsPM privatelabel = null;
-                //var url = AmitalCloudSecurityUtility.getLoggedDomain();
-                //if (!url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
-                //{
-                //    TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(tenant);
-                //    privatelabel = query.GetSingleActivePMByUrl_Cache(url);
-                //}
-
-                //    if (privatelabel != null)
-                //        {
-                //            TextCodePM textCode = service.GetMulti(a => a.Code == "General.MH.Importers" && a.Tenant == tenant, "").FirstOrDefault();
-                //            Translation tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
-                //            if (tra != null)
-                //            {
-                //                tra.TranslatedText = privatelabel.PrivateLabelName;
-                //            }
-                //            else
-                //            {
-                //                tra = new Translation()
-                //                {
-                //                    Id = Guid.NewGuid().ToString(),
-                //                    TextCodeId = textCode.Id,
-                //                    TextCode = textCode,
-                //                    Tenant = tenant,
-                //                    TranslatedText = privatelabel.PrivateLabelName,
-                //                    TranslationHeaderCode = tenantPM.Language,
-                //                    TextCodeCode = textCode.Code,
-                //                };
-
-                //                AllTranslations.Add(tra);
-                //            }
-                //            textCode = service.GetMulti(a => a.Code == "General.MH.ActivationWizard" && a.Tenant == tenant, "").FirstOrDefault();
-                //            tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
-                //            if (tra != null)
-                //            {
-                //                tra.TranslatedText = privatelabel.PrivateLabelShortName + " Services";
-                //            }
-                //            else
-                //            {
-                //                tra = new Translation()
-                //                {
-                //                    Id = Guid.NewGuid().ToString(),
-                //                    TextCodeId = textCode.Id,
-                //                    TextCode = textCode,
-                //                    Tenant = tenant,
-                //                    TranslatedText = privatelabel.PrivateLabelShortName + " Services",
-                //                    TranslationHeaderCode = tenantPM.Language,
-                //                    TextCodeCode = textCode.Code,
-                //                };
-
-                //                AllTranslations.Add(tra);
-                //            }
-                //        }
+                TranslationQuery service = new TranslationQuery(tenant);
+                AllTranslations = service.GetTenantLanguageTranslations(tenant, tenantPM.Language);
             }
             return AllTranslations;
         }
         [OperationContract]
         [Route("")]
         [WebGet(UriTemplate = "gettranslations/{translationTenant}")]
-        public List<Translation> GetTranslations(int translationTenant) => GetTenantLanguageTranslations(translationTenant);
+        public List<Translation> GetTranslations(int translationTenant)
+        {
+            translationTenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+            TranslationQuery service = new TranslationQuery(translationTenant);
+            List<Translation> AllTranslations = service.GetTenantTranslations(translationTenant);
+            return AllTranslations;
+        }
         [OperationContract]
-        [Route("")]
+        [Route("GetTenantObjectFields")]
         [WebGet(UriTemplate = "GetTenantObjectFields/{loggedTenant}")]
         public List<ObjectFieldPM> GetTenantObjectFields(int loggedTenant)
         {
@@ -108,13 +65,28 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             {
                 return null;
             }
-            return new ObjectFieldQueryService(loggedTenant).GetMulti(a => a.Tenant == loggedTenant, "ObjectTable").ToList();
-
+            return new ObjectFieldQueryService(loggedTenant).GetMulti(a => a.Tenant == loggedTenant, a => new ObjectFieldPM(a)
+            {
+                ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
+                FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
+                FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
+                ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
+                ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
+                ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
+                HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
+            }, "ObjectTable_LookUpTable,FullNameTextCode,ShortNameTextCode,ListTextCode,HelpTextCode,ObjectTable,ObjectTable_MultiTable").ToList();
         }
 
-        [Route("")]
+        [Route("GetTenantTextCodes")]
         public List<TextCodePM> GetTenantTextCodes(int tenant)
-        => new TextCodeQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetMulti(a => a.Tenant == tenant, "").ToList();
+        {
+            tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+            return new TextCodeQueryService(tenant).GetMulti(a => a.Tenant == tenant, a => new TextCodePM(a)
+            {
+                ObjectTableName = a.ObjectTable.Name,
+                SpellCheckedByUserName = a.SpellCheckedByUser == null ? null : a.SpellCheckedByUser.Contact.EnglishName,
+            }, "ObjectTable,SpellCheckedByUser.Contact").ToList();
+        }
 
         [HttpGet]
         [Route("")]
@@ -139,6 +111,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         public List<ScreenFieldPM> GetAllScreenFieldsByTenant(int tenant, string screenfields)
         {
             tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+            // todo: do again the implementation
             return new ScreenFieldQueryService(tenant).GetMulti(a => a.Tenant == tenant, "ObjectField,Screen,Screen.ObjectTable").ToList();
 
         }
@@ -146,19 +119,24 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         public List<ScreenPM> GetAllScreensByTenant(int tenant, string screens)
         {
             tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+            // incomplete implementation
             return new ScreenQueryService(tenant).GetMulti(a => a.Tenant == tenant, "ObjectTable");
         }
         [Route("")]
         public List<ObjectTableTabPM> GetAllObjectTableTabsByTenant(int tenant, string objecttabletabs)
         {
             tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-            return new ObjectTableTabQueryService(tenant).GetMulti(a => a.Tenant == tenant, "ObjectTable").ToList();
+            ObjectTableTabQuery query = new ObjectTableTabQuery(tenant);
+            var objectTableTabs = query.GetObjectTableTabPMsByTenant(tenant);
+            return objectTableTabs;
         }
         [Route("")]
         public List<ObjectTablePM> GetAllObjectTables(int tenant, string objecttables)
         {
             tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-            return new ObjectTableQueryService(tenant).GetMulti(a => a.Tenant == tenant, "ObjectTableTabs").ToList();
+            ObjectTableQuery query = new ObjectTableQuery(tenant);
+            var objectTables = query.GetObjectPMsByTenant(tenant).ToList();
+            return objectTables;
         }
         [WebInvoke(
             UriTemplate = "api/ngMetaData/menustables",
@@ -210,32 +188,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             tenant =  AmitalCloudSecurityUtility.AuthenticationOnTenant();
             var service = new MenuButtonQueryService(tenant);
-            return service.GetMulti(a => true, "");
-            //MenuButtonRepository menubuttonsRepository = new MenuButtonRepository(tenant);
-            //MenuButtonQuery query = new MenuButtonQuery(menubuttonsRepository);
-            ////var buttons = query.GetSpecialServicesTypePMsByTenant(tenant).ToList();
-            //List<MenuButtonPM> buttons = (from a in menubuttonsRepository.context.MenuButtons
-            //                              where a.MenuButtonGroupId == objecttableid
-            //                              select new MenuButtonPM(a)
-            //                              {
-            //                                  Id = a.Id,
-            //                                  ControlPath = a.ControlPath,
-            //                                  DropDownControl = a.DropDownControl,
-            //                                  EventCode = a.EventCode,
-            //                                  FeatureId = a.FeatureId,
-            //                                  Index = a.Index,
-            //                                  IsActive = a.IsActive,
-            //                                  //IsDisabled
-            //                                  LabelTextCodeId = a.LabelTextCodeId,
-            //                                  LabelTextCodeCode = a.LabelTextCodeCode,
-            //                                  MenuButtonGroupId = a.MenuButtonGroupId,
-            //                                  MenuButtonType = a.MenuButtonType,
-            //                                  ParentMenuButtonId = a.ParentMenuButtonId,
-            //                                  Style = a.Style,
-            //                                  Width = a.Width,
-            //                                  HtmlComponentPath = a.HtmlComponentPath,
-            //                              }).ToList();
-            //return buttons;
+            return service.GetMulti(a => a.MenuButtonGroupId == objecttableid);
         }
     }
 }

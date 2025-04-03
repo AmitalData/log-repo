@@ -33,15 +33,14 @@ namespace AmitalCloud.Infrastructure.WebAPI
             LoggedContactResolver.RegisterLoggedContactUtil();
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
-
-            //InfraRegistrationHelper.Register();
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            if (!string.IsNullOrEmpty(token))
+            if (HttpContext.Current?.Request?.Headers != null && !string.IsNullOrEmpty(HttpContext.Current.Request.Headers["Token"]))
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 if (authToken != null)
                 {
@@ -180,15 +179,11 @@ namespace AmitalCloud.Infrastructure.WebAPI
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                return authToken.Tenant;
+                return authToken?.Tenant ?? 0;
             };
 
             InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, AmitalCloudSecurityUtility.CheckContactFeature,
                 () => (new ByteCompressorUtil()) as IByteCompressorUtil,
-                //new IISManager(),
-                //() => (new IHtmlEditorHelper()) as IHtmlEditorHelper,
-                //() => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService,
-                //() => (new EntityGetReflectorService()) as IEntityGetReflectorService,
                 () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
         }
     }

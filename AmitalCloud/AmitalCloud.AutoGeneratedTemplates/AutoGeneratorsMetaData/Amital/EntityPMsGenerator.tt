@@ -225,6 +225,10 @@ namespace <#= pmnamespacestring #>
 					}
 				   else
 					{
+#>
+        _<#= privatepropname #> = null;
+<#+
+
 						continue;
 #>
 		_<#= privatepropname #> = default;
@@ -304,6 +308,7 @@ if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyNam
 					{
 						if(field.HasDataBaseField == "false")
 						{
+					    WritePMProperty(field);
 						continue;	
 						}
 					}

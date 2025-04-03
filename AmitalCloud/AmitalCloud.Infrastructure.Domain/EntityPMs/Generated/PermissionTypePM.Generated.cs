@@ -31,8 +31,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
-		objectFields_Agentpermissiontypecode = entity.ObjectFields_Agentpermissiontypecode != null ? entity.ObjectFields_Agentpermissiontypecode.Select(a=>new ObjectFieldPM(a)).ToList() : null;
-		objectFields_Customerpermissiontypecode = entity.ObjectFields_Customerpermissiontypecode != null ? entity.ObjectFields_Customerpermissiontypecode.Select(a=>new ObjectFieldPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -85,68 +83,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	   private List<ObjectFieldPM> objectFields_Agentpermissiontypecode;
-	 
-		     
-	   [Include]
-	   [Association("ObjectFieldPermissionType", "Code","Agentpermissiontypecode")]
-	   [DataMember]
-	   public virtual List<ObjectFieldPM> ObjectFields_Agentpermissiontypecode  
-	   {
-	        get
-             {
-                 if (objectFields_Agentpermissiontypecode == null)
-                 {
-                     objectFields_Agentpermissiontypecode = new List<ObjectFieldPM>();
-                 }
-                 return objectFields_Agentpermissiontypecode;
-              }
-             set { objectFields_Agentpermissiontypecode = value; }
-	    }
-	   private List<ObjectFieldPM>  deletedObjectFields_Agentpermissiontypecode;
-	   public virtual List<ObjectFieldPM> DeletedObjectFields_Agentpermissiontypecode  
-	   {
-	        get
-             {
-                 if ( deletedObjectFields_Agentpermissiontypecode == null)
-                 {
-                      deletedObjectFields_Agentpermissiontypecode = new List<ObjectFieldPM>();
-                 }
-                 return  deletedObjectFields_Agentpermissiontypecode;
-              }
-             set {  deletedObjectFields_Agentpermissiontypecode = value; }
-	    }
-	   private List<ObjectFieldPM> objectFields_Customerpermissiontypecode;
-	 
-		     
-	   [Include]
-	   [Association("ObjectFieldPermissionType", "Code","Customerpermissiontypecode")]
-	   [DataMember]
-	   public virtual List<ObjectFieldPM> ObjectFields_Customerpermissiontypecode  
-	   {
-	        get
-             {
-                 if (objectFields_Customerpermissiontypecode == null)
-                 {
-                     objectFields_Customerpermissiontypecode = new List<ObjectFieldPM>();
-                 }
-                 return objectFields_Customerpermissiontypecode;
-              }
-             set { objectFields_Customerpermissiontypecode = value; }
-	    }
-	   private List<ObjectFieldPM>  deletedObjectFields_Customerpermissiontypecode;
-	   public virtual List<ObjectFieldPM> DeletedObjectFields_Customerpermissiontypecode  
-	   {
-	        get
-             {
-                 if ( deletedObjectFields_Customerpermissiontypecode == null)
-                 {
-                      deletedObjectFields_Customerpermissiontypecode = new List<ObjectFieldPM>();
-                 }
-                 return  deletedObjectFields_Customerpermissiontypecode;
-              }
-             set {  deletedObjectFields_Customerpermissiontypecode = value; }
-	    }
 	 }
 #endregion Properties
 }

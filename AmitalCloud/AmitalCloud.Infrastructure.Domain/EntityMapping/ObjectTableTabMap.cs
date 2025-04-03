@@ -54,7 +54,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.HideTabNameInScreen).HasColumnName("HideTabNameInScreen").IsRequired();
 
-            this.Property(t => t.Islocked).HasColumnName("Islocked").IsRequired();
+            this.Property(t => t.IsLocked).HasColumnName("IsLocked").IsRequired();
         }
     }
 }

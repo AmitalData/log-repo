@@ -102,6 +102,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_fullNameTextCodeId = entity.FullNameTextCodeId;
 		_fullnametextcode = entity.FullNameTextCode !=null ? new TextCodePM(entity.FullNameTextCode) : null;
 			_fullNameTextCodeCode = entity.FullNameTextCodeCode;
+        _fullNameTextCodeDefaultText = null;
 		_availableInDocumentTypes = entity.AvailableInDocumentTypes;
 		_dBTableShortName = entity.DBTableShortName;
    }
@@ -1249,6 +1250,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeCode",OldValue=_fullNameTextCodeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _fullNameTextCodeCode=value;
+		   }
+		 }
+	   }
+	  private string _fullNameTextCodeDefaultText ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FullNameTextCodeDefaultText  
+	   {
+	     get { return _fullNameTextCodeDefaultText; }
+		 set
+		 {
+		   if(_fullNameTextCodeDefaultText != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeDefaultText",OldValue=_fullNameTextCodeDefaultText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fullNameTextCodeDefaultText=value;
 		   }
 		 }
 	   }

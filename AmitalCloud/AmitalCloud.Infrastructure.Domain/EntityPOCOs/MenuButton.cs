@@ -23,6 +23,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Key]
         [Column("Code")]
 	    public string Code { get; set; }
+        [ForeignKey("MenuButtonGroup")]
+        [Column("MenuButtonGroupId")]
+	    public string MenuButtonGroupId { get; set; }
+	      
+        public virtual MenuButtonGroup MenuButtonGroup { get; set; }
     }
 }
 	 

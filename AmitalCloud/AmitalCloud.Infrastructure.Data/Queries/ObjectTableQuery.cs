@@ -1,7 +1,6 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -21,13 +20,13 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
             List<ObjectTablePM> currentObjectTables = new List<ObjectTablePM>();
             List<ObjectTablePM> zeroObjectTables = new List<ObjectTablePM>();
+
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 currentObjectTables = repository.GetMulti(a => a.Tenant == tenant, a => new ObjectTablePM(a)
                 {
-                    //FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                }
-                , "HeaderScreen,DescriptionTextCode,NewButtonTextCode,FullNameTextCode").ToList();
+                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                }, "FullNameTextCode"); ;
             }
             if (tenant != 0)
             {
@@ -45,11 +44,10 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 return (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(tenantZeroObjectTablesCacheKeyName);
             }
-            List<ObjectTablePM> zeroObjectTables = 
-                repository.GetMulti(a => a.Tenant == 0, a => new ObjectTablePM(a)
-                {
-                    //FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                }, "HeaderScreen,DescriptionTextCode,NewButtonTextCode,FullNameTextCode").ToList();    
+            List<ObjectTablePM> zeroObjectTables = repository.GetMulti(a => a.Tenant == 0, a => new ObjectTablePM(a)
+            {
+                FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+            }, "FullNameTextCode").ToList();
 
             CacheManager.CacheWrapper.Insert(tenantZeroObjectTablesCacheKeyName, zeroObjectTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
             return zeroObjectTables;
@@ -100,7 +98,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                             where (a.Tenant == 0 && a.InActive == false)
                                             select new ObjectTablePM(a)
                                             {
-                                                //FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                                FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                             }).ToList();
                         scope.Complete();
                     }
@@ -117,7 +115,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                         where (a.Tenant == 0 && a.InActive == false)
                                         select new ObjectTablePM(a )
                                         {
-                                            //FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                                            FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                         }).ToList();
 
 
@@ -140,7 +138,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 currentTenantTables = new ObjectTableRepository(tenant).GetMulti(a => a.Tenant == tenant && a.InActive == false,
                     a => new ObjectTablePM(a)
                     {
-                        //FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
+                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                     }, "FullNameTextCode").ToList();
                 scope.Complete();
             }

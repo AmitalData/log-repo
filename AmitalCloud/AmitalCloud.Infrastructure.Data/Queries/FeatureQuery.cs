@@ -1,13 +1,12 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
 namespace AmitalCloud.Infrastructure.Data.Queries
@@ -21,7 +20,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<Feature>(context);
         }
-        //        public FeatureQuery(IRepository<IAmitalCloudContext,Feature, string> repository) => this.repository = repository;
         public List<FeaturePM> GetAllowedFeaturesForRole(string myRoleId, List<string> allowedPackages, int tenant)
         {
             List<FeaturePM> myResult = new List<FeaturePM>();
@@ -30,12 +28,12 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 Role myRole = (from d in context.Roles where d.Id == myRoleId select d).FirstOrDefault();
 
-                List<Feature> allFeatures = new List<Feature>();
+                List<FeaturePM> allFeatures = new List<FeaturePM>();
                 List<RoleFeature> allRoleFeatures = new List<RoleFeature>();
                 List<PackageFeature> allPackageFeatures = new List<PackageFeature>();
 
                 #region allFeatures
-                allFeatures = repository.GetMulti(a => a.Tenant == 0 || a.Tenant == tenant).ToList();
+                allFeatures = repository.GetMulti(a => a.Tenant == 0 || a.Tenant == tenant, a => new FeaturePM(a)).ToList();
                 #endregion
 
                 #region allRoleFeatures
@@ -87,13 +85,13 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 {
                     foreach (PackageFeature item in allPackageFeatures)
                     {
-                        Feature myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
+                        FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
                         if (myFeature != null)
                         {
                             if (!allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).Any())
                             {
-                                //myFeature.PackageCode = item.PackageCode;
-                                allAllowedPackageFeatures.Add(new FeaturePM(myFeature));
+                                myFeature.PackageCode = item.PackageCode;
+                                allAllowedPackageFeatures.Add(myFeature);
                             }
                         }
                     }
@@ -103,28 +101,27 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 {
                     foreach (RoleFeature item in allRoleFeatures)
                     {
-                        Feature myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
+                        FeaturePM myFeature = allFeatures.Where(f => f.FeatureUniqeCode == item.FeatureUniqeCode).FirstOrDefault();
                         if (myFeature != null)
                         {
                             if (!myResult.Where(d => d.Id == myFeature.Id).Any())
                             {
-                                //myFeature.RoleId = item.RoleId;
+                                myFeature.RoleId = item.RoleId;
 
                                 if (myFeature.Packagable)
                                 {
                                     FeaturePM myAllowedPackageFeature = allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).FirstOrDefault();
                                     if (myAllowedPackageFeature != null)
                                     {
-                                        //myFeature.Exists = true;
-                                        //myFeature.PackageCode = myAllowedPackageFeature.PackageCode;
-                                        myResult.Add(new FeaturePM(myFeature));
+                                        myFeature.Exists = true;
+                                        myFeature.PackageCode = myAllowedPackageFeature.PackageCode;
+                                        myResult.Add(myFeature);
                                     }
                                 }
-
                                 else
                                 {
-                                    //myFeature.Exists = true;
-                                    myResult.Add(new FeaturePM(myFeature));
+                                    myFeature.Exists = true;
+                                    myResult.Add(myFeature);
                                 }
                             }
                         }
@@ -157,8 +154,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public LoggedUserFeatures GetAllowedFeaturesForLoggedUser(string loggedUserId, int tenant)
         {
             LoggedUserFeatures loggedUserFeatures;
-            if (true)
-                //!AmitalCloudSettings.DeploymentStage.IsDBStage(AmitalCloudSettings.DeploymentStage.LogboxAndAccountingProduction))
+            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.LogboxAndAccountingProduction))
             {
                 string key = $"GetAllowedFeaturesForLoggedUser,{loggedUserId},{tenant}";
                 loggedUserFeatures = CacheManager.GetOrInsertNewObject<LoggedUserFeatures>(key, () =>

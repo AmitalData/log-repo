@@ -31,8 +31,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_queryId = entity.QueryId;
-		_objectFieldId = entity.ObjectFieldId;
-		_isPredefined = entity.IsPredefined;
+		_query = entity.Query !=null ? new QueryPM(entity.Query) : null;
+			_objectFieldId = entity.ObjectFieldId;
+		_objectfield = entity.ObjectField !=null ? new ObjectFieldPM(entity.ObjectField) : null;
+			_isPredefined = entity.IsPredefined;
 		_predefinedValue = entity.PredefinedValue;
 		_predefinedValue2 = entity.PredefinedValue2;
 		_operator = entity.Operator;
@@ -94,6 +96,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private QueryPM _query;
+		[Include]
+        [DataMember]
+        public virtual QueryPM Query 
+		{ 
+		get { return _query; } 
+		set { _query = value; }
+		}
 	  private string _objectFieldId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -110,6 +120,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectFieldPM _objectfield;
+		[Include]
+        [DataMember]
+        public virtual ObjectFieldPM ObjectField 
+		{ 
+		get { return _objectfield; } 
+		set { _objectfield = value; }
+		}
 	  private bool _isPredefined ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

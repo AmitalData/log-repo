@@ -1,18 +1,12 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Transactions;
-using System.Web;
 using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
@@ -48,6 +42,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             {
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
                 SettingQueryService settingQueryService = new SettingQueryService(tenant);
+
                 SettingPM mySetting = settingQueryService.GetSingle("1", false, true);
 
                 JSGlobalSettings myResult = new JSGlobalSettings(mySetting);
@@ -92,7 +87,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             {
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
                 TenantManagementPM entityPM = new TenantManagementQueryService(tenant).GetSingle(tenant, true, true);
-                //bool isLogboxSystem = CheckIsLogboxSystem();
+                bool isLogboxSystem = CheckIsLogboxSystem();
                 if (entityPM == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new TenantManagementJS(new TenantManagementPM()));
@@ -180,6 +175,14 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
         }
-    }
 
+        private static bool CheckIsLogboxSystem()
+        {
+            bool isLogboxSystem = false;
+            string url = AmitalCloudSecurityUtility.getLoggedDomain();
+            if (url.Contains("system.logbox.co.il") || url.Contains("pre.logbox.co.il") || url.Contains("test.logitudeworld.com")) //Test env acts Like Logbox
+                isLogboxSystem = true;
+            return isLogboxSystem;
+        }
+    }
 }

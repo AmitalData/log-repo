@@ -142,6 +142,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public TEntity GetFirst() => GetAll(0, true).FirstOrDefault();
         public List<TEntity> GetAll(int tenant) => GetQuery(tenant).ToList();
+        public IQueryable<TEntity> GetQueryable() => _dbSet; // todo: change it to GetQuery()
         protected IQueryable<TEntity> GetQuery(int tenant)
         {
             var type = typeof(TEntity);
@@ -166,8 +167,9 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public List<TEntity> GetAll<TKey>(int tenant, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending) => ApplyOrderedBy<TKey>(orderBy, orderByDirection, GetQuery(tenant)).ToList();
         public List<TEntity> GetMulti<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys) => GetMulti(entityKeys.Predicate);
-        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select) => _dbSet.Where(predicate).Select(select).ToList();
-        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include) => ApplyInclude(predicate, include).Select(select).ToList();
+        // FYI temp solution to pass Func<TEntity, TResult> without Expression to prevent an error when doing select with a cstr on query, that causes to execute the select after the data is fetched from db
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select, string include) => ApplyInclude(predicate, include).Select(select).ToList();
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select) => _dbSet.Where(predicate).Select(select).ToList();
 
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList().AsEnumerable().Select(a=>NewObject<TResult>(a)).ToList();
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, string include) => ApplyInclude(predicate, include).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();

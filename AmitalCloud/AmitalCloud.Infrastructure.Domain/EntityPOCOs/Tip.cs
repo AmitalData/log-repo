@@ -35,7 +35,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         public virtual ObjectTable ObjectTable { get; set; }
         [Column("ShortTextCodeCode")]
 	    public string ShortTextCodeCode { get; set; }
-		public virtual ICollection<ObjectTable> ObjectTables { get; set; }
 		public virtual ICollection<TipsVisibility> TipsVisibilitys { get; set; }
     }
 }

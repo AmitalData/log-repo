@@ -32,8 +32,8 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending);
 
 
-        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select);
-        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include);
+        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select);
+        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select, string include);
 
         List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate);
         List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, string include);
