@@ -256,9 +256,9 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.MasterNumber = currentInvoice.MasterNumber != null ? currentInvoice.MasterNumber : "";
                 invoicedataprovider.InvoiceType_label = invoicetype != null ? invoicetype.Name : "";
                 invoicedataprovider.Type = invoiceTypeCode == "CD" ? "Credit" : "Debit";
-                invoicedataprovider.MasterInternalNumber = shipment.MasterShipmentNumber != null ? shipment.MasterShipmentNumber : "";
-                invoicedataprovider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
-                invoicedataprovider.ProjectNumber = shipment.ProjectNumber != null ? shipment.ProjectNumber : "";
+                invoicedataprovider.MasterInternalNumber = shipment != null ? shipment.MasterShipmentNumber ?? "" : "";
+                invoicedataprovider.CustomsDeclarationNumber = shipment != null ? shipment.CustomsDeclarationNumber ?? "" : "";
+                invoicedataprovider.ProjectNumber = shipment != null ? shipment.ProjectNumber ?? "" : "";
 
                 this.SetOriginalInvoiceNumber(currentInvoice, invoiceCotnext, invoicedataprovider);
 
@@ -1477,144 +1477,147 @@ namespace WebFreight.Web.ReportsWebServices
                 string alphaFormat = @"[^A-Za-z]*";
                 string numericFormat = @"[^0-9]*";
 
-                List<ShipmentPackage> shipmentPackagesList = shipmentsContext.ShipmentPackages.Where(sh => sh.ShipmentId == shipment.Id).ToList();
-                if (shipmentPackagesList.Count > 0)
+                if (shipment != null)
                 {
-                    string myTotalContainers = "";
-                    int? myNumberofPackages = shipmentPackagesList.Sum(s => s.Quantity);
-
-                    var grouped = (from a in shipmentPackagesList
-                                   where a.PackageTypeId != null
-                                   group a by a.PackageTypeId into g
-                                   select new
-                                   {
-                                       PackageTypeId = g.Key,
-                                       Quantity = g.Sum(s => s.Quantity)
-                                   });
-
-                    foreach (var item in grouped)
+                    List<ShipmentPackage> shipmentPackagesList = shipmentsContext.ShipmentPackages.Where(sh => sh.ShipmentId == shipment.Id).ToList();
+                    if (shipmentPackagesList.Count > 0)
                     {
-                        PackageType myPackageType = (from pa in commonContext.PackageTypes
-                                                     where pa.Id == item.PackageTypeId
-                                                     select pa).FirstOrDefault();
+                        string myTotalContainers = "";
+                        int? myNumberofPackages = shipmentPackagesList.Sum(s => s.Quantity);
 
-                        if (myPackageType != null)
+                        var grouped = (from a in shipmentPackagesList
+                                       where a.PackageTypeId != null
+                                       group a by a.PackageTypeId into g
+                                       select new
+                                       {
+                                           PackageTypeId = g.Key,
+                                           Quantity = g.Sum(s => s.Quantity)
+                                       });
+
+                        foreach (var item in grouped)
                         {
-                            if (myPackageType.IsContainer)
-                            {
-                                alpha = Regex.Replace(myPackageType.Code, alphaFormat, string.Empty, RegexOptions.Compiled);
-                                num = Regex.Replace(myPackageType.Code, numericFormat, string.Empty, RegexOptions.Compiled);
+                            PackageType myPackageType = (from pa in commonContext.PackageTypes
+                                                         where pa.Id == item.PackageTypeId
+                                                         select pa).FirstOrDefault();
 
-                                string itemText = item.Quantity.ToString() + " x " + num + "'" + alpha;
-                                myTotalContainers = string.IsNullOrEmpty(myTotalContainers) ? itemText : myTotalContainers + ", " + itemText;
-                            }
-                        }
-                    }
-
-                    string myContainersNumbersText = "";
-                    string myContainersNumbersAndTypesText = "";
-                    string myPackageDetails = "";
-                    string myLCLContainersNumbersText = "";
-                    foreach (ShipmentPackage item in shipmentPackagesList)
-                    {
-                        if (string.IsNullOrEmpty(myPackageDetails))
-                        {
-
-                        }
-                        else
-                        {
-                            myPackageDetails = Environment.NewLine + myPackageDetails;
-                        }
-
-                        if (shipment.TransportModeId == "A")
-                        {
-                            myPackageDetails = myPackageDetails + item.Quantity == null ? "0" : item.Quantity.ToString();
-                        }
-
-                        else
-                        {
-                            PackageType myPackageType = (from pa in commonContext.PackageTypes where pa.Id == item.PackageTypeId select pa).FirstOrDefault();
-
-                            if (myPackageType != null)
-                            {
-                                myPackageDetails = myPackageDetails + item.Quantity == null ? "0" : item.Quantity.ToString() + " " + myPackageType.EnglishName;
-                            }
-                            else
-                            {
-                                myPackageDetails = myPackageDetails + item.Quantity == null ? "0" : item.Quantity.ToString();
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(item.ContainerNumber))
-                        {
-                            myLCLContainersNumbersText = string.IsNullOrEmpty(myLCLContainersNumbersText) ? item.ContainerNumber : myLCLContainersNumbersText + ", " + item.ContainerNumber;
-
-                            PackageType myPackageType = (from pa in commonContext.PackageTypes where pa.Id == item.PackageTypeId select pa).FirstOrDefault();
                             if (myPackageType != null)
                             {
                                 if (myPackageType.IsContainer)
                                 {
-                                    string type = !string.IsNullOrEmpty(myPackageType.PrintAs) ? myPackageType.PrintAs : myPackageType.Code;
-                                    string itemText = item.ContainerNumber + " " + type;
+                                    alpha = Regex.Replace(myPackageType.Code, alphaFormat, string.Empty, RegexOptions.Compiled);
+                                    num = Regex.Replace(myPackageType.Code, numericFormat, string.Empty, RegexOptions.Compiled);
 
-                                    myContainersNumbersText = string.IsNullOrEmpty(myContainersNumbersText) ? item.ContainerNumber : myContainersNumbersText + ", " + item.ContainerNumber;
-                                    myContainersNumbersAndTypesText = string.IsNullOrEmpty(myContainersNumbersAndTypesText) ? itemText : myContainersNumbersAndTypesText + "," + itemText;
+                                    string itemText = item.Quantity.ToString() + " x " + num + "'" + alpha;
+                                    myTotalContainers = string.IsNullOrEmpty(myTotalContainers) ? itemText : myTotalContainers + ", " + itemText;
                                 }
                             }
                         }
-                    }
 
-                    invoicedataprovider.PackageDetails = myPackageDetails;
-
-                    string myPackagesInDetails = null;
-                    switch (shipment.TransportModeId)
-                    {
-                        case "A":
+                        string myContainersNumbersText = "";
+                        string myContainersNumbersAndTypesText = "";
+                        string myPackageDetails = "";
+                        string myLCLContainersNumbersText = "";
+                        foreach (ShipmentPackage item in shipmentPackagesList)
+                        {
+                            if (string.IsNullOrEmpty(myPackageDetails))
                             {
-                                myPackagesInDetails = myNumberofPackages == null ? "0" : myNumberofPackages.ToString();
-                                break;
+
+                            }
+                            else
+                            {
+                                myPackageDetails = Environment.NewLine + myPackageDetails;
                             }
 
-                        case "I":
+                            if (shipment.TransportModeId == "A")
                             {
-                                myPackagesInDetails = myNumberofPackages == null ? "0" : myNumberofPackages.ToString();
-                                myPackagesInDetails += (myNumberofPackages == 1) ? " Trailer" : " Trailers";
-                                break;
+                                myPackageDetails = myPackageDetails + item.Quantity == null ? "0" : item.Quantity.ToString();
                             }
 
-                        case "O":
+                            else
                             {
-                                if (shipment.ShipmentTypeId == "FCLD")
+                                PackageType myPackageType = (from pa in commonContext.PackageTypes where pa.Id == item.PackageTypeId select pa).FirstOrDefault();
+
+                                if (myPackageType != null)
                                 {
-                                    myPackagesInDetails = myNumberofPackages == null ? "0" : myNumberofPackages.ToString();
-                                    myPackagesInDetails += (myNumberofPackages == 1) ? " Container" : " Containers";
+                                    myPackageDetails = myPackageDetails + item.Quantity == null ? "0" : item.Quantity.ToString() + " " + myPackageType.EnglishName;
                                 }
-
                                 else
                                 {
-                                    foreach (var item in grouped)
+                                    myPackageDetails = myPackageDetails + item.Quantity == null ? "0" : item.Quantity.ToString();
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(item.ContainerNumber))
+                            {
+                                myLCLContainersNumbersText = string.IsNullOrEmpty(myLCLContainersNumbersText) ? item.ContainerNumber : myLCLContainersNumbersText + ", " + item.ContainerNumber;
+
+                                PackageType myPackageType = (from pa in commonContext.PackageTypes where pa.Id == item.PackageTypeId select pa).FirstOrDefault();
+                                if (myPackageType != null)
+                                {
+                                    if (myPackageType.IsContainer)
                                     {
-                                        PackageType myPackageType = (from pa in commonContext.PackageTypes
-                                                                     where pa.Id == item.PackageTypeId
-                                                                     select pa).FirstOrDefault();
-                                        if (myPackageType != null)
-                                        {
-                                            string itemText = item.Quantity + " " + myPackageType.EnglishName;
-                                            myPackagesInDetails += string.IsNullOrEmpty(myPackagesInDetails) ? itemText : " " + itemText;
-                                        }
+                                        string type = !string.IsNullOrEmpty(myPackageType.PrintAs) ? myPackageType.PrintAs : myPackageType.Code;
+                                        string itemText = item.ContainerNumber + " " + type;
+
+                                        myContainersNumbersText = string.IsNullOrEmpty(myContainersNumbersText) ? item.ContainerNumber : myContainersNumbersText + ", " + item.ContainerNumber;
+                                        myContainersNumbersAndTypesText = string.IsNullOrEmpty(myContainersNumbersAndTypesText) ? itemText : myContainersNumbersAndTypesText + "," + itemText;
                                     }
                                 }
-
-                                break;
                             }
-                    }
+                        }
 
-                    invoicedataprovider.PackagesInDetails = myPackagesInDetails;
-                    invoicedataprovider.TotalContainers = myTotalContainers;
-                    invoicedataprovider.NumberofPackages = myNumberofPackages.ToString();
-                    invoicedataprovider.ContainersNumbersArray = myContainersNumbersText;
-                    invoicedataprovider.ContainersNumbersAndTypesArray = myContainersNumbersAndTypesText;
-                    invoicedataprovider.LCLContainersNumbersArray = myLCLContainersNumbersText;
+                        invoicedataprovider.PackageDetails = myPackageDetails;
+
+                        string myPackagesInDetails = null;
+                        switch (shipment.TransportModeId)
+                        {
+                            case "A":
+                                {
+                                    myPackagesInDetails = myNumberofPackages == null ? "0" : myNumberofPackages.ToString();
+                                    break;
+                                }
+
+                            case "I":
+                                {
+                                    myPackagesInDetails = myNumberofPackages == null ? "0" : myNumberofPackages.ToString();
+                                    myPackagesInDetails += (myNumberofPackages == 1) ? " Trailer" : " Trailers";
+                                    break;
+                                }
+
+                            case "O":
+                                {
+                                    if (shipment.ShipmentTypeId == "FCLD")
+                                    {
+                                        myPackagesInDetails = myNumberofPackages == null ? "0" : myNumberofPackages.ToString();
+                                        myPackagesInDetails += (myNumberofPackages == 1) ? " Container" : " Containers";
+                                    }
+
+                                    else
+                                    {
+                                        foreach (var item in grouped)
+                                        {
+                                            PackageType myPackageType = (from pa in commonContext.PackageTypes
+                                                                         where pa.Id == item.PackageTypeId
+                                                                         select pa).FirstOrDefault();
+                                            if (myPackageType != null)
+                                            {
+                                                string itemText = item.Quantity + " " + myPackageType.EnglishName;
+                                                myPackagesInDetails += string.IsNullOrEmpty(myPackagesInDetails) ? itemText : " " + itemText;
+                                            }
+                                        }
+                                    }
+
+                                    break;
+                                }
+                        }
+
+                        invoicedataprovider.PackagesInDetails = myPackagesInDetails;
+                        invoicedataprovider.TotalContainers = myTotalContainers;
+                        invoicedataprovider.NumberofPackages = myNumberofPackages.ToString();
+                        invoicedataprovider.ContainersNumbersArray = myContainersNumbersText;
+                        invoicedataprovider.ContainersNumbersAndTypesArray = myContainersNumbersAndTypesText;
+                        invoicedataprovider.LCLContainersNumbersArray = myLCLContainersNumbersText;
+                    }
                 }
                 #endregion
 
