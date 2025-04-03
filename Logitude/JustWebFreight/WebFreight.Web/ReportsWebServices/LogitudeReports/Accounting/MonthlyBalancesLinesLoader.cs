@@ -101,7 +101,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 			 }
             List<MonthlyBalancesLine> monthlyBalancesLine=GetMonthlyBalancesReportByYearAndTenant(tenant, year);
             dataProvider.ChartOfAccountLine=new List<ChartOfAccountLine>();
-            
+			dataProvider.Year = year;
+
             for (int i = 0; i < chartOfAccountList?.Count(); i++)
             {
                 List<MonthlyBalancesLine> monthlyBalancesLineOfChartOfAccount= monthlyBalancesLine.Where(a=>a.ChartOfAccount == chartOfAccountList[i].Id).ToList();
@@ -184,7 +185,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     connection.Close();
                 }
                 var ac = new AccountBalanceByDateCodeService(null, tenant, results.Select(a => a.AccountId).FirstOrDefault(), results.Select(a => a.AccountId).AsQueryable<string>());
-                ac.CalculateBalance(true, null, new DateTime(year, 1, 1), false, false, true, false, false);
+                ac.CalculateBalance(true, "1", new DateTime(year, 1, 1), false, false, true, false, false);
 				foreach (var result in results)
 				{
 					var CurrencySumUntillMounth = ac.AccountBalance.verbose.CurrencySumUntillMounth.Where(A => A.AccountId == result.AccountId).FirstOrDefault();
