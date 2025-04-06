@@ -485,7 +485,7 @@ namespace WebFreight.Web.Helpers
 
                 HtmlTemplate.Append("<br />");
                 HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("Logitude is the first true online Freight Forwarding software solution developed specifically for the cloud. Working in the cloud means you can access Logitude anytime, from anywhere , whether you are in your office, at home, or traveling. By using Logitude you can be updated online on your shipments, statuses, documents and more");
+                HtmlTemplate.Append("Unifreight cloud is the first true online Freight Forwarding software solution developed specifically for the cloud. Working in the cloud means you can access Logitude anytime, from anywhere , whether you are in your office, at home, or traveling. By using Logitude you can be updated online on your shipments, statuses, documents and more");
                 HtmlTemplate.Append("<br /><br />");
 
                 HtmlTemplate.Append("<table style='width:100%;height:50px; background-color:#EEEEEE'><tbody ><tr><td><p style='text-align:center;font-size:20px;font-weight:bold;padding:5px'>  Get the app </p></td></tr><tr> <td align='center'>" + "<a  href='" + LogitudeSettings.IOSAppLink + "'> <img  width='120' height='40' src='cid:AppleStore' /></a>" + "&nbsp" + "<a  href='" + LogitudeSettings.AndroidAppLink + "'> <img  width='120' height='40' src='cid:GooglePlay' /></a></td></tr></tbody></table>");
@@ -629,7 +629,7 @@ namespace WebFreight.Web.Helpers
                 HtmlTemplate.Append("<b>Password: </b>" + password);
                 HtmlTemplate.Append("<br />");
                 HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("Logitude is the first true online Freight Forwarding software solution developed specifically for the cloud. Working in the cloud means you can access Logitude anytime, from anywhere , whether you are in your office, at home, or traveling. By using Logitude you can be updated on-line on your shipments, statuses, documents and more");
+                HtmlTemplate.Append("Unifreight cloud is the first true online Freight Forwarding software solution developed specifically for the cloud. Working in the cloud means you can access Logitude anytime, from anywhere , whether you are in your office, at home, or traveling. By using Logitude you can be updated on-line on your shipments, statuses, documents and more");
 
 
                 HtmlTemplate.Append("<br /><br />");
