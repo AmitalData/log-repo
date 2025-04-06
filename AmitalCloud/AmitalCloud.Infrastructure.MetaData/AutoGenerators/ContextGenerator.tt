@@ -64,7 +64,7 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 
 
 <#+ if (!isPartial){ #>
-        IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
+        //IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
          void DetectChanges();
 <#+} #>
 
@@ -545,7 +545,7 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 }
 #>
 <#+ if (!isPartial){ #>
-public IDbSet<UserPermittedBranch> UserPermittedBranches { get;set; }
+//public IDbSet<UserPermittedBranch> UserPermittedBranches { get;set; }
 
 public int Tenant => _tenant;
 <#+ } #>

@@ -35,11 +35,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_searchfields = entity.Searchfields;
 		_entityid1 = entity.Entityid1;
 		_objecttableid1 = entity.Objecttableid1;
-		_entityid2 = entity.Entityid2;
+		_objecttable = entity.ObjectTable !=null ? new ObjectTablePM(entity.ObjectTable) : null;
+			_entityid2 = entity.Entityid2;
 		_objecttableid2 = entity.Objecttableid2;
 		_objecttableid2objecttable = entity.Objecttableid2ObjectTable !=null ? new ObjectTablePM(entity.Objecttableid2ObjectTable) : null;
 			_userid = entity.Userid;
-		_sessionid = entity.Sessionid;
+		_user = entity.User !=null ? new UserPM(entity.User) : null;
+			_sessionid = entity.Sessionid;
    }
    #endregion Constructors
    #region Properties
@@ -157,6 +159,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTablePM _objecttable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM ObjectTable 
+		{ 
+		get { return _objecttable; } 
+		set { _objecttable = value; }
+		}
 	  private string _entityid2 ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -213,6 +223,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _user;
+		[Include]
+        [DataMember]
+        public virtual UserPM User 
+		{ 
+		get { return _user; } 
+		set { _user = value; }
+		}
 	  private string _sessionid ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

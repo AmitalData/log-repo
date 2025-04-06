@@ -16,16 +16,13 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-	[Table("AccountingPartners")]
     public class AccountingPartner : BaseEntity
 	{
 		
         [Key]
         [ForeignKey("Card")]
         [Column("Id")]
-        [DataType(DataType.Text)]
-        [StringLength(50)]
-        public string Id { get; set; }
+	    public string Id { get; set; }
 	      
         public virtual Card Card { get; set; }
         [Column("Tenant")]
@@ -39,7 +36,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string PrimaryContactPhone { get; set; }
         [Column("CreditLimit")]
 	    public double? CreditLimit { get; set; }
-        [Column("InsuredCreditlimit"),DataType(DataType.)]
+        [Column("InsuredCreditlimit")]
 	    public double? InsuredCreditlimit { get; set; }
     }
 }

@@ -16,7 +16,6 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-	[Table("PackageConnectedPackages")]
     public class PackageConnectedPackage : BaseEntity
 	{
 	        new const bool hasTenant = false;  

@@ -1,14 +1,12 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Application.Helpers;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Web.DataContracts;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
 using System.Linq;
-using System.Net.Http;
 using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers

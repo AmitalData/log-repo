@@ -29,7 +29,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public AgentPM(POCO.Agent entity) : base()
    {
 		_id = entity.Id;
-		_card = entity.Card !=null ? new CardPM(entity.Card) : null;
 		_tenant = entity.Tenant;
 		_cASSCode = entity.CASSCode;
 		_iATACode = entity.IATACode;
@@ -62,14 +61,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private CardPM _card;
-		[Include]
-        [DataMember]
-        public virtual CardPM Card 
-		{ 
-		get { return _card; } 
-		set { _card = value; }
-		}
 	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

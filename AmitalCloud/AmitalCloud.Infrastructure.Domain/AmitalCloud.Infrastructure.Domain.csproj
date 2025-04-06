@@ -277,6 +277,7 @@
     <Compile Include="EntityKeys\EntityCasualDataKeys.cs" />
     <Compile Include="EntityKeys\EntityChangeKeys.cs" />
     <Compile Include="EntityKeys\EntityDateKeys.cs" />
+    <Compile Include="EntityKeys\EntityLastActivityKeys.cs" />
     <Compile Include="EntityKeys\EntityLastActivityTypeKeys.cs" />
     <Compile Include="EntityKeys\EntityLastUpdateKeys.cs" />
     <Compile Include="EntityKeys\EntityStatusKeys.cs" />
@@ -687,6 +688,7 @@
     <Compile Include="EntityLists\Generated\EntityCasualDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EntityChangeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EntityDateList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\EntityLastActivityList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EntityLastActivityTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EntityLastUpdateList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EntityStatusList.Generated.cs" />
@@ -1096,6 +1098,7 @@
     <Compile Include="EntityMapping\EntityCasualDataMap.cs" />
     <Compile Include="EntityMapping\EntityChangeMap.cs" />
     <Compile Include="EntityMapping\EntityDateMap.cs" />
+    <Compile Include="EntityMapping\EntityLastActivityMap.cs" />
     <Compile Include="EntityMapping\EntityLastActivityTypeMap.cs" />
     <Compile Include="EntityMapping\EntityLastUpdateMap.cs" />
     <Compile Include="EntityMapping\EntityStatusMap.cs" />
@@ -1515,6 +1518,7 @@
     <Compile Include="EntityPMs\Generated\EntityCasualDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\EntityChangePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\EntityDatePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\EntityLastActivityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\EntityLastActivityTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\EntityLastUpdatePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\EntityStatusPM.Generated.cs" />
@@ -1932,6 +1936,7 @@
     <Compile Include="EntityPOCOs\EntityCasualData.cs" />
     <Compile Include="EntityPOCOs\EntityChange.cs" />
     <Compile Include="EntityPOCOs\EntityDate.cs" />
+    <Compile Include="EntityPOCOs\EntityLastActivity.cs" />
     <Compile Include="EntityPOCOs\EntityLastActivityType.cs" />
     <Compile Include="EntityPOCOs\EntityLastUpdate.cs" />
     <Compile Include="EntityPOCOs\EntityStatus.cs" />

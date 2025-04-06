@@ -177,11 +177,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
             this.Property(t => t.AvailableInDocumentTypes).HasColumnName("AvailableInDocumentTypes");
 
             this.Property(t => t.DBTableShortName).HasColumnName("DBTableShortName").HasMaxLength(30).IsUnicode(false);
-
-            // Relationships
-            this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);
-            this.HasOptional(t => t.MainTip).WithMany().HasForeignKey(d => d.MainTipCode);
-            this.HasOptional(t => t.HeaderScreen).WithMany().HasForeignKey(d => d.HeaderScreenId);
         }
     }
 }

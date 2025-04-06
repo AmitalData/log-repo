@@ -28,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
    {
         public EntityChangeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
         public EntityChangeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.EntityChange>(context),new EntityChangeDataMapping()) {}
-		public  EntityChangePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new EntityChangeKeys<string>(){ Id = id }, getComposition, getFromCache);
-	    protected override IEntityKeyFields<POCO.EntityChange,string> GetKeys(POCO.EntityChange entityPOCO) => new EntityChangeKeys<string>() { Id = entityPOCO.Id,  };
+		public  EntityChangePM GetSingle(string id, string followupautomationfailedxml, string setslaautomationfailedxml,bool getComposition, bool getFromCache) => base.GetSingle(new EntityChangeKeys<string>(){ Id = id, FollowUpAutomationFailedXml = followupautomationfailedxml, SetSLAAutomationFailedXml = setslaautomationfailedxml }, getComposition, getFromCache);
+	    protected override IEntityKeyFields<POCO.EntityChange,string> GetKeys(POCO.EntityChange entityPOCO) => new EntityChangeKeys<string>() { Id = entityPOCO.Id, FollowUpAutomationFailedXml = entityPOCO.FollowUpAutomationFailedXml, SetSLAAutomationFailedXml = entityPOCO.SetSLAAutomationFailedXml,  };
    }
 }

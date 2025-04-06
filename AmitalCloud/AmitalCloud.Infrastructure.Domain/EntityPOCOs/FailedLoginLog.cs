@@ -16,7 +16,6 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-	[Table("FailedLoginLogs")]
     public class FailedLoginLog : BaseEntity
 	{
 	        new const bool hasTenant = false;  

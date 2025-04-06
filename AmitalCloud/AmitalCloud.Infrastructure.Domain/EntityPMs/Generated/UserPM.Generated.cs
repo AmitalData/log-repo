@@ -35,7 +35,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isFreelancer = entity.IsFreelancer;
 		_isProductRestricted = entity.IsProductRestricted;
 		_freelancerId = entity.FreelancerId;
-		_departmentId = entity.DepartmentId;
+		_freelancer = entity.Freelancer !=null ? new CardPM(entity.Freelancer) : null;
+			_departmentId = entity.DepartmentId;
 		_branchId = entity.BranchId;
 		_isSalesman = entity.IsSalesman;
 		_businessUnitId = entity.BusinessUnitId;
@@ -51,7 +52,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_personalId = entity.PersonalId;
 		_notes = entity.Notes;
 		_searchFields = entity.SearchFields;
-		rolePMLists = entity.RolePMLists != null ? entity.RolePMLists.Select(a=>new RolePM(a)).ToList() : null;
+		//rolePMLists = entity.RolePMLists != null ? entity.RolePMLists.Select(a=>new RolePM(a)).ToList() : null;
 		_isTwoFactorAuthenticationEnabled = entity.IsTwoFactorAuthenticationEnabled;
 		_showLogBoxToolTip = entity.ShowLogBoxToolTip;
 		_showInboxToolTip = entity.ShowInboxToolTip;
@@ -180,6 +181,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _freelancer;
+		[Include]
+        [DataMember]
+        public virtual CardPM Freelancer 
+		{ 
+		get { return _freelancer; } 
+		set { _freelancer = value; }
+		}
 	  private string _departmentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

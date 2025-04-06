@@ -16,7 +16,6 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-	[Table("DigitalPortalLanguages")]
     public class DigitalPortalLanguage : BaseEntity
 	{
 	        new const bool hasTenant = false;  

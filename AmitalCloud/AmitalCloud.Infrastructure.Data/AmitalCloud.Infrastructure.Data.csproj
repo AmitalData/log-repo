@@ -403,6 +403,7 @@
     <Compile Include="EntityDataMappings\EntityCasualDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityChangeDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityDateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EntityLastActivityDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityLastActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityLastUpdateDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityStatusDataMapping.cs" />
@@ -610,6 +611,7 @@
     <Compile Include="EntityDataMappings\Generated\EntityCasualDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityChangeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityDateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EntityLastActivityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityLastActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityLastUpdateDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityStatusDataMapping.Generated.cs" />

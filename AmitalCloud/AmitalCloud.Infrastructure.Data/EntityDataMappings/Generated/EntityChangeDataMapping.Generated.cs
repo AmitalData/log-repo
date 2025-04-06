@@ -125,8 +125,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SetAutomationFailedXml)) { entityPOCO.SetAutomationFailedXml = entityPM.SetAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EmailAutomationFailedXml)) { entityPOCO.EmailAutomationFailedXml = entityPM.EmailAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExecutionTime)) { entityPOCO.ExecutionTime = entityPM.ExecutionTime;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FollowUpAutomationFailedXml)) { entityPOCO.FollowUpAutomationFailedXml = entityPM.FollowUpAutomationFailedXml;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SetSLAAutomationFailedXml)) { entityPOCO.SetSLAAutomationFailedXml = entityPM.SetSLAAutomationFailedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FollowUpAutomationSsucceedXml)) { entityPOCO.FollowUpAutomationSsucceedXml = entityPM.FollowUpAutomationSsucceedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SetSLAAutomationSsucceedXml)) { entityPOCO.SetSLAAutomationSsucceedXml = entityPM.SetSLAAutomationSsucceedXml;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueuedTaskAutomationFailedXml)) { entityPOCO.QueuedTaskAutomationFailedXml = entityPM.QueuedTaskAutomationFailedXml;}
@@ -374,14 +372,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.ExecutionTime = entityPM.ExecutionTime;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FollowUpAutomationFailedXml))
-            {
-                oldEntityPM.FollowUpAutomationFailedXml = entityPM.FollowUpAutomationFailedXml;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SetSLAAutomationFailedXml))
-            {
-                oldEntityPM.SetSLAAutomationFailedXml = entityPM.SetSLAAutomationFailedXml;
-            }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FollowUpAutomationSsucceedXml))
             {
                 oldEntityPM.FollowUpAutomationSsucceedXml = entityPM.FollowUpAutomationSsucceedXml;
@@ -511,14 +501,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.EmailAutomationFailedXml)) //T4 find type == nText 
             {
                 entityPM.EmailAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.EmailAutomationFailedXml));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.FollowUpAutomationFailedXml)) //T4 find type == nText 
-            {
-                entityPM.FollowUpAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FollowUpAutomationFailedXml));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.SetSLAAutomationFailedXml)) //T4 find type == nText 
-            {
-                entityPM.SetSLAAutomationFailedXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SetSLAAutomationFailedXml));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.FollowUpAutomationSsucceedXml)) //T4 find type == nText 
             {

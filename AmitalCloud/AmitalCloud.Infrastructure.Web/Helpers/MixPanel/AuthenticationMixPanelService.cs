@@ -1,10 +1,6 @@
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Queries;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Web.DataContracts;
-using System;
 
 namespace AmitalCloud.Infrastructure.Web.Helpers.MixPanel
 {
@@ -54,13 +50,9 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.MixPanel
             {
                 return workEnvironment;
             }
-
-            IGlobalContext globalContext = GlobalContext.GetContext();
-
-            GlobalTenantQueryService globalTenantQueryService = new GlobalTenantQueryService(globalContext);
+            GlobalTenantQueryService globalTenantQueryService = new GlobalTenantQueryService(tenant);
             string privateLabelId = globalTenantQueryService.GetSingle(tenant, false, false).PrivateLabelId;
-
-            TenantManagmentPrivateLabelsQueryService tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQueryService(globalContext);
+            TenantManagmentPrivateLabelsQueryService tenantManagmentPrivateLabelsQuery = new TenantManagmentPrivateLabelsQueryService(tenant);
             return tenantManagmentPrivateLabelsQuery.GetSingle(privateLabelId, false, false)?.PrivateLabelName ?? "";
         }
     }

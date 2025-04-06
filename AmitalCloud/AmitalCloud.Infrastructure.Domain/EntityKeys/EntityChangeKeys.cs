@@ -19,12 +19,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
         public override void Initialize(IEnumerable<KeyValuePair<string, string>> paramList)
         {
 			Id = (string)Convert.ChangeType((paramList.Single(t => t.Key == "Id").Value), typeof(string));
+			FollowUpAutomationFailedXml = (string)Convert.ChangeType((paramList.Single(t => t.Key == "FollowUpAutomationFailedXml").Value), typeof(string));
+			SetSLAAutomationFailedXml = (string)Convert.ChangeType((paramList.Single(t => t.Key == "SetSLAAutomationFailedXml").Value), typeof(string));
         }
    	  public string Id  { get; set; }
 	    			   
-	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
+	  public string FollowUpAutomationFailedXml  { get; set; }
+	    			   
+	  public string SetSLAAutomationFailedXml  { get; set; }
+	    			   
+	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString()+'_'+FollowUpAutomationFailedXml.ToString()+'_'+SetSLAAutomationFailedXml.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "EntityChangesPM";
-	  public override Expression<Func<EntityPOCOs.EntityChange, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<EntityPOCOs.EntityChange, bool>> Predicate => a => a.Id == Id && a.FollowUpAutomationFailedXml == FollowUpAutomationFailedXml && a.SetSLAAutomationFailedXml == SetSLAAutomationFailedXml;
    }
 }
 	 

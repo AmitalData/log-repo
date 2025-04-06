@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server.ApplicationServices;
-using System;
 
 namespace AmitalCloud.Infrastructure.Web.DataContracts
 {

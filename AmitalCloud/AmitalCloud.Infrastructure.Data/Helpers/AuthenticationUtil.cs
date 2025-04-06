@@ -531,8 +531,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             return exists;
         }
 
-        public static ContactPassword VerifyContactPassword(string email, string password, IGlobalContext globalContext, bool isHashPassword = false)
+        public static ContactPassword VerifyContactPassword(string email, string password,  bool isHashPassword = false)
         {
+            IGlobalContext globalContext = GlobalContext.GetContext();
             ContactPassword contactPassword = null;
             if (globalContext != null && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
             {

@@ -16,7 +16,6 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 {
-	[Table("BatchServicesLogs")]
     public class BatchServicesLog : BaseEntity
 	{
 	        new const bool hasTenant = false;  

@@ -36,7 +36,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.PackageCode).HasColumnName("PackageCode").IsRequired().HasMaxLength(5).IsUnicode(false);
 
-            this.Property(t => t.Notes).HasColumnName("Notes").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.Notes).HasColumnName("Notes").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsRequired().HasMaxLength(1000).IsUnicode(true);
         }

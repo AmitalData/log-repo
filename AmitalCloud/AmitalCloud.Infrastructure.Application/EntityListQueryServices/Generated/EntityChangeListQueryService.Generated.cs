@@ -19,10 +19,12 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
     {
 	    protected override System.Data.Entity.IDbSet<POCO.EntityChange> contextEntity => (context as IAmitalCloudContext).EntityChanges;
 		public EntityChangeListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
-        public EntityChangeList GetSingle(string id)
+        public EntityChangeList GetSingle(string id, string followupautomationfailedxml, string setslaautomationfailedxml)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;
 				paramList.Append(new KeyValuePair<string, string>("id", id.ToString()));
+		 		paramList.Append(new KeyValuePair<string, string>("followupautomationfailedxml", followupautomationfailedxml.ToString()));
+		 		paramList.Append(new KeyValuePair<string, string>("setslaautomationfailedxml", setslaautomationfailedxml.ToString()));
 		 			return GetSingle(paramList) ; 
 		}
     }

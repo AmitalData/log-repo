@@ -279,6 +279,7 @@
     <Compile Include="EntityListQueryServices\Generated\EntityCasualDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityChangeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityDateListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\EntityLastActivityListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityLastActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityLastUpdateListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityStatusListQueryService.Generated.cs" />
@@ -672,6 +673,7 @@
     <Compile Include="EntityQueryServices\Generated\EntityCasualDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityChangeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityDateQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EntityLastActivityQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityLastActivityTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityLastUpdateQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityStatusQueryService.Generated.cs" />
@@ -1072,6 +1074,7 @@
     <Compile Include="EntityUpdateServices\Generated\EntityChangeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityDateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityLastActivityTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\EntityLastActivityUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityLastUpdateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityStatusTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityStatusUpdateService.Generated.cs" />

@@ -30,17 +30,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 
-            this.Property(t => t.CdropCreatedbyuseremail).HasColumnName("CdropCreatedbyuseremail").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.CdropCreatedbyuseremail).HasColumnName("CdropCreatedbyuseremail").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.CdropApprovedbyuseremail).HasColumnName("CdropApprovedbyuseremail").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.CdropApprovedbyuseremail).HasColumnName("CdropApprovedbyuseremail").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.ApproveDate).HasColumnName("ApproveDate").IsRequired();
 
             this.Property(t => t.InactiveDate).HasColumnName("InactiveDate").IsRequired();
 
-            this.Property(t => t.CdropInactivebyuseremail).HasColumnName("CdropInactivebyuseremail").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.CdropInactivebyuseremail).HasColumnName("CdropInactivebyuseremail").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.CdropStatuscode).HasColumnName("CdropStatuscode").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.CdropStatuscode).HasColumnName("CdropStatuscode").IsRequired().HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.SharedKey).HasColumnName("SharedKey").IsRequired().HasMaxLength(40).IsUnicode(false);
 

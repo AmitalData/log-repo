@@ -61,6 +61,7 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 		 IDbSet<EntityCasualData> EntityCasualData { get; }
 		 IDbSet<EntityChange> EntityChanges { get; }
 		 IDbSet<EntityDate> EntityDates { get; }
+		 IDbSet<EntityLastActivity> EntityLastActivities { get; }
 		 IDbSet<EntityLastActivityType> EntityLastActivityTypes { get; }
 		 IDbSet<EntityLastUpdate> EntityLastUpdates { get; }
 		 IDbSet<FailedTokenLog> FailedTokenLogs { get; }

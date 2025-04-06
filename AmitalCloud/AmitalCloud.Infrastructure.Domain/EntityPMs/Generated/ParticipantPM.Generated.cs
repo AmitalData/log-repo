@@ -37,7 +37,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_registered = entity.Registered;
 		_registrationRequested = entity.RegistrationRequested;
 		_forwarderTenant = entity.ForwarderTenant;
-		_forwarder = entity.Forwarder !=null ? new TenantPM(entity.Forwarder) : null;
 		_isDirect = entity.IsDirect;
 		addresses = entity.Addresses != null ? entity.Addresses.Select(a=>new AddressPM(a)).ToList() : null;
 		_fWBNotifyContacts = entity.FWBNotifyContacts;
@@ -178,14 +177,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private TenantPM _forwarder;
-		[Include]
-        [DataMember]
-        public virtual TenantPM Forwarder 
-		{ 
-		get { return _forwarder; } 
-		set { _forwarder = value; }
-		}
 	  private bool _isDirect ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

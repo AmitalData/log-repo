@@ -71,6 +71,7 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<EntityCasualData> EntityCasualData  {  get; set; }
 	public IDbSet<EntityChange> EntityChanges  {  get; set; }
 	public IDbSet<EntityDate> EntityDates  {  get; set; }
+	public IDbSet<EntityLastActivity> EntityLastActivities  {  get; set; }
 	public IDbSet<EntityLastActivityType> EntityLastActivityTypes  {  get; set; }
 	public IDbSet<EntityLastUpdate> EntityLastUpdates  {  get; set; }
 	public IDbSet<FailedTokenLog> FailedTokenLogs  {  get; set; }

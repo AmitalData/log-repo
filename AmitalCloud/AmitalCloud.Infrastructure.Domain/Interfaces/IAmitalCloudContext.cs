@@ -281,4 +281,4 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
          void DetectChanges();
 
     }
-}
+}
