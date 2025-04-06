@@ -8,7 +8,7 @@
 CREATE OR ALTER PROCEDURE [dbo].[usp_FixFailedReconcileJournals]
     @Tenant INT
 AS
-BEGINs
+BEGIN
     -- מחיקת הטבלה הזמנית אם קיימת
     IF OBJECT_ID('tempdb..#TempJournalIds') IS NOT NULL
     BEGIN
@@ -27,9 +27,7 @@ BEGINs
     WHERE l.InReconcileProgress = 1 
       AND l.IsReconciled = 0
       AND j.StatusCode = '4' 
-      AND l.Tenant = @Tenant
-      AND j.Tenant = @Tenant
-      AND r.Tenant = @Tenant 
+      AND (@Tenant = 0 OR (l.Tenant = @Tenant AND j.Tenant = @Tenant AND r.Tenant = @Tenant)) 
     UNION ALL
     SELECT r.JournalId, l.Id
     FROM JournalExternalReconciles r
@@ -38,9 +36,7 @@ BEGINs
     WHERE l.InProgressExternalReconcile = 1 
       AND l.IsExternalReconcile = 0
       AND j.StatusCode = '4' 
-      AND l.Tenant = @Tenant 
-      AND j.Tenant = @Tenant
-      AND r.Tenant = @Tenant;
+      AND (@Tenant = 0 OR (l.Tenant = @Tenant AND j.Tenant = @Tenant AND r.Tenant = @Tenant))
  
     -- מחיקת רשומות מטבלת JournalReconciles
     DELETE FROM JournalReconciles 
@@ -60,10 +56,24 @@ BEGINs
     InProgressExternalReconcile = 0
 	WHERE Id IN (SELECT DISTINCT LedgerTransactionId FROM #TempJournalIds);
  
-    -- מחיקת הטבלה הזמנית
+ 
+IF @Tenant = 0
+BEGIN
+    UPDATE lt
+		SET 
+		    lt.InReconcileProgress = 0,
+		    lt.InProgressExternalReconcile = 0
+		FROM LedgerTransactions lt
+		INNER JOIN Tenants t ON lt.Tenant = t.Id
+		WHERE t.AccountingActivated = 1
+		      AND (lt.InReconcileProgress = 1 OR lt.InProgressExternalReconcile = 1)
+		      AND (lt.IsReconciled = 0 AND lt.IsExternalReconcile = 0)
+		      AND lt.ProcessStartDate <= DATEADD(MINUTE, -30, GETDATE());
+END
+
+	-- מחיקת הטבלה הזמנית
     DROP TABLE #TempJournalIds;
 END;
-
 
     ]]>
   </SqlScript>

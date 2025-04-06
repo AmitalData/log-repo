@@ -22,29 +22,17 @@ namespace CommunicationWorkerRole.Tasks
 
         public override void StartTask()
         {
-            bool failed = false;
-            try
-            {
-
-
-                _SB.Append(DateTime.Now.ToString()).AppendLine("ReconcileInProgressCleanupTask:Start");
-                var tenantsAccountingActivated = new List<int>();
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
-                {
-                    var tenantRepo = new TenantRepository(0);
-                    tenantsAccountingActivated = tenantRepo.All().Where(r => r.AccountingActivated).Select(r => r.Id).ToList();
-                    scope.Complete();
-                }
-                _SB.Append(DateTime.Now.ToString()).Append("tenantsAccountingActivated:").Append(String.Join(",", tenantsAccountingActivated)).AppendLine();
-
-                
+                   bool failed = false;
+           
                     try
                     {
+                        _SB.Append(DateTime.Now.ToString()).AppendLine("ReconcileInProgressCleanupTask:Start");
+
                         var reconcileInProgressCleanupBatch = new ReconcileInProgressCleanupBatch();
                         int tenant = this.Task != null ? this.Task.Tenant : 0;
-                         reconcileInProgressCleanupBatch.ResetInProgressTransactions(tenantsAccountingActivated);
+                         reconcileInProgressCleanupBatch.ResetInProgressTransactions();
                          string responseText = reconcileInProgressCleanupBatch.ResponseText();
-                        _SB.Append(DateTime.Now.ToString()).Append("responseText:").Append("").AppendLine();
+                        _SB.Append(DateTime.Now.ToString()).Append("responseText:").Append(responseText).AppendLine();
                     }
                     catch (Exception ex)
                     {
@@ -53,14 +41,13 @@ namespace CommunicationWorkerRole.Tasks
                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", $"ReconcileInProgressCleanupTask()", null);
                     }
 
-            }
-            finally
-            {
-                if (failed)
-                {
-                    throw new Exception(_SB.ToString());
-                }
-            }
+                    finally
+                    {
+                        if (failed)
+                        {
+                            throw new Exception(_SB.ToString());
+                        }
+                    }
          
         }
 

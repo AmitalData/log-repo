@@ -30,25 +30,12 @@ namespace Logitude.Accounting.BL.Utils
             return _StatusCode;
         }
 
-        public void ResetInProgressTransactions(List<int> tenantsAccountingActivated)
+        public void ResetInProgressTransactions()
         {
-
             IAccountingContext MyContext = AccountingContext.GetContext(0);
-            LedgerTransactionQueryService queryService = new LedgerTransactionQueryService(MyContext);
-            List<LedgerTransactionPM> ledgerTransactionInProgress = queryService.GetLedgerTransactionPMInProgress(tenantsAccountingActivated);
-
-            foreach (LedgerTransactionPM item in ledgerTransactionInProgress)
-            {        item.InProgressExternalReconcile = false;
-                    item.InReconcileProgress = false;
-                    item.ChangeSetOp = ChangeSetOperation.Update;
-             }
-            LedgerTransactionUpdateService service = new LedgerTransactionUpdateService(MyContext, new Dictionary<string, IContext>(), 0);
-
-            foreach (LedgerTransactionPM item in ledgerTransactionInProgress)
-            {
-                service.Update(item, true);
-            }
-            
+           JournalQueryService queryService = new JournalQueryService(MyContext);
+           queryService.FixFailedReconcileJournals();
+            _ResponseText = "ResetInProgressTransactions:Success";
         }
 
         

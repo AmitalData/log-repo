@@ -716,7 +716,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return repository.GetFailedJournalsInReconcileProcess(accountId, tenant);
         }
 
-        public void FixFailedReconcileJournals(int tenant)
+        public void FixFailedReconcileJournals(int tenant = 0)
         {
             repository.FixFailedReconcileJournals(tenant);
         }
