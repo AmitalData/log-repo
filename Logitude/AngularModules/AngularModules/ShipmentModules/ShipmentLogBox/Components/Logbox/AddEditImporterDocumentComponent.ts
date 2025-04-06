@@ -1,9 +1,9 @@
 declare var window: any;
-import {Component, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DocumentsFilingPM} from '../../../../Common/EntityPMs/DocumentsFilingPM';
 import {DocumentTypeList} from '../../../../Common/EntityLists/DocumentTypeList';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-import {UIProperties, UIProperty} from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties} from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {FormGroup, FormBuilder} from '@angular/forms';
@@ -15,7 +15,6 @@ import {DocumentsFilingPMService} from '../../../../Common/Services/StandardPMs/
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
-import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 import {GeneralEmailSender} from '../../../../Infrastructure/Helpers/GeneralEmailSender';
 import {AttachmentsList} from '../../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/AttachmentsList';
 import {DocumentTypeMetaDataExtendedService} from '../../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
@@ -29,7 +28,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {LogBoxSignatureClientService} from '../../../../Shipment/Services/Others/LogBoxSignatureClientService';
-declare var attachmentUploader, OpenFileUploader, ResultAsArray: any;
+declare var attachmentUploader;
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
 import {CommonDomainService} from'../../../../Common/Services/CommonDomainService'; 
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
@@ -502,19 +501,13 @@ export class AddEditImporterDocumentComponent implements OnInit {
         this.EntityPm.DocumentsFilingMetaDataValues = [];
         if (this.DocumentTypeMetaDataList) {
             this.DocumentTypeMetaDataList.forEach((item) => {
-                //if (item.DocumentsFilingMetaDataValuePM && !AppTool.IsNullOrEmpty(item.DocumentsFilingMetaDataValuePM.MetaDataValue)) {
                 this.EntityPm.DocumentsFilingMetaDataValues.push((<any>item).DocumentsFilingMetaDataValuePM);
-                //}
             });
         }
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        //if (errors == null)
-        //{
         this.ValidationErrorsList = [];
-        //}
 
-        //Validator.TryValidateObject(importerDocumentDataViewModel.EntityPM, new ValidationContext(importerDocumentDataViewModel.EntityPM, null, null), errors);
 
         if (AppTool.IsNullOrEmpty(this.EntityPm.Description)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Description"));

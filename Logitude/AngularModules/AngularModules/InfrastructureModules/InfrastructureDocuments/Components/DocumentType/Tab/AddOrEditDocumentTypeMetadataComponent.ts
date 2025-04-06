@@ -34,7 +34,6 @@ export class AddOrEditDocumentTypeMetadataComponent {
         this.documentsMetaDataTypeFilter.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number", false);
         if(existsMetadataIds?.length > 0)
             this.documentsMetaDataTypeFilter.addAdditionalFilter("Id", existsMetadataIds.join(','), null, null, "Exclude", false, false, false, "string", false, true);
-        // this.documentTypeFilter.addAdditionalFilter("IsDocIn", true, null, null, "string", false, false, false, "boolean", false);
         this.dataReady = true;
     }
 

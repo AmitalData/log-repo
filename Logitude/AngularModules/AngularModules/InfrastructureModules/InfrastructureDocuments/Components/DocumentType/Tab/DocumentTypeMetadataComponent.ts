@@ -6,16 +6,12 @@ import { DocumentsMetaDataTypePMService } from "Common/Services/StandardPMs/Docu
 import { DocumentTypeMetaDataPMService } from "Common/Services/StandardPMs/DocumentTypeMetaDataPMService";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
-import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
-import { LogtuideTableDataService } from "Infrastructure/Services/logtuide-table-data.service";
 import { ObservableCollection } from "Infrastructure/Utilities/ObservableCollection";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { FieldData } from "InfrastructureModules/InfrastructureOthers/AmitalAPI/amitalApiTypes";
-import { TextBoxField } from "InfrastructureModules/InfrastructureOthers/AmitalAPI/components/LogTexBoxFormComponent";
-import { fieldsError } from "InfrastructureModules/InfrastructureOthers/AmitalAPI/WindowsComponent/AmitalAPIAddWindowService";
 
 @Component({
     selector: 'document-type-metadata',
@@ -30,8 +26,6 @@ export class DocumentTypeMetadataComponent {
     schemaDataSource: ObservableCollection = new ObservableCollection([]);
     schemaTableReady: boolean = false;
     schemaColumns: (FieldData & { width: string })[] = [
-        // { name: 'Id', label: 'Id', width: '37' },
-        // { name: 'tenants', label: 'Tenants', width: '60' },
         { name: 'DocumentsMetaDataTypeCode', label: 'Code', width: '100' },
         { name: 'DocumentsMetaDataTypeEnglishName', label: 'English Name', width: '150' },
         { name: 'DocumentsMetaDataTypeLocalName', label: 'Local Name', width: '150' },
