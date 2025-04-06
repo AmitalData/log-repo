@@ -8,7 +8,9 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 {
     public class DateGroupFilterExpression : IQueryTreeFilterExpression
     {
-        public string[] ValidOperator = new string[] {
+
+        public HashSet<string> ValidOperator = new HashSet<string>
+        {
         "NotEqual",
         "Equal",
         "Previous",
@@ -16,27 +18,28 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         "Next",
         "Between",
         };
+
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
             QueryTreeFilterIterator iterator = CreateIterator(queryTreeFilterContext);
             if (!iterator.Any()) return;
             while (iterator.HasNext())
             {
-                Handel(iterator.Next());
+                Handle(iterator.Next());
             }
         }
-        private void Handel(QueryFilterItem filterItem)
+        private void Handle(QueryFilterItem filterItem)
         {
 
-            HandelDateGroupFilter(filterItem);
+            HandleDateGroupFilter(filterItem);
         }
 
-        private void HandelDateGroupFilter(QueryFilterItem queryFilterItem)
+        private void HandleDateGroupFilter(QueryFilterItem queryFilterItem)
         {
             if (!ValidOperator.Contains(queryFilterItem.Operator))
                 return;
-            QueryFilterItem queryFilterItemLessThan = CloneQueryFilterItem(queryFilterItem); ;
-            QueryFilterItem queryFilterItemGreaterThan = CloneQueryFilterItem(queryFilterItem); ;
+            QueryFilterItem queryFilterItemLessThan = CloneQueryFilterItem(queryFilterItem);
+            QueryFilterItem queryFilterItemGreaterThan = CloneQueryFilterItem(queryFilterItem);
             switch (queryFilterItem.Operator)
             {
                 case "NotEqual":
@@ -60,8 +63,8 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
             }
 
             ChangeToGroup(queryFilterItem);
-            queryFilterItem.QueryFilterItems.Add(queryFilterItemLessThan);
-            queryFilterItem.QueryFilterItems.Add(queryFilterItemGreaterThan);
+
+            queryFilterItem.QueryFilterItems.AddRange(new[] { queryFilterItemLessThan, queryFilterItemGreaterThan });
         }
 
         private void ChangeToGroup(QueryFilterItem queryFilterItem)
@@ -79,7 +82,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
             queryFilterItem.DateGroupCode = null;
             queryFilterItem.IsListFilter = false;
             queryFilterItem.IsAnalyticsMetadatas = false;
-            queryFilterItem.QueryFilterItems = new List<QueryFilterItem>(); ;
+            queryFilterItem.QueryFilterItems = new List<QueryFilterItem>();
         }
 
         private void HandelEqualOperator(QueryFilterItem queryFilterItem, QueryFilterItem queryFilterItemLessThan, QueryFilterItem queryFilterItemGreaterThan)
@@ -135,8 +138,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 
         private DateTime GetStartDateByDateGroupCode(QueryFilterItem queryFilterItem, int factor)
         {
-
-            switch (queryFilterItem.DateGroupCode)
+            switch (queryFilterItem.DateGroupCode?.Trim())
             {
                 case "Day":
                     return DateTime.Now.Date;
@@ -147,7 +149,8 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
                 case "Year":
                     return new DateTime(DateTime.Now.Year, 1, 1);
                 case "Quarter":
-                    return new DateTime(DateTime.Now.Year, Convert.ToInt32(Math.Ceiling(DateTime.Now.Month/3.0) * 3 - 2 ), 1);
+                    int quarterStartMonth = (int)(Math.Ceiling(DateTime.Now.Month / 3.0) * 3 - 2);
+                    return new DateTime(DateTime.Now.Year, quarterStartMonth, 1);
                 default:
                     return DateTime.Now.Date;
             }
@@ -200,7 +203,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         private QueryTreeFilterIterator CreateIterator(QueryTreeFilterContext queryTreeFilterContext)
         {
             var iterator = new QueryTreeFilterCollection(queryTreeFilterContext).CreateIterator();
-            var collection = iterator.collection.Where(d => !string.IsNullOrEmpty(d.DateGroupCode) ||
+            var collection = iterator.Collection.Where(d => !string.IsNullOrEmpty(d.DateGroupCode) ||
                 (d.IsAnalyticsMetadatas &&  d.Operator == "Between")).ToList();
             iterator.SetCollection(collection);
             return iterator;

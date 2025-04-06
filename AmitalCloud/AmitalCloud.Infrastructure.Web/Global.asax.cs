@@ -12,6 +12,7 @@ using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery;
+using AmitalCloud.Infrastructure.Data.Queries;
 
 namespace AmitalCloud.Infrastructure.WebAPI
 {
@@ -105,7 +106,7 @@ namespace AmitalCloud.Infrastructure.WebAPI
         private void FillAppSettings()
         {
             SettingQueryService settingQueryService = new SettingQueryService(0);
-            SettingPM setting = settingQueryService.GetSingle("1", false, true);
+            SettingPM setting = settingQueryService.GetSingle(SettingQuery.GetDefaultSettingId(), false, true);
             AmitalCloudSettings.Id = setting.Id;
             AmitalCloudSettings.ChampEnv = setting.ChampEnv;
             AmitalCloudSettings.ChampURL = setting.ChampURL;

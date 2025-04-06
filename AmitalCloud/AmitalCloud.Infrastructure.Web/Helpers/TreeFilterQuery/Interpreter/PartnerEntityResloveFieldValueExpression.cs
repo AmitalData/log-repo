@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 {
-    public class PartnerEntityResloveFieldValueExpression : IQueryTreeFilterExpression
+    public class PartnerEntityResolveFieldValueExpression : IQueryTreeFilterExpression
     {
         private QueryTreeFilterContext queryTreeFilterContext;
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
@@ -20,7 +20,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 
             while (queryTreeFilterIterator.HasNext())
             {
-                Handel(queryTreeFilterIterator.Next());
+                Handle(queryTreeFilterIterator.Next());
             }
         }
 
@@ -52,26 +52,26 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
             }
         }
 
-        private void Handel(QueryFilterItem queryFilterItem)
+        private void Handle(QueryFilterItem queryFilterItem)
         {
             var fieldName = GetFieldName(queryFilterItem);
 
             queryFilterItem.FieldValue = QueryTreeFilterFieldValueResolver.Get(queryTreeFilterContext.ParentEntity, fieldName, queryFilterItem.FieldDataType);
-            queryFilterItem.Operator = queryFilterItem.Operator?.Replace("Field","");
+            queryFilterItem.Operator = queryFilterItem.Operator?.Replace("Field", string.Empty);
         }
 
         private string GetFieldName(QueryFilterItem queryFilterItem)
         {
-            if (queryFilterItem.FieldValue == null) return "";
+            if (queryFilterItem.FieldValue == null) return string.Empty;
             var values = queryFilterItem.FieldValue.ToString().Split('.');
-            if (values.Length == 0) return null;
+            if (values.Length == 0) return string.Empty;
             return values[values.Length - 1];
         }
 
         private QueryTreeFilterIterator CreateIterator()
         {
             var iterator = new QueryTreeFilterCollection(queryTreeFilterContext).CreateIterator();
-            var collection = iterator.collection.Where(d => d.Operator.Contains("Field") && d.FieldValue != null && d.FieldValue.ToString().Split('.')[0] == queryTreeFilterContext.ParentObjectTableName).ToList();
+            var collection = iterator.Collection.Where(d => d.Operator?.Contains("Field") == true && d.FieldValue != null && d.FieldValue.ToString().Split('.')[0] == queryTreeFilterContext.ParentObjectTableName).ToList();
             iterator.SetCollection(collection);
             return iterator;
         }

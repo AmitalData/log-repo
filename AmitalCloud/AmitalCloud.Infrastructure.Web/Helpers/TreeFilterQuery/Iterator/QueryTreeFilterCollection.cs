@@ -6,34 +6,27 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 {
     public class QueryTreeFilterCollection
     {
-        public List<QueryFilterItem> QueryFilterItems = new List<QueryFilterItem>();
+        public List<QueryFilterItem> QueryFilterItems { get; } = new List<QueryFilterItem>();
         public QueryTreeFilterCollection(QueryTreeFilterContext queryTreeFilterContext)
         {
-            BuildCollection(queryTreeFilterContext.QueryFilterItem);
+            if (queryTreeFilterContext?.QueryFilterItem != null)
+            {
+                BuildCollection(queryTreeFilterContext.QueryFilterItem);
+            }
         }
 
         private void BuildCollection(QueryFilterItem queryFilterItem)
         {
-            if (queryFilterItem.QueryFilterItems == null || queryFilterItem.QueryFilterItems.Count() == 0)
+            if (queryFilterItem.QueryFilterItems == null || !queryFilterItem.QueryFilterItems.Any())
             {
                 QueryFilterItems.Add(queryFilterItem);
                 return;
             }
 
-            for (var i = 0; i < queryFilterItem.QueryFilterItems.Count; i++)
-            {
-                BuildCollection(queryFilterItem.QueryFilterItems[i]);
-            }
+            queryFilterItem.QueryFilterItems.ForEach(x => BuildCollection(x));
         }
 
-        public QueryTreeFilterIterator CreateIterator()
-        {
-            return new QueryTreeFilterIterator(QueryFilterItems);
-        }
-
-        public QueryTreeFilterIterator CreateIterator(List<QueryFilterItem> collections)
-        {
-            return new QueryTreeFilterIterator(collections);
-        }
+        public QueryTreeFilterIterator CreateIterator() => new QueryTreeFilterIterator(QueryFilterItems);
+        public QueryTreeFilterIterator CreateIterator(List<QueryFilterItem> collections) => new QueryTreeFilterIterator(collections);
     }
 }

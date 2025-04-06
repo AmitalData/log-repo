@@ -7,20 +7,20 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 {
     public class CustomFieldExpression : IQueryTreeFilterExpression
     {
-        CustomFieldClass customFilterClass = new CustomFieldClass();
+        private readonly CustomFieldClass customFilterClass = new CustomFieldClass();
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
             QueryTreeFilterIterator iterator = CreateIterator(queryTreeFilterContext);
             if (!iterator.Any()) return;
             while (iterator.HasNext())
             {
-                Handel(iterator.Next(), queryTreeFilterContext);
+                Handle(iterator.Next(), queryTreeFilterContext);
             }
         }
 
-        private void Handel(QueryFilterItem filterItem, QueryTreeFilterContext queryTreeFilterContext)
+        private void Handle(QueryFilterItem filterItem, QueryTreeFilterContext queryTreeFilterContext)
         {
-            if(!filterItem.IsCustomField || filterItem.Operator.Contains("Field")) return;
+            if(!filterItem.IsCustomField || (string.IsNullOrEmpty(filterItem.Operator) && filterItem.Operator.Contains("Field"))) return;
             filterItem.FieldValue = GetCustomFieldStringValue(GetFieldValue(filterItem.FieldDataType, filterItem.FieldValue), filterItem.FieldDataType);
             filterItem.FieldValue2 = GetCustomFieldStringValue(GetFieldValue(filterItem.FieldDataType, filterItem.FieldValue2), filterItem.FieldDataType);
         }
@@ -29,7 +29,8 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         {
             if (fieldValue == null) return null;
              string result = customFilterClass.SetFieldDataType(fieldDataType, fieldValue);
-            if (result != null && result.ToString().ToLower() == "false")
+
+            if (string.Equals(result, "false", StringComparison.OrdinalIgnoreCase))
                 result = null;
             return result;
         }
@@ -43,14 +44,14 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
             }
             catch
             {
-                return fieldValue != null ? fieldValue.ToString() : null;
+                return fieldValue?.ToString();
             }
         }
 
         private QueryTreeFilterIterator CreateIterator(QueryTreeFilterContext queryTreeFilterContext)
         {
             var iterator = new QueryTreeFilterCollection(queryTreeFilterContext).CreateIterator();
-            var collection = iterator.collection.Where(d => d.IsCustomField && !d.Operator.Contains("Field")).ToList();
+            var collection = iterator.Collection.Where(d => d.IsCustomField && (d.Operator == null || !d.Operator.Contains("Field"))).ToList();
             iterator.SetCollection(collection);
             return iterator;
         }

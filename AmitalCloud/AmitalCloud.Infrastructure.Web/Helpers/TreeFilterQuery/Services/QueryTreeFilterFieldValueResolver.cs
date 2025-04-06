@@ -1,6 +1,7 @@
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Reflection;
 
@@ -10,7 +11,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
     {
         public static object Get(object parentEntity, string fieldName, string fieldDataType)
         {
-            if (parentEntity.GetType().Name == "JObject")
+            if (parentEntity is JObject)
             {
                 return GetFromDynamicEntity(parentEntity, fieldName, fieldDataType);
             }
@@ -26,7 +27,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
             object value = dynamicParentEntity[fieldName];
             if (value == null) return null;
 
-            if (value.GetType().Name == "JObject")
+            if (value is JObject)
             {
                 return GetCustomFieldValue(value, fieldDataType);
             }
@@ -40,32 +41,34 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         {
             dynamic customFieldValue = value;
 
-            if (customFieldValue["value"] == null || customFieldValue["value"] == "") return "";
+            if (string.IsNullOrWhiteSpace(customFieldValue["value"]?.ToString()))
+                return string.Empty;
 
             CustomFieldClass customFilterClass = new CustomFieldClass();
             return customFilterClass.SetFieldDataType(fieldDataType, customFieldValue["value"]);
         }
         public static object GetFromEntity(object parentEntity, string fieldName, string fieldDataType)
         {
+            if (parentEntity == null || string.IsNullOrEmpty(fieldName)) return null;
+
             PropertyInfo propertyInfo = GetProperty(parentEntity, fieldName);
             if (propertyInfo == null) return "";
             object value = propertyInfo.GetValue(parentEntity, null);
 
             if (value == null) return "";
 
-            if (value.GetType() != typeof(CustomFieldClass))
+            if (!(value is CustomFieldClass))
             {
                 return value;
             }
 
-            CustomFieldClass customFilterClass = new CustomFieldClass();
-            return customFilterClass.SetFieldDataType(fieldDataType, (value as CustomFieldClass).Value);
+            return new CustomFieldClass().SetFieldDataType(fieldDataType, (value as CustomFieldClass).Value);
         }
 
-        private static PropertyInfo GetProperty(object entity, string FieldName)
+        private static PropertyInfo GetProperty(object entity, string fieldName)
         {
             Type type = entity.GetType();
-            return type.GetProperty(FieldName);
+            return type.GetProperty(fieldName);
         }
     }
 }

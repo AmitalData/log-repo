@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 {
-    public class QueryTreeFilterResetValueExpresion : IQueryTreeFilterExpression
+    public class QueryTreeFilterResetValueExpression : IQueryTreeFilterExpression
     {
         private List<ObjectField> mainObjectFields;
         private List<ObjectField> partnerObjectFields;
@@ -20,7 +20,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 
             var iterator = new QueryTreeFilterCollection(queryTreeFilterContext).CreateIterator();
             mainObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(queryTreeFilterContext.ObjectTableName, queryTreeFilterContext.Tenant);
-            if (iterator.collection.Where(d => d.FieldName.Split('.')[0] == queryTreeFilterContext.ParentObjectTableName).Any())
+            if (iterator.Collection.Any(d => d.FieldName.Split('.')[0] == queryTreeFilterContext.ParentObjectTableName))
             {
                 partnerObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(queryTreeFilterContext.ParentObjectTableName, queryTreeFilterContext.Tenant);
             }
@@ -40,14 +40,14 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
                 {
                     DataTypeCode = queryFilterItem.FieldDataType
                 };
-            };
+            }
             if (objectField == null) return;
 
             queryFilterItem.IsCustomField = objectField.IsCustom;
             queryFilterItem.FieldDataType = objectField.DataTypeCode;
             if (queryFilterItem.IsCustomField || (!string.IsNullOrEmpty(queryFilterItem.Operator) &&  queryFilterItem.Operator.Contains("Field"))) return;
-            if (queryFilterItem.FieldValue != null && string.IsNullOrEmpty(queryFilterItem.FieldValue.ToString())) queryFilterItem.FieldValue = null;
-            if (queryFilterItem.FieldValue2 != null && string.IsNullOrEmpty(queryFilterItem.FieldValue2.ToString())) queryFilterItem.FieldValue2 = null;
+            if (queryFilterItem.FieldValue != null && string.IsNullOrWhiteSpace(queryFilterItem.FieldValue.ToString())) queryFilterItem.FieldValue = null;
+            if (queryFilterItem.FieldValue2 != null && string.IsNullOrWhiteSpace(queryFilterItem.FieldValue2.ToString())) queryFilterItem.FieldValue2 = null;
 
             queryFilterItem.FieldValue = FieldValueResolver.GetFieldDataValue(objectField, GetFieldValue(objectField.DataTypeCode , queryFilterItem.FieldValue));
             queryFilterItem.FieldValue2 = FieldValueResolver.GetFieldDataValue(objectField, GetFieldValue(objectField.DataTypeCode, queryFilterItem.FieldValue2));
@@ -62,13 +62,13 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
             }
             catch
             {
-                return fieldValue != null ? fieldValue.ToString() : null;
+                return fieldValue?.ToString();
             }
         }
 
         private ObjectField GetObjectField(QueryFilterItem queryFilterItem)
         {
-            string tableName = queryFilterItem.FieldName.Split('.')[0] == queryTreeFilterContext.ParentObjectTableName ? queryTreeFilterContext.ParentObjectTableName : queryTreeFilterContext.ObjectTableName;
+            string tableName = !string.IsNullOrEmpty(queryFilterItem?.FieldName) && queryFilterItem.FieldName.Split('.')[0] == queryTreeFilterContext.ParentObjectTableName ? queryTreeFilterContext.ParentObjectTableName : queryTreeFilterContext.ObjectTableName;
             string fieldName = GetFieldName(queryFilterItem);
             if(tableName == queryTreeFilterContext.ParentObjectTableName)
             {
@@ -83,7 +83,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
             if (string.IsNullOrEmpty(queryFilterItem.FieldName)) return "";
             var fieldNames = queryFilterItem.FieldName.Split('.');
             if (fieldNames.Length == 0) return null;
-            return fieldNames[fieldNames.Length - 1];
+            return fieldNames.LastOrDefault();
         }
     }
 }

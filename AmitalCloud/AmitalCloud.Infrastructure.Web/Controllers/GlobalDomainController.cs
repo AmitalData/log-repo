@@ -1,5 +1,6 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Data;
+using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
@@ -43,7 +44,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
                 SettingQueryService settingQueryService = new SettingQueryService(tenant);
 
-                SettingPM mySetting = settingQueryService.GetSingle("1", false, true);
+                SettingPM mySetting = settingQueryService.GetSingle(SettingQuery.GetDefaultSettingId(), false, true);
 
                 JSGlobalSettings myResult = new JSGlobalSettings(mySetting);
                 if (AmitalCloudSettings.IsCostomsDeploy)

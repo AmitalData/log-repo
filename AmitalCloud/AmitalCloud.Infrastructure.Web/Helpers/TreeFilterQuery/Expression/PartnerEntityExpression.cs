@@ -1,12 +1,14 @@
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using System.Linq.Expressions;
 
 namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 {
-    public class PartnerEntityExpression
+    public class PartnerEntity
     {
-        public System.Linq.Expressions.Expression CreateExpression(System.Linq.Expressions.Expression expression, QueryFilterItem queryFilterItem)
+        public Expression CreateExpression(Expression expression, QueryFilterItem queryFilterItem)
         {
-            return ((bool)queryFilterItem.FieldValue) ? System.Linq.Expressions.Expression.Equal(expression, expression) : System.Linq.Expressions.Expression.NotEqual(expression, expression);
+            bool value = queryFilterItem.FieldValue is bool b && b;
+            return value ? Expression.Equal(expression, expression) : Expression.NotEqual(expression, expression);
         }
     }
 }

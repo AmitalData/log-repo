@@ -8,16 +8,13 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
     {
         public IQueryable<T> Apply<T>(IQueryable<T> queryable, TreeFilterQueryArgs treeFilterQueryArgs)
         {
-            if (string.IsNullOrEmpty(treeFilterQueryArgs.AdditionalTreeFilter) || string.IsNullOrWhiteSpace(treeFilterQueryArgs.AdditionalTreeFilter) || treeFilterQueryArgs.AdditionalTreeFilter == "null" || treeFilterQueryArgs.AdditionalTreeFilter == "undefined") return queryable;
+            if (string.IsNullOrWhiteSpace(treeFilterQueryArgs.AdditionalTreeFilter) || treeFilterQueryArgs.AdditionalTreeFilter == "null" || treeFilterQueryArgs.AdditionalTreeFilter == "undefined") return queryable;
             treeFilterQueryArgs.Type = typeof(T);
             QueryFilterItem queryFilterItem = new QueryTreeFilterInterpreter(treeFilterQueryArgs).Run();
-            if (IsQueryFilterEmtpy(queryFilterItem)) return queryable;
+            if (IsQueryFilterEmpty(queryFilterItem)) return queryable;
             return queryable.Where(queryFilterItem.GetTreeExpression<T>());
         }
 
-        private bool IsQueryFilterEmtpy(QueryFilterItem queryFilterItem)
-        {
-            return (queryFilterItem == null || queryFilterItem.QueryFilterItems == null || queryFilterItem.QueryFilterItems.Count() == 0);
-        }
+        private bool IsQueryFilterEmpty(QueryFilterItem queryFilterItem) => queryFilterItem?.QueryFilterItems == null || !queryFilterItem.QueryFilterItems.Any();
     }
 }

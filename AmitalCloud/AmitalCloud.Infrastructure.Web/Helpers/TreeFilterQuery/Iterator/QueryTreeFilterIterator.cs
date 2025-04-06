@@ -6,37 +6,25 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 {
     public class QueryTreeFilterIterator
     {
-        public List<QueryFilterItem> collection;
+        private List<QueryFilterItem> _collection;
         private int position = 0;
+
+        public List<QueryFilterItem> Collection { get; }
+
         public QueryTreeFilterIterator(List<QueryFilterItem> collection)
         {
-            this.collection = collection;
+            this._collection = collection;
         }
 
         public void SetCollection(List<QueryFilterItem> collection)
         {
-            this.collection = collection;
+            this._collection = collection;
         }
 
-        public bool Any()
-        {
-            return collection.Any();
-        }
+        public bool Any() => _collection?.Any() == true;
 
-        public QueryFilterItem Next()
-        {
-            QueryFilterItem treeFilter = collection[position];
-            position += 1;
-            return treeFilter;
-        }
+        public QueryFilterItem Next() => _collection[position++];
 
-        public bool HasNext()
-        {
-            if (position >= collection.Count ||
-                collection[position] == null)
-                return false;
-            else
-                return true;
-        }
+        public bool HasNext() => position < _collection.Count && _collection[position] != null;
     }
 }

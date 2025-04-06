@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Linq.Expressions;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using System.ComponentModel;
 
 namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 {
@@ -10,8 +11,8 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
     {
         public static readonly Type StringType = typeof(string);
         private static readonly Type ExpType = typeof(Expression);
-        private static readonly MethodInfo AndExpMethod = ExpType.GetRuntimeMethod("AndAlso", new[] { ExpType, ExpType });
-        private static readonly MethodInfo OrExpMethod = ExpType.GetRuntimeMethod("OrElse", new[] { ExpType, ExpType });
+        private static readonly MethodInfo AndExpMethod = ExpType.GetRuntimeMethod(nameof(Expression.AndAlso), new[] { ExpType, ExpType });
+        private static readonly MethodInfo OrExpMethod = ExpType.GetRuntimeMethod(nameof(Expression.OrElse), new[] { ExpType, ExpType });
         public static readonly MethodInfo ContainsMethod = StringType.GetRuntimeMethod("Contains", new[] { StringType });
         public static readonly MethodInfo StartsMethod = StringType.GetRuntimeMethod("StartsWith", new[] { StringType });
         public static readonly MethodInfo EndsMethod = StringType.GetRuntimeMethod("EndsWith", new[] { StringType });
@@ -67,7 +68,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
             if (filter.FilterType == "None" || string.IsNullOrEmpty(filter.FilterType) || !string.IsNullOrEmpty(filter.Operator))
                 return GetExpressionForField(expression, filter, suffix + "0");
 
-            if (!(filter.QueryFilterItems?.Any() ?? false))
+            if (filter.QueryFilterItems == null || !filter.QueryFilterItems.Any())
                 throw new ArgumentException("Filter operands with operator type different from TreeFilterType.None cannot be empty.");
 
             var i = 0;
@@ -93,7 +94,9 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 
         private static Expression GenerateExpressionOneField(Expression expression, QueryFilterItem item)
         {
-            switch (item.Operator.Replace("Field", ""))
+            var op = item.Operator?.Replace("Field", "")?.Trim();
+
+            switch (op)
             {
                 case "LessThan": return new LessThan().CreateExpression(expression, item);
                 case "LessThanOrEqual": return new LessThanOrEqual().CreateExpression(expression, item);
@@ -109,14 +112,13 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
                 case "IsNull": return new IsEmpty().CreateExpression(expression, item);
                 case "IsNotEmpty":
                 case "IsNotNull": return new IsNotEmpty().CreateExpression(expression, item);
-                case "PartnerEntityExpression": return new PartnerEntityExpression().CreateExpression(expression, item);
+                case "PartnerEntity": return new PartnerEntity().CreateExpression(expression, item);
                 case "StartsWith": return new StartsWith().CreateExpression(expression, item);
                 case "EndsWith": return new EndsWith().CreateExpression(expression, item);
                 case "InList": return new InList().CreateExpression(expression, item);
-                case "InListExact": return new InList().CreateExpression(expression, item);
+                case "InListExact": return new InListExact().CreateExpression(expression, item);
                 case "Exclude": return new Exclude().CreateExpression(expression, item);
-                case "InListInt": return new Exclude().CreateExpression(expression, item);
-                //case "Between": return new Between().CreateExpression(expression, item);
+                case "InListInt": return new InListInt().CreateExpression(expression, item);
                 default: throw new InvalidOperationException("Operator not supported.");
             }
 
@@ -125,27 +127,21 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         public static object TryCastFieldValueType(object value, Type type)
         {
             if (value == null || (!AvailableCastTypes.Contains(type) && !type.GetTypeInfo().IsEnum))
+                throw new InvalidCastException($"Cannot convert value to type {type.Name}."); 
+            if (value.GetType() == type) return value; 
+
+            var underlyingType = Nullable.GetUnderlyingType(type) ?? type;
+            try
+            {
+                if (underlyingType.GetTypeInfo().IsEnum) { return Enum.Parse(underlyingType, value.ToString()); }
+                var converter = TypeDescriptor.GetConverter(underlyingType); 
+                if (converter != null && converter.IsValid(value)) { return converter.ConvertFromInvariantString(value.ToString()); }
+                throw new InvalidCastException($"Cannot convert value to type {type.Name }.");
+            }
+            catch
+            {
                 throw new InvalidCastException($"Cannot convert value to type {type.Name}.");
-
-            if (value.GetType() == type)
-                return value;
-
-            if (type.GetTypeInfo().BaseType == typeof(Enum))
-                return Enum.Parse(type, Convert.ToString(value));
-
-
-            type = (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) ? type.GenericTypeArguments[0] : type;
-            object res = (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) ? Activator.CreateInstance(typeof(Nullable<>).MakeGenericType(type)) : Activator.CreateInstance(type);
-
-
-            var argTypes = new[] { StringType, type.MakeByRefType() };
-            object[] args = { Convert.ToString(value), res };
-            var tryParse = type.GetRuntimeMethod("TryParse", argTypes);
-
-            if (!(bool)(tryParse?.Invoke(null, args) ?? false))
-                throw new InvalidCastException($"Cannot convert value to type {type.Name}.");
-
-            return args[1];
+            }
         }
 
         public static Expression ToStaticParameterExpressionOfType(object obj, Type type)
@@ -158,17 +154,17 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         public static PropertyInfo GetDeclaringProperty(Expression expression, string name)
         {
             var type = expression.Type;
-            var propertiy = type.GetRuntimeProperties().SingleOrDefault(d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            var property = type.GetRuntimeProperties().SingleOrDefault(d => d.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            if (property == null) throw new InvalidOperationException(string.Format("Property '{0}' not found on type '{1}'", name, type));
 
             if (name == "PartnerEntityField") return type.GetRuntimeProperties().FirstOrDefault();
 
-            if (propertiy == null) throw new InvalidOperationException(string.Format("Property '{0}' not found on type '{1}'", name, type));
-
-            if (type != propertiy.DeclaringType)
+            if (type != property.DeclaringType)
             {
-                propertiy = propertiy.DeclaringType.GetRuntimeProperties().SingleOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                property = property.DeclaringType.GetRuntimeProperties().SingleOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
             }
-            return propertiy;
+            return property;
         }
     }
 }

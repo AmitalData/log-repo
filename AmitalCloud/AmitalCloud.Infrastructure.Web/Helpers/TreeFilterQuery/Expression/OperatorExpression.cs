@@ -10,11 +10,11 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
     {
         public Expression LeftExpression { get; set; }
         public Expression RightExpression { get; set; }
-        public Expression Expression { get; set; }
+        public Expression BaseExpression { get; set; }
         public QueryFilterItem QueryFilterItem { get; set; }
         public Expression CreateExpression(Expression expression, QueryFilterItem queryFilterItem)
         {
-            Expression = expression;
+            BaseExpression = expression;
             QueryFilterItem = queryFilterItem;
             if (!queryFilterItem.IsCustomField) SetLeftRightExpressions();
             else SetCustomFieldLeftRightExpressions();
@@ -23,7 +23,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 
         private void SetLeftRightExpressions()
         {
-            LeftExpression = Expression.Property(Expression, WhereExpression.GetDeclaringProperty(Expression, QueryFilterItem.FieldName));
+            LeftExpression = Expression.Property(BaseExpression, WhereExpression.GetDeclaringProperty(BaseExpression, QueryFilterItem.FieldName));
             RightExpression = GetRightExpression();
         }
         private void SetCustomFieldLeftRightExpressions()
@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
             if (QueryFilterItem.Operator == "IsEmpty" || QueryFilterItem.Operator == "IsNotEmpty")
             {
                 QueryFilterItem.FieldValue = null;
-                LeftExpression = Expression.Property(Expression, WhereExpression.GetDeclaringProperty(Expression, QueryFilterItem.FieldName));
+                LeftExpression = Expression.Property(BaseExpression, WhereExpression.GetDeclaringProperty(BaseExpression, QueryFilterItem.FieldName));
                 RightExpression = GetRightExpression();
             }
             else
@@ -42,11 +42,11 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 
                 if (IsValueTypeField())
                 {
-                    LeftExpression = Expression.Call(Expression.PropertyOrField(Expression, QueryFilterItem.FieldName), methodInfo, Expression.PropertyOrField(Expression, GetFieldName(QueryFilterItem.FieldValue)));
+                    LeftExpression = Expression.Call(Expression.PropertyOrField(BaseExpression, QueryFilterItem.FieldName), methodInfo, Expression.PropertyOrField(BaseExpression, GetFieldName(QueryFilterItem.FieldValue)));
                 }
                 else
                 {
-                    LeftExpression = Expression.Call(Expression.PropertyOrField(Expression, QueryFilterItem.FieldName), methodInfo, Expression.Constant(QueryFilterItem.FieldValue));
+                    LeftExpression = Expression.Call(Expression.PropertyOrField(BaseExpression, QueryFilterItem.FieldName), methodInfo, Expression.Constant(QueryFilterItem.FieldValue));
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 
             if (IsValueTypeField())
             {
-                return Expression.Property(Expression, WhereExpression.GetDeclaringProperty(Expression, GetFieldName(QueryFilterItem.FieldValue)));
+                return Expression.Property(BaseExpression, WhereExpression.GetDeclaringProperty(BaseExpression, GetFieldName(QueryFilterItem.FieldValue)));
             }
             return WhereExpression.ToStaticParameterExpressionOfType(WhereExpression.TryCastFieldValueType(QueryFilterItem.FieldValue, LeftExpression.Type), LeftExpression.Type);
         }
@@ -68,10 +68,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
             var names = name.ToString().Split('.');
             return names[names.Length - 1];
         }
-        public bool IsValueTypeField()
-        {
-            return QueryFilterItem.Operator.ToString().Contains("Field");
-        }
+        public bool IsValueTypeField() => QueryFilterItem.Operator?.Contains("Field") == true;
     }
     public class GreaterThan : OperatorExpression
     {
@@ -118,7 +115,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
                 return Expression.Call(LeftExpression, WhereExpression.ContainsMethod, RightExpression);
             }
 
-            MemberExpression field = Expression.PropertyOrField(Expression, QueryFilterItem.FieldName);
+            MemberExpression field = Expression.PropertyOrField(BaseExpression, QueryFilterItem.FieldName);
             return Expression.Call(field, WhereExpression.ContainsMethod, Expression.Constant(QueryFilterItem.FieldValue, WhereExpression.StringType));
 
         }
@@ -133,7 +130,7 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
                 return Expression.Not(Expression.Call(LeftExpression, WhereExpression.ContainsMethod, RightExpression));
             }
 
-            MemberExpression field = Expression.PropertyOrField(Expression, QueryFilterItem.FieldName);
+            MemberExpression field = Expression.PropertyOrField(BaseExpression, QueryFilterItem.FieldName);
             return Expression.Not(Expression.Call(field, WhereExpression.ContainsMethod, Expression.Constant(QueryFilterItem.FieldValue, WhereExpression.StringType)));
         }
     }
@@ -151,16 +148,16 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
     {
         public override Expression Build()
         {
-            MemberExpression field = Expression.PropertyOrField(Expression, QueryFilterItem.FieldName);
-            return Expression.Call(field, WhereExpression.StartsMethod, Expression.Constant(QueryFilterItem.FieldValue));
+            MemberExpression field = Expression.PropertyOrField(BaseExpression, QueryFilterItem.FieldName);
+            return Expression.Call(field, WhereExpression.StartsMethod, Expression.Constant(QueryFilterItem.FieldValue ?? ""));
         }
     }
     public class EndsWith : OperatorExpression
     {
         public override Expression Build()
         {
-            MemberExpression field = Expression.PropertyOrField(Expression, QueryFilterItem.FieldName);
-            return Expression.Call(field, WhereExpression.EndsMethod, Expression.Constant(QueryFilterItem.FieldValue));
+            MemberExpression field = Expression.PropertyOrField(BaseExpression, QueryFilterItem.FieldName);
+            return Expression.Call(field, WhereExpression.EndsMethod, Expression.Constant(QueryFilterItem.FieldValue ?? ""));
         }
     }
     public class InList : OperatorExpression
@@ -168,16 +165,20 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         public override Expression Build()
         {
             Expression expression = null;
-            foreach (string value in QueryFilterItem.FieldValue.ToString().Split(','))
+            var values = QueryFilterItem.FieldValue?.ToString()?.Split(',') ?? Array.Empty<string>();
+            foreach (string value in values)
             {
-                expression = AddValueExpression(expression, value);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    expression = AddValueExpression(expression, value);
+                }
             }
             return expression;
         }
 
         private Expression AddValueExpression(Expression expression, string value)
         {
-            MethodCallExpression contains = Expression.Call(Expression.PropertyOrField(Expression, QueryFilterItem.FieldName), WhereExpression.ContainsMethod, Expression.Constant(value));
+            MethodCallExpression contains = Expression.Call(Expression.PropertyOrField(BaseExpression, QueryFilterItem.FieldName), WhereExpression.ContainsMethod, Expression.Constant(value));
             if (expression == null) return contains;
             return Expression.Or(expression, contains); ;
         }
@@ -188,13 +189,15 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         public override Expression Build()
         {
             Expression expression = null;
-            foreach (string value in QueryFilterItem.FieldValue.ToString().Split(','))
+            var values = QueryFilterItem.FieldValue?.ToString()?.Split(',') ?? Array.Empty<string>();
+            foreach (string value in values)
             {
-                expression = AddValueExpression(expression, value);
-
+                if (!string.IsNullOrEmpty(value))
+                {
+                    expression = AddValueExpression(expression, value);
+                }
             }
             return expression;
-
         }
 
         private Expression AddValueExpression(Expression expression, string value)
@@ -210,9 +213,13 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         public override Expression Build()
         {
             Expression expression = null;
-            foreach (string value in QueryFilterItem.FieldValue.ToString().Split(new string[] { ",", "%2C" }, StringSplitOptions.None))
+            var values = QueryFilterItem.FieldValue?.ToString()?.Split(new string[] { ",", "%2C" }, StringSplitOptions.None) ?? Array.Empty<string>(); ;
+            foreach (string value in values)
             {
-                expression = AddValueExpression(expression, value);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    expression = AddValueExpression(expression, value);
+                }
             }
             return expression;
         }
@@ -232,8 +239,8 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         {
             List<int> listOfInts = new List<int>();
             Expression expression = null;
-
-            foreach (string value in QueryFilterItem.FieldValue.ToString().Split(','))
+            var values = QueryFilterItem.FieldValue?.ToString()?.Split(',') ?? Array.Empty<string>();
+            foreach (string value in values)
             {
                 listOfInts.Add(Convert.ToInt32(value));
             }

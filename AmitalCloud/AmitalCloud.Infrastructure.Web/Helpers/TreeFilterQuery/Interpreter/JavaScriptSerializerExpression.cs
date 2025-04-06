@@ -1,5 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Domain.DataContracts;
-using System.Web.Script.Serialization;
+using System.Text.Json;
 
 namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 {
@@ -7,8 +7,14 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
     {
         public void Interpret(QueryTreeFilterContext queryTreeFilterContext)
         {
-            JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
-            queryTreeFilterContext.QueryFilterItem = javaScriptSerializer.Deserialize<QueryFilterItem>(queryTreeFilterContext.AdditionalTreeFilter);
+            if (!string.IsNullOrWhiteSpace(queryTreeFilterContext?.AdditionalTreeFilter))
+            {
+                queryTreeFilterContext.QueryFilterItem = JsonSerializer.Deserialize<QueryFilterItem>(queryTreeFilterContext.AdditionalTreeFilter);
+            }
+            else
+            {
+                queryTreeFilterContext.QueryFilterItem = null;
+            }
         }
     }
 }

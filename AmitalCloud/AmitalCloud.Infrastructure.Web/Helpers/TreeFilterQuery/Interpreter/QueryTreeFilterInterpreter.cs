@@ -5,15 +5,15 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
 {
     public class QueryTreeFilterInterpreter
     {
-        TreeFilterQueryArgs treeFilterQueryArgs;
+        private readonly TreeFilterQueryArgs _treeFilterQueryArgs;
         public QueryTreeFilterInterpreter(TreeFilterQueryArgs treeFilterQueryArgs)
         {
-            this.treeFilterQueryArgs = treeFilterQueryArgs;
+            this._treeFilterQueryArgs = treeFilterQueryArgs;
         }
 
         public QueryFilterItem Run()
         {
-            QueryTreeFilterContext queryTreeFilterContext = this.BuildContext(treeFilterQueryArgs);
+            QueryTreeFilterContext queryTreeFilterContext = this.BuildContext(_treeFilterQueryArgs);
             List<IQueryTreeFilterExpression> expressions = BuildExpressions();
             foreach (IQueryTreeFilterExpression expression in expressions)
             {
@@ -27,13 +27,12 @@ namespace AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery
         {
             List<IQueryTreeFilterExpression> expressions = new List<IQueryTreeFilterExpression>();
             expressions.Add(new JavaScriptSerializerExpression());
-            expressions.Add(new QueryTreeFilterValidateExpresion());
-            expressions.Add(new QueryTreeFilterResetValueExpresion());
+            expressions.Add(new QueryTreeFilterValidateExpression());
+            expressions.Add(new QueryTreeFilterResetValueExpression());
             expressions.Add(new CustomFieldExpression());
             expressions.Add(new DateGroupFilterExpression());
-            expressions.Add(new PartnerEntityResloveFieldValueExpression());
+            expressions.Add(new PartnerEntityResolveFieldValueExpression());
             expressions.Add(new PartnerEntityQueryFilterExpression());
-            expressions.Add(new QueryTreeFilterValidateExpresion());
             return expressions;
         }
 
