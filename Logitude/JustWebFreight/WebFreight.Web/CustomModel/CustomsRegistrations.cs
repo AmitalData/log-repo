@@ -45,8 +45,10 @@ namespace WebFreight.Web.CustomModel
             ContainerAccessor.Container.RegisterType<ICustomsDeleteCustomRequestSheet, DeleteCustomRequestSheet>("DeleteCustomRequestSheet", new InjectionFactory(c => new DeleteCustomRequestSheet()));
             ContainerAccessor.Container.RegisterType<ICustomsDeleteQueMessMoreDetails, DeleteQueMessMoreDetails>("DeleteQueMessMoreDetails", new InjectionFactory(c => new DeleteQueMessMoreDetails()));
             ContainerAccessor.Container.RegisterType<IPOAExpireReminder, POAExpireReminder>("POAExpireReminder", new InjectionFactory(c => new POAExpireReminder()));
-            
-            
+            ContainerAccessor.Container.RegisterType<ICustomsUpdateClosedTables, UpdateClosedTables>("UpdateClosedTables", new InjectionFactory(c => new UpdateClosedTables()));
+
+
+
 
             ContainerAccessor.Container.RegisterType<IUpdateOpenDeclarationInCourierMasterService, UpdateOpenDeclarationInCourierMasterService>("UpdateOpenDeclarationInCourierMasterService", new InjectionFactory(c => new UpdateOpenDeclarationInCourierMasterService()));
 

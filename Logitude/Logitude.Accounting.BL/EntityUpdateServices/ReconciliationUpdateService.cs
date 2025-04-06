@@ -207,7 +207,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                         {
                                             throw new ApplicationException("A/P Invoice " + lt.SourceNumber + " cannot compute status");
                                         }
-                                        if (newStatus != aPInvoicePM.StatusCode && !String.IsNullOrEmpty(newStatus))
+                                        if (aPInvoicePM.StatusCode != "VD" && newStatus != aPInvoicePM.StatusCode && !String.IsNullOrEmpty(newStatus))
                                         {
                                             DateTime stopLogAt = new DateTime(2023, 06, 01);
                                             string text = "ReconciliationUpdateService.OnUpdating(*1*) Set APInvoicePM.StatusCode: " + aPInvoicePM.Id + " old : " + aPInvoicePM.StatusCode + " new : " + newStatus;
@@ -479,7 +479,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             finally
             {
-                base.UpdateComposition(entityPM);
+                base.UpdateComposition(entityPM);                
             }
 
         }
@@ -533,36 +533,68 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     ledgerTransactionPM.IsReconciled = !reconciliationLine.IsPartial;
                 }
-                if (FeatureToggleHelper.HasFeatureToggle("ILO", ledgerTransactionPM.Tenant) && ledgerTransactionPM.SourceTypeCode == "4")
-                {
-                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(ledgerTransactionPM.Tenant);
-                    var invoiceRepository = new APInvoiceRepository(invoiceContext);
-                    APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(invoiceRepository);
-                    APInvoicePM invoice = aPInvoiceQuery.GetSinglePM(ledgerTransactionPM.SourceId, ledgerTransactionPM.Tenant);
-                    GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
-                    GLAccountPM account = query.GetSingle(entityPM.AccountId, false, false);
-                    var transactionAmount = account.ReconcileMethodCode == ReconcileMethodValues.LocalCurrency ? ledgerTransactionPM.LocalAmountCredit : ledgerTransactionPM.ForeignAmountCredit;
-                    if (ledgerTransactionPM.OpenAmount == 0)
-                    {
-                        invoice.IsClosed = true;
-                        invoice.StatusCode = "PD";
-                    }
-                    else if (Math.Abs(ledgerTransactionPM.OpenAmount) < transactionAmount)
-                    {
-                        invoice.IsClosed = false;
-                        invoice.StatusCode = "PP";
-                    }
-                    else
-                    {
-                        invoice.IsClosed = false;
-                        invoice.StatusCode = "AD";
-                    }
-                    SecurityUtility.IsWorkerRoleCall = true;
-                    APInvoiceService aPInvoiceService = new APInvoiceService(invoiceContext, ledgerTransactionPM.Tenant);
-                    aPInvoiceService.Update(invoice, true);
-                }
-                //ledgerTransactionPM.InReconcileProgress = true;
+               
             }
+            foreach (var ledgerTransactionGroup in LedgerTransactionPMsUpdated
+                                .Where(x => x.SourceTypeCode == "4" || x.SourceTypeCode == "2")
+                                .GroupBy(x => new { x.AccountId, x.JournalId }))
+            {
+                var ledgerTransactionPM = ledgerTransactionGroup.First();
+                bool isAPInvoice = ledgerTransactionPM.SourceTypeCode == "4";
+
+                IInvoiceContext invoiceContext = InvoiceContext.GetContext(ledgerTransactionPM.Tenant);
+                dynamic invoiceQuery = null;
+                dynamic invoiceService = null;
+                if (isAPInvoice)
+                {
+                    var invoiceRepository = new APInvoiceRepository(invoiceContext);
+                    invoiceQuery = new APInvoiceQuery(invoiceRepository);
+                    invoiceService = new APInvoiceService(invoiceContext, ledgerTransactionPM.Tenant);
+                }
+                else
+                {
+                    var invoiceRepository = new ARInvoiceRepository(invoiceContext);
+                    invoiceQuery = new ARInvoiceQuery(invoiceRepository);
+                    invoiceService = new ARInvoiceService(invoiceContext, ledgerTransactionPM.Tenant);
+                }
+
+                 var invoice = invoiceQuery.GetSinglePM(ledgerTransactionPM.SourceId, ledgerTransactionPM.Tenant);
+                string relevantGLAccountId = isAPInvoice ? invoice.VendorGLAccountId : invoice.BillToGLAccountId;
+
+               
+                var updatedLedgerTransactions = ledgerTransactionGroup.Where(t => t.AccountId == relevantGLAccountId).ToList();
+
+                var ledgerTransactionQueryService = new LedgerTransactionQueryService(ledgerTransactionPM.Tenant);
+                var dbTransactions = ledgerTransactionQueryService.GetByJournalAndAccountId(
+                    ledgerTransactionPM.JournalId, relevantGLAccountId, ledgerTransactionPM.Tenant);
+
+                var transactionIds = updatedLedgerTransactions.Select(t => t.Id).ToList();
+                var unmatchedTransactions = dbTransactions.Where(x => !transactionIds.Contains(x.Id)).ToList();
+
+                if (!unmatchedTransactions.Any() && !updatedLedgerTransactions.Any())
+                    continue;
+
+                decimal totalOpenAmount = unmatchedTransactions.Sum(x => x.OpenAmount) + updatedLedgerTransactions.Sum(x => x.OpenAmount);
+
+                var glAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
+                var reconcileMethodCode = glAccountQueryService.GetSingle(entityPM.AccountId, false, false).ReconcileMethodCode;
+
+                decimal totalAmount = reconcileMethodCode == ReconcileMethodValues.LocalCurrency
+                    ? unmatchedTransactions.Sum(x => x.LocalAmountCredit) + updatedLedgerTransactions.Sum(x => x.LocalAmountCredit)
+                    : unmatchedTransactions.Sum(x => x.ForeignAmountCredit) + updatedLedgerTransactions.Sum(x => x.ForeignAmountCredit);
+
+                invoice.IsClosed = totalOpenAmount == 0;
+                if (invoice.StatusCode != "VD") invoice.StatusCode = totalOpenAmount == 0 ? "PD"
+                    : Math.Abs(ledgerTransactionPM.OpenAmount) < totalAmount ? "PP" : "AD";
+
+                SecurityUtility.IsWorkerRoleCall = true;
+            
+                invoiceService.Update(invoice, true);
+
+            }
+
+
+
             var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             ledgerTransactionUpdateService._CancelledAction = this._CancelledAction;
             ledgerTransactionUpdateService.UpdateMulti(LedgerTransactionPMsUpdated, new List<LedgerTransactionPM>(), entityPM, false);

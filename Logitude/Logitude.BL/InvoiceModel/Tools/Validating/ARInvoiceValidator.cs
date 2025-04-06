@@ -575,7 +575,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                         else
                         {
-                            if (lineInvoiceAmount != lineInvoiceAmount_Computed)
+                            if (lineInvoiceAmount != lineInvoiceAmount_Computed && !entityPM.IsExternalEntity)
                             {
                                 throw new ApplicationException("Wrong Line Invoice Amount");
                             }

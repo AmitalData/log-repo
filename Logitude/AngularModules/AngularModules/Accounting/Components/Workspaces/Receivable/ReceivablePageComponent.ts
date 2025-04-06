@@ -1,11 +1,10 @@
 declare var makeAmBarChart;
 declare var window: any;
-import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -15,26 +14,22 @@ import {CurrencyRatesService, LastRate} from "../../../../Common/Services/Curren
 
 // Services
 import { GLAccountExtendedListService } from '../../../Services/ExtendedLists/GLAccountExtendedListService';
-import { GLAccountTotalByMonthListService } from '../../../Services/StandardLists/GLAccountTotalByMonthListService';
 import { FullAccountingSettingListService } from '../../../Services/StandardLists/FullAccountingSettingListService';
 
 // Lists
 import { GLAccountList } from '../../../EntityLists/GLAccountList';
 import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSettingList';
-import { GLAccountTotalByMonthList } from '../../../EntityLists/GLAccountTotalByMonthList';
 
 import { GLAccountSummary } from '../../../DataContracts/AccountingSummery';
 import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { ModulesService } from '../../../Services/ModulesService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { ARPaymentPM } from 'Invoice/EntityPMs/ARPaymentPM';
 import { ARInvoicePM } from 'Invoice/EntityPMs/ARInvoicePM';
 import {CurrencyList} from "../../../../Common/EntityLists/CurrencyList";
 import {CurrencyListService} from "../../../../Common/Services/StandardLists/CurrencyListService";
 import {InvoiceTool} from "../../../../Invoice/Tools";
-import { PartnersDomainService } from 'Common/Services/PartnersDomainService';
 
 
 @Component({
@@ -45,7 +40,6 @@ import { PartnersDomainService } from 'Common/Services/PartnersDomainService';
 export class ReceivablePageComponent {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
-    private _GLAccountTotalByMonthListService: GLAccountTotalByMonthListService = new GLAccountTotalByMonthListService();
     private _FullAccountingSettingListService: FullAccountingSettingListService = new FullAccountingSettingListService();
     private myCurrencyListService: CurrencyListService = new CurrencyListService();
     private LastRatesList: LastRate[] = [];
@@ -306,6 +300,16 @@ export class ReceivablePageComponent {
                     });
             });
         }
+    }
+    ViewInvoiceSequence(){
+        SessionLocator.DynamicLoader.Load(
+            '.InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceSequenceListComponent',
+            this.CurrentSession.SessionMenuLocation.viewContainerRef
+        ).then((cmpRef) => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            this.CurrentSession.AddMenuReference(cmpRef);
+        });
+
     }
 
     // // TODO: change the logic for ViewPayment Cheques

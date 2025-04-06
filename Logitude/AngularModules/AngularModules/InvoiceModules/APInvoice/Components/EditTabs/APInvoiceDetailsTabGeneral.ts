@@ -37,6 +37,7 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { isThisTypeNode } from 'typescript';
 declare var window: any;
 
 @Component({
@@ -268,9 +269,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     SetUIProperties_VATNumber() {
         var isRequired = false;
 
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
-            if (AppTool.IsNullOrEmpty(this.VATNumber)) {
-                isRequired = true;
+        if (AppTool.IsNullOrEmpty(this.VATNumber)) {
+                if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && (this.EntityPM.VendorCountry === "IL"|| this.EntityPM.VendorCountry === null)) {
+                     isRequired = true;
             }
         }
 
@@ -279,22 +280,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     public RateIsEnabled: boolean = false;
     SetUIProperties_ExchangeRate() {
-        var isEnabled: boolean = false;
-
-        if (this.IsScreenEnabled) {
-            if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
-                if (this.InvoiceCurrencyId) {
-                    if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
-                        if (this.EntityPM.InvoicePayments.length == 0) {
-                            isEnabled = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        this.RateIsEnabled = isEnabled;
-        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isEnabled);
+       
+        this.RateIsEnabled = this.IsScreenEnabled;
+        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, this.IsScreenEnabled);
     }
 
 
@@ -915,6 +903,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     public GLAccountId: string;
     public BillToId: string;
+
     GetCardProperties() {
         this.myCardListService.getSingle(this.EntityPM.VendorId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
@@ -929,6 +918,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     this.EntityPM.VendorGLAccountId = null;
                     this.EntityPM.VendorName = null;
                     this.EntityPM.VendorLocalName = null;
+                    this.EntityPM.VendorCountry = null;
                 }
 
                 else {
@@ -937,7 +927,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     this.VATNumber = list.VatNumber;
                     this.EntityPM.VendorName = list.EnglishName;
                     this.EntityPM.VendorLocalName = list.LocalName || list.EnglishName;
-
+                    this.EntityPM.VendorCountry = list.CountryCode;
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = list.InvoiceCurrencyId;
                     }
@@ -971,6 +961,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     this.GetConnectedGLAccount();
                 else
                     this.GetConnectedBillTo();
+                this.SetUIProperties_VATNumber();
 
 
             }

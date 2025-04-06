@@ -143,11 +143,22 @@
                                                 </div>
                                                 <!--<button class="Button" style="width:45px;" (click)="NewGeneralARInvoice()">New</button>-->
                                                 <div>
-                                                    <!--<p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Draft Invoices')">{{'ARInvoice.Q.DraftGeneralInvoices' | TextCodeTranslationPipe}} ({{ARGeneralInvoiceDraftCount}})</p>
-    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Approval General Invoices')">{{'ARInvoice.Q.ApprovalGeneralInvoices' | TextCodeTranslationPipe}}</p>-->
-                                                <!--    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:OpenInvoices')">{{'ARInvoice.Q.OpenInvoices' | TextCodeTranslationPipe}}</p>-->
+                                        
+                                                <table>
+                                                   
+                                                    <tr>
+                                                        <td style="width:190px;">
+                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:All General Invoices')">{{'ARInvoice.Q.AllGeneralInvoices' | TextCodeTranslationPipe}}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width:190px;">
+                                                            <p class="QueryLink" (click)="ViewInvoiceSequence()">{{'ARInvoice.O.InvoiceSequence' | TextCodeTranslationPipe}}</p>
+                                                        </td>
+                                                    </tr>
 
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:All General Invoices')">{{'ARInvoice.Q.AllGeneralInvoices' | TextCodeTranslationPipe}}</p>
+                                                </table>
+
                                                 </div>
                                             </div>
 
