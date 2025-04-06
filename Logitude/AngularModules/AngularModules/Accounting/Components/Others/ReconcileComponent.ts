@@ -2327,7 +2327,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public GetFailedJournalsInReconcileProcess(){
         const journalExtendedPMService : JournalExtendedPMService = new JournalExtendedPMService();
         journalExtendedPMService.GetFailedJournalsInReconcileProcess(this.GLAccountPM.Id).subscribe((response: ServiceResponse) => {
-            debugger
             this.failedJournalList = response.Result;
             if (this.failedJournalList && this.failedJournalList.length > 0) {
                 this.failedJournalsInReconcileProcess = true;
