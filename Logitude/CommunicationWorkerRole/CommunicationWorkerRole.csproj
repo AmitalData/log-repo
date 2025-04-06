@@ -468,6 +468,7 @@
     <Compile Include="Services\Logbox\LogboxExceptionHandler.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
     <Compile Include="Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs" />
+    <Compile Include="Tasks\ReconcileInProgressCleanupTask.cs" />
     <Compile Include="Tasks\QueryReport.cs" />
     <Compile Include="Tasks\UpdateCanceledSATEntitiesStatusesTask.cs" />
     <Compile Include="Tasks\ResetFullTextSearchIndexChangeTrackingTask.cs" />
