@@ -86,6 +86,19 @@ export class JournalExtendedPMService {
 
     }
 
+    GetFailedJournalsInReconcileProcess(accountId: string) {
+   
+        return this.httpClient.get(this._apiUrl + '/GetFailedJournalInReconcileProcess?accountId=' + accountId, ServiceHelper.GetHttpHeaders()).pipe(
+          map(res => {
+              var serviceResponse: ServiceResponse = new ServiceResponse();
+              serviceResponse.Result = res;
+              return serviceResponse;
+          }),
+          catchError(ServiceHelper.HandleServiceError));
+       
+  
+      }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: JournalPM = null) {
 
 

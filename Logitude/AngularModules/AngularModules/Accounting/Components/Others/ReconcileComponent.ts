@@ -38,6 +38,7 @@ import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
 import { now } from 'cypress/types/lodash';
+import { JournalExtendedPMService } from 'Accounting/Services/ExtendedPMs/JournalExtendedPMService';
 
 export class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
@@ -289,6 +290,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public autoReconil: boolean = false;
     public firstMark: boolean = true;
     public yelloMessage: string = '';
+    public failedJournalsInReconcileProcess: boolean = false;
     SessionEvent;
     showInternalReconcileAPPaymentAlert = false;
     createdPaymentNumber;
@@ -393,6 +395,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.CheckIfThereIsDraftReconcile();
             this.DisableDates();
             this.Mark()
+            this.GetFailedJournalsInReconcileProcess();
         }
 
         this.SetTitle();
@@ -2320,7 +2323,17 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public GetInternalReconcileAPPaymentAlertMessage() {
         return TextCodeTranslator.Translate('APPayment.M.PaymentCreatedWithReconciliation').replace('#number', this.createdPaymentNumber);
     }
-
+    public failedJournalList: any = null;
+    public GetFailedJournalsInReconcileProcess(){
+        const journalExtendedPMService : JournalExtendedPMService = new JournalExtendedPMService();
+        journalExtendedPMService.GetFailedJournalsInReconcileProcess(this.GLAccountPM.Id).subscribe((response: ServiceResponse) => {
+            debugger
+            this.failedJournalList = response.Result;
+            if (this.failedJournalList && this.failedJournalList.length > 0) {
+                this.failedJournalsInReconcileProcess = true;
+            }
+        });
+    }
 
 }
 

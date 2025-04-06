@@ -336,6 +336,59 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
+
+        public HttpResponseMessage GetFailedJournalInReconcileProcess(string accountId)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+                SecurityUtility.CheckContactFeature("Journal", "READ", authToken.Tenant);
+
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                JournalQueryService journalQuery = new JournalQueryService(MyContext);
+                List<Journal> journals = journalQuery.GetFailedJournalsInReconcileProcess(accountId, tenant);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, journals);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        [HttpPut]
+        public HttpResponseMessage FixFailedReconcileJournals()
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+                SecurityUtility.CheckContactFeature("Journal", "READ", authToken.Tenant);
+
+                IAccountingContext context = AccountingContext.GetContext(authToken.Tenant);
+                JournalQueryService journalQueryService = new JournalQueryService(context);
+                journalQueryService.FixFailedReconcileJournals(tenant);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "OK");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 
 }

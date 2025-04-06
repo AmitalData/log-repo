@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "c627f654b0668f7314a080a80c7bf1f3";
+		public const string HashString = "6d43c68e81e50fc3976543c1186c1c44";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3567,6 +3567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsExternalEntity",
 					  						ListPropertyPath =  "IsExternalEntity",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -4135,6 +4136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature JournalFeature_MB30 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalVoid", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Void", NameTextCodeDefaultText = "Void", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
              			   Feature JournalFeature_MB31 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "JournalPrint", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
              			   Feature JournalFeature_MB32 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CopyJournal", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.CopyJournal", NameTextCodeDefaultText = "Copy Journal", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
+             			   Feature JournalFeature_MB33 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FixJournalReconcile", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "Journal.Features.Fix", NameTextCodeDefaultText = "Fix", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -4284,6 +4286,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  JournalFeature_MB32.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton JournalMenuButton33 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "FixJournalReconcile",
+						Index = 3, 
+						IsActive = true,
+						LabelTextCodeCode = "Journal.B.Fix",
+						LabelTextCodeDefaultText = "Fix",
+						Tenant = 0,
+						MenuButtonGroupId = JournalMenuButtonGroup.Id,
+						ParentMenuButtonId = JournalMenuButton3.Id,
+						ObjectTableId = JournalObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  JournalFeature_MB33.Id,
+						Style = null,
+						LocalDefaultText = "תיקון",
+                        HtmlComponentPath=null,
+                        Width=0,
+						FeatureUniqeCode=  JournalFeature_MB33.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
@@ -4446,6 +4468,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalOCoefficientForAmountsAndCurrencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CoefficientForAmountsAndCurrencies", DefaultText = "Coefficient",LocalDefaultText = @"מקדם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalOPermissionSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.PermissionSetting", DefaultText = "Permission Setting",LocalDefaultText = @"הגדרת הרשאה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOSuperPermissionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SuperPermissionRequired", DefaultText = "Correction requires super permission. Please contact Amital.",LocalDefaultText = @"תיקון דורש הרשאת על. נא לפנות לעמיטל", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

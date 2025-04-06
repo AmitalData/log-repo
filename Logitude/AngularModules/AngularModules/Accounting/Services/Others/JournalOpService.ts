@@ -75,6 +75,18 @@ export class JournalOpService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+    FixFailedReconcileJournals() {
+        return defer(() => {
+            return this._http.put(this._apiUrl + '/FixFailedReconcileJournals/', null,
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+
+                    return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: JournalPM = null) {
 
 

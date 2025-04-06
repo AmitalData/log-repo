@@ -51,18 +51,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             //******getting all compositionTables for response service purposes only *****///
 
-            entityPM.JournalExternalReconciles= myJournalExternalReconcileQueryService.GetMulti(journalKeys, true);
+            entityPM.JournalExternalReconciles = myJournalExternalReconcileQueryService.GetMulti(journalKeys, true);
         }
 
 
         //public JournalPM  GetJournalPMByJournalNumber(string journalNumber, int tenant)
         //{
-        
+
         //}
 
         public string GetJournalMaxNumber(int tenant)
         {
-            string max =  this.repository.GetJournalMaxNumber(tenant);
+            string max = this.repository.GetJournalMaxNumber(tenant);
 
             int maxJournalNumber;
 
@@ -74,12 +74,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
-        public List<string> GetApprovedJournalWithoutLedgerTransaction(int tenant, 
+        public List<string> GetApprovedJournalWithoutLedgerTransaction(int tenant,
             string seedJournalId,
-            List<string> ExcludeJournalKeys,int top=15)
+            List<string> ExcludeJournalKeys, int top = 15)
         {
 
-             var ledgerTransactionRepository = new LedgerTransactionRepository(this.MainContext as IAccountingContext);
+            var ledgerTransactionRepository = new LedgerTransactionRepository(this.MainContext as IAccountingContext);
             var qPendingApprovedOrderedQueryable = repository.GetQueryablePending2ApproveOrdered(tenant);
             if (ExcludeJournalKeys != null && ExcludeJournalKeys.Count > 0)
             //exclude last executed buffer//
@@ -88,7 +88,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             if (!string.IsNullOrWhiteSpace(seedJournalId))
             {
-                qPendingApprovedOrderedQueryable = 
+                qPendingApprovedOrderedQueryable =
                     qPendingApprovedOrderedQueryable
                     .Where(r => r.Id == seedJournalId);
             }
@@ -166,17 +166,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public bool GetAnyPendingApproved(IQueryable<string> GLAccountIDList, int tenant)
         {
-            
+
             var journalLineRepository = new JournalLineRepository(this.MainContext as IAccountingContext);
-            var Jids=repository.
+            var Jids = repository.
                         //GetQueryablePending2ApproveOrdered(tenant)
                         GetQueryablePending2Approve_LedgerNotCreated(tenant).Select(r => r.Id).ToList();
-            if (Jids.Count==0)
+            if (Jids.Count == 0)
             {
                 return false;
             }
             var haveQ = (
-                        from jl in journalLineRepository.GetQueryContainsAccId(GLAccountIDList, tenant).Where(r=> Jids.Contains(r.JournalId))
+                        from jl in journalLineRepository.GetQueryContainsAccId(GLAccountIDList, tenant).Where(r => Jids.Contains(r.JournalId))
                         select jl.JournalId);
             return haveQ.Any();
         }
@@ -206,7 +206,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
         public List<string> GetJournalNumbersByTransactionsList(List<InterestTransactionList> interestTransactionLists, int tenant)
         {
-            List<string> JournalNumbers = repository.GetJournalNumbersByTransactionsList(interestTransactionLists,tenant);
+            List<string> JournalNumbers = repository.GetJournalNumbersByTransactionsList(interestTransactionLists, tenant);
             return JournalNumbers;
         }
 
@@ -217,37 +217,37 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             List<JournalPM> ratepms = (from a in journal
                                        select new JournalPM()
-                                                   {
-                                                       AccountingDate = a.AccountingDate,
-                                                       AccountingEntityCode = a.AccountingEntityCode,
-                                                       AccountingEntityId = a.AccountingEntityId,
-                                                       AccountingEntityName = a.AccountingEntityReference != null ? a.AccountingEntityReference : null,
-                                                       AccountingEntityReference = a.AccountingEntityReference, // CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
-                                                       ApproveDate = a.ApproveDate,
-                                                       ApprovedByUserId = a.ApprovedByUserId,
-                                                       ApprovedByUserName = a.ApprovedByUser != null ? a.ApprovedByUser.Contact.EnglishName : null,
-                                                       CreateDate = a.CreateDate,
-                                                       CreatedByUserId = a.CreatedByUserId,
-                                                       CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
-                                                       ExternalNo = a.ExternalNo,
-                                                       Id = a.Id,
-                                                       JournalNumber = a.JournalNumber,
-                                                       OriginalJournalId = a.OriginalJournalId,
-                                                       OriginalJournalName = a.OriginalJournal != null ? a.OriginalJournal.JournalNumber : null,
-                                                       SearchFields = a.SearchFields,
-                                                       StatusCode = a.StatusCode,
-                                                       StatusName = a.JournalStatusType != null ? a.JournalStatusType.EnglishName : null,
-                                                       Tenant = a.Tenant,
-                                                       TypeCode = a.TypeCode,
-                                                       TypeName = a.JournalType != null ? a.JournalType.EnglishName : null,
+                                       {
+                                           AccountingDate = a.AccountingDate,
+                                           AccountingEntityCode = a.AccountingEntityCode,
+                                           AccountingEntityId = a.AccountingEntityId,
+                                           AccountingEntityName = a.AccountingEntityReference != null ? a.AccountingEntityReference : null,
+                                           AccountingEntityReference = a.AccountingEntityReference, // CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                                           ApproveDate = a.ApproveDate,
+                                           ApprovedByUserId = a.ApprovedByUserId,
+                                           ApprovedByUserName = a.ApprovedByUser != null ? a.ApprovedByUser.Contact.EnglishName : null,
+                                           CreateDate = a.CreateDate,
+                                           CreatedByUserId = a.CreatedByUserId,
+                                           CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                                           ExternalNo = a.ExternalNo,
+                                           Id = a.Id,
+                                           JournalNumber = a.JournalNumber,
+                                           OriginalJournalId = a.OriginalJournalId,
+                                           OriginalJournalName = a.OriginalJournal != null ? a.OriginalJournal.JournalNumber : null,
+                                           SearchFields = a.SearchFields,
+                                           StatusCode = a.StatusCode,
+                                           StatusName = a.JournalStatusType != null ? a.JournalStatusType.EnglishName : null,
+                                           Tenant = a.Tenant,
+                                           TypeCode = a.TypeCode,
+                                           TypeName = a.JournalType != null ? a.JournalType.EnglishName : null,
 
-                                                       UpdateDate = a.UpdateDate,
-                                                       UpdatedByUserId = a.UpdatedByUserId,
-                                                       UpdatedByUserName = a.UpdatedByUser != null ? a.VoidedByUser.Contact.EnglishName : null,
-                                                       VoidDate = a.VoidDate,
-                                                       VoidedByUserId = a.VoidedByUserId,
-                                                      
-                                                   }).ToList();
+                                           UpdateDate = a.UpdateDate,
+                                           UpdatedByUserId = a.UpdatedByUserId,
+                                           UpdatedByUserName = a.UpdatedByUser != null ? a.VoidedByUser.Contact.EnglishName : null,
+                                           VoidDate = a.VoidDate,
+                                           VoidedByUserId = a.VoidedByUserId,
+
+                                       }).ToList();
 
             return ratepms;
         }
@@ -274,7 +274,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 Id = a.Id,
                 JournalNumber = a.JournalNumber,
                 OriginalJournalId = a.OriginalJournalId,
-              
+
                 SearchFields = a.SearchFields,
                 StatusCode = a.StatusCode,
                 StatusName = a.JournalStatusType != null ? a.JournalStatusType.EnglishName : null,
@@ -292,7 +292,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             if (journal.OriginalJournalId != null)
             {
-              
+
                 JournalQueryService journalQueryService = new JournalQueryService(tenant);
                 JournalPM parent = journalQueryService.GetSingle(journal.OriginalJournalId, false, false);
                 journal.OriginalJournalName = parent.JournalNumber;
@@ -327,7 +327,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             else
             {
                 return new JournalLite()
-                { 
+                {
                     JournalId = poco.Id,
                     IsLedgerCreated = poco.IsLedgerCreated
                 };
@@ -345,8 +345,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<JournalPM> GetJournalsByAccountingEntityIdAndTypeCode(string entityId, string accountingEntityCode, int tenant)
         {
             List<Journal> journals = repository.GetJournalsByAccountingEntityIdAndTypeCode(entityId, accountingEntityCode, tenant);
-            List <JournalPM> journalPMList = new List<JournalPM>();
-            foreach(Journal journal in journals)
+            List<JournalPM> journalPMList = new List<JournalPM>();
+            foreach (Journal journal in journals)
             {
                 JournalPM journalPM = this.GetEntityPM(journal);
                 if (journalPM != null)
@@ -357,9 +357,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 }
                 journalPMList.Add(journalPM);
             }
-           
+
             return journalPMList;
-      
+
         }
         public JournalPM GetApprovedJournalByAccountingEntityId(string entityId, string accountingEntityCode, int tenant)
         {
@@ -397,18 +397,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public IQueryable<JournalPM> GetJournalsByAccountingEntityId(string entityId, int tenant)
         {
-            IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingEntityId(entityId,tenant);
+            IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingEntityId(entityId, tenant);
 
             IQueryable<JournalPM> journals = from a in journalQuery
                                              select new JournalPM()
                                              {
                                                  JournalNumber = a.JournalNumber,
                                                  AccountingDate = a.AccountingDate,
-                                                 StatusName = a.JournalStatusType != null? a.JournalStatusType.LocalName :null,
-                                                 AccountingEntityCode= a.AccountingEntityCode,
+                                                 StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
+                                                 AccountingEntityCode = a.AccountingEntityCode,
                                                  Id = a.Id
                                              };
-          
+
             return journals;
         }
         public IQueryable<JournalPM> GetJournalsByAccountingEntityIdAndCode(string entityId, string entityCode, int tenant)
@@ -422,7 +422,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  AccountingDate = a.AccountingDate,
                                                  StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
                                                  AccountingEntityCode = a.AccountingEntityCode,
-                                                 
+
                                                  Id = a.Id
                                              };
 
@@ -493,16 +493,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public JournalPM GetSinglePMForInterest(string id, int tenant)
         {
-     
- 
-            JournalPM pm  = (from a in context.Journals
-                             where a.Id == id && a.Tenant == tenant
-                              select new JournalPM()
-                              {
-                                  Id = a.Id,
-                                  JournalNumber = a.JournalNumber,
 
-                              }).FirstOrDefault();
+
+            JournalPM pm = (from a in context.Journals
+                            where a.Id == id && a.Tenant == tenant
+                            select new JournalPM()
+                            {
+                                Id = a.Id,
+                                JournalNumber = a.JournalNumber,
+
+                            }).FirstOrDefault();
 
 
             return pm;
@@ -522,17 +522,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             }
             JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
-            List<JournalLinePM> lines = journalLineQueryService.GetJournalLinesByJournalId(id,tenant);
+            List<JournalLinePM> lines = journalLineQueryService.GetJournalLinesByJournalId(id, tenant);
             pm.JournalLines = lines;
 
             return pm;
         }
 
 
-        public JournalPM GetSingleWithLinesByEntityIdAndCode(string entityId,string code, int tenant)
+        public JournalPM GetSingleWithLinesByEntityIdAndCode(string entityId, string code, int tenant)
         {
             Journal journalPoco = null;
-            journalPoco = repository.GetByJournalsAccountingEntityIdAndCode(entityId , code, tenant).FirstOrDefault();
+            journalPoco = repository.GetByJournalsAccountingEntityIdAndCode(entityId, code, tenant).FirstOrDefault();
             JournalPM journalPm = this.GetEntityPM(journalPoco);
             if (journalPm != null)
             {
@@ -542,7 +542,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             return journalPm;
         }
-        public JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo,string externalSystem, int tenant)
+        public JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo, string externalSystem, int tenant)
         {
             Journal poco = null;
             poco = repository.GetSingleJournalByExternalNoAndExternalSystem(externalNo, externalSystem, tenant);
@@ -587,21 +587,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             IQueryable<JournalPM> journals = from a in journalQuery
                                              join jl in context.JournalLines
                                              on a.Id equals jl.JournalId
-                                           
+
                                              into groupJoin
-                                          
+
                                              from groupJoinData in groupJoin
-                                            
+
                                              select new JournalPM()
                                              {
                                                  JournalNumber = a.JournalNumber,
                                                  AccountingDate = a.AccountingDate,
                                                  StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
-                                                TaxReportJournalLineNumber = groupJoinData.Line,
+                                                 TaxReportJournalLineNumber = groupJoinData.Line,
                                                  Id = a.Id,
                                                  LineCreditAccountTypeCode = groupJoinData.CreditAccount != null ? groupJoinData.CreditAccount.AccountTypeCode : null,
                                                  LineCreditAccountId = groupJoinData.CreditAccount != null ? groupJoinData.CreditAccount.Id : null,
-                                                LineCounter = groupJoin.Count(),
+                                                 LineCounter = groupJoin.Count(),
                                                  ConfirmationNumber = groupJoinData.ConfirmationNumber,
                                              };
             journalPMs = journals.ToList();
@@ -709,6 +709,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                        }).ToList();
 
             return ratepms;
+        }
+
+        public List<Journal> GetFailedJournalsInReconcileProcess(string accountId, int tenant)
+        {
+            return repository.GetFailedJournalsInReconcileProcess(accountId, tenant);
+        }
+
+        public void FixFailedReconcileJournals(int tenant)
+        {
+            repository.FixFailedReconcileJournals(tenant);
         }
     }
 }

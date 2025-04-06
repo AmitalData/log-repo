@@ -71,6 +71,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Content Include="DBOthers\0Types\GLAccountAgingDataType.xml" />
+    <None Include="DBOthers\SProcedures\usp_FixFailedReconcileJournals.dxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
     <None Include="DBOthers\SProcedures\usp_OpenTransaction.dxml" />
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />

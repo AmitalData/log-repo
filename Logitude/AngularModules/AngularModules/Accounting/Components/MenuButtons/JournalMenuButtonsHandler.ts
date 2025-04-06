@@ -27,6 +27,7 @@ import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHe
 import {JournalExtendedPMService} from '../../Services/ExtendedPMs/JournalExtendedPMService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 export class JournalMenuButtonsHandler {
     public EntityPM: JournalPM;
@@ -155,6 +156,12 @@ export class JournalMenuButtonsHandler {
                                     button.IsDisabled = true;
                                 break;
                             }
+                        case "FixJournalReconcile":
+                            {
+                                if( this.EntityPM.StatusCode != "4" ) {
+                                    button.IsHidden = true;
+                                }
+                            }    
                     }
                 }
             }
@@ -263,24 +270,16 @@ export class JournalMenuButtonsHandler {
             case "JournalPrint":
                 {
                     this.PrintJournal();
-
-                    //if (this.EntityPM.StatusCode != "2") { // Approved
-                    //    this.PrintJournal();
-                    //} else {
-                    //    this.entityArgs.EditComponent.SaveChanges();
-                    //    this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
-                    //        if ($event == true) {
-                    //            this.entityArgs.EditComponent.ReloadEntityPM();
-                    //            this.SetEntityPM(this.entityArgs);
-                    //            this.PrintJournal();
-                    //        }
-                    //    });
-                    //}
                     break;
                 }
             case "CopyJournal":
                 {
                     this.OpenCopyJournalScreen();
+                    break;
+                }
+            case "FixJournalReconcile":
+                {
+                    this.FixJournal();
                     break;
                 }
         }
@@ -491,6 +490,34 @@ export class JournalMenuButtonsHandler {
         }
 
     }
-
+    private FixJournal() {
+ 
+        let messageWindow = new MessageWindow();
+        if(SessionLocator.LoggedUserPM.Tenant != 0) 
+        {
+            const msg = TextCodeTranslator.Translate("Journal.O.SuperPermissionRequired");
+            if(ObjectsLocator.GlobalSetting) 
+                messageWindow.RTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+            messageWindow.Show(msg);
+        }
+        else
+        {
+            this.StartBusyIndicator("Fixing journal...");
+            this._journalOpService.FixFailedReconcileJournals().subscribe((res: ServiceResponse) => {
+                this.StopBusyIndicator();
+                if (res.HasError) {
+                    const msg = "Error, try again.";
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(msg);
+                } else {
+                    const msg = "Succeeded";
+                    messageWindow.ShowSuccessIcon = true;
+                    messageWindow.Show(msg);
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+            });
+        }
+    
+    }
 
 }
