@@ -359,7 +359,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (!string.IsNullOrWhiteSpace(notificationDefinitionCode))
                     {
                         LogMessagingUtil.Instance.AppendLine("Start Sending Notification... ");
-                        DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, customResponse.MessageToAgent.responseToMessage.ToString(), notificationDescription, assigneToNotificationTypeCode);
+                        DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, customResponse.MessageToAgent.responseToMessage.ToString(), notificationDescription, assigneToNotificationTypeCode, customResponse.MessageToAgent?.SenderName);
                     }
                     return;
                 }
@@ -589,7 +589,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     responseToMessage = customResponse.MessageToAgent.responseToMessage.ToString();
                 }
-                DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, responseToMessage, notificationDescription, assigneToNotificationTypeCode);
+                DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, responseToMessage, notificationDescription, assigneToNotificationTypeCode, customResponse.MessageToAgent?.SenderName);
             }
         }
 
