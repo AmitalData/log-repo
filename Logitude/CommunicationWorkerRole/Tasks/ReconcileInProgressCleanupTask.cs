@@ -31,7 +31,7 @@ namespace CommunicationWorkerRole.Tasks
                         var reconcileInProgressCleanupBatch = new ReconcileInProgressCleanupBatch();
                         int tenant = this.Task != null ? this.Task.Tenant : 0;
                          reconcileInProgressCleanupBatch.ResetInProgressTransactions();
-                         string responseText = reconcileInProgressCleanupBatch.ResponseText();
+                         string responseText = reconcileInProgressCleanupBatch.GetResponseText();
                         _SB.Append(DateTime.Now.ToString()).Append("responseText:").Append(responseText).AppendLine();
                     }
                     catch (Exception ex)

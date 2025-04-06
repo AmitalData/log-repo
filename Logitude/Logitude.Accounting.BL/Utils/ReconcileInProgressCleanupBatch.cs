@@ -11,23 +11,23 @@ namespace Logitude.Accounting.BL.Utils
     public class ReconcileInProgressCleanupBatch
     {
 
-        private string _ResponseText;
-        private HttpStatusCode _StatusCode;
+        private string responseText;
+        private HttpStatusCode statusCode;
 
         public ReconcileInProgressCleanupBatch()
         {
-            _ResponseText = "";
-            _StatusCode = HttpStatusCode.Accepted;
+            responseText = "";
+            statusCode = HttpStatusCode.Accepted;
         }
 
-        public string ResponseText()
+        public string GetResponseText()
         {
-            return _ResponseText;
+            return responseText;
         }
 
-        public HttpStatusCode StatusCode()
+        public HttpStatusCode GetStatusCode()
         {
-            return _StatusCode;
+            return statusCode;
         }
 
         public void ResetInProgressTransactions()
@@ -35,7 +35,7 @@ namespace Logitude.Accounting.BL.Utils
             IAccountingContext MyContext = AccountingContext.GetContext(0);
            JournalQueryService queryService = new JournalQueryService(MyContext);
            queryService.FixFailedReconcileJournals();
-            _ResponseText = "ResetInProgressTransactions:Success";
+            responseText = "ResetInProgressTransactions:Success";
         }
 
         
