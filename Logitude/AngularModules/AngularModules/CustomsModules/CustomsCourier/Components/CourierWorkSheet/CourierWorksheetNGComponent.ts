@@ -327,7 +327,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
         this.RefreshList();
     }
 
-    SendALLCorrectManifest(courierDeclarationStatusCode: string) {
+    SendALLCorrectManifest(courierDeclarationStatusCode: string) {        
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -392,8 +392,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
     }
 
-    SendReadyLOWPAYToBatch() {
-
+    SendReadyLOWPAYToBatch() {        
         if (this._PAYReadyNotFastindividual == 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -476,7 +475,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
     }
 
-    SendALLCorrectDec(courierDeclarationStatusCode: string) {
+    SendALLCorrectDec(courierDeclarationStatusCode: string) {                
 
         if (this._ReadyDECToBatchSend == 0 && courierDeclarationStatusCode == "R") {
             var myMessageWindow = new MessageWindow();
@@ -536,7 +535,7 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                     }
                 });
             });
-        //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
+        //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);        
     }
 
     SendALLSVG(isAll: boolean) {

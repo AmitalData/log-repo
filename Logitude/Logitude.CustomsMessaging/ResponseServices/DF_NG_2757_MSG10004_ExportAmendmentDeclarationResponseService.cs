@@ -516,6 +516,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     case "3":
                                     case "2":
                                         {
+                                            declarationPM.ImporterCode = importer.ID.Value;
                                             declarationPM.ImporterPassportNumber = importer.ID.Value;
                                             break;
                                         }

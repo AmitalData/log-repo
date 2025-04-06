@@ -567,7 +567,8 @@ namespace Logitude.Accounting.BL.CoreBL
             LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
             var journalIds = taxReportLines.Select(x => x.JournalId).ToList();
             List<LedgerTransaction> ltList = ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsAndAccountId(journalIds, fullAccountingSettings.VATOutputGLAccountId, tenant);
-            List<LedgerTransaction> rv = ltList.Where(lt => lt.IsReconciled != true && lt.InReconcileProgress != true).ToList();
+            List<LedgerTransaction> rv = ltList.Where(lt => (lt.IsReconciled != true && lt.InReconcileProgress != true) 
+                           || (lt.IsReconciled == true && lt.LocalAmountDebit == 0m && lt.LocalAmountCredit == 0m)).ToList(); // zero lines are reconciled; those are good for the condition (ltList.Count > rv.Count) only; see below
             if (ltList.Count > rv.Count) {
                 var ErrorsInltList = ltList.Where(lt => lt.IsReconciled != false || lt.InReconcileProgress != false).ToList();
                 var reconiledLines = taxReportLines.Where(taxReportLine => ErrorsInltList.Any(error => taxReportLine.JournalId == error.JournalId)).ToList();
@@ -579,6 +580,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 throw new ApplicationException(errorText);
             }
+            rv = rv.Where(lt => lt.IsReconciled != true).ToList(); // Remove reconciled lines, see above: reconciled zero lines 
             return rv;
         }
 
