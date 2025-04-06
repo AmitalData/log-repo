@@ -124,7 +124,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
 
         private void ValidateCheques(List<ARPaymentChequePM> cheques)
         {
-            if (cheques.Any(ch => ch.StatusCode == ARPaymentChequeStatusValues.InBankAccount))
+            if (cheques.Any(ch => ch.StatusCode == ARPaymentChequeStatusValues.InBankAccount || ch.StatusCode == ARPaymentChequeStatusValues.InBank))
             {
                 throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.AlreadyDeposited", DepositPM.Tenant));
             }

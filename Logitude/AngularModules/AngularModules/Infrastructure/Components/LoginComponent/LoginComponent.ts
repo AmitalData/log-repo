@@ -200,7 +200,22 @@ export class LoginComponent implements OnInit {
             this.StartLoginProcess();
          }     
         
-    }
+    // if (isDevMode())
+        //     this.developerLogin();       
+     }
+   
+    async developerLogin() {
+        this.Email = ''
+        this.Password = '';
+       this.LoginClicked();
+
+       while(!this.TenantList?.length)
+          await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
+
+        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1);
+
+        this.ContinueClicked()
+    }   
    
     IsShowLoginForm: boolean = false;
 
@@ -536,7 +551,7 @@ export class LoginComponent implements OnInit {
                     this.LoginFailed = true;
                     this.HidePendingLoading = true;
 
-                    if (userData) alert(userData.ExceptionMessage);
+                    alert(userData?.ErrorsArray?.length > 0? userData.ErrorsArray.join("\r"): "Authentication failed. Please check your credentials and try again.");
                 } else {
                     this.TenantList = userData.CompanyLogins;
                     this.HideLoginForm = true;
@@ -610,23 +625,28 @@ export class LoginComponent implements OnInit {
         this.loginService
             .PostLoginData(this.LoginParams)
             .subscribe((userData: any) => {
-                if (userData.TwoFactorkey) {
-                    window.localStorage.setItem(
-                        'TwoFactorkey',
-                        userData.TwoFactorkey
-                    );
+                if (userData?.HasError) {
+                    if (userData?.ErrorsArray?.length > 0) alert(userData.ErrorsArray.join("\r"));
                 }
-                if (
-                    !userData.IsTwoFactorAuthenticationRequired ||
-                    userData.IsTwoFactorAuthenticationRequired == false
-                ) {
-                    this.StartLoading(userData);
-                } else {
-                    this.LoggedUserData = userData;
-                    this.UserMobileNumber = userData.UserMobileNumber;
-                    this.ShowTwoFactorAuthenScreen = true;
+                else {
+                    if (userData.TwoFactorkey) {
+                        window.localStorage.setItem(
+                            'TwoFactorkey',
+                            userData.TwoFactorkey
+                        );
+                    }
+                    if (
+                        !userData.IsTwoFactorAuthenticationRequired ||
+                        userData.IsTwoFactorAuthenticationRequired == false
+                    ) {
+                        this.StartLoading(userData);
+                    } else {
+                        this.LoggedUserData = userData;
+                        this.UserMobileNumber = userData.UserMobileNumber;
+                        this.ShowTwoFactorAuthenScreen = true;
 
-                    //alert('Two factor authentication');
+                        //alert('Two factor authentication');
+                    }
                 }
             });
     }

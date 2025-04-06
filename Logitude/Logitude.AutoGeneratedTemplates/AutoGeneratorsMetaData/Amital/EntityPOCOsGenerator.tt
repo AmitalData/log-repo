@@ -118,12 +118,12 @@ void SavePocoOutput(string outputFileName)
 		schema = tableName.ToString().Split('.')[0];
 		dBTableName = dBTableName.ToString().Split('.')[1];
 		
-		classAttribute = "[Table(\""+dBTableName+"\",Schema="+ schema + "\")]";
+		classAttribute = "[Table(\""+dBTableName+"\",Schema=\""+ schema + "\")]";
     }
 	else
     {
 		 
-		classAttribute = "[Table("+dBTableName+",)]";
+		classAttribute = "[Table(\""+dBTableName+"\")]";
     }
 		  bool hasTenant = false;
 		 foreach(var field in entity["field"])
@@ -180,6 +180,7 @@ using <#=infraNameSpace #>
 <#+ if (!string.IsNullOrEmpty(usingStatements)) { #><#= usingStatements #><#+ } #>
 namespace <#= namespacestring #>
 {
+	<#=classAttribute #>
     public class <#=tableName #> : BaseEntity
 	{
 	<#+ if(!hasTenant) { #>

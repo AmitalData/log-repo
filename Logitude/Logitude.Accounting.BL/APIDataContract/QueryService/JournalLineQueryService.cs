@@ -167,6 +167,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
                     temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
                     temp.ConfirmationNumber = item.ConfirmationNumber; 
+                    temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
 
                     JournalActionTypeQueryService journalActionTypeService = new JournalActionTypeQueryService(Tenant);
                     temp.ActionCode = item.ActionCode;
@@ -265,6 +266,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
                     temp.ActionCode = item.ActionCode;
                     temp.ConfirmationNumber = item.ConfirmationNumber;
+                    temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
                     MyList.Add(temp);
                 }
 

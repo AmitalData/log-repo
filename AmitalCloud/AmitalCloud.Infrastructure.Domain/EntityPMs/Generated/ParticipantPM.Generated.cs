@@ -37,10 +37,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_registered = entity.Registered;
 		_registrationRequested = entity.RegistrationRequested;
 		_forwarderTenant = entity.ForwarderTenant;
-		_forwarder = entity.Forwarder !=null ? new TenantPM(entity.Forwarder) : null;
-			_isDirect = entity.IsDirect;
+		_isDirect = entity.IsDirect;
 		addresses = entity.Addresses != null ? entity.Addresses.Select(a=>new AddressPM(a)).ToList() : null;
-		contacts = entity.Contacts != null ? entity.Contacts.Select(a=>new ContactPM(a)).ToList() : null;
 		_fWBNotifyContacts = entity.FWBNotifyContacts;
 		_fHLNotifyContacts = entity.FHLNotifyContacts;
 		_fFRNotifyContacts = entity.FFRNotifyContacts;
@@ -179,14 +177,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private TenantPM _forwarder;
-		[Include]
-        [DataMember]
-        public virtual TenantPM Forwarder 
-		{ 
-		get { return _forwarder; } 
-		set { _forwarder = value; }
-		}
 	  private bool _isDirect ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -233,37 +223,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
                  return  deletedAddresses;
               }
              set {  deletedAddresses = value; }
-	    }
-	   private List<ContactPM> contacts;
-	 
-		     
-	   [Include]
-	   [Association("ParticipantPMContactPM", "Id","CardId")]
-	   [DataMember]
-	   public virtual List<ContactPM> Contacts  
-	   {
-	        get
-             {
-                 if (contacts == null)
-                 {
-                     contacts = new List<ContactPM>();
-                 }
-                 return contacts;
-              }
-             set { contacts = value; }
-	    }
-	   private List<ContactPM>  deletedContacts;
-	   public virtual List<ContactPM> DeletedContacts  
-	   {
-	        get
-             {
-                 if ( deletedContacts == null)
-                 {
-                      deletedContacts = new List<ContactPM>();
-                 }
-                 return  deletedContacts;
-              }
-             set {  deletedContacts = value; }
 	    }
 	  private string _fWBNotifyContacts ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]

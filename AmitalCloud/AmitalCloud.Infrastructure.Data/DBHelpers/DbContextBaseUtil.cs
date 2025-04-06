@@ -64,9 +64,9 @@ namespace AmitalCloud.Infrastructure.Data.DBHelpers
         {
             Devart.Data.Oracle.OracleConnectionStringBuilder csb = null;
             string dbConnectionInfo = "";
-            if (AmitalCloudSettings.GetLogitudeCustomsSettingsMInject != null)
+            if (AmitalCloudSettings.GetAmitalCustomsSettingsMInject != null)
             {
-                dbConnectionInfo = AmitalCloudSettings.GetLogitudeCustomsSettingsMInject(tenantSeed).UnfConnectionString;
+                dbConnectionInfo = AmitalCloudSettings.GetAmitalCustomsSettingsMInject(tenantSeed).UnfConnectionString;
             }
             else
             {

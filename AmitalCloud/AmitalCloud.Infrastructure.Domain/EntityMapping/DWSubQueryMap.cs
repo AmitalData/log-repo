@@ -30,11 +30,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.DWQueryId).HasColumnName("DWQueryId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.SQLString).HasColumnName("SQLString").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.SQLString).HasColumnName("SQLString").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.FiltersXML).HasColumnName("FiltersXML").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.FiltersXML).HasColumnName("FiltersXML").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.ColumnsXML).HasColumnName("ColumnsXML").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.ColumnsXML).HasColumnName("ColumnsXML").IsRequired().IsMaxLength().IsUnicode(true);
         }
     }
 }

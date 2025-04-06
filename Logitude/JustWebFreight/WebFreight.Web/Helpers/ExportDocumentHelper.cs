@@ -527,7 +527,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         InterestPrintService service = new InterestPrintService();
                         InterestDataProvider InterestReportDP = service.LoadDataProvider(entityId, tenant);
                         BaseDataProviderService.FillBaseVariableFields(InterestReportDP, tenant);
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = service.InteerstReportPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = InterestReportDP }).Create(true);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = service.InterestReportPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = InterestReportDP }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "ITDT", Name = "InterestDataProvider", BusinessObjectValue = documentDataProvider.BusinessObjectValue };
@@ -841,13 +841,10 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         InvoiceWebService invoiceWebService = new InvoiceWebService();
-                        //byte[] byteArray = invoiceWebService.GetInvoiceData(childEntityId, documentTypeCopyId, tenant);
-                        //MemoryStream memorystream = new MemoryStream(byteArray);
-                        //XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
-                        InvoiceDataProvider invoicedataprovider = invoiceWebService.GetInvoiceDataProvider(childEntityId, documentTypeCopyId, tenant);//(InvoiceDataProvider)serializer.Deserialize(memorystream);
+                       
+                        InvoiceDataProvider invoicedataprovider = invoiceWebService.GetInvoiceDataProvider(childEntityId, documentTypeCopyId, tenant);
 
                         theT2 = System.DateTime.Now.Ticks;
-                        //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P");
                         BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = invoiceWebService.invoicePM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = invoicedataprovider }).Create(true);
 

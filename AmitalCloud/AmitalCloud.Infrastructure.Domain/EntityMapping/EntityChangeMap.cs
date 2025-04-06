@@ -20,7 +20,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
         { 
 				this.ToTable("EntityChanges");
 		
-		    this.HasKey(t => new { t.Id });
+		    this.HasKey(t => new { t.Id, t.FollowUpAutomationFailedXml, t.SetSLAAutomationFailedXml });
 	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
@@ -40,137 +40,137 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.HasExecutedRecord).HasColumnName("HasExecutedRecord").IsRequired();
 
-            this.Property(t => t.AutomationConditionFieldsXml).HasColumnName("AutomationConditionFieldsXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.AutomationConditionFieldsXml).HasColumnName("AutomationConditionFieldsXml").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.ChangesFieldsXml).HasColumnName("ChangesFieldsXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.ChangesFieldsXml).HasColumnName("ChangesFieldsXml").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.ChangesAutomationFieldsXml).HasColumnName("ChangesAutomationFieldsXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.ChangesAutomationFieldsXml).HasColumnName("ChangesAutomationFieldsXml").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.SetAutomationSsucceedXml).HasColumnName("SetAutomationSsucceedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.SetAutomationSsucceedXml).HasColumnName("SetAutomationSsucceedXml").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.EmailAutomationSsucceedXml).HasColumnName("EmailAutomationSsucceedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.EmailAutomationSsucceedXml).HasColumnName("EmailAutomationSsucceedXml").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.SetAutomationFailedXml).HasColumnName("SetAutomationFailedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.SetAutomationFailedXml).HasColumnName("SetAutomationFailedXml").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.EmailAutomationFailedXml).HasColumnName("EmailAutomationFailedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.EmailAutomationFailedXml).HasColumnName("EmailAutomationFailedXml").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.ExecutionTime).HasColumnName("ExecutionTime").IsRequired();
 
-            this.Property(t => t.FollowUpAutomationFailedXml).HasColumnName("FollowUpAutomationFailedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.FollowUpAutomationFailedXml).HasColumnName("FollowUpAutomationFailedXml").IsRequired().HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.SetSLAAutomationFailedXml).HasColumnName("SetSLAAutomationFailedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.SetSLAAutomationFailedXml).HasColumnName("SetSLAAutomationFailedXml").IsRequired().HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.FollowUpAutomationSsucceedXml).HasColumnName("FollowUpAutomationSsucceedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.FollowUpAutomationSsucceedXml).HasColumnName("FollowUpAutomationSsucceedXml").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.SetSLAAutomationSsucceedXml).HasColumnName("SetSLAAutomationSsucceedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.SetSLAAutomationSsucceedXml).HasColumnName("SetSLAAutomationSsucceedXml").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.QueuedTaskAutomationFailedXml).HasColumnName("QueuedTaskAutomationFailedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.QueuedTaskAutomationSsucceedXml).HasColumnName("QueuedTaskAutomationSsucceedXm").IsRequired().HasMaxLength(-1).IsUnicode(true);
-			}
-			else
-			{
-              this.Property(t => t.QueuedTaskAutomationSsucceedXml).HasColumnName("QueuedTaskAutomationSsucceedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
-			}
-
-
-            this.Property(t => t.DropSendinterfacefailedxml).HasColumnName("DropSendinterfacefailedxml").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            this.Property(t => t.DropSendinterfacessucceedxml).HasColumnName("DropSendinterfacessucceedxml").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            this.Property(t => t.DropSenddocumentfailedxml).HasColumnName("DropSenddocumentfailedxml").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            this.Property(t => t.DropSenddocumentssucceedxml).HasColumnName("DropSenddocumentssucceedxml").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            this.Property(t => t.DropCreatetaskfailedxml).HasColumnName("DropCreatetaskfailedxml").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            this.Property(t => t.DropCreatetaskssucceedxml).HasColumnName("DropCreatetaskssucceedxml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.QueuedTaskAutomationFailedXml).HasColumnName("QueuedTaskAutomationFailedXml").IsRequired().IsMaxLength().IsUnicode(true);
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.SendInterfaceAutomationFailedXml).HasColumnName("SendInterfaceAutomationFailedX").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.QueuedTaskAutomationSsucceedXml).HasColumnName("QueuedTaskAutomationSsucceedXm").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 			else
 			{
-              this.Property(t => t.SendInterfaceAutomationFailedXml).HasColumnName("SendInterfaceAutomationFailedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.QueuedTaskAutomationSsucceedXml).HasColumnName("QueuedTaskAutomationSsucceedXml").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 
+
+            this.Property(t => t.DropSendinterfacefailedxml).HasColumnName("DropSendinterfacefailedxml").IsRequired().IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.DropSendinterfacessucceedxml).HasColumnName("DropSendinterfacessucceedxml").IsRequired().IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.DropSenddocumentfailedxml).HasColumnName("DropSenddocumentfailedxml").IsRequired().IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.DropSenddocumentssucceedxml).HasColumnName("DropSenddocumentssucceedxml").IsRequired().IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.DropCreatetaskfailedxml).HasColumnName("DropCreatetaskfailedxml").IsRequired().IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.DropCreatetaskssucceedxml).HasColumnName("DropCreatetaskssucceedxml").IsRequired().IsMaxLength().IsUnicode(true);
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.SendInterfaceAutomationSsucceedXml).HasColumnName("SendInterfaceAutomationSsuccee").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.SendInterfaceAutomationFailedXml).HasColumnName("SendInterfaceAutomationFailedX").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 			else
 			{
-              this.Property(t => t.SendInterfaceAutomationSsucceedXml).HasColumnName("SendInterfaceAutomationSsucceedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.SendInterfaceAutomationFailedXml).HasColumnName("SendInterfaceAutomationFailedXml").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.SendDocumentAutomationFailedXml).HasColumnName("SendDocumentAutomationFailedXm").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.SendInterfaceAutomationSsucceedXml).HasColumnName("SendInterfaceAutomationSsuccee").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 			else
 			{
-              this.Property(t => t.SendDocumentAutomationFailedXml).HasColumnName("SendDocumentAutomationFailedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.SendInterfaceAutomationSsucceedXml).HasColumnName("SendInterfaceAutomationSsucceedXml").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.SendDocumentAutomationSsucceedXml).HasColumnName("SendDocumentAutomationSsucceed").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.SendDocumentAutomationFailedXml).HasColumnName("SendDocumentAutomationFailedXm").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 			else
 			{
-              this.Property(t => t.SendDocumentAutomationSsucceedXml).HasColumnName("SendDocumentAutomationSsucceedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.SendDocumentAutomationFailedXml).HasColumnName("SendDocumentAutomationFailedXml").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.OnUpdateDocumentAutomationFailedXml).HasColumnName("OnUpdateDocumentAutomationFail").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.SendDocumentAutomationSsucceedXml).HasColumnName("SendDocumentAutomationSsucceed").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 			else
 			{
-              this.Property(t => t.OnUpdateDocumentAutomationFailedXml).HasColumnName("OnUpdateDocumentAutomationFailedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.SendDocumentAutomationSsucceedXml).HasColumnName("SendDocumentAutomationSsucceedXml").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.OnUpdateDocumentAutomationSsucceedXml).HasColumnName("OnUpdateDocumentAutomationSsuc").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.OnUpdateDocumentAutomationFailedXml).HasColumnName("OnUpdateDocumentAutomationFail").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 			else
 			{
-              this.Property(t => t.OnUpdateDocumentAutomationSsucceedXml).HasColumnName("OnUpdateDocumentAutomationSsucceedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.OnUpdateDocumentAutomationFailedXml).HasColumnName("OnUpdateDocumentAutomationFailedXml").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 
-
-            this.Property(t => t.CreateTaskAutomationFailedXml).HasColumnName("CreateTaskAutomationFailedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.CreateTaskAutomationSsucceedXml).HasColumnName("CreateTaskAutomationSsucceedXm").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.OnUpdateDocumentAutomationSsucceedXml).HasColumnName("OnUpdateDocumentAutomationSsuc").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 			else
 			{
-              this.Property(t => t.CreateTaskAutomationSsucceedXml).HasColumnName("CreateTaskAutomationSsucceedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+              this.Property(t => t.OnUpdateDocumentAutomationSsucceedXml).HasColumnName("OnUpdateDocumentAutomationSsucceedXml").IsRequired().IsMaxLength().IsUnicode(true);
 			}
 
 
-            this.Property(t => t.EventAutomationFailedXml).HasColumnName("EventAutomationFailedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.CreateTaskAutomationFailedXml).HasColumnName("CreateTaskAutomationFailedXml").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.EventAutomationSsucceedXml).HasColumnName("EventAutomationSsucceedXml").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.CreateTaskAutomationSsucceedXml).HasColumnName("CreateTaskAutomationSsucceedXm").IsRequired().IsMaxLength().IsUnicode(true);
+			}
+			else
+			{
+              this.Property(t => t.CreateTaskAutomationSsucceedXml).HasColumnName("CreateTaskAutomationSsucceedXml").IsRequired().IsMaxLength().IsUnicode(true);
+			}
+
+
+            this.Property(t => t.EventAutomationFailedXml).HasColumnName("EventAutomationFailedXml").IsRequired().IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.EventAutomationSsucceedXml).HasColumnName("EventAutomationSsucceedXml").IsRequired().IsMaxLength().IsUnicode(true);
         }
     }
 }

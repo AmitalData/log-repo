@@ -22,17 +22,17 @@ using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ContactPasswordUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ContactPassword,ContactPasswordPM,IEntityPM,ContactPasswordList,string>
+   public partial class ContactPasswordUpdateService:BaseEntityUpdateService<GlobalContext,POCO.ContactPassword,ContactPasswordPM,IEntityPM,ContactPasswordList,string>
    {
    			
-        public ContactPasswordUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ContactPasswordUpdateService(IGlobalContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base((GlobalContext)mainContext,additionalContexts, tenant)
         {
             Mapping = new ContactPasswordDataMapping();
-            Repository = new Repository<POCO.ContactPassword>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ContactPassword>((GlobalContext)mainContext);
         }
-        public ContactPasswordUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ContactPasswordUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ContactPasswordUpdateService(int tenant) : this(GlobalContext.GetContext(tenant), null, tenant) {}
+        public ContactPasswordUpdateService(IGlobalContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ContactPassword,string> GetKeys(ContactPasswordPM entityPM) => new ContactPasswordKeys<string>() { Email = entityPM.Email };
 protected override void FillDefaultValuesOnCreate(ContactPasswordPM entityPM)
 		{

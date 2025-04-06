@@ -279,6 +279,7 @@
     <Compile Include="EntityListQueryServices\Generated\EntityCasualDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityChangeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityDateListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\EntityLastActivityListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityLastActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityLastUpdateListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntityStatusListQueryService.Generated.cs" />
@@ -417,6 +418,7 @@
     <Compile Include="EntityListQueryServices\Generated\ScreenSectionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SessionPolicyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SettingListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SharedLogisticsContactLastLoginListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsInvitationStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedUserQueryListQueryService.Generated.cs" />
@@ -671,6 +673,7 @@
     <Compile Include="EntityQueryServices\Generated\EntityCasualDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityChangeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityDateQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\EntityLastActivityQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityLastActivityTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityLastUpdateQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EntityStatusQueryService.Generated.cs" />
@@ -819,6 +822,7 @@
     <Compile Include="EntityQueryServices\Generated\ScreenSectionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SessionPolicyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SharedLogisticsContactLastLoginQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SharedLogisticsInvitationStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SharedLogisticsSettingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SharedUserQueryQueryService.Generated.cs" />
@@ -911,6 +915,7 @@
     <Compile Include="EntityUpdateServices\Generated\APILogsDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\APILogsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AuditLogUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AuthenticationTokenUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AutomationHistoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AutomationLastUpdateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AutomationResultEmailRecipientUpdateService.Generated.cs" />
@@ -1069,6 +1074,7 @@
     <Compile Include="EntityUpdateServices\Generated\EntityChangeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityDateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityLastActivityTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\EntityLastActivityUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityLastUpdateUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityStatusTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EntityStatusUpdateService.Generated.cs" />
@@ -1206,6 +1212,7 @@
     <Compile Include="EntityUpdateServices\Generated\ScreenUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SessionPolicyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SettingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SharedLogisticsContactLastLoginUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SharedLogisticsInvitationStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SharedLogisticsSettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SharedUserQueryUpdateService.Generated.cs" />

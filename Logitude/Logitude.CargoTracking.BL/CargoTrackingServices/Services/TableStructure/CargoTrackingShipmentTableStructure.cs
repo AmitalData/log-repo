@@ -58,10 +58,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "ExceptionDate",
                 "ExceptionDescription",
                 "IsOperationalClosed",
-                "LockerAddress",
-                "LockerCity",
-                "LockerCode",
-                "LockerName"
+               
 
             };
         public List<string> fields = new List<string>

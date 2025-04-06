@@ -9,11 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class CustomsSettingQueryService
     {
+        private const string notSeperatedDBKey = "notSeperatedDBKey";
+
         //static Dictionary<int,CustomsSettingPM> _CustomsSettingCache = new Dictionary<int,CustomsSettingPM>();
         public static string GetUnfDBConnectionInfo(int tenant)
         {
@@ -266,8 +269,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return poco.Tenant;
         }   
 
+        public static List<CustomsSettingPM> GetNotSeperatedDB()
+        {
+            List<CustomsSettingPM> pms = CacheManager.GetOrInsertNewObject(notSeperatedDBKey, () =>
+            {
+                CustomsSettingQueryService customsSettingQueryService = new CustomsSettingQueryService(0);
 
+                List<string> globalDbs = new GlobalDBRepository().All().Select(x => x.Id).ToList();
 
+                List<CustomsSettingPM> customsSettings = customsSettingQueryService.repository.GetRealAll()
+                    .Where(cs => !globalDbs.Contains(cs.Tenant.ToString())).ToList()
+                    .Select(cs => customsSettingQueryService.GetEntityPM(cs)).ToList();
+
+                return customsSettings;
+            });
+            return pms;
+        }
     }
 
 

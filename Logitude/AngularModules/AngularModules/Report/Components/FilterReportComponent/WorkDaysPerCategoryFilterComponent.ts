@@ -4,7 +4,7 @@ import { ReportsPreviewComponent } from '../../Components/ReportsPreviewComponen
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ReportFliter } from '../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'WorkDaysPerCategoryFilterComponent',
@@ -77,8 +77,71 @@ export class WorkDaysPerCategoryFilterComponent extends BaseComponent {
         date.setUTCSeconds(0);
         return date;
     }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
 
-    RunReport() {
+        if (this.IsSchedulerReport) {
+            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+        }
+        else {
+            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+        }
+
+    }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) {
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "EmployeeUserId":
+                    this.EmployeeUserId = queryFilterItem.FieldValue;
+                    break;
+                case "CustomerId":
+                    this.CustomerId = queryFilterItem.FieldValue;
+                    break;
+                case "BudgetId":
+                    this.BudgetId = queryFilterItem.FieldValue;
+                    break;
+                case "CategoryId":
+                    this.CategoryId = queryFilterItem.FieldValue;
+                    break;
+                case "OwnerId":
+                    this.OwnerId = queryFilterItem.FieldValue;
+                    break;
+                case "ProjectId":
+                    this.ProjectId = queryFilterItem.FieldValue;
+                    break;
+                case "IncludeInnerProject":
+                    this.IncludeInnerProject = queryFilterItem.FieldValue;
+                    break;
+                case "ExternalProjectNumber":
+                    this.ExternalProjectNumber = queryFilterItem.FieldValue;
+                    break;
+                case "IncludeInactiveProjects":
+                    this.IncludeInactiveProjects = queryFilterItem.FieldValue;
+                    break;
+
+
+            }
+
+        }
+    }
+    ValidateSelectedFilters(){
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
@@ -86,97 +149,104 @@ export class WorkDaysPerCategoryFilterComponent extends BaseComponent {
         if (this.ToDate == null) {
             this.ValidationErrorsList.push("To Date is required");
         }
-        if (this.ValidationErrorsList.length == 0) {
-            this.queryFilterItems = new Array<QueryFilterItem>();
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "FromDate";
-            this.queryFilterItem.FieldValue = this.FromDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        return this.ValidationErrorsList.length == 0;
+    }
+    GetQueryFilterItems(){
+        this.queryFilterItems = new Array<QueryFilterItem>();
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "FromDate";
+        this.queryFilterItem.FieldValue = this.FromDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ToDate";
-            this.queryFilterItem.FieldValue = this.ToDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "ToDate";
+        this.queryFilterItem.FieldValue = this.ToDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "EmployeeUserId";
-            this.queryFilterItem.FieldValue = this.EmployeeUserId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "EmployeeUserId";
+        this.queryFilterItem.FieldValue = this.EmployeeUserId;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CustomerId";
-            this.queryFilterItem.FieldValue = this.CustomerId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "CustomerId";
+        this.queryFilterItem.FieldValue = this.CustomerId;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "BudgetId";
-            this.queryFilterItem.FieldValue = this.BudgetId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "BudgetId";
+        this.queryFilterItem.FieldValue = this.BudgetId;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CategoryId";
-            this.queryFilterItem.FieldValue = this.CategoryId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "CategoryId";
+        this.queryFilterItem.FieldValue = this.CategoryId;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "OwnerId";
-            this.queryFilterItem.FieldValue = this.OwnerId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "OwnerId";
+        this.queryFilterItem.FieldValue = this.OwnerId;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ProjectId";
-            this.queryFilterItem.FieldValue = this.ProjectId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "ProjectId";
+        this.queryFilterItem.FieldValue = this.ProjectId;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "IncludeInnerProject";
-            this.queryFilterItem.FieldValue = this.IncludeInnerProject;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "IncludeInnerProject";
+        this.queryFilterItem.FieldValue = this.IncludeInnerProject;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ExternalProjectNumber";
-            this.queryFilterItem.FieldValue = this.ExternalProjectNumber;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "ExternalProjectNumber";
+        this.queryFilterItem.FieldValue = this.ExternalProjectNumber;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "OwnerId";
-            this.queryFilterItem.FieldValue = this.OwnerId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "OwnerId";
+        this.queryFilterItem.FieldValue = this.OwnerId;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "IncludeInactiveProjects";
-            this.queryFilterItem.FieldValue = this.IncludeInactiveProjects;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "IncludeInactiveProjects";
+        this.queryFilterItem.FieldValue = this.IncludeInactiveProjects;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+        return this.queryFilterItems;
+    }
+    RunReport() {
+        
+        if (this.ValidateSelectedFilters()) {
+          
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;

@@ -57,8 +57,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string EmailAutomationFailedXml { get; set; }
         [Column("ExecutionTime")]
 	    public int ExecutionTime { get; set; }
+     [Key]
         [Column("FollowUpAutomationFailedXml")]
 	    public string FollowUpAutomationFailedXml { get; set; }
+     [Key]
         [Column("SetSLAAutomationFailedXml")]
 	    public string SetSLAAutomationFailedXml { get; set; }
         [Column("FollowUpAutomationSsucceedXml")]

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.DataContracts
@@ -21,5 +23,6 @@ namespace Logitude.BL.DataContracts
         public string UpdatedByUderId { get; set; }
         public string UpdatedByUserName { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public List<CurrencyRate> CurrencyRates { get; set; }
     }
 }

@@ -53,18 +53,10 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                     continue;
                 }
                 object pocoInstance;
-                if (LBtenantsetting==null)
-                {
+                if (LBtenantsetting == null)
                      pocoInstance = new object[] { poco, tenant, globalTenant }.FirstOrDefault(x => x.GetType().GetProperty(property.Name) != null);
-
-                }
                 else
-                {
                      pocoInstance = new object[] { poco, tenant, globalTenant, LBtenantsetting }.FirstOrDefault(x => x.GetType().GetProperty(property.Name) != null);
-
-                }
-
-                
                 if (pocoInstance == null)
                     continue;
 
@@ -87,10 +79,12 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
             string fieldName = property.Name;
             string tableName = pocoInstance.GetType().BaseType.Name;
             ObjectFieldPM objectField = new ObjectFieldQuery(tenantId).GetObjectFieldPMsByObjectTableName(tableName, tenantId).FirstOrDefault(x => x.FieldName == fieldName);
-            string description = objectField.FullNameTextCodeDefaultText;
 
             if (objectField == null)
                 return;
+            string description = objectField.FullNameTextCodeDefaultText;
+
+            
 
             if (objectField.LookUpTableId != null)
             {
@@ -159,9 +153,35 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 
             List<Type> types = new List<Type>();
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
-                try { types.AddRange(assembly.GetTypes()); } catch { }
+            {
+                if (assembly.FullName.StartsWith("Microsoft")  || assembly.FullName.StartsWith("System"))
+                    continue;
+                try
+                {
+                    types.AddRange(assembly.GetTypes());
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    // Add the types that DID load
+                    types.AddRange(ex.Types.Where(t => t != null));
 
-            Type entityClrType = types.Where(t => t.Name == entityName).Last();
+                    // Optional: log detailed loader exceptions
+                    foreach (var loaderEx in ex.LoaderExceptions)
+                    {
+                        // Replace with your logging mechanism
+                        Console.WriteLine($"LoaderException: {loaderEx.Message}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log other unexpected exceptions (optional)
+                    Console.WriteLine($"General Exception loading types from {assembly.FullName}: {ex.Message}");
+                }
+            }
+
+
+            Type entityClrType = types.Where(t => t.Name == entityName && t.FullName.Contains("EntityPOCOs")).Last();
+
             if (entityClrType == null)
                 throw new InvalidOperationException($"CLR type for entity '{entityName}' not found.");
 

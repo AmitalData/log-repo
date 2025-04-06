@@ -3,7 +3,6 @@ import {Component, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef, Cha
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../Components/Filters/ReportFliter';
 import {ReportService} from '../../Common/Services/ExtendedLists/ReportService';
-import {StimulsoftViewerComponent} from '../../Infrastructure/Components/StimulsoftComponent/StimulsoftViewerComponent';
 import {StimulsoftArg} from '../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/StimulsoftArg';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ReportList} from '../EntityLists/ReportList';
@@ -11,7 +10,7 @@ import {ReportGroupList} from '../EntityLists/ReportGroupList';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 import {EntityPartner} from '../../Infrastructure/DataContracts/EntityPartner';
 import {ReportsTemplateList} from '../../Common/EntityLists/ReportsTemplateList';
-import {AppTool, DateTool} from '../../Infrastructure/Tools';
+import {AppTool} from '../../Infrastructure/Tools';
 import {ReportBuildResult} from '../DataContracts/ReportBuildResult';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 import { ReportsTemplateListExtendedService } from '../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
@@ -19,7 +18,6 @@ import { QueryFilterItem } from './Filters/QueryFilterItem';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
-import { HomeComponent } from 'Infrastructure/Components/HomeComponent/HomeComponent';
 
 @Component({
     selector: 'ReportsPreviewComponent',
@@ -85,8 +83,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     ReportsPreview(GroupList: ReportGroupList, ReportList: ReportList, reportTemplateLists: ReportsTemplateList[]) {
         this.Report = ReportList;
         this.ReportGroup = GroupList;
-        this.ReportsTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType == "R");
-        this.MessageTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType == "M");
+        this.ReportsTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType === "R" || temp.TemplateType === "E");
+        this.MessageTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType === "M");
         this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
         this.FilterControlName = ReportList.FilterControlName;
         this.ReportsRunUsingWR = true;
@@ -464,10 +462,13 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     FillReportFilter(filter: ReportFliter) {
-
-        if (this.StimulsoftArg) filter.DefaultTemplateId = this.StimulsoftArg.DefaultTemplateId;
-        else filter.DefaultTemplateId = this.Report.DefaultTemplateId;
-
+        if (AppTool.IsNullOrEmpty(filter.DefaultTemplateId)) {
+            if (this.StimulsoftArg) {
+                filter.DefaultTemplateId = this.StimulsoftArg.DefaultTemplateId;
+            } else {
+                filter.DefaultTemplateId = this.Report.DefaultTemplateId;
+            }
+        }
         filter.ReportsRunUsingWR = false;
         filter.Tenant = SessionLocator.Tenant;
         filter.ReportName = this.Title;

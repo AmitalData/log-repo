@@ -97,7 +97,7 @@ export class InvoiceQueueComponent
                 this.GetInvoiceFromUnifreight();
             } else {
                 this._invoiceQueueWebService.GetInvoice(this.declaration.Tenant, this.declaration.CustomFileNo).subscribe(data => {
-                    this.processInvoiceData(data.Result, this);
+                    this.processInvoiceData(data.Result?.Invoice, this);
                 });
             }
         });
@@ -106,7 +106,7 @@ export class InvoiceQueueComponent
 
     processInvoiceData(invoiceData: AllInvoices, context: any) {
         if (invoiceData.InvoiceLines != null) {
-            invoiceData.InvoiceLines.forEach(x => {
+            invoiceData.InvoiceLines?.forEach(x => {
                 if (x.AmountNIS !== "") {
                     context.SumAmountNIS += Number(x.AmountNIS);
                 }
@@ -119,8 +119,8 @@ export class InvoiceQueueComponent
         }
 
         context.LabelSumAmountNIS = context.SetFixedValue(String(context.SumAmountNIS));
-        invoiceData.Statuses.forEach(x => context.StatusList.Insert(x));
-        invoiceData.IntegratedInvoices.forEach(x => {
+        invoiceData.Statuses?.forEach(x => context.StatusList.Insert(x));
+        invoiceData.IntegratedInvoices?.forEach(x => {
             x.InvoiceAmount = context.SetFixedValue(x.InvoiceAmount);
             context.IntegratedInvoiceList.Insert(x);
         });
@@ -158,7 +158,7 @@ export class InvoiceQueueComponent
             }
         });
 
-        context.WMessagesList.Collection.forEach(x => context.EMessagesList.Insert(x));
+        context.WMessagesList?.Collection?.forEach(x => context.EMessagesList.Insert(x));
     }
 
     BuildDateFromString(date: string) {
@@ -622,13 +622,18 @@ export class InvoiceQueueComponent
         let allInvoices = this.getDefaultAllInvoices();
     
         // Regular expressions to extract each section from the XML string
+        const statusesMatch = xmlString.match(/<Statuses>[\s\S]*?<\/Statuses>/);
         const invoiceLinesMatch = xmlString.match(/<InvoiceLines>[\s\S]*?<\/InvoiceLines>/);
         const integratedInvoicesMatch = xmlString.match(/<IntegratedInvoices[\s\S]*?\/>/);
         const invoicesMatch = xmlString.match(/<Invoices>[\s\S]*?<\/Invoices>/);
         const messagesMatch = xmlString.match(/<Messages[\s\S]*?\/>/);
         const generalDetailsMatch = xmlString.match(/<GeneralDetails>[\s\S]*?<\/GeneralDetails>/);
     
-        // Parse and extract data for each section if available
+        if (statusesMatch) {
+            const statusesDoc = parser.parseFromString(statusesMatch[0], 'application/xml');
+            allInvoices.Statuses = this.extractStatuses(statusesDoc);
+        }
+
         if (invoiceLinesMatch) {
             const invoiceLinesDoc = parser.parseFromString(invoiceLinesMatch[0], 'application/xml');
             allInvoices.InvoiceLines = this.extractInvoiceLines(invoiceLinesDoc);

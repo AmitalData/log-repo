@@ -22,17 +22,17 @@ using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CaptchaKeyUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CaptchaKey,CaptchaKeyPM,IEntityPM,CaptchaKeyList,string>
+   public partial class CaptchaKeyUpdateService:BaseEntityUpdateService<GlobalContext,POCO.CaptchaKey,CaptchaKeyPM,IEntityPM,CaptchaKeyList,string>
    {
    			
-        public CaptchaKeyUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CaptchaKeyUpdateService(IGlobalContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base((GlobalContext)mainContext,additionalContexts, tenant)
         {
             Mapping = new CaptchaKeyDataMapping();
-            Repository = new Repository<POCO.CaptchaKey>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CaptchaKey>((GlobalContext)mainContext);
         }
-        public CaptchaKeyUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CaptchaKeyUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CaptchaKeyUpdateService(int tenant) : this(GlobalContext.GetContext(tenant), null, tenant) {}
+        public CaptchaKeyUpdateService(IGlobalContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CaptchaKey,string> GetKeys(CaptchaKeyPM entityPM) => new CaptchaKeyKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CaptchaKeyPM entityPM)
 		{

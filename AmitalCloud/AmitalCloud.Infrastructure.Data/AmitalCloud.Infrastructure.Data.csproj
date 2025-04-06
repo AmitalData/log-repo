@@ -177,7 +177,6 @@
   <ItemGroup>
     <Compile Include="AmitalCloudSettings.cs" />
     <Compile Include="ApplicationAppInfo.cs" />
-    <Compile Include="Azure\AzureRedisCacheDetails.cs" />
     <Compile Include="Azure\BlobExtensions.cs" />
     <Compile Include="Azure\CommunicationLogsAzure.cs" />
     <Compile Include="Azure\CommunicationLogsAzureContext.cs" />
@@ -404,6 +403,7 @@
     <Compile Include="EntityDataMappings\EntityCasualDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityChangeDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityDateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EntityLastActivityDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityLastActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityLastUpdateDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityStatusDataMapping.cs" />
@@ -611,6 +611,7 @@
     <Compile Include="EntityDataMappings\Generated\EntityCasualDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityChangeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityDateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EntityLastActivityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityLastActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityLastUpdateDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityStatusDataMapping.Generated.cs" />
@@ -759,6 +760,7 @@
     <Compile Include="EntityDataMappings\Generated\ScreenSectionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SessionPolicyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SharedLogisticsContactLastLoginDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedLogisticsInvitationStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedLogisticsSettingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedUserQueryDataMapping.Generated.cs" />
@@ -960,6 +962,7 @@
     <Compile Include="EntityDataMappings\ScreenSectionDataMapping.cs" />
     <Compile Include="EntityDataMappings\SessionPolicyDataMapping.cs" />
     <Compile Include="EntityDataMappings\SettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SharedLogisticsContactLastLoginDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedLogisticsInvitationStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedLogisticsSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedUserQueryDataMapping.cs" />
@@ -1050,6 +1053,7 @@
     <Compile Include="Queries\CommunicationLogStepQuery.cs" />
     <Compile Include="Queries\DocumentsFilingMetaDataValueQuery.cs" />
     <Compile Include="Queries\DocumentTypeQuery.cs" />
+    <Compile Include="Repositories\Manual\SessionPolicyRepository.cs" />
     <Compile Include="Repositories\Manual\CardRepository.cs" />
     <Compile Include="Repositories\Manual\CommunicationLogRepository.cs" />
     <Compile Include="Repositories\Manual\CommunicationLogStepRepository.cs" />
@@ -1132,7 +1136,6 @@
     <Compile Include="Queries\CardContactAdditionalServiceQuery.cs" />
     <Compile Include="Queries\CardContactProductQuery.cs" />
     <Compile Include="Queries\ContactQuery.cs" />
-    <Compile Include="Exceptions\APIException.cs" />
     <Compile Include="Exceptions\BusinessErrorException.cs" />
     <Compile Include="Queries\ContactTenantQuery.cs" />
     <Compile Include="Queries\ContactTenantRoleQuery.cs" />

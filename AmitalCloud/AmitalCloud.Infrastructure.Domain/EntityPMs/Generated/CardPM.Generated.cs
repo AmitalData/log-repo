@@ -87,8 +87,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		addresses = entity.Addresses != null ? entity.Addresses.Select(a=>new AddressPM(a)).ToList() : null;
 		_usoCFDICode = entity.UsoCFDICode;
 		_usocfdi = entity.UsoCFDI !=null ? new UsoCFDIPM(entity.UsoCFDI) : null;
-			contacts = entity.Contacts != null ? entity.Contacts.Select(a=>new ContactPM(a)).ToList() : null;
-		_gLAccountId = entity.GLAccountId;
+			_gLAccountId = entity.GLAccountId;
 		_address1 = entity.Address1;
 		_address2 = entity.Address2;
 		_isInternationalPartner = entity.IsInternationalPartner;
@@ -960,37 +959,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _usocfdi; } 
 		set { _usocfdi = value; }
 		}
-	   private List<ContactPM> contacts;
-	 
-		     
-	   [Include]
-	   [Association("ContactsCards", "Id","CardId")]
-	   [DataMember]
-	   public virtual List<ContactPM> Contacts  
-	   {
-	        get
-             {
-                 if (contacts == null)
-                 {
-                     contacts = new List<ContactPM>();
-                 }
-                 return contacts;
-              }
-             set { contacts = value; }
-	    }
-	   private List<ContactPM>  deletedContacts;
-	   public virtual List<ContactPM> DeletedContacts  
-	   {
-	        get
-             {
-                 if ( deletedContacts == null)
-                 {
-                      deletedContacts = new List<ContactPM>();
-                 }
-                 return  deletedContacts;
-              }
-             set {  deletedContacts = value; }
-	    }
 	  private string _gLAccountId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -1,19 +1,14 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Transactions;
-using System.Web;
 using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
@@ -156,7 +151,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                     }
                 }
                 UserQueryService service = new UserQueryService(tenant);
-                UserPM user = service.GetSingle(loggeduserid,true, true);
+                UserPM user = service.GetSingle(loggeduserid, true, true);
                 if (user != null)
                 {
                     myResult.ExpirationDate = user.ExpirationDate;

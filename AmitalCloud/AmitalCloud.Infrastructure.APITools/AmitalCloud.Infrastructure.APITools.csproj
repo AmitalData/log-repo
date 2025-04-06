@@ -168,7 +168,6 @@
   <ItemGroup>
     <Compile Include="ApiV1\DocumentsFiling.cs" />
     <Compile Include="ApiV1\DocumentsFilingQuery.cs" />
-    <Compile Include="ApiV1\DocumentsFilingUpdateService.cs" />
     <Compile Include="ApiV1\DocumentType.cs" />
     <Compile Include="ApiV1\ObjectTable.cs" />
     <Compile Include="ApiV1\QueryService\DocumentTypeQueryService.cs" />
@@ -183,9 +182,6 @@
     <Compile Include="DataContracts\Parameter.cs" />
     <Compile Include="DataContracts\QueueTask.cs" />
     <Compile Include="DataContracts\UnifreightGatewayProxy.cs" />
-    <Compile Include="ExternalServices\DcaManager.Chunk.cs" />
-    <Compile Include="ExternalServices\DcaManagerOld.cs" />
-    <Compile Include="ExternalServices\DcaManager.cs" />
     <Compile Include="ExternalServices\DCAParams.cs" />
     <Compile Include="ExternalServices\ExternalServicePM.cs" />
     <Compile Include="ExternalServices\ExternalServicesRepository.cs" />

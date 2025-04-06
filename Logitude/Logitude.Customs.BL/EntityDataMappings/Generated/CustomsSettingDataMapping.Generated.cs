@@ -64,7 +64,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             MaxSISendInteractive,
             CourierDocToken,
             ForbiddenSigns,
-            MyCustomURL,
         }
 
 
@@ -110,7 +109,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             MaxSISendInteractive,
             CourierDocToken,
             ForbiddenSigns,
-            MyCustomURL,
 
         }
 
@@ -294,10 +292,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.ForbiddenSigns = entityPM.ForbiddenSigns;
             }
 
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MyCustomURL))
-            {
-                entityPOCO.MyCustomURL = entityPM.MyCustomURL;
-            }
+           
 
             BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
         }
@@ -486,10 +481,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.ForbiddenSigns = entityPOCO.ForbiddenSigns;
             }
 
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.MyCustomURL))
-            {
-                entityPM.MyCustomURL = entityPOCO.MyCustomURL;
-            }
+         
 
         }
 
@@ -671,10 +663,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ForbiddenSigns = entityPM.ForbiddenSigns;
             }
 
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MyCustomURL))
-            {
-                oldEntityPM.MyCustomURL = entityPM.MyCustomURL;
-            }
+            
 
         }
 

@@ -26,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.SQLString).HasColumnName("SQLString").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.SQLString).HasColumnName("SQLString").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 

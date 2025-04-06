@@ -25,6 +25,7 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated 
 {
@@ -52,6 +53,26 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var res1 = new { Success = true, Message = responseText };
 
                 return Request.CreateResponse(StatusCode, res1);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetCountOpenChequesByBankAccount(int tenant, string bankId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                ARPaymentChequeQueryService arPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
+                var count = arPaymentChequeQueryService.GetOpenChequesByBankAccount(bankId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, count);
             }
 
             catch (Exception ex)

@@ -453,6 +453,30 @@ tenant);
 
         }
 
+
+        [HttpGet]
+        public HttpResponseMessage GetReconciliationsByJournalId(string journalId)
+        {
+            try
+            {
+                int tenant = AuthinticateTenant();
+
+                ReconciliationListQueryService reconciliationListQueryService = new ReconciliationListQueryService(AccountingContext.GetContext(tenant));
+                List<ReconciliationList> openReconciliation = reconciliationListQueryService.GetReconciliationsByJournalId(journalId, tenant);
+                  ServiceResponse response = new ServiceResponse();
+                  response.Count = openReconciliation.Count();
+                 response.Result = openReconciliation;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         private static string GetFilter(ApiQueryFilters filters, string fieldName)
         {
             JavaScriptSerializer JsonConvert = new JavaScriptSerializer();

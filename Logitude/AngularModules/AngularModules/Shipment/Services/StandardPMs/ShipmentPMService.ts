@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import { ShipmentPM } from '../../EntityPMs/ShipmentPM';
 import { AWBOCIPM } from '../../EntityPMs/AWBOCIPM';
@@ -38,12 +38,7 @@ import { ShipmentUnassignedFieldPM } from '../../EntityPMs/ShipmentUnassignedFie
 import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
 import { JsonPatchBuilder } from 'Infrastructure/Helpers/JsonPatchBuilder';
 import { AppTool } from 'Infrastructure/Tools';
-import { CustomsSettingPMService } from 'Customs/Services/StandardPMs/CustomsSettingPMService';
-import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
-import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
-import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
-import { DeclarationReferantDataPM } from 'Customs/EntityPMs/DeclarationReferantDataPM';
-import { DeclarationReferantDataPMService } from 'Customs/Services/StandardPMs/DeclarationReferantDataPMService';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 @Injectable()
 
@@ -53,7 +48,7 @@ export class ShipmentPMService {
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/shipment';
-    }
+            }
 
     get(id: string) {
 
@@ -78,15 +73,8 @@ export class ShipmentPMService {
                     pmresponse.Result = entity;
                     return pmresponse;
 
-                 }), mergeMap((pmresponse: ServiceResponse) => {
-                    if (pmresponse?.Result?.IsCustomShipment) {
-                        return this.MapCustomShipment(pmresponse);
-                    } else {
-                        return of(pmresponse);
-                    }
-
                 }), catchError(ServiceHelper.HandleServiceError));
-         });
+        });
 
         // .flatMap((res: Response) => {
         //    var location = res.headers.get('Location');
@@ -100,38 +88,6 @@ export class ShipmentPMService {
                 return this._http.get(serverTime);
             })
         */
-    }
-
-    MapCustomShipment(pmresponse: ServiceResponse) {
-        var entity = pmresponse.Result;
-
-        return this._declarationExtendedListService.GetSingleDeclarationByCustomFileNo(entity.ShipmentNumber).pipe(
-            mergeMap((myResult: any) => {
-                var mm: ServiceResponse = myResult;
-                if (!mm.HasError && mm?.Result) {
-                    entity.DeclarationPM = mm.Result;
-                    return this._declarationReferantDataPMService.get(entity.DeclarationPM.Id).pipe(
-                        map((myResult: any) => {
-                            var mm: ServiceResponse = myResult;
-                            if (!mm.HasError && mm?.Result) {
-                                entity.DeclarationReferentDataPM = mm.Result;
-
-                                entity = this.MapJsonToEntityPM(entity);
-
-                                entity.DeclarationReferentDataPM = null;
-                                entity.DeclarationPM = null;
-
-                                ShipmentPMInitService.ApplyUIPoperties(entity, false);
-                                pmresponse.Result = entity;
-                            }
-                            return pmresponse;
-                        })
-                    );
-                } else {
-                    return of(pmresponse);
-                }
-            })
-        );
     }
 
     CheckIsCFSShipmentById(shipmentId: string) {
@@ -171,119 +127,60 @@ export class ShipmentPMService {
                 }), catchError(ServiceHelper.HandleServiceError));
         });
 
-        // .flatMap((res: Response) => {
-        //    var location = res.headers.get('Location');
-        //    return this._http.get(location);
-        //}).map((res: Response) => res.json()))
-        //.catch(this.handleError)
 
-        /*
-        .flatMap((res: Response) => {
-                var serverTime = res.headers.get('ServerTime');
-                return this._http.get(serverTime);
-            })
-        */
     }
-
-    getMyCustomUrl() {
-        let res = null;
-        let filters = new ApiQueryFilters(true);
-        filters.addAdditionalFilter("Tenant", InfraSettings.TenantPM.Id, null, null, "Equals", false, false, false, "string");
-
-        new CustomsSettingListService().getByFilters(filters)
-            .subscribe((myResponse: ServiceResponse) => {
-                if (myResponse != null) {
-                    if (!myResponse.HasError) {
-                        if (!AppTool.IsNullOrEmpty(myResponse.Result)) {
-                            new CustomsSettingPMService().get(myResponse.Result[0].Id)
-                                .subscribe((myResponse: ServiceResponse) => {
-                                    res = myResponse.Result.CustomsSettingUrl;
-                                })
-                        }
-                    }
-                }
-            })
-        return res;
-    }
-
     getSingleBySecurityKeyTenantWithoutToken(SecurityKey: string, Tenant: number) {
 
-        let CustomURL = this._apiUrl;
-
-        //var myAuthHeader = new Headers();
-        //myAuthHeader.append('Content-Type', 'application/json');
-        //myAuthHeader.append('Accept', 'application/json');
-        //myAuthHeader.append('token', SessionInfo.Token);
-        //loginService.AuthHeader = myAuthHeader;
-        //loginService.GetGlobalSetting().subscribe(Setting => {
-        //    if (Setting) {
-        //        if (Setting.DeploymentStage == "amitalstorage") {
-        //            var myCustomURL = "http://13.93.36.4/api/shipment";
-        //        }
-        //    }
-        //});
-
-        this.getMyCustomUrl().subscribe((response: ServiceResponse) => {
-
-            if (response.Result) {
-                CustomURL = response.Result;
-            }
-
-            if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
-                CustomURL = this._apiUrl;
-            }
-        });
-        //var key = PerformanceLogger.AddLogTime();
-        var callTime = new Date();
         return defer(() => {
-            var url = CustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey;
+            return this.GetGlobalSetting().then((response) => {
 
-            if (!AppTool.IsNullOrUndefined(Tenant)) {
-                url += '&tenant=' + Tenant;
-            }
-            return this._http.get(url, ServiceHelper.GetHttpFullHeadersWithoutToken()).pipe(
-                map((response: HttpResponse<any>) => {
+                if(response?.body)
+                     ObjectsLocator.UpdateGlobalSetting(response.body);
+                var myCustomURL = ObjectsLocator?.GlobalSetting?.CustomURL ?? this._apiUrl;
 
-                    //var servertime = response.headers.get('ServerExecutionTime');
-                    //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "getSingleBySecurityKey", SecurityKey);
+                if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
+                    myCustomURL = this._apiUrl;
+                }
 
-                    var pm = response.body;
-                    var entity: ShipmentPM;
-                    if (pm) {
-                        entity = this.MapJsonToEntityPM(pm);
-                    }
-                    var pmresponse: ServiceResponse;
-                    pmresponse = new ServiceResponse();
-                    pmresponse.Result = entity;
+                var url = myCustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey;
 
-                    pmresponse.Data = {};
-                    pmresponse.Data.WhatsAppMessagingPhoneNumber = response.headers.get('WhatsAppMessagingPhoneNumber');
-                    pmresponse.Data.TranzilaPaymentWithBit = response.headers.get('TranzilaPaymentWithBit');
+                if (!AppTool.IsNullOrUndefined(Tenant)) {
+                    url += '&tenant=' + Tenant;
+                }
+                return this._http.get(url, ServiceHelper.GetHttpFullHeadersWithoutToken()).pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pm = response.body;
+                        var entity: ShipmentPM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                        }
+                        var pmresponse: ServiceResponse;
+                        pmresponse = new ServiceResponse();
+                        pmresponse.Result = entity;
 
-                    return pmresponse;
+                        pmresponse.Data = {};
+                        pmresponse.Data.WhatsAppMessagingPhoneNumber = response.headers.get('WhatsAppMessagingPhoneNumber');
+                        pmresponse.Data.TranzilaPaymentWithBit = response.headers.get('TranzilaPaymentWithBit');
 
-                }), catchError(ServiceHelper.HandleServiceError));
+                        return pmresponse;
+                    }), catchError(ServiceHelper.HandleServiceError)).toPromise();
+            });
         });
 
-        // .flatMap((res: Response) => {
-        //    var location = res.headers.get('Location');
-        //    return this._http.get(location);
-        //}).map((res: Response) => res.json()))
-        //.catch(this.handleError)
 
-        /*
-        .flatMap((res: Response) => {
-                var serverTime = res.headers.get('ServerTime');
-                return this._http.get(serverTime);
-            })
-        */
+
+
     }
 
     getLogoAndUrlWithoutToken(securityKey: string): Promise<UrlAndLogo> {
-        const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : "https://systemwr.amital.co.il/api/shipment";
+        const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : (ObjectsLocator?.GlobalSetting?.CustomURL ?? this._apiUrl);
         return this._http.get(url + '/GetLogoAndUrlWithoutToken', { params: { securityKey: securityKey } }).toPromise() as Promise<UrlAndLogo>;
     }
+    GetGlobalSetting() {
+        var url = ServiceHelper.GetLogitudeURL() + 'api/GlobalDomain/GetGlobalSettingWithOutToken';
+        return this._http.get(url, ServiceHelper.GetHttpFullHeadersWithoutToken()).toPromise() as Promise<any>;
 
+    }
     getUserIdDetailsByShipmentSecurityKeyWithoutToken(SecurityKey: string, Tenant: number) {
 
 
@@ -445,17 +342,14 @@ export class ShipmentPMService {
 
         return defer(() => {
 
-            var errors = [];
-            if (!entityPM.IsCustomShipment) {
-                var validator: ClassLevelValidator = new ClassLevelValidator();
-                var entityValidator: ShipmentValidator = new ShipmentValidator();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var entityValidator: ShipmentValidator = new ShipmentValidator();
 
-                errors = validator.Validate("Shipment", entityPM);
-                var entityErrors = entityValidator.Validate(entityPM);
+            var errors = validator.Validate("Shipment", entityPM);
+            var entityErrors = entityValidator.Validate(entityPM);
 
-                if (entityErrors) {
-                    errors = errors.concat(entityErrors);
-                }
+            if (entityErrors) {
+                errors = errors.concat(entityErrors);
             }
 
             var response: ServiceResponse;
@@ -534,15 +428,8 @@ export class ShipmentPMService {
                     response.Result = shipment;
                     return response;
 
-                 }), mergeMap((pmresponse: ServiceResponse) => {
-                    if (pmresponse?.Result?.IsCustomShipment) {
-                        return this.MapCustomShipment(pmresponse);
-                    } else {
-                        return of(pmresponse);
-                    }
-
                 }), catchError(ServiceHelper.HandleServiceError));
-             }
+            }
             else {
 
                 response.HasError = true;
@@ -586,61 +473,6 @@ export class ShipmentPMService {
         return entityPM;
     }
 
-    _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
-    _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
-
-    MapShipmentDeclaration(entity: ShipmentPM, jsonPM: any) {
-
-        if (jsonPM.DeclarationPM) {
-            entity.DisableMarkAsDirty = true;
-            let declarationPM: DeclarationPM = jsonPM.DeclarationPM;
-            entity.DeclarationNumber = declarationPM?.DeclarationNumber;
-            entity.DeclarationOfficeCode = declarationPM?.DeclarationOfficeCode;
-            entity.DeclarationOfficeName = declarationPM.DeclarationOfficeName;
-            if (declarationPM.HatraDate) {
-                entity.HatraDate = new Date(declarationPM.HatraDate);
-            }
-            entity.ProcedureCurrentCode = declarationPM?.ProcedureCurrentCode;
-            entity.ExternalDeclarationNumber = declarationPM?.ExternalDeclarationNumber;
-            entity.DeclarationStatusTypeCode = declarationPM?.DeclarationStatusTypeCode;
-            entity.DisableMarkAsDirty = false;
-        }
-
-        if (jsonPM.DeclarationReferentDataPM) {
-            entity.DisableMarkAsDirty = true;
-
-            let declarationReferentDataPM: DeclarationReferantDataPM = jsonPM.DeclarationReferentDataPM;
-            if (declarationReferentDataPM.CarrierCode && declarationReferentDataPM.Mawb) {
-                entity.CarrierCodeMawb = declarationReferentDataPM.CarrierCode + "-" + declarationReferentDataPM.Mawb;
-            }
-            else if (declarationReferentDataPM.Mawb) {
-                entity.CarrierCodeMawb = declarationReferentDataPM.Mawb;
-            }
-            entity.Mawb = declarationReferentDataPM.Mawb;
-            entity.CarrierCode = declarationReferentDataPM.CarrierCode;
-
-            if (declarationReferentDataPM.MawbDate) {
-                entity.MawbDate = new Date(declarationReferentDataPM.MawbDate);
-            }
-            if (declarationReferentDataPM.ArrivalDate) {
-                entity.ArrivalDate = new Date(declarationReferentDataPM.ArrivalDate);
-            }
-            if (declarationReferentDataPM.EstimatedArrivalDate) {
-                entity.EstimatedArrivalDate = new Date(declarationReferentDataPM.EstimatedArrivalDate);
-            }
-            entity.PackageTypeCode = declarationReferentDataPM.PackageTypeCode;
-            entity.Vessel = declarationReferentDataPM.Vessel;
-            entity.FlightVoyageNumber = declarationReferentDataPM.FlightVoyageNumber;
-            entity.Commodity = declarationReferentDataPM.Commodity;
-            entity.OriginCountryCode = declarationReferentDataPM.OriginCountryCode;
-            entity.DisableMarkAsDirty = false;
-
-        }
-
-        return entity;
-    }
-
-
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ShipmentPM = null) {
         var customFields: Array<string> = [];
         for (var i = 1; i < 71; i++) {
@@ -669,7 +501,6 @@ export class ShipmentPMService {
             }
         }
 
-        this.MapShipmentDeclaration(entityPM, jsonPM);
         this.MapShipmentOCIs(entityPM, jsonPM, mapParent);
         this.MapShipmentPackages(entityPM, jsonPM, mapParent);
         this.MapShipmentCommodities(entityPM, jsonPM, mapParent);
@@ -685,8 +516,7 @@ export class ShipmentPMService {
         this.MapShipmentStoragePricings(entityPM, jsonPM, mapParent);
         this.MapShipmentProductItems(entityPM, jsonPM, mapParent);
         this.MapShipmentUnassignedFields(entityPM, jsonPM, mapParent);
-        
-        entityPM.DisableMarkAsDirty = true;
+
         let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "Shipment");
         customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
 
@@ -1675,7 +1505,7 @@ export class ShipmentPMService {
         }
     }
     MapShipmentDeliveries(entityPM: ShipmentPM, jsonPM: any, mapParent: boolean = true) {
-       
+
         var oldCollection: ShipmentDeliveryPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldCollection = entityPM.OldEntityPM.ShipmentDeliveries;
@@ -1725,7 +1555,6 @@ export class ShipmentPMService {
 
 
             if (mapParent) {
-                itemPM.EntityParentPM.DisableMarkAsDirty = true;
                 itemPM.UniqueKey = Guid.newGuid();
                 itemPM.ChangeSetOp = "None";
                 itemJson.ChangeSetOp = "None";
@@ -1740,7 +1569,6 @@ export class ShipmentPMService {
                     var clonedInside = this.clone(itemPM.ShipmentPickUpDeliveryPackages[k]);
                     itemPM.OldEntityPM.ShipmentPickUpDeliveryPackages.push(clonedInside);
                 }
-                itemPM.EntityParentPM.DisableMarkAsDirty = false;
             }
 
             else {

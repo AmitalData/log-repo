@@ -16,7 +16,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
-//using System.Reflection.Emit;
 using System.Text;
 using System.Threading;
 using Logitude.Server.Tools.QueueService;
@@ -1332,17 +1331,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         break;
                 }
-
-                ///message.SafeComplete();
-                //throw;
+                
             }
             catch (Exception ex)
             {
                 OnException(myDbQueueService, message, qpJournalId, tenant, ex);
-                //LogMessagingUtil.Instance.AppendLine(MessageId.ToString() + " " + ex.Message);
-                //ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "AccountingJournalApproveWR: ProcessMessage() Method", null);
-                ///message.SafeComplete();
-                //throw;
             }
             return isSubmitApprove;
 
@@ -1351,7 +1344,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private static void SetTenantIdle(int tenant)
         {
             TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
-            TenantIdleStatus tenantObj = tenantRepository.GetAll(tenant).FirstOrDefault();
+            TenantIdleStatus tenantObj = tenantRepository.GetAllByObjectTable(tenant,  "Journal").FirstOrDefault();
             tenantObj.Idle = false;
             tenantObj.UpdateDate = DateTime.Now;
             tenantRepository.Update(tenantObj);
@@ -1908,9 +1901,11 @@ namespace Logitude.Accounting.BL.CoreBL
                             if (DateTime.Now.Subtract(_freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
                             {
                                 _freeTenantsDateTime = DateTime.Now;
-                                queueservice.FreeTenants();
+
+                            queueservice.FreeTenants("Journal");
                             }
-                            response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
+
+                        response = queueservice.ReceiveDetailsByTenant("Journal",new TimeSpan(0, 0, 0, 5));
                         }
                         catch (Exception)
                         {

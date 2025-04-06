@@ -30,9 +30,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_dropCdropId = entity.DropCdropId;
 		_tenant = entity.Tenant;
-		_dropCdropCode = entity.DropCdropCode;
-		_dropCdropEnglishname = entity.DropCdropEnglishname;
-		_dropCdropLocalname = entity.DropCdropLocalname;
 		_orderNumber = entity.OrderNumber;
 		_id = entity.Id;
 		_code = entity.Code;
@@ -71,54 +68,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _tenant=value;
-		   }
-		 }
-	   }
-	  private string _dropCdropCode ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DropCdropCode  
-	   {
-	     get { return _dropCdropCode; }
-		 set
-		 {
-		   if(_dropCdropCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropCdropCode",OldValue=_dropCdropCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dropCdropCode=value;
-		   }
-		 }
-	   }
-	  private string _dropCdropEnglishname ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DropCdropEnglishname  
-	   {
-	     get { return _dropCdropEnglishname; }
-		 set
-		 {
-		   if(_dropCdropEnglishname != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropCdropEnglishname",OldValue=_dropCdropEnglishname,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dropCdropEnglishname=value;
-		   }
-		 }
-	   }
-	  private string _dropCdropLocalname ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DropCdropLocalname  
-	   {
-	     get { return _dropCdropLocalname; }
-		 set
-		 {
-		   if(_dropCdropLocalname != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropCdropLocalname",OldValue=_dropCdropLocalname,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dropCdropLocalname=value;
 		   }
 		 }
 	   }

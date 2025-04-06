@@ -76,12 +76,12 @@
         <td style="width:10px"></td>
         <td style="width: 120px;">
             <LogLabel [NoObjectField]="true"  [ObjectTableName]="ObjectTableName"
-                [DataContext]="DataContext" [Text]="'Accounting.O.Year' | TextCodeTranslationPipe"></LogLabel>
+                [DataContext]="DataContext" [Text]="'Accounting.O.Year'  | TextCodeTranslationPipe"></LogLabel>
 
         </td>
         <td style="width: 120px;">
             <LogTextBox [ObjectFieldName]="'NumberOfYear'" [ObjectTableName]="ObjectTableName" [IsNewEntityCall]="true"
-                [InputType]="'integer'" [DataContext]="DataContext" [Text]="NumberOfYear" [NoObjectField]="true">
+                [InputType]="'integer'" [DataContext]="DataContext" [Text]="NumberOfYear" [NoObjectField]="true" >
             </LogTextBox>
         </td>
 
@@ -102,16 +102,7 @@
                 (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'LocalName'"
                 [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
         </td>
-        <!-- <td style="width:100px"></td>
-        <td colspan="3" style="padding-right: 100px;">
-            <div style="width: 90px;">
-                <button class="GreenButton" (click)="RunReport()">
-                    {{
-                    'AgingReport.O.RunReport' | TextCodeTranslationPipe
-                    }}
-                </button>
-            </div>
-        </td> -->
+        
     </tr>
     <tr style="height: 32px;">
 

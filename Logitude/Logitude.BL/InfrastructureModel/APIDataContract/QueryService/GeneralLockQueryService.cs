@@ -19,11 +19,12 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
         public GeneralLockQueryService(int tenant = 0)
         {
             context = WebFreightContext.GetContext(tenant);
-            //service = new ObjectTableService(context, tenant); 
             query = new GeneralLockQuery(tenant);
         }
 		public GeneralLockPM CheckIsLocked(int tenant, string sessionId, string userId, string entityId, string objectTableName, bool isFromCahnge = false)
 		{
+			return null;
+
 			var generalLockQuery = new GeneralLockQuery(tenant);
 			ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
 
@@ -103,6 +104,8 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 		}
 		public void DeleteGeneralLockByEntity(int tenant, string entityId, string objectTableName, string sessionId)
 		{
+			if (string.IsNullOrEmpty(entityId) || string.IsNullOrEmpty(objectTableName)) return;
+
 			ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
 
 			ObjectTablePM objectTable = tablesQuery.GetObjectTableByNameOrId(objectTableName, tenant);

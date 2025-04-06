@@ -1634,17 +1634,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                                 }
                                 bool sendHybridM = true;
-                                if (IsCourierTenant)
+
+                                if (extDocPM.ExternalEntityName == "CFIFILEM")
                                 {
-                                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("HCD", tenant))
-                                    {
-                                        sendHybridM = false;
-                                        if (extDocPM.ExternalEntityName == "CFIFILEM")
-                                        {
-                                            SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
-                                        }
-                                    }
+                                    sendHybridM = false;
+                                    SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
                                 }
+
                                 if (sendHybridM)
                                 {
                                     List<QueueTask> queue1Tasks = new List<QueueTask>();

@@ -411,12 +411,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ConfirmationNumberDefaultList confirmationNumberDefaultList = iQueryableEntityList.Where(a => a.FromDate <= entityPM.ReferenceDate).FirstOrDefault();
                     if (validStatuses.Contains(entityPM.LineTypeCode) && entityPM.VatAmount > confirmationNumberDefaultList?.AmountForConfirmationNumber && string.IsNullOrEmpty(entityPM.ConfirmationNumber))
                     {
-                        entityPM.StatusCode = "11";
+                        entityPM.StatusCode = TaxReportLineStatusValues.MissingConfirmationNumber;
                         JournalPM journal = GetJournalPM(entityPM);
                         ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(entityPM.Tenant);
-                        var ARInvoice = arInvoiceQuery.GetSinglePM(journal?.AccountingEntityId, entityPM.Tenant);
-                        if (ARInvoice?.ConfirmationNumberStatus == "6")
-                            entityPM.TransmitStatusCode = "3";
+                        // var ARInvoice = arInvoiceQuery.GetSinglePM(journal?.AccountingEntityId, entityPM.Tenant);
+                        // if (ARInvoice?.ConfirmationNumberStatus == "6")
+                        //     entityPM.TransmitStatusCode = "3";
                     }
                     if (validStatuses.Contains(entityPM.LineTypeCode) && entityPM.VatAmount > confirmationNumberDefaultList?.AmountForConfirmationNumber && !string.IsNullOrEmpty(entityPM.ConfirmationNumber))
                     {
@@ -533,8 +533,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (taxreportLine.Reference == null) SetTaxReportLineReferenceGroup(ReferenceGroupDefaultValue, taxreportLine);
             else
             {
-                taxreportLine.Reference = RemoveSpecialChars(taxreportLine.Reference);
-                bool containsLetters = CheckIfReferenceContainsLetters(taxreportLine.Reference);
+                taxreportLine.Reference = RemoveSpecialChars(taxreportLine.OriginalReference);
+                bool containsLetters = CheckIfReferenceContainsLetters(taxreportLine.OriginalReference);
                 if (containsLetters)
                 {
                     SetReferenceGroupForReferencesWithPrefex(taxreportLine);
@@ -558,15 +558,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             SetTaxReportLineReferenceGroup(null, taxreportLine);
             for (int i = 0; i < taxreportLine.Reference.Length; i++)
             {
-                string referenceChar = taxreportLine.Reference.Substring(i, 1);
-                bool IsReferenceHasPrefix = CheckIfReferenceHasPrefex(taxreportLine.Reference, referenceChar);
+                string referenceChar = taxreportLine.OriginalReference.Substring(i, 1);
+                bool IsReferenceHasPrefix = CheckIfReferenceHasPrefex(taxreportLine.OriginalReference, referenceChar);
                 if (IsReferenceHasPrefix)
                 {
                     SetTaxReportLineReferenceGroup(taxreportLine.ReferecneGroup + referenceChar, taxreportLine);
                 }
                 else
                 {
-                    taxreportLine.Reference = taxreportLine.Reference.Substring(i, taxreportLine.Reference.Length - i);
+                    taxreportLine.Reference = taxreportLine.OriginalReference.Substring(i, taxreportLine.OriginalReference.Length - i);
                     break;
                 }
 

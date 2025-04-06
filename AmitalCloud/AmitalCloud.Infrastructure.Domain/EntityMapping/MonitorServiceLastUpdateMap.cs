@@ -24,11 +24,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	 
             this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.CdropName).HasColumnName("CdropName").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.CdropName).HasColumnName("CdropName").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.LastUpdate).HasColumnName("LastUpdate").IsRequired();
 
-            this.Property(t => t.CdropSearchfields).HasColumnName("CdropSearchfields").IsRequired().HasMaxLength(-1).IsUnicode(true);
+            this.Property(t => t.CdropSearchfields).HasColumnName("CdropSearchfields").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(60).IsUnicode(false);
 

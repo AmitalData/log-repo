@@ -63,9 +63,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_storageServiceMode = entity.StorageServiceMode;
 		_isUpgradingChamp = entity.IsUpgradingChamp;
 		_htmlVersion = entity.HtmlVersion;
-		_dropQboconsumerkey = entity.DropQboconsumerkey;
-		_dropQboapptoken = entity.DropQboapptoken;
-		_dropQboconsumersecretkey = entity.DropQboconsumersecretkey;
 		_androidAppLink = entity.AndroidAppLink;
 		_iOSAppLink = entity.IOSAppLink;
 		_androidPodAppMinimumVersion = entity.AndroidPodAppMinimumVersion;
@@ -87,10 +84,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_iNTTRAProdFTPHost = entity.INTTRAProdFTPHost;
 		_iNTTRATestFTPHost = entity.INTTRATestFTPHost;
 		_oceanInsightsToken = entity.OceanInsightsToken;
-		_dropIsfullbuilddwrunning = entity.DropIsfullbuilddwrunning;
-		_dropIsincrementaldwrunning = entity.DropIsincrementaldwrunning;
 		_emailSendingQuota = entity.EmailSendingQuota;
-		_dropDwnextruntime = entity.DropDwnextruntime;
 		_champTestAPIURL = entity.ChampTestAPIURL;
 		_champTestAPIPassword = entity.ChampTestAPIPassword;
 		_champProdAPIURL = entity.ChampProdAPIURL;
@@ -124,7 +118,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_windWardSettings = entity.WindWardSettings;
 		_exportUrl = entity.ExportUrl;
 		_logitudeIISURL = entity.LogitudeIISURL;
-		_dropAmitaltenant = entity.DropAmitaltenant;
    }
    #endregion Constructors
    #region Properties
@@ -689,54 +682,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _dropQboconsumerkey ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DropQboconsumerkey  
-	   {
-	     get { return _dropQboconsumerkey; }
-		 set
-		 {
-		   if(_dropQboconsumerkey != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropQboconsumerkey",OldValue=_dropQboconsumerkey,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dropQboconsumerkey=value;
-		   }
-		 }
-	   }
-	  private string _dropQboapptoken ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DropQboapptoken  
-	   {
-	     get { return _dropQboapptoken; }
-		 set
-		 {
-		   if(_dropQboapptoken != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropQboapptoken",OldValue=_dropQboapptoken,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dropQboapptoken=value;
-		   }
-		 }
-	   }
-	  private string _dropQboconsumersecretkey ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DropQboconsumersecretkey  
-	   {
-	     get { return _dropQboconsumersecretkey; }
-		 set
-		 {
-		   if(_dropQboconsumersecretkey != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropQboconsumersecretkey",OldValue=_dropQboconsumersecretkey,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dropQboconsumersecretkey=value;
-		   }
-		 }
-	   }
 	  private string _androidAppLink ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1073,38 +1018,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private bool? _dropIsfullbuilddwrunning ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? DropIsfullbuilddwrunning  
-	   {
-	     get { return _dropIsfullbuilddwrunning; }
-		 set
-		 {
-		   if(_dropIsfullbuilddwrunning != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropIsfullbuilddwrunning",OldValue=_dropIsfullbuilddwrunning,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   _dropIsfullbuilddwrunning=value;
-		   }
-		 }
-	   }
-	  private bool? _dropIsincrementaldwrunning ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool? DropIsincrementaldwrunning  
-	   {
-	     get { return _dropIsincrementaldwrunning; }
-		 set
-		 {
-		   if(_dropIsincrementaldwrunning != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropIsincrementaldwrunning",OldValue=_dropIsincrementaldwrunning,NewValue=value,PropertyType="bool?"};
-		    NotifyPropertyChanged(values);
-		   _dropIsincrementaldwrunning=value;
-		   }
-		 }
-	   }
 	  private int _emailSendingQuota ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1118,22 +1031,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EmailSendingQuota",OldValue=_emailSendingQuota,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _emailSendingQuota=value;
-		   }
-		 }
-	   }
-	  private DateTime? _dropDwnextruntime ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? DropDwnextruntime  
-	   {
-	     get { return _dropDwnextruntime; }
-		 set
-		 {
-		   if(_dropDwnextruntime != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropDwnextruntime",OldValue=_dropDwnextruntime,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   _dropDwnextruntime=value;
 		   }
 		 }
 	   }
@@ -1662,22 +1559,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LogitudeIISURL",OldValue=_logitudeIISURL,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _logitudeIISURL=value;
-		   }
-		 }
-	   }
-	  private int? _dropAmitaltenant ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int? DropAmitaltenant  
-	   {
-	     get { return _dropAmitaltenant; }
-		 set
-		 {
-		   if(_dropAmitaltenant != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropAmitaltenant",OldValue=_dropAmitaltenant,NewValue=value,PropertyType="int?"};
-		    NotifyPropertyChanged(values);
-		   _dropAmitaltenant=value;
 		   }
 		 }
 	   }

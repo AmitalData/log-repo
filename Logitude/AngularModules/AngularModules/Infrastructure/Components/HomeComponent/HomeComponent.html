@@ -578,6 +578,6 @@
         </td>
     </tr>
 </table>
-<div *ngIf="IsReportPanelVisible"  (mouseleave)="closeReportPanel()" >
-    <ReportMenuComponent (PinnedChanged)="TogglePinReportPanel($event)" (mouseenter)="keepReportPanelOpen()" (mouseleave)="closeReportPanel()" [CurrentReportId]="CurrentReportId" [IsReportPanelVisible]="IsReportPanelVisible"></ReportMenuComponent>
+<div *ngIf="IsReportPanelVisible"  (mouseleave)="CloseReportPanel()" >
+    <ReportMenuComponent (PinnedChanged)="TogglePinReportPanel($event)"  (mouseenter)="KeepReportPanelOpen()" (mouseleave)="CloseReportPanel()" [CurrentReportId]="CurrentReportId" [IsReportPanelVisible]="IsReportPanelVisible" [IsPinned]="isPinned" (CloseMenu)="CloseReportPanel()"></ReportMenuComponent>
 </div>

@@ -167,31 +167,39 @@ namespace Logitude.Customs.BL.BL
 
         public void CalcDocumentStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
-            LogMessagingUtil.Instance.AppendLine("CalcDocumentStatusCode()");
-            if (myDeclarationCourierStatusPM == null) return;
-            //Set DocumentStatusCode
-            if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode))
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("CalcDocumentStatusCode()"));
+
+             if (myDeclarationCourierStatusPM == null) return;
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("CalcDocumentStatusCode() dec id :{0}", myDeclarationCourierStatusPM.DeclarationId));
+
+             if (string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode))
             {
-                LogMessagingUtil.Instance.AppendLine("string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode)");
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode) dec id :{0}", myDeclarationCourierStatusPM.DeclarationId));
 
                 myDeclarationCourierStatusPM.DocumentStatusCode = "M";
                 return;
             }
-            LogMessagingUtil.Instance.AppendLine("!string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode)");
 
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("!string.IsNullOrWhiteSpace(myDeclarationCourierStatusPM.DocumentStatusCode) dec id :{0}", myDeclarationCourierStatusPM.DeclarationId));
+
+ 
             var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
             List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
 
-            /*else*/
+        
+
             if (IsDocumentError(myDeclarationCourierStatusPM, customsDocumentsTicketPMList))
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("if (IsDocumentError(myDeclarationCourierStatusPM, customsDocumentsTicketPMList)) dec id :{0}", myDeclarationCourierStatusPM.DeclarationId));
+
                 myDeclarationCourierStatusPM.DocumentStatusCode = "X";
 
             }
             else if (IsDocumentMissing(myDeclarationCourierStatusPM, customsDocumentsTicketPMList))
             {
-                LogMessagingUtil.Instance.AppendLine("IsDocumentMissing");
+                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("IsDocumentMissing dec id :{0}", myDeclarationCourierStatusPM.DeclarationId));
 
                 myDeclarationCourierStatusPM.DocumentStatusCode = "M";
             }
@@ -433,62 +441,47 @@ namespace Logitude.Customs.BL.BL
         public Boolean IsDocumentMissing(DeclarationCourierStatusPM myDeclarationCourierStatusPM, List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList)
         {
             var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
-            //CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
+             CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
 
-            //List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
-
+            
             List<CustomDocumentTypePM> CustomDocumentTypePMList = docTypeQuery.GetMandatoryCustomDocumentTypesForCourier(declarationPM.Tenant);
             if (CustomDocumentTypePMList != null)
             {
                 foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList)
                 {
-                    LogMessagingUtil.Instance.AppendLine("customDocumentTypePMItem?.code" + customDocumentTypePMItem?.Code);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("customDocumentTypePMItem?.code" + customDocumentTypePMItem?.Code);
 
                     CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentTypeCode == customDocumentTypePMItem.Code && d.DocumentsFilingId != null).FirstOrDefault();
-                    LogMessagingUtil.Instance.AppendLine("customsDocumentsTicketPM?.DocumentsFilingId" + customsDocumentsTicketPM?.DocumentsFilingId);
-                    LogMessagingUtil.Instance.AppendLine("customsDocumentsTicketPM?.DocumentStatusCode" + customsDocumentsTicketPM?.DocumentStatusCode);
-                    LogMessagingUtil.Instance.AppendLine("customsDocumentsTicketPM?.DocumentTypeCode" + customsDocumentsTicketPM?.DocumentTypeCode);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("customsDocumentsTicketPM?.DocumentsFilingId" + customsDocumentsTicketPM?.DocumentsFilingId);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("customsDocumentsTicketPM?.DocumentStatusCode" + customsDocumentsTicketPM?.DocumentStatusCode);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("customsDocumentsTicketPM?.DocumentTypeCode" + customsDocumentsTicketPM?.DocumentTypeCode);
 
                     if (customsDocumentsTicketPM == null)
                     {
-                        LogMessagingUtil.Instance.AppendLine("customsDocumentsTicketPM == null");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("customsDocumentsTicketPM == null" + customsDocumentsTicketPM?.DocumentTypeCode);
 
                         return true;
                     }
-                    if (string.IsNullOrWhiteSpace(customsDocumentsTicketPM.CustomsDocId))// is missing or  not sent yet  !!
+                    if (string.IsNullOrWhiteSpace(customsDocumentsTicketPM.CustomsDocId))
                     {
-
-                        LogMessagingUtil.Instance.AppendLine("string.IsNullOrWhiteSpace(customsDocumentsTicketPM.CustomsDocId)");
-
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("string.IsNullOrWhiteSpace(customsDocumentsTicketPM.CustomsDocId) dec id :{0}", myDeclarationCourierStatusPM.DeclarationId));
                         return true;
                     }
                 }
             }
-            LogMessagingUtil.Instance.AppendLine(" return false;");
+   
             return false;
         }
 
         public Boolean IsDocumentError(DeclarationCourierStatusPM myDeclarationCourierStatusPM, List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList)
         {
-            //var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
-            //CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-            //CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
 
-            //List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration");
-
-            //List<CustomDocumentTypePM> CustomDocumentTypePMList = docTypeQuery.GetMandatoryCustomDocumentTypesForCourier(declarationPM.Tenant);
-            //if (CustomDocumentTypePMList != null)
-            //{
-            //    foreach (CustomDocumentTypePM customDocumentTypePMItem in CustomDocumentTypePMList) d.DocumentTypeCode == customDocumentTypePMItem.Code &&
-            //    {
             CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketPMList.Where(d => d.DocumentsFilingId != null && d.DocumentStatusCode == "2").FirstOrDefault();
             if (customsDocumentsTicketPM != null)
             {
                 return true;
             }
-            //    }
-            //}
+ 
 
             return false;
         }

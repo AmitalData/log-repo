@@ -377,7 +377,12 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
 
     }
+    ButtonUpdateRedeemedChecksFIX_Click() {
+        const opr = "_ButtonUpdateRedeemedChecksFIX_Click";
+        const obj = { MyTenant: SessionLocator.Tenant, MyDate: new Date(), MyGLAccId: "" };
+        this.StrandartOp(opr, obj, () => { });
 
+    }
     _ButtonReverseAllMonthsFIX_Click() {
         let opr = "_ButtonReverseAllMonthsFIX_Click";
         let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "" };

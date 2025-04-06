@@ -95,7 +95,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
                         {
                             cmd.CommandText =
-                                DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Enqueue", AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                                DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Enqueue", AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
 
                         }
                         else
@@ -314,7 +314,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         var cmd = context.Database.Connection.CreateCommand();
                         if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
                         {
-                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek", AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek", AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                         }
                         else
                         {
@@ -443,7 +443,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     using (OracleConnection DBConnection = new OracleConnection(context.Database.Connection.ConnectionString))
                     {
 
-                        OracleCommand cmd = new OracleCommand(DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", AmitalCloudDBSchema.LOGITUDE_MAIN, DBConnection.ConnectionString), DBConnection);
+                        OracleCommand cmd = new OracleCommand(DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", AmitalCloudDBSchema.AMITAL_MAIN, DBConnection.ConnectionString), DBConnection);
                         try
                         {
                             DBConnection.Open();
@@ -561,7 +561,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     var cmd = context.Database.Connection.CreateCommand();
                     if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
                     {
-                        cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_SetStatus", AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                        cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_SetStatus", AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                     }
                     else
                     {
@@ -641,7 +641,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     var cmd = context.Database.Connection.CreateCommand();
                     if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
                     {
-                        cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_DelayMessage", AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                        cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_DelayMessage", AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                     }
                     else
                     {

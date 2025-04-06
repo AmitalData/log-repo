@@ -79,6 +79,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string AccountingExternalCode { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public string CreditedByARInvoiceId { get; set; }
+        public bool IsApprovalFailed { get; set; }
         public DateTime? OperationalDate { get; set; }
         public DateTime? DateForInterest { get; set; }
         public bool SplitJournalByCurrency { get; set; }

@@ -34,7 +34,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_costCenter = entity.CostCenter;
 		_updateDate = entity.UpdateDate;
 		_cardId = entity.CardId;
-		_productTypeCode = entity.ProductTypeCode;
+		_card = entity.Card !=null ? new CardPM(entity.Card) : null;
+			_productTypeCode = entity.ProductTypeCode;
 		_updatedByUserId = entity.UpdatedByUserId;
    }
    #endregion Constructors
@@ -136,6 +137,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private CardPM _card;
+		[Include]
+        [DataMember]
+        public virtual CardPM Card 
+		{ 
+		get { return _card; } 
+		set { _card = value; }
+		}
 	  private string _productTypeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

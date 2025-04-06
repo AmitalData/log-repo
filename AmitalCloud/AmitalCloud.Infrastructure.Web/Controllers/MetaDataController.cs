@@ -12,17 +12,17 @@ using System.Net;
 using System.Net.Http;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Web;
 using System.Web.Http;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
+    [RoutePrefix("api/ngMetaData")]
     public class MetaDataController : ApiController
     {
         [OperationContract]
         [WebGet(UriTemplate = "getadvancequeryfilterspms/{tenant}")]
         public List<AdvancedQueryFilterPM> GetAdvanceQueryFiltersPMs(int tenant)
-        => new AdvancedQueryFilterQueryService(tenant).GetMulti(a=> (a.Tenant == tenant || a.Tenant == 0) && a.IsPredefined == true
+        => new AdvancedQueryFilterQueryService(tenant).GetMulti(a => (a.Tenant == tenant || a.Tenant == 0) && a.IsPredefined == true
                 , "ObjectField,Query,Query.ObjectTable").ToList();
         [OperationContract]
         [WebGet(UriTemplate = "GetTenantLanguageTranslations/{tenant}")]
@@ -37,7 +37,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                 //todo: check if this is needed
                 //TenantManagmentPrivateLabelsPM privatelabel = null;
                 //var url = AmitalCloudSecurityUtility.getLoggedDomain();
-                //if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
+                //if (!url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                 //{
                 //    TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(tenant);
                 //    privatelabel = query.GetSingleActivePMByUrl_Cache(url);
@@ -109,6 +109,9 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
 
         public List<TextCodePM> GetTenantTextCodes(int tenant)
         => new TextCodeQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetMulti(a => a.Tenant == tenant, "").ToList();
+
+        [HttpGet]
+        [Route("")]
         [OperationContract]
         [WebGet(UriTemplate = "getloggeduserpm/{tenant}/{useremail}/{getloggeduser}")]
         public UserPM GetLoggedUserPM(int tenant, string useremail, bool getloggeduser)
@@ -186,12 +189,12 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         [OperationContract]
         [WebGet(UriTemplate = "customsinterfacesettingpm/{InterfaceId}")]
         public CustomsInterfaceSettingPM GetCustomsInterfaceSettingPM(int InterfaceId)
-        => new CustomsInterfaceSettingQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetSingle(InterfaceId,true,true);
+        => new CustomsInterfaceSettingQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetSingle(InterfaceId, true, true);
         [OperationContract]
         [WebGet(UriTemplate = "getallmenubuttonssbyobjecttable/{tenant}/{objecttableid}/{menubuttons}")]
         public List<MenuButtonPM> GetAllSpecialServicesTypesByTenant(int tenant, string objecttableid, bool menubuttons)
         {
-            tenant =  AmitalCloudSecurityUtility.AuthenticationOnTenant();
+            tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
             var service = new MenuButtonQueryService(tenant);
             return service.GetMulti(a => true, "");
             //MenuButtonRepository menubuttonsRepository = new MenuButtonRepository(tenant);

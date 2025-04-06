@@ -24,6 +24,8 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.Gl
 using System.Runtime.InteropServices;
 using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Accounting.Data.Enums;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -102,6 +104,11 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                     where a.JournalId == journalId && a.Tenant == tenant
                     select a);
 
+        }
+        public IQueryable<LedgerTransaction> GetByJournalAndAccountId(string journalId, string accountId, int tenant)
+        {
+            return context.LedgerTransactions
+                          .Where(a => a.JournalId == journalId && a.AccountId == accountId && a.Tenant == tenant);
         }
         public IQueryable<LedgerTransaction> GetByJournalAndReference1(string journalId, string reference1, int tenant)
         {
@@ -1320,21 +1327,22 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromTo(string accountId, DateTime fromDate, DateTime toDate, int tenant)
         {
 
-            var mysumlist = (from r in context.LedgerTransactions
-                             where r.AccountId == accountId && r.AccountingDate >= fromDate && r.AccountingDate <= toDate && r.Tenant == tenant
-                             group r by new
-                             {
-                                 r.CurrencyId
-                             } into g
-                             select new CurrencySum
-                             {
-                                 AccountId = accountId,
-                                 CurrencyId = g.Key.CurrencyId,
-                                 LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
-                                 LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
-                                 ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
-                                 ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
-                             }).ToList();
+            var q = (from r in context.LedgerTransactions
+                     where r.AccountId == accountId && r.AccountingDate >= fromDate && r.AccountingDate <= toDate && r.Tenant == tenant
+                     group r by new
+                     {
+                         r.CurrencyId
+                     } into g
+                     select new CurrencySum
+                     {
+                         AccountId = accountId,
+                         CurrencyId = g.Key.CurrencyId,
+                         LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
+                         LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
+                         ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
+                         ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
+                     });
+            List<CurrencySum> mysumlist = q != null ? q.ToList() : new List<CurrencySum>();
             return mysumlist;
         }
 
@@ -1415,6 +1423,20 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                  select a).ToList();
             return ledgerTransactionPOCOs;
         }
+
+        public List<LedgerTransaction> GetLedgerTransactionsInProgress(List<int> tenantsAccountingActivated)
+        {
+            DateTime halfHourAgo = DateTime.Now.AddMinutes(-30);
+            List<LedgerTransaction> ledgerTransactionPOCOs =
+                (from a in context.LedgerTransactions
+                 where tenantsAccountingActivated.Contains(a.Tenant)
+                       && (a.InReconcileProgress || a.InProgressExternalReconcile)
+                       && (!a.IsReconciled && !a.IsExternalReconcile)
+                       && a.ProcessStartDate <= halfHourAgo
+                 select a).ToList();
+            return ledgerTransactionPOCOs;
+        }
+       
 
         public List<LedgerTransactionJournalLineLT> GetAPInvoiceLedgerTransactionsByIdList(List<String> ledgerTransactionIds, int tenant)
         {
@@ -1708,18 +1730,39 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return ledgerTransactionsListQuery;
         }
 
-        public List<LedgerTransaction> GetLedgerTransactionsByJournalIds(List<string> journalIds, int tenant)
+
+
+        // Get all journal transactions and journal transactions not excluded from tax report
+        // Used in the TaxReportService
+        // Combined select and return
+        public (HashSet<LedgerTransaction> allJournalTransactions, HashSet<LedgerTransaction> journalTransactionsNotExcluded)
+        GetLedgerTransactionsByJournalIdsCombined(List<string> journalIds, int tenant)
         {
+            // Single DB query (Include Account and JournalLine to capture all required data)
+            var query = context.LedgerTransactions
+                .Include("JournalLine")
+                .Where(a => journalIds.Contains(a.JournalId) && a.Tenant == tenant)
+                .Select(a => new
+                {
+                    LedgerTransaction = a,
+                    IsExcluded = a.JournalLine.ExcludeFromTaxReport
+                })
+                .ToHashSet();
 
+            // Separate results in memory
+            var allJournalTransactions = query
+                .Select(x => x.LedgerTransaction)
+                .ToHashSet();
 
-            return (from a in context.LedgerTransactions.Include("Account")
-                    where journalIds.Contains(a.JournalId) && a.Tenant == tenant
+            var journalTransactionsNotExcluded = query
+                .Where(x => x.IsExcluded != true)
+                .Select(x => x.LedgerTransaction)
+                .ToHashSet();
 
-                    select a
-                    ).ToList();
-
-
+            return (allJournalTransactions, journalTransactionsNotExcluded);
         }
+
+
         public List<LedgerTransaction> GetLedgerTransactionsByJournalIdsAndAccountId(List<string> journalIds, string accountId, int tenant)
         {
 
@@ -1794,6 +1837,36 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                     && a.Tenant == tenant
                  select a).OrderByDescending(a => a.AccountingDate);
             return pocos;
+        }
+
+
+        public IQueryable<LedgerTransactionDeductionDTO> GetTransactionsDeductionDTO(
+            string whAccountId,
+            DateTime startDate,
+            DateTime endDate,
+            int tenant)
+        {
+            var query =
+                from a in context.LedgerTransactionsDeductionView
+                where a.Tenant == tenant
+                      && (a.ChartOfAccountsTypeCode == ChartOfAccountsTypes.Banks || a.AccountId == whAccountId)
+                      && a.AccountingDate >= startDate
+                      && a.AccountingDate <= endDate
+                select new LedgerTransactionDeductionDTO
+                {
+                    Id = a.Id,
+                    AccountId = a.AccountId,
+                    OppositeAccountId = a.OppositeAccountId,
+                    JournalId = a.JournalId,
+                    JournalLineNumber = a.JournalLineNumber,
+                    LocalAmountDebit = a.LocalAmountDebit ?? 0m,
+                    LocalAmountCredit = a.LocalAmountCredit ?? 0m,
+                    Reference1 = a.Reference1,
+                    AccountingDate = a.AccountingDate,
+                    Tenant = a.Tenant
+                };
+
+            return query;
         }
 
         public List<LedgerTransaction> GetTransactionsBySourceId(string sourceId, string sourceTypeCode, int tenant)

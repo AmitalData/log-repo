@@ -26,21 +26,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.CdropIp).HasColumnName("CdropIp").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            this.Property(t => t.CdropBrowser).HasColumnName("CdropBrowser").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
             this.Property(t => t.ContactId).HasColumnName("ContactId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.GMTDateTime).HasColumnName("GMTDateTime").IsRequired();
 
             this.Property(t => t.LocalDateTime).HasColumnName("LocalDateTime").IsRequired();
-
-            this.Property(t => t.CdropComputerid).HasColumnName("CdropComputerid").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            this.Property(t => t.CdropContactagent).HasColumnName("CdropContactagent").IsRequired().HasMaxLength(-1).IsUnicode(true);
-
-            this.Property(t => t.CdropVia).HasColumnName("CdropVia").IsRequired().HasMaxLength(-1).IsUnicode(true);
 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 

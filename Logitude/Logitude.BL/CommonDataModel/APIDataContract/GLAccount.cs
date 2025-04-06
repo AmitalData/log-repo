@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.Data;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,6 +28,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public Currency Currency { get; set; }
         public ReconcileMethod ReconcileMethod { get; set; }
         public ChartOfAccount ChartOfAccount { get; set; }
+        public ExchangeRate ExchangeRate { get; set; }
+
     }
 
     public class ReconcileMethod
@@ -35,6 +38,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public string Code { get; set; }
         public string EnglishName { get; set; }
         public string LocalName { get; set; }
+    }
+    public class ExchangeRate
+    {
+        [XmlAttribute]
+        public string RateCoefficient { get; set; }
+        public string Name { get; set; }
     }
 
     public class ChartOfAccount
@@ -61,6 +70,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
 
         public string CurrencyId { get; set; }
         public string ReconcileMethodCode { get; set; }
+        public string ExchangeRateId { get; set; }
+
         public string ChartOfAccountCode { get; set; }
     }
 
@@ -133,12 +144,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         }
 
 
-      public bool IsMulti(string AccountId, int Tenant)
+        public bool IsMultiByInternal(string internalNumber, int Tenant)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(AccountId))
-                    throw new ArgumentException("AccountId cannot be null or empty.", nameof(AccountId));
+                if (string.IsNullOrWhiteSpace(internalNumber))
+                    throw new ArgumentException("Internal Number cannot be null or empty.", nameof(internalNumber));
 
                 if (Tenant <= 0)
                     throw new ArgumentException("Invalid Tenant ID.", nameof(Tenant));
@@ -146,7 +157,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
 
                 accountingContext = AccountingContext.GetContext(Tenant);
                 var isMultiCurrency = accountingContext.GLAccounts
-                    .Where(a => a.Id == AccountId && a.Tenant == Tenant)
+                    .Where(a => a.InternalNumber == internalNumber && a.Tenant == Tenant)
                     .Select(a => a.IsMultiCurrency)
                     .FirstOrDefault();
 

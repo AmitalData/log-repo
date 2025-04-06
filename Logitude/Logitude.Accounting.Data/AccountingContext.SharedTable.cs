@@ -1,4 +1,7 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Accounting.Data.EntityPOCOs;
+
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -21,6 +24,7 @@ namespace Logitude.Accounting.Data
         public IDbSet<Tenant> Tenants { get; set; }
         public IDbSet<TotalOpenTransInBankView> TotalOpenTransInBankViews { get; set; }
         public IDbSet<AllARPaymentChequesView> AllARPaymentChequesViews { get; set; }
+        public IDbSet<LedgerTransactionsDeductionView> LedgerTransactionsDeductionView { get; set; }
 
     }
     public partial interface IAccountingContext : IContext
@@ -34,8 +38,7 @@ namespace Logitude.Accounting.Data
         IDbSet<Contact> Contacts { get; set; }
         IDbSet<TotalOpenTransInBankView> TotalOpenTransInBankViews { get; set; }
         IDbSet<AllARPaymentChequesView> AllARPaymentChequesViews { get; set; }
-
-
+        IDbSet<LedgerTransactionsDeductionView> LedgerTransactionsDeductionView { get; set; }
 
 
     }

@@ -1,12 +1,11 @@
 declare var window;
-import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import { AppTool, ArrayTool, DateTool } from '../../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -15,20 +14,15 @@ import { LuhnAlgorithm } from '../../../../../Customs/Utilities/LuhnAlgorithm';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { ConsignmentPM } from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
-
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
-
 import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { CardPMService } from '../../../../../Common/Services/StandardPMs/CardPMService';
 import { CustomsHouseTypeExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsHouseTypeExtendedPMService';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
-import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
-
 import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
 import { CustomsRequiredFieldListService } from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
-import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationExportRecipientPM } from '../../../../../Customs/EntityPMs/DeclarationExportRecipientPM';
@@ -369,8 +363,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
     OkButtonClicked() {
         if (!this.IsDisplayOnly) {
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.declarationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
                 var res = response.Result;
+                this.CurrentSession.StopBusyIndicator();
                 if (response.HasError) {
                     this.XMLErrors = [];
                     this.XMLErrors = response.ErrorsArray;
@@ -379,7 +375,6 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                 }
             });
         }
-
     }
     //#endregion
 
@@ -1171,10 +1166,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ExportDeclarationComponent');
     }
 
-
+    showButtonSearchClient:boolean = false;
     SearchClient(type, item) {
-
-        if (this.IsDisplayOnly) {
+        
+        if (this.IsDisplayOnly && !this.showButtonSearchClient) {
             return;
         }
 
@@ -1192,7 +1187,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
         switch (type) {
             case "Importer":
                 importerCode = this.ImporterCode;
-                if (!this.IsImporerCodeEnabled) {
+                if (!this.IsImporerCodeEnabled && !this.showButtonSearchClient) {
                     importerCode = "";
                     isExternalId = false;
                     isPassport = true;
@@ -1215,7 +1210,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
 
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
-
+        
         var logWindow = new LogitudeWindow();
         windowArgs.Mode = "DeclarationGeneralComponent";
         windowArgs.ImporterCode = importerCode;
@@ -1705,6 +1700,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             this.CurrentSession.CurrentEditComponent.DisplayModeChanged.emit(this.IsDisplayOnly);
 
         });
+
+        if((this.EntityPM?.IsSubmitDeclaration && this.EntityPM?.Direction === "E" ) || this.EntityPM?.PaymentDate){
+            this.showButtonSearchClient = true;
+        }
+        else{
+            this.showButtonSearchClient = false;
+        }
     }
 
     BuildConsignments() {

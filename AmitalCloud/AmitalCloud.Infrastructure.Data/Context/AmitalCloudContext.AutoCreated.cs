@@ -27,7 +27,6 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<AutomationHistory> AutomationHistorys  {  get; set; }
 	public IDbSet<AutomationLastUpdate> AutomationLastUpdates  {  get; set; }
 	public IDbSet<BlobFile> BlobFiles  {  get; set; }
-	public IDbSet<CaptchaKey> CaptchaKeys  {  get; set; }
 	public IDbSet<CardContact> CardContacts  {  get; set; }
 	public IDbSet<CategoryType> CategoryTypes  {  get; set; }
 	public IDbSet<ChangePasswordLog> ChangePasswordLogs  {  get; set; }
@@ -38,7 +37,6 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<ContactLastLogin> ContactLastLogins  {  get; set; }
 	public IDbSet<ContactLoginLog> ContactLoginLogs  {  get; set; }
 	public IDbSet<ContactMobileDevice> ContactMobileDevices  {  get; set; }
-	public IDbSet<ContactPassword> ContactPasswords  {  get; set; }
 	public IDbSet<ContactTenant> ContactTenants  {  get; set; }
 	public IDbSet<ContactTenantRole> ContactTenantRoleset  {  get; set; }
 	public IDbSet<ConvertProgramInfo> ConvertProgramInfoes  {  get; set; }
@@ -73,9 +71,9 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<EntityCasualData> EntityCasualData  {  get; set; }
 	public IDbSet<EntityChange> EntityChanges  {  get; set; }
 	public IDbSet<EntityDate> EntityDates  {  get; set; }
+	public IDbSet<EntityLastActivity> EntityLastActivities  {  get; set; }
 	public IDbSet<EntityLastActivityType> EntityLastActivityTypes  {  get; set; }
 	public IDbSet<EntityLastUpdate> EntityLastUpdates  {  get; set; }
-	public IDbSet<FailedLoginLog> FailedLoginLogs  {  get; set; }
 	public IDbSet<FailedTokenLog> FailedTokenLogs  {  get; set; }
 	public IDbSet<Feature> Features  {  get; set; }
 	public IDbSet<FeatureChange> FeatureChanges  {  get; set; }
@@ -119,8 +117,6 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<Screen> Screens  {  get; set; }
 	public IDbSet<ScreenField> ScreenFields  {  get; set; }
 	public IDbSet<ScreenModification> ScreenModifications  {  get; set; }
-	public IDbSet<SessionPolicy> sessionpolicies  {  get; set; }
-	public IDbSet<Setting> Settings  {  get; set; }
 	public IDbSet<SharedUserQuery> shareduserqueries  {  get; set; }
 	public IDbSet<SmallDocument> SmallDocuments  {  get; set; }
 	public IDbSet<SpecialService> SpecialServices  {  get; set; }

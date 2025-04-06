@@ -25,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Code { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
-		//public virtual ICollection<EntityLastActivity> EntityLastActivitys { get; set; }
+		public virtual ICollection<EntityLastActivity> EntityLastActivitys { get; set; }
     }
 }
 	 

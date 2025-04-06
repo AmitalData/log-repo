@@ -67,7 +67,10 @@ export class ARInvoicePM {
     public get AutoCreditedByARInvoiceId() { return this.autoCreditedByARInvoiceId; }
     public set AutoCreditedByARInvoiceId(newValue: string) { if (this.autoCreditedByARInvoiceId != newValue) { this.autoCreditedByARInvoiceId = newValue; this.MarkAsDirty("AutoCreditedByARInvoiceId"); } }
        
-	 
+    private isApprovalFailed: boolean;
+    public get IsApprovalFailed() { return this.isApprovalFailed; }
+    public set IsApprovalFailed(newValue: boolean) { if (this.isApprovalFailed != newValue) { this.isApprovalFailed = newValue; this.MarkAsDirty("IsApprovalFailed"); } }
+      
     private autoCreditedByARInvoiceNumber: string;
     public get AutoCreditedByARInvoiceNumber() { return this.autoCreditedByARInvoiceNumber; }
     public set AutoCreditedByARInvoiceNumber(newValue: string) { if (this.autoCreditedByARInvoiceNumber != newValue) { this.autoCreditedByARInvoiceNumber = newValue; this.MarkAsDirty("AutoCreditedByARInvoiceNumber"); } }
@@ -87,7 +90,23 @@ export class ARInvoicePM {
     public get ARInvoiceTypeName() { return this.aRInvoiceTypeName; }
     public set ARInvoiceTypeName(newValue: string) { if (this.aRInvoiceTypeName != newValue) { this.aRInvoiceTypeName = newValue; this.MarkAsDirty("ARInvoiceTypeName"); } }
        
+
+
+    private sequenceStatus: string;
+    public get SequenceStatus() { return this.sequenceStatus; }
+    public set SequenceStatus(newValue: string) { if (this.sequenceStatus != newValue) { this.sequenceStatus = newValue; this.MarkAsDirty("SequenceStatus"); } }
+       
 	 
+    private invoiceNumberPart: string;
+    public get InvoiceNumberPart() { return this.invoiceNumberPart; }
+    public set InvoiceNumberPart(newValue: string) { if (this.invoiceNumberPart != newValue) { this.invoiceNumberPart = newValue; this.MarkAsDirty("InvoiceNumberPart"); } }
+
+
+    private invoiceSeries: string;
+    public get InvoiceSeries() { return this.invoiceSeries; }
+    public set InvoiceSeries(newValue: string) { if (this.invoiceSeries != newValue) { this.invoiceSeries = newValue; this.MarkAsDirty("InvoiceSeries"); } }
+       
+
     private mainEntityStatus: string;
     public get MainEntityStatus() { return this.mainEntityStatus; }
     public set MainEntityStatus(newValue: string) { if (this.mainEntityStatus != newValue) { this.mainEntityStatus = newValue; this.MarkAsDirty("MainEntityStatus"); } }

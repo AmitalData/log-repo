@@ -43,6 +43,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Server.Tools.FTP;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Reflection;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -825,14 +826,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         myParams
                         );
 
-                int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;
-				ICommonDataContext myContextCommon = CommonDataContext.GetContext(tenant);
-				FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
-				FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
+                int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;				
+				FeatureQuery featureQuery = new FeatureQuery(new FeatureRepository(CommonDataContext.GetContext(tenant)));
 				var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
-				var featureIsSendSFTP = features.Features.FirstOrDefault(x => x.Code == "IsSendSFTP");
-                string serverJobID = string.Empty;
-				if (featureIsSendSFTP != null)
+				bool isSendSFTPEnabled = features.Features.Any(x => x.Code == "IsSendSFTP");
+				string serverJobID = string.Empty;
+				if (isSendSFTPEnabled)
 				{
 					var bytsArry = Convert.FromBase64String(fileContentsBASE64);
 					serverJobID = SendFileToSFTP(tenant, bytsArry, dCAOutFileName, out MessageOut);
@@ -907,7 +906,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 				
 					string ftpHostIP = pmCustomsPartnerFtp.MyFtpDetail.Host;
 					string ftpUserName = pmCustomsPartnerFtp.MyFtpDetail.UserName;
-					string ftpPrivateKeyPath = pmCustomsPartnerFtp.MyFtpDetail.Password;//to
+					string ftpPrivateKeyPath = pmCustomsPartnerFtp.MyFtpDetail.Password ?? Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "PRK.PPK");
 					string ftpFolderName = pmCustomsPartnerFtp.MyFtpDetail.Folder;
 					string p_message = "";
 					string p_status = "";
@@ -1271,6 +1270,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
             if (String.IsNullOrWhiteSpace(exceptionMessage))
             {
                 exceptionMessage = defaultMessage;
+            }
+
+            if (exceptionMessage.Contains("Please Contact ESB Administrator"))
+            {
+                int tenant = requestParams?.Tenant == null ? 0 : requestParams.Tenant;
+                string msg = TextCodesTranslator.TranslateText("Customs.Declaration.O.ESBmsg", tenant) + "\n";
+                exceptionMessage = msg + exceptionMessage;
             }
             responseData = new TResponseData() { Succeeded = false, HasException = true, UserMessage = "SendWS failed:" + exceptionMessage };
 

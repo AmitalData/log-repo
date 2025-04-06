@@ -22,6 +22,8 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using static Stimulsoft.Report.Func;
+using CHAMP17;
 
 namespace WebFreight.Web.InfrastructureModel.DomainServices
 {
@@ -188,6 +190,31 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
             return count;
         }
 
+        public ServiceResponse GetCurrenciesExchangeRateByCurrencyId(string foreignCurrencyId, int tenant, int pageSize, int pageIndex)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            
+            objectContext = objectContext ?? WebFreightContext.GetContext(tenant);
+            var ratesTableRepository = new RatesTableRepository(objectContext);
+            var ratesTableQuery = new RatesTableQuery(ratesTableRepository, tenant);
+
+            var result = ratesTableQuery.GetCurrenciesExchangeRateByCurrencyId(tenant, foreignCurrencyId);
+
+            ServiceResponse response = new ServiceResponse();
+            response.Count = result.Count();
+            var pagedResult = result.Skip(pageIndex).Take(pageSize).ToList();
+
+            CurrencyRateRepository currencyRateRepository = new CurrencyRateRepository(tenant);
+            foreach (var rate in pagedResult)
+            {
+                rate.CurrencyRates = currencyRateRepository.GetSingleByExchangeRateId(rate.Id);
+            }
+
+            response.Result = pagedResult;
+
+            return response;
+        }
         public List<LastRate> GetCurrenciesExchangeRateByValueDate(int tenant, string baseCurrencyId, DateTime? date,bool calculateRateAccordingNumberUnit = false)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
@@ -218,6 +245,10 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
                 {
                     lastRate.BaseCurrencyId = baseCurrencyId;
                     lastRate.BaseCurrencyCode = baseCurrency.Code;
+
+                    CurrencyRateRepository currencyRateRepository = new CurrencyRateRepository(tenant);
+                    lastRate.CurrencyRates = currencyRateRepository.GetSingleByExchangeRateId(lastRate.Id);
+
                     resultList.Add(lastRate);
                 }
                 else

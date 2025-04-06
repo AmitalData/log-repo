@@ -25,11 +25,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         protected System.Data.Entity.IDbSet<TEntity> DbSet => _dbSet;
         protected IContext DbContext => _dbContext;
 
-        public Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
+        internal Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
         {
             _unitOfWork = unitOfWork;
         }
-        public Repository(IContext dbContext)
+        internal Repository(IContext dbContext)
         {
             _isDisposed = false;
             _dbContext = dbContext;
@@ -140,6 +140,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                 throw new Exception(_errorMessage, dbEx);
             }
         }
+        public TEntity GetFirst() => GetAll(0, true).FirstOrDefault();
         public List<TEntity> GetAll(int tenant) => GetQuery(tenant).ToList();
         protected IQueryable<TEntity> GetQuery(int tenant)
         {

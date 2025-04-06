@@ -10,12 +10,11 @@
 import {GLAccountWithholdingTaxPM} from './GLAccountWithholdingTaxPM';
 import {GLAccountInterestPeriodPM} from './GLAccountInterestPeriodPM';
 import {GLAccountCurrencyPM} from './GLAccountCurrencyPM';
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class GLAccountPM {
 
@@ -143,7 +142,17 @@ export class GLAccountPM {
     private reconcileMethodName: string;
     public get ReconcileMethodName() { return this.reconcileMethodName; }
     public set ReconcileMethodName(newValue: string) { if (this.reconcileMethodName != newValue) { this.reconcileMethodName = newValue; this.MarkAsDirty("ReconcileMethodName"); } }
+
+    private exchangeRateId: string;
+    public get ExchangeRateId() { return this.exchangeRateId; }
+    public set ExchangeRateId(newValue: string) { if (this.exchangeRateId != newValue) { this.exchangeRateId = newValue; this.MarkAsDirty("ExchangeRateId"); } }
        
+	 
+    private exchangeRateName: string;
+    public get ExchangeRateName() { return this.exchangeRateName; }
+    public set ExchangeRateName(newValue: string) { if (this.exchangeRateName != newValue) { this.exchangeRateName = newValue; this.MarkAsDirty("ExchangeRateName"); } }
+       
+
 	 
     private controlAccountId: string;
     public get ControlAccountId() { return this.controlAccountId; }
@@ -922,6 +931,10 @@ export class GLAccountPM {
     private markDate: Date;
     public get MarkDate() { return this.markDate; }
     public set MarkDate(newValue: Date) { if (this.markDate != newValue) { this.markDate = newValue;  } }
+     
+    private cardCountryCode: string;
+    public get CardCountryCode() { return this.cardCountryCode; }
+    public set CardCountryCode(newValue: string) { if (this.cardCountryCode != newValue) { this.cardCountryCode = newValue;  } }
      
 	 
 

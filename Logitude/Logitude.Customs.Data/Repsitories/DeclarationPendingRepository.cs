@@ -50,6 +50,15 @@ namespace Logitude.Customs.Data.Repsitories
             return pendings;
         }
 
+        public bool HasPendingWithStatus(string declarationId, int tenant, string status)
+        {
+            return (from a in context.DeclarationPendings
+                    where a.DeclarationID == declarationId
+                          && a.Tenant == tenant
+                          && a.Status == status
+                    select a.DeclarationID).Any();
+        }
+
         public bool DeclarationHasPending(string declarationId, int tenant)
         {
 
@@ -65,6 +74,8 @@ namespace Logitude.Customs.Data.Repsitories
 
             return haspending;
         }
+
+
 
         public string GetDeclarationPendingsByPendingId(string pending, int tenant)
         {

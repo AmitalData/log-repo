@@ -168,6 +168,17 @@ namespace Logitude.Customs.Data.Repsitories
         {
             return (from a in context.CourierMasters where a.Tenant == tenant && a.MAWB == mawb select a).FirstOrDefault();
         }
+        public CourierMaster GetCourierMasterByDeclarationId(string decId, int tenant)
+        {
+            return context.CourierMasters
+                          .Join(context.CourierDeclarations,
+                                cm => cm.Id,
+                                cd => cd.CourierMasterId,
+                                (cm, cd) => new { cm, cd })
+                          .Where(joined => joined.cd.DeclarationId == decId && joined.cm.Tenant == tenant)
+                          .Select(joined => joined.cm)
+                          .FirstOrDefault();
+        }
     }
 
     public  class LastMileReportData

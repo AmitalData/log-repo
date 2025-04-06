@@ -82,6 +82,8 @@ import {FieldTemplateComponent} from './Components/Templates/FieldTemplateCompon
 import {ManageReconciliationListTemplate} from './Components/ListTemplates/ManageReconciliationListTemplate';
 import {TaxReportListTemplate} from './Components/ListTemplates/TaxReportListTemplate';
 import { ReconciliationLineListTemplate } from './Components/ListTemplates/ReconciliationLineListTemplate';
+import { InvoiceSequenceListTemplate } from './Components/ListTemplates/InvoiceSequenceListTemplate';
+
 import {InterestReportListTemplate} from './Components/ListTemplates/InterestReportListTemplate'
 import {InterestInvoiceListTemplate} from './Components/ListTemplates/InterestInvoiceListTemplate'
 import { InterestBasesTypeDetailsTabComponent } from './Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent';
@@ -272,6 +274,7 @@ export const Components =
         ManageReconciliationListTemplate,
         TaxReportListTemplate,
         ReconciliationLineListTemplate,
+        InvoiceSequenceListTemplate,
         CashBookLineListTemplate,
         InterestReportListTemplate,
         InterestInvoiceListTemplate,
@@ -453,6 +456,8 @@ export class ModuleDeclarations {
             case "ManageReconciliationListTemplate": { myResult = ManageReconciliationListTemplate; break; }
             case "TaxReportListTemplate": { myResult = TaxReportListTemplate; break; }
             case "ReconciliationLineListTemplate": { myResult = ReconciliationLineListTemplate; break; }
+            case "InvoiceSequenceListTemplate": { myResult = InvoiceSequenceListTemplate; break; }
+
             case "CashBookLineListTemplate": { myResult = CashBookLineListTemplate; break; }
             case "InterestReportLinesByDateListTemplate": { myResult = InterestReportLinesByDateListTemplate; break; }
             case "InterestReportListTemplate": { myResult = InterestReportListTemplate; break;}

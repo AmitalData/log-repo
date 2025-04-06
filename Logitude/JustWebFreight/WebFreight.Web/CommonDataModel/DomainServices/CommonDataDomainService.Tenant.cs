@@ -349,7 +349,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 globalTenantRep.SubmitChanges();
 
                 TenantManagementRepository tenantMngmentRep = new TenantManagementRepository();
-                TenantManagement tenantMngment = tenantMngmentRep.GetSingleTenantManagement(currentTenant.Id);
+                TenantManagement tenantMngment = tenantMngmentRep.GetSingleTenantManagement(currentTenant.Id,false);
                 tenantMngment.Name = currentTenant.Company;
                 tenantMngment.DPArchiveShipmentArrivalFilter = currentTenant.DPArchiveShipmentArrivalFilter;
                 tenantMngment.DPArchiveShipmentDepartFilter = currentTenant.DPArchiveShipmentDepartFilter;

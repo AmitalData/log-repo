@@ -89,7 +89,7 @@ export class RatesTablePM {
     public get UpdatedDate() { return this.updatedDate; }
     public set UpdatedDate(newValue: Date) { if (this.updatedDate != newValue) { this.updatedDate = newValue; this.MarkAsDirty("UpdatedDate"); } }
        
-	 
+    
 
     public OldEntityPM: RatesTablePM;
 		
@@ -117,4 +117,4 @@ export class RatesTablePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

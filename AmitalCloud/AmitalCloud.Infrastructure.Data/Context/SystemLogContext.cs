@@ -19,7 +19,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
     {
         private int tenant;
         private SystemLogContext()
-            : base("LogitudeSystemLogsStr")
+            : base("AamitalSystemLogsStr")
         {
             Database.SetInitializer<SystemLogContext>(new MigrateDatabaseToLatestVersion<SystemLogContext, MigrationConfiguration<SystemLogContext>>());
         }
@@ -77,7 +77,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
         }
         protected override AmitalCloudDBSchema AmitalCloudDBSchema
         {
-            get { return AmitalCloudDBSchema.LOGITUDE_LOGS; }
+            get { return AmitalCloudDBSchema.AMITAL_LOGS; }
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -51,7 +51,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 return false;
             }
-            if (!AmitalCloudSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight)
+            if (!AmitalCloudSettings.GetAmitalCustomsSettingsMInject(tenant).IsConnectedToUniFreight)
             {
                 return false;
             }
@@ -67,7 +67,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
 
 
-            if (String.IsNullOrWhiteSpace(AmitalCloudSettings.GetLogitudeCustomsSettingsMInject(tenant).OnPremiseFillingService))
+            if (String.IsNullOrWhiteSpace(AmitalCloudSettings.GetAmitalCustomsSettingsMInject(tenant).OnPremiseFillingService))
             {
                 return false;
             }

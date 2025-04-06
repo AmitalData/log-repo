@@ -1,0 +1,382 @@
+﻿using Logitude.SystemLogs;
+using Microsoft.WindowsAzure.ServiceRuntime;
+using System;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using System.Diagnostics;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Simplog.Data.InvoiceModel;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Transactions;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
+using System.Collections.Generic;
+using Logitude.Accounting.Data;
+using Logitude.Server.Tools.Models;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+
+namespace CommunicationWorkerRole
+{
+    public class ARInvoiceApproveWR : WorkerEntryPoint
+    {
+        bool _OnStartDone = false;
+        DateTime _LastGC = DateTime.MinValue;
+        private bool _UseQueue = true;
+        private DbQueueService _DbQueueService;
+        private string _ObjectTable = "ARInvoice";
+
+        public override void Run()
+        {
+
+            while (IsRunning)
+            {
+
+                if (General.IsUpdating())
+                {
+                    Thread.Sleep(60000);
+                    continue;
+                }
+                try
+                {
+                    WorkOnce();
+                    Thread.Sleep(
+                        TimeSpan.FromSeconds(
+                        .5
+                        )
+
+                        );
+                }
+                catch (Exception e)
+                {
+                    ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "ARInvoiceApproveWR : Run() Method", null);
+                    Thread.Sleep(10000);
+                }
+
+            }
+
+        }
+
+        public override bool OnStart()
+        {
+            try
+            {
+                if (_OnStartDone) return true;
+                _OnStartDone = true;
+
+
+                if (!_UseQueue)
+                {
+                    return true;
+                }
+
+                _DbQueueService = new DbQueueService("ARInvoiceApproveWR", 0);
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "amital send data worker role start", null, null);
+            }
+
+            // Set the maximum number of concurrent connections 
+            ServicePointManager.DefaultConnectionLimit = 12;
+
+
+            RoleEnvironment.Changing += RoleEnvironmentChanging;
+
+            return base.OnStart();
+        }
+
+        private void RoleEnvironmentChanging(object sender, RoleEnvironmentChangingEventArgs e)
+        {
+
+            // If a configuration setting is changing
+            if (e.Changes.Any(change => change is RoleEnvironmentConfigurationSettingChange))
+            {
+
+                // Set e.Cancel to true to restart this role instance
+                e.Cancel = true;
+            }
+        }
+
+
+
+        public override void WorkOnce()
+        {
+            try
+            {
+                if (DateTime.Now.Subtract(_LastGC) > TimeSpan.FromMinutes(10))
+                {
+                    _LastGC = DateTime.Now;
+
+                }
+                OnStart();
+
+                WorkUntilQEmptyQueueDBMultiThreaded();
+
+
+            }
+            catch (Exception e)
+            {
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+                _OnStartDone = false;
+            }
+
+        }
+
+        public void WorkUntilQEmptyQueueDBMultiThreaded(TimeSpan? timeSpan = null)
+        {
+            string selectedQueue = "ARInvoiceApproveWR";
+            Stopwatch stopwatch = null;
+            if (timeSpan != null)
+            {
+                stopwatch = Stopwatch.StartNew();
+            }
+
+            QueueResponse response = null;
+            while (true)
+            {
+                if (stopwatch != null && timeSpan != null)
+                {
+                    if (stopwatch.Elapsed > timeSpan)
+                    {
+                        return;
+                    }
+                }
+                try
+                {
+                    _DbQueueService = new DbQueueService(selectedQueue, 0);
+                    response = _DbQueueService.ReceiveDetailsByTenant(_ObjectTable, new TimeSpan(0, 0, 0, 5));
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+                if (response == null || (response != null && response.MessageId == null))
+                {
+                    break;
+                }
+
+                if (response != null && response.Tenant != 0)
+                {
+                    try
+                    {
+
+                        if (response.MessageValues.ContainsKey("ARInvoiceId"))
+                        {
+                            this.UpdateInvoice(response);
+                        }
+
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                    finally
+                    {
+                        SetTenantIdle(response.Tenant);
+                    }
+                }
+
+
+
+                Thread.Sleep(10);
+            }
+        }
+        private void UpdateInvoice(QueueResponse response)
+        {
+
+            string arinvoiceId = response.MessageValues["ARInvoiceId"].ToString();
+            int tenant = 0;
+            int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
+
+            ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
+            ARInvoicePM aRInvoicePM = aRInvoiceQuery.GetSinglePM(arinvoiceId, tenant);
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+
+            if (arinvoiceId != null)
+            {
+                try
+                {
+                    aRInvoicePM.SetApproved = true;
+                    ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
+                    invoiceService.Update(aRInvoicePM, true);
+                    _DbQueueService.Complete();
+
+                    if (aRInvoicePM.ARInvoiceTypeCode == "IT" && !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber))
+                    {
+
+                        using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                        {
+                            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+                            InterestReportPM interestReportPM = interestReportQueryService.GetSingle(aRInvoicePM.InterestReportId, false, true);
+                            try
+                            {
+
+                                invoiceService.BuildDocumentsForNewInvoice(aRInvoicePM, interestReportPM);
+                                UpdateInterestReportsStatues(aRInvoicePM.InterestReportId, tenant, "2", aRInvoicePM.CreatedByUserId, aRInvoicePM);
+                                invoiceService.SignInvoice(aRInvoicePM, tenant);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
+                                scope.Complete();
+                            }
+                            catch (Exception ex)
+                            {
+                                scope.Dispose();
+                                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*4*) interestReport.Id=" + interestReportPM.Id);
+                                UpdateInterestReportsStatues(aRInvoicePM.InterestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
+
+                            }
+
+                        }
+
+                    }
+
+                }
+                catch (BusinessErrorException ex)
+                {
+                    string batchId = response.MessageValues.ContainsKey("BatchIdFromInterestInvoice") && response.MessageValues["BatchIdFromInterestInvoice"] != null
+                        ? response.MessageValues["BatchIdFromInterestInvoice"].ToString()
+                        : string.Empty;
+
+                    BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
+                    BatchTaskExecutionPM batchTask = batchTaskExecutionQueryService.GetSingle(batchId, false, true);
+                    if (batchTask == null) return;
+
+                    batchTask.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    batchTask.ErrorLog += "\n" + "Report # " + aRInvoicePM.InterestReportNumber + " " + ex.Message;
+                    BatchTaskExecutionUpdateService batchTaskExecutionRepository = new BatchTaskExecutionUpdateService(tenant);
+                    batchTaskExecutionRepository.Update(batchTask, true);
+                    if (!string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)
+                    {
+                        UpdateCounter(tenant);
+                    }
+                    _DbQueueService.CompleteAsFailed();
+                }
+                catch (Exception ex)
+                {
+                    ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(tenant);
+                    ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
+                    if (invoice != null && invoice.StatusCode == "AD")
+                    {
+                        _DbQueueService.Complete();
+                        throw;
+                    }
+                    if (!string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)
+                    {
+                        UpdateCounter(tenant);
+                    }
+                    if (response.RetryNumber == 4)
+                    {
+                        _DbQueueService.CompleteAsFailed();
+
+                        invoice.IsApprovalFailed = true;
+                        invoice.StatusCode = "DR";
+                        invoiceRepository.Update(invoice);
+
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = tenant,
+                            EventTypeCode = "APF",
+                            EntityId = arinvoiceId,
+                            ObjectTableName = _ObjectTable,
+                            Notes = ex.Message
+                        });
+
+                        invoiceRepository.SubmitChanges();
+                        if (aRInvoicePM.ARInvoiceTypeCode == "IT")
+                        {
+                            UpdateInterestReportsStatues(aRInvoicePM.InterestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
+                        }
+                    }
+
+
+                }
+            }
+
+
+        }
+
+        private void SetTenantIdle(int tenant)
+        {
+            TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
+            TenantIdleStatus tenantObj = tenantRepository.GetAllByObjectTable(tenant, _ObjectTable).FirstOrDefault();
+            if (tenantObj == null) return;
+            tenantObj.Idle = false;
+            tenantObj.UpdateDate = DateTime.Now;
+            tenantRepository.Update(tenantObj);
+            tenantRepository.SubmitChanges();
+
+        }
+
+
+        private void UpdateCounter(int tenant)
+        {
+            CounterStatRepository counterStatRepository = new CounterStatRepository(tenant);
+            if (TableCounter.counterState == null) return;
+
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
+            ObjectTable objectTable = objectTableRepository.GetObjectTableByName(_ObjectTable, 0, true);
+
+            var key = TableCounter.counterState.Keys.FirstOrDefault(k => k.EndsWith($"_{tenant}_{objectTable.Id}"));
+            if (!string.IsNullOrEmpty(key))
+            {
+                int id = int.Parse(key.Split('_')[0]);
+                CounterStat counterStat = counterStatRepository.GetSingleCounter(id, tenant);
+                counterStat.LastValue = int.Parse(TableCounter.counterState[key]) - 1;
+                counterStatRepository.Update(counterStat);
+                counterStatRepository.SubmitChanges();
+            }
+
+
+        }
+
+
+
+        public void UpdateInterestReportsStatues(string interestReportId, int tenant, string statues, string userId, ARInvoicePM aRInvoicePM = null, string invoiceFailureReason = null)
+        {
+
+            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+            InterestReportPM interestReportPM = interestReportQueryService.GetSingle(interestReportId, false, true);
+            var accountingContext = AccountingContext.GetContext(tenant);
+
+            interestReportPM.InterestReportStatusCode = statues;
+            interestReportPM.UpdatedByUserId = userId;
+            interestReportPM.UpdateDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+            if (invoiceFailureReason != null)
+            {
+                interestReportPM.InvoiceFailureReason = invoiceFailureReason.Substring(0, Math.Min(invoiceFailureReason.Length, 1024));
+
+            }
+            if (aRInvoicePM != null)
+            {
+                interestReportPM.ARinvoiceId = aRInvoicePM.Id;
+                interestReportPM.InvoiceAmount = (decimal?)aRInvoicePM.AmountInLocalCurrency;
+            }
+            interestReportPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            InterestReportUpdateService service = new InterestReportUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
+            interestReportPM.IsUpdatedFromBatch = true;
+            service.Update(interestReportPM, true);
+
+        }
+
+    }
+}

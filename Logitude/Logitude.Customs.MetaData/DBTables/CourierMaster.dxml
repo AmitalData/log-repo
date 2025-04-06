@@ -255,9 +255,16 @@
   <Column
     Name="SentDeclarationStatus"
     Type="bit"
-        DefaultValue="0">
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="CourierMasterPaymentStatusCd"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

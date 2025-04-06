@@ -37,6 +37,7 @@ using Logitude.Accounting.Data;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.Accounting.Def.BLExt;
 using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.BL.InvoiceModel.Enums;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -1030,7 +1031,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (invoice != null)
                 {
-                    if (invoice.StatusCode == "VD")
+                    if (invoice.StatusCode == APInvoiceStatusCodes.Void)
                     {
                         throw new Exception("Invoice (" + invoice.InvoiceNumber + ") is Voided");
                     }
@@ -1072,16 +1073,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             {
 
                                 invoice.IsClosed = false;
-                            if (!_invoiceStatusAccordingToLedgerOpenAmount && (invoice.StatusCode == "PD" || invoice.StatusCode == "PP"))
+                            if (!_invoiceStatusAccordingToLedgerOpenAmount && (invoice.StatusCode == APInvoiceStatusCodes.Paid || invoice.StatusCode == APInvoiceStatusCodes.PaidPartially))
                                 {
                                     if (PaidAmount != 0)
                                     {
-                                        invoice.StatusCode = "PP";
+                                        invoice.StatusCode = APInvoiceStatusCodes.PaidPartially;
                                     }
 
                                     else
                                     {
-                                        invoice.StatusCode = "AD";
+                                        invoice.StatusCode = APInvoiceStatusCodes.Unpaid;
                                     }
                                 }
                             }
@@ -1105,21 +1106,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                             NetCommonHelper.Logger.DevLog.Instance.WriteInfo("APINV_PD:APPaymentService.UpdateInvoiceAmounts: APInvoice status 'Paid' Inv No. " + invoice.InvoiceNumber.ToString()
                                             + ", old status= " + invoice.StatusCode
                                             + ", allConnectedItems.Count= " + allConnectedItems.Count.ToString()
-                                            + ", invoiceAmountDue= " + invoiceAmountDue.ToString()); 
-                                        invoice.StatusCode = "PD";
+                                            + ", invoiceAmountDue= " + invoiceAmountDue.ToString());
+                                            if (invoice.StatusCode != APInvoiceStatusCodes.Void) invoice.StatusCode = APInvoiceStatusCodes.Paid;
                                     }
                                 }
 
                                 else if (invoiceAmountDue > 0 && invoiceAmountDue < invoiceAmount)
                                 {
                                     invoice.IsClosed = false;
-                                    invoice.StatusCode = "PP";
+                                    invoice.StatusCode = APInvoiceStatusCodes.PaidPartially;
                                 }
 
                                 else if (invoiceAmountDue < 0 && invoiceAmountDue > invoiceAmount)
                                 {
                                     invoice.IsClosed = false;
-                                    invoice.StatusCode = "PP";
+                                    invoice.StatusCode = APInvoiceStatusCodes.PaidPartially;
                                 }
 
                                 else if (invoiceAmountDue < 0 && invoiceAmount > 0)
@@ -1388,7 +1389,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 );
                 if (AutoReconcileRecordList.Count > 0)
                 {
-                    AutoReconcileARPaymentServiceExt.InitMust(paymentGLAccount, journal, AutoReconcileRecordList, "4");// APInvoice
+                    AutoReconcileARPaymentServiceExt.InitMust(paymentGLAccount, journal, AutoReconcileRecordList, "4", paymentPM.PaymentCurrencyId);// APInvoice
                     AutoReconcileARPaymentServiceExt.InsertJournalReconcile();
                 }
 

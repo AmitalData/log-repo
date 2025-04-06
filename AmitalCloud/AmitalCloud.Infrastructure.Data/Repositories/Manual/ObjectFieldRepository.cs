@@ -361,11 +361,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             if (includeMetaDataFields)
             {
-                var myField = (from a in context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode")
+                var myField = (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
                                where a.Id == id
                                select a).FirstOrDefault();
                 if (myField == null)
-                    myField = (from a in context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode")
+                    myField = (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
                                where a.FieldCode == id
                                select a).FirstOrDefault();
                 return myField;
@@ -407,7 +407,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             if (IncludeMetaDataFields)
             {
-                return context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode").Where(t => (t.Tenant == tenant || t.Tenant == 0) && t.FieldName.ToLower() != "tenant");
+                return context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode").Where(t => (t.Tenant == tenant || t.Tenant == 0) && t.FieldName.ToLower() != "tenant");
             }
             return context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode").Where(t => t.Tenant == tenant || t.Tenant == 0);
         }
@@ -415,7 +415,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             if (IncludeMetaDataFields)
             {
-                return context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode")
+                return context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
                    .Where(t => ((t.Tenant == 0 && !t.FieldName.ToLower().StartsWith("Field")) || (t.Tenant == tenant && t.IsCustom == true))
                                    && t.FieldName.ToLower() != "tenant");
             }

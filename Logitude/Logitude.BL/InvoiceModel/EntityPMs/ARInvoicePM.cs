@@ -17,11 +17,15 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string AutoCreditByARInvoiceNumber { get; set; }
 
         public string AutoCreditedByARInvoiceId { get; set; }
+        public bool IsApprovalFailed { get; set; }
         public string AutoCreditedByARInvoiceNumber { get; set; }
 
         public string InvoiceNumber { get; set; }
         public string ARInvoiceTypeCode { get; set; }
         public string ARInvoiceTypeName { get; set; }
+        public string SequenceStatus { get; set; }
+        public string InvoiceNumberPart { get; set; }
+        public string InvoiceSeries { get; set; }
 
 
         public string MainEntityStatus { get; set; }

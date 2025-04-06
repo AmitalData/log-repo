@@ -432,6 +432,13 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.EntityPM.ReconcileMethodCode = value;
         }
     }
+    get ExchangeRateId() { return this.EntityPM.ExchangeRateId; }
+    set ExchangeRateId(value: string) {
+        if (this.EntityPM.ExchangeRateId != value) {
+            
+           this.EntityPM.ExchangeRateId = value;
+        }
+    }
 
     get AutomaticReconcileId() { return this.EntityPM.AutomaticReconcileId; }
     set AutomaticReconcileId(value: string) {
@@ -576,6 +583,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("ReconcileMethodCode", this.ObjectTableName, enable);
+        this.UIProperties.SetEnabled("ExchangeRateId", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("AutomaticReconcileId", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("ParentAccountId", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("Category1Id", this.ObjectTableName, enable);

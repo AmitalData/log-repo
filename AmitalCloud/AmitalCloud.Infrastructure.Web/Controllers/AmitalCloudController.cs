@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
+using AmitalCloud.Infrastructure.Data;
+using AmitalCloud.Infrastructure.Web.Helpers;
+using System;
 using System.Linq;
-using System.Net.Http;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Web.Helpers;
-using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Application.EntityQueryServices;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
-    [RoutePrefix("api/LogitudeApplication")]
     public class AmitalCloudController : ApiController
     {
         public HttpResponseMessage GetCheckIsupgradingSystem()
@@ -30,6 +26,10 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         }
         private bool GetIsBlockingFromDB()
         {
+
+            var res = new TenantManagementQueryService(0).GetMulti(a => true, "RecurringPeriod,PaymentMethod,PaymentChannel");
+
+
             var result = new GlobalDBQueryService(0).GetMulti(a => true); // a.IsBlocking == true); //,a=>new GlobalDBPM() {Id = a.Id });
             bool isBlocking = result.Count > 0;
             string[] authenticatedIPs = AmitalCloudSettings.CustomerCareIP?.Split(',');
@@ -45,5 +45,8 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }
             return isBlocking;
         }
+
+
+
     }
 }

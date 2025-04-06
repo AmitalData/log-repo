@@ -357,6 +357,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Text", Name = "Text" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "nText", Name = "nText" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "DateTime", Name = "DateTime" }, fieldDataTypeRep);
+            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "DateTime2", Name = "DateTime2" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Date", Name = "Date" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Integer", Name = "Integer" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "UnsInteger", Name = "UnsInteger" }, fieldDataTypeRep);
@@ -1575,6 +1576,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Text", Name = "Text" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "nText", Name = "nText" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "DateTime", Name = "DateTime" }, fieldDataTypeRep);
+            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "DateTime2", Name = "DateTime2" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Date", Name = "Date" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Integer", Name = "Integer" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "UnsInteger", Name = "UnsInteger" }, fieldDataTypeRep);

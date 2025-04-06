@@ -10,16 +10,16 @@ namespace WebFreight.Web.Controllers.WebServices
 {
     public class SyncCCUTablesController : ApiController
     {
-        public IHttpActionResult GetSyncData(string fileNo)
+        public IHttpActionResult GetSyncData(string fileNo = null, int? customsFileNo = null, bool allTask = false)
         {
-            DevLog.Instance.WriteDebug("GetSyncData, fileNo: " + fileNo);
-            if(string.IsNullOrEmpty(fileNo))
-                return BadRequest("FileNo is required");
+            DevLog.Instance.WriteDebug($"GetSyncData, fileNo: {fileNo}, customsFileNo: {customsFileNo}, allTask: {allTask}");
+            if(string.IsNullOrEmpty(fileNo) && !customsFileNo.HasValue)
+                return BadRequest("FileNo or customsFileNo is required");
 
             try
             {
                 int tenant = HeaderHelper.Authenticate().Tenant;
-                List<EntityRecord> res = new SyncRecordQuery(tenant).GetUnsyncRecordsAndMarkAsInProcess(tenant, fileNo);
+                List<EntityRecord> res = new SyncRecordQuery(tenant).GetUnsyncRecordsAndMarkAsInProcess(tenant, fileNo, customsFileNo, allTask);
 
                 return Ok(res);
             }

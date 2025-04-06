@@ -261,6 +261,8 @@ export class AppTool {
 
         if (location.href.indexOf('localhost') > -1) {
             return 'http://localhost:9996/';
+            // for amitalcloud: 
+            // return 'http://localhost:44346/';
         }
 
         else {

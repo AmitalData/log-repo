@@ -668,8 +668,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 					if (!String.IsNullOrEmpty(MyEntity.VendorGLAccount) && differentCurrencies) 
 					{
 						GLAccountQueryService gLAccountListQuery = new GLAccountQueryService(Tenant);
-						bool isMulti = gLAccountListQuery.IsMulti(MyEntity.VendorGLAccount, tenant);
-						if (!isMulti) 
+                    bool isMulti = gLAccountListQuery.IsMultiByInternal(MyEntity.VendorGLAccount, Tenant);
+                    if (!isMulti) 
 						{ 
 							throw new ApplicationException("Vendor GLAccount Id " + MyEntity.VendorGLAccount + " is not multi-currency"); 
 						}

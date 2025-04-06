@@ -42,12 +42,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     {
 
     
-        public HttpResponseMessage PostResponseCheckFileCredit(int tenant , string  response)
+        public HttpResponseMessage PostResponseCheckFileCredit([FromBody] string  response)
 		{
 			try
 			{
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+				int tenant = authToken.Tenant;
 				ICustomContext dbContext = CustomContext.GetContext(tenant);
 
 				if (String.IsNullOrWhiteSpace(response))
@@ -104,7 +105,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 						dF_NG_2754_MSG10004_ImportDeclarationResponseService.SendPaymentIsCheckFileCredit(isCheckFileCredit, declarationPM, declarationPaymentPM, dbContext, checkFileCrediteReq.LoggingUserId, checkFileCrediteReq.LoggingObjectTableId);
 						break;
 				}
-				
+				Communications.UpdateCommunicationLogStatus(comunicationLog.Id, comunicationLog.Tenant, null, "D", response, null);
+
 
 				return Request.CreateResponse(HttpStatusCode.OK, "OK");
             }

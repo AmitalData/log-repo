@@ -44,7 +44,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("LastUpdateDate")]
 	    public DateTime? LastUpdateDate { get; set; }
 		public virtual ICollection<GlobalContact> GlobalContacts { get; set; }
-		//public virtual ICollection<TenantManagement> TenantManagements { get; set; }
-	}
+		public virtual ICollection<TenantManagement> TenantManagements { get; set; }
+    }
 }
 	 

@@ -93,7 +93,19 @@ namespace WebFreight.Web.DataProviders
 
 		public decimal ExternalTransactionsTotal { get; set; }
 
-		public decimal TotalToCollect { get { return AccountingBalance + (decimal)(TotalOpenShipments); } }
+		public decimal TotalToCollect { get {
+                try
+                {
+                    return AccountingBalance + Convert.ToDecimal(TotalOpenShipments);
+
+                }
+                catch (Exception)
+                {
+                   
+                    throw;
+                }
+              
+            } }
 		public decimal? FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
 		public decimal? Obligo { get { return TotalToCollect + FutureChequesTotal; } }
 		public decimal? CreditUsed { get { return CreditLimit - Obligo; } }

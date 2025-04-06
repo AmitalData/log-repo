@@ -17,7 +17,7 @@ using Logitude.CustomsMessaging.Helpers.ClosedTable;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using NetCommonHelper.Logger;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -37,10 +37,11 @@ using UnifreightIIG.Common.SystemTableServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-
     public class SYSTBL_NG_9001_MSG_SystemTablesResponseService
         : ResponseServiceBase<SystemTableResponseData, SYSTBL_NG_9001_MSG_SystemTablesResponse, SystemTableRequestParams>
     {
+        private readonly DevLog logger = DevLog.Instance;
+
         public override void Update(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
         {
             bool anatWantAsDataSetExample = false;
@@ -147,20 +148,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 UpdateCustomZipFile(requestParams.Tenant, requestParams.LoggingUserId);//allways try To Build Custom Zip File !!! 
             }
-
-            //others ...
-            var syncUnifreight = SystemTables.SyncUnifreight(requestParams.TableId);
+            
+            bool syncUnifreight = SystemTables.SyncUnifreight(requestParams.TableId);
+            logger.WriteDebug($"syncUnifreight: {syncUnifreight}");
             if (syncUnifreight)
             {
                 var list = customResponse.TableData.OrderBy(rec => rec.id).ToList();
-                var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).IsConnectedToUniFreight;
+                bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant).IsConnectedToUniFreight;
                 if (isConnectedToUniFreight)
                 {
+                    logger.WriteDebug($"sending to Unifreight from onPomise, TableId: {requestParams.TableId}, tenant: {requestParams.Tenant}");
                     SystemTables.Send2Amital(requestParams.TableId, list, requestParams.Tenant);
                 }
                 else
                 {
-                    UpdateSyncRecord(customResponse, requestParams);
+                    logger.WriteDebug($"sending to Unifreight from cloud, TableId: {requestParams.TableId}, tenant: {requestParams.Tenant}");
+                    SystemTables.Send2AmitalFromCloud(requestParams.TableId, list, requestParams.Tenant);
                 }
             }
 

@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class SessionPolicyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SessionPolicy,SessionPolicyKeys<string>,SessionPolicyPM,SessionPolicyList,string>
+   public partial class SessionPolicyQueryService: BaseEntityQueryService<IGlobalContext,POCO.SessionPolicy,SessionPolicyKeys<string>,SessionPolicyPM,SessionPolicyList,string>
    {
-        public SessionPolicyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public SessionPolicyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SessionPolicy>(context),new SessionPolicyDataMapping()) {}
+        public SessionPolicyQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public SessionPolicyQueryService(IGlobalContext context) : base(new Repository<POCO.SessionPolicy>(context),new SessionPolicyDataMapping()) {}
 		public  SessionPolicyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new SessionPolicyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SessionPolicy,string> GetKeys(POCO.SessionPolicy entityPOCO) => new SessionPolicyKeys<string>() { Id = entityPOCO.Id,  };
    }
