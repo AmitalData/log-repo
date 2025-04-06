@@ -175,9 +175,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureSearch\Entities\CustomsItemASEntity.cs" />
+    <Compile Include="AzureSearch\Entities\DeclarationASEntity.cs" />
     <Compile Include="AzureSearch\Entities\RemarksCustomsBookASEntity.cs" />
     <Compile Include="AzureSearch\Entities\RemarkWithCustomsBookASEntity.cs" />
     <Compile Include="AzureSearch\Repo\CustomsBookAzureSearchRepo.cs" />
+    <Compile Include="AzureSearch\Repo\DeclarationAzureSearchRepo.cs" />
     <Compile Include="AzureSearch\Repo\RemarksCustomsBookAzureSearchRepo.cs" />
     <Compile Include="CustomContext.SharedTables.cs" />
     <Compile Include="CustomContextExt.cs" />
