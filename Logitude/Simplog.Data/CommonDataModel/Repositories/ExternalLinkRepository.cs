@@ -83,5 +83,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+        void IRepository<ExternalLink>.SubmitChanges()
+        {
+            Context.SaveChanges();
+        }
     }
 }

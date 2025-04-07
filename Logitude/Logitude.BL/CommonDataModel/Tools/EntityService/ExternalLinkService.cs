@@ -17,19 +17,22 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
    public class ExternalLinkService
     {
-         bool isNewEntity;
-        private int tenant;
+        bool isNewEntity = false;
+        private readonly int tenant;
+        private const string CACHE_KEY_FORMAT = "ExternalLink_{0}";
+
         public ExternalLink Poco { get; set; }
 
         public ICommonDataContext ObjectContext
         {
             get { return objectContext; }
-            set { objectContext = value; }
+            private set { objectContext = value; }
         }
 
         private ExternalLinkPM entityPM;
         private ICommonDataContext objectContext;
         private ExternalLinkRepository entityRepository;
+
         public ExternalLinkService(ICommonDataContext objectContext,int tenant)
         {
           
@@ -40,6 +43,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void Create(ExternalLinkPM entityPM)
         {
+            if (entityPM == null)
+                throw new ArgumentNullException(nameof(entityPM));
+
             this.entityPM = entityPM;
             this.isNewEntity = true;
 
@@ -53,15 +59,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
 
         public void Update(ExternalLinkPM entityPM)
-        {
+        {            
             this.entityPM = entityPM;
             this.isNewEntity = false;
             this.Poco = entityRepository.GetSingleExternalLink(entityPM.Id);
+
+            if (Poco == null)
+                throw new InvalidOperationException($"Poco with Id {entityPM.Id} not found.");
+
             ExternalLinkMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             
-            string cacheKey = "ExternalLink_" + entityPM.Id;
+            string cacheKey = string.Format(CACHE_KEY_FORMAT, entityPM.Id);
             if (HttpContext.Current != null)
                 CacheManager.CacheWrapper.Remove(cacheKey);
         }

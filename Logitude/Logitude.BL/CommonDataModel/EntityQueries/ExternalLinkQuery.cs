@@ -16,7 +16,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 {
     public class ExternalLinkQuery
     {
-        ExternalLinkRepository repository;
+        readonly ExternalLinkRepository repository;
+        private static readonly string CACHE_KEY_FORMAT = "ExternalLink_{0}";
 
         public ExternalLinkQuery(int tenant)
         {
@@ -28,7 +29,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             this.repository = repository;
         }
 
-        public ExternalLinkPM GetSinglePM(string id, int tenant) => GetSinglePM(id);
+        public ExternalLinkPM GetSinglePM(string id, int tenant) => GetSinglePM(id, true);
         public ExternalLinkPM GetSinglePM(string id, bool fromCache = true)
         {
             if (!fromCache)
@@ -39,7 +40,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 return ExternalLinkMapping.MapPM(externalLink);
             }
 
-            string cacheKey = "ExternalLink_" + id;
+            string cacheKey = string.Format(CACHE_KEY_FORMAT, id);
 
             if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(cacheKey) != null)
                 return (ExternalLinkPM)CacheManager.CacheWrapper.Get(cacheKey);
@@ -63,7 +64,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 return ExternalLinkMapping.MapPM(externalLink);
             }
 
-            string cacheKey = "ExternalLink_" + Ref;
+            string cacheKey = string.Format(CACHE_KEY_FORMAT, Ref);
 
             if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(cacheKey) != null)
                 return (ExternalLinkPM)CacheManager.CacheWrapper.Get(cacheKey);
@@ -78,8 +79,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public string GetExternalLink(string Ref, string param, int tenant)
         {
+            if (string.IsNullOrEmpty(Ref) || string.IsNullOrEmpty(param) || tenant == null)
+                throw new ArgumentException($"one of the next parameter is null, Ref: {Ref}, param: {param}, tenant: {tenant}");
+
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(tenant);
             ExternalLinkPM externalLinkPM = GetSinglePMByRef(Ref);
+
+            if (externalLinkPM is null)
+                throw new InvalidOperationException($"PMByRef with Ref {Ref} not found.");
+
             AuthenticationToken token = new AuthenticationToken()
             {
                 Token = Guid.NewGuid().ToString(),
@@ -101,20 +109,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return externalLinkPM.Link.Replace("{token}", token.Token);
         }
 
-        public IQueryable<ExternalLinkList> GetIQueryableEntityList(IQueryable<ExternalLink> iQueryable)
-        {
-            IQueryable<ExternalLinkList> result = (from a in iQueryable
-                                                   select new ExternalLinkList()
-                                                   {
-                                                       Id = a.Id,
-                                                       Ref = a.Ref,
-                                                       Link = a.Link,
-                                                       ExpirationDate = a.ExpirationDate,
-                                                       ActivityLog = a.ActivityLog,
-                                                       Params = a.Params
-
-                                                   });
-            return result;
-        }
+        public IQueryable<ExternalLinkList> GetIQueryableEntityList(IQueryable<ExternalLink> iQueryable) =>
+            iQueryable.Select(a => new ExternalLinkList
+            {
+                Id = a.Id,
+                Ref = a.Ref,
+                Link = a.Link,
+                ExpirationDate = a.ExpirationDate,
+                ActivityLog = a.ActivityLog,
+                Params = a.Params
+            });       
     }
 }

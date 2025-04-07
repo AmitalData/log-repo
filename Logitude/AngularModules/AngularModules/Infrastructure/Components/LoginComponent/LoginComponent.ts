@@ -30,7 +30,7 @@ import { InfrastructureDomainService } from '../../Services/InfrastructureDomain
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { SATInterfaceSettingPMService } from '../../../Invoice/Services/StandardPMs/SATInterfaceSettingPMService';
-import { DateTool, FileLoader } from '../../Tools';
+import { DateTool } from '../../Tools';
 import { Guid } from '../../Utilities/Guid';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 declare var changeFavicon: any;

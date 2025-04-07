@@ -9,8 +9,6 @@ import { DWQueryBuilderComponent } from './Components/DWQueryBuilder/DWQueryBuil
 import { DWQueryBuilderFiltersComponent } from './Components/DWQueryBuilder/DWQueryBuilderFiltersComponent'; 
 import { CustomsShipperGeneralTabComponent } from './Components/Depositions/EditTab/CustomsShipperGeneralTabComponent';
 import { DWFilterSettings } from './Components/DWQueryBuilder/DWFilterSettings';
-//import { DWAskUserFiltersComponent } from './Components/DWQueryBuilder/DWAskUserFiltersComponent'; 
-
 import { ProductTypeGeneralTabComponent } from './Components/ProductType/EditTabs/ProductTypeGeneralTabComponent';
 import { DocumentsFilingComponent } from './Components/NewEntity/DocumnetsFiling/DocumentsFilingComponent';
 import { DragDropFileInputComponent } from './Components/drag-drop-file-input/drag-drop-file-input.component';
@@ -30,7 +28,6 @@ export const Components =
         DWQueryBuilderFiltersComponent,
         CustomsShipperGeneralTabComponent,
         DWFilterSettings,
-        //DWAskUserFiltersComponent
         ProductTypeGeneralTabComponent,
         DocumentsFilingComponent,
         DragDropFileInputComponent,
@@ -52,7 +49,6 @@ export class ModuleDeclarations {
             case "DWQueryBuilderFiltersComponent": { myResult = DWQueryBuilderFiltersComponent; break; }
             case "CustomsShipperGeneralTabComponent": { myResult = CustomsShipperGeneralTabComponent; break; }
             case "DWFilterSettings": { myResult = DWFilterSettings; break; }
-            //case "DWAskUserFiltersComponent": { myResult = DWAskUserFiltersComponent; break; }
             case "ProductTypeGeneralTabComponent": { myResult = ProductTypeGeneralTabComponent; break; }
             case "DocumentsFilingComponent": { myResult = DocumentsFilingComponent; break; }
             case "DragDropFileInputComponent": { myResult = DragDropFileInputComponent; break; }

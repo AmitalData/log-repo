@@ -20,7 +20,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.ApiHelpers
 
         public static void AddFilters(QueryOperations queryOperations, int tenant)
         {
-            //BranchPermitionsFilter.AddUserBranchRestrictionFilters(queryOperations, tenant);
         }
     }
 }
