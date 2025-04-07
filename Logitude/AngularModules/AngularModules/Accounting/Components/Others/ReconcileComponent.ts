@@ -8,6 +8,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 import { ReconciliationPM } from '../../EntityPMs/ReconciliationPM';
+
 import { AutomaticReconcileMethodList } from '../../EntityLists/AutomaticReconcileMethodList';
 import { LedgerTransactionPM } from '../../EntityPMs/LedgerTransactionPM';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -26,11 +27,13 @@ import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { APPaymentPM } from 'Invoice/EntityPMs/APPaymentPM';
+
 import { delay, expand, takeLast } from 'rxjs/operators';
-import { EMPTY} from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
+import { JournalExtendedPMService } from 'Accounting/Services/ExtendedPMs/JournalExtendedPMService';
 
 export class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
@@ -282,6 +285,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public autoReconil: boolean = false;
     public firstMark: boolean = true;
     public yelloMessage: string = '';
+    public failedJournalsInReconcileProcess: boolean = false;
     SessionEvent;
     showInternalReconcileAPPaymentAlert = false;
     createdPaymentNumber;
@@ -386,6 +390,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.CheckIfThereIsDraftReconcile();
             this.DisableDates();
             this.Mark()
+            this.GetFailedJournalsInReconcileProcess();
         }
 
         this.SetTitle();
@@ -2313,7 +2318,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public GetInternalReconcileAPPaymentAlertMessage() {
         return TextCodeTranslator.Translate('APPayment.M.PaymentCreatedWithReconciliation').replace('#number', this.createdPaymentNumber);
     }
-
+    public failedJournalList: any = null;
+    public GetFailedJournalsInReconcileProcess(){
+        const journalExtendedPMService : JournalExtendedPMService = new JournalExtendedPMService();
+        journalExtendedPMService.GetFailedJournalsInReconcileProcess(this.GLAccountPM.Id).subscribe((response: ServiceResponse) => {
+            this.failedJournalList = response.Result;
+            if (this.failedJournalList && this.failedJournalList.length > 0) {
+                this.failedJournalsInReconcileProcess = true;
+            }
+        });
+    }
 
 }
 
