@@ -7704,7 +7704,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature DeclarationReferantDataFeature_DeclarationStatusFilters = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationStatusFilters", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeclarationReferantData.Features.DeclarationStatusFilters", NameTextCodeDefaultText = @"BS64:Iteh15jXmNeV16HXmdedINeR16jXpNeo16DXmCI=" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationReferantDataObjectTable);
+		   Feature DeclarationReferantDataFeature_DeclarationStatusFilters = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationStatusFilters", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.DeclarationReferantData.Features.DeclarationStatusFilters", NameTextCodeDefaultText = @"Status in referant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationReferantDataObjectTable);
 
    
 	    
