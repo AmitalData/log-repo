@@ -877,6 +877,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReferenceDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"

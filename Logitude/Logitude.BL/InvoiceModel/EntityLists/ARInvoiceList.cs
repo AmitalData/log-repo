@@ -223,6 +223,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string SequenceStatus { get; set; }
         public string InvoiceNumberPart { get; set; }
         public string InvoiceSeries { get; set; }
+        public DateTime? ReferenceDate { get; set; }
 
     }
 }

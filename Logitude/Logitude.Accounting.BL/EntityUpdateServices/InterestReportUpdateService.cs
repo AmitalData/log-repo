@@ -334,6 +334,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             autoCreditInvoice.Tenant = aRInvoice.Tenant;
             autoCreditInvoice.HasInterestFeature = true;
             autoCreditInvoice = CreateautoCreditInvoiceLines(autoCreditInvoice, aRInvoice);
+            autoCreditInvoice.ReferenceDate = aRInvoice.ReferenceDate;
             return autoCreditInvoice;
 
         }
