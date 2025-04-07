@@ -1,3 +1,9 @@
+:root {
+  --primary-color: var(--primary-color);
+  --primary-hover: #0056b3;
+  --text-color: white;
+}
+
 :host {
   display: inline-block;
   position: relative;
@@ -68,7 +74,7 @@
     align-items: center;
     margin: 0 10px;
     font-size: 16px;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: white;
     padding-right: 4px;
     border-radius: 5px;
@@ -82,7 +88,7 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 5px;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: white;
     outline: none;
     -moz-appearance: textfield;
@@ -151,11 +157,11 @@ img {
 }
 
 .button-blue {
-  background-color: #007bff;
+  background-color: var(--primary-color);
 }
 
 .button-blue:hover {
-  background-color: #0056b3;
+  background-color: var(--hover-color);
 }
 
 .button-blue:active {
