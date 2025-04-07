@@ -253,6 +253,29 @@ namespace <#= entitymapnamespacestring #>
 	 }
 
 	 #>
+   <#+ 
+      #>
+
+       // Relationship 
+      <#+
+		foreach(var field in entity["field"])  //get all classes
+	 {
+		dynamic fieldName = GetEntityMapPropertyName(field.FieldName);
+
+		if( field.IsForeignKey.GetType() == typeof(string))
+        {
+           if(field.IsForeignKey == "true")
+           {
+            #>
+
+               this.HasOptional(t => t.<#= field.NavigationPropertyName #>).WithMany().HasForeignKey(d => d.<#= fieldName #>);
+            <#+
+
+           }
+        }
+     }
+		  #>
+
         }
     }
 }
@@ -338,8 +361,8 @@ if( field.IsForeignKey.GetType() == typeof(string))
 {
 if(field.IsForeignKey == "true")
 {
- 
- 
+
+
 }
 }
 if( field.IsRequired.GetType() == typeof(string))
