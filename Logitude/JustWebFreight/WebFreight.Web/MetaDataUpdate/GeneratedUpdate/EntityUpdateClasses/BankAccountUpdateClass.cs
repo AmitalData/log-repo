@@ -24,7 +24,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankAccountUpdateClass
    {  		
-		public const string HashString = "0c911503d914ec471c9497b811606918";
+		public const string HashString = "0c911503d914ec471c9497b81164f5sdf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2437,7 +2437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyCode",
-					  						DefaultText =  "מטבע",
+					  						DefaultText = "Currency Code",
 					  						FullLocalDefaultText =  "מטבע",
 					  						ListFieldLable =  "CurrencyCodeListLable",
 					  						ListLableDefaultText =  "Currency Code",

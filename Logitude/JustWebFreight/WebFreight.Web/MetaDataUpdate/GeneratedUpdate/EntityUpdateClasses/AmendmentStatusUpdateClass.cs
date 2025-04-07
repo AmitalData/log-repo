@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AmendmentStatusUpdateClass
    {  		
-		public const string HashString = "e9475e14a109e6c16e5427ad1a9cc315";
+		public const string HashString = "a99e4f03d6d19ee72a4ba3d0fab34426";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -69,8 +69,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-				                    DefaultText = "סטטוס תיקון הצהרה",
-			      				    Code =  "350d",
+			      				    LocalDefaultText =  "סטטוס תיקון הצהרה",
+			      				    DefaultText =  "Amendment Declaration Status",
+			      				    Code =  "e571",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
