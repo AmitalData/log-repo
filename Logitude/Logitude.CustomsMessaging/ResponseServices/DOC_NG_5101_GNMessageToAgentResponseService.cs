@@ -359,7 +359,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (!string.IsNullOrWhiteSpace(notificationDefinitionCode))
                     {
                         LogMessagingUtil.Instance.AppendLine("Start Sending Notification... ");
-                        DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, customResponse.MessageToAgent.responseToMessage.ToString(), notificationDescription, assigneToNotificationTypeCode);
+                        DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, customResponse.MessageToAgent.responseToMessage.ToString(), notificationDescription, assigneToNotificationTypeCode, customResponse.MessageToAgent?.SenderName);
                     }
                     return;
                 }
@@ -589,11 +589,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     responseToMessage = customResponse.MessageToAgent.responseToMessage.ToString();
                 }
-                DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, responseToMessage, notificationDescription, assigneToNotificationTypeCode);
+                DoUpdateNotification(notificationDefinitionCode, requestParams.Tenant, responseToMessage, notificationDescription, assigneToNotificationTypeCode, customResponse.MessageToAgent?.SenderName);
             }
         }
 
-        private void DoUpdateNotification(string notificationDefinitionCode, int tenant, string responseToMessage, string description, string typeCode)
+        private void DoUpdateNotification(string notificationDefinitionCode, int tenant, string responseToMessage, string description, string typeCode,string senderName=null)
         {
             LogMessagingUtil.Instance.AppendLine("New Message To Agent Request Notification");
 
@@ -609,6 +609,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.Description = description;
             newNotificationPM.Reference2Number = responseToMessage;
             newNotificationPM.DueDate = DateTime.Now;
+            newNotificationPM.SenderName = senderName;
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
             
             string customerId = null;
