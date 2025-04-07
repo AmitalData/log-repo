@@ -50,24 +50,7 @@ namespace AmitalCustomsWindowsService
         static void Main()
         {
 
-#if DEBUG
-          
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Debugger");
-                Program.ThreadStartStaticIsMustB4UsingTheDB();
-                System.Windows.Forms.Application.Run(new AmitalCustomsWindowsService.Tester.TesterForm());
-                return;
-           
-           
-#else
-        // מריץ את השירות בזמן רגיל
-        ServiceBase[] ServicesToRun;
-        ServicesToRun = new ServiceBase[]
-        {
-            new MyWinService() // תוודא שזה השירות שאתה באמת רוצה להריץ
-        };
-        ServiceBase.Run(ServicesToRun);
-#endif
-//==================================================================================================
+
 
             bool test = false;
             if (test)
