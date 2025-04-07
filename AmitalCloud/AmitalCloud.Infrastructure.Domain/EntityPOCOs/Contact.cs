@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("ExternalId")]
 	    public string ExternalId { get; set; }
         [Column("Signature")]
-	    public string Signature { get; set; }
+	    public byte[] Signature { get; set; }
         [Column("DisplayGettingStarted")]
 	    public bool DisplayGettingStarted { get; set; }
         [ForeignKey("ImageDetail")]

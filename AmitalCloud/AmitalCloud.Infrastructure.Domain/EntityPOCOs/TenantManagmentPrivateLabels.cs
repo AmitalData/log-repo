@@ -20,9 +20,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	{
 		
            [Column("MainLogo")]
-	    public string MainLogo { get; set; }
+	    public byte[] MainLogo { get; set; }
         [Column("SmallLogo")]
-	    public string SmallLogo { get; set; }
+	    public byte[] SmallLogo { get; set; }
         [Column("HybridPartnerId")]
 	    public string HybridPartnerId { get; set; }
      [Key]

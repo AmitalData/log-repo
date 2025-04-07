@@ -25,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("TemplateBody")]
-	    public string TemplateBody { get; set; }
+	    public byte[] TemplateBody { get; set; }
         [Column("TemplateType")]
 	    public string TemplateType { get; set; }
         [ForeignKey("LastUpdatedByUser")]
@@ -51,7 +51,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("HorizontalShift")]
 	    public double? HorizontalShift { get; set; }
         [Column("TemplateBodyHtml")]
-	    public string TemplateBodyHtml { get; set; }
+	    public byte[] TemplateBodyHtml { get; set; }
         [ForeignKey("OriginalTemplate")]
         [Column("OriginalTemplateId")]
 	    public string OriginalTemplateId { get; set; }
@@ -72,9 +72,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("ObjectTableId")]
 	    public string ObjectTableId { get; set; }
         [Column("TemplateFooterHtml")]
-	    public string TemplateFooterHtml { get; set; }
+	    public byte[]? TemplateFooterHtml { get; set; }
         [Column("TemplateHeaderHtml")]
-	    public string TemplateHeaderHtml { get; set; }
+	    public byte[]? TemplateHeaderHtml { get; set; }
         [Column("TemplateHeaderHeight")]
 	    public int TemplateHeaderHeight { get; set; }
         [Column("TemplateFooterHeight")]
@@ -82,7 +82,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("TemplateTechnologyCode")]
 	    public string TemplateTechnologyCode { get; set; }
         [Column("TemplateBodyjson")]
-	    public string TemplateBodyjson { get; set; }
+	    public byte[] TemplateBodyjson { get; set; }
         [Column("From")]
 	    public string From { get; set; }
         [Column("ReplyTo")]

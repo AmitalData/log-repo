@@ -472,7 +472,7 @@ private string GetPropertyName(dynamic property)
 				result = typecode;
             }
 
-			if(typecode == "Byte[]")
+			if(typecode == "Byte[]" || typecode == "Binary")
             {
 				result = "byte[]";
             }
