@@ -113,7 +113,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
             }
         }
 
-        if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.PayableDebitGLAcountId)) {
+        if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.PayableDebitGLAcountId) && AppTool.IsNullOrEmpty(this.EntityPM.PayableDebitGLAcountId)) {
             errors.push(TextCodeTranslator.Translate("APInvoice.M.NoGLAccount"));
         }
 
