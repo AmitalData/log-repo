@@ -98,6 +98,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            PartnerTypeId = a.Card.PartnerTypeId,
                                            Code = a.Card.Code,
                                            GLAccountId=a.Card.GLAccountId,
+                                           ExternalSystem = a.Card.ExternalSystem,
                                        },
                                        BillToId = a.Card.BillToId,
                                    }).FirstOrDefault();
@@ -193,6 +194,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            PartnerTypeId = a.Card.PartnerTypeId,
                                            Code = a.Card.Code,
                                            GLAccountId = a.Card.GLAccountId,
+                                           ExternalSystem = a.Card.ExternalSystem,
                                        },
                                        BillToId = a.Card.BillToId,
                                    }).FirstOrDefault();
@@ -290,7 +292,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                            EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                            SendingInterestReport = a.Card.SendingInterestReport,
-                                           GLAccountId= a.Card.GLAccountId
+                                           GLAccountId= a.Card.GLAccountId,
+                                           ExternalSystem = a.Card.ExternalSystem,
                                        },
                                        BillToId = a.Card.BillToId,
                                    }).FirstOrDefault();

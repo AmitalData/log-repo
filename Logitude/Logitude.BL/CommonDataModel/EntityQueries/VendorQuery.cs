@@ -108,6 +108,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                        EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                        SendingInterestReport = a.Card.SendingInterestReport,
+                                       ExternalSystem = a.Card.ExternalSystem,
                                    },
                                }).FirstOrDefault();
 
@@ -204,6 +205,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                        EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                        SendingInterestReport = a.Card.SendingInterestReport,
+                                       ExternalSystem = a.Card.ExternalSystem,
                                    },
                                }).FirstOrDefault();
 
@@ -300,7 +302,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                        EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                        SendingInterestReport = a.Card.SendingInterestReport,
-
+                                       ExternalSystem = a.Card.ExternalSystem,
                                    },
                                }).FirstOrDefault();
 
@@ -566,6 +568,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  Field48 = customFieldsMainObject != null ? customFieldsMainObject.Field48 : null,
                                                  Field49 = customFieldsMainObject != null ? customFieldsMainObject.Field49 : null,
                                                  Field50 = customFieldsMainObject != null ? customFieldsMainObject.Field50 : null,
+                                                 ExternalSystem = a.Card.ExternalSystem,
                                              });
 
 
@@ -632,6 +635,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                        EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                        SendingInterestReport = a.Card.SendingInterestReport,
+                                       ExternalSystem = a.Card.ExternalSystem,
                                    },
                                }).FirstOrDefault();
 

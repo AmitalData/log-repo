@@ -141,6 +141,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Code = a.Card.Code,
                                    EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                    SendingInterestReport = a.Card.SendingInterestReport,
+                                   ExternalSystem = a.Card.ExternalSystem,
                                },
                                BillToId = a.Card.BillToId,
                            }).FirstOrDefault();
@@ -262,6 +263,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Code = a.Card.Code,
                                    EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                    SendingInterestReport = a.Card.SendingInterestReport,
+                                   ExternalSystem = a.Card.ExternalSystem,
                                },
                                BillToId = a.Card.BillToId,
                            }).FirstOrDefault();
@@ -386,6 +388,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Prefix = a.Prefix,
                                    EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                    SendingInterestReport = a.Card.SendingInterestReport,
+                                   ExternalSystem = a.Card.ExternalSystem,
                                },
                                BillToId = a.Card.BillToId,
                            }).FirstOrDefault();

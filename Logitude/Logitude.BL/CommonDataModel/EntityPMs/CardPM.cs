@@ -245,6 +245,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public bool SendingInterestReport { get; set; }
+        public string ExternalSystem { get; set; }
 
      }
 }
