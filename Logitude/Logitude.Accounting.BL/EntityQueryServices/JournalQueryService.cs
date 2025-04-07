@@ -24,42 +24,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             JournalLineQueryService journalLineQueryService = new JournalLineQueryService(context);
 
-
-
-            //******getting all compositionTables for response service purposes only *****///
-
             entityPM.JournalLines = journalLineQueryService.GetMulti(journalKeys, true);
-
-            // entityPM.DeclarationErrorViews = this.GetDeclarationErrors(declarationKeys.Id, entityPM.Tenant, null);
-            //****************************************************************************//
-
-
 
             var journalReconcileQueryService = new JournalReconcileQueryService(context);
 
-
-
-            //******getting all compositionTables for response service purposes only *****///
-
             entityPM.JournalReconciles = journalReconcileQueryService.GetMulti(journalKeys, true);
 
-
-
             var myJournalExternalReconcileQueryService = new JournalExternalReconcileQueryService(context);
-
-
-
-            //******getting all compositionTables for response service purposes only *****///
 
             entityPM.JournalExternalReconciles = myJournalExternalReconcileQueryService.GetMulti(journalKeys, true);
         }
 
 
-        //public JournalPM  GetJournalPMByJournalNumber(string journalNumber, int tenant)
-        //{
-
-        //}
-
+        
         public string GetJournalMaxNumber(int tenant)
         {
             string max = this.repository.GetJournalMaxNumber(tenant);
@@ -136,7 +113,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             var journalLineRepository = new JournalLineRepository(this.MainContext as IAccountingContext);
             var haveQ = (from j in repository.
-                        //GetQueryablePending2ApproveOrdered(tenant)
                         GetQueryablePending2Approve_LedgerNotCreated(tenant)
                          join jl in journalLineRepository.GetQueryContainsAccId(GLAccountIDList, tenant)
                          on j.Id equals jl.JournalId
@@ -146,7 +122,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public bool GetFailedJournlsForToday()
         {
-            DateTime startDateTime = DateTime.Today; //Today at 00:00:00
+            DateTime startDateTime = DateTime.Today; 
             DateTime endDateTime = DateTime.Today.AddDays(1).AddTicks(-1); //Today at 23:59:59
             var failedJournals = repository.GetQueryableFailedJournals();
             return (from j in failedJournals
@@ -169,7 +145,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             var journalLineRepository = new JournalLineRepository(this.MainContext as IAccountingContext);
             var Jids = repository.
-                        //GetQueryablePending2ApproveOrdered(tenant)
                         GetQueryablePending2Approve_LedgerNotCreated(tenant).Select(r => r.Id).ToList();
             if (Jids.Count == 0)
             {
@@ -222,7 +197,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                            AccountingEntityCode = a.AccountingEntityCode,
                                            AccountingEntityId = a.AccountingEntityId,
                                            AccountingEntityName = a.AccountingEntityReference != null ? a.AccountingEntityReference : null,
-                                           AccountingEntityReference = a.AccountingEntityReference, // CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                                           AccountingEntityReference = a.AccountingEntityReference, 
                                            ApproveDate = a.ApproveDate,
                                            ApprovedByUserId = a.ApprovedByUserId,
                                            ApprovedByUserName = a.ApprovedByUser != null ? a.ApprovedByUser.Contact.EnglishName : null,
@@ -263,7 +238,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 AccountingEntityCode = a.AccountingEntityCode,
                 AccountingEntityId = a.AccountingEntityId,
                 AccountingEntityName = a.AccountingEntityReference != null ? a.AccountingEntityReference : null,
-                AccountingEntityReference = a.AccountingEntityReference, // CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                AccountingEntityReference = a.AccountingEntityReference,
                 ApproveDate = a.ApproveDate,
                 ApprovedByUserId = a.ApprovedByUserId,
                 ApprovedByUserName = a.ApprovedByUser != null ? a.ApprovedByUser.Contact.EnglishName : null,
@@ -605,11 +580,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  ConfirmationNumber = groupJoinData.ConfirmationNumber,
                                              };
             journalPMs = journals.ToList();
-            //foreach (JournalPM journal in journalPMs)
-            //{
-
-            //    journal.JournalLines = GetJournalLines(journal, tenant);
-            //}
+           
             return journalPMs;
         }
 
