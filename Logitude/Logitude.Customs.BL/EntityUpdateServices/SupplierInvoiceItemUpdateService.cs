@@ -165,6 +165,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 logData = $"entityPM.ClassificationCode(New value)={entityPM.ClassificationCode},entityPOCO.ClassificationCode(Old value)={entityPOCO.ClassificationCode}, User name={loggedUser}"; 
                 LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
             }
+
             bool OCRisOn = false;
             try
             {
@@ -174,16 +175,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 LogMessagingUtil.Instance.AppendLine("EntityException occurred, possible database connection issue: " + ex.Message);
             }
-            if (OCRisOn && !string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription)) 
+            if (OCRisOn && (!string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription))) 
             {
                 if(string.IsNullOrEmpty(entityPM.ClassificationCode))
                 {
                     ClientItemQueryService clientItemQueryService = new ClientItemQueryService(entityPM.Tenant);
                     declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, true);
-                    
+
                     if (declarationPM != null && declarationPM?.Direction == "E" && !string.IsNullOrEmpty(declarationPM.ExporterImporterCode))
                     {
-                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenant(entityPM.ItemCode, declarationPM.ExporterImporterCode, entityPM.Tenant);
+                        string itemKey = $"{(entityPM.ItemCode ?? "")}_{(entityPM.ItemDescription ?? "")}";
+
+                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenantByItemKey(itemKey, declarationPM.ExporterImporterCode, entityPM.Tenant);
                         if(clientItem != null)
                         {
                             entityPM.ClassificationCode = clientItem?.ClassificationCode;
