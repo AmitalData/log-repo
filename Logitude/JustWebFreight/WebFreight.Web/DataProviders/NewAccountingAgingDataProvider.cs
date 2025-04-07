@@ -25,7 +25,7 @@ namespace WebFreight.Web.DataProviders
     {
       
 
-
+        public decimal? Rate { get; set; }
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
         public string AccountDisplayNumber { get; set; }

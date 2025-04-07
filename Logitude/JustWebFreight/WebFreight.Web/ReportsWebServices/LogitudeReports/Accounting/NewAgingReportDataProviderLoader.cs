@@ -121,10 +121,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 Plus60Days = reader["Plus60Days"] != DBNull.Value ? (decimal?)reader["Plus60Days"] : 0,
                                   Plus90Days = reader["Plus90Days"] != DBNull.Value ? (decimal?)reader["Plus90Days"] : 0,
                                 Future = reader["Future"] != DBNull.Value ? (decimal?)reader["Future"] : 0,
+                                Rate = reader["Rate"] != DBNull.Value ? (decimal?)reader["Rate"] : 1,
                             };
-                            result.BalanceInLocalCurrency = SumOfBalanceInLocalCurrency(result);
-                            result.TotalLocal = result.BalanceInLocalCurrency;
-                            result.AccountingBalance = result.BalanceInLocalCurrency;
+                            result.AccountingBalance = SumOfBalanceInLocalCurrency(result);
+                            result.TotalLocal = result.AccountingBalance * result.Rate;
+                            result.BalanceInLocalCurrency = result.TotalLocal;
                             results.Add(result);
                         }
                     }
