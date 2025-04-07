@@ -218,6 +218,7 @@ namespace CommunicationWorkerRole
                 try
                 {
                     aRInvoicePM.SetApproved = true;
+                    aRInvoicePM.IsApprovalFailed = false;
                     ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
                     invoiceService.Update(aRInvoicePM, true);
                     _DbQueueService.Complete();
