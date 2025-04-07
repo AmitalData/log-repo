@@ -9,8 +9,9 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 })
 export class DragDropFileInputComponent implements OnChanges {
   @Output() base64FileSelected = new EventEmitter<string>();
-  @Output() FilesSelected = new EventEmitter<FileList | File>();
+  @Output() filesSelected = new EventEmitter<FileList | File>();
   @Output() fileCleared = new EventEmitter<void>();
+  @Output() fileRotate = new EventEmitter<number>();
   @Input() width: number = 300;
   @Input() height: number = 410;
   @Input() input: Blob | File | string | null | FileList = null;
@@ -29,6 +30,8 @@ export class DragDropFileInputComponent implements OnChanges {
   fileName: string = '';
   zoom: number = 1.0;
   rotation: number = 0;
+  currentPage: number = 1;
+  totalPages: number = 1;
 
   constructor(private sanitizer: DomSanitizer) { }
 
@@ -99,7 +102,7 @@ export class DragDropFileInputComponent implements OnChanges {
     
     if (!(file instanceof File) || !this.isFileExtensionAllowed(file)) return;
     
-    this.FilesSelected.emit(file as FileList | File);
+    this.filesSelected.emit(file as FileList | File);
     this.file = file;
     this.handleBlob(this.file, true);
   }
@@ -186,10 +189,12 @@ export class DragDropFileInputComponent implements OnChanges {
 
   rotateClockwise(): void {
     this.rotation += 90;
+    this.fileRotate.emit(this.rotation);
   }
-
+  
   rotateCounterClockwise(): void {
     this.rotation -= 90;
+    this.fileRotate.emit(this.rotation);
   }
 
   clearFile(): void {
@@ -201,5 +206,22 @@ export class DragDropFileInputComponent implements OnChanges {
     this.zoom = 1.0;
     this.rotation = 0;
     this.fileCleared.emit();
+  }
+  
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  onPdfLoaded(pdf: any): void {
+    this.currentPage = 1;
+    this.totalPages = pdf.numPages;
   }
 }

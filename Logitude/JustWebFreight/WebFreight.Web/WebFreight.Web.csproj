@@ -1071,8 +1071,11 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\AdditionalCurrencyRateController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\TruckerSettingExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentsMetaDataTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ResponsibilityViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\TruckerSettingViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\DocumentTypeMetaDataController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\DocumentsMetaDataTypeController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TruckerSettingController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NUnicloudViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationPaymentWebServiceController.cs" />
@@ -4064,9 +4067,11 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentFolderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentsExecutionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentsFilingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentsMetaDataTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeCategoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeCopyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeCustomFieldUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeMetaDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeTemplateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DueTypeUpdateClass.cs" />

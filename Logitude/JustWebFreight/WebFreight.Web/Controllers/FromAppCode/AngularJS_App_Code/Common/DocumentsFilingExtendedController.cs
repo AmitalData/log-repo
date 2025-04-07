@@ -566,6 +566,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 AuthenticationToken authenticationToken = AuthenticateRequest(tenant);
 
                 byte[] fileData = Convert.FromBase64String(data.fileContent);
+                fileData = HtmlEditorHelper.RotatePdf(fileData, data.rotationAngle);
                 new DocumentsFilingService(CommonDataContext.GetContext(tenant), tenant).Create(data.documentsFilingPM, fileData);
 
                 return Request.CreateResponse(HttpStatusCode.OK, data.documentsFilingPM);
@@ -590,6 +591,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
         {
             public DocumentsFilingPM documentsFilingPM { get; set; }
             public string fileContent { get; set; }
+            public EvoPdf.RotationAngle rotationAngle { get; set; }
         }
     }
 }

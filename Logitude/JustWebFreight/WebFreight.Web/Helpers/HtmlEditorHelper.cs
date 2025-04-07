@@ -7492,9 +7492,25 @@ namespace WebFreight.Web.Helpers
 
         }
 
+        public static byte[] RotatePdf(byte[] pdfBase64, RotationAngle rotationAngle) => RotatePdf(new MemoryStream(pdfBase64), rotationAngle);
+        
+        public static byte[] RotatePdf(Stream pdfStream, RotationAngle rotationAngle)
+        {
+            if(pdfStream == null || rotationAngle == null || rotationAngle == RotationAngle.Rotate_0)
+            {
+                MemoryStream stream = new MemoryStream();
+                pdfStream.CopyTo(stream);
+                return stream.ToArray();
+            }
 
+            EvoPdf.Document pdfDocument = new EvoPdf.Document(pdfStream);
+            pdfDocument.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
 
+            foreach (PdfPage page in pdfDocument.Pages)
+                page.RotationAngle = RotationAngle.Rotate_180;
 
+            return pdfDocument.Save();
+        }
     }
 
     public class ResolveVariableFieldArgs

@@ -3,9 +3,28 @@
         <div class="data">
             <div class="data-row">
                 <label>{{'Customs.CustomsDocument.F.DocumentTypeCode' | TextCodeTranslationPipe}}</label>
-                <LogLov class="data-value" [ObjectFieldName]="'DocumentTypeId'" [ObjectTableName]="'DocumentsFiling'"
+                <LogLov class="data-value" [ObjectFieldName]="'DocumentTypeId'" [ObjectTableName]="ObjectTableName"
                     [DataContext]="documentsFilingPM" [LookUpTableName]="'DocumentType'" [HideColumns]="true"
-                    (ValueChanged)="documentTypeChanged(false)">
+                    (ValueChanged)="documentTypeChanged(false)" [QueryFilterItems]="documentTypeFilter">
+                </LogLov>
+            </div>
+            <div class="data-row">
+                <label>{{'Customs.DeficitFileFilterQuery.F.EntityTypeName' | TextCodeTranslationPipe}}</label>
+                <LogLov class="data-value" [ObjectFieldName]="'ObjectTableId'" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="documentsFilingPM" [LookUpTableName]="'ObjectTable'" [HideColumns]="true"
+                    [QueryFilterItems]="objectTablesFilter" [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
+                </LogLov>
+            </div>
+            <div class="data-row">
+                <label>Id</label>
+                <LogTextBox class="data-value" [ObjectFieldName]="'EntityId'" [DataContext]="documentsFilingPM">
+                </LogTextBox>
+            </div>
+            <div class="data-row">
+                <label>{{'Accounting.O.Customer' | TextCodeTranslationPipe}}</label>
+                <LogLov class="data-value" [ObjectFieldName]="'ReceivedByByContactId'"
+                    [ObjectTableName]="ObjectTableName" [DataContext]="documentsFilingPM" [LookUpTableName]="'Contact'"
+                    [HideColumns]="true">
                 </LogLov>
             </div>
             <div class="data-row">
@@ -31,24 +50,24 @@
                             (SelectedTypeValueChanged)="item.MetaDataValue = $event;metadataChanged()">
                         </BooleanFilter>
                         <LogTextBox *ngSwitchCase="'string'" [ObjectFieldName]="'MetaDataValue'" [DataContext]="item"
-                            [ObjectTableName]="'DocumentsFilingMetaDataValue'"
-                            (ValueChanged)="metadataChanged()">
+                            [ObjectTableName]="'DocumentsFilingMetaDataValue'" (ValueChanged)="metadataChanged()">
                         </LogTextBox>
-                        <LogDatePicker [ForceSubscribe]="true" *ngSwitchCase="'datetime'" [ObjectFieldName]="'MetaDataValue'"
-                            [DataContext]="item" [ObjectTableName]="'DocumentsFilingMetaDataValue'"
-                            (ValueChanged)="metadataChanged()">
+                        <LogDatePicker [ForceSubscribe]="true" *ngSwitchCase="'datetime'"
+                            [ObjectFieldName]="'MetaDataValue'" [DataContext]="item"
+                            [ObjectTableName]="'DocumentsFilingMetaDataValue'" (ValueChanged)="metadataChanged()">
                         </LogDatePicker>
                         <LogTextBox *ngSwitchCase="'integer'" [ObjectFieldName]="'MetaDataValue'" [DataContext]="item"
-                            [ObjectTableName]="'DocumentsFilingMetaDataValue'"
-                            [InputType]="'integer'" (ValueChanged)="metadataChanged()"></LogTextBox>
+                            [ObjectTableName]="'DocumentsFilingMetaDataValue'" [InputType]="'integer'"
+                            (ValueChanged)="metadataChanged()"></LogTextBox>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <app-drag-drop-file-input [input]="fileData" (base64FileSelected)="base64File = $event"
-        (fileCleared)="onFileCleared()" (FilesSelected)="onFileSelected($event)" [displayOnly]="!isNew"
-        [width]="inputFileWidth" [height]="inputFileHeight" [allowedExtensions]="allowedExtensions">
+        (fileCleared)="onFileCleared()" (filesSelected)="onFileSelected($event)" [displayOnly]="!isNew"
+        [width]="inputFileWidth" [height]="inputFileHeight" [allowedExtensions]="allowedExtensions"
+        (fileRotate)="rotationAngle = $event">
     </app-drag-drop-file-input>
 </div>
 

@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse'; 
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Injectable()
 
@@ -56,6 +55,15 @@ export class DocumentTypeMetaDataExtendedService {
     }), catchError(ServiceHelper.HandleServiceError));
   }
 
-
+  Delete(id: string, tenant: number) {
+    return this._http.delete(this._apiUrl, {
+      params: { id, tenant: tenant.toString() },
+      headers: ServiceHelper.GetHttpHeaders().headers
+    }).pipe(map(response => {
+      const pmresponse: ServiceResponse = new ServiceResponse();
+      pmresponse.Result = response;
+      return pmresponse;
+    }), catchError(ServiceHelper.HandleServiceError));
+  }
 }
 
