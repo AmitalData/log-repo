@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -40,7 +43,7 @@
   LocalDefaultText="&quot;תביעות&quot;"
   DefaultText="&quot;Claim&quot;"
   NewButtonLocalDefaultText="&quot;תביעה חדשה&quot;"
-  NewButtonDefaultText="&quot;תביעה חדשה&quot;"
+  NewButtonDefaultText="&quot;New Claim&quot;"
   Code="&quot;d8f1&quot;"
   Name="&quot;Customs.Claim Query Group&quot;"
   GenerateDomainService="true"
@@ -58,6 +61,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;7284&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -4649,6 +4653,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -4726,6 +4731,7 @@
     SystemMaxLength="35"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -4957,7 +4963,8 @@
         ObjectFieldName="&quot;IsClosed&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
-        IndexOrder="0" />
+        IndexOrder="0"
+        CustomPredefined="false" />
     </QueryFilters>
   </Query>
   <Screen
@@ -5605,7 +5612,7 @@
       Code="&quot;CreateNewClaimWithCustomFileNo&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Claim.Features.CreateNewClaimWithCustomFileNo&quot;"
-      FeatureDefaultText="&quot;יצירת תביעה חדשה עם תיק עמילות&quot;"
+      FeatureDefaultText="&quot;Creating a new claim with a customFileNo&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

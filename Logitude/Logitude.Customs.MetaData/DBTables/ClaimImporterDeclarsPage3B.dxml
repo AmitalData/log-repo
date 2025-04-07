@@ -13,17 +13,17 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="LineNo"
-    Type="int">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int"
     DefaultValue="0">
     <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LineNo"
+    Type="int">
+    <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column

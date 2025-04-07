@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimUpdateClass
    {  		
-		public const string HashString = "20ad3944f60720b2270aa42d6f9f2306";
+		public const string HashString = "0903ff991afd2523fc1f5f8c53e4cf9a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,6 +103,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -132,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultText =  "תביעות",
 			      				    DefaultText =  "Claim",
 			      				    NewButtonLocalDefaultText =  "תביעה חדשה",
-			      				    NewButtonDefaultText =  "תביעה חדשה",
+			      				    NewButtonDefaultText =  "New Claim",
 			      				    Code =  "d8f1",
 			      				    Name =  "Customs.Claim Query Group",
 			      				    GenerateDomainService =  true,
@@ -4080,6 +4083,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4146,6 +4150,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  35,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4388,7 +4393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature ClaimFeature_CreateNewClaimWithCustomFileNo = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CreateNewClaimWithCustomFileNo", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Claim.Features.CreateNewClaimWithCustomFileNo", NameTextCodeDefaultText = @"יצירת תביעה חדשה עם תיק עמילות" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClaimObjectTable);
+		   Feature ClaimFeature_CreateNewClaimWithCustomFileNo = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CreateNewClaimWithCustomFileNo", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Claim.Features.CreateNewClaimWithCustomFileNo", NameTextCodeDefaultText = @"Creating a new claim with a customFileNo" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClaimObjectTable);
 
    
 	    
