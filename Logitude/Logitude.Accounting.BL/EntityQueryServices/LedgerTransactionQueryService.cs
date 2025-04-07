@@ -1109,6 +1109,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
 
+
         public List<LedgerTransaction> GetTransactionsDeduction(string whAccountId, DateTime startDate, DateTime endDate, int tenant)
         {
             var dto = this.repository.GetTransactionsDeductionDTO(whAccountId, startDate, endDate, tenant).ToList();
@@ -1126,8 +1127,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 AccountingDate = x.AccountingDate,
                 Tenant = x.Tenant,
             }).ToList();
-
         }
+
+
         private List<LedgerTransactionJournalLineLT> FillTransactionsReconciliationNumbersLT(List<LedgerTransactionJournalLineLT> invoicesTransactions, int tenant)
         {
             List<ReconciliationLinePM> recoLines = GetReconciliationLinesForTransactionsLT(tenant, invoicesTransactions);

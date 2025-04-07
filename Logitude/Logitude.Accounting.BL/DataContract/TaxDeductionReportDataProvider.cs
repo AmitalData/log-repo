@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using System.Web.Util;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.Data.Enums;
+using Logitude.BL.InvoiceModel.CloseTables;
 
 namespace Logitude.Accounting.BL.DataContract
 {
@@ -284,9 +285,16 @@ namespace Logitude.Accounting.BL.DataContract
         {
             List<APPayment> payments = (from a in invoiceContext.APPayments.Include("VendorCard")
                                         where a.Tenant == Tenant
-                                         && a.RegisterDate >= startDate && a.RegisterDate < endDate
-                                         && !(a.DontIncludeInDeductionReport == true || (a.AccountingCancelationDate != null  && (a.AccountingCancelationDate < startDate || a.AccountingCancelationDate >= endDate)))
-                                         && (a.StatusCode == "VD" || a.StatusCode == "AD" || a.StatusCode == "CL" || a.StatusCode == "PR")
+                                         && (a.RegisterDate >= startDate && a.RegisterDate < endDate)
+                                         && !(a.AccountingCancelationDate != null  && a.DontIncludeInDeductionReport == false
+                                                && (a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate
+                                                        || a.AccountingCancelationDate.Value.Year == a.RegisterDate.Value.Year && a.AccountingCancelationDate.Value.Month == a.RegisterDate.Value.Month
+                                                   )
+                                             )
+                                         && (a.StatusCode == APPaymentStatusValues.Void 
+                                          || a.StatusCode == APPaymentStatusValues.Approved 
+                                          || a.StatusCode == APPaymentStatusValues.Closed 
+                                          || a.StatusCode == APPaymentStatusValues.Printed)
                                         select a).ToList();
             payments = getAPPaymentsWithGLAccountsAndVendor(payments);
             return payments;
@@ -664,7 +672,10 @@ namespace Logitude.Accounting.BL.DataContract
                                                  where a.AccountingCancelationDate >= startDate && a.AccountingCancelationDate < endDate &&
                                                  !(a.RegisterDate >= startDate && a.RegisterDate < endDate)
                                                  && a.Tenant == Tenant
-                                                 && (a.StatusCode == "VD" && a.DontIncludeInDeductionReport == false)
+                                                 && !(a.AccountingCancelationDate.Value.Year == a.RegisterDate.Value.Year 
+                                                        && a.AccountingCancelationDate.Value.Month == a.RegisterDate.Value.Month
+                                                     )
+                                                 && a.StatusCode == APPaymentStatusValues.Void && a.DontIncludeInDeductionReport == false
                                                  select a).ToList();
             cancelledPayments = getAPPaymentsWithGLAccountsAndVendor(cancelledPayments);
             return cancelledPayments;
