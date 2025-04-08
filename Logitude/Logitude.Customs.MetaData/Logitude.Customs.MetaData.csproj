@@ -107,13 +107,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
-     <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
       <Link>DependencyValidation1.layerdiagram</Link>
       <Visible>False</Visible>
     </AdditionalFiles>
     <None Include="DBOthers\Procedures\Queue_Peek_list.dxml" />
-     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataV2OLD.dxml" />
-     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataOLD.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataV2OLD.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelData.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
@@ -140,7 +140,6 @@
     <None Include="DBOthers\Views\DecTaxesByTaxTypeCodeViews.dxml" />
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
     <None Include="DBOthers\Views\DocumentsFilingsView.dxml" />
-    <None Include="DBScripts\Pre\202408121031_AddIdToGatepassrequests.sxml" />
     <None Include="DBScripts\Post\202307201232_AddCOURIERPENDINGREASONS908.sxml" />
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS907.sxml" />
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS905.sxml" />
