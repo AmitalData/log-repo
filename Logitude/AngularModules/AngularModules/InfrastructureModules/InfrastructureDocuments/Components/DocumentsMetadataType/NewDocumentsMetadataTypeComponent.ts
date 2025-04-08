@@ -66,8 +66,6 @@ export class NewDocumentsMetadataTypeComponent extends BaseComponent {
     }
 
     async saveData() {
-        // delete this.documentsMetaDataTypePM.UIProperties;
-
         SessionLocator.SelectedSession.StartBusyIndicator('');
         const result: ServiceResponse = await new Promise<ServiceResponse>(res => 
             new DocumentsMetaDataTypePMService().insert(this.documentsMetaDataTypePM).subscribe((myResult: ServiceResponse) => res(myResult)));

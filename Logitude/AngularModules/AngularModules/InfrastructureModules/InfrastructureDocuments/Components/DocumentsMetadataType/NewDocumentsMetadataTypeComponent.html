@@ -30,7 +30,7 @@
     <div class="field-container">
         <LogLabel [ObjectFieldName]="'FORMAT'" [ObjectTableName]="ObjectTableName"
             [DataContext]="documentsMetaDataTypePM"></LogLabel>
-        <select #selectControl (change)="documentsMetaDataTypePM.Format = selectControl.value">
+        <select [(ngModel)]="documentsMetaDataTypePM.Format">
             <option value=''>{{'Customs.Declaration.O.Choose' | TextCodeTranslationPipe}}</option>
             <option *ngFor="let format of ['boolean', 'datetime', 'integer', 'listofvalues', 'string']"
                 [selected]="format == documentsMetaDataTypePM.Format">{{format}}</option>

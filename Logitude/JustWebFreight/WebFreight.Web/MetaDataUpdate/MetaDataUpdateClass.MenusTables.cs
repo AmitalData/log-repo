@@ -310,7 +310,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTEA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 5, CategoryTypeCode = "CRM", TextCode = "General.MC.CRM.EmailAlertSetting", Icon = "Industries.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "EmailAlertSetting").FirstOrDefault().Id, FeatureId = EmailAlertsFeature.Id, FeatureUniqeCode = EmailAlertsFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTIS", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 6, CategoryTypeCode = "CRM", TextCode = "General.MC.CRM.IntegrationSystemsSetting", Icon = "Industries.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "General").FirstOrDefault().Id, FeatureId = IntegrationSystemsSettingFeature.Id, FeatureUniqeCode = IntegrationSystemsSettingFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
-            //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTAN", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 6, CategoryTypeCode = "CRM", TextCode = "General.MC.CRM.AutomationSetting", Icon = "Industries.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Automation").FirstOrDefault().Id, FeatureId = AutomationsFeature.Id }, MenusTablesRepository, tenantMenusTables);
             #endregion
 
             #region Quotation

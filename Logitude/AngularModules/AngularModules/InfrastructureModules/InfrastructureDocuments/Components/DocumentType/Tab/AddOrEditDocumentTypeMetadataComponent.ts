@@ -32,7 +32,7 @@ export class AddOrEditDocumentTypeMetadataComponent {
         this.documentTypeMetaData.Mandatory = !!this.documentTypeMetaData.Mandatory;
         this.documentTypeID = documentTypeID;
         this.documentsMetaDataTypeFilter.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number", false);
-        if(existsMetadataIds?.length > 0)
+        if (existsMetadataIds?.length > 0)
             this.documentsMetaDataTypeFilter.addAdditionalFilter("Id", existsMetadataIds.join(','), null, null, "Exclude", false, false, false, "string", false, true);
         this.dataReady = true;
     }
@@ -57,12 +57,19 @@ export class AddOrEditDocumentTypeMetadataComponent {
         delete this.documentTypeMetaData.UIProperties;
         const serviceApiClient = new DocumentTypeMetaDataPMService();
 
-        SessionLocator.SelectedSession.StartBusyIndicator('');
-        const observable = this.isUpdate ? serviceApiClient.update(this.documentTypeMetaData) : serviceApiClient.insert(this.documentTypeMetaData);
-        const res: boolean = await new Promise(resolve => observable.subscribe((response: ServiceResponse) => resolve(!response.HasError)));
-        
-        SessionLocator.SelectedSession.StopBusyIndicator();
+        try {
+            const observable = this.isUpdate ? serviceApiClient.update(this.documentTypeMetaData): serviceApiClient.insert(this.documentTypeMetaData);
 
-        SessionLocator.SelectedSession.CurrentWindow.Close(res as any);
+            const res: boolean = await new Promise(resolve => observable.subscribe({
+                    next: (response: ServiceResponse) => resolve(!response.HasError),
+                    error: () => resolve(false)
+                })
+            );
+
+            SessionLocator.SelectedSession.CurrentWindow.Close(res as any);
+        } catch (err) {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            this.validationErrorsList = [TextCodeTranslator.Translate('General.M.UnexpectedError')];
+        }
     }
 }

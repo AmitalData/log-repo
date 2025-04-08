@@ -12,8 +12,8 @@
     <div class="field-container">
         <LogLabel [DataContext]="documentTypeMetaData" [ObjectFieldName]="'Mandatory'" [ObjectTableName]='tableName'>
         </LogLabel>
-        <CheckBox [IsChecked]="documentTypeMetaData['Mandatory']"
-            (Checked)="documentTypeMetaData['Mandatory'] = $event;">
+        <CheckBox [IsChecked]="documentTypeMetaData.Mandatory" (Checked)="documentTypeMetaData.Mandatory = $event"
+            [ngClass]="{'error': validationErrorsList.length > 0 && documentTypeMetaData.Mandatory === null}">
         </CheckBox>
     </div>
 
