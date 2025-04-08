@@ -277,22 +277,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pmList;
         }
 
-        public List<CustomsRequestsSheetPM> GetRequestInProgressFromAllList(int tenant, string CustomFileNo)
-        {
-            string[] intrefaceTypeList = GetintrefaceTypeListDisplayOnly();
-            List<CustomsRequestsSheetPM> listData = new List<CustomsRequestsSheetPM>();
 
-            foreach (string intrefaceTypeItem in intrefaceTypeList)
-            {
-                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = GetRequestInProgress(tenant, intrefaceTypeItem, "", "", null, null, CustomFileNo, true);
-                if (customsRequestsSheetPMList != null)
-                {
-                    listData = customsRequestsSheetPMList;
-                    return listData;
-                }
-            }
-            return listData; 
-        }
 
         public List<CustomsRequestsSheetPM> GetRequestInProgress(
             int Tenant,
@@ -492,6 +477,198 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("CR1", requestInProgressParams.Tenant))
             {
                 if (requestInProgressParams.InterfaceTypeCode == "2715")
+                {
+                    if (!string.IsNullOrWhiteSpace(requestInProgressParams.EntityId2) && !string.IsNullOrWhiteSpace(requestInProgressParams.ObjectTableId2))
+                    {
+                        q = q.Where(rec => rec.EntityId2 == requestInProgressParams.EntityId2 && rec.ObjectTableId2 == requestInProgressParams.ObjectTableId2);
+                    }
+                }
+            }
+            if (!haveFilter)
+            {
+                return new List<CustomsRequestsSheetPM>();
+            }
+
+            var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
+            return pmList;
+        }
+
+        public List<CustomsRequestsSheetPM> GetRequestInProgressForAll(
+          int Tenant,
+          string InterfaceTypeCode,
+          string ObjectTableId1, string EntityId1,
+          string ObjectTableId2, string EntityId2,
+          string CustomFileNo,
+          bool displayOnlyMode = false,
+          string customsRequestsSheetId = null
+          , bool IsWorkSheetFromExcel = false, string userId = null)
+        {
+            return GetRequestInProgressForAll(new RequestInProgressParams()
+            {
+                Tenant = Tenant,
+                InterfaceTypeCode = InterfaceTypeCode,
+                ObjectTableId1 = ObjectTableId1,
+                EntityId1 = EntityId1,
+                ObjectTableId2 = ObjectTableId2,
+                EntityId2 = EntityId2,
+                CustomFileNo = CustomFileNo,
+                CustomsRequestsSheetId = customsRequestsSheetId,
+                DisplayOnlyMode = displayOnlyMode,
+                IsWorkSheetFromExcel = IsWorkSheetFromExcel,
+                UserId = userId,
+            });
+        }
+
+        public List<CustomsRequestsSheetPM> GetRequestInProgressForAll(
+            RequestInProgressParams requestInProgressParams
+            )
+        {
+            if (!requestInProgressParams.DisplayOnlyMode)
+            {
+                throw new Exception("GetRequestInProgress !displayOnlyMode && string.IsNullOrWhiteSpace(InterfaceTypeCode) ");
+            }
+
+            var intrefaceTypeList =
+                new List<string>()
+                {
+"2715",//CustomsDocument Request
+"2750",// - מסר הצהרה יוצא
+"2754",// - משוב להגשה/הצהרה
+"2755",// - מסר הגשה
+"8211",// - מסר דרישה לבטוחה
+"8212",// - מסר מענה לדרישה לבטוחה
+"8214",// -מסר בקשה של סוכן לאישור אילוצים 
+"8215",// - מסר של החלטת גורם מאשר לאישור האילוץ
+"8216",// - מסר תשובה של סוכן עם נימוקים לאישור האילוץ
+"8227",// - מסר מסמך נדרש
+"US2L01I",// - תהליך SIVUG BATCH 
+//"UCUW2L",// - פתיחת הצהרה ממסר אינטגרטור
+"UCTZIP",// - תהליך BuildCustomTableZip
+"UCB2750",//,Batch Send 2750 per CourierMasterId
+"UCB2755",//,Batch Send 2755 per CourierMasterId
+"UCB1170",//,Batch Send 1170 per CourierMasterId
+"UCBAC",//,Batch Send UCBAC per CourierMasterId
+"UCB2751",//,Batch Send 2751 for export
+"UCB2755E",//,Batch Payment 2755E for export
+"UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
+"UCB8250",//,Batch Send 8250 per CourierMasterId
+"UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
+"UCB8212",/// Batch Send Collateral
+"2892",
+"2450",
+"UCBNDCD",///  Send bonded filing
+"UCUDO", 
+///"8302", //בקשה לטופס הצהרה
+
+"2751"//הצהרת יצוא- מסר יוצא
+,"2757", //הצהרת יצוא - מסר נכנס
+///"8302" //בקשה לטופס הצהרה
+
+"UCB2715", // שידור מסמכים שגויים ראשי - מפצל
+"UCBSEDF",// שידור תעודות עיכוב ראשי - מפצל
+"UCB2715SendNow", // שידור מסמכים שגויים ראשי - מפצל
+"UCBCTML", // שידור הגשה בלדר
+"UCBCMSS", //שינוי אתר איחסון לבלדר
+"ClosePending",//סגירה גורפת ל-Pending
+"UCB9999", // ניתוח מחדש
+"8326", // שאילתא לתצהיר יבואן
+"DCAMU", // multi update 
+"DCAUAC", // multi update 
+"DCACCFII",//יצירת אישור לפרטי מכס
+"DCACSIFF", // יצירת חשבון ספק מאקסל
+"DCACESIFF",//חשבונות יצואן מאקסל
+"2755T", // הגשת שטעון
+"2757T", // תשובה להגשת שטעון
+"2751T", // הצהרת שטעון
+"2751T2", // תשובה להצהרת שטעון
+"UCADPE", // add multi pending
+"DCAInUCBApproveAllPending",//אישור PENDING
+"CourierMastersConnected", // קישור הצהרות לטיסה
+"UCADPE", // add multi pending
+"8235T", // תיקון שטעון
+"8314",//נתוני פרט מכס
+"8888",// תשובה לנתוני פרט מכס
+"2791",// אחסנה
+"2755E",// הגשה יצוא
+"8250",// סטטוס הצהרה
+"DCAOCR",//פתיחת חשבון יצואן - OCR
+"8235", // תיקון הצהרה ברקע
+"2280",//תעודת מקור
+"2281",//משוב תעודת מקור
+"8317",//הנחיות סיווג
+"8323",//פרטי הנחיות סיווג
+"8319",//כללים - ספר סיווג
+"UCB8373",
+            };
+
+
+            string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
+            if (!requestInProgressParams.DisplayOnlyMode)
+            {
+                return new List<CustomsRequestsSheetPM>();
+            }
+            var listSheetStatusInProcess = new List<string>();
+            foreach (var item in Enum.GetValues(typeof(SheetStatusInProcessEnum)))
+            {
+                listSheetStatusInProcess.Add(((int)item).ToString());
+            }
+            var q = 
+                this.repository.GetAll(requestInProgressParams.Tenant)
+                .Where(rec => rec.Tenant == requestInProgressParams.Tenant)
+                .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode)
+                    
+                    );
+            if (requestInProgressParams.Include8250IsShaam)
+            {
+                var my = intrefaceTypeListDisplayOnly.ToList();
+                my.Add("8250");
+                intrefaceTypeListDisplayOnly = my.ToArray();
+            }
+            if (requestInProgressParams.DisplayOnlyMode)
+            {
+                q = q.Where(rec => intrefaceTypeListDisplayOnly.Contains(rec.InterfaceTypeCode));
+            }
+            else
+            {
+                // the real change:
+                q = q.Where(rec => intrefaceTypeList.Contains(rec.InterfaceTypeCode));
+            }
+
+
+            var haveFilter = false;
+            if (requestInProgressParams.IsWorkSheetFromExcel)
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.RequestOwnerId == requestInProgressParams.UserId && rec.ObjectTableId1 == requestInProgressParams.ObjectTableId1);
+            }
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.CustomFileNo))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.CustomFileNo == requestInProgressParams.CustomFileNo);
+            }
+
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.EntityId1) && !string.IsNullOrWhiteSpace(requestInProgressParams.ObjectTableId1))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.EntityId1 == requestInProgressParams.EntityId1 && rec.ObjectTableId1 == requestInProgressParams.ObjectTableId1);
+            }
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.EntityId2) && !string.IsNullOrWhiteSpace(requestInProgressParams.ObjectTableId2))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.EntityId2 == requestInProgressParams.EntityId2 && rec.ObjectTableId2 == requestInProgressParams.ObjectTableId2);
+            }
+
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.CustomsRequestsSheetId))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.Id != requestInProgressParams.CustomsRequestsSheetId);
+            }
+
+            
+            if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("CR1", requestInProgressParams.Tenant))
+            {
+                // real change
+                if (intrefaceTypeList.Contains("2715"))
                 {
                     if (!string.IsNullOrWhiteSpace(requestInProgressParams.EntityId2) && !string.IsNullOrWhiteSpace(requestInProgressParams.ObjectTableId2))
                     {

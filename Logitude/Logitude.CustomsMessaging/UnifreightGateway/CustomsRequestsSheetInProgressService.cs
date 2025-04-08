@@ -98,9 +98,9 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                 }
 
                 var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(tenant);
-     
-                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgressFromAllList(tenant, CustomFileNo);
-                // List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgress(tenant, "2750", "", "", null, null, CustomFileNo, true);
+
+                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = customsRequestsSheetQueryService.GetRequestInProgressForAll(tenant, "All", "", "", null, null, CustomFileNo, true);
+
                 if (customsRequestsSheetPMList != null)
                 {
                     if (customsRequestsSheetPMList.Count > 0)
