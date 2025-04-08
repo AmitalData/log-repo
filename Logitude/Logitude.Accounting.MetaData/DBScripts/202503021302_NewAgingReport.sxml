@@ -249,6 +249,8 @@ LEFT JOIN
     AND (@SalesmanId IS NULL OR GL.SalesmanUserId = @SalesmanId) 
     AND (@CollectorId IS NULL OR GL.CollectorId = @CollectorId)
     AND (@ChartOfAccountsId IS NULL OR GL.ChartOfAccountsId = @ChartOfAccountsId)
+	AND (@CurrencyId IS NULL OR GL.CurrencyId = @CurrencyId)
+
     AND (
         (@CategoryName IS NULL OR 
         (@CategoryName = 'Category1Id' AND GL.Category1Id = @CategoryValue) OR 
