@@ -117,7 +117,7 @@ namespace Logitude.Server.Tools.ExternalServices
             try
             {
 				DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(fileInfo.Tenant);
-				var documentFiling = documentsFilingRepository.GetSingleWithIncludeDocumentType(fileInfo.U, fileInfo.Tenant);
+				var documentFiling = documentsFilingRepository.GetSingleWithIncludeDocumentType(fileInfo.UDocumentsFilingId, fileInfo.Tenant);
 
 				var reqBase64StringByFolderTenantComIdM_V1 = new ReqBase64StringByFolderTenantComIdM_V1()
                 {
