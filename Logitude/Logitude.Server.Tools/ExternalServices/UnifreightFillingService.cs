@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Configuration;
 using System.ServiceModel;
 using Logitude.Server.Tools.FilingManagerSplitServiceReference;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Server.Tools.ExternalServices
 {
@@ -115,9 +116,10 @@ namespace Logitude.Server.Tools.ExternalServices
             byte[] AllDataCalcOnClient = null;
             try
             {
+				DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(fileInfo.Tenant);
+				var documentFiling = documentsFilingRepository.GetSingleWithIncludeDocumentType(fileInfo.U, fileInfo.Tenant);
 
-
-                var reqBase64StringByFolderTenantComIdM_V1 = new ReqBase64StringByFolderTenantComIdM_V1()
+				var reqBase64StringByFolderTenantComIdM_V1 = new ReqBase64StringByFolderTenantComIdM_V1()
                 {
                     ComId = externalDocumentId,
                     CustomsTenant = fileInfo.Tenant,
