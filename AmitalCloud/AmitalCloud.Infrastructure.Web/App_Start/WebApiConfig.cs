@@ -6,6 +6,8 @@ namespace AmitalCloud.Shipment.WebAPI
     {
         public static void Register(HttpConfiguration config)
         {
+            config.Filters.Add(new AuthenticationExceptionFilter());
+
             config.MapHttpAttributeRoutes();
             //config.Routes.MapHttpRoute(
             //                            name: "ActionApi",

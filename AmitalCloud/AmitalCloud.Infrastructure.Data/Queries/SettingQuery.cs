@@ -8,7 +8,7 @@
         }
         public static string GetDefaultSettingId()
         {
-            return SettingIds.DefaultSetting.ToString();
+            return ((int)SettingIds.DefaultSetting).ToString();
         }
     }
 }

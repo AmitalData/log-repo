@@ -1051,6 +1051,8 @@
     <Compile Include="Queries\CommunicationLogStepQuery.cs" />
     <Compile Include="Queries\DocumentsFilingMetaDataValueQuery.cs" />
     <Compile Include="Queries\DocumentTypeQuery.cs" />
+    <Compile Include="Queries\ScreenQuery.cs" />
+    <Compile Include="Queries\ScreenFieldQuery.cs" />
     <Compile Include="Queries\SettingQuery.cs" />
     <Compile Include="Queries\TranslationQuery.cs" />
     <Compile Include="Queries\ObjectTableTabQuery.cs" />

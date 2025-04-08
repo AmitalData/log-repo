@@ -49,7 +49,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_internal = entity.Internal;
 		_advancedCondition = entity.AdvancedCondition;
 		_triggerFieldCode = entity.TriggerFieldCode;
-		objectTableRuleFields = entity.ObjectTableRuleFields != null ? entity.ObjectTableRuleFields.Select(a=>new ObjectTableRuleFieldPM(a)).ToList() : null;
+		//objectTableRuleFields = entity.ObjectTableRuleFields != null ? entity.ObjectTableRuleFields.Select(a=>new ObjectTableRuleFieldPM(a)).ToList() : null;
 		ruleConditionFields = entity.RuleConditionFields != null ? entity.RuleConditionFields.Select(a=>new RuleConditionFieldPM(a)).ToList() : null;
    }
    #endregion Constructors

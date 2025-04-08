@@ -57,6 +57,10 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                     {
                         EntityPM = GetEntityPM(EntityPOCO, getComposition, entityKeys);
                     }
+                    else
+                    {
+                        EntityPM = default(TEntityPM);
+                    }
                     if (EntityPM != null)
                     {
                         CacheManager.CacheWrapper.Insert(cacheKey, EntityPM);
@@ -74,6 +78,10 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                 if (EntityPOCO != null)
                 {
                     EntityPM = GetEntityPM(EntityPOCO, getComposition, entityKeys);
+                }
+                else
+                {
+                    EntityPM = default(TEntityPM);
                 }
             }
             return EntityPM;
@@ -125,7 +133,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             }
             return entityPMs;
         }
-        public List<TEntityPM> GetMultiFromCache(string cacheKey, Expression<Func<TEntityPOCO, bool>> predicate, string include = null)
+        public List<TEntityPM> GetMultiFromCache(string cacheKey, Expression<Func<TEntityPOCO, bool>> predicate, string include = null, Func<TEntityPOCO, TEntityPM> select = null)
         {
             List<TEntityPM> entityPMs;
 
@@ -139,7 +147,11 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             {
                 if (!string.IsNullOrEmpty(include))
                 {
-                    entityPMs = Repository.GetMulti<TEntityPM>(predicate, include);
+                    if (select == null)
+                    {
+                        throw new Exception("you can not include tables without selecting columns");
+                    }
+                    entityPMs = Repository.GetMulti<TEntityPM>(predicate, select, include);
                 }
                 else
                 {
@@ -159,9 +171,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         }
         public TEntityPOCO GetFirst() => Repository.GetFirst();
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate)
-        => Repository.GetMulti<TEntityPM>(predicate);
-        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, string include)
-        => Repository.GetMulti<TEntityPM>(predicate,include);
+        => Repository.GetMulti<TEntityPM>(predicate);        
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TEntityPM> select)
         => Repository.GetMulti(predicate,select);
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TEntityPM> select, string include)

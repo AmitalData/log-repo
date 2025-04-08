@@ -145,10 +145,13 @@
     <Compile Include="Controllers\GeneralDomainController.cs" />
     <Compile Include="Controllers\GlobalDomainController.cs" />
     <Compile Include="Controllers\InfrastructureDomainController.cs" />
+    <Compile Include="Controllers\UserExtendedController.cs" />
+    <Compile Include="Controllers\ObjectTableRuleFieldsController.cs" />
     <Compile Include="Controllers\MetaDataController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ReportGroupController.cs" />
     <Compile Include="Controllers\UserLastLoginsController.cs" />
+    <Compile Include="DataContracts\FieldsTranslations.cs" />
     <Compile Include="DataContracts\UserData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -157,6 +160,7 @@
     <Compile Include="DataContracts\LoginParameters.cs" />
     <Compile Include="Helpers\AmitalCloudSettingConfigration.cs" />
     <Compile Include="Helpers\Authentication.cs" />
+    <Compile Include="Helpers\AuthenticationExceptionFilter.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
     <Compile Include="Helpers\CaptchaHelper.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelEvent.cs" />

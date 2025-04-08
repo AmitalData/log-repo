@@ -34,6 +34,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_inActive = entity.InActive;
 		_name = entity.Name;
+        _objectTableName = null;
 		_statusWeight = entity.StatusWeight;
 		_searchFields = entity.SearchFields;
 		_displayName = entity.DisplayName;
@@ -139,6 +140,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Name",OldValue=_name,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _name=value;
+		   }
+		 }
+	   }
+	  private string _objectTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableName  
+	   {
+	     get { return _objectTableName; }
+		 set
+		 {
+		   if(_objectTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableName=value;
 		   }
 		 }
 	   }

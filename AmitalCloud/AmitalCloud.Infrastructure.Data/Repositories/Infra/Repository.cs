@@ -172,15 +172,12 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select) => _dbSet.Where(predicate).Select(select).ToList();
 
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList().AsEnumerable().Select(a=>NewObject<TResult>(a)).ToList();
-        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, string include) => ApplyInclude(predicate, include).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
-
 
 
 
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select) => _dbSet.Where(predicate).Select(select).ToList();
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, string include) => ApplyInclude(predicate, include).Select(select).ToList();
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList();
-        public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, string include) => ApplyInclude(predicate, include).ToList();
 
 
         public IEnumerable<TEntity> GetMulti<TKey>(ISpecification<TEntity, TKey> spec) => GetQuery(spec).AsEnumerable();

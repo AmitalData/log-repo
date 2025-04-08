@@ -16,15 +16,9 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     {
         public string GetSettingsLoginCode(int myDummyInteger, string myDummyString)
         {
-            string myResult = "";
             IGlobalContext globalContext = GlobalContext.GetContext();
             Setting mySettings = globalContext.Settings.FirstOrDefault();
-            if (mySettings == null)
-            {
-                return myResult;
-            }
-            myResult = mySettings.LogoCode;
-            return myResult;
+            return mySettings?.LogoCode ?? string.Empty;
         }
 
         public HttpResponseMessage PostUserValidation(LoginParameters loginParameters)
@@ -37,14 +31,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, loginParameters.Email, "", "AuthenticationController : PostUserValidation", null);
-                string message = "";
-                if (ex.InnerException != null)
-                {
-                    message += ex.InnerException.Message + Environment.NewLine;
-                }
-                message += ex.Message;
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, message);
+                LogException(ex, loginParameters.Email, "PostUserValidation");
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -60,16 +47,16 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, parameters.Email, "", "AuthenticationController : PostLoginData", null);
-                string errorMessage = "";
-                if (ex.InnerException != null)
-                {
-                    errorMessage = ex.InnerException.Message + Environment.NewLine;
-                }
-                errorMessage += ex.Message;
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, errorMessage);
+                LogException(ex, parameters.Email, "PostLoginData", tenant);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private void LogException(Exception ex, string email, string methodName, int tenant = 0)
+        {
+            ExceptionHandler.HandleException(ex, DateTime.Now, tenant, email, "", $"AuthenticationController : {methodName}", null);
+            string message = ex.InnerException?.Message + Environment.NewLine + ex.Message;
+            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, message);
         }
     }
 }

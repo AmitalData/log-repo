@@ -42,7 +42,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         ObjectTableRuleId, 
 	         Expression, 
 	         RuleNotificationTypeCode, 
-	         ObjectFieldCode,	      }
+	         ObjectFieldCode, 
+	         ObjectFieldName, 
+	         ObjectTableRuleCode, 
+	         ObjectTableRuleTypeCode,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ObjectTableRuleFieldPM entityPM, POCO.ObjectTableRuleField entityPOCO)

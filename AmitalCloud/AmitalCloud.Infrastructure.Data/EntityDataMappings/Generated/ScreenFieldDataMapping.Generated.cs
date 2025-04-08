@@ -44,7 +44,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         ObjectFieldId, 
 	         ObjectFieldCode, 
 	         ScreenCode, 
-	         SectionNumber,	      }
+	         SectionNumber, 
+	         ObjectFieldName, 
+	         ObjectFieldObjectTableName,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ScreenFieldPM entityPM, POCO.ScreenField entityPOCO)
