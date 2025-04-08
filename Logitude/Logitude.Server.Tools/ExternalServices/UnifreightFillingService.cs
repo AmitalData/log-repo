@@ -227,7 +227,7 @@ namespace Logitude.Server.Tools.ExternalServices
 
             return AllDataCalcOnClient;
         }
-		public static void CreateNewFiling(Dictionary<string, string> inParams, string file_data, int tenant,bool isFromCloud = false,out Dictionary<string, string> outParams, out bool fatal_error, out string message)
+		public static void CreateNewFiling(Dictionary<string, string> inParams, string file_data, int tenant,out Dictionary<string, string> outParams, out bool fatal_error, out string message, bool isFromCloud = false)
 		{
 			outParams = null;
 			fatal_error = false;
