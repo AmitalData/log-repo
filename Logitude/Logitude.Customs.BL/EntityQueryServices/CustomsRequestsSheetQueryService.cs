@@ -276,6 +276,23 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
             return pmList;
         }
+
+        public List<CustomsRequestsSheetPM> GetRequestInProgressFromAllList(int tenant, string CustomFileNo)
+        {
+            string[] intrefaceTypeList = GetintrefaceTypeListDisplayOnly();
+            List<CustomsRequestsSheetPM> listData = new List<CustomsRequestsSheetPM>();
+
+            foreach (string intrefaceTypeItem in intrefaceTypeList)
+            {
+                List<CustomsRequestsSheetPM> customsRequestsSheetPMList = GetRequestInProgress(tenant, intrefaceTypeItem, "", "", null, null, CustomFileNo, true);
+                if (customsRequestsSheetPMList != null)
+                {
+                    listData.AddRange(customsRequestsSheetPMList);
+                }
+            }
+            return listData;
+        }
+
         public List<CustomsRequestsSheetPM> GetRequestInProgress(
             int Tenant,
             string InterfaceTypeCode,
