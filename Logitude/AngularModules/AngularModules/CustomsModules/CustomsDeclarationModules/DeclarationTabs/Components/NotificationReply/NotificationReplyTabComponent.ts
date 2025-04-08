@@ -179,7 +179,11 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
         this.entityPM = notificationPM;
         this.parent = trigger;
         this.NotificationData = this.entityPM.Description;// + Environment.NewLine;
-        this.SenderName = this.entityPM?.SenderName;
+
+        if (this.entityPM?.SenderName) {
+            this.SenderName = "מעריך: " + this.entityPM?.SenderName ;
+        }
+
 
         if (this.entityPM.NotificationRplies.length == 0) {
             this.WithAnswerGridVisibility = false;
