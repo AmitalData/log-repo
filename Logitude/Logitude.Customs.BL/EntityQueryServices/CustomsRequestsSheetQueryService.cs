@@ -287,10 +287,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 List<CustomsRequestsSheetPM> customsRequestsSheetPMList = GetRequestInProgress(tenant, intrefaceTypeItem, "", "", null, null, CustomFileNo, true);
                 if (customsRequestsSheetPMList != null)
                 {
-                    listData.AddRange(customsRequestsSheetPMList);
+                    listData = customsRequestsSheetPMList;
+                    return listData;
                 }
             }
-            return listData;
+            return listData; 
         }
 
         public List<CustomsRequestsSheetPM> GetRequestInProgress(
