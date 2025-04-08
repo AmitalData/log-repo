@@ -122,7 +122,7 @@ namespace Logitude.Server.Tools.ExternalServices
 				var reqBase64StringByFolderTenantComIdM_V1 = new ReqBase64StringByFolderTenantComIdM_V1()
                 {
                     ComId = externalDocumentId,
-                    CustomsTenant = fileInfo.Tenant,
+                    CustomsTenant = (documentFiling?.IsFromCloud ?? false) ? (10000 + fileInfo.Tenant) : fileInfo.Tenant,
                     myFillingFolderType = FillingFolderType.BLOB,
 
                 };
@@ -131,8 +131,8 @@ namespace Logitude.Server.Tools.ExternalServices
                 {
                     ComId = externalDocumentId,
                     CreateDate = createDate.Value,
-                    CustomsTenant = fileInfo.Tenant,
-                    myFillingFolderType = FillingFolderType.BLOB,
+                    CustomsTenant = (documentFiling?.IsFromCloud ?? false) ? (10000 + fileInfo.Tenant ): fileInfo.Tenant,
+					myFillingFolderType = FillingFolderType.BLOB,
                     Version = fileInfo.UFileVer ?? 1,
                     ExtensionWithoutPoint = fileInfo.Extension,
                     strMoreParams = ""
@@ -178,15 +178,15 @@ namespace Logitude.Server.Tools.ExternalServices
             ErrorMessage = TiffPageLines = null;
             DownloadServiceResponseData res = null;
             byte[] AllDataCalcOnClient = null;
-            try
+			try
             {
-
-
-                var reqGetPageTiffAsB64FromTarByTenantComIdPageM_V1 = new ReqGetPageTiffAsB64FromTarByTenantComIdPageM_V1()
+				DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(tenant);
+				var documentFiling = documentsFilingRepository.GetSingleWithIncludeDocumentType(externalDocumentId, tenant);
+				var reqGetPageTiffAsB64FromTarByTenantComIdPageM_V1 = new ReqGetPageTiffAsB64FromTarByTenantComIdPageM_V1()
                 {
                     ComId = externalDocumentId,
-                    CustomsTenant = tenant,
-                    currPage = CurrPage
+					CustomsTenant = (documentFiling?.IsFromCloud ?? false) ? (10000 + tenant) : tenant,
+					currPage = CurrPage
 
                 };
 
@@ -227,7 +227,7 @@ namespace Logitude.Server.Tools.ExternalServices
 
             return AllDataCalcOnClient;
         }
-		public static void CreateNewFiling(Dictionary<string, string> inParams, string file_data, int Tenant,out Dictionary<string, string> outParams, out bool fatal_error, out string message)
+		public static void CreateNewFiling(Dictionary<string, string> inParams, string file_data, int tenant,bool isFromCloud = false,out Dictionary<string, string> outParams, out bool fatal_error, out string message)
 		{
 			outParams = null;
 			fatal_error = false;
@@ -240,17 +240,16 @@ namespace Logitude.Server.Tools.ExternalServices
 				binding.MaxReceivedMessageSize = 2147483647;
 				binding.ReaderQuotas.MaxStringContentLength = 2147483647;
 				binding.ReaderQuotas.MaxArrayLength = 2147483647;
-                if(LogitudeSettings.GetLogitudeCustomsSettingsMInject(Tenant).OnPremiseFillingService == null)
+                if(LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).OnPremiseFillingService == null)
 				{
 					throw new Exception("OnPremiseFillingService is null");
 				}
-		        address = (new EndpointAddress(new Uri(LogitudeSettings.GetLogitudeCustomsSettingsMInject(Tenant).OnPremiseFillingService)));
+		        address = (new EndpointAddress(new Uri(LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).OnPremiseFillingService)));
 				//address = new EndpointAddress(new Uri(@"http://univ511:5057/Unifreight511/FilingManagerSplit/Basic"));
 				FilingManagerClient FilingManager = new FilingManagerClient(binding, address);
 
-               
-
-				outParams = FilingManager.CreateNewFiling(inParams, file_data, Tenant,  out fatal_error, out message);							
+				tenant = isFromCloud ? (10000 + tenant): tenant;
+				outParams = FilingManager.CreateNewFiling(inParams, file_data, tenant,  out fatal_error, out message);							
 			}
 			catch (Exception ex)
 			{

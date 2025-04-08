@@ -148,9 +148,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.EntityNumber = entityPM.EntityNumber;
             poco.IsTransferdToQBO = entityPM.IsTransferdToQBO;
             poco.ReceivedByPartner = entityPM.ReceivedByPartner;
-        }
+			poco.IsFromCloud = entityPM.IsFromCloud;
 
-        private static void MapUpdatedByUserId(DocumentsFilingPM entityPM, DocumentsFiling poco, ContactPM loggedContact)
+		}
+
+		private static void MapUpdatedByUserId(DocumentsFilingPM entityPM, DocumentsFiling poco, ContactPM loggedContact)
         {
             if (string.IsNullOrEmpty(entityPM.UpdatedByUserId))
             {

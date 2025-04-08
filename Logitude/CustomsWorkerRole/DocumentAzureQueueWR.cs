@@ -163,7 +163,7 @@ namespace CustomsWorkerRole
 						inParams.Add("base64data", "true");
 						var filedata = Convert.ToBase64String(File.ReadAllBytes(filePath));
 						logs += "before CreateNewFiling " + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-						UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message);
+						UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant,true, out outParams, out fatal_error, out message);
 						logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 						#endregion
 						if (!fatal_error)
@@ -339,6 +339,7 @@ namespace CustomsWorkerRole
 			documentsFilingPM.UpdateDate = null;
 			documentsFilingPM.UpdatedByUserCode = user.Code;
 			documentsFilingPM.UpdatedByUserId = user.Code;
+			documentsFilingPM.IsFromCloud = true;
 
 			var res = UpsertDocumentData(documentsFilingPM);
 			return res;

@@ -79,7 +79,7 @@ namespace Logitude.Server.Tools
             unifreightFillingService.UploadByTenantComId(fileInfo, fileInfo.UDocumentsFilingId, fileInfo.UCreateDate, data);
             return true;
         }
-        public static bool IsUnifreightFillingModeBase(int tenant,string FolderName)
+        public static bool IsUnifreightFillingModeBase(int tenant,string FolderName,bool isFromCloud = false)
         {
             if (!isFeatureOn)
             {
@@ -113,6 +113,11 @@ namespace Logitude.Server.Tools
             {
                 return false;
             }
+
+            if (isFromCloud) 
+            {
+				return false;
+			}
             return true;
         }
         public static bool IsUnifreightFillingMode(this BlobFileInfo fileInfo, bool isnew=false)

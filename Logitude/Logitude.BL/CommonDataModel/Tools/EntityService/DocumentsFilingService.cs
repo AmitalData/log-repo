@@ -198,7 +198,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             DocumentsFilingValidating.Validate(theEntityPm);
             DocumentsFilingTracing.Trace(theEntityPm, Poco, isNewEntity);
-            _OnCreateUnifreightFillingMode = BlobFileInfoExt.IsUnifreightFillingModeBase(theEntityPm.Tenant, theEntityPm.Folder);
+            _OnCreateUnifreightFillingMode = BlobFileInfoExt.IsUnifreightFillingModeBase(theEntityPm.Tenant, theEntityPm.Folder, theEntityPm.IsFromCloud);
 
             if ((!FromService || _OnCreateUnifreightFillingMode) && documentId == null)
             {
