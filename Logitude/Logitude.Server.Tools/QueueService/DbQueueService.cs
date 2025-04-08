@@ -650,7 +650,8 @@ namespace Logitude.Server.Tools.QueueService
                 return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
             }
 
-             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
+             if (serverWaitTime == null) 
+            { serverWaitTime = TimeSpan.FromMinutes(20); }
 
             long messageId = -1;
 
@@ -693,8 +694,7 @@ namespace Logitude.Server.Tools.QueueService
                             watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
 
                             queueCodePar.Value = QueueCode;
-                            //nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
-                            nextRunDelayInSecPar.Value = serverWaitTime.Value.TotalSeconds;
+                            nextRunDelayInSecPar.Value = serverWaitTime.Value.Minutes;
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);
                             cmd.Parameters.Add(retryNumberPar);
@@ -770,7 +770,7 @@ namespace Logitude.Server.Tools.QueueService
 
                             queueCodePar.Value = QueueCode;
                             watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
-                            nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
+                            nextRunDelayInSecPar.Value = serverWaitTime.Value.Minutes;
 
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);

@@ -135,7 +135,7 @@
                 <tr>
                     <td style="padding: 0 10px;">
                         <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="'Accounting.General.O.All' | TextCodeTranslationPipe"
-                            [IsChecked]="IsAll" (Checked)="isAllClicked()"></RadioButton>
+                            [IsChecked]="(IsAll && !SelectedItem) || SelectedItem=='All'" (Checked)="isAllClicked()"></RadioButton>
                     </td>
                 </tr>
             </table>
@@ -146,7 +146,7 @@
                 <tr>
                     <td style="padding: 0 10px;">
                         <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType"
-                            [IsChecked]="!IsAll" (Checked)="isSelectedClicked()"></RadioButton>
+                            [IsChecked]="(!IsAll && !SelectedItem)|| SelectedItem=='NotAll'" (Checked)="isSelectedClicked()"></RadioButton>
                     </td>
 
 
@@ -168,7 +168,7 @@
                                     </td>
                                     <td style="width:20px">
                                         <CheckBox (Checked)="clickItem(item,i)" [IsChecked]="item.Checked"
-                                            [IsEnabled]="ShowSelected"></CheckBox>
+                                            [IsEnabled]="(ShowSelected && !SelectedItem)|| SelectedItem=='NotAll' "></CheckBox>
 
                                     </td>
 
@@ -206,7 +206,7 @@
                     </tr>
                     <tr>
                         <td style="width:100px">
-                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="'  '+'All'" [IsChecked]="IsAll" (Checked)="isAllClicked()"></RadioButton>
+                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="'  '+'All'" [IsChecked]="(IsAll && !SelectedItem)|| SelectedItem=='All'" (Checked)="isAllClicked()"></RadioButton>
                         </td>
                         <td></td>
                     </tr>
@@ -216,7 +216,7 @@
                 <table>
                     <tr>
                         <td style="width:100px">
-                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType" [IsChecked]="!IsAll" (Checked)="isSelectedClicked()"></RadioButton>
+                            <RadioButton [Name]="'shipmentType'" [IsComboBoxWithCheck]="true" [Text]="' '+ProductsSelectionType" [IsChecked]="(!IsAll && !SelectedItem)|| SelectedItem=='NotAll'" (Checked)="isSelectedClicked()"></RadioButton>
                         </td>
 
                         <td></td>
@@ -232,7 +232,7 @@
                     </tr>
                     <tr>
                         <td style="width:25px">
-                            <CheckBox (Checked)="clickItem(item,i)" [IsChecked]="item.Checked" [IsEnabled]="ShowSelected"></CheckBox>
+                            <CheckBox (Checked)="clickItem(item,i)" [IsChecked]="item.Checked" [IsEnabled]="(ShowSelected && !SelectedItem)|| SelectedItem=='NotAll'"></CheckBox>
                         </td>
                         <td style="padding-left:2px;width:25px">
                             <img style="margin-top:2px;" class="CenterCenter" *ngIf="item.Code[0] && (item.Code[0]=='A' || item.Code[0]=='I' || item.Code[0]=='O')" [attr.src]="'./Images/TransportModes/' + item.Code[0] + '.png'" />

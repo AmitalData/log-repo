@@ -396,10 +396,12 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                 }
             });
         });
+        this.currentSession.StopBusyIndicator();
 
     }
 
-    SendALLCorrectManifest(courierDeclarationStatusCode: string) {
+    SendALLCorrectManifest(courierDeclarationStatusCode: string) {      
+      this.currentSession.StartBusyIndicatorLoading();        
         if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
@@ -407,6 +409,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
             myMessageWindow.Show("חסרים שדות חובה ברמת הטיסה");
+            this.currentSession.StopBusyIndicator();
             return;
         }
 
@@ -415,6 +418,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            this.currentSession.StopBusyIndicator();
             return;
         }
         if (this._CorrectMNFToBatchSend == 0 && courierDeclarationStatusCode == "RV") {
@@ -422,8 +426,9 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            this.currentSession.StopBusyIndicator();
             return;
-        }
+        }        
 
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
@@ -444,8 +449,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
         currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
-        currRequestParams.IsWorkSheetFromExcel = true;
-
+        currRequestParams.IsWorkSheetFromExcel = true;       
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe((res: any) => {
 
@@ -465,10 +469,12 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                     }
                 });
             });
+            this.currentSession.StopBusyIndicator();            
 
     }
 
     SendReadyLOWPAYToBatch() {
+        this.currentSession.StartBusyIndicatorLoading();
         if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
         if (this._PAYReadyNotFastindividual == 0) {
@@ -476,10 +482,9 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            this.currentSession.StopBusyIndicator();
             return;
-        }
-
-        this.currentSession.StartBusyIndicatorLoading();
+        }        
         this.currentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe((response: any) => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
@@ -555,6 +560,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
     }
 
     SendALLCorrectDec(courierDeclarationStatusCode: string) {
+        this.currentSession.StartBusyIndicatorLoading();
         if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
 
         if (this._ReadyDECToBatchSend == 0 && courierDeclarationStatusCode == "R") {
@@ -562,6 +568,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            this.currentSession.StopBusyIndicator();
             return;
         }
         if (this._CorrectDECToBatchSend == 0 && courierDeclarationStatusCode == "RV") {
@@ -569,6 +576,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            this.currentSession.StopBusyIndicator();
             return;
         }
         if (this._InCorrectDECToBatchSend == 0 && courierDeclarationStatusCode == "X") {
@@ -576,6 +584,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            this.currentSession.StopBusyIndicator();
             return;
         }
 
@@ -2171,6 +2180,7 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
 
     SendALLTerminal() {
+        this.currentSession.StartBusyIndicatorLoading();
         if (this.DataSource.rowCount > 0) this.CourierHawbsFromExcelUploaded = true;
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
@@ -2198,7 +2208,8 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                 });
             });
 
-    }
+            this.currentSession.StopBusyIndicator();
+            }
 
     SendDelayForm() {
 

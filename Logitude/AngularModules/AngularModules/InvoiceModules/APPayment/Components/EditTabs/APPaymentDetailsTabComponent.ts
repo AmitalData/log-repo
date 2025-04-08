@@ -911,7 +911,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.LoadData();
             this.EntityPM.VendorPartnerTypeId = null;
         }
-        else {
+        else if(AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.CurrentSession.StartBusyIndicatorLoading();
             this.CardListService.getSingle(this.EntityPM.VendorId).subscribe((myResult: any) => {
                 var myResponse: ServiceResponse = myResult;

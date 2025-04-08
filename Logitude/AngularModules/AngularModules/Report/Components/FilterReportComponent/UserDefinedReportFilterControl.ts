@@ -1,13 +1,9 @@
-declare var window: any;
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow'
 import {ReportFliter} from '../Filters/ReportFliter';
 import {QueryFilterItem} from '../Filters/QueryFilterItem';
-import {Component, OnInit, Output, ElementRef}  from '@angular/core';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {Component, OnInit}  from '@angular/core';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
@@ -64,14 +60,14 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
 
 
     RunReport() {
-        this.CheckIsReportFiltersValid();
+        this.ValidateSelectedFilters();
         if (this.ValidationErrorsList.length == 0) {
            this.BuildReport();
         }
     }
 
 
-    CheckIsReportFiltersValid(){
+    ValidateSelectedFilters(){
         this.ValidationErrorsList = [];
         var FieldIsRequiredText = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         this.ValidatePeriodsDateIsNotNull();
@@ -82,6 +78,7 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
         this.ValidateReportIsNotNull(FieldIsRequiredText);
         this.ValidateFirstPeriodDateFromLessorEqualDateTo();
         this.ValidateSecounddPeriodDateFromLessorEqualDateTo();
+        return this.ValidationErrorsList.length === 0;
        }
 
    ValidateFromForFirstPeriodsDate(fieldIsRequiredText:string){
@@ -154,7 +151,7 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
         }
     }
 
-    InitilaizeFilter(){
+    GetQueryFilterItems(){
         this.queryFilterItems = new Array<QueryFilterItem>();
         this.queryFilterItems.push(this.GetNewQueryFilterItem("UserDefinedReportId",this.UserDefinedReportId));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("SecoundPeriodDateFrom",this.SecoundPeriodDateFrom));
@@ -164,10 +161,11 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
         this.queryFilterItems.push(this.GetNewQueryFilterItem("IncludeAnOpeningBalance",this.IncludeAnOpeningBalance));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("ExcludeZeroCloseBalance",this.ExcludeZeroCloseBalance));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("ExpandChartOfAccountToGLAccounts",this.ExpandChartOfAccountToGLAccounts));
+        return this.queryFilterItems;
     }
 
     BuildReport(){
-        this.InitilaizeFilter();
+        this.GetQueryFilterItems();
         this.SetReportFilters();
         this.ReportsPreview.GenerateReport(this.reportFliter, true);
     }
@@ -182,7 +180,62 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
         this.reportFliter.NumberOfPage = 1;
         this.reportFliter.ProcessType = "GenerateReport";
     }
-
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+        
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        
+    }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+   
+      
+   
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "UserDefinedReportId":
+                    this.UserDefinedReportId= queryFilterItem.FieldValue;
+                    break;
+                case "SecoundPeriodDateFrom":
+                    this.SecoundPeriodDateFrom = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "SecoundPeriodDateTo":
+                    this.SecoundPeriodDateTo = new Date(queryFilterItem.FieldValue);
+                     break;
+                case "FirstPeriodDateFrom":
+                    this.FirstPeriodDateFrom = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "FirstPeriodDateTo":
+                    this.FirstPeriodDateTo = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "IncludeAnOpeningBalance":
+                    this.IncludeAnOpeningBalance = queryFilterItem.FieldValue;
+                    break;
+                case "ExcludeZeroCloseBalance":
+                    this.ExcludeZeroCloseBalance= queryFilterItem.FieldValue;                        
+                    break;
+                case "ExpandChartOfAccountToGLAccounts":
+                    this.ExpandChartOfAccountToGLAccounts= queryFilterItem.FieldValue;                           
+                    break;
+                           
+                                      
+            }
+                  
+        }
+    }
     GetNewQueryFilterItem(FieldName:string,FieldValue:any,FieldDataType:string=null){
              var queryFilterItem = new QueryFilterItem();
                  queryFilterItem.DisplayInList = false;

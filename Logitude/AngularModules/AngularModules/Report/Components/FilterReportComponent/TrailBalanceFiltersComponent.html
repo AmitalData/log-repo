@@ -124,16 +124,16 @@
 
                                                     <div style="padding: 4px 15px;">{{'GLAccount.F.ChartOfAccountsTypeCode' | TextCodeTranslationPipe}}</div>
                                                     <div style="width: 150px;" *ngIf="chartOfAccountsTypes.length > 0">
-                                                        <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccountsTypes" [IsDisabled]="isChartOfAccountsTypesDisabled"
-                                                            [SelectedItem]="ChartOfAccountsTypeComboboxValue" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
+                                                        <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150"  [IsDisabled]="isChartOfAccountsTypesDisabled"
+                                                            [SelectedItem]="ChartOfAccountsTypeComboboxValue"  [ItemsSource]="chartOfAccountsTypes" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
                                                             [SelectionType]="showLocal?'קבוצה':'Product'"
                                                             (SelectedItemChanged)="ChartOfAccountsTypeComboboxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
                                                     </div>
                                                     <div style="width: 50px;"></div>
                                                     <div style="padding: 4px 15px;">{{'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe}}</div>
                                                     <div style="width: 150px;" *ngIf="chartOfAccounts.length > 0" >
-                                                        <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccounts" [IsDisabled]="isChartOfAccountsDisabled" (SetStyle)="handleSetStyle($event)"
-                                                            [SelectedItem]="ChartOfAccountsComboBoxValue" (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
+                                                        <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [IsDisabled]="isChartOfAccountsDisabled" (SetStyle)="handleSetStyle($event)"
+                                                            [SelectedItem]="ChartOfAccountsComboBoxValue"  [ItemsSource]="chartOfAccounts" (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
                                                             [SelectionType]="showLocal?'קבוצה':'Product'"
                                                             (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
                                                     </div>
@@ -168,52 +168,62 @@
 
                                                     <!-- Category 1 -->
                                                     <LogLov *ngSwitchCase="'Category 1'"
+                                                             
                                                             [ObjectFieldName]="'Category1'"
                                                             [ObjectTableName]="'GLAccount'"
                                                             [DataContext]="DataContext"
                                                             [DisplayMemberPath]="'LocalName'"
                                                             [LookUpTableName]="'Category1'"
-                                                            [HideColumns]="true">
+                                                            [HideColumns]="true"
+                                                            [SelectedValue]="Category1">
                                                     </LogLov>
 
                                                     <!-- Category 2 -->
                                                     <LogLov *ngSwitchCase="'Category 2'"
+                                                            
                                                             [ObjectFieldName]="'Category2'"
                                                             [ObjectTableName]="'GLAccount'"
                                                             [DataContext]="DataContext"
                                                             [DisplayMemberPath]="'LocalName'"
                                                             [LookUpTableName]="'Category2'"
-                                                            [HideColumns]="true">
+                                                            [HideColumns]="true"
+                                                            [SelectedValue]="Category2">
                                                     </LogLov>
 
                                                     <!-- Category 3 -->
                                                     <LogLov *ngSwitchCase="'Category 3'"
+                                                           
                                                             [ObjectFieldName]="'Category3'"
                                                             [ObjectTableName]="'GLAccount'"
                                                             [DataContext]="DataContext"
                                                             [DisplayMemberPath]="'LocalName'"
                                                             [LookUpTableName]="'Category3'"
-                                                            [HideColumns]="true">
+                                                            [HideColumns]="true"
+                                                            [SelectedValue]="Category3">
                                                     </LogLov>
 
                                                     <!-- Category 4 -->
                                                     <LogLov *ngSwitchCase="'Category 4'"
+                                                           
                                                             [ObjectFieldName]="'Category4'"
                                                             [ObjectTableName]="'GLAccount'"
                                                             [DataContext]="DataContext"
                                                             [DisplayMemberPath]="'LocalName'"
                                                             [LookUpTableName]="'Category4'"
-                                                            [HideColumns]="true">
+                                                            [HideColumns]="true"
+                                                            [SelectedValue]="Category4">
                                                     </LogLov>
 
                                                     <!-- Category 5 -->
                                                     <LogLov *ngSwitchCase="'Category 5'"
+                                                            
                                                             [ObjectFieldName]="'Category5'"
                                                             [ObjectTableName]="'GLAccount'"
                                                             [DataContext]="DataContext"
                                                             [DisplayMemberPath]="'LocalName'"
                                                             [LookUpTableName]="'Category5'"
-                                                            [HideColumns]="true">
+                                                            [HideColumns]="true"
+                                                            [SelectedValue]="Category5">
                                                     </LogLov>
 
                                                     <!-- Default -->
@@ -337,7 +347,7 @@
 
                     <td style="width:90px;">
                         <button (click)="RunReport()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{'Accounting.General.O.Run' | TextCodeTranslationPipe}}</div>
+                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>
                         </button>
 
                     </td>

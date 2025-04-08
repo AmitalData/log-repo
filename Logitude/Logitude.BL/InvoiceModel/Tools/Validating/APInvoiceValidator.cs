@@ -59,7 +59,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 if (accountingSetting.IsVatNumberMandatoryInAP)
                 {
-                    if (string.IsNullOrEmpty(entityPM.VATNumber))
+                    if (string.IsNullOrEmpty(entityPM.VATNumber) && (entityPM.VendorCountry == "IL" || entityPM.VendorCountry == null))
                     {
                         throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
                     }

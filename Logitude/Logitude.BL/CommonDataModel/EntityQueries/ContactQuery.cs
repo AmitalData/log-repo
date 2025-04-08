@@ -2087,5 +2087,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return contacts;
         }
+
+        public Contact GetContactByEmail(string email, int tenant)
+        {
+            return repository.GetContactByEmail(email, tenant);
+        }
+
     }
 }
