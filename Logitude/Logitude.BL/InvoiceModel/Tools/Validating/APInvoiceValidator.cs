@@ -59,7 +59,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 if (accountingSetting.IsVatNumberMandatoryInAP && entityPM.VendorCountry == "ISRAEL")
                 {
-                    if (string.IsNullOrEmpty(entityPM.VATNumber))
+                    if (string.IsNullOrEmpty(entityPM.VATNumber) && (entityPM.VendorCountry == "IL" || entityPM.VendorCountry == null))
                     {
                         throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
                     }
@@ -775,7 +775,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException("Wrong Invoice Total Amount");
                 }
 
-                if (!entityPM.IsExternalEntity && entityPM.AmountInLocalCurrency != Amount_Local)
+                bool differentCurrencies =  entityPM.IsExternalEntity && entityPM.InvoiceLines != null && entityPM.InvoiceLines
+                    .Select(line => line.ForiegnCurrencyCode ?? String.Empty)
+                    .Distinct().Count() > 1;
+
+                if ((!entityPM.IsExternalEntity || differentCurrencies) && entityPM.AmountInLocalCurrency != Amount_Local)
                 {
                     throw new ApplicationException("Wrong Invoice Total Local Amount");
                 }

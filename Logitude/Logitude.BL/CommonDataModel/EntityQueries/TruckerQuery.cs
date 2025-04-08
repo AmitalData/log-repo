@@ -102,6 +102,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    PartnerTypeId = a.Card.PartnerTypeId,
                                    Code = a.Card.Code,
                                     GLAccountId = a.Card.GLAccountId,
+                                    ExternalSystem = a.Card.ExternalSystem,
                                 },
                            }).FirstOrDefault();
 
@@ -428,6 +429,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         SendingInterestReport = a.Card.SendingInterestReport,
                                         PartnerTypeId = a.Card.PartnerTypeId,
                                         Code = a.Card.Code,
+                                        ExternalSystem = a.Card.ExternalSystem,
                                     },
                                 }).FirstOrDefault();
 

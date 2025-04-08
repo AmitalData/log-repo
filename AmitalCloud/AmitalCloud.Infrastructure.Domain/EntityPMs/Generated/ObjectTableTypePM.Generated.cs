@@ -31,6 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
+		objectTables = entity.ObjectTables != null ? entity.ObjectTables.Select(a=>new ObjectTablePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -83,6 +84,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<ObjectTablePM> objectTables;
+	 
+		     
+	   [Include]
+	   [Association("ObjectTableObjectTableType", "Code","Objecttabletypecode")]
+	   [DataMember]
+	   public virtual List<ObjectTablePM> ObjectTables  
+	   {
+	        get
+             {
+                 if (objectTables == null)
+                 {
+                     objectTables = new List<ObjectTablePM>();
+                 }
+                 return objectTables;
+              }
+             set { objectTables = value; }
+	    }
+	   private List<ObjectTablePM>  deletedObjectTables;
+	   public virtual List<ObjectTablePM> DeletedObjectTables  
+	   {
+	        get
+             {
+                 if ( deletedObjectTables == null)
+                 {
+                      deletedObjectTables = new List<ObjectTablePM>();
+                 }
+                 return  deletedObjectTables;
+              }
+             set {  deletedObjectTables = value; }
+	    }
 	 }
 #endregion Properties
 }

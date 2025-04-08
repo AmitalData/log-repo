@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class QueryListQueryService  : BaseEntityListQueryService<QueryList,POCO.Query,  QueryKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.Query> contextEntity => (context as IAmitalCloudContext).Querys;
+	    protected override System.Data.Entity.IDbSet<POCO.Query> contextEntity => (context as IAmitalCloudContext).QUERIES;
 		public QueryListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public QueryList GetSingle(string id)
 		{

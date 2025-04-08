@@ -154,6 +154,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 return;
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.UserAgent)) //T4 find type == nText 
+            {
+                entityPM.UserAgent = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.UserAgent));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)

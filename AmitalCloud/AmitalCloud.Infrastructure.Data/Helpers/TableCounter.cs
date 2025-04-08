@@ -97,8 +97,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
                     cmd.CommandText =
-                        //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "." +  "usp_GetNextTableNumberValue";
-                        DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableNumberValue", AmitalCloudDBSchema.LOGITUDE_MAIN,
+                        DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableNumberValue", AmitalCloudDBSchema.AMITAL_MAIN,
                         cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
                     /*

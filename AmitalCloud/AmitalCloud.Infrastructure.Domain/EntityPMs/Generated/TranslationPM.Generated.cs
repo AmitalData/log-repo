@@ -37,8 +37,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_translateDate = entity.TranslateDate;
 		_translatedByUserId = entity.TranslatedByUserId;
-		_translatedbyuser = entity.TranslatedByUser !=null ? new UserPM(entity.TranslatedByUser) : null;
-			_updateDateGMT = entity.UpdateDateGMT;
+		_updateDateGMT = entity.UpdateDateGMT;
 		_textCodeCode = entity.TextCodeCode;
    }
    #endregion Constructors
@@ -180,14 +179,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private UserPM _translatedbyuser;
-		[Include]
-        [DataMember]
-        public virtual UserPM TranslatedByUser 
-		{ 
-		get { return _translatedbyuser; } 
-		set { _translatedbyuser = value; }
-		}
 	  private DateTime? _updateDateGMT ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

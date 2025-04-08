@@ -24,15 +24,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired();
 
-            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
-
-            this.Property(t => t.QueueDefinitionCode).HasColumnName("QueueDefinitionCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QueueDefinitionCode).HasColumnName("QueueDefinitionCode").IsRequired().HasMaxLength(265).IsUnicode(false);
 
             this.Property(t => t.CreateDateTime).HasColumnName("CreateDateTime").IsRequired();
 
             this.Property(t => t.Status).HasColumnName("Status").IsRequired();
 
-            this.Property(t => t.MessageBody).HasColumnName("MessageBody").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.MessageBody).HasColumnName("MessageBody").IsRequired().HasMaxLength(2000).IsUnicode(false);
 
             this.Property(t => t.NextRunDateTime).HasColumnName("NextRunDateTime").IsRequired();
 
@@ -42,29 +40,31 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.RetryNumber).HasColumnName("RetryNumber").IsRequired();
 
-            this.Property(t => t.HashCode).HasColumnName("HashCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.QueueDefinition).HasColumnName("QueueDefinition").IsRequired();
+            this.Property(t => t.HashCode).HasColumnName("HashCode").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.TenantPriority).HasColumnName("TenantPriority").IsRequired();
 
-            this.Property(t => t.InterfaceTypeCode).HasColumnName("InterfaceTypeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.InterfaceTypeCode).HasColumnName("InterfaceTypeCode").IsRequired().HasMaxLength(32).IsUnicode(false);
 
-            this.Property(t => t.UseRabbitMQ).HasColumnName("UseRabbitMQ").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QueueCodeRabbit).HasColumnName("QueueCodeRabbit").IsRequired().HasMaxLength(256).IsUnicode(false);
 
-            this.Property(t => t.QueueCodeRabbit).HasColumnName("QueueCodeRabbit").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.UseRabbitMQ).HasColumnName("UseRabbitMQ").IsRequired();
 
-            this.Property(t => t.HaveRabbitMQ).HasColumnName("HaveRabbitMQ").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.EntityCode).HasColumnName("EntityCode").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.EntityId).HasColumnName("EntityId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.HaveRabbitMQ).HasColumnName("HaveRabbitMQ").IsRequired();
 
             this.Property(t => t.RabbitMQCreateDate).HasColumnName("RabbitMQCreateDate").IsRequired();
 
             this.Property(t => t.RabbitMQRetryNumber).HasColumnName("RabbitMQRetryNumber").IsRequired();
 
-            this.Property(t => t.RabbitMQErrMess).HasColumnName("RabbitMQErrMess").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.RabbitMQErrMess).HasColumnName("RabbitMQErrMess").IsRequired().HasMaxLength(256).IsUnicode(false);
+
+            this.Property(t => t.EntityCode).HasColumnName("EntityCode").IsRequired().HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.EntityId).HasColumnName("EntityId").IsRequired().HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.DropRowid).HasColumnName("DropRowid").IsRequired();
         }
     }
 }

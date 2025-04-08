@@ -20,27 +20,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
         { 
 				this.ToTable("CommunicationLogSteps");
 		
-		    this.HasKey(t => new { t.CommunicationLogId, t.StepNumber });
+		    this.HasKey(t => new { t.StepNumber, t.CommunicationLogId });
 	 
-            this.Property(t => t.CommunicationLogId).HasColumnName("CommunicationLogId").IsRequired().HasMaxLength(0).IsUnicode(false);
-
             this.Property(t => t.StepNumber).HasColumnName("StepNumber").IsRequired().HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.CommunicationLogId).HasColumnName("CommunicationLogId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.Retries).HasColumnName("Retries").IsRequired();
 
-            this.Property(t => t.Status).HasColumnName("Status").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Status).HasColumnName("Status").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.Log).HasColumnName("Log").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Log).HasColumnName("Log").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.StartDate).HasColumnName("StartDate").IsRequired();
 
             this.Property(t => t.EndDate).HasColumnName("EndDate").IsRequired();
 
-            this.Property(t => t.DocumentId).HasColumnName("DocumentId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DocumentId).HasColumnName("DocumentId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsLogCompress).HasColumnName("IsLogCompress").IsRequired();
         }

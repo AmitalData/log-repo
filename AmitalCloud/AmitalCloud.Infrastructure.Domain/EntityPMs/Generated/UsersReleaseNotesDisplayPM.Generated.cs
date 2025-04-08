@@ -31,7 +31,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_userId = entity.UserId;
-		_user = entity.User;
    }
    #endregion Constructors
    #region Properties
@@ -81,22 +80,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UserId",OldValue=_userId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _userId=value;
-		   }
-		 }
-	   }
-	  private string _user ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string User  
-	   {
-	     get { return _user; }
-		 set
-		 {
-		   if(_user != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="User",OldValue=_user,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _user=value;
 		   }
 		 }
 	   }

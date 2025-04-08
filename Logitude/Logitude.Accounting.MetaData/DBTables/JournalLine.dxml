@@ -172,6 +172,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExcludeFromTaxReport"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="JournalId"
     ReferencedTable="Journals"

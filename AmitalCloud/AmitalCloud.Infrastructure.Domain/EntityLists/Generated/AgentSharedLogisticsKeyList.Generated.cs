@@ -24,23 +24,26 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public AgentSharedLogisticsKeyList() : base() {}
        public AgentSharedLogisticsKeyList(POCO.AgentSharedLogisticsKey entity) : base()
        {
-          SharedKey  = entity.SharedKey;
+          CdropSharedkey  = entity.CdropSharedkey;
           Agent1Tenant  = entity.Agent1Tenant;
           Agent2Tenant  = entity.Agent2Tenant;
           CreateDate  = entity.CreateDate;
-          CreatedByUserEmail  = entity.CreatedByUserEmail;
-          ApprovedByUserEmail  = entity.ApprovedByUserEmail;
+          CdropCreatedbyuseremail  = entity.CdropCreatedbyuseremail;
+          CdropApprovedbyuseremail  = entity.CdropApprovedbyuseremail;
           ApproveDate  = entity.ApproveDate;
           InactiveDate  = entity.InactiveDate;
+          CdropInactivebyuseremail  = entity.CdropInactivebyuseremail;
+          CdropStatuscode  = entity.CdropStatuscode;
+          SharedKey  = entity.SharedKey;
+          CreatedByUserEmail  = entity.CreatedByUserEmail;
+          ApprovedByUserEmail  = entity.ApprovedByUserEmail;
           InactiveByUserEmail  = entity.InactiveByUserEmail;
           StatusCode  = entity.StatusCode;
        }
        #endregion Constructors
        #region Properties
-   
-       [Key]
-       [DataMember]
-       public string SharedKey  { get; set; }
+          [DataMember]
+       public string CdropSharedkey  { get; set; }
        [DataMember]
        public int Agent1Tenant  { get; set; }
        [DataMember]
@@ -48,13 +51,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
-       public string CreatedByUserEmail  { get; set; }
+       public string CdropCreatedbyuseremail  { get; set; }
        [DataMember]
-       public string ApprovedByUserEmail  { get; set; }
+       public string CdropApprovedbyuseremail  { get; set; }
        [DataMember]
        public DateTime? ApproveDate  { get; set; }
        [DataMember]
        public DateTime? InactiveDate  { get; set; }
+       [DataMember]
+       public string CdropInactivebyuseremail  { get; set; }
+       [DataMember]
+       public string CdropStatuscode  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string SharedKey  { get; set; }
+       [DataMember]
+       public string CreatedByUserEmail  { get; set; }
+       [DataMember]
+       public string ApprovedByUserEmail  { get; set; }
        [DataMember]
        public string InactiveByUserEmail  { get; set; }
        [DataMember]

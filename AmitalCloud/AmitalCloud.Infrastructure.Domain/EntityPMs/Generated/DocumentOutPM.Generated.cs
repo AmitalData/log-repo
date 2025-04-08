@@ -29,19 +29,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public DocumentOutPM(POCO.DocumentOut entity) : base()
    {
 		_id = entity.Id;
-		_tenant = entity.Tenant;
+		_documentsfiling = entity.DocumentsFiling !=null ? new DocumentsFilingPM(entity.DocumentsFiling) : null;
+			_tenant = entity.Tenant;
 		_issued = entity.Issued;
 		_editableFields = entity.EditableFields;
 		_documentTemplateId = entity.DocumentTemplateId;
 		_emailTemplateId = entity.EmailTemplateId;
 		_xamlDocumentId = entity.XamlDocumentId;
-		_xamldocument = entity.XamlDocument !=null ? new DocumentPM(entity.XamlDocument) : null;
-			_needsRebuild = entity.NeedsRebuild;
+		_needsRebuild = entity.NeedsRebuild;
 		_isBlobExist = entity.IsBlobExist;
 		_issuedDate = entity.IssuedDate;
 		_issuedByUserId = entity.IssuedByUserId;
-		_issuedbyuser = entity.IssuedByUser !=null ? new UserPM(entity.IssuedByUser) : null;
-			_documentsFiling = entity.DocumentsFiling;
+		communicationLogs = entity.CommunicationLogs != null ? entity.CommunicationLogs.Select(a=>new CommunicationLogPM(a)).ToList() : null;
+		documentOutCopys = entity.DocumentOutCopys != null ? entity.DocumentOutCopys.Select(a=>new DocumentOutCopyPM(a)).ToList() : null;
+		followUps = entity.FollowUps != null ? entity.FollowUps.Select(a=>new FollowUpPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -62,6 +63,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private DocumentsFilingPM _documentsfiling;
+		[Include]
+        [DataMember]
+        public virtual DocumentsFilingPM DocumentsFiling 
+		{ 
+		get { return _documentsfiling; } 
+		set { _documentsfiling = value; }
+		}
 	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -158,14 +167,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private DocumentPM _xamldocument;
-		[Include]
-        [DataMember]
-        public virtual DocumentPM XamlDocument 
-		{ 
-		get { return _xamldocument; } 
-		set { _xamldocument = value; }
-		}
 	  private bool _needsRebuild ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -230,30 +231,99 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private UserPM _issuedbyuser;
-		[Include]
-        [DataMember]
-        public virtual UserPM IssuedByUser 
-		{ 
-		get { return _issuedbyuser; } 
-		set { _issuedbyuser = value; }
-		}
-	  private string _documentsFiling ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   private List<CommunicationLogPM> communicationLogs;
+	 
+		     
+	   [Include]
+	   [Association("CommunicationLogDocumentOut", "Id","Documentoutid")]
 	   [DataMember]
-       public string DocumentsFiling  
+	   public virtual List<CommunicationLogPM> CommunicationLogs  
 	   {
-	     get { return _documentsFiling; }
-		 set
-		 {
-		   if(_documentsFiling != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentsFiling",OldValue=_documentsFiling,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _documentsFiling=value;
-		   }
-		 }
-	   }
+	        get
+             {
+                 if (communicationLogs == null)
+                 {
+                     communicationLogs = new List<CommunicationLogPM>();
+                 }
+                 return communicationLogs;
+              }
+             set { communicationLogs = value; }
+	    }
+	   private List<CommunicationLogPM>  deletedCommunicationLogs;
+	   public virtual List<CommunicationLogPM> DeletedCommunicationLogs  
+	   {
+	        get
+             {
+                 if ( deletedCommunicationLogs == null)
+                 {
+                      deletedCommunicationLogs = new List<CommunicationLogPM>();
+                 }
+                 return  deletedCommunicationLogs;
+              }
+             set {  deletedCommunicationLogs = value; }
+	    }
+	   private List<DocumentOutCopyPM> documentOutCopys;
+	 
+		     
+	   [Include]
+	   [Association("DocumentOutCopyDocumentOut", "Id","Documentoutid")]
+	   [DataMember]
+	   public virtual List<DocumentOutCopyPM> DocumentOutCopys  
+	   {
+	        get
+             {
+                 if (documentOutCopys == null)
+                 {
+                     documentOutCopys = new List<DocumentOutCopyPM>();
+                 }
+                 return documentOutCopys;
+              }
+             set { documentOutCopys = value; }
+	    }
+	   private List<DocumentOutCopyPM>  deletedDocumentOutCopys;
+	   public virtual List<DocumentOutCopyPM> DeletedDocumentOutCopys  
+	   {
+	        get
+             {
+                 if ( deletedDocumentOutCopys == null)
+                 {
+                      deletedDocumentOutCopys = new List<DocumentOutCopyPM>();
+                 }
+                 return  deletedDocumentOutCopys;
+              }
+             set {  deletedDocumentOutCopys = value; }
+	    }
+	   private List<FollowUpPM> followUps;
+	 
+		     
+	   [Include]
+	   [Association("FollowUpDocumentOut", "Id","Internaldocumentid")]
+	   [DataMember]
+	   public virtual List<FollowUpPM> FollowUps  
+	   {
+	        get
+             {
+                 if (followUps == null)
+                 {
+                     followUps = new List<FollowUpPM>();
+                 }
+                 return followUps;
+              }
+             set { followUps = value; }
+	    }
+	   private List<FollowUpPM>  deletedFollowUps;
+	   public virtual List<FollowUpPM> DeletedFollowUps  
+	   {
+	        get
+             {
+                 if ( deletedFollowUps == null)
+                 {
+                      deletedFollowUps = new List<FollowUpPM>();
+                 }
+                 return  deletedFollowUps;
+              }
+             set {  deletedFollowUps = value; }
+	    }
 	 }
 #endregion Properties
 }

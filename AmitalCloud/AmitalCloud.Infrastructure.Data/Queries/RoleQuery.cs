@@ -30,23 +30,19 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         public List<RolePM> GetRolesForContact(string contactid, int tenant)
         {
-            List<RolePM> roles = null;
+            List<RolePM> roles = repository.GetMulti(a => (a.Tenant == tenant && contactid  != null) || a.Tenant == 0).Select(a => new RolePM(a)).ToList();
+
             if (contactid != null)
             {
-                ContactTenant contacttenant = (from a in context.ContactTenants
-                                               where a.ContactId == contactid && (a.TenantId == tenant)
-                                               select a).FirstOrDefault();
+                Repository<ContactTenant> contactTenant= new Repository<ContactTenant>(context);
+                ContactTenant contacttenant = contactTenant.GetMulti(a => a.ContactId == contactid && a.TenantId == tenant).FirstOrDefault();
                 if (contacttenant == null)
                 {
                     throw new Exception($"contacttenant not exist in DB ({contactid})");
                 }
-                List<ContactTenantRole> contactTenantRoles = (from a in context.ContactTenantRoles
-                                                              where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
-                                                              select a).ToList();
 
-                roles = (from a in context.Roles
-                         where a.Tenant == tenant || a.Tenant == 0
-                         select new RolePM(a)).ToList();
+                Repository<ContactTenantRole> contactTenantRoleRepo = new Repository<ContactTenantRole>(context);
+                List<ContactTenantRole> contactTenantRoles = contactTenantRoleRepo.GetMulti(a => a.ContactTenantId == contacttenant.Id && a.Tenant == tenant);
 
                 foreach (ContactTenantRole contacttenantrole in contactTenantRoles)
                 {
@@ -56,13 +52,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                     //role.Exists = true;
                     //role.UserId = contacttenant.ContactId;
                 }
-
-            }
-            else
-            {
-                roles = (from a in context.Roles
-                         where a.Tenant == 0 
-                         select new RolePM(a)).ToList();
             }
             return roles; //.Where(d => d.Exists == true).ToList();
         }

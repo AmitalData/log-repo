@@ -30,6 +30,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_code = entity.Code;
 		_name = entity.Name;
+		documentTypes = entity.DocumentTypes != null ? entity.DocumentTypes.Select(a=>new DocumentTypePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -66,6 +67,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<DocumentTypePM> documentTypes;
+	 
+		     
+	   [Include]
+	   [Association("DocumentTypeDocumentsDataProvider", "Code","Documentsdataprovidercode")]
+	   [DataMember]
+	   public virtual List<DocumentTypePM> DocumentTypes  
+	   {
+	        get
+             {
+                 if (documentTypes == null)
+                 {
+                     documentTypes = new List<DocumentTypePM>();
+                 }
+                 return documentTypes;
+              }
+             set { documentTypes = value; }
+	    }
+	   private List<DocumentTypePM>  deletedDocumentTypes;
+	   public virtual List<DocumentTypePM> DeletedDocumentTypes  
+	   {
+	        get
+             {
+                 if ( deletedDocumentTypes == null)
+                 {
+                      deletedDocumentTypes = new List<DocumentTypePM>();
+                 }
+                 return  deletedDocumentTypes;
+              }
+             set {  deletedDocumentTypes = value; }
+	    }
 	 }
 #endregion Properties
 }

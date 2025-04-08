@@ -25,7 +25,7 @@ export class TextCodeTranslator {
 
 
 
-    static Translate(value: string, Fix: boolean = true): string {
+    static Translate(value: string, Fix: boolean = true): string {        
         if (SessionLocator.UseCachedData) {
 
             return this.TranslateCached(value, Fix);

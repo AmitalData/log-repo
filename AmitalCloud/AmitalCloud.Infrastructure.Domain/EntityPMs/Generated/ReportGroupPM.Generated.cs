@@ -28,29 +28,30 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public ReportGroupPM() : base() {} 
    public ReportGroupPM(POCO.ReportGroup entity) : base()
    {
-		_id = entity.Id;
+		_dropCdropId = entity.DropCdropId;
 		_tenant = entity.Tenant;
+		_orderNumber = entity.OrderNumber;
+		_id = entity.Id;
 		_code = entity.Code;
 		_englishName = entity.EnglishName;
 		_localName = entity.LocalName;
-		_orderNumber = entity.OrderNumber;
+		reports = entity.Reports != null ? entity.Reports.Select(a=>new ReportPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
-   	  private string _id ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+   	  private string _dropCdropId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Id  
+       public string DropCdropId  
 	   {
-	     get { return _id; }
+	     get { return _dropCdropId; }
 		 set
 		 {
-		   if(_id != value)
+		   if(_dropCdropId != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropCdropId",OldValue=_dropCdropId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _id=value;
+		   _dropCdropId=value;
 		   }
 		 }
 	   }
@@ -67,6 +68,39 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _tenant=value;
+		   }
+		 }
+	   }
+	  private int _orderNumber ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int OrderNumber  
+	   {
+	     get { return _orderNumber; }
+		 set
+		 {
+		   if(_orderNumber != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OrderNumber",OldValue=_orderNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _orderNumber=value;
+		   }
+		 }
+	   }
+	  private string _id ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	     get { return _id; }
+		 set
+		 {
+		   if(_id != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _id=value;
 		   }
 		 }
 	   }
@@ -118,22 +152,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private int _orderNumber ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   private List<ReportPM> reports;
+	 
+		     
+	   [Include]
+	   [Association("ReportReportGroup", "Id","Reportgroupid")]
 	   [DataMember]
-       public int OrderNumber  
+	   public virtual List<ReportPM> Reports  
 	   {
-	     get { return _orderNumber; }
-		 set
-		 {
-		   if(_orderNumber != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OrderNumber",OldValue=_orderNumber,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _orderNumber=value;
-		   }
-		 }
-	   }
+	        get
+             {
+                 if (reports == null)
+                 {
+                     reports = new List<ReportPM>();
+                 }
+                 return reports;
+              }
+             set { reports = value; }
+	    }
+	   private List<ReportPM>  deletedReports;
+	   public virtual List<ReportPM> DeletedReports  
+	   {
+	        get
+             {
+                 if ( deletedReports == null)
+                 {
+                      deletedReports = new List<ReportPM>();
+                 }
+                 return  deletedReports;
+              }
+             set {  deletedReports = value; }
+	    }
 	 }
 #endregion Properties
 }

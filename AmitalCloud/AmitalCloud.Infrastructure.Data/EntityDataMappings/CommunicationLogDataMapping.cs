@@ -12,10 +12,11 @@ using System.Linq;
 using System.Text;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Domain.Enums;
+using AmitalCloud.Infrastructure.Data.Services;
 using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
-using AmitalCloud.Infrastructure.Domain;
+using AmitalCloud.Infrastructure.Data;
 
 
 namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
@@ -26,7 +27,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 
         public void CustomPMToPOCO(CommunicationLogPM entityPM, POCO.CommunicationLog entityPOCO)
         {
-            //throw new NotImplementedException();
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.Id = entityPM.Id;
+            }
         }
 
         public void CustomPOCOToPM(CommunicationLogPM entityPM, POCO.CommunicationLog entityPOCO)

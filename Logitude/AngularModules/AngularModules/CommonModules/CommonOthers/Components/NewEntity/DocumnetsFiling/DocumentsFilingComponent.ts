@@ -8,6 +8,7 @@ import { DocumentTypeMetaDataExtendedService } from "Common/Services/ExtendedPMs
 import { DocumentsFilingPMService } from "Common/Services/StandardPMs/DocumentsFilingPMService";
 import { LogitudeWindowTemplateComponent } from "Controls/Windows/LogitudeWindow";
 import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
+import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
@@ -15,7 +16,6 @@ import { TraceEventTypeCodes, TraceEventExtendedPMService } from "Infrastructure
 import { LogtuideTableDataService } from "Infrastructure/Services/logtuide-table-data.service";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { Observable } from "rxjs";
-import { officeFileExtensions } from "./DocumentsFilingMetadata";
 
 @Component({
     selector: "app-new-documents-filing",
@@ -23,11 +23,13 @@ import { officeFileExtensions } from "./DocumentsFilingMetadata";
     styleUrls: ["./DocumentsFilingComponent.scss"]
 })
 export class DocumentsFilingComponent {
+    ObjectTableName: string = 'DocumentsFiling';
     documentsFilingPM: DocumentsFilingPM = new DocumentsFilingPM();
     orginalDocumentsFilingPM: DocumentsFilingPM & any = null;
     fileData: string = '';
     base64File: string = '';
-    allowedExtensions: string[] = ['pdf', 'tif', 'tiff', 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'xml', 'json'].concat(officeFileExtensions);
+    rotationAngle: number = 0;
+    allowedExtensions: string[] = ['csv', 'jpg', 'jpeg', 'tif', 'tiff', 'txt', 'zip', 'png', 'gif', 'bmp', 'doc', 'xls', 'ppt', 'docx', 'xlsx', 'pptx', 'pdf', '7z', 'html', 'htm'];
     documentTypeMetaDataList: DocumentTypeMetaDataPM[];
     documentTypeMetaDataExtendedService = new DocumentTypeMetaDataExtendedService();
     isNew: boolean = false;
@@ -35,26 +37,40 @@ export class DocumentsFilingComponent {
     dataReady: boolean = false;
     tableDataInit: boolean = false;
     errors: string[] = [];
-    inputFileWidth: number = 400;
-    inputFileHeight: number = 560;
+    inputFileWidth: number = 580;
+    inputFileHeight: number = 700;
     inSavingProcess: boolean = false;
     directionCodes: { name: string, id: string }[] = [
         { name: 'In', id: 'I' },
         { name: 'Out', id: 'O' }
     ];
+    entities: string[]
     selectedSession = SessionLocator.SelectedSession;
     dataInitProcess: boolean = false;
     finishInitialCdr: boolean = false;
+    objectTablesFilter: ApiQueryFilters = this.getObjectTablesFilter();
+    documentTypeFilter: ApiQueryFilters = this.getDocumentTypeFilter();
+
+    getObjectTablesFilter() {
+        const filter = new ApiQueryFilters();
+        const tables: string[] = ['Customs.Declaration', 'Shipment'];
+        filter.addAdditionalFilter("Name", tables.join(','), null, null, "InListExact", false, false, false, "string", false, true);
+        return filter;
+    }
+    
+    getDocumentTypeFilter() {
+        const filter = new ApiQueryFilters();        
+        filter.addAdditionalFilter("IsDocIn", true, null, null, "Equals", false, false, false, "boolean", false);
+        return filter;
+    }
 
     constructor(entityArgs: EntityArgs, private cdr: ChangeDetectorRef) {
         this.isEditComponent = !!SessionLocator.SelectedSession.CurrentEditComponent;
         this.listner();
 
-        if (this.isEditComponent) {
-            this.inputFileHeight = 700;
-            this.inputFileWidth = 580;
-        } else {
-            (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).logWindow.Height = 700;
+        if (!this.isEditComponent) {
+            (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).logWindow.Height = 840;
+            (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).logWindow.Width = 1090;
             (<LogitudeWindowTemplateComponent>SessionLocator.SelectedSession.CurrentWindow?.ComponentRef.instance).SetWindowSize();
         }
 
@@ -190,7 +206,7 @@ export class DocumentsFilingComponent {
             value.Mandatory = item.Mandatory;
             value.DocumentsMetaDataTypeEnglishName = item.DocumentsMetaDataTypeEnglishName;
             value.DocumentsMetaDataTypeFormat = item.DocumentsMetaDataTypeFormat;
-            this.documentTypeMetaDataList.find(a => a.DocumentsMetaDataTypeId == item.DocumentsMetaDataTypeId).DocumentsFilingMetaDataValuePM = value;
+            (<any>this.documentTypeMetaDataList.find(a => a.DocumentsMetaDataTypeId == item.DocumentsMetaDataTypeId)).DocumentsFilingMetaDataValuePM = value;
         });
 
         this.cdr.detectChanges();
@@ -203,7 +219,7 @@ export class DocumentsFilingComponent {
         SessionLocator.SelectedSession.StartBusyIndicator('');
 
         const serviceRequest: Observable<ServiceResponse> = this.isNew ?
-            new DocumentsFilingExtendedPMService().PostDocumentAndDocumentFiling(this.documentsFilingPM, this.base64File) :
+            new DocumentsFilingExtendedPMService().PostDocumentAndDocumentFiling(this.documentsFilingPM, this.base64File, this.rotationAngle) :
             new DocumentsFilingPMService().update(this.documentsFilingPM);
 
         const result = await new Promise<ServiceResponse>(res => serviceRequest.subscribe((myResult: ServiceResponse) => res(myResult)));

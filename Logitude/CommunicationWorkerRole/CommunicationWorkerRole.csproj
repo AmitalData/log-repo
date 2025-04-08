@@ -566,13 +566,13 @@
       <HintPath>..\packages\Twilio.7.1.0\lib\net462\Twilio.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -589,6 +589,7 @@
       <Link>OldEntityDetailsGenerator.cs</Link>
     </Compile>
     <Compile Include="Accounting\AccountingConversionJournalApproveWR.cs" />
+    <Compile Include="Accounting\ARInvoiceApproveWR.cs" />
     <Compile Include="Accounting\AccountingJournalApproveMutliThreadingWR.cs" />
     <Compile Include="Accounting\ReconciliationWorkerRole.cs" />
     <Compile Include="Accounting\AccountingJournalApproveWR.cs" />
@@ -660,6 +661,7 @@
     <Compile Include="Services\Logbox\LogboxExceptionHandler.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
     <Compile Include="Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs" />
+    <Compile Include="Tasks\ReconcileInProgressCleanupTask.cs" />
     <Compile Include="Tasks\QueryReport.cs" />
     <Compile Include="Tasks\UpdateCanceledSATEntitiesStatusesTask.cs" />
     <Compile Include="Tasks\ResetFullTextSearchIndexChangeTrackingTask.cs" />

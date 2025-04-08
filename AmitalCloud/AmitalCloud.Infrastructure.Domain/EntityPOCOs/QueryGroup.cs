@@ -27,6 +27,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Name { get; set; }
         [Column("IndexOrder")]
 	    public int IndexOrder { get; set; }
+		public virtual ICollection<Query> Querys { get; set; }
     }
 }
 	 

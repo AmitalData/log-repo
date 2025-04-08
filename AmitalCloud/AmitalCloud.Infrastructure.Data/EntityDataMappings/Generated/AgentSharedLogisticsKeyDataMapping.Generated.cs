@@ -24,48 +24,63 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         SharedKey, 
+	         CdropSharedkey, 
 	         Agent1Tenant, 
 	         Agent2Tenant, 
 	         CreateDate, 
-	         CreatedByUserEmail, 
-	         ApprovedByUserEmail, 
+	         CdropCreatedbyuseremail, 
+	         CdropApprovedbyuseremail, 
 	         ApproveDate, 
 	         InactiveDate, 
+	         CdropInactivebyuseremail, 
+	         CdropStatuscode, 
+	         SharedKey, 
+	         CreatedByUserEmail, 
+	         ApprovedByUserEmail, 
 	         InactiveByUserEmail, 
 	         StatusCode,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         SharedKey, 
+	         CdropSharedkey, 
 	         Agent1Tenant, 
 	         Agent2Tenant, 
 	         CreateDate, 
-	         CreatedByUserEmail, 
-	         ApprovedByUserEmail, 
+	         CdropCreatedbyuseremail, 
+	         CdropApprovedbyuseremail, 
 	         ApproveDate, 
 	         InactiveDate, 
+	         CdropInactivebyuseremail, 
+	         CdropStatuscode, 
+	         SharedKey, 
+	         CreatedByUserEmail, 
+	         ApprovedByUserEmail, 
 	         InactiveByUserEmail, 
 	         StatusCode,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(AgentSharedLogisticsKeyPM entityPM, POCO.AgentSharedLogisticsKey entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Agent1Tenant)) { entityPOCO.Agent1Tenant = entityPM.Agent1Tenant;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropSharedkey)) { entityPOCO.CdropSharedkey = entityPM.CdropSharedkey;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Agent1Tenant)) { entityPOCO.Agent1Tenant = entityPM.Agent1Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Agent2Tenant)) { entityPOCO.Agent2Tenant = entityPM.Agent2Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate)) { entityPOCO.CreateDate = entityPM.CreateDate;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserEmail)) { entityPOCO.CreatedByUserEmail = entityPM.CreatedByUserEmail;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovedByUserEmail)) { entityPOCO.ApprovedByUserEmail = entityPM.ApprovedByUserEmail;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropCreatedbyuseremail)) { entityPOCO.CdropCreatedbyuseremail = entityPM.CdropCreatedbyuseremail;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropApprovedbyuseremail)) { entityPOCO.CdropApprovedbyuseremail = entityPM.CdropApprovedbyuseremail;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApproveDate)) { entityPOCO.ApproveDate = entityPM.ApproveDate;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InactiveDate)) { entityPOCO.InactiveDate = entityPM.InactiveDate;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropInactivebyuseremail)) { entityPOCO.CdropInactivebyuseremail = entityPM.CdropInactivebyuseremail;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropStatuscode)) { entityPOCO.CdropStatuscode = entityPM.CdropStatuscode;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserEmail)) { entityPOCO.CreatedByUserEmail = entityPM.CreatedByUserEmail;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovedByUserEmail)) { entityPOCO.ApprovedByUserEmail = entityPM.ApprovedByUserEmail;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InactiveByUserEmail)) { entityPOCO.InactiveByUserEmail = entityPM.InactiveByUserEmail;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusCode)) { entityPOCO.StatusCode = entityPM.StatusCode;}
 					}
 		public void POCOToPM(AgentSharedLogisticsKeyPM entityPM, POCO.AgentSharedLogisticsKey entityPOCO)
         {
-			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SharedKey))
+			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropSharedkey))
             {
-					entityPM.SharedKey = entityPOCO.SharedKey;
+					entityPM.CdropSharedkey = entityPOCO.CdropSharedkey;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Agent1Tenant))
             {
@@ -79,13 +94,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.CreateDate = entityPOCO.CreateDate;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserEmail))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropCreatedbyuseremail))
             {
-					entityPM.CreatedByUserEmail = entityPOCO.CreatedByUserEmail;
+					entityPM.CdropCreatedbyuseremail = entityPOCO.CdropCreatedbyuseremail;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApprovedByUserEmail))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropApprovedbyuseremail))
             {
-					entityPM.ApprovedByUserEmail = entityPOCO.ApprovedByUserEmail;
+					entityPM.CdropApprovedbyuseremail = entityPOCO.CdropApprovedbyuseremail;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApproveDate))
             {
@@ -94,6 +109,26 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InactiveDate))
             {
 					entityPM.InactiveDate = entityPOCO.InactiveDate;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropInactivebyuseremail))
+            {
+					entityPM.CdropInactivebyuseremail = entityPOCO.CdropInactivebyuseremail;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropStatuscode))
+            {
+					entityPM.CdropStatuscode = entityPOCO.CdropStatuscode;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SharedKey))
+            {
+					entityPM.SharedKey = entityPOCO.SharedKey;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedByUserEmail))
+            {
+					entityPM.CreatedByUserEmail = entityPOCO.CreatedByUserEmail;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApprovedByUserEmail))
+            {
+					entityPM.ApprovedByUserEmail = entityPOCO.ApprovedByUserEmail;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InactiveByUserEmail))
             {
@@ -107,7 +142,11 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		public void PMToOldPM(AgentSharedLogisticsKeyPM entityPM, AgentSharedLogisticsKeyPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Agent1Tenant))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropSharedkey))
+            {
+                oldEntityPM.CdropSharedkey = entityPM.CdropSharedkey;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Agent1Tenant))
             {
                 oldEntityPM.Agent1Tenant = entityPM.Agent1Tenant;
             }
@@ -119,13 +158,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.CreateDate = entityPM.CreateDate;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserEmail))
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropCreatedbyuseremail))
             {
-                oldEntityPM.CreatedByUserEmail = entityPM.CreatedByUserEmail;
+                oldEntityPM.CdropCreatedbyuseremail = entityPM.CdropCreatedbyuseremail;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovedByUserEmail))
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropApprovedbyuseremail))
             {
-                oldEntityPM.ApprovedByUserEmail = entityPM.ApprovedByUserEmail;
+                oldEntityPM.CdropApprovedbyuseremail = entityPM.CdropApprovedbyuseremail;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApproveDate))
             {
@@ -134,6 +173,22 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InactiveDate))
             {
                 oldEntityPM.InactiveDate = entityPM.InactiveDate;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropInactivebyuseremail))
+            {
+                oldEntityPM.CdropInactivebyuseremail = entityPM.CdropInactivebyuseremail;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropStatuscode))
+            {
+                oldEntityPM.CdropStatuscode = entityPM.CdropStatuscode;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserEmail))
+            {
+                oldEntityPM.CreatedByUserEmail = entityPM.CreatedByUserEmail;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovedByUserEmail))
+            {
+                oldEntityPM.ApprovedByUserEmail = entityPM.ApprovedByUserEmail;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InactiveByUserEmail))
             {
@@ -164,6 +219,26 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CdropSharedkey)) //T4 find type == nText 
+            {
+                entityPM.CdropSharedkey = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropSharedkey));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CdropCreatedbyuseremail)) //T4 find type == nText 
+            {
+                entityPM.CdropCreatedbyuseremail = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropCreatedbyuseremail));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CdropApprovedbyuseremail)) //T4 find type == nText 
+            {
+                entityPM.CdropApprovedbyuseremail = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropApprovedbyuseremail));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CdropInactivebyuseremail)) //T4 find type == nText 
+            {
+                entityPM.CdropInactivebyuseremail = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropInactivebyuseremail));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CdropStatuscode)) //T4 find type == nText 
+            {
+                entityPM.CdropStatuscode = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropStatuscode));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

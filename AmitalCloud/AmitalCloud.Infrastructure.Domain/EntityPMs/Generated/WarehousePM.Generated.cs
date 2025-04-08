@@ -33,7 +33,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_addedManually = entity.AddedManually;
 		addresses = entity.Addresses != null ? entity.Addresses.Select(a=>new AddressPM(a)).ToList() : null;
-		contacts = entity.Contacts != null ? entity.Contacts.Select(a=>new ContactPM(a)).ToList() : null;
 		_firmCode = entity.FirmCode;
 		_typeCode = entity.TypeCode;
 		_warehousetype = entity.WarehouseType !=null ? new WarehouseTypePM(entity.WarehouseType) : null;
@@ -137,37 +136,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
                  return  deletedAddresses;
               }
              set {  deletedAddresses = value; }
-	    }
-	   private List<ContactPM> contacts;
-	 
-		     
-	   [Include]
-	   [Association("WarehousePMContactPM", "Id","CardId")]
-	   [DataMember]
-	   public virtual List<ContactPM> Contacts  
-	   {
-	        get
-             {
-                 if (contacts == null)
-                 {
-                     contacts = new List<ContactPM>();
-                 }
-                 return contacts;
-              }
-             set { contacts = value; }
-	    }
-	   private List<ContactPM>  deletedContacts;
-	   public virtual List<ContactPM> DeletedContacts  
-	   {
-	        get
-             {
-                 if ( deletedContacts == null)
-                 {
-                      deletedContacts = new List<ContactPM>();
-                 }
-                 return  deletedContacts;
-              }
-             set {  deletedContacts = value; }
 	    }
 	   private List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencies;
 	    

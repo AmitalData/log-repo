@@ -11,9 +11,13 @@ namespace WebFreight.Web.DataProviders
         public MonthlyBalancesReportDataProvider()
         {
             ChartOfAccountLine = new List<ChartOfAccountLine>();
+
+            Year = DateTime.Now.Year;
+
         }
            
          public List<ChartOfAccountLine> ChartOfAccountLine { get; set; }
+         public int Year { get; set; }
     }
 
 

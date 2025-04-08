@@ -18,37 +18,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public EntityCasualDataMap()
         { 
-				this.ToTable("EntityCasualDatas");
+				this.ToTable("EntityCasualData");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.CasualTypeCode).HasColumnName("CasualTypeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CasualTypeCode).HasColumnName("CasualTypeCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.EntityId).HasColumnName("EntityId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.EntityId).HasColumnName("EntityId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.LocalName).HasColumnName("LocalName").IsRequired().HasMaxLength(200).IsUnicode(true);
 
-            this.Property(t => t.EnglishName).HasColumnName("EnglishName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.EnglishName).HasColumnName("EnglishName").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.City).HasColumnName("City").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.City).HasColumnName("City").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.ZipCode).HasColumnName("ZipCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ZipCode).HasColumnName("ZipCode").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.FaxNumber).HasColumnName("FaxNumber").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.FaxNumber).HasColumnName("FaxNumber").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.PhoneNumber).HasColumnName("PhoneNumber").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.PhoneNumber).HasColumnName("PhoneNumber").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.Address1).HasColumnName("Address1").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Address1).HasColumnName("Address1").IsRequired().HasMaxLength(150).IsUnicode(false);
 
-            this.Property(t => t.Address2).HasColumnName("Address2").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Address2).HasColumnName("Address2").IsRequired().HasMaxLength(150).IsUnicode(false);
 
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsRequired().IsMaxLength().IsUnicode(false);
         }
     }
 }

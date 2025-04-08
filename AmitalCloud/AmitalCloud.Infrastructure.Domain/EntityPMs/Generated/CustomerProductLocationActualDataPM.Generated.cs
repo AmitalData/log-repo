@@ -151,17 +151,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private decimal? _tEU ;
+	  private int? _tEU ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal? TEU  
+       public int? TEU  
 	   {
 	     get { return _tEU; }
 		 set
 		 {
 		   if(_tEU != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TEU",OldValue=_tEU,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TEU",OldValue=_tEU,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _tEU=value;
 		   }
@@ -183,33 +183,33 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private decimal? _chargeableWeight ;
+	  private int? _chargeableWeight ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal? ChargeableWeight  
+       public int? ChargeableWeight  
 	   {
 	     get { return _chargeableWeight; }
 		 set
 		 {
 		   if(_chargeableWeight != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargeableWeight",OldValue=_chargeableWeight,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargeableWeight",OldValue=_chargeableWeight,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _chargeableWeight=value;
 		   }
 		 }
 	   }
-	  private decimal? _revenue ;
+	  private int? _revenue ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal? Revenue  
+       public int? Revenue  
 	   {
 	     get { return _revenue; }
 		 set
 		 {
 		   if(_revenue != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Revenue",OldValue=_revenue,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Revenue",OldValue=_revenue,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _revenue=value;
 		   }

@@ -24,15 +24,15 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         Id, 
 	         WebTokenLifeTimeInMinutes, 
-	         WebTokenExpirationWarningInMinutes,	      }
+	         WebTokenExpirationWarningInMinutes, 
+	         Id,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         Id, 
 	         WebTokenLifeTimeInMinutes, 
-	         WebTokenExpirationWarningInMinutes,	      }
+	         WebTokenExpirationWarningInMinutes, 
+	         Id,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(SessionPolicyPM entityPM, POCO.SessionPolicy entityPOCO)
@@ -42,17 +42,17 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 					}
 		public void POCOToPM(SessionPolicyPM entityPM, POCO.SessionPolicy entityPOCO)
         {
-			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
-            {
-					entityPM.Id = entityPOCO.Id;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WebTokenLifeTimeInMinutes))
+			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WebTokenLifeTimeInMinutes))
             {
 					entityPM.WebTokenLifeTimeInMinutes = entityPOCO.WebTokenLifeTimeInMinutes;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WebTokenExpirationWarningInMinutes))
             {
 					entityPM.WebTokenExpirationWarningInMinutes = entityPOCO.WebTokenExpirationWarningInMinutes;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
             }
 		}
 		public void PMToOldPM(SessionPolicyPM entityPM, SessionPolicyPM oldEntityPM)

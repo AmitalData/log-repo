@@ -28,30 +28,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public SessionPolicyPM() : base() {} 
    public SessionPolicyPM(POCO.SessionPolicy entity) : base()
    {
-		_id = entity.Id;
 		_webTokenLifeTimeInMinutes = entity.WebTokenLifeTimeInMinutes;
 		_webTokenExpirationWarningInMinutes = entity.WebTokenExpirationWarningInMinutes;
+		_id = entity.Id;
    }
    #endregion Constructors
    #region Properties
-   	  private string _id ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Id  
-	   {
-	     get { return _id; }
-		 set
-		 {
-		   if(_id != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _id=value;
-		   }
-		 }
-	   }
-	  private int _webTokenLifeTimeInMinutes ;
+   	  private int _webTokenLifeTimeInMinutes ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
        public int WebTokenLifeTimeInMinutes  
@@ -80,6 +63,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WebTokenExpirationWarningInMinutes",OldValue=_webTokenExpirationWarningInMinutes,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _webTokenExpirationWarningInMinutes=value;
+		   }
+		 }
+	   }
+	  private string _id ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	     get { return _id; }
+		 set
+		 {
+		   if(_id != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _id=value;
 		   }
 		 }
 	   }

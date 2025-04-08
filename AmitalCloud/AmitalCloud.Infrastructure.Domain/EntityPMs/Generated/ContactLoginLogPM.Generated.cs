@@ -28,33 +28,34 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public ContactLoginLogPM() : base() {} 
    public ContactLoginLogPM(POCO.ContactLoginLog entity) : base()
    {
-		_id = entity.Id;
+		_cdropId = entity.CdropId;
 		_tenant = entity.Tenant;
+		_contactId = entity.ContactId;
+		_contact = entity.Contact !=null ? new ContactPM(entity.Contact) : null;
+			_gMTDateTime = entity.GMTDateTime;
+		_localDateTime = entity.LocalDateTime;
+		_id = entity.Id;
 		_iP = entity.IP;
 		_browser = entity.Browser;
-		_contactId = entity.ContactId;
-		_gMTDateTime = entity.GMTDateTime;
-		_localDateTime = entity.LocalDateTime;
 		_computerId = entity.ComputerId;
 		_contactAgent = entity.ContactAgent;
 		_via = entity.Via;
    }
    #endregion Constructors
    #region Properties
-   	  private string _id ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+   	  private string _cdropId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Id  
+       public string CdropId  
 	   {
-	     get { return _id; }
+	     get { return _cdropId; }
 		 set
 		 {
-		   if(_id != value)
+		   if(_cdropId != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropId",OldValue=_cdropId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _id=value;
+		   _cdropId=value;
 		   }
 		 }
 	   }
@@ -71,6 +72,79 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _tenant=value;
+		   }
+		 }
+	   }
+	  private string _contactId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactId  
+	   {
+	     get { return _contactId; }
+		 set
+		 {
+		   if(_contactId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactId",OldValue=_contactId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _contactId=value;
+		   }
+		 }
+	   }
+		private ContactPM _contact;
+		[Include]
+        [DataMember]
+        public virtual ContactPM Contact 
+		{ 
+		get { return _contact; } 
+		set { _contact = value; }
+		}
+	  private DateTime? _gMTDateTime ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? GMTDateTime  
+	   {
+	     get { return _gMTDateTime; }
+		 set
+		 {
+		   if(_gMTDateTime != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GMTDateTime",OldValue=_gMTDateTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   _gMTDateTime=value;
+		   }
+		 }
+	   }
+	  private DateTime? _localDateTime ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LocalDateTime  
+	   {
+	     get { return _localDateTime; }
+		 set
+		 {
+		   if(_localDateTime != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalDateTime",OldValue=_localDateTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   _localDateTime=value;
+		   }
+		 }
+	   }
+	  private string _id ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	     get { return _id; }
+		 set
+		 {
+		   if(_id != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _id=value;
 		   }
 		 }
 	   }
@@ -103,54 +177,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Browser",OldValue=_browser,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _browser=value;
-		   }
-		 }
-	   }
-	  private string _contactId ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContactId  
-	   {
-	     get { return _contactId; }
-		 set
-		 {
-		   if(_contactId != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactId",OldValue=_contactId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _contactId=value;
-		   }
-		 }
-	   }
-	  private DateTime? _gMTDateTime ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? GMTDateTime  
-	   {
-	     get { return _gMTDateTime; }
-		 set
-		 {
-		   if(_gMTDateTime != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GMTDateTime",OldValue=_gMTDateTime,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   _gMTDateTime=value;
-		   }
-		 }
-	   }
-	  private DateTime? _localDateTime ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime? LocalDateTime  
-	   {
-	     get { return _localDateTime; }
-		 set
-		 {
-		   if(_localDateTime != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalDateTime",OldValue=_localDateTime,NewValue=value,PropertyType="DateTime?"};
-		    NotifyPropertyChanged(values);
-		   _localDateTime=value;
 		   }
 		 }
 	   }

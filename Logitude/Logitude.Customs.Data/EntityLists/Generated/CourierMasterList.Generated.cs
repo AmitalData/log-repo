@@ -163,6 +163,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool EffectiveFlight  { get; set; }
        [DataMember]
        public bool SentDeclarationStatus  { get; set; }
+       [DataMember]
+       public string CourierMasterPaymentStatusCd  { get; set; }
    }
 
 }

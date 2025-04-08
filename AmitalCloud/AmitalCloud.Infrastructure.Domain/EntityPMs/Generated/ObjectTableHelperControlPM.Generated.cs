@@ -34,8 +34,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_objectTableId = entity.ObjectTableId;
 		_featureId = entity.FeatureId;
-		_featureUniqeCode = entity.FeatureUniqeCode;
-		_feature = entity.Feature;
+		_feature = entity.Feature !=null ? new FeaturePM(entity.Feature) : null;
+			_featureUniqeCode = entity.FeatureUniqeCode;
    }
    #endregion Constructors
    #region Properties
@@ -136,6 +136,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FeaturePM _feature;
+		[Include]
+        [DataMember]
+        public virtual FeaturePM Feature 
+		{ 
+		get { return _feature; } 
+		set { _feature = value; }
+		}
 	  private string _featureUniqeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -149,22 +157,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FeatureUniqeCode",OldValue=_featureUniqeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _featureUniqeCode=value;
-		   }
-		 }
-	   }
-	  private string _feature ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Feature  
-	   {
-	     get { return _feature; }
-		 set
-		 {
-		   if(_feature != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Feature",OldValue=_feature,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _feature=value;
 		   }
 		 }
 	   }

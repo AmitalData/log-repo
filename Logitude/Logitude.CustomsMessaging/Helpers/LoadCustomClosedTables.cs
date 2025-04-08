@@ -26,6 +26,7 @@ using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.Helpers.ClosedTable;
 using Logitude.Customs.Data.EntityMapping;
 using Logitude.BL.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.Helpers
 {
@@ -1432,7 +1433,8 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> entitySystemTables = null;
             bool errorHandel = false;
             int rowUpdateAdded = 0;
-            ICustomContext customContext = CustomContext.GetContext(0);
+            int tenant= SettingUtil.GetCurrentTenant();            
+            ICustomContext customContext = CustomContext.GetContext(tenant);
             CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(customContext);
             CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = tableId });
             try

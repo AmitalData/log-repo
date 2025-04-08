@@ -25,6 +25,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int DataBaseNumber { get; set; }
         [Column("LastBackupDate")]
 	    public DateTime? LastBackupDate { get; set; }
+        [Column("Rowid")]
+	    public string Rowid { get; set; }
     }
 }
 	 

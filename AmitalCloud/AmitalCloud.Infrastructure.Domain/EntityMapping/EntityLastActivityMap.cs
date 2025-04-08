@@ -18,7 +18,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public EntityLastActivityMap()
         { 
-				this.ToTable("EntityLastActivitys");
+				this.ToTable("EntityLastActivities");
 		
 		    this.HasKey(t => new { t.Id });
 	 

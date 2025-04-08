@@ -25,7 +25,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public ContactMobileDeviceList(POCO.ContactMobileDevice entity) : base()
        {
           DeviceId  = entity.DeviceId;
-          NotificationUniqueKey  = entity.NotificationUniqueKey;
           Email  = entity.Email;
           Platform  = entity.Platform;
           Version  = entity.Version;
@@ -33,6 +32,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           CreateDate  = entity.CreateDate;
           UpdateDate  = entity.UpdateDate;
           IsSignOut  = entity.IsSignOut;
+          NotificationUniqueKey  = entity.NotificationUniqueKey;
           AppVersion  = entity.AppVersion;
        }
        #endregion Constructors
@@ -41,8 +41,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [Key]
        [DataMember]
        public string DeviceId  { get; set; }
-       [DataMember]
-       public string NotificationUniqueKey  { get; set; }
        [DataMember]
        public string Email  { get; set; }
        [DataMember]
@@ -57,6 +55,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public DateTime UpdateDate  { get; set; }
        [DataMember]
        public bool IsSignOut  { get; set; }
+       [DataMember]
+       public string NotificationUniqueKey  { get; set; }
        [DataMember]
        public string AppVersion  { get; set; }
          #endregion Properties

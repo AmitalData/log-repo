@@ -23,10 +23,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Key]
         [Column("Code")]
 	    public string Code { get; set; }
-        [Column("Name")]
-	    public string Name { get; set; }
+        [Column("CdropName")]
+	    public string CdropName { get; set; }
         [Column("LastUpdate")]
 	    public DateTime LastUpdate { get; set; }
+        [Column("CdropSearchfields")]
+	    public string CdropSearchfields { get; set; }
+        [Column("Name")]
+	    public string Name { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
     }

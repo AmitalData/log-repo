@@ -600,6 +600,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
+                    if (_MyDeclarationPM.AmendmentStatus == "4")
+                    {
+                        if (_MyDeclarationPM.ReplacingRepairRequest != null)
+                        {
+                            DeclarationPM declarationAmendment = myDeclarationQueryService.GetDeclarationAmendmentByAmendmentRequestNumber(_MyDeclarationPM.Tenant, _MyDeclarationPM.ReplacingRepairRequest);
+                            declarationAmendment.AmendmentStatus = _MyDeclarationPM.AmendmentStatus;
+                            declarationAmendment.AmendmentErrorXml = this._MyDeclarationPM.AmendmentErrorXml;
+                            declarationAmendment.ChangeSetOp = ChangeSetOperation.Update;
+                            myDeclarationUpdateService.Update(declarationAmendment, false);
+                        }
+                    }
                     if (isExportCloseFromMehes)
                     {
                         if (customResponse.Response.Error != null)

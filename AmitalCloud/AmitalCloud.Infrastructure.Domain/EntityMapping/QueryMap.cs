@@ -18,31 +18,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public QueryMap()
         { 
-				this.ToTable("Querys");
+				this.ToTable("QUERIES");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(30).IsUnicode(false);
 
-            this.Property(t => t.UniqueCode).HasColumnName("UniqueCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.UserId).HasColumnName("UserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.UserId).HasColumnName("UserId").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.SystemLevel).HasColumnName("SystemLevel").IsRequired();
 
             this.Property(t => t.TenantLevel).HasColumnName("TenantLevel").IsRequired();
 
-            this.Property(t => t.OriginalQueryId).HasColumnName("OriginalQueryId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.OriginalQueryId).HasColumnName("OriginalQueryId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.OriginalQueryCode).HasColumnName("OriginalQueryCode").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.QuerySection).HasColumnName("QuerySection").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QuerySection).HasColumnName("QuerySection").IsRequired().HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.IndexOrder).HasColumnName("IndexOrder").IsRequired();
 
@@ -50,15 +46,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.IsAddNewEntityEnabled).HasColumnName("IsAddNewEntityEnabled").IsRequired();
 
-            this.Property(t => t.QueryGroupCode).HasColumnName("QueryGroupCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QueryGroupCode).HasColumnName("QueryGroupCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.NameTextCodeId).HasColumnName("NameTextCodeId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.NameTextCodeId).HasColumnName("NameTextCodeId").IsRequired().HasMaxLength(30).IsUnicode(false);
 
-            this.Property(t => t.DefaultSortDirection).HasColumnName("DefaultSortDirection").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DefaultSortDirection).HasColumnName("DefaultSortDirection").IsRequired().HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.DefaultSortColumn).HasColumnName("DefaultSortColumn").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DefaultSortColumn).HasColumnName("DefaultSortColumn").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.SpotlightDataTemplate).HasColumnName("SpotlightDataTemplate").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SpotlightDataTemplate).HasColumnName("SpotlightDataTemplate").IsRequired().HasMaxLength(50).IsUnicode(false);
 
             this.Property(t => t.Internal).HasColumnName("Internal").IsRequired();
 
@@ -66,39 +62,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.Agent).HasColumnName("Agent").IsRequired();
 
-            this.Property(t => t.FeatureId).HasColumnName("FeatureId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.FeatureId).HasColumnName("FeatureId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.EditWizardName).HasColumnName("EditWizardName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.EditWizardName).HasColumnName("EditWizardName").IsRequired().HasMaxLength(200).IsUnicode(true);
 
-            this.Property(t => t.Perspective).HasColumnName("Perspective").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Perspective).HasColumnName("Perspective").IsRequired().HasMaxLength(25).IsUnicode(false);
 
             this.Property(t => t.IsHiddenFromView).HasColumnName("IsHiddenFromView").IsRequired();
 
             this.Property(t => t.IsNewFromTenantZeroOnly).HasColumnName("IsNewFromTenantZeroOnly").IsRequired();
 
-            this.Property(t => t.EditWizardComponentPath).HasColumnName("EditWizardComponentPath").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.EditWizardComponentPath).HasColumnName("EditWizardComponentPath").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
             this.Property(t => t.SharedWithAll).HasColumnName("SharedWithAll").IsRequired();
 
             this.Property(t => t.SharedWithSpecificUsers).HasColumnName("SharedWithSpecificUsers").IsRequired();
 
-            this.Property(t => t.SharedByUserId).HasColumnName("SharedByUserId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SharedByUserId).HasColumnName("SharedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.SpotlightModeActivated).HasColumnName("SpotlightModeActivated").IsRequired();
 
-            this.Property(t => t.NameTextCodeCode).HasColumnName("NameTextCodeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.UniqueCode).HasColumnName("UniqueCode").IsRequired().HasMaxLength(200).IsUnicode(false);
 
-            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.OriginalQueryCode).HasColumnName("OriginalQueryCode").IsRequired().HasMaxLength(200).IsUnicode(false);
+
+            this.Property(t => t.NameTextCodeCode).HasColumnName("NameTextCodeCode").IsRequired().HasMaxLength(200).IsUnicode(true);
+
+            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode").IsRequired().HasMaxLength(120).IsUnicode(false);
 
             this.Property(t => t.IsViewOnly).HasColumnName("IsViewOnly").IsRequired();
 
             this.Property(t => t.IsDefault).HasColumnName("IsDefault").IsRequired();
-
-            this.Property(t => t.Feature).HasColumnName("Feature").IsRequired();
-
-            this.Property(t => t.OriginalQuery).HasColumnName("OriginalQuery").IsRequired();
-
-            this.Property(t => t.CopiedQueries).HasColumnName("CopiedQueries").IsRequired();
         }
     }
 }

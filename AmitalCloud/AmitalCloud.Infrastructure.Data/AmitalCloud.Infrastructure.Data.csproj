@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -178,7 +177,6 @@
   <ItemGroup>
     <Compile Include="AmitalCloudSettings.cs" />
     <Compile Include="ApplicationAppInfo.cs" />
-    <Compile Include="Azure\AzureRedisCacheDetails.cs" />
     <Compile Include="Azure\BlobExtensions.cs" />
     <Compile Include="Azure\CommunicationLogsAzure.cs" />
     <Compile Include="Azure\CommunicationLogsAzureContext.cs" />
@@ -188,6 +186,7 @@
     <Compile Include="BaseClasses\BaseSpecification.cs" />
     <Compile Include="BaseClasses\DbContextBase.cs" />
     <Compile Include="Context\AmitalCloudContext.AutoCreated.cs" />
+    <Compile Include="Context\AmitalCloudContext.cs" />
     <Compile Include="Context\SystemLogContext.cs" />
     <Compile Include="DataMapping\AdvancedQueryFilterMapping.cs" />
     <Compile Include="DataMapping\CounterDefinitionMapping.cs" />
@@ -233,7 +232,6 @@
     <Compile Include="EntityDataMappings\AgentSharedLogisticsKeyDataMapping.cs" />
     <Compile Include="EntityDataMappings\AirlineDataMapping.cs" />
     <Compile Include="EntityDataMappings\AirlineMessagingRuleDataMapping.cs" />
-    <Compile Include="EntityDataMappings\AllActiveGLAccountsViewDataMapping.cs" />
     <Compile Include="EntityDataMappings\AnalyzeQueueDataMapping.cs" />
     <Compile Include="EntityDataMappings\AnalyzeQueueStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ApiCredintialsDataMapping.cs" />
@@ -344,7 +342,6 @@
     <Compile Include="EntityDataMappings\CustomerTenantAccessRequestDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomerTenantAccessStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomFieldsMainObjectsDataMapping.cs" />
-    <Compile Include="EntityDataMappings\CustomMetaDataTypesAdditionalDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomPickListDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsInterfaceDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsInterfaceSettingDataMapping.cs" />
@@ -381,7 +378,6 @@
     <Compile Include="EntityDataMappings\DocumentsExecutionLogDataMapping.cs" />
     <Compile Include="EntityDataMappings\DocumentsFilingDataMapping.cs" />
     <Compile Include="EntityDataMappings\DocumentsFilingMetaDataValueDataMapping.cs" />
-    <Compile Include="EntityDataMappings\DocumentsFilingsViewDataMapping.cs" />
     <Compile Include="EntityDataMappings\DocumentsMetaDataTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DocumentStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\DocumentTypeCategoryDataMapping.cs" />
@@ -410,9 +406,9 @@
     <Compile Include="EntityDataMappings\EntityLastActivityDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityLastActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityLastUpdateDataMapping.cs" />
-    <Compile Include="EntityDataMappings\EntityPartnerDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\EntityStatusTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EventRemarkDataMapping.cs" />
     <Compile Include="EntityDataMappings\EventTypeCategoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\EventTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FailedLoginLogDataMapping.cs" />
@@ -424,7 +420,6 @@
     <Compile Include="EntityDataMappings\FeatureToggleDataMapping.cs" />
     <Compile Include="EntityDataMappings\FeatureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\FieldDataTypeDataMapping.cs" />
-    <Compile Include="EntityDataMappings\FieldsTranslationsDataMapping.cs" />
     <Compile Include="EntityDataMappings\FilingInboxAttachmentDataMapping.cs" />
     <Compile Include="EntityDataMappings\FilingInboxAttachmentLogDataMapping.cs" />
     <Compile Include="EntityDataMappings\FilingInboxDataMapping.cs" />
@@ -445,7 +440,6 @@
     <Compile Include="EntityDataMappings\Generated\AgentSharedLogisticsKeyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AirlineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AirlineMessagingRuleDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\AllActiveGLAccountsViewDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AnalyzeQueueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AnalyzeQueueStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ApiCredintialsDataMapping.Generated.cs" />
@@ -556,7 +550,6 @@
     <Compile Include="EntityDataMappings\Generated\CustomerTenantAccessRequestDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomerTenantAccessStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomFieldsMainObjectsDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\CustomMetaDataTypesAdditionalDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomPickListDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsInterfaceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsInterfaceSettingDataMapping.Generated.cs" />
@@ -593,7 +586,6 @@
     <Compile Include="EntityDataMappings\Generated\DocumentsExecutionLogDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DocumentsFilingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DocumentsFilingMetaDataValueDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\DocumentsFilingsViewDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DocumentsMetaDataTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DocumentStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DocumentTypeCategoryDataMapping.Generated.cs" />
@@ -622,9 +614,9 @@
     <Compile Include="EntityDataMappings\Generated\EntityLastActivityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityLastActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityLastUpdateDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\EntityPartnerDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EntityStatusTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EventRemarkDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EventTypeCategoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EventTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FailedLoginLogDataMapping.Generated.cs" />
@@ -636,7 +628,6 @@
     <Compile Include="EntityDataMappings\Generated\FeatureToggleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FeatureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FieldDataTypeDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\FieldsTranslationsDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FilingInboxAttachmentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FilingInboxAttachmentLogDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FilingInboxDataMapping.Generated.cs" />
@@ -769,6 +760,7 @@
     <Compile Include="EntityDataMappings\Generated\ScreenSectionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SessionPolicyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SharedLogisticsContactLastLoginDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedLogisticsInvitationStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedLogisticsSettingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedUserQueryDataMapping.Generated.cs" />
@@ -970,6 +962,7 @@
     <Compile Include="EntityDataMappings\ScreenSectionDataMapping.cs" />
     <Compile Include="EntityDataMappings\SessionPolicyDataMapping.cs" />
     <Compile Include="EntityDataMappings\SettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SharedLogisticsContactLastLoginDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedLogisticsInvitationStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedLogisticsSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedUserQueryDataMapping.cs" />
@@ -1060,6 +1053,7 @@
     <Compile Include="Queries\CommunicationLogStepQuery.cs" />
     <Compile Include="Queries\DocumentsFilingMetaDataValueQuery.cs" />
     <Compile Include="Queries\DocumentTypeQuery.cs" />
+    <Compile Include="Repositories\Manual\SessionPolicyRepository.cs" />
     <Compile Include="Repositories\Manual\CardRepository.cs" />
     <Compile Include="Repositories\Manual\CommunicationLogRepository.cs" />
     <Compile Include="Repositories\Manual\CommunicationLogStepRepository.cs" />
@@ -1142,7 +1136,6 @@
     <Compile Include="Queries\CardContactAdditionalServiceQuery.cs" />
     <Compile Include="Queries\CardContactProductQuery.cs" />
     <Compile Include="Queries\ContactQuery.cs" />
-    <Compile Include="Exceptions\APIException.cs" />
     <Compile Include="Exceptions\BusinessErrorException.cs" />
     <Compile Include="Queries\ContactTenantQuery.cs" />
     <Compile Include="Queries\ContactTenantRoleQuery.cs" />
@@ -1193,7 +1186,6 @@
     <Compile Include="Services\CustomFields\ChildEntitiesCustomFieldService.cs" />
     <Compile Include="Services\CustomFields\EntityCustomFieldService.cs" />
     <Compile Include="Migrations\MigrationConfiguration.cs" />
-    <Compile Include="Context\AmitalCloudContext.cs" />
     <Compile Include="Counters\CodeCounter.cs" />
     <Compile Include="Counters\IdCounter.cs" />
     <Compile Include="Counters\TenantCounter.cs" />
@@ -1284,8 +1276,5 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
 </Project>

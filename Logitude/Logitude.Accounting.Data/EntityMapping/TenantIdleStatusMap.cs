@@ -28,7 +28,7 @@ namespace Logitude.Accounting.Data.EntityMapping
         { 
 				this.ToTable("TenantIdleStatuses");
 		
-		    this.HasKey(t => new { t.Id });
+		    this.HasKey(t => new { t.Id, t.ObjectTable });
 	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
@@ -41,6 +41,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.Idle).HasColumnName("Idle");
+
+            this.Property(t => t.ObjectTable).HasColumnName("ObjectTable").IsRequired().HasMaxLength(25).IsUnicode(false);
         }
     }
 }

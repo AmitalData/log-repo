@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class BatchServicesDefinitionModsQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BatchServicesDefinitionMods,BatchServicesDefinitionModsKeys<string>,BatchServicesDefinitionModsPM,BatchServicesDefinitionModsList,string>
+   public partial class BatchServicesDefinitionModsQueryService: BaseEntityQueryService<IGlobalContext,POCO.BatchServicesDefinitionMods,BatchServicesDefinitionModsKeys<string>,BatchServicesDefinitionModsPM,BatchServicesDefinitionModsList,string>
    {
-        public BatchServicesDefinitionModsQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public BatchServicesDefinitionModsQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BatchServicesDefinitionMods>(context),new BatchServicesDefinitionModsDataMapping()) {}
+        public BatchServicesDefinitionModsQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public BatchServicesDefinitionModsQueryService(IGlobalContext context) : base(new Repository<POCO.BatchServicesDefinitionMods>(context),new BatchServicesDefinitionModsDataMapping()) {}
 		public  BatchServicesDefinitionModsPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new BatchServicesDefinitionModsKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BatchServicesDefinitionMods,string> GetKeys(POCO.BatchServicesDefinitionMods entityPOCO) => new BatchServicesDefinitionModsKeys<string>() { Code = entityPOCO.Code,  };
    }

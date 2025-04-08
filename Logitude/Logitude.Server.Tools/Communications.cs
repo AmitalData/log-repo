@@ -186,7 +186,7 @@ namespace Logitude.Server.Tools
                 if (!String.IsNullOrWhiteSpace(communicationParams.LoggingObjectTableId))
                 {
 
-                    objectTable = objecttableRep.GetSingleObjectTable(communicationParams.LoggingObjectTableId, 0, true);
+                    objectTable = objecttableRep.GetSingleObjectTable(communicationParams.LoggingObjectTableId, communicationParams.Tenant, true);
                 }
                 else
                 {
@@ -574,7 +574,7 @@ namespace Logitude.Server.Tools
                             new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.Int, ParamName = "@pTenant",Value = tenant },
                             new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.VarChar, ParamSize = 4, ParamName = "@pCommunicationStatusTypeCode",Value= statusTypeCode },
                             new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.NVarChar, ParamSize = -1, ParamName = "@pLog",Value = log },
-                            new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.VarChar, ParamSize = -1, ParamName = "@pExceptionMessage",Value = exceptionMessage },
+                            new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.NVarChar, ParamSize = -1, ParamName = "@pExceptionMessage",Value = exceptionMessage },
                             new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.VarChar, ParamSize = 40, ParamName = "@pMessageLockId",Value = messageLockId }
 
                         };

@@ -23,10 +23,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Key]
         [Column("Code")]
 	    public string Code { get; set; }
+        [Column("DropCdropName")]
+	    public string DropCdropName { get; set; }
+        [Column("DropCdropSearchfields")]
+	    public string DropCdropSearchfields { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+		public virtual ICollection<DocumentsFiling> DocumentsFilings { get; set; }
     }
 }
 	 

@@ -36,8 +36,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 			_documentTypeCopyId = entity.DocumentTypeCopyId;
 		_documenttypecopy = entity.DocumentTypeCopy !=null ? new DocumentTypeCopyPM(entity.DocumentTypeCopy) : null;
 			_lastPrintedByUserId = entity.LastPrintedByUserId;
-		_lastprintedbyuser = entity.LastPrintedByUser !=null ? new UserPM(entity.LastPrintedByUser) : null;
-			_lastPrintDate = entity.LastPrintDate;
+		_lastPrintDate = entity.LastPrintDate;
    }
    #endregion Constructors
    #region Properties
@@ -154,14 +153,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private UserPM _lastprintedbyuser;
-		[Include]
-        [DataMember]
-        public virtual UserPM LastPrintedByUser 
-		{ 
-		get { return _lastprintedbyuser; } 
-		set { _lastprintedbyuser = value; }
-		}
 	  private DateTime? _lastPrintDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

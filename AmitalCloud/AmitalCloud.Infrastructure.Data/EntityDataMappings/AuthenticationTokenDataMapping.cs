@@ -27,12 +27,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 
         public void CustomPMToPOCO(AuthenticationTokenPM entityPM, POCO.AuthenticationToken entityPOCO)
         {
-            //throw new NotImplementedException();
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.Token = entityPM.Token;
+            }
         }
 
         public void CustomPOCOToPM(AuthenticationTokenPM entityPM, POCO.AuthenticationToken entityPOCO)
         {
-            //throw new NotImplementedException();
         }
    }
 

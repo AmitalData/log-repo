@@ -31,8 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_communicationLogId = entity.CommunicationLogId;
-		_communicationlog = entity.CommunicationLog !=null ? new CommunicationLogPM(entity.CommunicationLog) : null;
-			_documentId = entity.DocumentId;
+		_documentId = entity.DocumentId;
 		_document = entity.Document !=null ? new DocumentPM(entity.Document) : null;
 	   }
    #endregion Constructors
@@ -86,14 +85,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private CommunicationLogPM _communicationlog;
-		[Include]
-        [DataMember]
-        public virtual CommunicationLogPM CommunicationLog 
-		{ 
-		get { return _communicationlog; } 
-		set { _communicationlog = value; }
-		}
 	  private string _documentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

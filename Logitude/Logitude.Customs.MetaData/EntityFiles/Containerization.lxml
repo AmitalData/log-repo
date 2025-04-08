@@ -267,7 +267,7 @@
     ListFieldLable="&quot;SearchFieldsListLable&quot;"
     ListLableDefaultText="&quot;Search ...&quot;"
     ShortFieldLable="&quot;SearchFields&quot;"
-    ShortFieldLableDefaultText="&quot;מספר המכלה/תיק יצוא/מזהה מטען/לקוח&quot;"
+    ShortFieldLableDefaultText="&quot;Containerization Number/Export File/CargoIdentifire Type/Importer Name&quot;"
     ShortLocalDefaultText="&quot;מספר המכלה/תיק יצוא/מזהה מטען/לקוח&quot;"
     IsNullable="true"
     IsForeignKey="false"

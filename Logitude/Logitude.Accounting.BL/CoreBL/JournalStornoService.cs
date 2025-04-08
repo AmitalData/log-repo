@@ -227,6 +227,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 newStornoJournalLine.Reference2 = item.Reference2;
                 newStornoJournalLine.Reference3 = item.Reference3;
                 newStornoJournalLine.Tenant = item.Tenant;
+                newStornoJournalLine.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
                 //newStornoJournalLine.ExternalOpenAmount = item.ExternalOpenAmount;
 
                 Storno.JournalLines.Add(newStornoJournalLine);

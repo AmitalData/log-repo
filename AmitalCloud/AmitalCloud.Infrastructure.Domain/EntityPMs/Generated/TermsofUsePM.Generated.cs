@@ -28,30 +28,32 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public TermsofUsePM() : base() {} 
    public TermsofUsePM(POCO.TermsofUse entity) : base()
    {
-		_id = entity.Id;
+		_dropVersion = entity.DropVersion;
 		_date = entity.Date;
 		_versionNumber = entity.VersionNumber;
 		_tenant = entity.Tenant;
 		_versionDocumentId = entity.VersionDocumentId;
 		_privateLabelId = entity.PrivateLabelId;
+		_dbmigrationslastscript = entity.Dbmigrationslastscript;
+		_id = entity.Id;
 		_isNew = entity.IsNew;
+		termsofUseSignatures = entity.TermsofUseSignatures != null ? entity.TermsofUseSignatures.Select(a=>new TermsofUseSignaturePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
-   	  private int _id ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+   	  private int? _dropVersion ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int Id  
+       public int? DropVersion  
 	   {
-	     get { return _id; }
+	     get { return _dropVersion; }
 		 set
 		 {
-		   if(_id != value)
+		   if(_dropVersion != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropVersion",OldValue=_dropVersion,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
-		   _id=value;
+		   _dropVersion=value;
 		   }
 		 }
 	   }
@@ -71,17 +73,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private int _versionNumber ;
+	  private int? _versionNumber ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int VersionNumber  
+       public int? VersionNumber  
 	   {
 	     get { return _versionNumber; }
 		 set
 		 {
 		   if(_versionNumber != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VersionNumber",OldValue=_versionNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VersionNumber",OldValue=_versionNumber,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _versionNumber=value;
 		   }
@@ -135,6 +137,39 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private int? _dbmigrationslastscript ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? Dbmigrationslastscript  
+	   {
+	     get { return _dbmigrationslastscript; }
+		 set
+		 {
+		   if(_dbmigrationslastscript != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Dbmigrationslastscript",OldValue=_dbmigrationslastscript,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   _dbmigrationslastscript=value;
+		   }
+		 }
+	   }
+	  private int _id ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Id  
+	   {
+	     get { return _id; }
+		 set
+		 {
+		   if(_id != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _id=value;
+		   }
+		 }
+	   }
 	  private bool _isNew ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -151,6 +186,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<TermsofUseSignaturePM> termsofUseSignatures;
+	 
+		     
+	   [Include]
+	   [Association("TermsofUseSignatureTermsofUse", "Id","Termsofuseid")]
+	   [DataMember]
+	   public virtual List<TermsofUseSignaturePM> TermsofUseSignatures  
+	   {
+	        get
+             {
+                 if (termsofUseSignatures == null)
+                 {
+                     termsofUseSignatures = new List<TermsofUseSignaturePM>();
+                 }
+                 return termsofUseSignatures;
+              }
+             set { termsofUseSignatures = value; }
+	    }
+	   private List<TermsofUseSignaturePM>  deletedTermsofUseSignatures;
+	   public virtual List<TermsofUseSignaturePM> DeletedTermsofUseSignatures  
+	   {
+	        get
+             {
+                 if ( deletedTermsofUseSignatures == null)
+                 {
+                      deletedTermsofUseSignatures = new List<TermsofUseSignaturePM>();
+                 }
+                 return  deletedTermsofUseSignatures;
+              }
+             set {  deletedTermsofUseSignatures = value; }
+	    }
 	 }
 #endregion Properties
 }

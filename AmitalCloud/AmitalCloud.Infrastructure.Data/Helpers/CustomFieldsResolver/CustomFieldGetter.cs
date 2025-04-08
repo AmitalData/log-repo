@@ -111,29 +111,29 @@ namespace AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver
         {
             LookUpFieldTypeReflectionDetails lookUpFieldTypeReflectionDetails = new LookUpFieldTypeReflectionDetails();
 
-            Assembly blAssembly = Assembly.Load("Logitude.BL");
-            string insideEntityName = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant).Name;
-            if (insideEntityName == "Carrier") insideEntityName = "Card";
+            //Assembly blAssembly = Assembly.Load("Logitude.BL");
+            //string insideEntityName = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant).Name;
+            //if (insideEntityName == "Carrier") insideEntityName = "Card";
 
-            lookUpFieldTypeReflectionDetails.InsideTypePath = "Logitude.BL.ShipmentsModel.EntityQueries." + insideEntityName + "Query";
-            lookUpFieldTypeReflectionDetails.InsideEntityType = blAssembly.GetType(lookUpFieldTypeReflectionDetails.InsideTypePath);
-            if (lookUpFieldTypeReflectionDetails.InsideEntityType != null) return lookUpFieldTypeReflectionDetails;
+            //lookUpFieldTypeReflectionDetails.InsideTypePath = "Logitude.BL.ShipmentsModel.EntityQueries." + insideEntityName + "Query";
+            //lookUpFieldTypeReflectionDetails.InsideEntityType = blAssembly.GetType(lookUpFieldTypeReflectionDetails.InsideTypePath);
+            //if (lookUpFieldTypeReflectionDetails.InsideEntityType != null) return lookUpFieldTypeReflectionDetails;
 
-            lookUpFieldTypeReflectionDetails.InsideTypePath = "Logitude.BL.CommonDataModel.EntityQueries." + insideEntityName + "Query";
-            lookUpFieldTypeReflectionDetails.InsideEntityType = blAssembly.GetType(lookUpFieldTypeReflectionDetails.InsideTypePath);
-            if (lookUpFieldTypeReflectionDetails.InsideEntityType != null) return lookUpFieldTypeReflectionDetails;
+            //lookUpFieldTypeReflectionDetails.InsideTypePath = "Logitude.BL.CommonDataModel.EntityQueries." + insideEntityName + "Query";
+            //lookUpFieldTypeReflectionDetails.InsideEntityType = blAssembly.GetType(lookUpFieldTypeReflectionDetails.InsideTypePath);
+            //if (lookUpFieldTypeReflectionDetails.InsideEntityType != null) return lookUpFieldTypeReflectionDetails;
 
-            lookUpFieldTypeReflectionDetails.InsideTypePath = "Logitude.BL." + insideEntityName + "Query";
-            lookUpFieldTypeReflectionDetails.InsideEntityType = blAssembly.GetType(lookUpFieldTypeReflectionDetails.InsideTypePath);
-            if (lookUpFieldTypeReflectionDetails.InsideEntityType != null) return lookUpFieldTypeReflectionDetails;
+            //lookUpFieldTypeReflectionDetails.InsideTypePath = "Logitude.BL." + insideEntityName + "Query";
+            //lookUpFieldTypeReflectionDetails.InsideEntityType = blAssembly.GetType(lookUpFieldTypeReflectionDetails.InsideTypePath);
+            //if (lookUpFieldTypeReflectionDetails.InsideEntityType != null) return lookUpFieldTypeReflectionDetails;
 
-            lookUpFieldTypeReflectionDetails.InsideTypePath = "Logitude.BL.InfrastructureModel.EntityQueries." + insideEntityName + "Query";
-            lookUpFieldTypeReflectionDetails.InsideEntityType = blAssembly.GetType(lookUpFieldTypeReflectionDetails.InsideTypePath);
-            if (lookUpFieldTypeReflectionDetails.InsideEntityType != null) return lookUpFieldTypeReflectionDetails;
+            //lookUpFieldTypeReflectionDetails.InsideTypePath = "Logitude.BL.InfrastructureModel.EntityQueries." + insideEntityName + "Query";
+            //lookUpFieldTypeReflectionDetails.InsideEntityType = blAssembly.GetType(lookUpFieldTypeReflectionDetails.InsideTypePath);
+            //if (lookUpFieldTypeReflectionDetails.InsideEntityType != null) return lookUpFieldTypeReflectionDetails;
 
-            lookUpFieldTypeReflectionDetails.InsideTypePath = "Logitude.BL.QuoteModel.EntityQueries." + insideEntityName + "Query";
-            lookUpFieldTypeReflectionDetails.InsideEntityType = blAssembly.GetType(lookUpFieldTypeReflectionDetails.InsideTypePath);
-            if (lookUpFieldTypeReflectionDetails.InsideEntityType != null) return lookUpFieldTypeReflectionDetails;
+            //lookUpFieldTypeReflectionDetails.InsideTypePath = "Logitude.BL.QuoteModel.EntityQueries." + insideEntityName + "Query";
+            //lookUpFieldTypeReflectionDetails.InsideEntityType = blAssembly.GetType(lookUpFieldTypeReflectionDetails.InsideTypePath);
+            //if (lookUpFieldTypeReflectionDetails.InsideEntityType != null) return lookUpFieldTypeReflectionDetails;
 
             return lookUpFieldTypeReflectionDetails;
         }
@@ -382,184 +382,184 @@ namespace AmitalCloud.Infrastructure.Data.Helpers.CustomFieldsResolver
         {
             //Old Code will keep it as is 
             string resultValue = null;
-            if (value != null)
-            {
-                if (objectField != null)
-                {
-                    Assembly blAssembly = Assembly.Load("Logitude.BL");
+            //if (value != null)
+            //{
+            //    if (objectField != null)
+            //    {
+            //        Assembly blAssembly = Assembly.Load("Logitude.BL");
 
-                    if (objectField.DataTypeCode == "LookUp" && value != null)
-                    {
-                        string insideEntityName = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant).Name;
-                        if (insideEntityName == "Carrier")
-                        {
-                            insideEntityName = "Card";
-                        }
+            //        if (objectField.DataTypeCode == "LookUp" && value != null)
+            //        {
+            //            string insideEntityName = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant).Name;
+            //            if (insideEntityName == "Carrier")
+            //            {
+            //                insideEntityName = "Card";
+            //            }
 
-                        string insideTypePath = "Logitude.BL.ShipmentsModel.EntityQueries." + insideEntityName + "Query";
+            //            string insideTypePath = "Logitude.BL.ShipmentsModel.EntityQueries." + insideEntityName + "Query";
 
-                        Type insideEntityType = blAssembly.GetType(insideTypePath);
+            //            Type insideEntityType = blAssembly.GetType(insideTypePath);
 
-                        if (insideEntityType == null)
-                        {
-                            insideTypePath = "Logitude.BL.CommonDataModel.EntityQueries." + insideEntityName + "Query";
-                            insideEntityType = blAssembly.GetType(insideTypePath);
-                        }
+            //            if (insideEntityType == null)
+            //            {
+            //                insideTypePath = "Logitude.BL.CommonDataModel.EntityQueries." + insideEntityName + "Query";
+            //                insideEntityType = blAssembly.GetType(insideTypePath);
+            //            }
 
-                        if (insideEntityType == null)
-                        {
-                            insideTypePath = "Logitude.BL." + insideEntityName + "Query";
-                            insideEntityType = blAssembly.GetType(insideTypePath);
-                        }
+            //            if (insideEntityType == null)
+            //            {
+            //                insideTypePath = "Logitude.BL." + insideEntityName + "Query";
+            //                insideEntityType = blAssembly.GetType(insideTypePath);
+            //            }
 
-                        if (insideEntityType == null)
-                        {
-                            insideTypePath = "Logitude.BL.InfrastructureModel.EntityQueries." + insideEntityName + "Query";
-                            insideEntityType = blAssembly.GetType(insideTypePath);
-                        }
+            //            if (insideEntityType == null)
+            //            {
+            //                insideTypePath = "Logitude.BL.InfrastructureModel.EntityQueries." + insideEntityName + "Query";
+            //                insideEntityType = blAssembly.GetType(insideTypePath);
+            //            }
 
-                        if (insideEntityType == null)
-                        {
-                            insideTypePath = "Logitude.BL.QuoteModel.EntityQueries." + insideEntityName + "Query";
-                            insideEntityType = blAssembly.GetType(insideTypePath);
-                        }
+            //            if (insideEntityType == null)
+            //            {
+            //                insideTypePath = "Logitude.BL.QuoteModel.EntityQueries." + insideEntityName + "Query";
+            //                insideEntityType = blAssembly.GetType(insideTypePath);
+            //            }
 
-                        if (insideEntityType == null)
-                        {
-                            insideTypePath = "Logitude.BL.InvoiceModel.EntityQueries." + insideEntityName + "Query";
-                            insideEntityType = blAssembly.GetType(insideTypePath);
-                        }
-
-
+            //            if (insideEntityType == null)
+            //            {
+            //                insideTypePath = "Logitude.BL.InvoiceModel.EntityQueries." + insideEntityName + "Query";
+            //                insideEntityType = blAssembly.GetType(insideTypePath);
+            //            }
 
 
 
-                        bool isGeneratedQuery = false;
-                        if (insideEntityType == null)
-                        {
-                            //Logitude.CRM.BL.EntityQueryServices
-                            blAssembly = Assembly.Load("Logitude.CRM.BL");
-                            insideTypePath = "Logitude.CRM.BL.EntityQueryServices." + insideEntityName + "QueryService";
-                            insideEntityType = blAssembly.GetType(insideTypePath);
-                            if (insideEntityType != null)
-                            {
-                                isGeneratedQuery = true;
-                            }
-
-                        }
-
-                        object insideEntityRepository = null;
-
-                        if (insideEntityType != null)
-                        {
-                            if (customFieldResolver.definedObjects.Keys.Contains(insideTypePath))
-                            {
-                                insideEntityRepository = customFieldResolver.definedObjects[insideTypePath];
-                            }
-
-                            if (insideEntityRepository == null)
-                            {
-                                insideEntityRepository = Activator.CreateInstance(insideEntityType, tenant);
-
-                                customFieldResolver.definedObjects.Add(insideTypePath, insideEntityRepository);
-                            }
-
-                            MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
-
-                            if (insideMethodInfo == null)
-                            {
-                                // insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
 
 
-                                insideMethodInfo = insideEntityRepository.GetType().GetMethods().Where(d => d.Name == "GetSinglePM").FirstOrDefault();
+            //            bool isGeneratedQuery = false;
+            //            if (insideEntityType == null)
+            //            {
+            //                //Logitude.CRM.BL.EntityQueryServices
+            //                blAssembly = Assembly.Load("Logitude.CRM.BL");
+            //                insideTypePath = "Logitude.CRM.BL.EntityQueryServices." + insideEntityName + "QueryService";
+            //                insideEntityType = blAssembly.GetType(insideTypePath);
+            //                if (insideEntityType != null)
+            //                {
+            //                    isGeneratedQuery = true;
+            //                }
 
-                            }
-                            if (insideMethodInfo == null)
-                            {
-                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingle");
-                            }
-                            object insideEntity = null;
+            //            }
 
-                            if (insideMethodInfo != null)
-                            {
-                                ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
-                                object[] parameters = new object[] { };
-                                if (!isGeneratedQuery)
-                                {
-                                    switch (parametersInfo.Count())
-                                    {
-                                        case 1:
-                                            parameters = new object[] { value };
-                                            break;
-                                        case 2:
-                                            parameters = new object[] { value, tenant };
-                                            break;
-                                        case 3:
-                                            parameters = new object[] { value, tenant, false };
-                                            break;
-                                        default:
-                                            parameters = new object[] { value, tenant };
-                                            break;
-                                    }
-                                }
-                                else parameters = new object[] { value, false, false };
+            //            object insideEntityRepository = null;
+
+            //            if (insideEntityType != null)
+            //            {
+            //                if (customFieldResolver.definedObjects.Keys.Contains(insideTypePath))
+            //                {
+            //                    insideEntityRepository = customFieldResolver.definedObjects[insideTypePath];
+            //                }
+
+            //                if (insideEntityRepository == null)
+            //                {
+            //                    insideEntityRepository = Activator.CreateInstance(insideEntityType, tenant);
+
+            //                    customFieldResolver.definedObjects.Add(insideTypePath, insideEntityRepository);
+            //                }
+
+            //                MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
+
+            //                if (insideMethodInfo == null)
+            //                {
+            //                    // insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
 
 
+            //                    insideMethodInfo = insideEntityRepository.GetType().GetMethods().Where(d => d.Name == "GetSinglePM").FirstOrDefault();
 
-                                insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
+            //                }
+            //                if (insideMethodInfo == null)
+            //                {
+            //                    insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingle");
+            //                }
+            //                object insideEntity = null;
 
-                                if (insideEntity != null)
-                                {
-                                    ObjectTable lookupTable = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant);
-                                    string lookupProperty = lookupTable.LookUp2 != null ? lookupTable.LookUp2 : lookupTable.LookUp1;
-                                    PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(lookupProperty);
-                                    if (insidePropertyPathPi != null)
-                                    {
-                                        object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
-                                        if (insideValue != null)
-                                        {
-                                            if (insideValue is DateTime)
-                                            {
-                                                DateTime date = (DateTime)insideValue;
-                                                insideValue = date.ToShortDateString();
-                                            }
-                                        }
+            //                if (insideMethodInfo != null)
+            //                {
+            //                    ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
+            //                    object[] parameters = new object[] { };
+            //                    if (!isGeneratedQuery)
+            //                    {
+            //                        switch (parametersInfo.Count())
+            //                        {
+            //                            case 1:
+            //                                parameters = new object[] { value };
+            //                                break;
+            //                            case 2:
+            //                                parameters = new object[] { value, tenant };
+            //                                break;
+            //                            case 3:
+            //                                parameters = new object[] { value, tenant, false };
+            //                                break;
+            //                            default:
+            //                                parameters = new object[] { value, tenant };
+            //                                break;
+            //                        }
+            //                    }
+            //                    else parameters = new object[] { value, false, false };
 
-                                        resultValue = (insideValue != null ? insideValue.ToString() : null);
-                                    }
-                                }
-                            }
-                        }
-                    }
 
-                    if (objectField.DataTypeCode == "PickList")
-                    {
-                        if (value != null)
-                        {
-                            CustomPickList picklist = customFieldResolver.customPickLists.Where(c => c.Id == value.ToString()).FirstOrDefault();
 
-                            if (picklist != null)
-                            {
-                                resultValue = picklist.Value;
-                            }
-                        }
-                    }
+            //                    insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
 
-                    if (objectField.DataTypeCode != "LookUp" && objectField.DataTypeCode != "PickList")
-                    {
-                        string valueString = value != null ? value.ToString() : null;
-                        if (!String.IsNullOrEmpty(valueString))
-                        {
-                            resultValue = GetFieldDataType(objectField, valueString, customFieldResolver);
-                        }
-                    }
-                }
-            }
+            //                    if (insideEntity != null)
+            //                    {
+            //                        ObjectTable lookupTable = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant);
+            //                        string lookupProperty = lookupTable.LookUp2 != null ? lookupTable.LookUp2 : lookupTable.LookUp1;
+            //                        PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(lookupProperty);
+            //                        if (insidePropertyPathPi != null)
+            //                        {
+            //                            object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
+            //                            if (insideValue != null)
+            //                            {
+            //                                if (insideValue is DateTime)
+            //                                {
+            //                                    DateTime date = (DateTime)insideValue;
+            //                                    insideValue = date.ToShortDateString();
+            //                                }
+            //                            }
 
-            if (resultValue == "")
-            {
-                resultValue = null;
-            }
+            //                            resultValue = (insideValue != null ? insideValue.ToString() : null);
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        }
+
+            //        if (objectField.DataTypeCode == "PickList")
+            //        {
+            //            if (value != null)
+            //            {
+            //                CustomPickList picklist = customFieldResolver.customPickLists.Where(c => c.Id == value.ToString()).FirstOrDefault();
+
+            //                if (picklist != null)
+            //                {
+            //                    resultValue = picklist.Value;
+            //                }
+            //            }
+            //        }
+
+            //        if (objectField.DataTypeCode != "LookUp" && objectField.DataTypeCode != "PickList")
+            //        {
+            //            string valueString = value != null ? value.ToString() : null;
+            //            if (!String.IsNullOrEmpty(valueString))
+            //            {
+            //                resultValue = GetFieldDataType(objectField, valueString, customFieldResolver);
+            //            }
+            //        }
+            //    }
+            //}
+
+            //if (resultValue == "")
+            //{
+            //    resultValue = null;
+            //}
 
             return resultValue;
         }

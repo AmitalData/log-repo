@@ -54,7 +54,7 @@ export function AssertCreateCrossdockEntry() {
         CrossDockContext.EntryNumber = responseBody.EntryNumber;
     });
 }
-
+//TEST QA
 export function UpdateCrossdockEntry() {
     DefinePutCrossdockEntryRequest()
     cy.Click(CrossdockSelectors.WarehouseEntrySaveButton, null, true);

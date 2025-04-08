@@ -18,11 +18,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public DWHBuildStatusMap()
         { 
-				this.ToTable("DWHBuildStatuss");
+				this.ToTable("DWHBuildStatus");
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.LastIncrementalDWUpdateDate).HasColumnName("LastIncrementalDWUpdateDate").IsRequired();
 

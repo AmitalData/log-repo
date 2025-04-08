@@ -31,6 +31,8 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal? PostponedChequesCommission { get; set; }
         public int CountPostponedCheques { get; set; }
         public decimal? TotalAmountWithPostponedCheques { get; set; }
+        public List<InterestReportFlatLine> InterestReportFlatLineList { get; set; }
+
     }
 
     public class InterestReportLinesByDateProvider
@@ -44,9 +46,21 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal AccumulatedAmount { get; set; }
         public decimal TotalAmount { get; set; }
         public int TotalInterestDays { get; set; }
+
         public decimal StandardInterestPercentage { get; set; }
         public decimal ExceptionalInterestPercentage { get; set; }
         public decimal CreditInterestPercentage { get; set; }
+
+        public decimal CalculatedStandardInterestAmount { get; set; }
+        public decimal CalculatedExceptionalInterestAmount { get; set; }
+        public decimal CalculatedCreditInterestAmount { get; set; }
+
+        public decimal TotalStandardInterestAmount { get; set; }
+        public decimal TotalExceptionalInterestAmount { get; set; }
+        public decimal TotalCreditInterestAmount { get; set; }
+
+
+
         public string CalculationDetails { get; set; }
         public decimal TotalInterest { get; set; }
         public decimal TotalLocalAmount { get; set; }
@@ -57,12 +71,49 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
     public class InterestTransactionProvider
     {
         public string EntityType { get; set; }
+        public string EntityTypeCode { get; set; }
         public string EntityNumber { get; set; }
         public decimal LocalAmount { get; set; }
         public DateTime? InterestValueDate { get; set; }
         public string CurrencyCode { get; set; }
         public decimal? ForeignAmount { get; set; }
+        public string Reference1 { get; set; }
+        public string Notes { get; set; }
 
+    }
+
+    public class InterestReportFlatLine
+    {
+        public int LineNo { get; set; }
+        public string LineType { get; set; }
+        public DateTime? Date { get; set; }
+        public int? NumberOfDays { get; set; }
+        public string Reference1 { get; set; }
+        public string Notes { get; set; }
+        public decimal? LocalAmount { get; set; }
+        public decimal? TotalToDate { get; set; }
+        public decimal? AccumulatedForInterest { get; set; }
+        public string Currency { get; set; }
+        public decimal? ForeignAmount { get; set; }
+
+
+        // Standard Interest
+        public decimal? CalculatedStdInterestAmount { get; set; }
+        public decimal? StdPercentage { get; set; }
+        public decimal? TotalStdInterest { get; set; }
+
+
+        // Exceptional Interest
+        public decimal? CalculatedExcInterestAmount { get; set; }
+        public decimal? ExcPercentage { get; set; }
+        public decimal? TotalExcInterest { get; set; }
+
+        // Credit Interest
+        public decimal? CalculatedCrdInterestAmount { get; set; }
+        public decimal? CrdPercentage { get; set; }
+        public decimal? TotalCrdInterest { get; set; }
+        
+        public string CalculationDetails { get; set; }
      }
 
     public class FutureInterestTransactionProvider 
@@ -92,5 +143,4 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public DateTime AccountingDate { get; set; }
         public string Notes { get; set; }
     }
-
 }

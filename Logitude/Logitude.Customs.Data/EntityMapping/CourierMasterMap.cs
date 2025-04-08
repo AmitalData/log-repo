@@ -105,6 +105,7 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.EffectiveFlight).HasColumnName("EffectiveFlight");
 
             this.Property(t => t.SentDeclarationStatus).HasColumnName("SentDeclarationStatus");
+            this.Property(t => t.CourierMasterPaymentStatusCd).HasColumnName("CourierMasterPaymentStatusCd").HasMaxLength(1).IsUnicode(false);
         }
     }
 }

@@ -18,13 +18,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public AnalyzeQueueStatusMap()
         { 
-				this.ToTable("AnalyzeQueueStatuss");
+				this.ToTable("ANALYZEQUEUESTATUS");
 		
 		    this.HasKey(t => new { t.Code });
 	 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(40).IsUnicode(false);
         }
     }
 }

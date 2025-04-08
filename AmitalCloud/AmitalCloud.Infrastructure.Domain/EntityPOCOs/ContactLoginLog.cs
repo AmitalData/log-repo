@@ -19,15 +19,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
     public class ContactLoginLog : BaseEntity
 	{
 		
-        [Key]
-        [Column("Id")]
-	    public string Id { get; set; }
+           [Column("CdropId")]
+	    public string CdropId { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [Column("IP")]
-	    public string IP { get; set; }
-        [Column("Browser")]
-	    public string Browser { get; set; }
         [ForeignKey("Contact")]
         [Column("ContactId")]
 	    public string ContactId { get; set; }
@@ -37,6 +32,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public DateTime? GMTDateTime { get; set; }
         [Column("LocalDateTime")]
 	    public DateTime? LocalDateTime { get; set; }
+     [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("IP")]
+	    public string IP { get; set; }
+        [Column("Browser")]
+	    public string Browser { get; set; }
         [Column("ComputerId")]
 	    public string ComputerId { get; set; }
         [Column("ContactAgent")]

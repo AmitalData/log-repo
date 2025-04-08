@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class DWSubQueryListQueryService  : BaseEntityListQueryService<DWSubQueryList,POCO.DWSubQuery,  DWSubQueryKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.DWSubQuery> contextEntity => (context as IAmitalCloudContext).DWSubQuerys;
+	    protected override System.Data.Entity.IDbSet<POCO.DWSubQuery> contextEntity => (context as IAmitalCloudContext).dwsubqueries;
 		public DWSubQueryListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public DWSubQueryList GetSingle(string id)
 		{

@@ -30,19 +30,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string EntityId { get; set; }
         [Column("CreateDate")]
 	    public DateTime? CreateDate { get; set; }
-        [ForeignKey("CreateByUser")]
+        [ForeignKey("User")]
         [Column("CreateByUserId")]
 	    public string CreateByUserId { get; set; }
 	      
-        public virtual User CreateByUser { get; set; }
-        [Column("AutomationConditionFieldsXml")]
-	    public string AutomationConditionFieldsXml { get; set; }
+        public virtual User User { get; set; }
         [Column("CheckStartDate")]
 	    public DateTime? CheckStartDate { get; set; }
         [Column("DoneDate")]
 	    public DateTime? DoneDate { get; set; }
         [Column("HasExecutedRecord")]
 	    public bool HasExecutedRecord { get; set; }
+        [Column("AutomationConditionFieldsXml")]
+	    public string AutomationConditionFieldsXml { get; set; }
         [Column("ChangesFieldsXml")]
 	    public string ChangesFieldsXml { get; set; }
         [Column("ChangesAutomationFieldsXml")]
@@ -55,8 +55,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string SetAutomationFailedXml { get; set; }
         [Column("EmailAutomationFailedXml")]
 	    public string EmailAutomationFailedXml { get; set; }
+        [Column("ExecutionTime")]
+	    public int ExecutionTime { get; set; }
+     [Key]
         [Column("FollowUpAutomationFailedXml")]
 	    public string FollowUpAutomationFailedXml { get; set; }
+     [Key]
         [Column("SetSLAAutomationFailedXml")]
 	    public string SetSLAAutomationFailedXml { get; set; }
         [Column("FollowUpAutomationSsucceedXml")]
@@ -67,6 +71,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string QueuedTaskAutomationFailedXml { get; set; }
      
 	    public string QueuedTaskAutomationSsucceedXml { get; set; }
+        [Column("DropSendinterfacefailedxml")]
+	    public string DropSendinterfacefailedxml { get; set; }
+        [Column("DropSendinterfacessucceedxml")]
+	    public string DropSendinterfacessucceedxml { get; set; }
+        [Column("DropSenddocumentfailedxml")]
+	    public string DropSenddocumentfailedxml { get; set; }
+        [Column("DropSenddocumentssucceedxml")]
+	    public string DropSenddocumentssucceedxml { get; set; }
+        [Column("DropCreatetaskfailedxml")]
+	    public string DropCreatetaskfailedxml { get; set; }
+        [Column("DropCreatetaskssucceedxml")]
+	    public string DropCreatetaskssucceedxml { get; set; }
      
 	    public string SendInterfaceAutomationFailedXml { get; set; }
      
@@ -75,20 +91,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string SendDocumentAutomationFailedXml { get; set; }
      
 	    public string SendDocumentAutomationSsucceedXml { get; set; }
-        [Column("CreateTaskAutomationFailedXml")]
-	    public string CreateTaskAutomationFailedXml { get; set; }
-     
-	    public string CreateTaskAutomationSsucceedXml { get; set; }
      
 	    public string OnUpdateDocumentAutomationFailedXml { get; set; }
      
 	    public string OnUpdateDocumentAutomationSsucceedXml { get; set; }
+        [Column("CreateTaskAutomationFailedXml")]
+	    public string CreateTaskAutomationFailedXml { get; set; }
+     
+	    public string CreateTaskAutomationSsucceedXml { get; set; }
         [Column("EventAutomationFailedXml")]
 	    public string EventAutomationFailedXml { get; set; }
         [Column("EventAutomationSsucceedXml")]
 	    public string EventAutomationSsucceedXml { get; set; }
-        [Column("ExecutionTime")]
-	    public int ExecutionTime { get; set; }
     }
 }
 	 

@@ -25,7 +25,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           { 
 		     None,  
 	         DeviceId, 
-	         NotificationUniqueKey, 
 	         Email, 
 	         Platform, 
 	         Version, 
@@ -33,12 +32,12 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         CreateDate, 
 	         UpdateDate, 
 	         IsSignOut, 
+	         NotificationUniqueKey, 
 	         AppVersion,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
 	         DeviceId, 
-	         NotificationUniqueKey, 
 	         Email, 
 	         Platform, 
 	         Version, 
@@ -46,19 +45,20 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         CreateDate, 
 	         UpdateDate, 
 	         IsSignOut, 
+	         NotificationUniqueKey, 
 	         AppVersion,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ContactMobileDevicePM entityPM, POCO.ContactMobileDevice entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotificationUniqueKey)) { entityPOCO.NotificationUniqueKey = entityPM.NotificationUniqueKey;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Email)) { entityPOCO.Email = entityPM.Email;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Email)) { entityPOCO.Email = entityPM.Email;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Platform)) { entityPOCO.Platform = entityPM.Platform;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Version)) { entityPOCO.Version = entityPM.Version;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Devicetype)) { entityPOCO.Devicetype = entityPM.Devicetype;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate)) { entityPOCO.CreateDate = entityPM.CreateDate;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate)) { entityPOCO.UpdateDate = entityPM.UpdateDate;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSignOut)) { entityPOCO.IsSignOut = entityPM.IsSignOut;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotificationUniqueKey)) { entityPOCO.NotificationUniqueKey = entityPM.NotificationUniqueKey;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AppVersion)) { entityPOCO.AppVersion = entityPM.AppVersion;}
 					}
 		public void POCOToPM(ContactMobileDevicePM entityPM, POCO.ContactMobileDevice entityPOCO)
@@ -66,10 +66,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeviceId))
             {
 					entityPM.DeviceId = entityPOCO.DeviceId;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NotificationUniqueKey))
-            {
-					entityPM.NotificationUniqueKey = entityPOCO.NotificationUniqueKey;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Email))
             {
@@ -99,6 +95,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.IsSignOut = entityPOCO.IsSignOut;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NotificationUniqueKey))
+            {
+					entityPM.NotificationUniqueKey = entityPOCO.NotificationUniqueKey;
+            }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AppVersion))
             {
 					entityPM.AppVersion = entityPOCO.AppVersion;
@@ -107,11 +107,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		public void PMToOldPM(ContactMobileDevicePM entityPM, ContactMobileDevicePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotificationUniqueKey))
-            {
-                oldEntityPM.NotificationUniqueKey = entityPM.NotificationUniqueKey;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Email))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Email))
             {
                 oldEntityPM.Email = entityPM.Email;
             }
@@ -138,6 +134,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSignOut))
             {
                 oldEntityPM.IsSignOut = entityPM.IsSignOut;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NotificationUniqueKey))
+            {
+                oldEntityPM.NotificationUniqueKey = entityPM.NotificationUniqueKey;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AppVersion))
             {

@@ -190,6 +190,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
                         myResult.ReleaseDateString = mySetting.ReleaseDateString;
                         myResult.DNSZone = mySetting.DNSZone;
+                        myResult.CustomURL = mySetting.CustomURL;
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
                             myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
@@ -241,6 +242,79 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
         }
+
+        public HttpResponseMessage GetGlobalSettingWithOutToken()
+        {
+            try
+            {
+              
+                   
+                    JSGlobalSettings myResult = new JSGlobalSettings();
+
+                    SettingRepository mySettingRepository = new SettingRepository();
+                    Setting mySetting = mySettingRepository.GetSingleSetting("1");
+                if (mySetting != null)
+                {
+                    myResult.Id = mySetting.Id;
+                    myResult.LogitudeURL = mySetting.LogitudeURL;
+                    myResult.LogoCode = mySetting.LogoCode;
+                    myResult.WorkEnvironment = mySetting.WorkEnvironment;
+                    myResult.SameUserLoginEnabled = mySetting.SameUserLoginEnabled;
+                    myResult.LayoutDirection = mySetting.LayoutDirection;
+                    myResult.ReportsRunUsingWR = mySetting.ReportsRunUsingWR;
+                    myResult.DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
+                    myResult.DeploymentStage = mySetting.DeploymentStage;
+                    myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
+                    myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
+                    myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
+                    myResult.ReleaseDateString = mySetting.ReleaseDateString;
+                    myResult.DNSZone = mySetting.DNSZone;
+                    myResult.CustomURL = mySetting.CustomURL;
+                    if (LogitudeSettings.IsCostomsDeploy)
+                    {
+                        myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
+                        myResult.ProductMessage = LogitudeSettings.ProductMessage;
+                    }
+
+                }
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+
+            }
+
+            catch (Exception e)
+            {
+                try
+                {
+               
+                       
+
+                        JSGlobalSettings myResult = new JSGlobalSettings();
+
+                        SettingRepository mySettingRepository = new SettingRepository();
+                        Setting mySetting = mySettingRepository.GetSingleSetting("1");
+                        if (mySetting != null)
+                        {
+                            myResult.Id = mySetting.Id;
+                            myResult.LogitudeURL = mySetting.LogitudeURL;
+                            myResult.LogoCode = mySetting.LogoCode;
+                            myResult.WorkEnvironment = mySetting.WorkEnvironment;
+                            myResult.SameUserLoginEnabled = mySetting.SameUserLoginEnabled;
+                            myResult.LayoutDirection = mySetting.LayoutDirection;
+                            myResult.DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
+                        }
+
+                       
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                 
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+        }
+
         public HttpResponseMessage GetPrivateLableById(string Id)
         {
             try
@@ -887,6 +961,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public DateTime? TMPersonalAccessExpirationDate { get; set; }
         public string ReleaseDateString { get; set; }
         public string DNSZone { get; set; }
+        public string CustomURL { get; set; }
     }
 
     public class TenantManagementJS

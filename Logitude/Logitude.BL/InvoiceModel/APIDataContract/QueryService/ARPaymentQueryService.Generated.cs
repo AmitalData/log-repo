@@ -17,7 +17,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
-
+using Logitude.BL.CommonDataModel.CloseTables;
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -364,7 +364,11 @@ using Simplog.Data.InvoiceModel;
 					CardQueryService BillToCardService = new CardQueryService(Tenant);
 					if(MyEntity.BillTo != null)
 					{
-						var myBillToPM = BillToCardService.CardDataMappingAndValidatin(MyEntity.BillTo,Tenant,ComputingPartnerName,IsUpdate);
+
+
+						var partnerTypes = new List<string> { PartnerTypeValues.Customer, PartnerTypeValues.AccountingPartner };
+
+						var myBillToPM = BillToCardService.CardDataMappingAndValidatin(MyEntity.BillTo,Tenant,ComputingPartnerName,IsUpdate,partnerTypes);
 						
 						if(myBillToPM != null)
 						{ 

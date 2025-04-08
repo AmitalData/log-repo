@@ -31,12 +31,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_createDate = entity.CreateDate;
-		//_createdByUserId = entity.CreatedByUserId;
+		_createdByUserId = entity.CreatedByUserId;
 		_searchFields = entity.SearchFields;
 		_eventTypeId = entity.EventTypeId;
 		_eventtype = entity.EventType !=null ? new EventTypePM(entity.EventType) : null;
 			_partnerTypeId = entity.PartnerTypeId;
-		//_partnertype = entity.PartnerType !=null ? new PartnerTypePM(entity.PartnerType) : null;
+		_partnertype = entity.PartnerType !=null ? new PartnerTypePM(entity.PartnerType) : null;
 			_isChoose = entity.IsChoose;
    }
    #endregion Constructors

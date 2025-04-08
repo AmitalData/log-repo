@@ -17,6 +17,10 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.Accounting.Data.DataContract;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Server.Tools.Utils;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -659,10 +663,59 @@ namespace Logitude.Accounting.Data.Repositories
             return journals;
         }
 
+
+        public List<Journal> GetFailedJournalsInReconcileProcess(string accountId, int tenant)
+        {
+           
+            var internalReconciles = from r in context.JournalReconciles
+                                     join j in context.Journals on r.JournalId equals j.Id
+                                     join l in context.LedgerTransactions on r.LedgerTransactionId equals l.Id
+                                     where l.InReconcileProgress && !l.IsReconciled && j.StatusCode == "4"
+                                           && l.AccountId == accountId && l.Tenant == tenant && r.Tenant == tenant && j.Tenant == tenant
+                                     select j;
+
+            var externalReconciles = from r in context.JournalExternalReconciles
+                                     join j in context.Journals on r.JournalId equals j.Id
+                                     join l in context.LedgerTransactions on r.LedgerTransactionId equals l.Id
+                                     where l.InProgressExternalReconcile && !l.IsExternalReconcile && j.StatusCode == "4"
+                                           && l.AccountId == accountId && l.Tenant == tenant && r.Tenant == tenant && j.Tenant == tenant
+                                     select j;
+
+            return internalReconciles.Union(externalReconciles).Distinct().ToList();
+        }
+
+        public void FixFailedReconcileJournals(int tenant)
+        {
+            string sqlConnectionString = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
+
+            using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
+            {
+                try
+                {
+                    sqlConnection.Open();
+
+                    using (SqlCommand command = new SqlCommand("dbo.usp_FixFailedReconcileJournals", sqlConnection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@Tenant", tenant);
+
+                        command.ExecuteNonQuery();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    sqlConnection.Close();                 }
+            }
+        }
     }
 
 
-   
+
 
 }
 

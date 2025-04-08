@@ -190,184 +190,184 @@ namespace AmitalCloud.Infrastructure.Data.Validators
         {
             int i = 0;
             string resultValue = " ";
-            object currentEntity = entity;
-            List<ObjectField> currentEntityObjectFields = entityObjectFields;
+            //object currentEntity = entity;
+            //List<ObjectField> currentEntityObjectFields = entityObjectFields;
 
-            while (true)
-            {
-                PropertyInfo propertyPathPi = currentEntity.GetType().GetProperty(fields[i].Trim());
-                if (propertyPathPi != null)
-                {
-                    object value = propertyPathPi.GetValue(currentEntity, null);
+            //while (true)
+            //{
+            //    PropertyInfo propertyPathPi = currentEntity.GetType().GetProperty(fields[i].Trim());
+            //    if (propertyPathPi != null)
+            //    {
+            //        object value = propertyPathPi.GetValue(currentEntity, null);
 
-                    if (value == null)
-                    {
-                        break;
-                    }
-                    ObjectField objectField = currentEntityObjectFields.Where(f => f.FieldName == fields[i]).FirstOrDefault();
-                    if (objectField != null)
-                    {
-                        string insideEntityName = objectField.ObjectTable_LookUpTable.Name;
-                        if (insideEntityName == "Carrier")
-                        {
-                            insideEntityName = "Card";
-                        }
-                        // ==================================================================================
+            //        if (value == null)
+            //        {
+            //            break;
+            //        }
+            //        ObjectField objectField = currentEntityObjectFields.Where(f => f.FieldName == fields[i]).FirstOrDefault();
+            //        if (objectField != null)
+            //        {
+            //            string insideEntityName = objectField.ObjectTable_LookUpTable.Name;
+            //            if (insideEntityName == "Carrier")
+            //            {
+            //                insideEntityName = "Card";
+            //            }
+            //            // ==================================================================================
 
-                        List<ObjectField> insideEntityObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(insideEntityName, tenant).ToList();
-                        ObjectField insideObjectField = insideEntityObjectFields.Where(f => f.FieldName == fields[i + 1]).FirstOrDefault();
+            //            List<ObjectField> insideEntityObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(insideEntityName, tenant).ToList();
+            //            ObjectField insideObjectField = insideEntityObjectFields.Where(f => f.FieldName == fields[i + 1]).FirstOrDefault();
 
-                        //===============================================================================================================
-                        string insideTypePath = "Logitude.BL.ShipmentsModel.Repositories." + insideEntityName + "Repository";
+            //            //===============================================================================================================
+            //            string insideTypePath = "Logitude.BL.ShipmentsModel.Repositories." + insideEntityName + "Repository";
 
-                        Type insideEntityType = Type.GetType(insideTypePath);
-                        if (insideEntityType == null)
-                        {
-                            insideTypePath = "Logitude.BL.CommonDataModel.Repositories." + insideEntityName + "Repository";
-                            insideEntityType = Type.GetType(insideTypePath);
-                        }
+            //            Type insideEntityType = Type.GetType(insideTypePath);
+            //            if (insideEntityType == null)
+            //            {
+            //                insideTypePath = "Logitude.BL.CommonDataModel.Repositories." + insideEntityName + "Repository";
+            //                insideEntityType = Type.GetType(insideTypePath);
+            //            }
 
-                        if (insideEntityType == null)
-                        {
-                            insideTypePath = "Logitude.BL." + insideEntityName + "Repository";
-                            insideEntityType = Type.GetType(insideTypePath);
-                        }
+            //            if (insideEntityType == null)
+            //            {
+            //                insideTypePath = "Logitude.BL." + insideEntityName + "Repository";
+            //                insideEntityType = Type.GetType(insideTypePath);
+            //            }
 
-                        if (insideEntityType == null)
-                        {
+            //            if (insideEntityType == null)
+            //            {
 
-                            insideTypePath = "Logitude.BL.InfrastructureModel.Repositories." + insideEntityName + "Repository";
-                            insideEntityType = Type.GetType(insideTypePath);
-                        }
+            //                insideTypePath = "Logitude.BL.InfrastructureModel.Repositories." + insideEntityName + "Repository";
+            //                insideEntityType = Type.GetType(insideTypePath);
+            //            }
 
-                        if (insideEntityType == null)
-                        {
+            //            if (insideEntityType == null)
+            //            {
 
-                            insideTypePath = "Logitude.BL.QuoteModel.Repositories." + insideEntityName + "Repository";
-                            insideEntityType = Type.GetType(insideTypePath);
-                        }
+            //                insideTypePath = "Logitude.BL.QuoteModel.Repositories." + insideEntityName + "Repository";
+            //                insideEntityType = Type.GetType(insideTypePath);
+            //            }
 
-                        object insideEntityRepository = null;
-                        if (insideEntityType != null)
-                        {
-                            if (definedObjects.Keys.Contains(insideTypePath))
-                            {
-                                insideEntityRepository = definedObjects[insideTypePath];
-                            }
+            //            object insideEntityRepository = null;
+            //            if (insideEntityType != null)
+            //            {
+            //                if (definedObjects.Keys.Contains(insideTypePath))
+            //                {
+            //                    insideEntityRepository = definedObjects[insideTypePath];
+            //                }
 
-                            if (insideEntityRepository == null)
-                            {
-                                insideEntityRepository = Activator.CreateInstance(insideEntityType, tenant);///??????
-                                                                                                            ///
-                                definedObjects.Add(insideTypePath, insideEntityRepository);
-                            }
+            //                if (insideEntityRepository == null)
+            //                {
+            //                    insideEntityRepository = Activator.CreateInstance(insideEntityType, tenant);///??????
+            //                                                                                                ///
+            //                    definedObjects.Add(insideTypePath, insideEntityRepository);
+            //                }
 
-                            MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
-                            object insideEntity = null;
-                            if (insideMethodInfo != null)
-                            {
-                                ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
-                                object[] parameters = new object[] { };
-                                switch (parametersInfo.Count())
-                                {
-                                    case 1:
-                                        parameters = new object[] { value };
-                                        break;
-                                    case 2:
-                                        parameters = new object[] { value, tenant };
-                                        break;
-                                    case 3:
-                                        parameters = new object[] { value, tenant, false };
-                                        break;
-                                    default:
-                                        parameters = new object[] { value, tenant };
-                                        break;
-                                }
+            //                MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+            //                object insideEntity = null;
+            //                if (insideMethodInfo != null)
+            //                {
+            //                    ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
+            //                    object[] parameters = new object[] { };
+            //                    switch (parametersInfo.Count())
+            //                    {
+            //                        case 1:
+            //                            parameters = new object[] { value };
+            //                            break;
+            //                        case 2:
+            //                            parameters = new object[] { value, tenant };
+            //                            break;
+            //                        case 3:
+            //                            parameters = new object[] { value, tenant, false };
+            //                            break;
+            //                        default:
+            //                            parameters = new object[] { value, tenant };
+            //                            break;
+            //                    }
 
-                                insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
-                                if (insideEntity != null)
-                                {
-                                    if ((i + 1) < fields.Count())
-                                    {
-                                        PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(fields[i + 1].Trim());
-                                        if (insidePropertyPathPi != null)
-                                        {
-                                            object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
-                                            if (insideValue != null)
-                                            {
-                                                if (insideValue is DateTime)
-                                                {
-                                                    DateTime date = (DateTime)insideValue;
-                                                    insideValue = date.ToShortDateString();
-                                                }
-                                            }
+            //                    insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
+            //                    if (insideEntity != null)
+            //                    {
+            //                        if ((i + 1) < fields.Count())
+            //                        {
+            //                            PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(fields[i + 1].Trim());
+            //                            if (insidePropertyPathPi != null)
+            //                            {
+            //                                object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
+            //                                if (insideValue != null)
+            //                                {
+            //                                    if (insideValue is DateTime)
+            //                                    {
+            //                                        DateTime date = (DateTime)insideValue;
+            //                                        insideValue = date.ToShortDateString();
+            //                                    }
+            //                                }
 
-                                            resultValue = (insideValue != null ? insideValue.ToString() : " ");
+            //                                resultValue = (insideValue != null ? insideValue.ToString() : " ");
 
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
-                                    else
-                                    {
+            //                            }
+            //                            else
+            //                            {
+            //                                break;
+            //                            }
+            //                        }
+            //                        else
+            //                        {
 
-                                        break;
-                                    }
+            //                            break;
+            //                        }
 
-                                    if (insideObjectField != null)
-                                    {
-                                        if (insideObjectField.DataTypeCode == "LookUp")
-                                        {
-                                            currentEntity = insideEntity;
-                                            currentEntityObjectFields = insideEntityObjectFields;
-                                            i++;
-                                        }
-                                        else
-                                        {
-                                            // check if its a multi value
-                                            // ResolveObjectFieldValue
-                                            break;
-                                        }
-                                    }
-                                    else
-                                    {
+            //                        if (insideObjectField != null)
+            //                        {
+            //                            if (insideObjectField.DataTypeCode == "LookUp")
+            //                            {
+            //                                currentEntity = insideEntity;
+            //                                currentEntityObjectFields = insideEntityObjectFields;
+            //                                i++;
+            //                            }
+            //                            else
+            //                            {
+            //                                // check if its a multi value
+            //                                // ResolveObjectFieldValue
+            //                                break;
+            //                            }
+            //                        }
+            //                        else
+            //                        {
 
-                                        break;
-                                    }
-                                }
-                                else
-                                {
-                                    break;
+            //                            break;
+            //                        }
+            //                    }
+            //                    else
+            //                    {
+            //                        break;
 
-                                }
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        else
-                        {
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    break;
+            //                }
+            //            }
+            //            else
+            //            {
 
-                            break;
-                        }
+            //                break;
+            //            }
 
-                    }
-                    else
-                    {
+            //        }
+            //        else
+            //        {
 
-                        break;
-                    }
+            //            break;
+            //        }
 
-                }
-                else
-                {
+            //    }
+            //    else
+            //    {
 
-                    break;
-                }
-            }
+            //        break;
+            //    }
+            //}
 
             return resultValue;
         }

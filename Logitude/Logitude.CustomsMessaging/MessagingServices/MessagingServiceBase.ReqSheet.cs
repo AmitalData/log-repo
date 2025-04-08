@@ -40,6 +40,10 @@ using System.Configuration;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.Server.Tools.FTP;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Reflection;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -821,14 +825,28 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, isVualtTaskyam,
                         myParams
                         );
-                var dcaManager = new DcaManager(this.CustomsSetting.DCAServiceAddress //  @"http://itzik7:5050/Unifreight/DCAService/basic"
-                     , this.CustomsSetting.DCAPartnerVault  ///"IIG"
-                    , _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant);
 
-                var serverJobID = dcaManager.SubmitFileOutgoingQueue(
-                    _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, fileContentsBASE64, dCAOutFileName,
-                    out MessageOut);
-                LogMessagingUtil.Instance.AppendLine("serverJobID =" + serverJobID);
+                int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;				
+				FeatureQuery featureQuery = new FeatureQuery(new FeatureRepository(CommonDataContext.GetContext(tenant)));
+				var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+				bool isSendSFTPEnabled = features.Features.Any(x => x.Code == "IsSendSFTP");
+				string serverJobID = string.Empty;
+				if (isSendSFTPEnabled)
+				{
+					var bytsArry = Convert.FromBase64String(fileContentsBASE64);
+					serverJobID = SendFileToSFTP(tenant, bytsArry, dCAOutFileName, out MessageOut);
+				}
+				else
+                {
+					var dcaManager = new DcaManager(this.CustomsSetting.DCAServiceAddress //  @"http://itzik7:5050/Unifreight/DCAService/basic"
+						, this.CustomsSetting.DCAPartnerVault  ///"IIG"
+					   , _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant);
+
+					 serverJobID = dcaManager.SubmitFileOutgoingQueue(
+						_CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Id, fileContentsBASE64, dCAOutFileName,
+						out MessageOut);
+				}
+				LogMessagingUtil.Instance.AppendLine("serverJobID =" + serverJobID);
                 if (String.IsNullOrWhiteSpace(serverJobID))
                 {
                     //MessageOut
@@ -874,8 +892,85 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             }
         }
+		private string SendFileToSFTP(int tenant,byte[] filedata, string fileName, out string MessageOut)
+		{			
+			var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
+			CustomsPartnerFtpPM pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, "Customs", "Customs", CustomsPartnerFtpDetails.TypeCode_Out);
+			
+            string serverjobID = string.Empty;
+			MessageOut = string.Empty;
+			if (filedata != null)
+			{
+				if (pmCustomsPartnerFtp.MyFtpDetail != null)
+				{
+				
+					string ftpHostIP = pmCustomsPartnerFtp.MyFtpDetail.Host;
+					string ftpUserName = pmCustomsPartnerFtp.MyFtpDetail.UserName;
+					string ftpPrivateKeyPath = pmCustomsPartnerFtp.MyFtpDetail.Password ?? Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "PRK.PPK");
+					string ftpFolderName = pmCustomsPartnerFtp.MyFtpDetail.Folder;
+					string p_message = "";
+					string p_status = "";
 
-        private bool CustomsCommandAnalyzeResponseEndStep(TRequestParams requestParams, TResponseData responseData, CommStatusEnum stepStatusEnum)
+					var sFTPDeleteTempFilesService = new SFTPDeleteTempFilesService(tenant, ftpHost: $"{ftpHostIP}@{ftpUserName}:2023/{ftpFolderName}");
+					SFTPService sftpService = new SFTPService(sFTPDeleteTempFilesService);
+					sftpService.LogonWithKey(ftpHostIP, ftpUserName, ftpPrivateKeyPath, "2023", ftpFolderName, out p_status, out p_message);
+
+					if (p_status == "0")
+					{
+						try
+						{
+
+							sftpService.Upload(fileName, filedata, false, false, out p_status, out p_message);
+							MessageOut = p_message; 
+						}
+						finally
+						{
+
+							try
+							{
+								string p_more1 = ""; string p_status1; string p_message1;
+								if (!String.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SFTPLogoff"]))
+								{
+									Debug.WriteLine("sftpService.Logoff");
+									sftpService.Logoff(ref p_more1, out p_status1, out p_message1);
+								}
+
+							}
+							catch //(Exception)
+							{
+
+								///throw;
+							}
+
+						}
+
+						if (p_status == "-1")
+						{
+							Debug.WriteLine("sftpService.Upload-failed");
+							throw new FTPServiceException("SFTP upload file failed: " + p_message);
+						}
+						else
+						{
+                            serverjobID = p_status;
+							Debug.WriteLine("sftpService.Upload-success");
+						}
+					}
+					else
+						throw new FTPServiceException("SFTP Login failed: " + p_message);
+
+				}
+
+
+			}
+			else
+			{
+				throw new Exception("The file data was not found!");
+			}
+			return serverjobID;
+
+		}
+
+		private bool CustomsCommandAnalyzeResponseEndStep(TRequestParams requestParams, TResponseData responseData, CommStatusEnum stepStatusEnum)
         {
             var memResponseData =
                 XmlGenericUtil<TResponseData>.MemoryStreamSerialize(responseData);
@@ -1175,6 +1270,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
             if (String.IsNullOrWhiteSpace(exceptionMessage))
             {
                 exceptionMessage = defaultMessage;
+            }
+
+            if (exceptionMessage.Contains("Please Contact ESB Administrator"))
+            {
+                int tenant = requestParams?.Tenant == null ? 0 : requestParams.Tenant;
+                string msg = TextCodesTranslator.TranslateText("Customs.Declaration.O.ESBmsg", tenant) + "\n";
+                exceptionMessage = msg + exceptionMessage;
             }
             responseData = new TResponseData() { Succeeded = false, HasException = true, UserMessage = "SendWS failed:" + exceptionMessage };
 

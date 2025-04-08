@@ -28,27 +28,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public UserPermittedProductPM() : base() {} 
    public UserPermittedProductPM(POCO.UserPermittedProduct entity) : base()
    {
-		_id = entity.Id;
+		_cdropId = entity.CdropId;
 		_tenant = entity.Tenant;
 		_userId = entity.UserId;
 		_productTypeCode = entity.ProductTypeCode;
+		_id = entity.Id;
    }
    #endregion Constructors
    #region Properties
-   	  private string _id ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+   	  private string _cdropId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Id  
+       public string CdropId  
 	   {
-	     get { return _id; }
+	     get { return _cdropId; }
 		 set
 		 {
-		   if(_id != value)
+		   if(_cdropId != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CdropId",OldValue=_cdropId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _id=value;
+		   _cdropId=value;
 		   }
 		 }
 	   }
@@ -97,6 +97,23 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProductTypeCode",OldValue=_productTypeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _productTypeCode=value;
+		   }
+		 }
+	   }
+	  private string _id ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	     get { return _id; }
+		 set
+		 {
+		   if(_id != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=_id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _id=value;
 		   }
 		 }
 	   }

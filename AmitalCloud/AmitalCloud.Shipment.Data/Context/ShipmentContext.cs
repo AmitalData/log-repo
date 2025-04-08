@@ -37,16 +37,10 @@ namespace AmitalCloud.Shipment.Data.Context
 
 		protected override AmitalCloudDBSchema AmitalCloudDBSchema
         {
-            get { return AmitalCloudDBSchema.LOGITUDE_MAIN; }
+            get { return AmitalCloudDBSchema.AMITAL_MAIN; }
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-//		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-//            {
-//                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
-//                config.Workarounds.DisableQuoting = true;
-//                config.Workarounds.IgnoreSchemaName = true;
-//            }
             Database.SetInitializer<ShipmentContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			            modelBuilder.Configurations.Add(new AccountingInformationIdentifierMap());
@@ -197,8 +191,8 @@ namespace AmitalCloud.Shipment.Data.Context
             modelBuilder.Configurations.Add(new DocumentTypeTemplateMap());
             modelBuilder.Configurations.Add(new DueTypeMap());
             modelBuilder.Configurations.Add(new EntityDateMap());
-            modelBuilder.Configurations.Add(new EntityLastActivityMap());
-            modelBuilder.Configurations.Add(new EntityLastActivityTypeMap());
+			//modelBuilder.Configurations.Add(new EntityLastActivityMap());
+			modelBuilder.Configurations.Add(new EntityLastActivityTypeMap());
             modelBuilder.Configurations.Add(new EntityLastUpdateMap());
             modelBuilder.Configurations.Add(new EntityStatuMap());
             modelBuilder.Configurations.Add(new EventTypeMap());

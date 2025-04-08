@@ -24,11 +24,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	 
             this.Property(t => t.Version).HasColumnName("Version").IsRequired().HasDatabaseGeneratedOption(null);
 
-            this.Property(t => t.AutomationsId).HasColumnName("AutomationsId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AutomationsId).HasColumnName("AutomationsId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.AutomationXML).HasColumnName("AutomationXML").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AutomationXML).HasColumnName("AutomationXML").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
         }

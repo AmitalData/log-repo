@@ -32,6 +32,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenantId = entity.TenantId;
 		_tenant = entity.Tenant !=null ? new TenantPM(entity.Tenant) : null;
 			_contactId = entity.ContactId;
+		restrictions = entity.Restrictions != null ? entity.Restrictions.Select(a=>new RestrictionPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -92,6 +93,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<RestrictionPM> restrictions;
+	 
+		     
+	   [Include]
+	   [Association("RestrictionContactTenant", "Id","Contacttenantid")]
+	   [DataMember]
+	   public virtual List<RestrictionPM> Restrictions  
+	   {
+	        get
+             {
+                 if (restrictions == null)
+                 {
+                     restrictions = new List<RestrictionPM>();
+                 }
+                 return restrictions;
+              }
+             set { restrictions = value; }
+	    }
+	   private List<RestrictionPM>  deletedRestrictions;
+	   public virtual List<RestrictionPM> DeletedRestrictions  
+	   {
+	        get
+             {
+                 if ( deletedRestrictions == null)
+                 {
+                      deletedRestrictions = new List<RestrictionPM>();
+                 }
+                 return  deletedRestrictions;
+              }
+             set {  deletedRestrictions = value; }
+	    }
 	 }
 #endregion Properties
 }

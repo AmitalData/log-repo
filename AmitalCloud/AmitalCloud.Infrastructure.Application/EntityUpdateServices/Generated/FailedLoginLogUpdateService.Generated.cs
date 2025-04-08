@@ -22,17 +22,17 @@ using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class FailedLoginLogUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.FailedLoginLog,FailedLoginLogPM,IEntityPM,FailedLoginLogList,string>
+   public partial class FailedLoginLogUpdateService:BaseEntityUpdateService<SystemLogContext,POCO.FailedLoginLog,FailedLoginLogPM,IEntityPM,FailedLoginLogList,string>
    {
    			
-        public FailedLoginLogUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public FailedLoginLogUpdateService(ISystemLogContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base((SystemLogContext)mainContext,additionalContexts, tenant)
         {
             Mapping = new FailedLoginLogDataMapping();
-            Repository = new Repository<POCO.FailedLoginLog>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.FailedLoginLog>((SystemLogContext)mainContext);
         }
-        public FailedLoginLogUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public FailedLoginLogUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public FailedLoginLogUpdateService(int tenant) : this(SystemLogContext.GetContext(tenant), null, tenant) {}
+        public FailedLoginLogUpdateService(ISystemLogContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.FailedLoginLog,string> GetKeys(FailedLoginLogPM entityPM) => new FailedLoginLogKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(FailedLoginLogPM entityPM)
 		{

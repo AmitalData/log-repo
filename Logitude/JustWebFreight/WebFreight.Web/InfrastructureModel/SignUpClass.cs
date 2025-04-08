@@ -55,6 +55,7 @@ using Logitude.Workflow.Data.Repositories;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Simplog.Data.InfrastructureModel;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -3117,17 +3118,33 @@ namespace WebFreight.Web.InfrastructureModel
 
         private static void AddDefaultTenantIdleStatuses(int theTenant, TenantIdleStatusRepository tenantIdleStatusRepository)
         {
-            TenantIdleStatus TenantIdleStatus = new TenantIdleStatus()
+
+
+            TenantIdleStatus tenantIdleStatusJournal = new TenantIdleStatus()
             {
                 Id = theTenant.ToString(),
                 Tenant = theTenant,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
-                SearchFields=null,
-                Idle=false
+                SearchFields = null,
+                Idle = false,
+                ObjectTable = "Journal",
             };
 
-            tenantIdleStatusRepository.Add(TenantIdleStatus);
+            tenantIdleStatusRepository.Add(tenantIdleStatusJournal);
+
+            TenantIdleStatus tenantIdleStatusARInvoice = new TenantIdleStatus()
+            {
+                Id = theTenant.ToString(),
+                Tenant = theTenant,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                SearchFields = null,
+                Idle = false,
+                ObjectTable = "ARInvoice",
+            };
+
+            tenantIdleStatusRepository.Add(tenantIdleStatusARInvoice);
             tenantIdleStatusRepository.SubmitChanges();
         }
 

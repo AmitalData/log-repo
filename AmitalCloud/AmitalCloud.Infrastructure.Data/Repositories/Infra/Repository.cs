@@ -25,11 +25,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         protected System.Data.Entity.IDbSet<TEntity> DbSet => _dbSet;
         protected IContext DbContext => _dbContext;
 
-        public Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
+        internal Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
         {
             _unitOfWork = unitOfWork;
         }
-        public Repository(IContext dbContext)
+        internal Repository(IContext dbContext)
         {
             _isDisposed = false;
             _dbContext = dbContext;
@@ -73,8 +73,8 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public async Task<List<TEntity>> GetMultiAsync<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, int skip, int take) => await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToListAsync();
         public async Task<List<TResult>> GetMultiAsync<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, int skip, int take) => await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToListAsync();
         public async Task<List<TEntity>> GetMultiAsync<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, string include, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
-            => orderByDirection == OrderByDirection.Ascending ? await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Include(include).OrderBy(orderBy).ToListAsync()
-            : await _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Include(include).OrderByDescending(orderBy).ToListAsync();
+            => orderByDirection == OrderByDirection.Ascending ? await ApplyInclude(predicate, include).Select(select).OrderBy(orderBy).OrderBy(orderBy).ToListAsync()
+            : await ApplyInclude(predicate, include).Select(select).OrderBy(orderBy).OrderByDescending(orderBy).ToListAsync();
         #endregion ASync Methods 
 
         #region Sync Methods 
@@ -140,6 +140,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                 throw new Exception(_errorMessage, dbEx);
             }
         }
+        public TEntity GetFirst() => GetAll(0, true).FirstOrDefault();
         public List<TEntity> GetAll(int tenant) => GetQuery(tenant).ToList();
         protected IQueryable<TEntity> GetQuery(int tenant)
         {
@@ -166,11 +167,20 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public List<TEntity> GetAll<TKey>(int tenant, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending) => ApplyOrderedBy<TKey>(orderBy, orderByDirection, GetQuery(tenant)).ToList();
         public List<TEntity> GetMulti<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys) => GetMulti(entityKeys.Predicate);
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select) => _dbSet.Where(predicate).Select(select).ToList();
-        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include) => _dbSet.Where(predicate).Include(include).Select(select).ToList();
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include) => ApplyInclude(predicate, include).Select(select).ToList();
+
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList().AsEnumerable().Select(a=>NewObject<TResult>(a)).ToList();
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, string include) => ApplyInclude(predicate, include).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
+
+
+
+
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select) => _dbSet.Where(predicate).Select(select).ToList();
-        public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, string include) => _dbSet.Where(predicate).Include(include).Select(select).ToList();
+        public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, string include) => ApplyInclude(predicate, include).Select(select).ToList();
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList();
-        public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, string include) => _dbSet.Where(predicate).Include(include).ToList();
+        public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, string include) => ApplyInclude(predicate, include).ToList();
+
+
         public IEnumerable<TEntity> GetMulti<TKey>(ISpecification<TEntity, TKey> spec) => GetQuery(spec).AsEnumerable();
         public TEntity GetSingle<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys) => GetMulti(entityKeys.Predicate).FirstOrDefault();
         public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, int skip, int take) => _dbSet.Where(predicate).OrderBy(orderBy).Skip(skip).Take(take).ToList();
@@ -178,24 +188,32 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             => _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToList();
         public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, int skip, int take)
             => _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToList();
+        public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, int skip, int take)
+            => _dbSet.Where(predicate).OrderBy(orderBy).Skip(skip).Take(take).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
         public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
             => (orderByDirection == OrderByDirection.Ascending) ?
             _dbSet.Where(predicate).OrderBy(orderBy).ToList() : _dbSet.Where(predicate).OrderByDescending(orderBy).ToList();
         public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
             => (orderByDirection == OrderByDirection.Ascending) ?
             _dbSet.Where(predicate).Select(select).OrderBy(orderBy).ToList() : _dbSet.Where(predicate).Select(select).OrderByDescending(orderBy).ToList();
-        public List<TResult> GetMulti<TResult,TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include, Expression<Func<TResult, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
+        public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include, Expression<Func<TResult, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
                     => (orderByDirection == OrderByDirection.Ascending) ?
-            _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Include(include).ToList() : _dbSet.Where(predicate).Select(select).OrderByDescending(orderBy).Include(include).ToList();
-
-
+            ApplyInclude(predicate, include).Select(select).OrderBy(orderBy).ToList() : ApplyInclude(predicate, include).Select(select).OrderByDescending(orderBy).ToList();
+        public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate,  string include, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
+                    => (orderByDirection == OrderByDirection.Ascending) ?
+            ApplyInclude(predicate, include).OrderBy(orderBy).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList() : ApplyInclude(predicate, include).OrderByDescending(orderBy).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
         public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
             => (orderByDirection == OrderByDirection.Ascending) ?
             _dbSet.Where(predicate).Select(select).OrderBy(orderBy).ToList() : _dbSet.Where(predicate).Select(select).OrderByDescending(orderBy).ToList();
+        public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
+            => (orderByDirection == OrderByDirection.Ascending) ?
+            _dbSet.Where(predicate).OrderBy(orderBy).ToList().AsEnumerable()
+            .Select(a => NewObject<TResult>(a)).ToList() : _dbSet.Where(predicate).OrderByDescending(orderBy).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
+
+
+
         public List<object> GetMulti<TInner, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TInner, bool>> innerpredicate,
-           //, Expression<Func<TResult, TResult>> select,
            Expression<Func<TEntity, TKey>> outerKeySelector, Expression<Func<TInner, TKey>> innerKeySelector
-            //, Expression<Func<TEntity, TInner, TResult>> resultSelector
             ) where TInner : class
         {
             var res = _dbSet.Where(predicate)
@@ -361,6 +379,10 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             }
             return entity;
         }
+        private TResult NewObject<TResult>(TEntity entity)
+            => (TResult)typeof(TResult).GetConstructor(new Type[] { typeof(TEntity) }).Invoke(new object[] { entity });
+        private IQueryable<TEntity> ApplyInclude(Expression<Func<TEntity, bool>> predicate, string include)
+        => include.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(_dbSet.Where(predicate), (current, next) => { return current.Include(next); });
         #endregion  Private Methods 
     }
 }

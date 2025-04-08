@@ -266,11 +266,13 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             {
                 throw;
             }
-            foreach (IContext context in AdditionalContexts.Values)
+            if (AdditionalContexts != null)
             {
-                context.GetType().GetMethod("SaveChanges").Invoke(context, null);
+                foreach (IContext context in AdditionalContexts.Values)
+                {
+                    context.GetType().GetMethod("SaveChanges").Invoke(context, null);
+                }
             }
-
         }
 
         protected virtual void OnCreating(TEntityPM entityPM, TEntityParentPM entityParentPM)

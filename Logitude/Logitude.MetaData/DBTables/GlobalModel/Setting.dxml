@@ -648,5 +648,15 @@
     <Constraints
       Nullable="true" />
   </Column>
- 
+	<Column
+   Name="CustomURL"
+   Type="varchar"
+   Size="1000">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+  
+	
+
+	
  </Table>

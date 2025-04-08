@@ -3,7 +3,10 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
+using System.Web.Http.Results;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {
@@ -39,7 +42,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             if (getFromCache && (CacheManager.CacheWrapper != null))
             {
                 string cacheKey = $"TEntityPMGetSingle_({entityKeys.GetEntityPMName()}_{entityKeys.GetFullKey()}_{getComposition})";
-                var cacheObj = CacheManager.CacheWrapper.Get(cacheKey);
+                var cacheObj = CacheManager.CacheWrapper.Get(cacheKey, Tenant);
                 if (cacheObj != null)
                 {
                     EntityPM = (TEntityPM)cacheObj;
@@ -119,9 +122,51 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             }
             return entityPMs;
         }
-        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate,string include)
-        => Repository.GetMulti(predicate
-            ,a=> (TEntityPM)typeof(TEntityPM).GetConstructor(new Type[] { typeof(TEntityPOCO)}).Invoke(a, null)
-            , include);
-}
+        public List<TEntityPM> GetMultiFromCache(string cacheKey, Expression<Func<TEntityPOCO, bool>> predicate, string include = null)
+        {
+            List<TEntityPM> entityPMs;
+
+            cacheKey = $"TEntityPMGetMulti_({cacheKey};{include ?? string.Empty})";
+            var cacheObj = CacheManager.CacheWrapper.Get(cacheKey);
+            if (cacheObj != null)
+            {
+                entityPMs = (List<TEntityPM>)cacheObj;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(include))
+                {
+                    entityPMs = Repository.GetMulti<TEntityPM>(predicate, include);
+                }
+                else
+                {
+                    entityPMs = Repository.GetMulti<TEntityPM>(predicate);
+                }
+
+                if (entityPMs != null)
+                {
+                    CacheManager.CacheWrapper.Insert(cacheKey, entityPMs);
+                }
+                else
+                {
+                    CacheManager.CacheWrapper.Insert(cacheKey, new NullCache());
+                }
+            }
+            return entityPMs;
+        }
+        public TEntityPOCO GetFirst() => Repository.GetFirst();
+        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate)
+        => Repository.GetMulti<TEntityPM>(predicate);
+        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, string include)
+        => Repository.GetMulti<TEntityPM>(predicate,include);
+        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TEntityPM>> select)
+        => Repository.GetMulti(predicate,select);
+        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TEntityPM>> select, string include)
+        => Repository.GetMulti(predicate, select,include);
+
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TResult>> select)
+            => Repository.GetMulti(predicate, select);
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TResult>> select, string include)
+        => Repository.GetMulti(predicate, select, include);
+    }
 }

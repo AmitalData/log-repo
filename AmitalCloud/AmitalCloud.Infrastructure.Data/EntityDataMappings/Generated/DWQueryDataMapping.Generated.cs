@@ -24,28 +24,31 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         Id, 
+	         CdropId, 
 	         Tenant, 
 	         SQLString, 
 	         CreatedByUserId, 
 	         UpdateByUserId, 
 	         CreatedDate, 
-	         UpdatedDate,	      }
+	         UpdatedDate, 
+	         Id,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         Id, 
+	         CdropId, 
 	         Tenant, 
 	         SQLString, 
 	         CreatedByUserId, 
 	         UpdateByUserId, 
 	         CreatedDate, 
-	         UpdatedDate,	      }
+	         UpdatedDate, 
+	         Id,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(DWQueryPM entityPM, POCO.DWQuery entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropId)) { entityPOCO.CdropId = entityPM.CdropId;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SQLString)) { entityPOCO.SQLString = entityPM.SQLString;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserId)) { entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateByUserId)) { entityPOCO.UpdateByUserId = entityPM.UpdateByUserId;}
@@ -54,9 +57,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 					}
 		public void POCOToPM(DWQueryPM entityPM, POCO.DWQuery entityPOCO)
         {
-			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CdropId))
             {
-					entityPM.Id = entityPOCO.Id;
+					entityPM.CdropId = entityPOCO.CdropId;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
@@ -82,11 +85,19 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.UpdatedDate = entityPOCO.UpdatedDate;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
 		}
 		public void PMToOldPM(DWQueryPM entityPM, DWQueryPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CdropId))
+            {
+                oldEntityPM.CdropId = entityPM.CdropId;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
             }
@@ -131,6 +142,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CdropId)) //T4 find type == nText 
+            {
+                entityPM.CdropId = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CdropId));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SQLString)) //T4 find type == nText 
+            {
+                entityPM.SQLString = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SQLString));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

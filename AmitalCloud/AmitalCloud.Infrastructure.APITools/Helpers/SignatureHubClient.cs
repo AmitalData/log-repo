@@ -186,24 +186,24 @@ namespace AmitalCloud.Infrastructure.APITools.Helpers
             }
         }
 
-        public static void SafeSend(string LogitudeURL, string WorkEnvironment, SignQueueByType requestMessageType, string requestMessageData)
+        public static void SafeSend(string AmitalURL, string WorkEnvironment, SignQueueByType requestMessageType, string requestMessageData)
         {
-            if (!IsSafe(LogitudeURL, WorkEnvironment)) return;
+            if (!IsSafe(AmitalURL, WorkEnvironment)) return;
             Instance.Send(requestMessageType, requestMessageData);
         }
 
-        private static bool IsSafe(string LogitudeURL, string WorkEnvironment)
+        private static bool IsSafe(string AmitalURL, string WorkEnvironment)
         {
-            string host = GetHost(LogitudeURL);
+            string host = GetHost(AmitalURL);
             return !string.IsNullOrWhiteSpace(host);
         }
-        public static void SafeWakeUp(string LogitudeURL, string WorkEnvironment)
+        public static void SafeWakeUp(string AmitalURL, string WorkEnvironment)
         {
-            if (!IsSafe(LogitudeURL, WorkEnvironment)) return;
+            if (!IsSafe(AmitalURL, WorkEnvironment)) return;
             Instance.WakeUp();
         }
 
-        public static string GetHost(string LogitudeURL)
+        public static string GetHost(string AmitalURL)
         {
 
             if (!AmitalCloudSettings.IsCostomsDeploy)
@@ -239,7 +239,7 @@ namespace AmitalCloud.Infrastructure.APITools.Helpers
             // Any connection or hub wire up and configuration should go here
 
 
-            host = LogitudeURL;
+            host = AmitalURL;
             var uri = new Uri(host);
             host = host.Replace(uri.Host, "localhost");
             if (!string.IsNullOrWhiteSpace(itzikhost))

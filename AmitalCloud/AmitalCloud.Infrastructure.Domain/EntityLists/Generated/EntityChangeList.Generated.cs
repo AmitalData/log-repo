@@ -30,33 +30,39 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           EntityId  = entity.EntityId;
           CreateDate  = entity.CreateDate;
           CreateByUserId  = entity.CreateByUserId;
-          AutomationConditionFieldsXml  = entity.AutomationConditionFieldsXml;
           CheckStartDate  = entity.CheckStartDate;
           DoneDate  = entity.DoneDate;
           HasExecutedRecord  = entity.HasExecutedRecord;
+          AutomationConditionFieldsXml  = entity.AutomationConditionFieldsXml;
           ChangesFieldsXml  = entity.ChangesFieldsXml;
           ChangesAutomationFieldsXml  = entity.ChangesAutomationFieldsXml;
           SetAutomationSsucceedXml  = entity.SetAutomationSsucceedXml;
           EmailAutomationSsucceedXml  = entity.EmailAutomationSsucceedXml;
           SetAutomationFailedXml  = entity.SetAutomationFailedXml;
           EmailAutomationFailedXml  = entity.EmailAutomationFailedXml;
+          ExecutionTime  = entity.ExecutionTime;
           FollowUpAutomationFailedXml  = entity.FollowUpAutomationFailedXml;
           SetSLAAutomationFailedXml  = entity.SetSLAAutomationFailedXml;
           FollowUpAutomationSsucceedXml  = entity.FollowUpAutomationSsucceedXml;
           SetSLAAutomationSsucceedXml  = entity.SetSLAAutomationSsucceedXml;
           QueuedTaskAutomationFailedXml  = entity.QueuedTaskAutomationFailedXml;
           QueuedTaskAutomationSsucceedXml  = entity.QueuedTaskAutomationSsucceedXml;
+          DropSendinterfacefailedxml  = entity.DropSendinterfacefailedxml;
+          DropSendinterfacessucceedxml  = entity.DropSendinterfacessucceedxml;
+          DropSenddocumentfailedxml  = entity.DropSenddocumentfailedxml;
+          DropSenddocumentssucceedxml  = entity.DropSenddocumentssucceedxml;
+          DropCreatetaskfailedxml  = entity.DropCreatetaskfailedxml;
+          DropCreatetaskssucceedxml  = entity.DropCreatetaskssucceedxml;
           SendInterfaceAutomationFailedXml  = entity.SendInterfaceAutomationFailedXml;
           SendInterfaceAutomationSsucceedXml  = entity.SendInterfaceAutomationSsucceedXml;
           SendDocumentAutomationFailedXml  = entity.SendDocumentAutomationFailedXml;
           SendDocumentAutomationSsucceedXml  = entity.SendDocumentAutomationSsucceedXml;
-          CreateTaskAutomationFailedXml  = entity.CreateTaskAutomationFailedXml;
-          CreateTaskAutomationSsucceedXml  = entity.CreateTaskAutomationSsucceedXml;
           OnUpdateDocumentAutomationFailedXml  = entity.OnUpdateDocumentAutomationFailedXml;
           OnUpdateDocumentAutomationSsucceedXml  = entity.OnUpdateDocumentAutomationSsucceedXml;
+          CreateTaskAutomationFailedXml  = entity.CreateTaskAutomationFailedXml;
+          CreateTaskAutomationSsucceedXml  = entity.CreateTaskAutomationSsucceedXml;
           EventAutomationFailedXml  = entity.EventAutomationFailedXml;
           EventAutomationSsucceedXml  = entity.EventAutomationSsucceedXml;
-          ExecutionTime  = entity.ExecutionTime;
        }
        #endregion Constructors
        #region Properties
@@ -75,13 +81,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string CreateByUserId  { get; set; }
        [DataMember]
-       public string AutomationConditionFieldsXml  { get; set; }
-       [DataMember]
        public DateTime? CheckStartDate  { get; set; }
        [DataMember]
        public DateTime? DoneDate  { get; set; }
        [DataMember]
        public bool HasExecutedRecord  { get; set; }
+       [DataMember]
+       public string AutomationConditionFieldsXml  { get; set; }
        [DataMember]
        public string ChangesFieldsXml  { get; set; }
        [DataMember]
@@ -95,7 +101,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string EmailAutomationFailedXml  { get; set; }
        [DataMember]
+       public int ExecutionTime  { get; set; }
+
+       [Key]
+       [DataMember]
        public string FollowUpAutomationFailedXml  { get; set; }
+
+       [Key]
        [DataMember]
        public string SetSLAAutomationFailedXml  { get; set; }
        [DataMember]
@@ -107,6 +119,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string QueuedTaskAutomationSsucceedXml  { get; set; }
        [DataMember]
+       public string DropSendinterfacefailedxml  { get; set; }
+       [DataMember]
+       public string DropSendinterfacessucceedxml  { get; set; }
+       [DataMember]
+       public string DropSenddocumentfailedxml  { get; set; }
+       [DataMember]
+       public string DropSenddocumentssucceedxml  { get; set; }
+       [DataMember]
+       public string DropCreatetaskfailedxml  { get; set; }
+       [DataMember]
+       public string DropCreatetaskssucceedxml  { get; set; }
+       [DataMember]
        public string SendInterfaceAutomationFailedXml  { get; set; }
        [DataMember]
        public string SendInterfaceAutomationSsucceedXml  { get; set; }
@@ -115,19 +139,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string SendDocumentAutomationSsucceedXml  { get; set; }
        [DataMember]
-       public string CreateTaskAutomationFailedXml  { get; set; }
-       [DataMember]
-       public string CreateTaskAutomationSsucceedXml  { get; set; }
-       [DataMember]
        public string OnUpdateDocumentAutomationFailedXml  { get; set; }
        [DataMember]
        public string OnUpdateDocumentAutomationSsucceedXml  { get; set; }
        [DataMember]
+       public string CreateTaskAutomationFailedXml  { get; set; }
+       [DataMember]
+       public string CreateTaskAutomationSsucceedXml  { get; set; }
+       [DataMember]
        public string EventAutomationFailedXml  { get; set; }
        [DataMember]
        public string EventAutomationSsucceedXml  { get; set; }
-       [DataMember]
-       public int ExecutionTime  { get; set; }
          #endregion Properties
    }
 

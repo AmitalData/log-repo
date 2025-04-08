@@ -32,9 +32,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from d in context.UserFreelancerGroups where d.UserId == UserId && d.Tenant == tenant select d).ToList();
         }
-        public UserFreelancerGroup GetSingleUserFreelancerGroup(string id, int tenant)
+        public List<UserFreelancerGroup> GetUserFreelancerGroupByUserId(string UserId, int tenant)
         {
-            return (from record in context.UserFreelancerGroups.Include("User") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return context.UserFreelancerGroups
+                          .Where(d => d.UserId == UserId && d.Tenant == tenant)
+                          .ToList();
         }
 
 

@@ -24,6 +24,7 @@ namespace Logitude.FullAccounting.Test.Models
         public string BillToId { get; set; }
         public string BillToName { get; set; }
         public string BillToLocalName { get; set; }
+        public string BillToDisplayNumber { get; set; }
         public string BillToType { get; set; }
         public string BillToPartnerTypeId { get; set; }
         public string BillToCode { get; set; }
@@ -143,6 +144,7 @@ namespace Logitude.FullAccounting.Test.Models
 
 
         public string CreditedByARInvoiceId { get; set; }
+        public bool IsApprovalFailed { get; set; }
 
         public string ExternalAccountingEntityId { get; set; }
 

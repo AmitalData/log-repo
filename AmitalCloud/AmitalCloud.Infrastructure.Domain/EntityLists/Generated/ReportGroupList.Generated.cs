@@ -24,29 +24,32 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public ReportGroupList() : base() {}
        public ReportGroupList(POCO.ReportGroup entity) : base()
        {
-          Id  = entity.Id;
+          DropCdropId  = entity.DropCdropId;
           Tenant  = entity.Tenant;
+          OrderNumber  = entity.OrderNumber;
+          Id  = entity.Id;
           Code  = entity.Code;
           EnglishName  = entity.EnglishName;
           LocalName  = entity.LocalName;
-          OrderNumber  = entity.OrderNumber;
        }
        #endregion Constructors
        #region Properties
-   
+          [DataMember]
+       public string DropCdropId  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public int OrderNumber  { get; set; }
+
        [Key]
        [DataMember]
        public string Id  { get; set; }
-       [DataMember]
-       public int Tenant  { get; set; }
        [DataMember]
        public string Code  { get; set; }
        [DataMember]
        public string EnglishName  { get; set; }
        [DataMember]
        public string LocalName  { get; set; }
-       [DataMember]
-       public int OrderNumber  { get; set; }
          #endregion Properties
    }
 

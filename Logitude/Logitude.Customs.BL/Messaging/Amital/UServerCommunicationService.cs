@@ -367,7 +367,7 @@ MoreParams:blockdata ~{1}~
             if (String.IsNullOrWhiteSpace(_CommunicationModel.objectTableName)) return "";//not must 
             var objectTableRepository = new ObjectTableRepository(_CommunicationModel.Tenant); // ObjectTabelRepository tenant must be zero !!
             var objectTable = objectTableRepository.GetObjectTableByName(_CommunicationModel.objectTableName,// "Customs.PhysicalCheck", 
-                0, true);
+				_CommunicationModel.Tenant, true);
 
             return objectTable.Id;
         }

@@ -168,8 +168,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         OracleCommand cmd = new OracleCommand();
                         cmd.Connection = cn;
                         cmd.CommandText =
-                            DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Enqueue", Domain.Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
-                        //DBHelpers.DbContextBaseUtil.GetStoredProcedureName("TSTQueue_Enqueue", Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Enqueue", Domain.Enums.AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                         cmd.CommandType = CommandType.StoredProcedure;
 
 
@@ -456,7 +455,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_Jouranl_Approval", Domain.Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_Jouranl_Approval", Domain.Enums.AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
                             OracleParameter messageIdPar = new OracleParameter("v_MessageId", OracleDbType.Number);
@@ -665,7 +664,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek", Domain.Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek", Domain.Enums.AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
                             OracleParameter messageIdPar = new OracleParameter("v_MessageId", OracleDbType.Number);
@@ -864,7 +863,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek", Domain.Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek", Domain.Enums.AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
                             OracleParameter messageIdPar = new OracleParameter("v_MessageId", OracleDbType.Number);
@@ -1045,7 +1044,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     {
                         using (OracleConnection DBConnection = new OracleConnection(strConnString))
                         {
-                            OracleCommand cmd = new OracleCommand(DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", Domain.Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, DBConnection.ConnectionString), DBConnection);
+                            OracleCommand cmd = new OracleCommand(DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", Domain.Enums.AmitalCloudDBSchema.AMITAL_MAIN, DBConnection.ConnectionString), DBConnection);
                             try
                             {
                                 DBConnection.Open();
@@ -1147,7 +1146,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_DelayMessage", Domain.Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_DelayMessage", Domain.Enums.AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
 
@@ -1235,7 +1234,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_ReturnMessage", Domain.Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_ReturnMessage", Domain.Enums.AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
 
@@ -1309,7 +1308,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_SetStatus", Domain.Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_SetStatus", Domain.Enums.AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
 
@@ -1401,7 +1400,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_SetStatus", Domain.Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Queue_SetStatus", Domain.Enums.AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
 
@@ -1491,7 +1490,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Q_DelayMsgandChangeStatusTo0", Domain.Enums.AmitalCloudDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DBHelpers.DbContextBaseUtil.GetStoredProcedureName("Q_DelayMsgandChangeStatusTo0", Domain.Enums.AmitalCloudDBSchema.AMITAL_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
 

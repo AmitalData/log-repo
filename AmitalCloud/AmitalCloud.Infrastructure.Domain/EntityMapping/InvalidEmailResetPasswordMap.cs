@@ -22,13 +22,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.IP).HasColumnName("IP").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.IP).HasColumnName("IP").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 
-            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(70).IsUnicode(false);
         }
     }
 }

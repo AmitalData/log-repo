@@ -182,6 +182,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExcludeFromTaxReport"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="APInvoiceId"
     ReferencedTable="APInvoices"

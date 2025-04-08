@@ -24,35 +24,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public ContactLoginLogList() : base() {}
        public ContactLoginLogList(POCO.ContactLoginLog entity) : base()
        {
-          Id  = entity.Id;
+          CdropId  = entity.CdropId;
           Tenant  = entity.Tenant;
-          IP  = entity.IP;
-          Browser  = entity.Browser;
           ContactId  = entity.ContactId;
           GMTDateTime  = entity.GMTDateTime;
           LocalDateTime  = entity.LocalDateTime;
+          Id  = entity.Id;
+          IP  = entity.IP;
+          Browser  = entity.Browser;
           ComputerId  = entity.ComputerId;
           ContactAgent  = entity.ContactAgent;
           Via  = entity.Via;
        }
        #endregion Constructors
        #region Properties
-   
-       [Key]
-       [DataMember]
-       public string Id  { get; set; }
+          [DataMember]
+       public string CdropId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
-       [DataMember]
-       public string IP  { get; set; }
-       [DataMember]
-       public string Browser  { get; set; }
        [DataMember]
        public string ContactId  { get; set; }
        [DataMember]
        public DateTime? GMTDateTime  { get; set; }
        [DataMember]
        public DateTime? LocalDateTime  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public string IP  { get; set; }
+       [DataMember]
+       public string Browser  { get; set; }
        [DataMember]
        public string ComputerId  { get; set; }
        [DataMember]

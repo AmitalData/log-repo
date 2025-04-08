@@ -31,10 +31,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_logitudeURL = entity.LogitudeURL;
 		_champURL = entity.ChampURL;
-		_champTestAPIURL = entity.ChampTestAPIURL;
-		_champTestAPIPassword = entity.ChampTestAPIPassword;
-		_champProdAPIURL = entity.ChampProdAPIURL;
-		_champProdAPIPassword = entity.ChampProdAPIPassword;
 		_deploymentStage = entity.DeploymentStage;
 		_champEnv = entity.ChampEnv;
 		_customerCareIP = entity.CustomerCareIP;
@@ -73,15 +69,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_iOSPodAppMinimumVersion = entity.IOSPodAppMinimumVersion;
 		_minimumOutlookVersion = entity.MinimumOutlookVersion;
 		_sameUserLoginEnabled = entity.SameUserLoginEnabled;
+		_layoutDirection = entity.LayoutDirection;
 		_dropboxAppKey = entity.DropboxAppKey;
 		_dropboxAppSecret = entity.DropboxAppSecret;
 		_aBMProductId = entity.ABMProductId;
-		_layoutDirection = entity.LayoutDirection;
 		_azureFolderName = entity.AzureFolderName;
 		_signAppVersion = entity.SignAppVersion;
 		_documentFilingEmailDomain = entity.DocumentFilingEmailDomain;
-		_system2RedirectFraction = entity.System2RedirectFraction;
 		_reportsRunUsingWR = entity.ReportsRunUsingWR;
+		_system2RedirectFraction = entity.System2RedirectFraction;
 		_sMSServiceUserId = entity.SMSServiceUserId;
 		_sMSServiceAuthToken = entity.SMSServiceAuthToken;
 		_sMSServicePhoneNumber = entity.SMSServicePhoneNumber;
@@ -89,6 +85,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_iNTTRATestFTPHost = entity.INTTRATestFTPHost;
 		_oceanInsightsToken = entity.OceanInsightsToken;
 		_emailSendingQuota = entity.EmailSendingQuota;
+		_champTestAPIURL = entity.ChampTestAPIURL;
+		_champTestAPIPassword = entity.ChampTestAPIPassword;
+		_champProdAPIURL = entity.ChampProdAPIURL;
+		_champProdAPIPassword = entity.ChampProdAPIPassword;
 		_releaseNotesURL = entity.ReleaseNotesURL;
 		_cPUIntensiveWebServicesURL = entity.CPUIntensiveWebServicesURL;
 		_qBOOAuthDefault = entity.QBOOAuthDefault;
@@ -100,23 +100,24 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_oITenantNumber = entity.OITenantNumber;
 		_amitalCloudEnvironmentURL = entity.AmitalCloudEnvironmentURL;
 		_amitalCloudLogitudeTenantPrimaryKey = entity.AmitalCloudLogitudeTenantPrimaryKey;
+		_mainversion = entity.Mainversion;
 		_privateKey = entity.PrivateKey;
 		_amitalTaxesUrl = entity.AmitalTaxesUrl;
 		_taxesRediractUrl = entity.TaxesRediractUrl;
 		_amitalApiAddress = entity.AmitalApiAddress;
 		_amitalApiXFunctionsKey = entity.AmitalApiXFunctionsKey;
+		_tempStorageConnection = entity.TempStorageConnection;
 		_releaseDateString = entity.ReleaseDateString;
 		_azurePrincipalSecretKey = entity.AzurePrincipalSecretKey;
-		_dNSIPAddress = entity.DNSIPAddress;
 		_dNSZone = entity.DNSZone;
+		_dNSIPAddress = entity.DNSIPAddress;
 		_qboBaseUrl = entity.QboBaseUrl;
 		_qboEnvironment = entity.QboEnvironment;
 		_workflowStorageAccountName = entity.WorkflowStorageAccountName;
 		_workflowStorageAccountKey = entity.WorkflowStorageAccountKey;
 		_windWardSettings = entity.WindWardSettings;
-		_logitudeIISURL = entity.LogitudeIISURL;
 		_exportUrl = entity.ExportUrl;
-		_tempStorageConnection = entity.TempStorageConnection;
+		_logitudeIISURL = entity.LogitudeIISURL;
    }
    #endregion Constructors
    #region Properties
@@ -166,70 +167,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChampURL",OldValue=_champURL,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _champURL=value;
-		   }
-		 }
-	   }
-	  private string _champTestAPIURL ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChampTestAPIURL  
-	   {
-	     get { return _champTestAPIURL; }
-		 set
-		 {
-		   if(_champTestAPIURL != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChampTestAPIURL",OldValue=_champTestAPIURL,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _champTestAPIURL=value;
-		   }
-		 }
-	   }
-	  private string _champTestAPIPassword ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChampTestAPIPassword  
-	   {
-	     get { return _champTestAPIPassword; }
-		 set
-		 {
-		   if(_champTestAPIPassword != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChampTestAPIPassword",OldValue=_champTestAPIPassword,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _champTestAPIPassword=value;
-		   }
-		 }
-	   }
-	  private string _champProdAPIURL ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChampProdAPIURL  
-	   {
-	     get { return _champProdAPIURL; }
-		 set
-		 {
-		   if(_champProdAPIURL != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChampProdAPIURL",OldValue=_champProdAPIURL,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _champProdAPIURL=value;
-		   }
-		 }
-	   }
-	  private string _champProdAPIPassword ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChampProdAPIPassword  
-	   {
-	     get { return _champProdAPIPassword; }
-		 set
-		 {
-		   if(_champProdAPIPassword != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChampProdAPIPassword",OldValue=_champProdAPIPassword,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _champProdAPIPassword=value;
 		   }
 		 }
 	   }
@@ -841,6 +778,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _layoutDirection ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LayoutDirection  
+	   {
+	     get { return _layoutDirection; }
+		 set
+		 {
+		   if(_layoutDirection != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LayoutDirection",OldValue=_layoutDirection,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _layoutDirection=value;
+		   }
+		 }
+	   }
 	  private string _dropboxAppKey ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -886,22 +839,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ABMProductId",OldValue=_aBMProductId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _aBMProductId=value;
-		   }
-		 }
-	   }
-	  private string _layoutDirection ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LayoutDirection  
-	   {
-	     get { return _layoutDirection; }
-		 set
-		 {
-		   if(_layoutDirection != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LayoutDirection",OldValue=_layoutDirection,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _layoutDirection=value;
 		   }
 		 }
 	   }
@@ -953,22 +890,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private int _system2RedirectFraction ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int System2RedirectFraction  
-	   {
-	     get { return _system2RedirectFraction; }
-		 set
-		 {
-		   if(_system2RedirectFraction != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="System2RedirectFraction",OldValue=_system2RedirectFraction,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   _system2RedirectFraction=value;
-		   }
-		 }
-	   }
 	  private bool _reportsRunUsingWR ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -982,6 +903,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReportsRunUsingWR",OldValue=_reportsRunUsingWR,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _reportsRunUsingWR=value;
+		   }
+		 }
+	   }
+	  private int _system2RedirectFraction ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int System2RedirectFraction  
+	   {
+	     get { return _system2RedirectFraction; }
+		 set
+		 {
+		   if(_system2RedirectFraction != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="System2RedirectFraction",OldValue=_system2RedirectFraction,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _system2RedirectFraction=value;
 		   }
 		 }
 	   }
@@ -1094,6 +1031,70 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EmailSendingQuota",OldValue=_emailSendingQuota,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _emailSendingQuota=value;
+		   }
+		 }
+	   }
+	  private string _champTestAPIURL ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChampTestAPIURL  
+	   {
+	     get { return _champTestAPIURL; }
+		 set
+		 {
+		   if(_champTestAPIURL != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChampTestAPIURL",OldValue=_champTestAPIURL,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _champTestAPIURL=value;
+		   }
+		 }
+	   }
+	  private string _champTestAPIPassword ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChampTestAPIPassword  
+	   {
+	     get { return _champTestAPIPassword; }
+		 set
+		 {
+		   if(_champTestAPIPassword != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChampTestAPIPassword",OldValue=_champTestAPIPassword,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _champTestAPIPassword=value;
+		   }
+		 }
+	   }
+	  private string _champProdAPIURL ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChampProdAPIURL  
+	   {
+	     get { return _champProdAPIURL; }
+		 set
+		 {
+		   if(_champProdAPIURL != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChampProdAPIURL",OldValue=_champProdAPIURL,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _champProdAPIURL=value;
+		   }
+		 }
+	   }
+	  private string _champProdAPIPassword ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChampProdAPIPassword  
+	   {
+	     get { return _champProdAPIPassword; }
+		 set
+		 {
+		   if(_champProdAPIPassword != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChampProdAPIPassword",OldValue=_champProdAPIPassword,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _champProdAPIPassword=value;
 		   }
 		 }
 	   }
@@ -1273,6 +1274,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _mainversion ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Mainversion  
+	   {
+	     get { return _mainversion; }
+		 set
+		 {
+		   if(_mainversion != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Mainversion",OldValue=_mainversion,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _mainversion=value;
+		   }
+		 }
+	   }
 	  private string _privateKey ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1353,6 +1370,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _tempStorageConnection ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TempStorageConnection  
+	   {
+	     get { return _tempStorageConnection; }
+		 set
+		 {
+		   if(_tempStorageConnection != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TempStorageConnection",OldValue=_tempStorageConnection,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _tempStorageConnection=value;
+		   }
+		 }
+	   }
 	  private string _releaseDateString ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1385,22 +1418,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _dNSIPAddress ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DNSIPAddress  
-	   {
-	     get { return _dNSIPAddress; }
-		 set
-		 {
-		   if(_dNSIPAddress != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DNSIPAddress",OldValue=_dNSIPAddress,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _dNSIPAddress=value;
-		   }
-		 }
-	   }
 	  private string _dNSZone ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1414,6 +1431,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DNSZone",OldValue=_dNSZone,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _dNSZone=value;
+		   }
+		 }
+	   }
+	  private string _dNSIPAddress ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DNSIPAddress  
+	   {
+	     get { return _dNSIPAddress; }
+		 set
+		 {
+		   if(_dNSIPAddress != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DNSIPAddress",OldValue=_dNSIPAddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dNSIPAddress=value;
 		   }
 		 }
 	   }
@@ -1497,22 +1530,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _logitudeIISURL ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LogitudeIISURL  
-	   {
-	     get { return _logitudeIISURL; }
-		 set
-		 {
-		   if(_logitudeIISURL != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LogitudeIISURL",OldValue=_logitudeIISURL,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _logitudeIISURL=value;
-		   }
-		 }
-	   }
 	  private string _exportUrl ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1529,19 +1546,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _tempStorageConnection ;
+	  private string _logitudeIISURL ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string TempStorageConnection  
+       public string LogitudeIISURL  
 	   {
-	     get { return _tempStorageConnection; }
+	     get { return _logitudeIISURL; }
 		 set
 		 {
-		   if(_tempStorageConnection != value)
+		   if(_logitudeIISURL != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TempStorageConnection",OldValue=_tempStorageConnection,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LogitudeIISURL",OldValue=_logitudeIISURL,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   _tempStorageConnection=value;
+		   _logitudeIISURL=value;
 		   }
 		 }
 	   }

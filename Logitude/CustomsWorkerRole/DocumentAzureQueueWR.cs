@@ -7,7 +7,6 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.ExternalServices;
 using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -29,9 +28,10 @@ using Simplog.Data.InfrastructureModel;
 using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.Server.Tools.Utils;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 
 namespace CustomsWorkerRole
@@ -54,7 +54,7 @@ namespace CustomsWorkerRole
 		}
 
 		public override bool OnStart()
-		{			
+		{
 			ThreadId = Guid.NewGuid().ToString();
 			DoneItemsInRange = new Dictionary<DateTime, int>();
 			ConnectClient();
@@ -125,7 +125,7 @@ namespace CustomsWorkerRole
 				AutoCompleteMessages = false,
 				MaxConcurrentCalls = 1,
 				ReceiveMode = ServiceBusReceiveMode.PeekLock,
-				MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(90),
+				MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(3),
 			});
 
 			processor.ProcessMessageAsync += async (args) =>
@@ -345,14 +345,16 @@ namespace CustomsWorkerRole
 		}
 		public Response UpsertDocumentData(DocumentsFilingPM entityPM)
 		{
-			CheckLock(entityPM.Id);
-			using (TransactionScope scope = new TransactionScope())
+
+			Response response = new Response();
+			TransactionScope scope = null;
+			try
+
 			{
-
-				Response response = new Response();
-
-				try
-				{
+				CheckLock(entityPM.Id);
+				using (scope = new TransactionScope(TransactionScopeOption.Required,
+							new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
+			    {				
 
 					ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
 					IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityPM.Tenant);
@@ -391,49 +393,50 @@ namespace CustomsWorkerRole
 						response.Result = entityPM.Id;
 						response.Result2 = entityPM.SecurityId;
 					}
-					return response;
-				}
-
-				catch (System.Data.Entity.Validation.DbEntityValidationException e)
-				{
-					string Error = "";
-					foreach (var eve in e.EntityValidationErrors)
-					{
-						Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-							eve.Entry.Entity.GetType().Name, eve.Entry.State);
-						foreach (var ve in eve.ValidationErrors)
-						{
-							Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-								ve.PropertyName, ve.ErrorMessage);
-
-							Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
-						}
-					}
-
-					response.HasError = true;
-					response.ErrorMessage = Error;
-
-					return response;
-				}
-				catch (Exception ex)
-				{
-					response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
-					response.HasError = true;
-					response.ErrorMessage = ex.Message;
-					response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
-					if (!string.IsNullOrEmpty(ex.StackTrace))
-					{
-						response.ErrorMessage += Environment.NewLine + ex.StackTrace;
-					}
-					return response;
-				}
-				finally
-				{
 					scope.Complete();
+
+					return response;
+			    }
+			}
+			catch (System.Data.Entity.Validation.DbEntityValidationException e)
+			{
+				string Error = "";
+				foreach (var eve in e.EntityValidationErrors)
+				{
+					Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+						eve.Entry.Entity.GetType().Name, eve.Entry.State);
+					foreach (var ve in eve.ValidationErrors)
+					{
+						Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+							ve.PropertyName, ve.ErrorMessage);
+
+						Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
+					}
 				}
 
+				response.HasError = true;
+				response.ErrorMessage = Error;
+
+				return response;
 			}
+			catch (Exception ex)
+			{
+				response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+				response.HasError = true;
+				response.ErrorMessage = ex.Message;
+				response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+				if (!string.IsNullOrEmpty(ex.StackTrace))
+				{
+					response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+				}
+				return response;
+			}
+			finally
+			{
+			}
+
 		}
+
 		public void CheckLock(string id)
 		{
 			string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(id, tenant);

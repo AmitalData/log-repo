@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class EntityCasualDataListQueryService  : BaseEntityListQueryService<EntityCasualDataList,POCO.EntityCasualData,  EntityCasualDataKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.EntityCasualData> contextEntity => (context as IAmitalCloudContext).EntityCasualDatas;
+	    protected override System.Data.Entity.IDbSet<POCO.EntityCasualData> contextEntity => (context as IAmitalCloudContext).EntityCasualData;
 		public EntityCasualDataListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public EntityCasualDataList GetSingle(string id)
 		{

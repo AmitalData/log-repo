@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.SharedKey });
 	 
-            this.Property(t => t.SharedKey).HasColumnName("SharedKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropSharedkey).HasColumnName("CdropSharedkey").IsRequired().HasMaxLength(128).IsUnicode(true);
 
             this.Property(t => t.Agent1Tenant).HasColumnName("Agent1Tenant").IsRequired();
 
@@ -30,17 +30,27 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 
-            this.Property(t => t.CreatedByUserEmail).HasColumnName("CreatedByUserEmail").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropCreatedbyuseremail).HasColumnName("CdropCreatedbyuseremail").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.ApprovedByUserEmail).HasColumnName("ApprovedByUserEmail").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropApprovedbyuseremail).HasColumnName("CdropApprovedbyuseremail").IsRequired().IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.ApproveDate).HasColumnName("ApproveDate").IsRequired();
 
             this.Property(t => t.InactiveDate).HasColumnName("InactiveDate").IsRequired();
 
-            this.Property(t => t.InactiveByUserEmail).HasColumnName("InactiveByUserEmail").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropInactivebyuseremail).HasColumnName("CdropInactivebyuseremail").IsRequired().IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.StatusCode).HasColumnName("StatusCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropStatuscode).HasColumnName("CdropStatuscode").IsRequired().HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.SharedKey).HasColumnName("SharedKey").IsRequired().HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.CreatedByUserEmail).HasColumnName("CreatedByUserEmail").IsRequired().HasMaxLength(70).IsUnicode(false);
+
+            this.Property(t => t.ApprovedByUserEmail).HasColumnName("ApprovedByUserEmail").IsRequired().HasMaxLength(70).IsUnicode(false);
+
+            this.Property(t => t.InactiveByUserEmail).HasColumnName("InactiveByUserEmail").IsRequired().HasMaxLength(70).IsUnicode(false);
+
+            this.Property(t => t.StatusCode).HasColumnName("StatusCode").IsRequired().HasMaxLength(4).IsUnicode(false);
         }
     }
 }

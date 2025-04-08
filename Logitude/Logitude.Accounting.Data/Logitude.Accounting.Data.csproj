@@ -302,6 +302,7 @@
     <Compile Include="EntityLists\Generated\TenantIdleStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UserDefinedReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VatReportStatusList.Generated.cs" />
+    <Compile Include="EntityLists\LedgerTransactionDeductionDTO.cs" />
     <Compile Include="EntityLists\LedgerTransactionJournalLineLT.cs" />
     <Compile Include="EntityMapping\AccountingEntityJournalMap.cs" />
     <Compile Include="EntityMapping\AccountingIntegrityCheckMap.cs" />
@@ -389,6 +390,7 @@
     <Compile Include="EntityPOCOs\JournalAdditionalData.cs" />
     <Compile Include="EntityPOCOs\JournalExternalReconcile.cs" />
     <Compile Include="EntityPOCOs\JournalMoreData.cs" />
+    <Compile Include="EntityPOCOs\LedgerTransactionsDeductionView.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReport.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReportStatus.cs" />
     <Compile Include="EntityPOCOs\RevaluationStatus.cs" />
@@ -406,9 +408,13 @@
     <Compile Include="Enums\AccountingEntityCodes.cs" />
     <Compile Include="Enums\ChartOfAccountsTypes.cs" />
     <Compile Include="Enums\GLAccountTypes.cs" />
+    <Compile Include="Enums\InterestEntityTypeCodes.cs" />
     <Compile Include="Enums\InterestEntityTypes.cs" />
+    <Compile Include="Enums\InterestPeriodLineTypes.cs" />
     <Compile Include="Enums\InterestReportStatusCodes.cs" />
-    <Compile Include="Enums\RevaluationStatusEnum.cs" />
+     <Compile Include="Enums\OpenFormatDocumentTypes.cs" />
+     <Compile Include="Enums\JournalActionTypes.cs" />
+     <Compile Include="Enums\RevaluationStatusEnum.cs" />
     <Compile Include="Repositories\AccountingEntityJournalRepository.cs" />
     <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
     <Compile Include="Repositories\Aur_ItemRepository.cs" />

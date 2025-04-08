@@ -20,8 +20,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	{
 		
         [Key]
+        [ForeignKey("DocumentsFiling")]
         [Column("Id")]
 	    public string Id { get; set; }
+	      
+        public virtual DocumentsFiling DocumentsFiling { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
         [Column("Issued")]
@@ -32,24 +35,25 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string DocumentTemplateId { get; set; }
         [Column("EmailTemplateId")]
 	    public string EmailTemplateId { get; set; }
-        [ForeignKey("XamlDocument")]
+        [ForeignKey("Document")]
         [Column("XamlDocumentId")]
 	    public string XamlDocumentId { get; set; }
 	      
-        public virtual Document XamlDocument { get; set; }
+        public virtual Document Document { get; set; }
         [Column("NeedsRebuild")]
 	    public bool NeedsRebuild { get; set; }
         [Column("IsBlobExist")]
 	    public bool IsBlobExist { get; set; }
         [Column("IssuedDate")]
 	    public DateTime? IssuedDate { get; set; }
-        [ForeignKey("IssuedByUser")]
+        [ForeignKey("User")]
         [Column("IssuedByUserId")]
 	    public string IssuedByUserId { get; set; }
 	      
-        public virtual User IssuedByUser { get; set; }
-        [Column("DocumentsFiling")]
-	    public string DocumentsFiling { get; set; }
+        public virtual User User { get; set; }
+		public virtual ICollection<CommunicationLog> CommunicationLogs { get; set; }
+		public virtual ICollection<DocumentOutCopy> DocumentOutCopys { get; set; }
+		public virtual ICollection<FollowUp> FollowUps { get; set; }
     }
 }
 	 

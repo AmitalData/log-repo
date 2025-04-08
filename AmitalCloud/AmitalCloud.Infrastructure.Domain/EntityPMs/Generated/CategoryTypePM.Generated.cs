@@ -31,6 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
+		menusTables = entity.MenusTables != null ? entity.MenusTables.Select(a=>new MenusTablePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -83,6 +84,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<MenusTablePM> menusTables;
+	 
+		     
+	   [Include]
+	   [Association("MenusTableCategoryType", "Code","Categorytypecode")]
+	   [DataMember]
+	   public virtual List<MenusTablePM> MenusTables  
+	   {
+	        get
+             {
+                 if (menusTables == null)
+                 {
+                     menusTables = new List<MenusTablePM>();
+                 }
+                 return menusTables;
+              }
+             set { menusTables = value; }
+	    }
+	   private List<MenusTablePM>  deletedMenusTables;
+	   public virtual List<MenusTablePM> DeletedMenusTables  
+	   {
+	        get
+             {
+                 if ( deletedMenusTables == null)
+                 {
+                      deletedMenusTables = new List<MenusTablePM>();
+                 }
+                 return  deletedMenusTables;
+              }
+             set {  deletedMenusTables = value; }
+	    }
 	 }
 #endregion Properties
 }

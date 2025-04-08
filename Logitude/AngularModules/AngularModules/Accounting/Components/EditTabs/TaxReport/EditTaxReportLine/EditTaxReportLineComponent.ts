@@ -117,6 +117,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     set Reference(value: string) {
         if (this.TaxReportLinePM.Reference != value) {
             this.TaxReportLinePM.Reference = value;
+            this.TaxReportLinePM.OriginalReference = value;
         }
     }
     get ConfirmationNumber() { return this.TaxReportLinePM.ConfirmationNumber; }

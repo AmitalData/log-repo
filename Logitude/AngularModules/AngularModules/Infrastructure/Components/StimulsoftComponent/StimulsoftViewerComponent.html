@@ -159,7 +159,9 @@
 
                 <td *ngIf="IsShowSendButton" style="width:7px"><div style="width:7px"></div></td>
 
-
+                <td *ngIf="false" >
+                    <button class="Button" style="height:22px;width:22px;" [disabled]="!IsEditingEnabled" (click)="ExportToExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                </td>
 
                 <td *ngIf="IsShowSendButton" style="width:80px;vertical-align:middle;">
                     <div style="width:80px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
@@ -400,7 +402,7 @@
     </div>
 
     <div [style.display]="Footervisibility" style="display:block;border-top:1px solid gray;height:30px;background-color:#D1D6D8;text-align:left;vertical-align:central">
-        <table style="width:250px;vertical-align:central;height:30px;">
+        <table style="width:250px;vertical-align:central;height:30px; margin-right: 120px;">
             <tr style="vertical-align:central">
 
 

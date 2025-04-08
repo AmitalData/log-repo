@@ -430,7 +430,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             List<ObjectTablePM> result = new List<ObjectTablePM>();
             List<ObjectTablePM> currentTenantTables = new List<ObjectTablePM>();
             List<ObjectTablePM> zeroTenantTables = new List<ObjectTablePM>();
-             
+            var contextTenant = SettingUtil.GetCurrentTenant();
             if (tenant != 0)
             {
                 if (HttpContext.Current != null)
@@ -439,7 +439,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                         {
-                            IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                            IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
                             currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                                    where (a.Tenant == tenant && a.InActive == false)
                                                    select new ObjectTablePM()
@@ -533,7 +533,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
                         currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                                where (a.Tenant == tenant && a.InActive == false)
                                                select new ObjectTablePM()
@@ -624,7 +624,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
                         zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                             where (a.Tenant == 0 && a.InActive == false)
                                                select new ObjectTablePM()
@@ -722,7 +722,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                    IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
                     zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                         where (a.Tenant == 0 && a.InActive == false)
                                         select new ObjectTablePM()

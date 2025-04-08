@@ -155,7 +155,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string UsoCFDICode { get; set; }
 	      
         public virtual UsoCFDI UsoCFDI { get; set; }
-		public virtual ICollection<Contact> Contacts { get; set; }
         [Column("GLAccountId")]
 	    public string GLAccountId { get; set; }
         [Column("Address1")]

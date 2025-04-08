@@ -25,6 +25,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public int IndexNumber { get; set; }
         [Column("Color")]
 	    public string Color { get; set; }
+        [Column("Rowid")]
+	    public string Rowid { get; set; }
     }
 }
 	 

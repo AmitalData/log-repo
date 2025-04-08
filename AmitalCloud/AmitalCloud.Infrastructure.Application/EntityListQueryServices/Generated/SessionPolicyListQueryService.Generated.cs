@@ -17,8 +17,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class SessionPolicyListQueryService  : BaseEntityListQueryService<SessionPolicyList,POCO.SessionPolicy,  SessionPolicyKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.SessionPolicy> contextEntity => (context as IAmitalCloudContext).SessionPolicys;
-		public SessionPolicyListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+	    protected override System.Data.Entity.IDbSet<POCO.SessionPolicy> contextEntity => (context as IGlobalContext).SessionPolicies;
+		public SessionPolicyListQueryService(int tenant) : base(GlobalContext.GetContext(tenant)) { }
         public SessionPolicyList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

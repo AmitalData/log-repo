@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class DWObjectFieldCategoriesListQueryService  : BaseEntityListQueryService<DWObjectFieldCategoriesList,POCO.DWObjectFieldCategories,  DWObjectFieldCategoriesKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.DWObjectFieldCategories> contextEntity => (context as IAmitalCloudContext).DWObjectFieldCategoriess;
+	    protected override System.Data.Entity.IDbSet<POCO.DWObjectFieldCategories> contextEntity => (context as IAmitalCloudContext).DWObjectFieldCategories;
 		public DWObjectFieldCategoriesListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public DWObjectFieldCategoriesList GetSingle(string id)
 		{

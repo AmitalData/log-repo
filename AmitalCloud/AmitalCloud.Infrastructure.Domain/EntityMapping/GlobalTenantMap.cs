@@ -24,23 +24,19 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	 
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasDatabaseGeneratedOption(null);
 
-            this.Property(t => t.GlobalDBId).HasColumnName("GlobalDBId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.GlobalDBId).HasColumnName("GlobalDBId").IsRequired().HasMaxLength(15).IsUnicode(true);
 
-            this.Property(t => t.CompanyName).HasColumnName("CompanyName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CompanyName).HasColumnName("CompanyName").IsRequired().HasMaxLength(100).IsUnicode(true);
 
             this.Property(t => t.Version).HasColumnName("Version").IsRequired();
 
             this.Property(t => t.IsActive).HasColumnName("IsActive").IsRequired();
 
-            this.Property(t => t.TTY).HasColumnName("TTY").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TTY).HasColumnName("TTY").IsRequired().HasMaxLength(33).IsUnicode(false);
 
-            this.Property(t => t.computed).HasColumnName("computed").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.PrivateLabelId).HasColumnName("PrivateLabelId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate").IsRequired();
-
-            this.Property(t => t.TenantManagement).HasColumnName("TenantManagement").IsRequired();
         }
     }
 }

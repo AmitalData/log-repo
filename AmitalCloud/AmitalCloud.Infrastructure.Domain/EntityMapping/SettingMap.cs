@@ -22,37 +22,29 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.LogitudeURL).HasColumnName("LogitudeURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.LogitudeURL).HasColumnName("LogitudeURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.ChampURL).HasColumnName("ChampURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ChampURL).HasColumnName("ChampURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.ChampTestAPIURL).HasColumnName("ChampTestAPIURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DeploymentStage).HasColumnName("DeploymentStage").IsRequired().HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.ChampTestAPIPassword).HasColumnName("ChampTestAPIPassword").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ChampEnv).HasColumnName("ChampEnv").IsRequired().HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.ChampProdAPIURL).HasColumnName("ChampProdAPIURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CustomerCareIP).HasColumnName("CustomerCareIP").IsRequired().HasMaxLength(250).IsUnicode(false);
 
-            this.Property(t => t.ChampProdAPIPassword).HasColumnName("ChampProdAPIPassword").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.DeploymentStage).HasColumnName("DeploymentStage").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.ChampEnv).HasColumnName("ChampEnv").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.CustomerCareIP).HasColumnName("CustomerCareIP").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.TotangoServiceId).HasColumnName("TotangoServiceId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TotangoServiceId).HasColumnName("TotangoServiceId").IsRequired().HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.UsingAzure).HasColumnName("UsingAzure").IsRequired();
 
-            this.Property(t => t.StorageAccountName).HasColumnName("StorageAccountName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.StorageAccountName).HasColumnName("StorageAccountName").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.StorageAccountKey).HasColumnName("StorageAccountKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.StorageAccountKey).HasColumnName("StorageAccountKey").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
             this.Property(t => t.IsLogEnabled).HasColumnName("IsLogEnabled").IsRequired();
 
-            this.Property(t => t.StorageType).HasColumnName("StorageType").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.StorageType).HasColumnName("StorageType").IsRequired().HasMaxLength(60).IsUnicode(false);
 
             this.Property(t => t.LogitudeCRMTenantNumber).HasColumnName("LogitudeCRMTenantNumber").IsRequired();
 
@@ -60,163 +52,173 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.AndroidSharedAppMinimumVersion).HasColumnName("AndroidSharedAppMinimumVersion").IsRequired();
 
-            this.Property(t => t.AutoSignupEmail).HasColumnName("AutoSignupEmail").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AutoSignupEmail).HasColumnName("AutoSignupEmail").IsRequired().HasMaxLength(70).IsUnicode(false);
 
-            this.Property(t => t.AutoSignupPassword).HasColumnName("AutoSignupPassword").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AutoSignupPassword).HasColumnName("AutoSignupPassword").IsRequired().HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.ForceHttps).HasColumnName("ForceHttps").IsRequired();
 
-            this.Property(t => t.CheckConnectionURL).HasColumnName("CheckConnectionURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CheckConnectionURL).HasColumnName("CheckConnectionURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.WorkEnvironment).HasColumnName("WorkEnvironment").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.WorkEnvironment).HasColumnName("WorkEnvironment").IsRequired().HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.LogoCode).HasColumnName("LogoCode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.LogoCode).HasColumnName("LogoCode").IsRequired().HasMaxLength(5).IsUnicode(false);
 
             this.Property(t => t.EnableHybridQueue).HasColumnName("EnableHybridQueue").IsRequired();
 
-            this.Property(t => t.GLSHKURL).HasColumnName("GLSHKURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.GLSHKURL).HasColumnName("GLSHKURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.GLSHKEnv).HasColumnName("GLSHKEnv").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.GLSHKEnv).HasColumnName("GLSHKEnv").IsRequired().HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.NotificationHubName).HasColumnName("NotificationHubName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.NotificationHubName).HasColumnName("NotificationHubName").IsRequired().HasMaxLength(100).IsUnicode(false);
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnectionStrin").IsRequired().HasMaxLength(0).IsUnicode(false);
+              this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnectionStrin").IsRequired().HasMaxLength(600).IsUnicode(false);
 			}
 			else
 			{
-              this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnectionString").IsRequired().HasMaxLength(0).IsUnicode(false);
+              this.Property(t => t.NotificationHubConnectionString).HasColumnName("NotificationHubConnectionString").IsRequired().HasMaxLength(600).IsUnicode(false);
 			}
 
 
-            this.Property(t => t.CustomerTenantsURL).HasColumnName("CustomerTenantsURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CustomerTenantsURL).HasColumnName("CustomerTenantsURL").IsRequired().HasMaxLength(600).IsUnicode(false);
 
-            this.Property(t => t.ForwarderTenantsURL).HasColumnName("ForwarderTenantsURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ForwarderTenantsURL).HasColumnName("ForwarderTenantsURL").IsRequired().HasMaxLength(600).IsUnicode(false);
 
-            this.Property(t => t.DomainName).HasColumnName("DomainName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DomainName).HasColumnName("DomainName").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.ProductName).HasColumnName("ProductName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ProductName).HasColumnName("ProductName").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.EmailAlertSignature).HasColumnName("EmailAlertSignature").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.EmailAlertSignature).HasColumnName("EmailAlertSignature").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.QueueServiceMode).HasColumnName("QueueServiceMode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QueueServiceMode).HasColumnName("QueueServiceMode").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.StorageServiceMode).HasColumnName("StorageServiceMode").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.StorageServiceMode).HasColumnName("StorageServiceMode").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsUpgradingChamp).HasColumnName("IsUpgradingChamp").IsRequired();
 
-            this.Property(t => t.HtmlVersion).HasColumnName("HtmlVersion").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.HtmlVersion).HasColumnName("HtmlVersion").IsRequired().HasMaxLength(10).IsUnicode(false);
 
-            this.Property(t => t.AndroidAppLink).HasColumnName("AndroidAppLink").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AndroidAppLink).HasColumnName("AndroidAppLink").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.IOSAppLink).HasColumnName("IOSAppLink").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.IOSAppLink).HasColumnName("IOSAppLink").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
             this.Property(t => t.AndroidPodAppMinimumVersion).HasColumnName("AndroidPodAppMinimumVersion").IsRequired();
 
             this.Property(t => t.IOSPodAppMinimumVersion).HasColumnName("IOSPodAppMinimumVersion").IsRequired();
 
-            this.Property(t => t.MinimumOutlookVersion).HasColumnName("MinimumOutlookVersion").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.MinimumOutlookVersion).HasColumnName("MinimumOutlookVersion").IsRequired().HasMaxLength(10).IsUnicode(false);
 
             this.Property(t => t.SameUserLoginEnabled).HasColumnName("SameUserLoginEnabled").IsRequired();
 
-            this.Property(t => t.DropboxAppKey).HasColumnName("DropboxAppKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.LayoutDirection).HasColumnName("LayoutDirection").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.DropboxAppSecret).HasColumnName("DropboxAppSecret").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DropboxAppKey).HasColumnName("DropboxAppKey").IsRequired().HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.ABMProductId).HasColumnName("ABMProductId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DropboxAppSecret).HasColumnName("DropboxAppSecret").IsRequired().HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.LayoutDirection).HasColumnName("LayoutDirection").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ABMProductId).HasColumnName("ABMProductId").IsRequired().HasMaxLength(25).IsUnicode(false);
 
-            this.Property(t => t.AzureFolderName).HasColumnName("AzureFolderName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AzureFolderName).HasColumnName("AzureFolderName").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.SignAppVersion).HasColumnName("SignAppVersion").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SignAppVersion).HasColumnName("SignAppVersion").IsRequired().HasMaxLength(10).IsUnicode(false);
 
-            this.Property(t => t.DocumentFilingEmailDomain).HasColumnName("DocumentFilingEmailDomain").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.System2RedirectFraction).HasColumnName("System2RedirectFraction").IsRequired();
+            this.Property(t => t.DocumentFilingEmailDomain).HasColumnName("DocumentFilingEmailDomain").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
             this.Property(t => t.ReportsRunUsingWR).HasColumnName("ReportsRunUsingWR").IsRequired();
 
-            this.Property(t => t.SMSServiceUserId).HasColumnName("SMSServiceUserId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.System2RedirectFraction).HasColumnName("System2RedirectFraction").IsRequired();
 
-            this.Property(t => t.SMSServiceAuthToken).HasColumnName("SMSServiceAuthToken").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SMSServiceUserId).HasColumnName("SMSServiceUserId").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.SMSServicePhoneNumber).HasColumnName("SMSServicePhoneNumber").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SMSServiceAuthToken).HasColumnName("SMSServiceAuthToken").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.INTTRAProdFTPHost).HasColumnName("INTTRAProdFTPHost").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.SMSServicePhoneNumber).HasColumnName("SMSServicePhoneNumber").IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            this.Property(t => t.INTTRATestFTPHost).HasColumnName("INTTRATestFTPHost").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.INTTRAProdFTPHost).HasColumnName("INTTRAProdFTPHost").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.OceanInsightsToken).HasColumnName("OceanInsightsToken").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.INTTRATestFTPHost).HasColumnName("INTTRATestFTPHost").IsRequired().HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.OceanInsightsToken).HasColumnName("OceanInsightsToken").IsRequired().HasMaxLength(200).IsUnicode(false);
 
             this.Property(t => t.EmailSendingQuota).HasColumnName("EmailSendingQuota").IsRequired();
 
-            this.Property(t => t.ReleaseNotesURL).HasColumnName("ReleaseNotesURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ChampTestAPIURL).HasColumnName("ChampTestAPIURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.CPUIntensiveWebServicesURL).HasColumnName("CPUIntensiveWebServicesURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ChampTestAPIPassword).HasColumnName("ChampTestAPIPassword").IsRequired().HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.ChampProdAPIURL).HasColumnName("ChampProdAPIURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
+
+            this.Property(t => t.ChampProdAPIPassword).HasColumnName("ChampProdAPIPassword").IsRequired().HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.ReleaseNotesURL).HasColumnName("ReleaseNotesURL").IsRequired().HasMaxLength(600).IsUnicode(false);
+
+            this.Property(t => t.CPUIntensiveWebServicesURL).HasColumnName("CPUIntensiveWebServicesURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
             this.Property(t => t.QBOOAuthDefault).HasColumnName("QBOOAuthDefault").IsRequired();
 
-            this.Property(t => t.QBOClientID).HasColumnName("QBOClientID").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QBOClientID).HasColumnName("QBOClientID").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.QBOClientSecret).HasColumnName("QBOClientSecret").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QBOClientSecret).HasColumnName("QBOClientSecret").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.TMPersonalAccessToken).HasColumnName("TMPersonalAccessToken").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TMPersonalAccessToken).HasColumnName("TMPersonalAccessToken").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.LogitudeDemoTenants).HasColumnName("LogitudeDemoTenants").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.LogitudeDemoTenants).HasColumnName("LogitudeDemoTenants").IsRequired().HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.TMPersonalAccessExpirationDate).HasColumnName("TMPersonalAccessExpirationDate").IsRequired();
 
             this.Property(t => t.OITenantNumber).HasColumnName("OITenantNumber").IsRequired();
 
-            this.Property(t => t.AmitalCloudEnvironmentURL).HasColumnName("AmitalCloudEnvironmentURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AmitalCloudEnvironmentURL).HasColumnName("AmitalCloudEnvironmentURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrima").IsRequired().HasMaxLength(0).IsUnicode(false);
+              this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrima").IsRequired().HasMaxLength(50).IsUnicode(true);
 			}
 			else
 			{
-              this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+              this.Property(t => t.AmitalCloudLogitudeTenantPrimaryKey).HasColumnName("AmitalCloudLogitudeTenantPrimaryKey").IsRequired().HasMaxLength(50).IsUnicode(true);
 			}
 
 
-            this.Property(t => t.PrivateKey).HasColumnName("PrivateKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Mainversion).HasColumnName("Mainversion").IsRequired().HasMaxLength(50).IsUnicode(true);
 
-            this.Property(t => t.AmitalTaxesUrl).HasColumnName("AmitalTaxesUrl").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.PrivateKey).HasColumnName("PrivateKey").IsRequired().HasMaxLength(500).IsUnicode(true);
 
-            this.Property(t => t.TaxesRediractUrl).HasColumnName("TaxesRediractUrl").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AmitalTaxesUrl).HasColumnName("AmitalTaxesUrl").IsRequired().HasMaxLength(250).IsUnicode(true);
 
-            this.Property(t => t.AmitalApiAddress).HasColumnName("AmitalApiAddress").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TaxesRediractUrl).HasColumnName("TaxesRediractUrl").IsRequired().HasMaxLength(250).IsUnicode(true);
 
-            this.Property(t => t.AmitalApiXFunctionsKey).HasColumnName("AmitalApiXFunctionsKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AmitalApiAddress).HasColumnName("AmitalApiAddress").IsRequired().HasMaxLength(250).IsUnicode(true);
 
-            this.Property(t => t.ReleaseDateString).HasColumnName("ReleaseDateString").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AmitalApiXFunctionsKey).HasColumnName("AmitalApiXFunctionsKey").IsRequired().HasMaxLength(250).IsUnicode(true);
 
-            this.Property(t => t.AzurePrincipalSecretKey).HasColumnName("AzurePrincipalSecretKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.TempStorageConnection).HasColumnName("TempStorageConnection").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.DNSIPAddress).HasColumnName("DNSIPAddress").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ReleaseDateString).HasColumnName("ReleaseDateString").IsRequired().HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.DNSZone).HasColumnName("DNSZone").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.AzurePrincipalSecretKey).HasColumnName("AzurePrincipalSecretKey").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.QboBaseUrl).HasColumnName("QboBaseUrl").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DNSZone).HasColumnName("DNSZone").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.QboEnvironment).HasColumnName("QboEnvironment").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DNSIPAddress).HasColumnName("DNSIPAddress").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.WorkflowStorageAccountName).HasColumnName("WorkflowStorageAccountName").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QboBaseUrl).HasColumnName("QboBaseUrl").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.WorkflowStorageAccountKey).HasColumnName("WorkflowStorageAccountKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.QboEnvironment).HasColumnName("QboEnvironment").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.WindWardSettings).HasColumnName("WindWardSettings").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.WorkflowStorageAccountName).HasColumnName("WorkflowStorageAccountName").IsRequired().HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.LogitudeIISURL).HasColumnName("LogitudeIISURL").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.WorkflowStorageAccountKey).HasColumnName("WorkflowStorageAccountKey").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.ExportUrl).HasColumnName("ExportUrl").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.WindWardSettings).HasColumnName("WindWardSettings").IsRequired().HasMaxLength(1000).IsUnicode(false);
 
-            this.Property(t => t.TempStorageConnection).HasColumnName("TempStorageConnection").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ExportUrl).HasColumnName("ExportUrl").IsRequired().HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.LogitudeIISURL).HasColumnName("LogitudeIISURL").IsRequired().HasMaxLength(1000).IsUnicode(false);
         }
     }
 }

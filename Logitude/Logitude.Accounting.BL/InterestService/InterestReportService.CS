@@ -61,7 +61,7 @@ namespace Logitude.Accounting.BL.InterestService
             return interestTransactionsWithTotal;
         }
 
-        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext, string ARInvoiceId = null, string InvoiceNumber = null, double? AmountInLocalCurrency = null, string InvoiceEntitiId = null)
+        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext, string ARInvoiceId = null, string InvoiceNumber = null, double? AmountInLocalCurrency = null, string InvoiceEntitiId = null, string invoiceStatus = null)
         {
             if (MainContext == null)
             {
@@ -70,10 +70,10 @@ namespace Logitude.Accounting.BL.InterestService
 
             if (interestReportPM == null)
             {
-                interestReportPM = GetSingleInterestReportPM(MainContext, Tenant, InvoiceEntitiId, AmountInLocalCurrency, ARInvoiceId, InvoiceNumber);
+                interestReportPM = GetSingleInterestReportPM(MainContext, Tenant, InvoiceEntitiId, AmountInLocalCurrency, ARInvoiceId, InvoiceNumber, invoiceStatus);
             }
 
-            interestReportPM = CloseInterestReportWithoutInvoice(interestReportPM, Tenant, MainContext);  
+            interestReportPM = CloseInterestReportWithoutInvoice(interestReportPM, Tenant, MainContext, invoiceStatus);  
 
             return interestReportPM;
         }
@@ -313,15 +313,25 @@ namespace Logitude.Accounting.BL.InterestService
         private InterestTransactionList FillDataInterestTransaction(InterestTransactionList interestTransactionLists, List<string> JournalNumbers, List<string> CurencyCodes)
         {
             InterestEntityResult entityResult = GetInterestEntityResultByInterestTransaction(interestTransactionLists);
-        
-            interestTransactionLists.JournalNumber = GetSingleJournalnumberByInterestTransaction(entityResult, interestTransactionLists, JournalNumbers);
-            interestTransactionLists.InterestEntityNumber = entityResult.EntityNumber;
-            interestTransactionLists.InterestEntityType = entityResult.EntityType;
-            interestTransactionLists.InterestEntityIconCode = entityResult.EntityTypeCode;
-            interestTransactionLists.JournalId = entityResult.JournalId;
-            interestTransactionLists.AccountEntityCode = entityResult.AccountCode;
-            interestTransactionLists.CurrencyCode = GetSingleCurrencyCodeByInterestTransaction(interestTransactionLists, CurencyCodes);
 
+            interestTransactionLists.JournalNumber = GetSingleJournalnumberByInterestTransaction(entityResult, interestTransactionLists, JournalNumbers);
+            interestTransactionLists.InterestEntityNumber = entityResult.EntityNumber; //aRInvoice.InvoiceNumber //aRPaymentPM.PaymentNo //journalPM.JournalNumber //journalPM.JournalNumber //reportPM.ReportNumber
+            interestTransactionLists.InterestEntityType = entityResult.EntityType;     //"ARInvoice" //"ARPayment" //"Journal" //"Adjustments" //"Interest Report"
+            interestTransactionLists.InterestEntityIconCode = entityResult.EntityTypeCode; // See InterestEntityTypeCodes.cs
+            interestTransactionLists.JournalId = entityResult.JournalId;               //aRInvoice.JournalId //aRPaymentPM.JournalId //journalPM.Id //journalPM.Id //null
+            interestTransactionLists.AccountEntityCode = entityResult.AccountCode;     //"2" //"3" //"1" //"1" //"11"
+            if (entityResult.OriginalLines.Any(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber))
+            {
+                interestTransactionLists.Reference1 = entityResult.OriginalLines.Where(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber).FirstOrDefault()?.Reference1;
+                interestTransactionLists.Notes = entityResult.OriginalLines.Where(ln => ln.OriginalLineNumber == interestTransactionLists.OriginalEntityLineNumber).FirstOrDefault()?.Notes;
+            }
+            else
+            {
+                interestTransactionLists.Reference1 = entityResult.OriginalLines.FirstOrDefault()?.Reference1;
+                interestTransactionLists.Notes = entityResult.OriginalLines.FirstOrDefault()?.Notes; 
+            }
+            interestTransactionLists.CurrencyCode = GetSingleCurrencyCodeByInterestTransaction(interestTransactionLists, CurencyCodes);
+        
             return interestTransactionLists;
         }
 
@@ -361,7 +371,7 @@ namespace Logitude.Accounting.BL.InterestService
             return interestTransactionLists.JournalNumber;
         }
    
-        private InterestReportPM CloseInterestReportWithoutInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
+        private InterestReportPM CloseInterestReportWithoutInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext, string invoiceStatus)
         {
             ContactQuery contactQuery = new ContactQuery(Tenant);
             ContactPM contact = GetLoggedContact(Tenant) ?? new ContactPM();
@@ -369,17 +379,8 @@ namespace Logitude.Accounting.BL.InterestService
 
 
             InterestReportUpdateService InterestReportUpdate = new InterestReportUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-
-            //interestReportPM.CloseBalance = 0;
-            //if (interestReportPM.OpenBalance != null)
-            //{
-            //    interestReportPM.CloseBalance += interestReportPM.OpenBalance;
-            //}
-            //if (interestReportPM.TotalAmount != null)
-            //{
-            //    interestReportPM.CloseBalance += interestReportPM.TotalAmount;
-            //}
-            if (interestReportPM.InterestReportStatusCode != invoiced)
+           
+            if (invoiceStatus !="PR"  && interestReportPM.InterestReportStatusCode != invoiced)
             {
                 interestReportPM.InterestReportStatusCode = closedWithoutInvoice;
             }
@@ -398,14 +399,14 @@ namespace Logitude.Accounting.BL.InterestService
             return interestReportPM;
         }
 
-        private InterestReportPM GetSingleInterestReportPM(IAccountingContext MainContext ,int Tenant, string InvoiceEntitiId, double? AmountInLocalCurrency, string ARInvoiceId , string InvoiceNumber)
+        private InterestReportPM GetSingleInterestReportPM(IAccountingContext MainContext ,int Tenant, string InvoiceEntitiId, double? AmountInLocalCurrency, string ARInvoiceId , string InvoiceNumber, string invoiceStatus = null)
         {
             InterestReportRepository interestReportRepository = new InterestReportRepository(MainContext);
             InterestReport interestReport = interestReportRepository.GetSingle(InvoiceEntitiId, Tenant);
             InterestReportPM interestReportPM = new InterestReportPM()
             {
                 Id = interestReport.Id,
-                InterestReportStatusCode = "2",
+                InterestReportStatusCode = invoiceStatus == "PR" ?  "8"  :  "2",
                 ARinvoiceId = ARInvoiceId,
                 ARInvoiceNumber = InvoiceNumber,
                 OpenBalance = interestReport.OpenBalance,

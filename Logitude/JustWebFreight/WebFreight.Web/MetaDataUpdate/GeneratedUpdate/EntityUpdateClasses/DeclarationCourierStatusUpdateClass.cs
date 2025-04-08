@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
- 		public const string HashString = "aa4b0318466949b37f2765485b580d41";
+		public const string HashString = "55b69ef54ed4a7b38998b1076f77a2ef";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4994,7 +4994,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentDontDisplayInList",
-					  						DefaultText =  "הצהרה רםשית",
+					  						DefaultText =  "Main Declaration",
+					  						FullLocalDefaultText =  "הצהרה רםשית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

@@ -645,6 +645,7 @@
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\EntityLists\ExternalLinkList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\DocumentsMetaDataTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\QuoteGroupSectionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HTSCodeList.cs" />
     <Compile Include="CommonDataModel\EntityAMs\CustomerTenantAccessUpdaterAM.cs" />
@@ -683,6 +684,7 @@
     <Compile Include="CommonDataModel\EntityPMs\ProductItemPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\TruckerSettingPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\UserFreelancerGroupPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\DocumentsMetaDataTypeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ProductTypeModificationQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\QuoteGroupSectionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
@@ -765,6 +767,7 @@
     <Compile Include="CommonDataModel\EntityQueries\WarehouseWeightRoundingQuery.cs" />
     <Compile Include="CommonDataModel\Helpers\CustomsSettingsHelper.cs" />
     <Compile Include="CommonDataModel\Helpers\BatchTaskNames.cs" />
+    <Compile Include="CommonDataModel\Helpers\HybridExternalSystem.cs" />
     <Compile Include="CommonDataModel\Helpers\ShipmentOrderDocumentsQueueService.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardSearchMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreasPortMapping.cs" />
@@ -805,6 +808,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerStatusQueueService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\ExternalLinkService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\DocumentTypeMetaDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TruckerSettingService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\FreelancerGroupTypeService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\GLAccountCardDataService.cs" />
@@ -891,6 +895,7 @@
     <Compile Include="InfrastructureModel\DataContracts\ObjectCustomFieldDataContractPM.cs" />
     <Compile Include="InfrastructureModel\EntityAMs\EntityStatusAM.cs" />
     <Compile Include="InfrastructureModel\EntityAMs\EventTypeAM.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\AdditionalCurrencyRateList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationKeyList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\GeneralLockList.cs" />
@@ -907,7 +912,9 @@
     <Compile Include="InfrastructureModel\EntityLists\QuoteChargesGroupList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ReferenceCustomObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ScreenSectionList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\AdditionalCurrencyRatePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ChildEntitiesCustomFieldPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\CurrencyRatePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationKeyPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EventRemarkPM.cs" />
@@ -927,7 +934,9 @@
     <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackagePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ReferenceCustomObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ScreenSectionPM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\AdditionalCurrencyRateQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ChildEntitiesCustomFieldQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\CurrencyRateQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationKeyQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EventRemarkQueryService.cs" />
@@ -1000,6 +1009,8 @@
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\ImportingValidator\DeploymentPackageImporterValidatingService.cs" />
     <Compile Include="InfrastructureModel\Services\DeploymentPackage\ImportingValidator\IDeploymentPackageImporterValidatingService.cs" />
     <Compile Include="InfrastructureModel\Services\PartnersObjectFieldService.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\AdditionalCurrencyRateMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\CurrencyRateMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomChildObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomFieldsMainObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationKeyMapping.cs" />
@@ -1010,6 +1021,8 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageExecutionLogMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\EventRemarkMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ReferenceCustomObjectMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\AdditionalCurrencyRateService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\CurrencyRateService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\CustomChildObjectService.cs" />
     <Compile Include="InfrastructureModel\Services\QuoteUpdateService.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\ImageLibraryMapping.cs" />
@@ -1043,7 +1056,11 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationKeyService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
+    <Compile Include="InfrastructureModel\Tools\TraceEvents\CurrencyRateTracing.cs" />
+    <Compile Include="InfrastructureModel\Tools\TraceEvents\AdditionalCurrencyRateTracing.cs" />
+    <Compile Include="InfrastructureModel\Tools\Validating\AdditionalCurrencyRateValidating.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\DeploymentPackageValidating.cs" />
+    <Compile Include="InfrastructureModel\Tools\Validating\CurrencyRateValidating.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TasksSchedulerValidator.cs" />
     <Compile Include="IntegrationTestModel\EntityPMs\LocationsVariables.cs" />
     <Compile Include="IntegrationTestModel\EntityPMs\PartnersVariables.cs" />
@@ -1110,6 +1127,7 @@
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeReplicaQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeStatusReplicaQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\QBOGlobalTaxCalculationQuery.cs" />
+    <Compile Include="InvoiceModel\Enums\APInvoiceStatusCodes.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceAmountDueBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceFieldsBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceLinesBehavior.cs" />

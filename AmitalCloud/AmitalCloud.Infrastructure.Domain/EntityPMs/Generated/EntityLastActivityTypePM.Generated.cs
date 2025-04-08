@@ -30,6 +30,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    {
 		_code = entity.Code;
 		_name = entity.Name;
+		entityLastActivitys = entity.EntityLastActivitys != null ? entity.EntityLastActivitys.Select(a=>new EntityLastActivityPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -66,6 +67,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<EntityLastActivityPM> entityLastActivitys;
+	 
+		     
+	   [Include]
+	   [Association("EntityLastActivityEntityLastActivityType", "Code","Activitytypecode")]
+	   [DataMember]
+	   public virtual List<EntityLastActivityPM> EntityLastActivitys  
+	   {
+	        get
+             {
+                 if (entityLastActivitys == null)
+                 {
+                     entityLastActivitys = new List<EntityLastActivityPM>();
+                 }
+                 return entityLastActivitys;
+              }
+             set { entityLastActivitys = value; }
+	    }
+	   private List<EntityLastActivityPM>  deletedEntityLastActivitys;
+	   public virtual List<EntityLastActivityPM> DeletedEntityLastActivitys  
+	   {
+	        get
+             {
+                 if ( deletedEntityLastActivitys == null)
+                 {
+                      deletedEntityLastActivitys = new List<EntityLastActivityPM>();
+                 }
+                 return  deletedEntityLastActivitys;
+              }
+             set {  deletedEntityLastActivitys = value; }
+	    }
 	 }
 #endregion Properties
 }

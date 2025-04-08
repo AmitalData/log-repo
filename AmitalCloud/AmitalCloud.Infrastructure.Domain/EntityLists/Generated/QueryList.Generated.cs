@@ -27,13 +27,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           Id  = entity.Id;
           Tenant  = entity.Tenant;
           Code  = entity.Code;
-          UniqueCode  = entity.UniqueCode;
           UserId  = entity.UserId;
           ObjectTableId  = entity.ObjectTableId;
           SystemLevel  = entity.SystemLevel;
           TenantLevel  = entity.TenantLevel;
           OriginalQueryId  = entity.OriginalQueryId;
-          OriginalQueryCode  = entity.OriginalQueryCode;
           QuerySection  = entity.QuerySection;
           IndexOrder  = entity.IndexOrder;
           DisplayCount  = entity.DisplayCount;
@@ -56,13 +54,12 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           SharedWithSpecificUsers  = entity.SharedWithSpecificUsers;
           SharedByUserId  = entity.SharedByUserId;
           SpotlightModeActivated  = entity.SpotlightModeActivated;
+          UniqueCode  = entity.UniqueCode;
+          OriginalQueryCode  = entity.OriginalQueryCode;
           NameTextCodeCode  = entity.NameTextCodeCode;
           FeatureUniqeCode  = entity.FeatureUniqeCode;
           IsViewOnly  = entity.IsViewOnly;
           IsDefault  = entity.IsDefault;
-          Feature  = entity.Feature;
-          OriginalQuery  = entity.OriginalQuery;
-          CopiedQueries  = entity.CopiedQueries;
        }
        #endregion Constructors
        #region Properties
@@ -75,8 +72,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string Code  { get; set; }
        [DataMember]
-       public string UniqueCode  { get; set; }
-       [DataMember]
        public string UserId  { get; set; }
        [DataMember]
        public string ObjectTableId  { get; set; }
@@ -86,8 +81,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool TenantLevel  { get; set; }
        [DataMember]
        public string OriginalQueryId  { get; set; }
-       [DataMember]
-       public string OriginalQueryCode  { get; set; }
        [DataMember]
        public string QuerySection  { get; set; }
        [DataMember]
@@ -133,6 +126,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public bool SpotlightModeActivated  { get; set; }
        [DataMember]
+       public string UniqueCode  { get; set; }
+       [DataMember]
+       public string OriginalQueryCode  { get; set; }
+       [DataMember]
        public string NameTextCodeCode  { get; set; }
        [DataMember]
        public string FeatureUniqeCode  { get; set; }
@@ -140,12 +137,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public bool IsViewOnly  { get; set; }
        [DataMember]
        public bool IsDefault  { get; set; }
-       [DataMember]
-       public string Feature  { get; set; }
-       [DataMember]
-       public string OriginalQuery  { get; set; }
-       [DataMember]
-       public string CopiedQueries  { get; set; }
          #endregion Properties
    }
 

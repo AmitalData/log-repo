@@ -535,6 +535,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ExternalSystem"
+    Type="nvarchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"
@@ -631,8 +638,22 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="SingleInvoiceTemplateId,CustomsInvoiceTemplateId,ConsolidationInvoiceTemplateId,ManifestInvoiceTemplateId"
+   ForeignKeyColumn="SingleInvoiceTemplateId"
     ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomsInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ConsolidationInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ManifestInvoiceTemplateId"    ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

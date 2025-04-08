@@ -35,6 +35,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string SecondaryAzureDBConnection { get; set; }
         [Column("IsBlocking")]
 	    public bool IsBlocking { get; set; }
+		public virtual ICollection<GlobalTenant> GlobalTenants { get; set; }
     }
 }
 	 

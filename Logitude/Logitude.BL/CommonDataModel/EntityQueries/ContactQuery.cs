@@ -2126,5 +2126,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 return rv;
             }
         }
+
+        public Contact GetContactByEmail(string email, int tenant)
+        {
+            return repository.GetContactByEmail(email, tenant);
+        }
+
     }
 }

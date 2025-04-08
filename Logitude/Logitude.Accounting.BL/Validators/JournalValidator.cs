@@ -238,7 +238,7 @@ namespace Logitude.Accounting.BL.Validators
 
                         bool suppressInactiveCheck = myJournalPM.AccountingEntityCode == "11";//  העברת שנה   Year Transfer
                         var jlCurrencyId = currJournalLinePM.CurrencyId;
-                        currJournalLinePM.ActionTypeCode = currJournalLinePM.ActionTypeCode ?? string.Empty;
+                        currJournalLinePM.ActionTypeCode = currJournalLinePM.ActionCode ?? string.Empty;
                         FullAccountingSettingPM tenantFullAccountingSettingPM = null;
                         TenantCurrency = GetTenantCurrency(myJournalPM, accountingValidationContextServiceProvider);
                         //IWebFreightContext webFreightContext = WebFreightContext.GetContext(myJournalPM.Tenant);
@@ -1395,17 +1395,17 @@ accountingValidationContextServiceProvider
 
         private  void CalculateTotals(JournalLinePM item, ref decimal creditTotal, ref decimal debitTotal)
         {
-            if ((item.ActionTypeCode == "3" || item.ActionTypeCode == "4") && (item.LocalAmount != null))
+            if ((item.ActionCode == "3" || item.ActionCode == "4") && (item.LocalAmount != null))
             {
                 creditTotal = creditTotal + (decimal)item.LocalAmount;
                 debitTotal = debitTotal + (decimal)item.LocalAmount;
             }
-            if ((item.ActionTypeCode == "2") && (item.LocalAmount != null))
+            if ((item.ActionCode == "2") && (item.LocalAmount != null))
             {
 
                 debitTotal = debitTotal + (decimal)item.LocalAmount;
             }
-            if ((item.ActionTypeCode == "1") && (item.LocalAmount != null))
+            if ((item.ActionCode == "1") && (item.LocalAmount != null))
             {
 
                 creditTotal = creditTotal + (decimal)item.LocalAmount;

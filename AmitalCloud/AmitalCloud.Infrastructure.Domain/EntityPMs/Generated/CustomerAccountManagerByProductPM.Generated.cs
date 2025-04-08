@@ -32,7 +32,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_productTypeCode = entity.ProductTypeCode;
 		_accountManagerId = entity.AccountManagerId;
-		_customerId = entity.CustomerId;
+		_accountmanageruser = entity.AccountManagerUser !=null ? new UserPM(entity.AccountManagerUser) : null;
+			_customerId = entity.CustomerId;
    }
    #endregion Constructors
    #region Properties
@@ -85,6 +86,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _accountmanageruser;
+		[Include]
+        [DataMember]
+        public virtual UserPM AccountManagerUser 
+		{ 
+		get { return _accountmanageruser; } 
+		set { _accountmanageruser = value; }
+		}
 	  private string _customerId ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]

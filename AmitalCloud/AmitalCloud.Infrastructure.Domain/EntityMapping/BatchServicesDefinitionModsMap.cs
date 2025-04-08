@@ -18,17 +18,17 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public BatchServicesDefinitionModsMap()
         { 
-				this.ToTable("BatchServicesDefinitionModss");
+				this.ToTable("BATCHSERVICESDEFINITIONMODS");
 		
 		    this.HasKey(t => new { t.Code });
 	 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.CdropCode).HasColumnName("CdropCode").IsRequired().HasMaxLength(128).IsUnicode(true);
 
             this.Property(t => t.InActive).HasColumnName("InActive").IsRequired();
 
             this.Property(t => t.NumberOfThreads).HasColumnName("NumberOfThreads").IsRequired();
 
-            this.Property(t => t.BatchServicesDefinition).HasColumnName("BatchServicesDefinition").IsRequired();
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(50).IsUnicode(false);
         }
     }
 }

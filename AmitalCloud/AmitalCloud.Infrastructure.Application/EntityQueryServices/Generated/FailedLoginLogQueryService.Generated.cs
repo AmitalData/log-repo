@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class FailedLoginLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.FailedLoginLog,FailedLoginLogKeys<string>,FailedLoginLogPM,FailedLoginLogList,string>
+   public partial class FailedLoginLogQueryService: BaseEntityQueryService<ISystemLogContext,POCO.FailedLoginLog,FailedLoginLogKeys<string>,FailedLoginLogPM,FailedLoginLogList,string>
    {
-        public FailedLoginLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public FailedLoginLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FailedLoginLog>(context),new FailedLoginLogDataMapping()) {}
+        public FailedLoginLogQueryService(int tenant) : this(SystemLogContext.GetContext(tenant))  { }
+        public FailedLoginLogQueryService(ISystemLogContext context) : base(new Repository<POCO.FailedLoginLog>(context),new FailedLoginLogDataMapping()) {}
 		public  FailedLoginLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new FailedLoginLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FailedLoginLog,string> GetKeys(POCO.FailedLoginLog entityPOCO) => new FailedLoginLogKeys<string>() { Id = entityPOCO.Id,  };
    }

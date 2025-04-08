@@ -27,7 +27,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public Translation GetSingleTranslation(int tenant, string code, string language)
         {
-            return context.Translations.Where(d => d.Tenant == tenant && d.TextCode.Code == code && (d.TranslationHeader.Description == language || d.TranslationHeaderCode == language)).Include("TextCode").FirstOrDefault();
+            return context.Translations.Where(d => d.Tenant == tenant && d.TextCodeCode == code && (d.TranslationHeader.Description == language || d.TranslationHeaderCode == language)).Include("TextCode").FirstOrDefault();
         }
         public List<Translation> GetTranslationsByTenantList(int tenant)
         {
@@ -57,7 +57,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             return (from a in context.Translations.Include("TextCode")
                     where a.Tenant == tenant
-                    select a).ToDictionary(d => d.TextCode.Code, a => a);
+                    select a).ToDictionary(d => d.TextCodeCode, a => a);
         }
         public Dictionary<string, string> GetDigitalTranslationsByTenant(int tenant, string objectTableName, string lang = "")
         {

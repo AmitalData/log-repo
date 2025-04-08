@@ -878,11 +878,11 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DisplayNumber"
-    Type="nvarchar"
-    Size="50">
+    Name="IsApprovalFailed"
+    Type="bit"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
@@ -1038,11 +1038,6 @@
     ForeignKeyColumn="ConfirmationNumberStatus"
     ReferencedTable="ConfirmationNumberStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="DisplayNumber"
-    ReferencedTable="GLAccounts"
-    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InvoiceDate" />

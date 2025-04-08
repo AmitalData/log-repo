@@ -20,7 +20,7 @@ export class PageTopComponent {
 	@Output() searchClick = new EventEmitter<string | number>();
 	textToSearch: string = '';
 	searchHeader: string = 'חיפוש פרט מכס/מילה/צירוף מילים';
-	
+
 	constructor(
 		public searchService: SearchService,
 		private headerService: HeaderService,
@@ -74,6 +74,20 @@ export class PageTopComponent {
 		if (this.textToSearch.trim() === "") {
 			this.textToSearch = "";
 			return;
+		}
+
+		if (this.textToSearch.includes('/') && !isNaN(Number(this.textToSearch.replace('/', '')))) {
+			this.textToSearch = this.textToSearch.replace('/', '');
+			this.searchService.SearchBy('searchBy_form01');
+			this.searchByNumOrText = SearchBy.searchBy_form01;
+		}
+
+		if (this.textToSearch.charAt(0) == '-' && !isNaN(Number(this.textToSearch.substring(1)))) {
+			this.textToSearch = this.textToSearch.substring(1);
+			this.searchService.SetSearchText(this.textToSearch);
+			this.searchService.SearchBy('searchBy_form01');
+			this.searchByNumOrText = SearchBy.searchBy_form01;
+			this.headerService.setIsDiscountCodes(true);
 		}
 
 		this.searchClick.emit(this.searchByNumOrText);

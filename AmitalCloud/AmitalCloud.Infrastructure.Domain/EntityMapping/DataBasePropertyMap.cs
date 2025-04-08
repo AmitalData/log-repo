@@ -18,13 +18,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 	    string dbms;
         public DataBasePropertyMap()
         { 
-				this.ToTable("DataBasePropertys");
+				this.ToTable("databaseproperties");
 		
 		    this.HasKey(t => new { t.DataBaseNumber });
 	 
             this.Property(t => t.DataBaseNumber).HasColumnName("DataBaseNumber").IsRequired().HasDatabaseGeneratedOption(null);
 
             this.Property(t => t.LastBackupDate).HasColumnName("LastBackupDate").IsRequired();
+
+            this.Property(t => t.Rowid).HasColumnName("Rowid").IsRequired();
         }
     }
 }

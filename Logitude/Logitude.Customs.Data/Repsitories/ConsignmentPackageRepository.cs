@@ -38,14 +38,12 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == declarationId
                     select a).ToList();        
 
-        public List<ConsignmentPackage> GetConsignmentPackagesFilterByMeasureQualifierCode(string declarationId)
+        public decimal? GetConsignmentPackagesFilterByMeasureQualifierCode(string declarationId)
         {
-            string code = "2" ; 
+            string code = "2" ;
+			return context.ConsignmentPackages.Where(a => a.DeclarationId == declarationId && a.PackageMeasureQualifierCode == code).Sum(c => c.GrossMassMeasure);
 
-            return (from a in context.ConsignmentPackages
-                    where a.DeclarationId == declarationId && a.PackageMeasureQualifierCode == code
-                    select a).ToList();
-        }        
+		}        
     }
 
 }

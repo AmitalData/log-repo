@@ -28,11 +28,13 @@ using System.IO;
 using WebFreight.Web.DataProviders;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using static WebFreight.Web.Helpers.ReportHelper;
+using NetCommonHelper.Logger;
 
 namespace WebFreight.Web.Stimulsoft
 {
     public partial class Designer : System.Web.UI.Page
     {
+        static private readonly DevLog logger = DevLog.Instance;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -120,7 +122,7 @@ namespace WebFreight.Web.Stimulsoft
                     }
                     #endregion
 
-                    ReFillBusinessObjects(report.Dictionary.BusinessObjects, processType, tenant, reportTemplateId);
+                    ReFillBusinessObjects(report.Dictionary.BusinessObjects, tenant, reportTemplateId, templateId);
 
                     LogitudeStiWebDesigner.Report = report;
                 }
@@ -143,40 +145,91 @@ namespace WebFreight.Web.Stimulsoft
             }
         }
 
-        private void ReFillBusinessObjects(StiBusinessObjectsCollection bo, string processType, int tenant, string reportTemplateId)
+        private void ReFillBusinessObjects(StiBusinessObjectsCollection bo, int tenant, string reportTemplateId, string templateId)
         {
-            if (processType == "ReportPreview" || bo == null || tenant == null || string.IsNullOrEmpty(reportTemplateId))
-                return;
-            
-            ReportsTemplatesVersionQuery reportsTemplatesVersionQuery = new ReportsTemplatesVersionQuery(tenant);
-            ReportsTemplatesVersionPM reportsTemplatesVersionPM = reportsTemplatesVersionQuery.GetLastReportsTemplatesVersionPMByReportsTemplateId(reportTemplateId, tenant);
-            if(reportsTemplatesVersionPM == null)
-                return;
-
-            string code = new ReportQuery(tenant).GetReportCodeById(reportsTemplatesVersionPM.ReportId, tenant);
-            if (string.IsNullOrEmpty(code))
-                return;
-            
-            ReportHelper reportHelper = new ReportHelper();
-            new List<ISlvLeaf>();
-            string dpName = reportHelper.GetDataProviderName(code);
-            if (string.IsNullOrEmpty(dpName))
-                return;
-
-            List<ISlvLeaf> variablesList = reportHelper.GetPropertyNames(dpName, new List<ISlvLeaf>());
-            StiBusinessObject businessObject = null;
-
-            if (bo.Count == 0)
+            try
             {
-                string dpNameLastPart = dpName.Substring(dpName.LastIndexOf('.') + 1);
-                businessObject = new StiBusinessObject(code, dpNameLastPart, dpNameLastPart, Guid.NewGuid().ToString("N"));
-                bo.Add(businessObject);
+                logger.WriteDebug($"ReFillBusinessObjects, reportTemplateId: {reportTemplateId}, templateId: {templateId}");
+
+                string code = "";
+                string dpName = "";
+                ReportHelper reportHelper = new ReportHelper();
+
+                if (bo == null || tenant == null)
+                {
+                    logger.WriteError($"ReFillBusinessObjects, StiBusinessObjectsCollection or tenant empties");
+                    return;
+                }
+
+                if (!string.IsNullOrEmpty(reportTemplateId))
+                {
+                    ReportsTemplatesVersionPM reportsTemplatesVersionPM = new ReportsTemplatesVersionQuery(tenant).GetLastReportsTemplatesVersionPMByReportsTemplateId(reportTemplateId, tenant);
+                    if (reportsTemplatesVersionPM == null)
+                    {
+                        logger.WriteError($"ReFillBusinessObjects, reportsTemplatesVersionPM not found for reportTemplateId {reportTemplateId} and tenant {tenant}");
+                        return;
+                    }
+
+                    code = new ReportQuery(tenant).GetReportCodeById(reportsTemplatesVersionPM.ReportId, tenant);
+                    if (string.IsNullOrEmpty(code))
+                    {
+                        logger.WriteError($"ReFillBusinessObjects, code not found for reportId {reportsTemplatesVersionPM.ReportId} and tenant {tenant}");
+                        return;
+                    }
+
+                    logger.WriteDebug($"dataProvider code: {code}, reportId: {reportsTemplatesVersionPM.ReportId}, tenatn: {tenant}");
+
+                    dpName = reportHelper.GetDataProviderName(code);
+                }
+                else if (!string.IsNullOrEmpty(templateId))
+                {
+                    DocumentTypeTemplatePM documentTypeTemplatePM = new DocumentTypeTemplateQuery(tenant).GetById(templateId, tenant);
+                    if (documentTypeTemplatePM == null)
+                    {
+                        logger.WriteError($"ReFillBusinessObjects, documentTypeTemplatePM not found for templateId {templateId} and tenant {tenant}");
+                        return;
+                    }
+
+                    DocumentDataProviderArgs documentDataProviderArgs = new StiBusinessObjectDataService().GetDocumentDataProviderArgs(documentTypeTemplatePM.DocumentTypeCode);
+                    if (documentDataProviderArgs == null)
+                    {
+                        logger.WriteError($"ReFillBusinessObjects, documentDataProviderArgs not found for DocumentTypeCode {documentTypeTemplatePM.DocumentTypeCode}");
+                        return;
+                    }
+
+                    dpName = documentDataProviderArgs.Type.FullName;
+                }
+                else
+                {
+                    logger.WriteError($"ReFillBusinessObjects, reportTemplateId and reportId empties");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(dpName))
+                {
+                    logger.WriteError($"ReFillBusinessObjects, dpName empty");
+                    return;
+                }
+
+                List<ISlvLeaf> variablesList = reportHelper.GetPropertyNames(dpName, new List<ISlvLeaf>());
+                StiBusinessObject businessObject = null;
+
+                if (bo.Count == 0)
+                {
+                    string dpNameLastPart = dpName.Substring(dpName.LastIndexOf('.') + 1);
+                    businessObject = new StiBusinessObject(code, dpNameLastPart, dpNameLastPart, Guid.NewGuid().ToString("N"));
+                    bo.Add(businessObject);
+                }
+                else
+                    businessObject = bo[0];
+
+                CreateBusinessObject(businessObject, variablesList);
             }
-            else
-                businessObject = bo[0];
-            
-            CreateBusinessObject(businessObject, variablesList);
-        }   
+            catch (Exception e)
+            {
+                logger.WriteFatal(e, $"error when try ReFillBusinessObjects, reportTemplateId: {reportTemplateId}, templateId: {templateId}, tenant: {tenant}");
+            }
+        }
 
         private void CreateBusinessObject(StiBusinessObject businessObject, List<ISlvLeaf> variablesList)
         {
@@ -193,7 +246,7 @@ namespace WebFreight.Web.Stimulsoft
 
                     CreateBusinessObject(child, variable.children);
                 }
-                else if (businessObject.Columns.ToList().Any(col => col.Name == variable.content))
+                else if (businessObject.Columns.ToList().Any(col => col.Name == variable.content) || variable.type.FullName.Contains("System.") == false)
                     return;
                 else
                     businessObject.Columns.Add(new StiDataColumn(variable.content, variable.type));

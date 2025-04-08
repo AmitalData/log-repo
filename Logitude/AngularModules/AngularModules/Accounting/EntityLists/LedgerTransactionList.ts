@@ -87,6 +87,7 @@ export class LedgerTransactionList {
 	AmountInNIS: number;
 	IsExternalEntity: boolean;
 	BankName: string;
+	ProcessStartDate: Date;
 	
 }
  

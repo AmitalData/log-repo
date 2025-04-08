@@ -19,6 +19,7 @@ using UnifreightIIG.Common.ImportDeclarationSubmitRequestServiceReference;
 using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.CustomsMessaging.MessagingServices;
+using Exception = System.Exception;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -93,8 +94,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 }
             }
-            
+
             // Sending Auto Restore Declaration Request #113942
+            if (_MyDeclarationPM.DeclarationNumber == null)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Canceled because of declaration number not exist!");
+                throw new Exception("Sending Restore Declaration Request Canceled because of declaration number not exist!");
+            }
             DeclarationRestoreResponseData declarationRestoreResponseData = RestoreDeclarationRequest(requestParams);
 
             base.OnRequestFail(customResponse, requestParams);
@@ -358,25 +364,60 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             try
             {
-                DeclarationRestoreResponseData responseData = null;
-                if (_MyDeclarationPM.DeclarationNumber == null) return responseData;
                 DeclarationRestoreRequestParams requestParamsData = new DeclarationRestoreRequestParams();
-                requestParamsData = (DeclarationRestoreRequestParams)requestParams;
-                requestParamsData.CustomsFile = _MyDeclarationPM.CustomFileNo;
-                requestParamsData.Tenant = _MyDeclarationPM.Tenant;
-                requestParamsData.DeclarationNumber = _MyDeclarationPM.DeclarationNumber;
-                requestParamsData.DeclarationId = _MyDeclarationPM.Id;
+                requestParamsData.Tenant = requestParams.Tenant;
+                requestParamsData.LoggingEnabled = requestParams.LoggingEnabled;
+                requestParamsData.LoggingObjectTableId = requestParams.LoggingObjectTableId;
+                requestParamsData.LoggingEntityId = requestParams.LoggingEntityId;
+                requestParamsData.AppicationId = requestParams.AppicationId;
+                requestParamsData.InterfaceTypeCode = requestParams.InterfaceTypeCode;
+                requestParamsData.LoggingUserId = requestParams.LoggingUserId;
+                requestParamsData.RequestVIA = requestParams.RequestVIA;
                 requestParamsData.IsUpdateDB = true;
                 requestParamsData.ShowData = true;
-
-                DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
-                responseData = messagingService.Send(requestParamsData);
-                return responseData;
+                if (_MyDeclarationPM != null)
+                {
+                    requestParamsData.CustomsFile = _MyDeclarationPM.CustomFileNo;
+                    requestParamsData.DeclarationNumber = _MyDeclarationPM.DeclarationNumber;
+                    requestParamsData.DeclarationId = _MyDeclarationPM.Id;
+                    return SendRestoreDeclaration(requestParamsData);
+                }
+                else
+                {
+                    DeclarationQueryService declarationQuery = new DeclarationQueryService(requestParams.Tenant);
+                    DeclarationPM decData = declarationQuery.GetSingle(requestParamsData.AppicationId, false, false);
+                    if (decData == null)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Failed because of declaration data is not found!");
+                        throw new Exception("declaration data is not found !");
+                    }
+                    requestParamsData.CustomsFile = decData.CustomFileNo;
+                    requestParamsData.DeclarationNumber = decData.DeclarationNumber;
+                    requestParamsData.DeclarationId = decData.Id;
+                    return SendRestoreDeclaration(requestParamsData);
+                }
             }
             catch
             {
                 LogMessagingUtil.Instance.AppendLine("Sending Restore Declaration Request Failed !");
-                return null;
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Failed !");
+                throw new Exception("Sending Restore Declaration Request Failed !");
+            }
+        }
+
+        private DeclarationRestoreResponseData SendRestoreDeclaration(DeclarationRestoreRequestParams requestParamsData)
+        {
+            DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
+            DeclarationRestoreResponseData responseData = messagingService.Send(requestParamsData);
+            if (responseData?.HasException == false && responseData?.Succeeded == true)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request success!");
+                return responseData;
+            }
+            else
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Failed because of declaration data is not found!");
+                throw new Exception("declaration data is not found !" + " " + responseData?.UserMessage);
             }
         }
     }

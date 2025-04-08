@@ -221,7 +221,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     SetUIProperties_VATNumber() {
         var isRequired = false;
 
-        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP && this.EntityPM.VendorCountry === "ISRAEL") {
+        if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             if (AppTool.IsNullOrEmpty(this.VATNumber)) {
                 isRequired = true;
             }
@@ -230,9 +230,9 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.UIProperties.SetRequired("VATNumber", this.ObjectTableName, isRequired);
     }
 
-    public RateIsEnabled: boolean = true;
+    public RateIsEnabled: boolean = false;
     SetUIProperties_ExchangeRate() {
-        var isEnabled: boolean = true;
+        var isEnabled: boolean = false;
 
         if (this.IsScreenEnabled) {
             if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {

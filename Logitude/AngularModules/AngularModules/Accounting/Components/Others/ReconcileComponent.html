@@ -14,17 +14,7 @@
         font-family: sans-serif;
     }
 </style>
-<!-- Alert -->
-<!--<div class="alert-animation Alert">
-    <!--<div class="alert-close" (click)="CloseAlert()">×</div>-->
-<!--<div class="alert-title">{{'Accounting.General.O.Reconciled' | TextCodeTranslationPipe}}</div>-->
-<!--<div class="LeftCenter ConfirmIcon">&#10003;</div>-->
-<!--<div style="padding: 43px 15px 10px 50px;font-size: 13px;">
-        {{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="RecoPM" href="#" (click)="OpenReco()"> {{RecoPM.Number }}</a> {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.
-    </div>
 
-
-</div>-->
 <!-- Alert -->
 <div *ngIf="showAlert && recoCallback" class="alert-animation SaveAlert"
      [style.text-align]="isRTL ? 'right' : 'left'"
@@ -241,54 +231,13 @@
 
                     <li float-start style="width: 20px;height: 100%;"></li>
 
-                    <!-- Refresh Button -->
-                    <!-- <li float-start style="padding: 0 15px;padding-top: 4px;">
-                        <IconButton [Name]="'refresh'" (click)="ReloadScreen()"></IconButton>
-                    </li> -->
+
 
 
                 </ul>
             </div>
 
-            <!-- <table> -->
 
-
-
-                <!-- <tr class="FormFieldRow"> -->
-
-
-                    <!-- OpenAmount -->
-                    <!-- <td style="width: 120px; " [style.padding-right]="isRTL ? 'initial' : '10px'" [style.padding-left]="isRTL ? '10px' : 'initial'">
-                                <LogLabel [ObjectFieldName]="'OpenAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width: 140px; " [style.padding-right]="isRTL ? 'initial' : '10px'" [style.padding-left]="isRTL ? '10px' : 'initial'">
-                                <ComboBox [ItemsSource]="OperatorsList" [Binding]="'LocalName'" [SelectedItem]="SelectedOperator" (SelectedItemChanged)="SelectedOperator = $event"></ComboBox>
-                            </td>
-                            <td style="width: 80px;">
-                                <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [HideColumns]="true"
-                                            (ValueChanged)="OpenAmountTextChanged($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-
-                            </td> -->
-
-                    <!-- <td style="width :20px"></td> -->
-
-
-
-                    <!-- <td>
-                        <div></div>
-                    </td> -->
-
-
-                <!-- </tr> -->
-
-
-                <!-- <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-            </table> -->
         </td>
     </tr>
 
@@ -296,7 +245,6 @@
 
     <!-- .::(1)::. First Section Lines -->
     <tr >
-        <!--*ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit"-->
         <td style="width :10px"></td>
         <td style=" vertical-align: top;height: 100%;" colspan="4">
             <div class="GeneratedGridContainer" style="height: calc(100% - 10px)">
@@ -314,7 +262,7 @@
                                [MarkIsChecked]="MarkIsChecked"
                                [CheckBoxFilterChanged]="CheckBoxFilterChanged"
                                (SortInvoked)="OnSortInvoked($event)"
-                               (DataLoaded)="onDataLoaded($event)"
+                               (DataLoaded)="onDataLoaded()"
                                [ChangeCheckBoxesState]="ChangeCheckBoxesState"
                                (rowSelectedEvent)="onRowSelected($event)">
                 </logitude-grid>
@@ -568,18 +516,37 @@
         </td>
         <td style="width :10px"></td>
     </tr>
-
+    
     <!-- Buttons -->
     <tr>
-        <td colspan="5">
+        <td colspan="10">
             <table style="position: absolute; bottom: 10px;">
                 <tr>
                     <td>
                         <div></div>
                     </td>
+                    <td style="width:40px;" *ngIf="failedJournalsInReconcileProcess">
 
-                    <td style="width: 80px; padding-left: 5px;">
-                        <!--<button class="Button" [disabled]="!(SelectedLines.Length > 0 && TotalDifference != 0)" (click)="AdjustButton()">{{'Accounting.General.O.Adjust' | TextCodeTranslationPipe}}</button>-->
+                        <div style="margin-top: -30px;"> <span style="font-size: 15px;font-weight: bold;">{{'Reconciliation.O.FailedJournalInReconcileProcess' | TextCodeTranslationPipe}}</span></div>
+                
+                    </td>
+                
+
+                    <td style="width:20px;" *ngIf="failedJournalsInReconcileProcess">
+                
+                        <div>
+                
+                            <LogToolTip style="margin-top: -35px;" [float]="'left'" [mode]="'Info'" float-start [direction]="isRTL?'bottomleft':'bottomright'" *ngIf="failedJournalsInReconcileProcess">                        
+                                <div *ngFor="let journal of failedJournalList">
+                                    <a href="#" style="font-size:12px;display: block;" (click)="OpenJournal(journal.Id)">{{journal.JournalNumber}}</a>                          
+                                </div>
+                           </LogToolTip>
+                
+                        </div>
+                
+                    </td>
+                    
+                    <td style="width: 30%; padding-left: 5px;">
                     </td>
                     <td style="width: 57px; padding-left: 5px;">
                         <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>

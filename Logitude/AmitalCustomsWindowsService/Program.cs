@@ -49,7 +49,9 @@ namespace AmitalCustomsWindowsService
         [STAThread]
         static void Main()
         {
-            
+
+
+
             bool test = false;
             if (test)
             {

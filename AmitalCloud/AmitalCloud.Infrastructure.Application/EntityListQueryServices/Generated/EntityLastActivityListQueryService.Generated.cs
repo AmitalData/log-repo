@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class EntityLastActivityListQueryService  : BaseEntityListQueryService<EntityLastActivityList,POCO.EntityLastActivity,  EntityLastActivityKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.EntityLastActivity> contextEntity => (context as IAmitalCloudContext).EntityLastActivitys;
+	    protected override System.Data.Entity.IDbSet<POCO.EntityLastActivity> contextEntity => (context as IAmitalCloudContext).EntityLastActivities;
 		public EntityLastActivityListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public EntityLastActivityList GetSingle(string id)
 		{

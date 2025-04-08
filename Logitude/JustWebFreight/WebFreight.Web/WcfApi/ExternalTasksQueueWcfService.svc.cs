@@ -35,6 +35,9 @@ using System.Data.Entity.Infrastructure;
 using Logitude.Customs.Data.EntityPOCOs;
 using System.Windows.Media.Effects;
 using System.Diagnostics;
+using Simplog.Global.Data.GlobalModel.Helpers;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -221,8 +224,7 @@ namespace WebFreight.Web.WcfApi
                         }
                     }
                     response.HasError = false;
-                    //results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
-                    //results.Add("sql_query", sqlQuery);
+
                     stopwatch.Stop();
                     double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
                     if (log_level == "DEBUG") all_results.Add("ALL_SQL", elapsedSeconds.ToString());
@@ -323,11 +325,7 @@ namespace WebFreight.Web.WcfApi
                     bool.TryParse(queryParams["from_global"], out from_global);
                     queryParams.Remove("from_global");
                 }
-                //tenant = 6;//temppppp
 
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-                //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ
-                //var context = Simplog.Data.ShipmentsModel.ShipmentsContext.GetContext(tenant);
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
@@ -349,7 +347,7 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
                 CFILOGIAPI sql_logi = new CFILOGIAPI();
-                List<CFILOGIAPI> logi_list = new List<CFILOGIAPI>();  // to do call once !!!!!!!!!!!!!!!!!!!!!!!!!
+                List<CFILOGIAPI> logi_list = new List<CFILOGIAPI>();
                 logi_list = CFILOGIAPITask.GetLogiOcc();
                 if (queryId == "EXTERNAL_LOGIAPI")
                 {
@@ -382,10 +380,6 @@ namespace WebFreight.Web.WcfApi
 
                 String remark ="";
 
-
-
-                //tenant = 6;
-                //string id = "1-110456";
                 Dictionary<string, string> results = new Dictionary<string, string>();
                 List<List<string>> all_lines = new List<List<string>>();
                 int rows_effected = 0;
@@ -403,20 +397,24 @@ namespace WebFreight.Web.WcfApi
                         connection.ConnectionString = GlobalContext.Database.Connection.ConnectionString;
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug("global db : " + connection.ConnectionString);
 
-                        remark = "GlobalContext";
+                        remark = "GlobalContext" + connection.ConnectionString;
                     }
                     else
                     {
-                        connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ship db : " + connection.ConnectionString);
-                        remark = "ShipmentsContext";
+                        GlobalDB currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+                        string DBConnection = currentDb.DBConnection;
+                        string[] sourceConnectionArray = DBConnection.Split(',');
+                        ConnectionStringArguments sourceConnectionStringArguments = GetConnectionStringArguments(sourceConnectionArray);
+                        string ConnectionString = BuildConnectionString(sourceConnectionStringArguments);
+                        
+                        connection.ConnectionString = ConnectionString;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GlobalDB : " + connection.ConnectionString);
+                        remark = "GlobalDB tenant=" + tenant.ToString()+ " " + connection.ConnectionString;
                     }
                     
                     connection.Open();
-                    //sqlQuery = "SELECT IMPORTERID,ID from Customs.DECLARATIONS where (ID = @LOGITUDE_FILE ) AND TENANT = @Tenant";
                     using (var cmd = new SqlCommand(sqlQuery, connection))
                     {
-                        //cmd.Parameters.Add(new SqlParameter("@LOGITUDE_FILE", id));
                         foreach (var field in queryParams)
                         {
                             cmd.Parameters.Add(new SqlParameter($"@{field.Key}", field.Value));
@@ -475,14 +473,31 @@ namespace WebFreight.Web.WcfApi
             }
 
         }
+        public string BuildConnectionString(ConnectionStringArguments connectionStringArguments)
+        {
+            string result = "Data Source=" + connectionStringArguments.Server +
+                            ";Initial Catalog=" + connectionStringArguments.Catalog +
+                            ";Integrated Security=False;Persist Security Info=True;User ID=" + connectionStringArguments.UserName +
+                            ";Password= " + connectionStringArguments.Password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            return result;
+        }
+        private ConnectionStringArguments GetConnectionStringArguments(string[] connectionArray)
+        {
+            ConnectionStringArguments connectionStringArguments = new ConnectionStringArguments()
+            {
+                Catalog = connectionArray[0],
+                UserName = connectionArray[1],
+                Password = connectionArray[2],
+                Server = connectionArray[3],
+            };
+
+            return connectionStringArguments;
+        }
         public Response LGTQueryExample(string queryId, Dictionary<string, string> queryParams, int tenant)
         {
             var response = new Response();
             try
             {
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-                //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ
-                //var context = Simplog.Data.ShipmentsModel.ShipmentsContext.GetContext(tenant);
 
                 tenant = 6;
                 string id = "1-110456";
@@ -539,7 +554,6 @@ namespace WebFreight.Web.WcfApi
             CommunicationLog commLog = null;
             QueueResponse queueResponse = null;
 			string result = null;
-			//BrokeredMessage message = null;
 			try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
@@ -550,7 +564,6 @@ namespace WebFreight.Web.WcfApi
                 }
 
 
-                //HttpContext.Current.Items.Add("workerrolename", "production");
 
                 string enableQueueWaitOnExternalWCFService = System.Configuration.ConfigurationManager.AppSettings.Get("EnableQueueWaitOnExternalWCFService");
                 TimeSpan queueWaitTime = new TimeSpan(0, 0, 0);
@@ -566,9 +579,7 @@ namespace WebFreight.Web.WcfApi
                 DbQueueService queueservice = new DbQueueService(queueName, tenant);//QueueServiceManager.GetQueueService(queueName, 0);
                 queueResponse = queueservice.Receive(queueWaitTime);
 
-                // QueueClient client = Communications.GetQueueClient("externaltasksqueue" + tenant + priority);
-
-                //message = client.Receive(new TimeSpan(0, 0, 20));
+ 
                 if (queueResponse.MessageId != null)
                 {
                     string communicationLogId = queueResponse.MessageValues["CommunicationLogId"].ToString();
@@ -613,7 +624,6 @@ namespace WebFreight.Web.WcfApi
                             queueservice.CompleteAsFailed();
 
                         }
-                        //envelope.Result = message.LockToken.ToString() + "," + communicationLogId;
 
 
                         result = LogitudeXmlSerializer.SerializeObjectToXmlString(envelope);

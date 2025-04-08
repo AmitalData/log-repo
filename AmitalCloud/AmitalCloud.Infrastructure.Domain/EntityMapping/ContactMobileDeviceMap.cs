@@ -22,17 +22,15 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.DeviceId });
 	 
-            this.Property(t => t.DeviceId).HasColumnName("DeviceId").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.DeviceId).HasColumnName("DeviceId").IsRequired().HasMaxLength(500).IsUnicode(false);
 
-            this.Property(t => t.NotificationUniqueKey).HasColumnName("NotificationUniqueKey").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(70).IsUnicode(false);
 
-            this.Property(t => t.Email).HasColumnName("Email").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Platform).HasColumnName("Platform").IsRequired().HasMaxLength(10).IsUnicode(false);
 
-            this.Property(t => t.Platform).HasColumnName("Platform").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Version).HasColumnName("Version").IsRequired().HasMaxLength(10).IsUnicode(false);
 
-            this.Property(t => t.Version).HasColumnName("Version").IsRequired().HasMaxLength(0).IsUnicode(false);
-
-            this.Property(t => t.Devicetype).HasColumnName("Devicetype").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.Devicetype).HasColumnName("Devicetype").IsRequired().HasMaxLength(200).IsUnicode(false);
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 
@@ -40,7 +38,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.IsSignOut).HasColumnName("IsSignOut").IsRequired();
 
-            this.Property(t => t.AppVersion).HasColumnName("AppVersion").IsRequired().HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.NotificationUniqueKey).HasColumnName("NotificationUniqueKey").IsRequired().HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.AppVersion).HasColumnName("AppVersion").IsRequired().HasMaxLength(10).IsUnicode(false);
         }
     }
 }

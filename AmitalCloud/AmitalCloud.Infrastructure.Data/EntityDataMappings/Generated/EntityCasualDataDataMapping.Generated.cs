@@ -210,6 +210,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 return;
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.LocalName)) //T4 find type == nText 
+            {
+                entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)

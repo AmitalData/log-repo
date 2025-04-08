@@ -22,17 +22,17 @@ using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class AuthenticationTokenUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.AuthenticationToken,AuthenticationTokenPM,IEntityPM,AuthenticationTokenList,string>
+   public partial class AuthenticationTokenUpdateService:BaseEntityUpdateService<GlobalContext, POCO.AuthenticationToken,AuthenticationTokenPM,IEntityPM,AuthenticationTokenList,string>
    {
    			
-        public AuthenticationTokenUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public AuthenticationTokenUpdateService(IGlobalContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base((GlobalContext)mainContext,additionalContexts, tenant)
         {
             Mapping = new AuthenticationTokenDataMapping();
-            Repository = new Repository<POCO.AuthenticationToken>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.AuthenticationToken>((GlobalContext)mainContext);
         }
-        public AuthenticationTokenUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public AuthenticationTokenUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public AuthenticationTokenUpdateService(int tenant) : this(GlobalContext.GetContext(tenant), null, tenant) {}
+        public AuthenticationTokenUpdateService(IGlobalContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AuthenticationToken,string> GetKeys(AuthenticationTokenPM entityPM) => new AuthenticationTokenKeys<string>() { Token = entityPM.Token };
 protected override void FillDefaultValuesOnCreate(AuthenticationTokenPM entityPM)
 		{

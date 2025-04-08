@@ -119,6 +119,8 @@ namespace Logitude.Accounting.Data.EntityMapping
 
 
             this.Property(t => t.InternalNote).HasColumnName("InternalNote").IsUnicode(true);
+
+            this.Property(t => t.ProcessStartDate).HasColumnName("ProcessStartDate");
         }
     }
 }

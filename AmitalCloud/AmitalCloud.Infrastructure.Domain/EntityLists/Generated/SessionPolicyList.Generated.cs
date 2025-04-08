@@ -24,20 +24,20 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public SessionPolicyList() : base() {}
        public SessionPolicyList(POCO.SessionPolicy entity) : base()
        {
-          Id  = entity.Id;
           WebTokenLifeTimeInMinutes  = entity.WebTokenLifeTimeInMinutes;
           WebTokenExpirationWarningInMinutes  = entity.WebTokenExpirationWarningInMinutes;
+          Id  = entity.Id;
        }
        #endregion Constructors
        #region Properties
-   
-       [Key]
-       [DataMember]
-       public string Id  { get; set; }
-       [DataMember]
+          [DataMember]
        public int WebTokenLifeTimeInMinutes  { get; set; }
        [DataMember]
        public int WebTokenExpirationWarningInMinutes  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
          #endregion Properties
    }
 

@@ -16,7 +16,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
-//using System.Reflection.Emit;
 using System.Text;
 using System.Threading;
 using Logitude.Server.Tools.QueueService;
@@ -1332,17 +1331,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         break;
                 }
-
-                ///message.SafeComplete();
-                //throw;
+                
             }
             catch (Exception ex)
             {
                 OnException(myDbQueueService, message, qpJournalId, tenant, ex);
-                //LogMessagingUtil.Instance.AppendLine(MessageId.ToString() + " " + ex.Message);
-                //ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "AccountingJournalApproveWR: ProcessMessage() Method", null);
-                ///message.SafeComplete();
-                //throw;
             }
             return isSubmitApprove;
 
@@ -1351,7 +1344,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private static void SetTenantIdle(int tenant)
         {
             TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
-            TenantIdleStatus tenantObj = tenantRepository.GetAll(tenant).FirstOrDefault();
+            TenantIdleStatus tenantObj = tenantRepository.GetAllByObjectTable(tenant,  "Journal").FirstOrDefault();
             tenantObj.Idle = false;
             tenantObj.UpdateDate = DateTime.Now;
             tenantRepository.Update(tenantObj);
@@ -1467,7 +1460,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         SqlCommand cmd = new SqlCommand("[dbo].[usp_AccountingStreaming]", myConnection);
                         cmd.CommandType = CommandType.StoredProcedure;
-
+                        cmd.CommandTimeout = 1800; 
                         SqlParameter journalIdPar = new SqlParameter("@pJournalId", SqlDbType.VarChar);
                         journalIdPar.Direction = ParameterDirection.Input;
                         journalIdPar.Value = _JournalPM.Id;
@@ -1583,6 +1576,26 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     scope.Complete();
                     complete = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(" usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + ex);
+                if (_JournalPM?.StatusCode == "6" && !_JournalPM.IsLedgerCreated)
+                {
+                    try
+                    {
+                        using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Suppress))
+                        {
+                            var up = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
+                            up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
+                            scope.Complete();
+                        }
+                    }
+                    catch (Exception updateEx)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("Failed to update journal status in exception handling. JournalId: " + _JournalPM?.Id + " Err:" + updateEx);
+                    }
                 }
             }
             finally
@@ -1888,9 +1901,11 @@ namespace Logitude.Accounting.BL.CoreBL
                             if (DateTime.Now.Subtract(_freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
                             {
                                 _freeTenantsDateTime = DateTime.Now;
-                                queueservice.FreeTenants();
+
+                            queueservice.FreeTenants("Journal");
                             }
-                            response = queueservice.ReceiveJournal(new TimeSpan(0, 0, 0, 5));
+
+                        response = queueservice.ReceiveDetailsByTenant("Journal",new TimeSpan(0, 0, 0, 5));
                         }
                         catch (Exception)
                         {

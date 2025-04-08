@@ -417,6 +417,9 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
                     this.SelectedCategory = 'Category 5';        
                     this.Category5 = queryFilterItem.FieldValue; 
                     break;
+                default:
+                    this.SelectedCategory = null;
+                    break;
             };
         }
     }
@@ -538,7 +541,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     categoryIndex: any = null;
     categoryValue: any = null;
     SetCategoryIndexAndValueFilters(queryFilterItems: Array<QueryFilterItem>) {
-       this.categoryIndex = this.SelectedCategory? this.SelectedCategory.replace(' ', ''): null;
+       this.categoryIndex = (this.SelectedCategory && typeof this.SelectedCategory === 'string' ) ? this.SelectedCategory.replace(' ', '') : null;
         if (this.categoryIndex)
         this.SetCategoryValueFilter( );
     }

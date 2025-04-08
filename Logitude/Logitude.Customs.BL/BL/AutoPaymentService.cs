@@ -848,7 +848,7 @@ namespace Logitude.Customs.BL.BL
 				{
 					this.paymentPM.PaymentDate = customFileCreditResponseData.PaymentDateTime;
 				}
-				this.paymentPM.FuturePaymentDateTime = null;
+				this.paymentPM.FuturePaymentDateTime = newDate;
 				SetFuturePaymentTime(null);
 
 			}
@@ -1082,10 +1082,11 @@ namespace Logitude.Customs.BL.BL
 			{
 
 				CustomFileCreditResponseData responseData = new CustomFileCreditResponseData();
-				DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParamsCredit.Tenant);
-				DeclarationPM declarationPM = declarationQueryService.GetSingle(requestParamsCredit.AppicationId, false, false);
-				if (declarationPM != null && declarationPM.IsConnectedToUnifreight)
-				{
+				CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(this.customContext);
+				CustomsSettingPM customsSetting = customsSettingQuery.GetSingleByTenant(this._tenant);
+
+				if (customsSetting != null && customsSetting.IsConnectedToUniFreight)
+				 {
 					try
 					{
 						//ClientProgressBarIndicatorService.UpsertClientProgressBarIndicatorCurrentStage(requestParamsCredit.PBId, "שליחת בקשת העברה לגובה");
@@ -2778,7 +2779,7 @@ public class PaymentMethodModel : DeclarationPaymentMethodPM
 								{
 									agentBanks = response.FindAll(d => d.PayerTypeCode == "3" && !d.InActive);
 									//fill the LOV
-									BanksList = (List<CustomBankList>)connectedBanks.Concat(agentBanks);
+									BanksList = (List<CustomBankList>)connectedBanks.Concat(agentBanks).ToList();
 
 									//select bank
 									if (InternalBankId != null)

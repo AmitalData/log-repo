@@ -17,8 +17,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class CaptchaKeyListQueryService  : BaseEntityListQueryService<CaptchaKeyList,POCO.CaptchaKey,  CaptchaKeyKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.CaptchaKey> contextEntity => (context as IAmitalCloudContext).CaptchaKeys;
-		public CaptchaKeyListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+	    protected override System.Data.Entity.IDbSet<POCO.CaptchaKey> contextEntity => (context as IGlobalContext).CaptchaKeys;
+		public CaptchaKeyListQueryService(int tenant) : base(GlobalContext.GetContext(tenant)) { }
         public CaptchaKeyList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

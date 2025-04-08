@@ -31,6 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
+		objectTableRules = entity.ObjectTableRules != null ? entity.ObjectTableRules.Select(a=>new ObjectTableRulePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -83,6 +84,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<ObjectTableRulePM> objectTableRules;
+	 
+		     
+	   [Include]
+	   [Association("ObjectTableRuleTriggerType", "Code","Triggertypecode")]
+	   [DataMember]
+	   public virtual List<ObjectTableRulePM> ObjectTableRules  
+	   {
+	        get
+             {
+                 if (objectTableRules == null)
+                 {
+                     objectTableRules = new List<ObjectTableRulePM>();
+                 }
+                 return objectTableRules;
+              }
+             set { objectTableRules = value; }
+	    }
+	   private List<ObjectTableRulePM>  deletedObjectTableRules;
+	   public virtual List<ObjectTableRulePM> DeletedObjectTableRules  
+	   {
+	        get
+             {
+                 if ( deletedObjectTableRules == null)
+                 {
+                      deletedObjectTableRules = new List<ObjectTableRulePM>();
+                 }
+                 return  deletedObjectTableRules;
+              }
+             set {  deletedObjectTableRules = value; }
+	    }
 	 }
 #endregion Properties
 }

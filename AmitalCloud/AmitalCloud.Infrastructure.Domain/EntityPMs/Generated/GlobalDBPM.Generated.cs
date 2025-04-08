@@ -35,6 +35,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_sharedDWConnection = entity.SharedDWConnection;
 		_secondaryAzureDBConnection = entity.SecondaryAzureDBConnection;
 		_isBlocking = entity.IsBlocking;
+		globalTenants = entity.GlobalTenants != null ? entity.GlobalTenants.Select(a=>new GlobalTenantPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties
@@ -151,6 +152,37 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	   private List<GlobalTenantPM> globalTenants;
+	 
+		     
+	   [Include]
+	   [Association("GlobalTenantGlobalDB", "Id","Globaldbid")]
+	   [DataMember]
+	   public virtual List<GlobalTenantPM> GlobalTenants  
+	   {
+	        get
+             {
+                 if (globalTenants == null)
+                 {
+                     globalTenants = new List<GlobalTenantPM>();
+                 }
+                 return globalTenants;
+              }
+             set { globalTenants = value; }
+	    }
+	   private List<GlobalTenantPM>  deletedGlobalTenants;
+	   public virtual List<GlobalTenantPM> DeletedGlobalTenants  
+	   {
+	        get
+             {
+                 if ( deletedGlobalTenants == null)
+                 {
+                      deletedGlobalTenants = new List<GlobalTenantPM>();
+                 }
+                 return  deletedGlobalTenants;
+              }
+             set {  deletedGlobalTenants = value; }
+	    }
 	 }
 #endregion Properties
 }

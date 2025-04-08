@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CaptchaKeyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CaptchaKey,CaptchaKeyKeys<string>,CaptchaKeyPM,CaptchaKeyList,string>
+   public partial class CaptchaKeyQueryService: BaseEntityQueryService<IGlobalContext,POCO.CaptchaKey,CaptchaKeyKeys<string>,CaptchaKeyPM,CaptchaKeyList,string>
    {
-        public CaptchaKeyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public CaptchaKeyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CaptchaKey>(context),new CaptchaKeyDataMapping()) {}
+        public CaptchaKeyQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public CaptchaKeyQueryService(IGlobalContext context) : base(new Repository<POCO.CaptchaKey>(context),new CaptchaKeyDataMapping()) {}
 		public  CaptchaKeyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CaptchaKeyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CaptchaKey,string> GetKeys(POCO.CaptchaKey entityPOCO) => new CaptchaKeyKeys<string>() { Id = entityPOCO.Id,  };
    }

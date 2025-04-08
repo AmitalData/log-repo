@@ -113,6 +113,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         AWBNumber, 
 	         Tenant, 
 	         IsWaiting, 
+	         IsSecured, 
 	         ResponseDocumentId, 
 	         ChildEntityId, 
 	         ChildObjectTableId, 
@@ -161,6 +162,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Priority)) { entityPOCO.Priority = entityPM.Priority;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AWBNumber)) { entityPOCO.AWBNumber = entityPM.AWBNumber;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSecured)) { entityPOCO.IsSecured = entityPM.IsSecured;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ResponseDocumentId)) { entityPOCO.ResponseDocumentId = entityPM.ResponseDocumentId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChildEntityId)) { entityPOCO.ChildEntityId = entityPM.ChildEntityId;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChildObjectTableId)) { entityPOCO.ChildObjectTableId = entityPM.ChildObjectTableId;}
@@ -309,6 +311,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
 					entityPM.Tenant = entityPOCO.Tenant;
+            }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSecured))
+            {
+					entityPM.IsSecured = entityPOCO.IsSecured;
             }
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ResponseDocumentId))
             {
@@ -481,6 +487,10 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
+            }
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSecured))
+            {
+                oldEntityPM.IsSecured = entityPM.IsSecured;
             }
 						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ResponseDocumentId))
             {

@@ -28,15 +28,40 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public CustomerCompetitorProductPM() : base() {} 
    public CustomerCompetitorProductPM(POCO.CustomerCompetitorProduct entity) : base()
    {
-		_customerId = entity.CustomerId;
-		_competitorId = entity.CompetitorId;
 		_productTypeCode = entity.ProductTypeCode;
 		_producttype = entity.ProductType !=null ? new ProductTypePM(entity.ProductType) : null;
-			_tenant = entity.Tenant;
+			_customerId = entity.CustomerId;
+		_competitorId = entity.CompetitorId;
+		_tenant = entity.Tenant;
    }
    #endregion Constructors
    #region Properties
-   	  private string _customerId ;
+   	  private string _productTypeCode ;
+	         [Key]
+	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProductTypeCode  
+	   {
+	     get { return _productTypeCode; }
+		 set
+		 {
+		   if(_productTypeCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProductTypeCode",OldValue=_productTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _productTypeCode=value;
+		   }
+		 }
+	   }
+		private ProductTypePM _producttype;
+		[Include]
+        [DataMember]
+        public virtual ProductTypePM ProductType 
+		{ 
+		get { return _producttype; } 
+		set { _producttype = value; }
+		}
+	  private string _customerId ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -70,31 +95,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-	  private string _productTypeCode ;
-	         [Key]
-	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ProductTypeCode  
-	   {
-	     get { return _productTypeCode; }
-		 set
-		 {
-		   if(_productTypeCode != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProductTypeCode",OldValue=_productTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   _productTypeCode=value;
-		   }
-		 }
-	   }
-		private ProductTypePM _producttype;
-		[Include]
-        [DataMember]
-        public virtual ProductTypePM ProductType 
-		{ 
-		get { return _producttype; } 
-		set { _producttype = value; }
-		}
 	  private int _tenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

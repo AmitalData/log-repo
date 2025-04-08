@@ -24,6 +24,7 @@ using UnifreightIIG.Common.MessageLib.DeclarationDeal;
 using UnifreightIIG.Common.MessageLib.Deficit;
 using Logitude.Customs.BL.Models;
 using Attachment = UnifreightIIG.Common.MessageLib.Deficit.Attachment;
+using Logitude.BL.Security;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -64,7 +65,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
 
-            if (setting.IsConnectedToUniFreight != true)
+            if (SecurityUtility.CheckFeature("Customs.Declaration", "CUSTOMSDECLARATION", requestParams.Tenant) != true)
             {
                 this.MyResponseData = new INF_MSG_GenericResponseData();
                 this.MyResponseData.Succeeded = true;

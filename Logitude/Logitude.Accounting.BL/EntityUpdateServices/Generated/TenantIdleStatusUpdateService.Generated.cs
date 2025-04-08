@@ -60,7 +60,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(TenantIdleStatusPM entityPM)
         {
-            TenantIdleStatusKeys entityKeys = new TenantIdleStatusKeys() { Id = entityPM.Id };
+            TenantIdleStatusKeys entityKeys = new TenantIdleStatusKeys() { Id = entityPM.Id, ObjectTable = entityPM.ObjectTable };
             return entityKeys;
         }
 

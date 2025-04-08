@@ -31,7 +31,8 @@ namespace Simplog.Data.CommonDataModel
         {
             if (LogitudeSettings.WorkEnvironment == "customs" && LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                GlobalDB currentDb = GlobalDbHelper.GetSingleGlobalDB();
+                GlobalDB currentDb;                
+                currentDb = GlobalDbHelper.GetSingleGlobalDBOracle();                
                 string dbConnectionInfo = currentDb.DBConnection;
                 string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 

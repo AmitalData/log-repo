@@ -27,14 +27,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string LogitudeURL { get; set; }
         [Column("ChampURL")]
 	    public string ChampURL { get; set; }
-        [Column("ChampTestAPIURL")]
-	    public string ChampTestAPIURL { get; set; }
-        [Column("ChampTestAPIPassword")]
-	    public string ChampTestAPIPassword { get; set; }
-        [Column("ChampProdAPIURL")]
-	    public string ChampProdAPIURL { get; set; }
-        [Column("ChampProdAPIPassword")]
-	    public string ChampProdAPIPassword { get; set; }
         [Column("DeploymentStage")]
 	    public string DeploymentStage { get; set; }
         [Column("ChampEnv")]
@@ -111,24 +103,24 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string MinimumOutlookVersion { get; set; }
         [Column("SameUserLoginEnabled")]
 	    public bool SameUserLoginEnabled { get; set; }
+        [Column("LayoutDirection")]
+	    public string LayoutDirection { get; set; }
         [Column("DropboxAppKey")]
 	    public string DropboxAppKey { get; set; }
         [Column("DropboxAppSecret")]
 	    public string DropboxAppSecret { get; set; }
         [Column("ABMProductId")]
 	    public string ABMProductId { get; set; }
-        [Column("LayoutDirection")]
-	    public string LayoutDirection { get; set; }
         [Column("AzureFolderName")]
 	    public string AzureFolderName { get; set; }
         [Column("SignAppVersion")]
 	    public string SignAppVersion { get; set; }
         [Column("DocumentFilingEmailDomain")]
 	    public string DocumentFilingEmailDomain { get; set; }
-        [Column("System2RedirectFraction")]
-	    public int System2RedirectFraction { get; set; }
         [Column("ReportsRunUsingWR")]
 	    public bool ReportsRunUsingWR { get; set; }
+        [Column("System2RedirectFraction")]
+	    public int System2RedirectFraction { get; set; }
         [Column("SMSServiceUserId")]
 	    public string SMSServiceUserId { get; set; }
         [Column("SMSServiceAuthToken")]
@@ -143,6 +135,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string OceanInsightsToken { get; set; }
         [Column("EmailSendingQuota")]
 	    public int EmailSendingQuota { get; set; }
+        [Column("ChampTestAPIURL")]
+	    public string ChampTestAPIURL { get; set; }
+        [Column("ChampTestAPIPassword")]
+	    public string ChampTestAPIPassword { get; set; }
+        [Column("ChampProdAPIURL")]
+	    public string ChampProdAPIURL { get; set; }
+        [Column("ChampProdAPIPassword")]
+	    public string ChampProdAPIPassword { get; set; }
         [Column("ReleaseNotesURL")]
 	    public string ReleaseNotesURL { get; set; }
         [Column("CPUIntensiveWebServicesURL")]
@@ -165,6 +165,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string AmitalCloudEnvironmentURL { get; set; }
      
 	    public string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
+        [Column("Mainversion")]
+	    public string Mainversion { get; set; }
         [Column("PrivateKey")]
 	    public string PrivateKey { get; set; }
         [Column("AmitalTaxesUrl")]
@@ -175,14 +177,16 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string AmitalApiAddress { get; set; }
         [Column("AmitalApiXFunctionsKey")]
 	    public string AmitalApiXFunctionsKey { get; set; }
+        [Column("TempStorageConnection")]
+	    public string TempStorageConnection { get; set; }
         [Column("ReleaseDateString")]
 	    public string ReleaseDateString { get; set; }
         [Column("AzurePrincipalSecretKey")]
 	    public string AzurePrincipalSecretKey { get; set; }
-        [Column("DNSIPAddress")]
-	    public string DNSIPAddress { get; set; }
         [Column("DNSZone")]
 	    public string DNSZone { get; set; }
+        [Column("DNSIPAddress")]
+	    public string DNSIPAddress { get; set; }
         [Column("QboBaseUrl")]
 	    public string QboBaseUrl { get; set; }
         [Column("QboEnvironment")]
@@ -193,12 +197,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string WorkflowStorageAccountKey { get; set; }
         [Column("WindWardSettings")]
 	    public string WindWardSettings { get; set; }
-        [Column("LogitudeIISURL")]
-	    public string LogitudeIISURL { get; set; }
         [Column("ExportUrl")]
 	    public string ExportUrl { get; set; }
-        [Column("TempStorageConnection")]
-	    public string TempStorageConnection { get; set; }
+        [Column("LogitudeIISURL")]
+	    public string LogitudeIISURL { get; set; }
     }
 }
 	 

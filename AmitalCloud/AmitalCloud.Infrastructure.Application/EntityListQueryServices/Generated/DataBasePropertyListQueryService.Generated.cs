@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class DataBasePropertyListQueryService  : BaseEntityListQueryService<DataBasePropertyList,POCO.DataBaseProperty,  DataBasePropertyKeys<int>,int>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.DataBaseProperty> contextEntity => (context as IAmitalCloudContext).DataBasePropertys;
+	    protected override System.Data.Entity.IDbSet<POCO.DataBaseProperty> contextEntity => (context as IAmitalCloudContext).databaseproperties;
 		public DataBasePropertyListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public DataBasePropertyList GetSingle(int databasenumber)
 		{

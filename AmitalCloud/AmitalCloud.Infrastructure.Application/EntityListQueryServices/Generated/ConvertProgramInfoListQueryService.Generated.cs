@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class ConvertProgramInfoListQueryService  : BaseEntityListQueryService<ConvertProgramInfoList,POCO.ConvertProgramInfo,  ConvertProgramInfoKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ConvertProgramInfo> contextEntity => (context as IAmitalCloudContext).ConvertProgramInfos;
+	    protected override System.Data.Entity.IDbSet<POCO.ConvertProgramInfo> contextEntity => (context as IAmitalCloudContext).ConvertProgramInfoes;
 		public ConvertProgramInfoListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
         public ConvertProgramInfoList GetSingle(string id)
 		{

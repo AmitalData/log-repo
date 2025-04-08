@@ -28,6 +28,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             report.FeatureUniqeCode = reportPM.FeatureUniqeCode;
             report.DisablePreview = reportPM.DisablePreview;
             report.DefaultExcelTemplateId = reportPM.DefaultExcelTemplateId;
+            report.AvailableForScheduling = reportPM.AvailableForScheduling;
         }
     }
 }

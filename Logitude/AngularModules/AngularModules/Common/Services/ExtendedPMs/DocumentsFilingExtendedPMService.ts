@@ -762,7 +762,7 @@ export class DocumentsFilingExtendedPMService {
 
           }
 
-    PostDocumentAndDocumentFiling(documentsFilingPM: DocumentsFilingPM, fileContent: string) {
+    PostDocumentAndDocumentFiling(documentsFilingPM: DocumentsFilingPM, fileContent: string, rotationAngle: number) {
         const serviceResponse: ServiceResponse = new ServiceResponse();
         const errorsArray: string[] = new DocumentsFilingValidator().Validate(documentsFilingPM);
 
@@ -775,7 +775,7 @@ export class DocumentsFilingExtendedPMService {
         documentsFilingPM = this.AddEditMapJsonToEntityPM(documentsFilingPM, false);
 
         return this._http.post(this._apiUrl + "/PostDocumentAndDocumentFiling", 
-            { documentsFilingPM, fileContent },
+            { documentsFilingPM, fileContent, rotationAngle },
             ServiceHelper.GetHttpHeaders()
         ).pipe(map(response => {
             serviceResponse.Result = response;
