@@ -28,9 +28,10 @@ using Simplog.Data.InfrastructureModel;
 using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.Server.Tools.Utils;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 
 namespace CustomsWorkerRole
@@ -397,8 +398,6 @@ namespace CustomsWorkerRole
 					return response;
 			    }
 			}
-			}
-
 			catch (System.Data.Entity.Validation.DbEntityValidationException e)
 			{
 				string Error = "";
