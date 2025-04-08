@@ -52,7 +52,7 @@ export class NotificationReplyTabComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-        debugger;
+        
         if (!AppTool.IsNullOrEmpty(entityArgs)) {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.Notification").subscribe((response: any) => {
