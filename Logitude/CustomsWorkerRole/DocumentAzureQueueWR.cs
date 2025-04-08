@@ -7,7 +7,6 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.ExternalServices;
 using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -54,7 +53,7 @@ namespace CustomsWorkerRole
 		}
 
 		public override bool OnStart()
-		{			
+		{
 			ThreadId = Guid.NewGuid().ToString();
 			DoneItemsInRange = new Dictionary<DateTime, int>();
 			ConnectClient();
@@ -345,6 +344,7 @@ namespace CustomsWorkerRole
 		}
 		public Response UpsertDocumentData(DocumentsFilingPM entityPM)
 		{
+
 			Response response = new Response();
 			TransactionScope scope = null;
 			try
@@ -397,6 +397,7 @@ namespace CustomsWorkerRole
 					return response;
 			    }
 			}
+			}
 
 			catch (System.Data.Entity.Validation.DbEntityValidationException e)
 			{
@@ -434,7 +435,9 @@ namespace CustomsWorkerRole
 			finally
 			{
 			}
+
 		}
+
 		public void CheckLock(string id)
 		{
 			string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(id, tenant);
