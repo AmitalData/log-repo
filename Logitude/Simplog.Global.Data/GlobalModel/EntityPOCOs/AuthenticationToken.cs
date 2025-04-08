@@ -22,7 +22,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string InActiveReason { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public DateTime? InActiveDate { get; set; }
-        
+        public string LinkId { get; set; }
+        public string Params { get; set; }
     }
     
 }

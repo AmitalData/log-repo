@@ -644,6 +644,7 @@
     <Compile Include="CommonDataModel\CustomFilters\ChargesTypeCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\ReportExecutionLogCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityLists\ExternalLinkList.cs" />
     <Compile Include="CommonDataModel\EntityLists\DocumentsMetaDataTypeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\QuoteGroupSectionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HTSCodeList.cs" />
@@ -778,6 +779,7 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerGroupMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerTeamMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CustomerOpenFilesAmountMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\ExternalLinkMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TruckerSettingMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\FreelancerGroupTypeMapping.cs" />
@@ -804,6 +806,7 @@
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerOpenFilesAmountService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerTeamService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\CustomerStatusQueueService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\ExternalLinkService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentTypeMetaDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TruckerSettingService.cs" />
@@ -1161,6 +1164,7 @@
     <Compile Include="ShipmentsModel\CustomFilters\LogBoxShipmentCustomFilter.cs" />
     <Compile Include="ShipmentsModel\EntityLists\LogBoxShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityOtherServices\ContainerShipmentUpdateService.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\ExternalLinkPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusLogPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ReferenceTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentReferancePM.cs" />
@@ -1170,6 +1174,7 @@
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsStatusLogMapping.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.FreightForwarderReference.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentReferance.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\ExternalLinkQuery.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsStatusLogService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\FreightForwarderReferenceService.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentReferanceService.cs" />

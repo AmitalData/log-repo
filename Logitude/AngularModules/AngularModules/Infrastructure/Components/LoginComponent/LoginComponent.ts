@@ -30,7 +30,7 @@ import { InfrastructureDomainService } from '../../Services/InfrastructureDomain
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { SATInterfaceSettingPMService } from '../../../Invoice/Services/StandardPMs/SATInterfaceSettingPMService';
-import { DateTool, FileLoader } from '../../Tools';
+import { DateTool } from '../../Tools';
 import { Guid } from '../../Utilities/Guid';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 declare var changeFavicon: any;
@@ -253,8 +253,15 @@ export class LoginComponent implements OnInit {
         if (SessionLocator.IsExternalParams) {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu) {
-                    var menuName =
-                        SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
+                    var menuName = SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
+                    const token: string = new URLSearchParams(window.location.search).get('Token');
+                    
+                    if (menuName === 'redi' && token) {
+                        const origin: string = window.location.origin.replace('localhost:4200', 'localhost:9996');
+                        location.href = origin + '/api/ExternalLink/GetForward?Token=' + token;
+                        return;
+                    }
+                    
                     if (
                         menuName == 'logbox' ||
                         menuName == 'dapp' ||
@@ -262,6 +269,7 @@ export class LoginComponent implements OnInit {
                         menuName == 'preq' ||
                         menuName == 'uid'
                     ) {
+
                         if (menuName == 'preq' || menuName == 'uid') {
                             this.LoginCompleted.emit('IgnoreTerms');
                             return;

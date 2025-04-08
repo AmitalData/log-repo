@@ -6721,7 +6721,12 @@
       DefaultText="&quot;Documents Metadata Types&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
-   </AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.MC.Others.ExternalLink&quot;"
+      DefaultText="&quot;External Links&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
 
   <AdditionalFeatures>
     <Feature
@@ -9179,6 +9184,15 @@
       FeatureTextCodeCode="&quot;General.Features.GENERALLOCK&quot;"
       FeatureDefaultText="&quot;GeneralLock&quot;"
       IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ExternalLink&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.MC.Others.ExternalLink&quot;"
+      FeatureDefaultText="&quot;External Links&quot;"
+      IsPackagable="false"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />

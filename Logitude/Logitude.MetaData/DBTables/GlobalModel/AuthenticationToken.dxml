@@ -83,6 +83,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+   Name="LinkId "
+   Type="varchar"
+   Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Params"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Index
     Columns="InActive"
     Include="CreateDate" />
