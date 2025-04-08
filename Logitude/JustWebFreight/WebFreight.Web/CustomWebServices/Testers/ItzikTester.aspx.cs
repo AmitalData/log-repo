@@ -27,7 +27,7 @@ namespace WebFreight.Web.CustomWebServices.Testers
 {
     public partial class ItzikTester : System.Web.UI.Page
     {
-        protected void Page_Load1(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
@@ -56,27 +56,7 @@ namespace WebFreight.Web.CustomWebServices.Testers
             }
             
         }
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                SystemTableRequestParams req = new SystemTableRequestParams()
-                {
-                    TableId = "1091",
-                    Tenant = 16,
-                    RequestVIA = SendRequestVIA.WebServiceInteractive
-                };
-
-                var a = new SYSTBL_NG_9000_MSG_SystemTableRequestMessageService().Send(req);
-
-                Response.Clear();
-            }
-            catch (Exception eee)
-            {
-                Response.Clear();
-                Response.Write(eee.ToString());
-            }
-        }
+       
 
         private static void Old()
         {
