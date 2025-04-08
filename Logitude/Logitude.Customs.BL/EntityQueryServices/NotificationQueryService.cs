@@ -124,9 +124,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
            var declarationPMsByID = declarationQueryService.GetDeclarationById(tenant, EntityId);
             List<string> directions = new List<string>();
             declarationPMsByID.ForEach(x => directions.Add(x.Direction));
-            var query = (this.repository as NotificationRepository).GetAll(tenant)
-                .Where(rec => rec.ObjectTableId == ObjectTableId && entityIds.Contains(rec.EntityId) && (directions.Contains("E") || ((rec.NotificationDefinitionCode == "5101N" && !string.IsNullOrEmpty(rec.Reference2Number)) || rec.NotificationDefinitionCode == "5101E" || rec.NotificationDefinitionCode == "5101D" || rec.NotificationDefinitionCode == "5101R" || rec.NotificationDefinitionCode == "5101A")));
-
 
             var allNotifications = (this.repository as NotificationRepository).GetAll(tenant)
                 .Where(rec => rec.ObjectTableId == ObjectTableId && entityIds.Contains( rec.EntityId) && (directions.Contains("E") ||  ((rec.NotificationDefinitionCode == "5101N" && !string.IsNullOrEmpty(rec.Reference2Number)) || rec.NotificationDefinitionCode == "5101E" || rec.NotificationDefinitionCode == "5101D" || rec.NotificationDefinitionCode == "5101R" || rec.NotificationDefinitionCode == "5101A")))
