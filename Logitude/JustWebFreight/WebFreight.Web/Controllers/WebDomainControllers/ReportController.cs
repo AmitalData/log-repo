@@ -28,6 +28,8 @@ using Newtonsoft.Json;
 using System.Configuration;
 using static WebFreight.Web.Helpers.ReportHelper;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Helpers;
+using System.Data;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -410,7 +412,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
-                List<ReportExecutionLogPM> reportExecutionLogs = reportExecutionLogQuery.GetReportExecutionLogPMsByTenantAndUserLastWeek(authToken.Tenant, id).ToList();
+                List<ReportMenuClass> reportExecutionLogs = reportExecutionLogQuery.GetReportByTenantAndUserLastWeek(authToken.Tenant, id).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLogs);
             }
             catch (Exception ex)
@@ -428,8 +430,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
                 List<string> idsList = ids?.Split(',').ToList();
-                List<ReportExecutionLogPM> reportExecutionLogs = reportExecutionLogQuery.GetReportExecutionLogPMsByIds(idsList, authToken.Tenant).ToList();
-                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLogs);
+                List<ReportMenuClass> menuList = reportExecutionLogQuery.GetReporByIds(idsList, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, menuList);
             }
             catch (Exception ex)
             {
@@ -437,7 +439,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage PostDeleteFromMenu(string reportId)
+        public HttpResponseMessage PostDeleteFromMenu(string reportId, int type)
         {
             try
             {
@@ -449,7 +451,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("ReportExecutionLog", "READ", tenant);
                 SecurityUtility.CheckContactFeature("ReportExecutionLog", "UPDATE", tenant);
                 ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
-                reportExecutionLogQuery.DeleteFromMenu(reportId, tenant);
+                reportExecutionLogQuery.DeleteFromMenu(reportId, tenant,type);
 
 
 
@@ -461,6 +463,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
         }
+       
         public HttpResponseMessage GetCheckIfStimulSoftReportIsBliud(string reportKey, int tenant)
         {
             try

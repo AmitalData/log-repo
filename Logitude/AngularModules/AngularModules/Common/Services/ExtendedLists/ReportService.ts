@@ -6,8 +6,8 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse'; 
 import {ReportFliter} from '../../../Report/Components/Filters/ReportFliter';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
-import { ReportExecutionLogPM } from 'Common/EntityPMs/ReportExecutionLogPM';
 import { AppTool } from 'Infrastructure/Tools';
+import { ReportMenuClass } from 'Report/Components/ReportMenuComponent';
 
 @Injectable()
 export class ReportService {
@@ -75,15 +75,17 @@ export class ReportService {
             return pmresponse;
         }),catchError(ServiceHelper.HandleServiceError));
     }
-    DeleteFromMenu(reportId: string) {
+    DeleteFromMenu(reportId: string , type: number) {
         
-        return this._http.post(this._apiUrl + '/PostDeleteFromMenu?reportId=' + reportId, null, ServiceHelper.GetHttpHeaders()).pipe(
+        return this._http.post(this._apiUrl + '/PostDeleteFromMenu?reportId=' + reportId + '&type='+type, null, ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
                 let serviceResponse = response;
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
     }
+
+   
     GetCheckIfStimulSoftReportIsBliud(reportKey: string,  tenant: number) {
 
         var authHeader = new Headers();
@@ -127,8 +129,8 @@ export class ReportService {
         );
 
     }
-    relatedReportSubject = new BehaviorSubject<ReportExecutionLogPM[]>([]);
-    relatedReport: ReportExecutionLogPM[];
+    relatedReportSubject = new BehaviorSubject<ReportMenuClass[]>([]);
+    relatedReport: ReportMenuClass[];
     private reportsCount = new Subject<number>();
     reportsCount$ = this.reportsCount.asObservable();
     private subscription: Subscription | null = null;
@@ -141,7 +143,7 @@ export class ReportService {
             if (!AppTool.IsNullOrEmpty(response)) {
 
                 this.relatedReport = [];
-                var relatedDocs: ReportExecutionLogPM[];
+                var relatedDocs: ReportMenuClass[];
                 relatedDocs = response.Result;
                 this.relatedReport = relatedDocs?.sort((a, b) => new Date(b.CreateDate).getTime() - new Date(a.CreateDate).getTime());
                 this.relatedReportSubject.next(relatedDocs);

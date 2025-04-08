@@ -77,6 +77,7 @@ export class HomeComponent implements OnDestroy{
     private reportPanelTimeout: any;
     public isPinned: boolean = false;
     countDoneRepors: number =0;
+    selectedTab: number = 0;
 
 
     constructor(private reportService: ReportService) {
@@ -829,6 +830,14 @@ export class HomeComponent implements OnDestroy{
         if (this.currentReportId != newValue) {
             this.currentReportId = newValue;
             this.reportService.LoadReports()
+           
+        }
+    }
+    get SelectedTab() { return this.selectedTab; }
+    set SelectedTab(newValue: number) {
+        
+        if (this.selectedTab != newValue) {
+            this.selectedTab = newValue;
            
         }
     }

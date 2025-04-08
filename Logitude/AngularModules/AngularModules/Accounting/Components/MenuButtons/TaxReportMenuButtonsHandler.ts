@@ -14,6 +14,8 @@ import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardL
 import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
 import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
 import { EntityPMService } from 'Infrastructure/Services/EntityPMService';
+import { ComponentRef, EventEmitter, Output } from '@angular/core';
+import { MenuTypes } from 'Report/Components/ReportMenuComponent';
 
 
 export class TaxReportMenuButtonsHandler {
@@ -31,6 +33,11 @@ export class TaxReportMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
     private BlockReportCancel: boolean = false;
 
+    
+    BackButtonClicked() {
+        this.CurrentSession.CurrentEditComponent.BackButtonClicked();
+
+    }
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -219,6 +226,12 @@ export class TaxReportMenuButtonsHandler {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.entityArgs.EditComponent.ReloadEntityPM();
+                SessionLocator.HomeComponent.IsReportPanelVisible = true;
+                SessionLocator.HomeComponent.CurrentReportId = mm.Result.Id;
+                SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution;;
+
+                SessionLocator.HomeComponent.isPinned = true;
+                this.BackButtonClicked();
             }
             else {
                 this.EntityPM.IsCancelled = false;
@@ -232,7 +245,7 @@ export class TaxReportMenuButtonsHandler {
             }
         });
     }
-
+    
     timer: any;
     timerInterval: number = 1000;
     ConfirmRecalculatingReport() {
@@ -245,25 +258,25 @@ export class TaxReportMenuButtonsHandler {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Refreshing ...");
                 this.EntityPM.RecalculateData = true;
-                //
-                //this.entityArgs.EditComponent.SaveChanges();
-
-                //this.EntityPMService.update(this.ObjectTableName, this.EntityPM).then((res: any) => {
-
+                
                 this.TaxReportPMService.update(this.EntityPM).subscribe((myResult: any) => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         var entity = mm.Result;
                         this.taxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe((myResult: any) => {
-                            var mm: ServiceResponse = myResult;
-                            var entity = mm.Result;
-                            this.btePM = entity;
+                           var mm: ServiceResponse = myResult;
 
-                            //  this.ChangeStatus("inprogress");
+                          this.CurrentSession.StopBusyIndicator();
+                          this.CurrentSession.CloseCurrentWindowEmit("ok");
+                          var messageWindow = new MessageWindow();
+                          messageWindow.ShowSuccessIcon = true;
+                          messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
+                          SessionLocator.HomeComponent.IsReportPanelVisible = true;
+                          SessionLocator.HomeComponent.CurrentReportId = mm.Result.reportKey;
+                          SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution;
 
-                            this.timer = setInterval(() => {
-                                this.GetBTE();
-                            }, this.timerInterval);
+                          SessionLocator.HomeComponent.isPinned = true;
+                          this.BackButtonClicked();
 
                         });
                     }
@@ -274,62 +287,9 @@ export class TaxReportMenuButtonsHandler {
         confirmWindow.Show(TextCodeTranslator.Translate('TaxReport.O.ConfirmRecalculateReport'));
     }
 
-    private StartBusyIndicator(message: string) {
-        this.CurrentSession.StartBusyIndicator(message);
-    }
+    
 
-    GetBTE() {
-        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe((myResult: any) => {
-            console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-                this.bteList = mm.Result;
-                if (this.bteList.StatusCode == "D") // D- Done
-                {
-
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    if (!this.EntityPM.RecalculateData) {
-                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                            this.CurrentSession.SessionLocation.viewContainerRef)
-                            .then(cmpRef => {
-                                cmpRef.instance.ComponentRef = cmpRef;
-                                cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: this.ObjectTableName });
-                                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                    //this.CancelButtonClicked();
-                                });
-                            });
-                    }else{
-                        this.entityArgs.EditComponent.ReloadEntityPM();
-                    }
-                    this.CurrentSession.StopBusyIndicator();
-                    //stop timer
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-
-
-                }
-                else if (this.bteList.StatusCode == "F") // F- Failed
-                {
-                    //stop timer
-
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-
-                    //update status
-                    //   this.ChangeStatus("failed");
-
-                }
-            }
-            else {
-            }
-        });
-
-    }
+    
 
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();

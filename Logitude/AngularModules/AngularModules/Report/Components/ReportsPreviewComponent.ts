@@ -18,6 +18,7 @@ import { QueryFilterItem } from './Filters/QueryFilterItem';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { MenuTypes } from './ReportMenuComponent';
 
 @Component({
     selector: 'ReportsPreviewComponent',
@@ -539,6 +540,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
                 SessionLocator.HomeComponent.IsReportPanelVisible = true;
                 SessionLocator.HomeComponent.CurrentReportId = myResponse.Result.ReportKey;
+                SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog;
+
                 SessionLocator.HomeComponent.isPinned = true;
 
                 this.BackButtonClicked()
