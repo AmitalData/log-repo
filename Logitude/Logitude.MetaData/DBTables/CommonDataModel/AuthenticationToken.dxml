@@ -84,7 +84,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LinkId "
+    Name="LinkId"
     Type="varchar"
     Size="15">
     <Constraints
