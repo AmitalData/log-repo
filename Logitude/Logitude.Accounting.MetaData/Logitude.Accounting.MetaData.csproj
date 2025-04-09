@@ -78,6 +78,7 @@
       <Link>DependencyValidation1.layerdiagram</Link>
       <Visible>False</Visible>
     </AdditionalFiles>
+    <None Include="DBOthers\SProcedures\usp_NewAgingReport.dxml" />
     <None Include="DBOthers\SProcedures\usp_Queue_Peek_ThreadPerTenant.dxml" />
     <None Include="DBOthers\SProcedures\usp_FixFailedReconcileJournals.dxml" />
     <None Include="DBOthers\SProcedures\usp_OpenTransaction.dxml" />
@@ -98,7 +99,6 @@
     <None Include="DBOthers\Views\AllARPaymentChequesViews.dxml" />
     <None Include="DBOthers\Views\LedgerTransactionsDeductionViews.dxml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
-    <None Include="DBScripts\202503021302_NewAgingReport.sxml" />
     <None Include="DBScripts\202405131200_CreateSchemaQueryReports.sxml" />
     <None Include="DBScripts\202403031201_ChartOfAccountsEnglishName.sxml" />
     <None Include="DBScripts\202403111553_ChequeCounterSerialAddLine.sxml" />

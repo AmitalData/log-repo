@@ -26,7 +26,6 @@ select DeclarationId from Customs.CourierDeclarations
 where Tenant = @Tenant and  CourierMasterId = @CourierMasterId) or (ObjectTableId1 = '1-655' and  EntityId1 = @CourierMasterId) )
 );
 end
-GO
 
     ]]>
   </SqlScript>
