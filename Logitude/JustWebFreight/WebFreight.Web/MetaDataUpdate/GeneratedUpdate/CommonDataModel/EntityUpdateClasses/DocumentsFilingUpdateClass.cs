@@ -23,7 +23,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentsFilingUpdateClass
    {  		
-		public const string HashString = "b42de1e16b8fe4a6bca905aaf9be4073";
+
+		public const string HashString = "e6ad7f95dc5f7c7c10ccf69b5d6731bd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -596,7 +597,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  " תאריך יצירה",
+					  						FullLocalDefaultText =  " תםריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
 					  						ListLocalDefaultText =  "CreateDate",
@@ -3003,7 +3004,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Description",
 					  						DefaultText =  "Description",
-					  						FullLocalDefaultText =  "תאור",
+					  						FullLocalDefaultText =  "תםור",
 					  						ListFieldLable =  "DescriptionListLable",
 					  						ListLableDefaultText =  "Description",
 					  						IsForeignKey =  false,
@@ -7307,10 +7308,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OcrScore",
 					  						DefaultText =  "Ocr Score",
-					  						FullLocalDefaultText =  "אחוז הצלחה OCR",
+					  						FullLocalDefaultText =  "םחוז הצלחה OCR",
 					  						ListFieldLable =  "OcrScoreListLable",
 					  						ListLableDefaultText =  "Ocr Score",
-					  						ListLocalDefaultText =  "אחוז הצלחה OCR",
+					  						ListLocalDefaultText =  "םחוז הצלחה OCR",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7890,10 +7891,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+			AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+			{
+
+				FieldName = "IsFromCloud",
+				ObjectTableName = "DocumentsFiling",
+				FieldsDataType = "Boolean",
+				MinLength = 0,
+				MaxLength = 0,
+				IsRequired = false,
+				CopyToDW = false,
+				DisplayOnLookUp = false,
+				DisplayOnLookUpLocal = false,
+				CanFilter = false,
+				DisplayOnly = false,
+				SystemRequired = false,
+				SystemMaxLength = 0,
+				DisplayInList = false,
+				IsCustomFilter = false,
+				IsListFilter = false,
+				MultiLine = false,
+				IsTimeFrameFilter = false,
+				DisplayInSearchWindowList = false,
+				PMPropertyPath = "IsFromCloud",
+				ListPropertyPath = "IsFromCloud",
+				AutomaticField = false,
+				UniqueField = false,
+				DisplayInSearchWindowListIndex = 0,
+				IsMulti = false,
+				DependencyFilter1IsList = false,
+				DependencyFilter2IsList = false,
+				DependencyFilter3IsList = false,
+				IsRestrictable = false,
+				DisplayInEntityVariables = false,
+				AllowedInCustomerFieldsSettings = false,
+				DisplayInSearchWindowFilters = false,
+				DisplayInSearchWindowFiltersIndex = 0,
+				DisplayInDocumentReferences = false,
+				InActive = false,
+				DisplayLongName = false,
+				FullFieldLable = "IsFromCloud",
+				DefaultText = "IsFromCloud",
+				IsForeignKey = false,
+				IsMaxLength = false,
+				NoMetaDataField = false,
+				IsFixedLength = false,
+				EnableAutoFill = false,
+				IncludeInSearchField = false,
+				AllowedinAutomationConditions = false,
+				AutomationEmailRecipient = false,
+				CanAutomateSetValue = false,
+				DisplayInAutomationAsEnitity = false,
+				DisplayInRequiredFields = false,
+				HasTemplate = false,
+				IsCustom = false,
+				EnableFullscreenTextBox = false,
+
+			}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes);
+
+		}
+
+		public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();

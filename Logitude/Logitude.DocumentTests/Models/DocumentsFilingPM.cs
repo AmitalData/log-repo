@@ -148,5 +148,7 @@ namespace Logitude.DocumentTests.Models
         public string CustomReference { get; set; }
         public bool IsDigitalSignRequired { get; set; }
         public bool BackedupExternally { get; set; }
-    }
+		public bool IsFromCloud { get; set; }
+
+	}
 }
