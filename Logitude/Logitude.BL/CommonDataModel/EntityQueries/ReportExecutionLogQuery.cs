@@ -121,125 +121,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         };
             return result;
         }
-        public List<ReportMenuClass> GetReportByTenantAndUserLastWeek(int tenant, string id)
-        {
-            var oneWeekAgo = DateTime.Now.AddDays(-7);
-            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
-
-            var reportLogs = repository.context.ReportExecutionLogs
-                .Include(a => a.Report)
-                .Where(a => a.Tenant == tenant && a.CreateDate >= oneWeekAgo && a.CreatedByUserId == id && !a.NotDisplayInMenu)
-                .Select(a => new ReportMenuClass
-                {   Id=a.Id,
-                    ReportId = a.ReportId,
-                    StatusCode = a.StatusCode,
-                    ExceptionMessage = a.ExceptionMessage,
-                    CreateDate = a.CreateDate,
-                    ReportFilterXML = a.ReportFilterXML,
-                    ReportName = a.Report != null ? a.Report.Name : null,
-                    ReportLocalName = a.Report != null ? a.Report.LocalName : null,
-                    ReportTemplateId = a.ReportTemplateId,
-                    NotDisplayInMenu = a.NotDisplayInMenu,
-                    ItemType =(int) MenuTypes.ReportExecutionLog
-                }).ToList();
-
-            var batchTasks = InfrastructureContext.GetContext(tenant).BatchTaskExecutions
-                .Where(a =>( a.Subject == "Create a new Tax Report" || a.Subject== "Cancel Tax Report") && a.Tenant == tenant && a.CreatedByUserId == id && a.CreateDate >= oneWeekAgo && !a.NotDisplayInMenu)
-                .AsEnumerable() 
-                .Select(a => new ReportMenuClass
-                {
-                    Id = a.Id,
-                    StatusCode = a.StatusCode,
-                    ExceptionMessage = a.ErrorLog,
-                    CreateDate = a.CreateDate,
-                    ReportFilterXML = a.PrametersXml,
-
-                    ReportName = TextCodesTranslator.TranslateText($"Accounting.General.O.{a.Subject.Trim()}", tenant, false),
-                    ReportLocalName = TextCodesTranslator.TranslateText($"Accounting.General.O.{a.Subject.Trim()}", tenant, true),
-                    NotDisplayInMenu = a.NotDisplayInMenu,
-                    ItemType = (int)MenuTypes.BatchTaskExecution
-                }).ToList();
-
-            return reportLogs.Concat(batchTasks).ToList();
-        }
-
-        public List<ReportMenuClass> GetReporByIds(List<string> ids, int tenant)
-        {
-            (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
-
-            var reportLogs = repository.context.ReportExecutionLogs
-                .Include(a => a.Report)
-                .Where(a => ids.Contains(a.Id) && a.Tenant == tenant)
-                .Select(a => new ReportMenuClass
-                {   Id = a.Id,
-                    ReportId = a.ReportId,
-                    StatusCode = a.StatusCode,
-                    ExceptionMessage = a.ExceptionMessage,
-                    CreateDate = a.CreateDate,
-                    ReportFilterXML = a.ReportFilterXML,
-                    ReportName = a.Report != null ? a.Report.Name : null,
-                    ReportLocalName = a.Report != null ? a.Report.LocalName : null,
-                    ReportTemplateId = a.ReportTemplateId,
-                    NotDisplayInMenu = a.NotDisplayInMenu,
-                    ItemType = (int)MenuTypes.ReportExecutionLog
-                }).ToList();
-
-            var batchTasks = InfrastructureContext.GetContext(tenant).BatchTaskExecutions
-                .Where(a => ids.Contains(a.Id) && a.Tenant == tenant)
-                .AsEnumerable()
-                .Select(a => new ReportMenuClass
-                {
-                    Id = a.Id,
-                    StatusCode = a.StatusCode,
-                    ExceptionMessage = a.ErrorLog,
-                    CreateDate = a.CreateDate,
-                    ReportFilterXML = a.PrametersXml,
-                    ReportName = a.Subject,
-                    ReportLocalName = a.Subject,
-                    NotDisplayInMenu = a.NotDisplayInMenu,
-                    ItemType =(int)MenuTypes.BatchTaskExecution
-                }).ToList();
-
-            return reportLogs.Concat(batchTasks).ToList();
-        }
-        public void DeleteFromMenu(string reportId, int tenant, int type)
-        {
-            switch (type)
-            {
-                case ((int)MenuTypes.ReportExecutionLog):
-                    var reportExecutionLog = repository.context.ReportExecutionLogs.FirstOrDefault(a => a.Id == reportId && a.Tenant == tenant);
-                    if (reportExecutionLog != null)
-                    {
-                        UpdateEntity(reportExecutionLog);
-                        repository.context.SaveChanges();
-                    }
-                    break;
-
-                case ((int)MenuTypes.BatchTaskExecution):
-                    var context = InfrastructureContext.GetContext(tenant);
-                    var batchTaskExecution = context.BatchTaskExecutions.FirstOrDefault(a => a.Id == reportId);
-                    if (batchTaskExecution != null)
-                    {
-                        UpdateEntity(batchTaskExecution);
-                        context.SaveChanges();
-                    }
-                    break;
-
-                default:
-                    throw new ArgumentException("Invalid type", nameof(type));
-            }
-        }
+      
 
       
-        private void UpdateEntity(object entity)
-        {
-            var notDisplayInMenuProperty = entity.GetType().GetProperty("NotDisplayInMenu");
-           
-            if (notDisplayInMenuProperty != null)
-            {
-                notDisplayInMenuProperty.SetValue(entity, true);
-            }
-        }
+
+      
+       
 
       
 

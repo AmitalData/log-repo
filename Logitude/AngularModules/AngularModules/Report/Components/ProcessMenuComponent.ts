@@ -1,7 +1,6 @@
 import { EventEmitter, HostListener, OnDestroy, Output } from "@angular/core";
 import { Component } from "@angular/core";
 import { ReportPM } from "Common/EntityPMs/ReportPM";
-import { ReportService } from "Common/Services/ExtendedLists/ReportService";
 import { ReportExecutionLogPMService } from "Common/Services/StandardPMs/ReportExecutionLogPMService";
 import { ReportPMService } from "Common/Services/StandardPMs/ReportPMService";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
@@ -16,55 +15,62 @@ import { ObjectsLocator } from "Infrastructure/Locators/ObjectsLocator";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { AppTool } from "Infrastructure/Tools";
+import { ProcessMenuService } from "Common/Services/ProcessMenuService";
 
 
 @Component({
-    selector: 'ReportMenuComponent',
-    templateUrl: './ReportMenuComponent.html',
-    inputs: ['CurrentReportId', 'IsReportPanelVisible', 'IsPinned','CurrentSelectedTab'],
+    selector: 'ProcessMenuComponent',
+    templateUrl: './ProcessMenuComponent.html',
+    inputs: ['CurrentProcessId', 'IsProcessMenuVisible', 'IsPinned','CurrentSelectedTab'],
 })
 
-export class ReportMenuComponent implements OnDestroy {
+export class ProcessMenuComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     @Output() PinnedChanged = new EventEmitter<boolean>();
-    @Output() NumberDoneReports = new EventEmitter<number>();
-    private numberDoneReports = 0;
+    @Output() NumberCompletedProcesses = new EventEmitter<number>();
 
-    public RelatedReport: ReportMenuClass[];
-    SelectedReport: ReportMenuClass;
-    private relatedReportSubject = new BehaviorSubject<ReportMenuClass[]>([]);
-    RelatedReport$ = this.relatedReportSubject.asObservable();
+    public MenuItems: MenuItemClass[];
+    SelectedMenuItem: MenuItemClass;
+    private menuItemsSubject = new BehaviorSubject<MenuItemClass[]>([]);
+    MenuItems$ = this.menuItemsSubject.asObservable();
     showExceptionMessage = false
-    isReportPanelVisible: boolean = false;
+    isProcessMenuVisible: boolean = false;
     public selectedTab: string = ''; 
     public currentSelectedTab: number = 0; 
 
-    currentReportId: string = "";
+    currentProcessId: string = "";
     public isPinned: boolean = false;
     public LayoutDirection: string = 'ltr';
-    public groupedReports: { [key: string]: any[] } = {}; 
+    ReportExecutionLogPMService: ReportExecutionLogPMService = new ReportExecutionLogPMService();
+    processMenuService: ProcessMenuService = new ProcessMenuService();
+    private subscription: Subscription | null = null;
+    reportPMService: ReportPMService = new ReportPMService();
+    reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
+    ReportTemplates = null;
+
+    public groupedMenuItems: { [key: string]: any[] } = {}; 
     public MenuTypeNames: { [key in MenuTypes]: string } = {
         [MenuTypes.ReportExecutionLog]: TextCodeTranslator.Translate("General.MH.Reports"),
         [MenuTypes.BatchTaskExecution]: TextCodeTranslator.Translate("Accounting.General.O.TaxReport"),
     };
-    constructor(private reportService: ReportService) {
+    constructor() {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
       
-        this.groupReportsByType();
+        this.GroupMenuItemsByType();
 
 
     }
-    groupReportsByType() {
-        this.reportService.relatedReportSubject.subscribe(reportList => {
-            this.groupedReports = reportList.reduce((groups: { [key: string]: ReportMenuClass[] }, report: ReportMenuClass) => {
-                const type = report.ItemType;
+    GroupMenuItemsByType() {
+        this.processMenuService.relatedProcessSubject.subscribe(menuItemList => {
+            this.groupedMenuItems = menuItemList.reduce((groups: { [key: string]: MenuItemClass[] }, menuItem: MenuItemClass) => { 
+                const type = menuItem.ItemType; 
                 if (!groups[type]) {
                     groups[type] = [];
                 }
-                groups[type].push(report);
-                return groups; 
+                groups[type].push(menuItem); 
+                return groups;
             }, {});
-            this.selectedTab =  (!AppTool.IsNullOrEmpty(this.selectedTab) && AppTool.IsNullOrEmpty(this.CurrentReportId)) ? this.selectedTab: Object.keys(this.groupedReports)[this.CurrentSelectedTab];
+            this.selectedTab =  (!AppTool.IsNullOrEmpty(this.selectedTab) && AppTool.IsNullOrEmpty(this.CurrentProcessId)) ? this.selectedTab: Object.keys(this.groupedMenuItems)[this.CurrentSelectedTab];
 
         });
     }
@@ -78,14 +84,13 @@ export class ReportMenuComponent implements OnDestroy {
     }
 
 
-    _reportService: ReportService = new ReportService();
-    private subscription: Subscription | null = null;
+    
 
-    get CurrentReportId() { return this.currentReportId; }
-    set CurrentReportId(newValue: string) {
+    get CurrentProcessId() { return this.currentProcessId; }
+    set CurrentProcessId(newValue: string) {
 
-        if (this.currentReportId != newValue) {
-            this.currentReportId = newValue;
+        if (this.currentProcessId != newValue) {
+            this.currentProcessId = newValue;
         }
     }
     get CurrentSelectedTab() { return this.currentSelectedTab; }
@@ -103,11 +108,11 @@ export class ReportMenuComponent implements OnDestroy {
             this.isPinned = newValue;
         }
     }
-    get IsReportPanelVisible() { return this.isReportPanelVisible; }
-    set IsReportPanelVisible(newValue: boolean) {
+    get IsProcessMenuVisible() { return this.isProcessMenuVisible; }
+    set IsProcessMenuVisible(newValue: boolean) {
 
-        if (this.isReportPanelVisible != newValue) {
-            this.isReportPanelVisible = newValue;
+        if (this.isProcessMenuVisible != newValue) {
+            this.isProcessMenuVisible = newValue;
         }
        
     }
@@ -117,36 +122,32 @@ export class ReportMenuComponent implements OnDestroy {
         this.PinnedChanged.emit(this.isPinned);
     }
 
-    DeleteReport(relatedRep: ReportMenuClass) {
+    DeleteMenuItem(relatedRep: MenuItemClass) {
         this.CurrentSession.StartBusyIndicator("Deleting....");
 
 
-        this._reportService.DeleteFromMenu(relatedRep.Id,relatedRep.ItemType).subscribe((res: any) => {
+        this.processMenuService.DeleteFromMenu(relatedRep.Id,relatedRep.ItemType).subscribe((res: any) => {
             if (!res.HasError) {
-                this.reportService.LoadReports();
-                SessionLocator.HomeComponent.IsReportPanelVisible = true;
+                this.processMenuService.LoadMenuItems();
+                SessionLocator.HomeComponent.IsProcessMenuVisible = true;
 
             }
             this.CurrentSession.StopBusyIndicator();
         });
     }
-    ReportExecutionLogPMService: ReportExecutionLogPMService = new ReportExecutionLogPMService();
 
-    CancelReport(relatedRep: ReportMenuClass) {
+    CancelMenuItem(relatedRep: MenuItemClass) {
 
         this.CurrentSession.StartBusyIndicator("Canceling...");
         this.ReportExecutionLogPMService.Cancel(relatedRep.Id).subscribe((res: any) => {
             if (!res.HasError) {
-                this.reportService.LoadReports();
-                SessionLocator.HomeComponent.IsReportPanelVisible = true;
+                this.processMenuService.LoadMenuItems();
+                SessionLocator.HomeComponent.IsProcessMenuVisible = true;
             }
             this.CurrentSession.StopBusyIndicator();
         });
     }
-    reportPMService: ReportPMService = new ReportPMService();
-    reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
-    ReportTemplates = null;
-    ViewReport(relatedRep: ReportMenuClass) {
+    ViewMenuItem(relatedRep: MenuItemClass) {
         switch (relatedRep.ItemType) {
             case MenuTypes.ReportExecutionLog:
                 this.ViewReportExecutionLog(relatedRep);
@@ -166,15 +167,15 @@ export class ReportMenuComponent implements OnDestroy {
         msg.Width = 450;
         msg.Show(" This item is not supported yet");
     }
-    ViewReportExecutionLog(relatedRep: ReportMenuClass) {
-        this.reportPMService.get(relatedRep.ReportId).subscribe((response: ServiceResponse) => {
+    ViewReportExecutionLog(item: MenuItemClass) {
+        this.reportPMService.get(item.ItemId).subscribe((response: ServiceResponse) => {
             if (response.Result) {
                 if (!response.HasError) {
-                    this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(relatedRep.ReportId).subscribe((myResponse: ServiceResponse) => {
+                    this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(item.ItemId).subscribe((myResponse: ServiceResponse) => {
                         if (myResponse.HasError) return;
 
                         this.ReportTemplates = myResponse.Result;
-                        this.LoadReportsPreviewComponent(relatedRep, response.Result);
+                        this.LoadReportsPreviewComponent(item, response.Result);
 
                         this.CurrentSession.StopBusyIndicator();
                     });
@@ -186,13 +187,13 @@ export class ReportMenuComponent implements OnDestroy {
         })
     }
 
-    ViewBatchTaskExecution(relatedRep: ReportMenuClass) {
+    ViewBatchTaskExecution(relatedRep: MenuItemClass) {
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
             this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(relatedRep.ReportFilterXML, "text/xml");
+                const xmlDoc = parser.parseFromString(relatedRep.FilterXML, "text/xml");
                 const reportId = xmlDoc.getElementsByTagName("ReportId")[0]?.textContent;
 
                 cmpRef.instance.Run({ EntityId: reportId, ObjectTableName: "TaxReport" });
@@ -202,7 +203,7 @@ export class ReportMenuComponent implements OnDestroy {
     private PageChild_PRREP: any = null;
     ReportsPreviewComponent: ReportsPreviewComponent
 
-    LoadReportsPreviewComponent(relatedRep: ReportMenuClass, report: ReportPM) {
+    LoadReportsPreviewComponent(relatedRep: MenuItemClass, report: ReportPM) {
         this.CurrentSession.StartBusyIndicator("Preview...");
         SessionLocator.DynamicLoader.Load('./Report/Components/ReportsPreviewComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
             .then((cmpRef: any) => {
@@ -214,12 +215,12 @@ export class ReportMenuComponent implements OnDestroy {
             });
     }
 
-    SetReportDetails(relatedRep: ReportMenuClass, report: ReportPM) {
+    SetReportDetails(relatedRep: MenuItemClass, report: ReportPM) {
 
-        let reportFilterItems = this.ConvertXmlToObject(relatedRep.ReportFilterXML)
+        let reportFilterItems = this.ConvertXmlToObject(relatedRep.FilterXML)
         this.PageChild_PRREP.SetReportFilterItems(reportFilterItems?.QueryFilterItemLists, false);
 
-        this.PageChild_PRREP.SetReportTemplate(relatedRep.ReportTemplateId);
+        this.PageChild_PRREP.SetReportTemplate(relatedRep.TemplateId);
         this.PageChild_PRREP.ReportsPreview(null, report, this.ReportTemplates);
         this.PageChild_PRREP.GenerateReportViewWorkerRole(reportFilterItems);
 
@@ -300,15 +301,15 @@ export class ReportMenuComponent implements OnDestroy {
 }
 
 
-export class ReportMenuClass {
+export class MenuItemClass {
     public StatusCode: string;
-    public ReportLocalName: string;
-    public ReportName: string;
+    public LocalName: string;
+    public Name: string;
     public CreateDate: Date = new Date();
     public ExceptionMessage: string = '';
-    public ReportId: string;
-    public ReportFilterXML: string;
-    public ReportTemplateId: string;
+    public ItemId: string;
+    public FilterXML: string;
+    public TemplateId: string;
     public NotDisplayInMenu: boolean = false;
     public ItemType: number = 0
     public Id: string;

@@ -16,7 +16,7 @@ import { TaxReportExtendedPMService } from '../../Services/ExtendedPMs/TaxReport
 import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
-import { MenuTypes } from 'Report/Components/ReportMenuComponent';
+import { MenuTypes } from 'Report/Components/ProcessMenuComponent';
 
 
 @Component({
@@ -153,8 +153,8 @@ export class NewTaxReportComponent extends BaseComponent {
                           var messageWindow = new MessageWindow();
                           messageWindow.ShowSuccessIcon = true;
                           messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
-                          SessionLocator.HomeComponent.IsReportPanelVisible = true;
-                          SessionLocator.HomeComponent.CurrentReportId = myResult.ReportKey;
+                          SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                          SessionLocator.HomeComponent.CurrentProcessId = myResult.ReportKey;
                           SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution;
                           SessionLocator.HomeComponent.isPinned = true;
                       }

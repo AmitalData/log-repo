@@ -14,8 +14,7 @@ import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardL
 import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
 import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
 import { EntityPMService } from 'Infrastructure/Services/EntityPMService';
-import { ComponentRef, EventEmitter, Output } from '@angular/core';
-import { MenuTypes } from 'Report/Components/ReportMenuComponent';
+import { MenuTypes } from 'Report/Components/ProcessMenuComponent';
 
 
 export class TaxReportMenuButtonsHandler {
@@ -226,8 +225,8 @@ export class TaxReportMenuButtonsHandler {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.entityArgs.EditComponent.ReloadEntityPM();
-                SessionLocator.HomeComponent.IsReportPanelVisible = true;
-                SessionLocator.HomeComponent.CurrentReportId = mm.Result.Id;
+                SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                SessionLocator.HomeComponent.CurrentProcessId = mm.Result.Id;
                 SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution;;
 
                 SessionLocator.HomeComponent.isPinned = true;
@@ -271,8 +270,8 @@ export class TaxReportMenuButtonsHandler {
                           var messageWindow = new MessageWindow();
                           messageWindow.ShowSuccessIcon = true;
                           messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
-                          SessionLocator.HomeComponent.IsReportPanelVisible = true;
-                          SessionLocator.HomeComponent.CurrentReportId = mm.Result.reportKey;
+                          SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                          SessionLocator.HomeComponent.CurrentProcessId = mm.Result.reportKey;
                           SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution;
 
                           SessionLocator.HomeComponent.isPinned = true;

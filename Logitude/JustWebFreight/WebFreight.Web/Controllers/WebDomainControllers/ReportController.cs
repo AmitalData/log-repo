@@ -404,65 +404,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetReportByTenantAndUserToMenu(string id)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
-                List<ReportMenuClass> reportExecutionLogs = reportExecutionLogQuery.GetReportByTenantAndUserLastWeek(authToken.Tenant, id).ToList();
-                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLogs);
-            }
-            catch (Exception ex)
-            {
-
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        public HttpResponseMessage GetCheckReportsStatus(string ids)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
-                List<string> idsList = ids?.Split(',').ToList();
-                List<ReportMenuClass> menuList = reportExecutionLogQuery.GetReporByIds(idsList, authToken.Tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, menuList);
-            }
-            catch (Exception ex)
-            {
-
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        public HttpResponseMessage PostDeleteFromMenu(string reportId, int type)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                var tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                SecurityUtility.CheckContactFeature("ReportExecutionLog", "READ", tenant);
-                SecurityUtility.CheckContactFeature("ReportExecutionLog", "UPDATE", tenant);
-                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
-                reportExecutionLogQuery.DeleteFromMenu(reportId, tenant,type);
-
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, "OK");
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
+      
        
         public HttpResponseMessage GetCheckIfStimulSoftReportIsBliud(string reportKey, int tenant)
         {

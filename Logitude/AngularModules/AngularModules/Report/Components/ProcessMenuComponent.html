@@ -179,7 +179,7 @@
                     </div>
 
                     <div class="TabsContainer">
-                        <div *ngFor="let tab of groupedReports | keyvalue" class="TabHeader"
+                        <div *ngFor="let tab of groupedMenuItems | keyvalue" class="TabHeader"
                             [class.active]="selectedTab === tab.key" (click)="selectTab(tab.key)">
 
                             <span *ngIf="MenuTypeNames && MenuTypeNames[tab.key]">{{ MenuTypeNames[tab.key]}}</span>
@@ -187,17 +187,17 @@
                     </div>
                     <div class="TabContent">
 
-                        <ul *ngIf="groupedReports[selectedTab]">
-                            <li *ngIf="!groupedReports[selectedTab]?.length"
+                        <ul *ngIf="groupedMenuItems[selectedTab]">
+                            <li *ngIf="!groupedMenuItems[selectedTab]?.length"
                                 style="width: 100%; padding: 10px;  text-align: center;height: 20px;line-height: 20px; font-size: 18px; color: #1B90CB;">
                                 {{'Accounting.General.O.NoReportsDisplay' | TextCodeTranslationPipe}} </li>
 
-                            <li *ngFor="let relatedRep of groupedReports[selectedTab]" style="width: 100%; padding: 10px;padding-bottom: 0px;  font-size: 10px;
+                            <li *ngFor="let item of groupedMenuItems[selectedTab]" style="width: 100%; padding: 10px;padding-bottom: 0px;  font-size: 10px;
                                                  color: #312C31; ">
 
-                                <div class="RelatedDocItem" [class.selectedticket]="SelectedReport == relatedRep"
-                                    [ngClass]="relatedRep.Id==currentReportId ?  'red-border' : ''"
-                                    (click)="relatedRep.StatusCode === 'D' && ViewReport(relatedRep)">
+                                <div class="RelatedDocItem" [class.selectedticket]="SelectedMenuItem == item"
+                                    [ngClass]="item.Id==currentProcessId ?  'red-border' : ''"
+                                    (click)="item.StatusCode === 'D' && ViewMenuItem(item)">
                                     <table>
 
                                         <!--Header-->
@@ -211,7 +211,7 @@
                                                                 <img [title]="'Delete'" class="LeftCenter"
                                                                     style="width: 10px; height: 10px; cursor: pointer;"
                                                                     src="./Images/Buttons/Delete.over.png"
-                                                                    (click)="$event.stopPropagation(); DeleteReport(relatedRep)" />
+                                                                    (click)="$event.stopPropagation(); DeleteMenuItem(item)" />
                                                             </div>
 
                                                         </td>
@@ -223,8 +223,8 @@
                                                             <div class="TextTrimming"
                                                                 style="font-weight: bold; text-align: center; padding-bottom: 3px;">
                                                                 {{LayoutDirection == 'rtl'?
-                                                                relatedRep.ReportLocalName
-                                                                :relatedRep.ReportName}}
+                                                                item.LocalName
+                                                                :item.Name}}
                                                             </div>
                                                         </td>
 
@@ -239,7 +239,7 @@
                                                                 style="text-align: center; padding-bottom: 3px;">
                                                                 {{'Accounting.General.O.CreateDate' |
                                                                 TextCodeTranslationPipe}}:
-                                                                {{relatedRep.CreateDate |
+                                                                {{item.CreateDate |
                                                                 DateTimeToDatePipe}}
                                                             </div>
                                                         </td>
@@ -248,9 +248,9 @@
 
                                                         <td>
                                                             <div style="margin-right:6px;overflow:hidden">
-                                                                <div *ngIf="relatedRep.StatusCode !== 'F';">
+                                                                <div *ngIf="item.StatusCode !== 'F';">
 
-                                                                    <div *ngIf="relatedRep.StatusCode !== 'D'"
+                                                                    <div *ngIf="item.StatusCode !== 'D'"
                                                                         class="progress-container">
                                                                         <div class="progress"></div>
                                                                     </div>
@@ -259,24 +259,24 @@
                                                             </div>
 
                                                         </td>
-                                                        <td [hidden]="relatedRep.StatusCode=='D' || relatedRep.StatusCode=='F' || relatedRep.ItemType === 1"
+                                                        <td [hidden]="item.StatusCode=='D' || item.StatusCode=='F' || item.ItemType === 1"
                                                             style="width: 1px; vertical-align: top;">
                                                             <img style="width: 18px;height: 18px;" [title]="'Cancel'"
-                                                                (click)="$event.stopPropagation();CancelReport(relatedRep)"
+                                                                (click)="$event.stopPropagation();CancelMenuItem(item)"
                                                                 src="./_Resources/Images/Icons/All/BlackDeleteIcon.png" />
 
                                                         </td>
-                                                        <td [hidden]="relatedRep.StatusCode!=='D'"
+                                                        <td [hidden]="item.StatusCode!=='D'"
                                                             style="width: 20px; vertical-align: top;">
-                                                            <img [title]="'View Report'" style=" cursor: pointer;"
+                                                            <img [title]="'View Item'" style=" cursor: pointer;"
                                                                 src="./Images/Successful_process@1x.png" />
                                                         </td>
-                                                        <td [hidden]="relatedRep.StatusCode!=='F'"
+                                                        <td [hidden]="item.StatusCode!=='F'"
                                                             style="width: 20px; vertical-align: top;">
 
-                                                            <img [title]="relatedRep.ExceptionMessage && !relatedRep.ExceptionMessage.startsWith('Stopped manually by') ? relatedRep.ExceptionMessage :'Cancelled'"
+                                                            <img [title]="item.ExceptionMessage && !item.ExceptionMessage.startsWith('Stopped manually by') ? item.ExceptionMessage :'Cancelled'"
                                                                 style=" cursor: pointer;"
-                                                                [src]="relatedRep.ExceptionMessage && !relatedRep.ExceptionMessage.startsWith('Stopped manually by') ? './Images/process_failed@1x.png' : './Images/process_cancelled.png'" />
+                                                                [src]="item.ExceptionMessage && !item.ExceptionMessage.startsWith('Stopped manually by') ? './Images/process_failed@1x.png' : './Images/process_cancelled.png'" />
                                                         </td>
 
 
