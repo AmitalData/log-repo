@@ -38,6 +38,8 @@ namespace WebFreight.Web.DataProviders
          public decimal? TotalLocal { get; set; } = 0;
         public decimal? TotalForeign { get; set; } = 0;
        public decimal? TotalFutureOpenCheques { get; set; }
+        public decimal? TotalPastOpenCheques { get; set; }
+
         public decimal? TotalOpenShipments { get; set; }
         public decimal? BalanceInLocalCurrency { get; set; }
          public string AccountSalesmanName { get; set; }
