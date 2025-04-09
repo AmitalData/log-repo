@@ -1,5 +1,5 @@
 ﻿<Script DBType="Main" Module="Common">
-  <Sql Version="3">
+  <Sql Version="4">
     <![CDATA[
 
      
@@ -31,13 +31,14 @@ BEGIN
 		
 		--ChargesType
 		set @ChargesGroupCode = 'HNDCH'
-		set @ChargesGroupId = (select Id from ChargesGroups where Tenant = @Tenant and Code = 'HNDCH')
+		SET @ChargesGroupId = (SELECT TOP 1 Id FROM ChargesGroups WHERE Tenant = @Tenant AND Code = 'HNDCH')
 		set @VATTypeId = (select Id from VatTypes where Tenant = @Tenant and Code = 'STD')
 		set @IATACodeId = (select Id from IATACodes where Code = 'SO')
 
 		if not exists (select Id from ChargesTypes where Tenant = @Tenant and Code = 'ISTOR')
         begin 
-              
+		if (@ChargesGroupId is not null)
+		begin
 			EXECUTE usp_GetNextTableIdValue @ChargesTypeId OUTPUT,'ChargesType'
             insert into ChargesTypes(Code, EnglishName, LocalName, Id, Tenant, AddedManually, InActive, ChargesGroupCode, VatTypeId, IsReceivable, 
 			IsPayable, IsAir, IsOcean, IsInland, IsAutoDisplayInShipment, IsAutoDisplayInConsolidation, Description, AWBPrintDescription, DueTypeCode,
@@ -55,7 +56,7 @@ BEGIN
 			0,0,NULL,0,0,0,0,
 			NULL,NULL,0,0,0)                            
         end                    
-
+		end
            FETCH NEXT FROM TenantsCursor INTO @Tenant      
         END
 	CLOSE TenantsCursor
