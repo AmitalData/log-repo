@@ -79,7 +79,6 @@ namespace Logitude.Customs.BL.BL
                 {
                     hasActivePending = declarationPendingRepo.HasPendingWithStatus(declaration.Id, declarationCourierStatusPM.Tenant, "A");
                 }
-
                 if (declaration != null &&
                     !hasActivePending &&
                     string.IsNullOrEmpty(declaration.ImporterCode))
@@ -180,6 +179,7 @@ namespace Logitude.Customs.BL.BL
                         LoggingEnabled = true,
                         LoggingObjectTableId = declarationObjectTableId,
                         LoggingEntityId = declarationCourierStatusPM.DeclarationId,
+                        FromAutomate = true, 
                         AppicationId = declarationCourierStatusPM.DeclarationId,
                         InterfaceTypeCode = "2750",
                         //LoggingEntityReference = declarationNumber,
