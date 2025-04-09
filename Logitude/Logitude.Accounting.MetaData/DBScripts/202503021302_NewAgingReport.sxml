@@ -56,7 +56,8 @@ BEGIN
     Future DECIMAL(30, 2),
     ExternalTransactionsTotal DECIMAL(30, 2),
    TotalForeign DECIMAL(30, 2),
-   Rate DECIMAL(30, 2),
+   	Rate DECIMAL(30, 2),
+
 );
 
 
@@ -74,13 +75,12 @@ INSERT INTO #TemporaryTable
 	MAX(GL.DisplayNumber) AS DisplayNumber,
 	MAX(GL.LocalName) AS LocalName,
 	MAX(GL.EnglishName) AS EnglishName,
-	
 	MAX(GL.Id)AS ID,
     SUM(CASE 
       WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 1 AND 30 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -90,7 +90,7 @@ INSERT INTO #TemporaryTable
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 31 AND 60 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -100,7 +100,7 @@ INSERT INTO #TemporaryTable
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 61 AND 90 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -110,7 +110,7 @@ INSERT INTO #TemporaryTable
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 91 AND 120 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -120,7 +120,7 @@ INSERT INTO #TemporaryTable
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 121 AND 150 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -130,7 +130,7 @@ INSERT INTO #TemporaryTable
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 151 AND 180 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -140,7 +140,7 @@ INSERT INTO #TemporaryTable
         WHEN DATEDIFF(day, T.DueDate, @InputDate) > 180 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -152,7 +152,7 @@ INSERT INTO #TemporaryTable
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -30 AND 0 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -162,7 +162,7 @@ INSERT INTO #TemporaryTable
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -60 AND -31 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -171,7 +171,7 @@ INSERT INTO #TemporaryTable
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -90 AND -61 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -181,7 +181,7 @@ INSERT INTO #TemporaryTable
         WHEN DATEDIFF(day, T.DueDate, @InputDate) < -90 THEN 
             CASE 
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' THEN T.OpenAmount * dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId)
+                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
         ELSE 0 
@@ -202,7 +202,7 @@ INSERT INTO #TemporaryTable
     WHEN T.CreateDate < @InputDate THEN (T.ForeignAmountDebit - T.ForeignAmountCredit) 
     ELSE 0 
      END) AS TotalForeign,
-	 	max(dbo.GetLastRate(@Tenant, GETDATE(), TEN.CurrencyId, T.OpenAmountCurrencyId))as Rate
+	max(t.ExchangeRate)as Rate
 
    
  
@@ -282,6 +282,7 @@ LEFT JOIN
 	 order by t.ID 
 	  DROP TABLE  #TemporaryTable 
 END;
+
 
 	
 GO
