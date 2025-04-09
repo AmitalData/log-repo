@@ -762,7 +762,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 ChargeTypeAccounting myChargeTypeAccounting = (from d in iQueryable_ChargeTypeAccounting where d.ChargeTypeId == line.ChargesTypeId && d.VatTypeId == line.VatTypeId select d).FirstOrDefault();
                                 if (myChargeTypeAccounting != null)
                                 {
-                                    line.ChargeTypeGLAccountId = myChargeTypeAccounting.PayableDebitGLAcountId;
+                                    line.ChargeTypeGLAccountId =line.PayableDebitGLAcountId ?? myChargeTypeAccounting.PayableDebitGLAcountId;
                                 }
                             }
                             else
@@ -778,12 +778,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 }
                                 else
                                 {
-                                    line.ChargeTypeGLAccountId = myChargesType.PayableDebitGLAcountId;
+                                    line.ChargeTypeGLAccountId =line.PayableDebitGLAcountId ?? myChargesType.PayableDebitGLAcountId;
                                 }
 
                             }
 
-                            if (string.IsNullOrEmpty(line.ChargeTypeGLAccountId))
+                            if (string.IsNullOrEmpty(line.ChargeTypeGLAccountId) && string.IsNullOrEmpty(line.PayableDebitGLAcountId))
                             {
                                 throw new Exception("The Payabel GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
                             }
