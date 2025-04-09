@@ -26,6 +26,7 @@ export class AccountingPartnerPM extends ObjectCustomFieldPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
+  
 	  constructor() {
 		  super("AccountingPartner");
           this.UIProperties = new UIProperties(this); 
@@ -262,7 +263,11 @@ export class AccountingPartnerPM extends ObjectCustomFieldPM {
     public get Card() { return this.card; }
     public set Card(newValue: any) { if (this.card != newValue) { this.card = newValue; this.MarkAsDirty("Card"); } }
        
-	 
+    
+    private externalSystem: string;
+    public get ExternalSystem() { return this.externalSystem; }
+    public set ExternalSystem(newValue: string) { if (this.externalSystem != newValue) { this.externalSystem = newValue; this.MarkAsDirty("ExternalSystem"); } }
+
      
 	private addresses: AddressPM[];
     get  Addresses() {
@@ -436,4 +441,4 @@ export class AccountingPartnerPM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
