@@ -39,6 +39,8 @@ BEGIN
     AccountCurrencyCode VARCHAR(3),
     TotalOpenShipments decimal(18,2),
     TotFutureOpenChequesInLocalCur DECIMAL(18, 2),
+	TotPastOpenChequesInLocalCur DECIMAL(18, 2),
+
     DisplayNumber VARCHAR(15),
     LocalName NVARCHAR(210),
     EnglishName VARCHAR(75),
@@ -72,6 +74,7 @@ INSERT INTO #TemporaryTable
 	MAX(CURRENCY.Code) AS AccountCurrencyCode,
 	MAX(C.TotalOpenShipments) AS TotalOpenShipments,
 	MAX(FUTQ.TotFutureOpenChequesInLocalCur) AS TotFutureOpenChequesInLocalCur,
+	MAX(FUTQ.TotPastOpenChequesInLocalCur) AS TotPastOpenChequesInLocalCur,
 	MAX(GL.DisplayNumber) AS DisplayNumber,
 	MAX(GL.LocalName) AS LocalName,
 	MAX(GL.EnglishName) AS EnglishName,
@@ -215,10 +218,12 @@ INNER JOIN
     TENANTS TEN ON GL.tenant = TEN.Id
 	LEFT JOIN
 	 (
-    SELECT 
-        jl.CreditAccountId,
-        COALESCE(SUM(DISTINCT jl.LocalAmount), 0) AS TotFutureOpenChequesInLocalCur
-    FROM JournalLines jl
+   SELECT 
+        jl.CreditAccountId,
+        COALESCE(SUM(DISTINCT CASE WHEN jl.DueDate <= @InputDate THEN jl.LocalAmount ELSE 0 END), 0) AS TotPastOpenChequesInLocalCur,
+        COALESCE(SUM(DISTINCT CASE WHEN jl.DueDate > @InputDate THEN jl.LocalAmount ELSE 0 END), 0) AS TotFutureOpenChequesInLocalCur
+    FROM JournalLines jl
+
     JOIN Journals j 
         ON jl.JournalId = j.Id
     JOIN ARPaymentCheques arpch 
@@ -228,7 +233,6 @@ INNER JOIN
 	  j.AccountingEntityCode = '3'
       AND jl.ActionCode = '1'
       AND j.IsLedgerCreated = 1
-      AND jl.DueDate > GETDATE()
 	  AND (@AccountID IS NULL OR jl.CreditAccountId = @AccountID) 
 
     GROUP BY jl.CreditAccountId

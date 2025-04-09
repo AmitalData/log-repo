@@ -104,7 +104,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 InsuredCreditLimit = reader["InsuredCreditLimit"] != DBNull.Value ? (decimal?)reader["InsuredCreditLimit"] : 0,
                                 TotalOpenShipments = reader[ "TotalOpenShipments"] != DBNull.Value ? (decimal?)reader["TotalOpenShipments"] : 0,
                               TotalFutureOpenCheques = reader["TotFutureOpenChequesInLocalCur"] != DBNull.Value ? (decimal?)reader["TotFutureOpenChequesInLocalCur"] : 0,
-                               ExternalTransactionsTotal= reader["ExternalTransactionsTotal"] != DBNull.Value ? (decimal?)reader["ExternalTransactionsTotal"] : 0,
+                                TotalPastOpenCheques = reader["TotPastOpenChequesInLocalCur"] != DBNull.Value ? (decimal?)reader["TotPastOpenChequesInLocalCur"] : 0,
+
+                                ExternalTransactionsTotal = reader["ExternalTransactionsTotal"] != DBNull.Value ? (decimal?)reader["ExternalTransactionsTotal"] : 0,
                                AccountSalesmanName = reader["AccountSalesmanName"] != DBNull.Value ? (string)reader["AccountSalesmanName"] : null,
                               AccountSalesmanLocalName = reader["AccountSalesmanLocalName"] != DBNull.Value ? (string)reader["AccountSalesmanLocalName"] : null,
                                AccountCollectorName = reader["AccountCollectorName"] != DBNull.Value ? (string)reader["AccountCollectorName"] : null,
