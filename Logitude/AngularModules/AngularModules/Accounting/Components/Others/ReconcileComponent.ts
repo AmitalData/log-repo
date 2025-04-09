@@ -1964,6 +1964,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal', BackButtonLabel: 'Back' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
+                        if(this.failedJournalsInReconcileProcess)
+                            this.GetFailedJournalsInReconcileProcess();
+
                     });
                 });
         }
@@ -2320,6 +2323,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
     public failedJournalList: any = null;
     public GetFailedJournalsInReconcileProcess(){
+        this.failedJournalsInReconcileProcess = false;
         const journalExtendedPMService : JournalExtendedPMService = new JournalExtendedPMService();
         journalExtendedPMService.GetFailedJournalsInReconcileProcess(this.GLAccountPM.Id).subscribe((response: ServiceResponse) => {
             this.failedJournalList = response.Result;
