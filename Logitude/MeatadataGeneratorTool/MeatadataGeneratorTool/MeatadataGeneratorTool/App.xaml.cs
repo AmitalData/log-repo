@@ -134,7 +134,7 @@ namespace MeatadataGeneratorTool
                         LXMLFilesPaths = new List<string>();
                         DXMLFilesPaths = new List<string>();
 
-                        Thread thread = new Thread(new ThreadStart(GetLXMLAndDXMLFilesPaths));
+						Thread thread = new Thread(new ThreadStart(() => GetLXMLAndDXMLFilesPaths("")));
                         thread.Start();
                     }
                     catch (Exception err)
@@ -142,8 +142,8 @@ namespace MeatadataGeneratorTool
                         LXMLFilesPaths = new List<string>();
                         DXMLFilesPaths = new List<string>();
 
-                        Thread thread = new Thread(new ThreadStart(GetLXMLAndDXMLFilesPaths));
-                        thread.Start();
+						Thread thread = new Thread(new ThreadStart(() => GetLXMLAndDXMLFilesPaths("")));
+						thread.Start();
                         //MessageBox.Show(err.Message);
                         if (DirectOpenPath.Contains(".lxml"))
                         {
@@ -177,7 +177,7 @@ namespace MeatadataGeneratorTool
             base.OnStartup(e);
         }
 
-        public void GetLXMLAndDXMLFilesPaths()
+        public void GetLXMLAndDXMLFilesPaths(string projectName)
         {
             try
             {
@@ -188,6 +188,13 @@ namespace MeatadataGeneratorTool
                     LXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.lxml", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
                     DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.dxml", SearchOption.AllDirectories).ToList();
                 }
+                else
+                {
+					string logitudePath = projectDirectory.Split(new string[] { @"\AmitalCloud\" }, StringSplitOptions.None)[0];
+
+					LXMLFilesPaths = Directory.GetFiles(logitudePath + @"\AmitalCloud\", "*.lxml", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
+					DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\AmitalCloud\", "*.dxml", SearchOption.AllDirectories).ToList();
+				}
             }
             catch (Exception exception)
             {
