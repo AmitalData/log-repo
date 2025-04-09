@@ -80,7 +80,6 @@ namespace Logitude.Customs.BL.BL
                 {
                     hasActivePending = declarationPendingRepo.HasPendingWithStatus(declaration.Id, declarationCourierStatusPM.Tenant, "A");
                 }
-
                 if (declaration != null &&
                     !hasActivePending &&
                     string.IsNullOrEmpty(declaration.ImporterCode))
@@ -181,6 +180,7 @@ namespace Logitude.Customs.BL.BL
                         LoggingEnabled = true,
                         LoggingObjectTableId = declarationObjectTableId,
                         LoggingEntityId = declarationCourierStatusPM.DeclarationId,
+                        FromAutomate = true, 
                         AppicationId = declarationCourierStatusPM.DeclarationId,
                         InterfaceTypeCode = "2750",
                         LoggingUserId = userId,
@@ -214,12 +214,15 @@ namespace Logitude.Customs.BL.BL
                 var requestParams1170 = new MANIFESTRequestRequestParams()
                 {
                     Tenant = declarationCourierStatusPM.Tenant,
+
                     LoggingEnabled = true,
                     LoggingObjectTableId = declarationObjectTableId,
                     LoggingEntityId = declarationCourierStatusPM.DeclarationId,
                     LoggingObjectTableId2 = objectTableIdCourierMaster,
                     LoggingEntityId2 = objectTableIdCourierMaster,
+
                     InterfaceTypeCode = "1170",
+
                     LoggingUserId = userId,
                     RequestVIA = SendRequestVIA.WebServiceBatch,
                     DeclarationId = declarationCourierStatusPM.DeclarationId,

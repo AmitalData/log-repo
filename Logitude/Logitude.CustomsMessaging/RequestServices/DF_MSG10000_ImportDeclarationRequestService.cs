@@ -521,7 +521,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var objectTableIdCourierHawbFromExcel = ObjectTableRepository.GetObjectTableByName("Customs.CourierHawbFromExcel");
 
-            if (requestParams.LoggingObjectTableId2 == objectTableIdCourierMaster || fromMevaker || requestParams.LoggingObjectTableId2 == objectTableIdCourierHawbFromExcel)
+            if (requestParams.LoggingObjectTableId2 == objectTableIdCourierMaster || requestParams.FromAutomate || fromMevaker || requestParams.LoggingObjectTableId2 == objectTableIdCourierHawbFromExcel)
             {
                 if (!fromMevaker)
                 {
