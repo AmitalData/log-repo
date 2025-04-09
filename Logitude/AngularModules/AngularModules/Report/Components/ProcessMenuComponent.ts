@@ -28,6 +28,7 @@ export class ProcessMenuComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     @Output() PinnedChanged = new EventEmitter<boolean>();
     @Output() NumberCompletedProcesses = new EventEmitter<number>();
+    @Output() CloseMenu = new EventEmitter<MenuItemClass>();
 
     public MenuItems: MenuItemClass[];
     SelectedMenuItem: MenuItemClass;
@@ -173,6 +174,7 @@ export class ProcessMenuComponent implements OnDestroy {
                 if (!response.HasError) {
                     this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(item.ItemId).subscribe((myResponse: ServiceResponse) => {
                         if (myResponse.HasError) return;
+                        this.CloseMenu.emit();
 
                         this.ReportTemplates = myResponse.Result;
                         this.LoadReportsPreviewComponent(item, response.Result);
@@ -197,7 +199,8 @@ export class ProcessMenuComponent implements OnDestroy {
                 const reportId = xmlDoc.getElementsByTagName("ReportId")[0]?.textContent;
 
                 cmpRef.instance.Run({ EntityId: reportId, ObjectTableName: "TaxReport" });
-                
+                this.CloseMenu.emit();
+
             });
     }
     private PageChild_PRREP: any = null;
