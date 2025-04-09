@@ -1000,7 +1000,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pm = this.GetEntityPM(poco);
             return pm;
         }
-
         public List<CustomsRequestsSheetPM> GetGeneralRequestInProgressByEntity2(
            int Tenant,
            string InterfaceTypeCode,
