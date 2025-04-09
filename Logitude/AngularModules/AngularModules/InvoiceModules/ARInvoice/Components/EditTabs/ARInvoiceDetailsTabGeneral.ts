@@ -982,9 +982,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
             else {
                 const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
+                const exchangeRateId = this.glaccount?.ExchangeRateId;
                 if (lastRate) {
-                    const customRate = this.glaccount?.ExchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                    const customRate = exchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
 
                         myResult = customRate ?? lastRate.Rate;

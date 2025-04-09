@@ -1199,7 +1199,7 @@ class JournalLineModel extends BaseComponent {
                             const customRate = myResponse.Result?.CurrencyRates?.find(rate => rate?.AdditionalCurrencyRateId === glaccount?.ExchangeRateId)?.Rate ?? null;
                             var rate = customRate?? myResponse?.Result?.Rate;
                      
-                            if (this.IsAccDayChanged && (this.currencyRate != rate)) {
+                            if (this.IsAccDayChanged && (this.currencyRate !== rate)) {
                                 this.SetAmountsWhenChangingAccDay();
                                 this.currencyRate = rate;
                             }

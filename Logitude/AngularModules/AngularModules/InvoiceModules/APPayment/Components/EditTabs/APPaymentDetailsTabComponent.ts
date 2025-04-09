@@ -572,10 +572,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 
                 const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.PaymentCurrencyId);
                 if (lastRate) {
-                    const customRate = this.glaccount?.ExchangeRateId 
+                    const customRate = (this.glaccount && this.glaccount.ExchangeRateId)
                     ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount?.ExchangeRateId)?.Rate 
                     : null;
-                    myRate = customRate?? lastRate.Rate;
+                    myRate = customRate !== null && customRate !== undefined ? customRate : lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
             
                 } 
@@ -607,8 +607,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 if (this.LastRatesList) {
                     const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
                     if (lastRate) {
-                        const customRate = this.glaccount?.ExchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        const exchangeRateId = this.glaccount?.ExchangeRateId;
+                        const customRate = exchangeRateId
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
                          result = customRate ?? lastRate.Rate;
                 
@@ -632,8 +633,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 if (this.LastRatesList) {
                     const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
                     if (lastRate) {
-                        const customRate = this.glaccount?.ExchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        const exchangeRateId = this.glaccount?.ExchangeRateId;
+                        const customRate = exchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
                          result = customRate ?? lastRate.Rate;
                      } 

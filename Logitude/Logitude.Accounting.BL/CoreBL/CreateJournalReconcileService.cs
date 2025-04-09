@@ -93,7 +93,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     var myAccountingEntityDetails = new AccountingEntityDetails();
                     var myAccEntityReconciliation10 = myAccountingEntityDetails.GetAll().FirstOrDefault(r => r.EnglishName ==
-                    //"Reconciliation"
                     "Adjustment"
                     );
                     if (myAccEntityReconciliation10 == null)
@@ -105,7 +104,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (!String.IsNullOrWhiteSpace(glPM.CurrencyId))
                     {
-                        theJournalLineCurrencyId = glPM.CurrencyId;//ohad : ACCOUNT -CURRENCY = NISS + RECONCILE = 0 (LOCAL )  ==>> JOURNAL CURRENCY == NIS
+                        theJournalLineCurrencyId = glPM.CurrencyId;
 
                     }
                     else
@@ -149,21 +148,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         Tenant = tenant,
-                        ///journal.JournalNumber = "1";
                         CreateDate = @now,
-                        AccountingDate = AccountDate,//1.1.(yyyy+1)
-                        TypeCode = "0", //== REGULAR  //"1" == TEMPLATE,
+                        AccountingDate = AccountDate,
+                        TypeCode = "0", 
                         StatusCode = "6",
-                        AccountingEntityCode = myAccEntityReconciliation10.Code, //"6",// - Reconciliation
-                        AccountingEntityId = null,//Reconciliations.id !!!!!!!!!!!!
-                        AccountingEntityReference = null,//Reconciliations.Number !!!!!!!!!!!!
+                        AccountingEntityCode = myAccEntityReconciliation10.Code, 
+                        AccountingEntityId = null,
+                        AccountingEntityReference = null,
                         DueDate = dueDate,
                         DocumentDate = refDate,
                         UpdateDate = @now,
-                        //journal.UpdatedByUserId = theEntityPm.UpdatedByUserId;
                         ApproveDate = @now,
-                        //journal.ApprovedByUserId = theEntityPm.ApprovedByUserId;
-
 
                         CreatedByUserId = usrid,
                         ApprovedByUserId = usrid,
@@ -171,16 +166,15 @@ namespace Logitude.Accounting.BL.CoreBL
                         ExternalNo = null,
                         ExternalSystem = null,
                         OriginalJournalId = null,
-                        SearchFields= "OneLineReconciliation",//If the journal is one or split, use SearchFields as an indecter.
+                        SearchFields= "OneLineReconciliation",
 
 
                     };
 
-                    //totForeign= TranslateForeignAmount(journal.AccountingDate , totReconciliationAmount)
-                    if (totReconciliationLocalAmount < 0)///credit //Ohad :
+                    if (totReconciliationLocalAmount < 0)
                     {
-                        totReconciliationLocalAmount = -1 * totReconciliationLocalAmount; //Ohad :
-                        totForeign = -1 * totForeign; //Ohad :
+                        totReconciliationLocalAmount = -1 * totReconciliationLocalAmount; 
+                        totForeign = -1 * totForeign; 
                         journal.JournalLines.Add(new JournalLinePM()
                         {
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -216,7 +210,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         });
 
                     }
-                    else//debit  //Ohad :
+                    else
                     {
                         journal.JournalLines.Add(new JournalLinePM()
                         {
@@ -304,13 +298,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     journal.JournalReconciles.AddRange(listJournalReconciles);
 
-                    //var listTransactionId = ReconciliationLines.Select(r => r.TransactionId).ToList();
-
-
-                    //var ledgerTransactionUpdateService = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-                    //ledgerTransactionUpdateService.UpdateInReconcileProgress(listTransactionId, tenant);
-
-
+                
 
                     var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                     JournalUP.Update(journal, true);
@@ -370,7 +358,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,AccountDate);
                     if (rate == null && theCurrencyId == accountingCurrencyId)
                     {
-                        rate = new RatesTablePM() { Rate = 1 };/// ON THE HOUSE !?!?!?
+                        rate = new RatesTablePM() { Rate = 1 };
                     }
                     ValidateRate(rate,tenant);
                     List<JournalPM> addedJournalPMs = new List<JournalPM>();
@@ -484,7 +472,7 @@ namespace Logitude.Accounting.BL.CoreBL
             DateTime dueDate, DateTime refDate, string theCurrencyId, RatesTablePM rate, string Ref1, string Ref2, string Ref3, string Remarks) {
             var qs = new GLAccountQueryService(_AccountingContext);
             var glPM = qs.GetSingle(TheAccountId, false, false);
-            decimal totForeign;//= reconciliationLine.ReconciliationAmount / (decimal)rate.Rate.GetValueOrDefault();
+            decimal totForeign;
             decimal totReconciliationLocalAmount;
             bool useLocalRecoMethod = (glPM.ReconcileMethodCode == "0");
             decimal totReconciliationAmountFromUnknownCurrency = reconciliationLine.ReconciliationAmount;
@@ -502,10 +490,10 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-            if (reconciliationLine.ReconciliationAmount < 0)///credit //Ohad :
+            if (reconciliationLine.ReconciliationAmount < 0)
             {
                 totReconciliationLocalAmount = -1 * totReconciliationLocalAmount;
-                totForeign = -1 * totForeign; //Ohad :
+                totForeign = -1 * totForeign; 
                 journal.JournalLines.Add(new JournalLinePM()
                 {
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
@@ -539,7 +527,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 });
 
             }
-            else//debit  //Ohad :
+            else
             {
                 journal.JournalLines.Add(new JournalLinePM()
                 {
@@ -585,7 +573,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private bool IsMonthOpenForAccountingDate(DateTime accountingDate, int tenant)
         {
-            var typeregular = "1"; //1 Regular רגיל        1,Regular,רגיל   0
+            var typeregular = "1";
             var accountingPeriodQueryService = new AccountingPeriodQueryService(tenant);
             var accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodByType(typeregular, tenant); ;
 

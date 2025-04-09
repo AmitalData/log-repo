@@ -109,21 +109,9 @@ export class JournalMenuButtonsHandler {
                         case "JournalVoid":
                             {
 
-                                // the VOID button is only available on this case:          BUG #44819
-                                //    - Approved Journal, not storno
-
                                 this.SetVoidButtonEnability(button);
 
-                                // if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
-                                //     button.IsDisabled = true;
-                                // }
-                                // else if( this.EntityPM.AccountingEntityCode == "1" && this.EntityPM.StatusCode == "2" && (this.EntityPM.OriginalJournalId != null)) // STORNO  1-Journal
-                                // {
-                                //     button.IsDisabled = true;
-                                // }
-                                // else if (this.EntityPM.StatusCode == "2" && this.EntityPM.AccountingEntityCode == "1" && this.EntityPM.OriginalJournalId == null) { // 2- Approved
-                                //     button.IsDisabled = false;
-                                // }
+                                
 
                                 break;
                             }
@@ -132,13 +120,7 @@ export class JournalMenuButtonsHandler {
                                 button.IsDisabled = false;
 
                                 if (!AppTool.IsNullOrEmpty(SessionLocator.LoggedUserPM.SecurityLevel) && SessionLocator.LoggedUserPM.SecurityLevel <= this.EntityPM.SecurityLevel)
-                                    button.IsDisabled = true;
-                                //    if (this.EntityPM.StatusCode == "2" && this.EntityPM.OriginalJournalId == null) {
-                                //    button.IsDisabled = false;
-                                //}
-                                //else {
-                                //    button.IsDisabled = true;
-                                //}
+                               
                                 break;
                             }
                         case "CopyJournal":
@@ -207,7 +189,6 @@ export class JournalMenuButtonsHandler {
 
     public MenuButtonClick(menuButton: MenuButtonPM) {
 
-        //this.copyAccountingDates();
 
         switch (menuButton.EventCode) {
             case "JournalSave": // save and close
@@ -264,18 +245,7 @@ export class JournalMenuButtonsHandler {
                 {
                     this.PrintJournal();
 
-                    //if (this.EntityPM.StatusCode != "2") { // Approved
-                    //    this.PrintJournal();
-                    //} else {
-                    //    this.entityArgs.EditComponent.SaveChanges();
-                    //    this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
-                    //        if ($event == true) {
-                    //            this.entityArgs.EditComponent.ReloadEntityPM();
-                    //            this.SetEntityPM(this.entityArgs);
-                    //            this.PrintJournal();
-                    //        }
-                    //    });
-                    //}
+                   
                     break;
                 }
             case "CopyJournal":
@@ -357,7 +327,6 @@ export class JournalMenuButtonsHandler {
             if (line.AccountingDate != this.EntityPM.AccountingDate) {
                 line.AccountingDate = this.EntityPM.AccountingDate;
             }
-            //line.ActionTypeCode = line.ActionCode;
         }
     }
 
@@ -442,11 +411,7 @@ export class JournalMenuButtonsHandler {
                                     }
 
                                 });
-                            //} else {
-                            //    console.warn("Cannot find document out copy, resend request...");
-                            //    //this.CurrentSession.StopBusyIndicator();
-                            //    this.BuildDocument(); // resend the request, the method [getCreateDocumentOut] does not create document out copy!!
-                            //}
+                            
 
 
 
@@ -476,12 +441,7 @@ export class JournalMenuButtonsHandler {
 
     ViewPage(documentName: string, docoumentTypeCopyName: string, documentOut: DocumentOutPM) {
 
-        //ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, docoumentTypeCopyName + " Viewing");
-
-
-        //DownloadManager.DownloadPage(documentName , documentOut.SecurityId);
-
-        //this.StopBusyIndicator();
+        
 
         var myPrintHelper = new GeneralPrintHelper(this.ObjectTableName, "JRPR", this.EntityPM.Id, null, this.EntityPM.AccountingEntityReference, null);
         if (myPrintHelper.IsLoadPrintControl) {

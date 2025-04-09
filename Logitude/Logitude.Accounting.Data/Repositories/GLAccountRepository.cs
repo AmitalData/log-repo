@@ -1346,17 +1346,14 @@ namespace Logitude.Accounting.Data.Repositories
         }
         public string GetExchangeRateIdById(string glaccountId, int tenant)
         {
-            if (String.IsNullOrEmpty(glaccountId))
-            {
+            if (string.IsNullOrEmpty(glaccountId))
                 return null;
-            }
-            else
-            {
+          
                 return context.GLAccounts
                     .Where(a => a.Id == glaccountId && a.Tenant == tenant)
                     .Select(a => a.ExchangeRateId)
                     .FirstOrDefault();
-            }
+
         }
 
         public List<CardDTO> GetVendorCardsWithoutGLAccountMatchDisplayNumber(int tenant)
