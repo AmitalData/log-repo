@@ -373,7 +373,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             if (string.IsNullOrEmpty(line.ChargeTypeGLAccountId))
             {
-                line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
+                line.ChargeTypeGLAccountId = line.PayableDebitGLAcountId ?? charge.PayableDebitGLAcountId;
             }
             else
             {

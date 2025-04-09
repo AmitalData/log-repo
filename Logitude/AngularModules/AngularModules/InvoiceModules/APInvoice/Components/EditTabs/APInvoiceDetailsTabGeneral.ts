@@ -1355,6 +1355,13 @@ export class APInvoiceLineItem extends BaseComponent {
     set PayableDebitGLAcountId(value: string) {
         if (this.invoiceLinePM.PayableDebitGLAcountId != value) {
             this.invoiceLinePM.PayableDebitGLAcountId = value;
+            if(!AppTool.IsNullOrEmpty(value) && AppTool.IsNullOrEmpty(this.chargesTypeList?.PayableDebitGLAcountId))    {}
+            this.fatherComponent.myGLAccountPMService.get(this.PayableDebitGLAcountId).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                     this.PayableDebitGLAcountName = this.fatherComponent.isRTL ? myResponse?.Result?.LocalName : myResponse?.Result?.EnglishName;
+                 
+                }
+            });
             this.SetUIProperties_PayableDebitGLAcountId();
         }
      }
@@ -1513,7 +1520,7 @@ export class APInvoiceLineItem extends BaseComponent {
     SetUIProperties_PayableDebitGLAcountId() {
        this.UIProperties.SetRequired("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PayableDebitGLAcountId));
        this.UIProperties.SetEnabled("PayableDebitGLAcountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.chargesTypeList?.PayableDebitGLAcountId));
-
+       
     }
     // Line Properties
     public RefreshLine() {
@@ -1739,7 +1746,7 @@ export class APInvoiceLineItem extends BaseComponent {
             });
         }
     }
-
+    
     get ChargesTypeCode() { return this.invoiceLinePM.ChargesTypeCode; }
     set ChargesTypeCode(value: string) {
         if (this.invoiceLinePM.ChargesTypeCode != value) {
