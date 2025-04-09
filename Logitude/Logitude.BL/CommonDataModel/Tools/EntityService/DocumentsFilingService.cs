@@ -181,10 +181,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.entityPM.Id = this.entityPM.Id.PadRight(30, '0');
 
-            //Added by Maheera
-            //this.entityPM.SecurityId = entityPM.Id + System.Web.Security.Membership.GeneratePassword(10, 0);
+   
             Random rnd = new Random();
-            //this.entityPM.SecurityId = entityPM.Id + RandomString(10);
             string com_id = entityPM.Id;        // Length = 30
             string com_md5 = CreateMD5(com_id); // Length = 32 
             string com_short = entityPM.Id.Substring(0,8);

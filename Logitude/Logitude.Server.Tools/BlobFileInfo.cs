@@ -81,44 +81,12 @@ namespace Logitude.Server.Tools
         }
         public static bool IsUnifreightFillingModeBase(int tenant,string FolderName,bool isFromCloud = false)
         {
-            if (!isFeatureOn)
-            {
-                return isFeatureOn;
-            }
-            if (LogitudeSettings.StorageServiceMode != "db")
-            {
-                return false;
-            }
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                return false;
-            }
-            if (!LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight)
-            {
-                return false;
-            }
-            if (FolderName != "docsin")
-            {
-                return false;
-            }
-
-
-            if (tenant == 0)
-            {
-                return false;
-            }
-
-            
-            if (String.IsNullOrWhiteSpace(LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).OnPremiseFillingService))
-            {
-                return false;
-            }
-
-            if (isFromCloud) 
-            {
+			if (!isFeatureOn || LogitudeSettings.StorageServiceMode != "db" || !LogitudeSettings.IsCostomsDeploy || !LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight ||
+	            FolderName != "docsin" || tenant == 0 || String.IsNullOrWhiteSpace(LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).OnPremiseFillingService) || isFromCloud)
+			{
 				return false;
 			}
-            return true;
+			return true;
         }
         public static bool IsUnifreightFillingMode(this BlobFileInfo fileInfo, bool isnew=false)
         {
