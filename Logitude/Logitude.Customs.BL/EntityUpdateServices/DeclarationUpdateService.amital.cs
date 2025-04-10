@@ -1724,13 +1724,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var info = myUServerCommunicationService.Send(myImmediately);
             if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
             {
-                throw new Exception("ImmediatelyResponse is null");
+                throw new Exception("ImmediatelyResponse is null" + " Urouter is failed, Try to restart urouter service");
             }
             var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
             var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
             if (genericResponseObj == null)
             {
-                throw new Exception("GenericResponse.GenericResponseObj is null");
+                throw new Exception("GenericResponse.GenericResponseObj is null" + " Urouter is failed, Try to restart urouter service");
             }
 
             if (!String.IsNullOrWhiteSpace(genericResponseObj.Status))
@@ -1798,13 +1798,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var info = myUServerCommunicationService.Send(myImmediately);
             if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
             {
-                throw new Exception("ImmediatelyResponse is null");
+                throw new Exception("ImmediatelyResponse is null" + " Urouter is failed, Try to restart urouter service");
             }
             var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
             var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
             if (genericResponseObj == null)
             {
-                throw new Exception("GenericResponse.GenericResponseObj is null");
+                throw new Exception("GenericResponse.GenericResponseObj is null" + " Urouter is failed, Try to restart urouter service");
             }
 
             if (!String.IsNullOrWhiteSpace(genericResponseObj.Status))
@@ -1872,13 +1872,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var info = myUServerCommunicationService.Send(myImmediately);
             if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
             {
-                throw new Exception("ImmediatelyResponse is null");
+                throw new Exception("ImmediatelyResponse is null" + " Urouter is failed, Try to restart urouter service");
             }
             var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
             var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
             if (genericResponseObj == null)
             {
-                throw new Exception("GenericResponse.GenericResponseObj is null");
+                throw new Exception("GenericResponse.GenericResponseObj is null" + " Urouter is failed, Try to restart urouter service");
             }
 
             if (!String.IsNullOrWhiteSpace(genericResponseObj.Status))
