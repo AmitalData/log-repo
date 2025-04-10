@@ -388,7 +388,7 @@ namespace CustomsWorkerRole
 						if (documentInPM == null)
 						{
 							service.SetChangeSet(entityPM.DocumentsFilingMetaDataValues);
-							service.Create(entityPM, entityPM.FileData, null, entityPM.FileData == null ? true : false);
+							service.Create(entityPM, entityPM.FileData, null, false);
 							commonContext.SaveChanges();
 						}
 						response.Result = entityPM.Id;
