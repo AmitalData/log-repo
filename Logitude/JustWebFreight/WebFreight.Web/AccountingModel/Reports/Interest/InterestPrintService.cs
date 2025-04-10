@@ -245,20 +245,7 @@ using WebFreight.Web.Helpers;
             }
             return rv;
         }
-        //private string GetReference1i(InterestTransactionProvider transaction)
-        //{
-        //    return transaction.EntityType switch
-        //    {
-        //        InterestEntityTypeCodes.ARInvoice or
-        //        InterestEntityTypeCodes.ARPayment or
-        //        InterestEntityTypeCodes.Adjustments or
-        //        InterestEntityTypeCodes.InterestReport
-        //        => transaction.EntityNumber,
-        //        InterestEntityTypeCodes.Journal
-        //        => transaction.Reference1,
-        //        _ => string.Empty
-        //    };
-        //}
+
 
         private string GetReference1(InterestTransactionProvider interestTransactionDP)
         {
