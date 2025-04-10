@@ -585,8 +585,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
-                    var declarationAvaliabilityDate = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog?.AvailabiltyLogRunDetails?.TimeStamp;
-               
+                    DateTime? declarationAvaliabilityDate = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog?.AvailabiltyLogRunDetails?.TimeStamp;
+
+                    if (declarationAvaliabilityDate != null)
+                    {
+                        string strDeclarationAvaliabilityDate = declarationAvaliabilityDate?.ToString("dd/MM/yyyy HH:mm:ss.fff");
+                        declarationAvaliabilityDate = DateTime.Parse(strDeclarationAvaliabilityDate);
+                    }
+
                     if (isAutoPayment)
                         SendPayment(declarationPM, dbContext, requestParams, declarationAvaliabilityDate);
 
@@ -856,6 +862,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
             _declarationPM.MarkAsChanged = false;
             _declarationPM.AvailabilityDate = declarationAvaliabilityDate ?? DateTime.Now;
+            LogMessagingUtil.Instance.AppendLine("AvailabilityDate: " + _declarationPM.AvailabilityDate?.ToString("hh:mm:ss.fff tt"));
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_declarationPM, true);
 
