@@ -214,6 +214,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.IsDiamondDeclaration = declarationOrg.IsDiamondDeclaration;
                     declarationPM.AutoSending = declarationOrg.AutoSending;
                     declarationPM.AmendmentRequestNumber = CodeCounter.GetNumber("AmendmentRequestNumber", tenant).ToString();
+                    declarationPM.ImporterName = declarationOrg.ImporterName;
+                    declarationPM.ImporterAddress = declarationOrg.ImporterAddress;
 
                     if (declarationOrg.IsCourierDeclaration)
                     {
@@ -624,8 +626,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 declarationPM.ImporterTypeCode = importer.ID.schemeID;
                                 if (!dontUpdateImporters)
                                 {
-                                    declarationPM.ImporterAddress = importer.DMExtensions.Address;
-                                    declarationPM.ImporterName = importer.DMExtensions.Name;
+                                    if (string.IsNullOrEmpty(declarationPM.ImporterAddress))
+                                        declarationPM.ImporterAddress = importer.DMExtensions.Address;
+                                    if (string.IsNullOrEmpty(declarationPM.ImporterName))
+                                        declarationPM.ImporterName = importer.DMExtensions.Name;
                                 }
                                 declarationPM.MainImporterEntitlemntTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
                                 if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.ImporterPassCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
@@ -769,9 +773,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     if (!dontUpdateImporters)
                                     {
-                                        declarationPM.ImporterAddress = importer.DMExtensions.Address;
-                                        declarationPM.ImporterName = importer.DMExtensions.Name;
-                                        //   declarationPM.impo = GetValueTextType(importer.DMExtensions.IssueLocation);
+                                        if (string.IsNullOrEmpty(declarationPM.ImporterAddress))
+                                            declarationPM.ImporterAddress = importer.DMExtensions.Address;
+                                        if (string.IsNullOrEmpty(declarationPM.ImporterName))
+                                            declarationPM.ImporterName = importer.DMExtensions.Name;
                                     }
                                     break;
                                 }
