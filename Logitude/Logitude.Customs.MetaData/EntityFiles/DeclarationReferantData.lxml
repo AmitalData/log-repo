@@ -7855,7 +7855,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;764cac6d-a278-448a-8134-936bd8ac7ade&quot;"
     FieldName="&quot;Email&quot;"
@@ -7884,6 +7883,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Email&quot;"
     ListPropertyPath="&quot;Email&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -10139,8 +10139,7 @@
       Code="&quot;DeclarationStatusFilters&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.DeclarationReferantData.Features.DeclarationStatusFilters&quot;"
-      FeatureDefaultTextBack_up="&quot;סטטוסים ברפרנט&quot;"
-      FeatureDefaultText="&quot;BS64:Iteh15jXmNeV16HXmdedINeR16jXpNeo16DXmCI=&quot;"
+      FeatureDefaultText="&quot;Status in referant&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
