@@ -405,7 +405,8 @@
   </Column>
   <Column
     Name="IsFromCloud"
-    Type="bit">
+    Type="bit"
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
