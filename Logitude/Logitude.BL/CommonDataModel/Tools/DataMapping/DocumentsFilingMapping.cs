@@ -32,8 +32,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 poco.Tenant = entityPM.Tenant;
                 poco.CreateDate = entityPM.CreateDate;
                 poco.SecurityId = entityPM.SecurityId;
-            }
-            if (string.IsNullOrEmpty(entityPM.ForwarderDocumentId))
+				poco.IsFromCloud = entityPM.IsFromCloud;
+
+			}
+			if (string.IsNullOrEmpty(entityPM.ForwarderDocumentId))
             {
                 poco.ComputedForwarderDocumentId = entityPM.Id;
             }
