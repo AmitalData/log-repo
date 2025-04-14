@@ -142,13 +142,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var containerizationImporters = containerizationRepository.GetContainerizationImporters(entityPM.Tenant, entityPM.ConnectedDeclarations);
 
                 var distinctImporters = containerizationImporters
-                    .Where(c => c != null)
-                    .GroupBy(c => c.Id)
-                    .ToList();
+                .Select((c, i) => new { Card = c, Key = c?.Id ?? $"__null_{i}" })
+                .GroupBy(x => x.Key)
+                .ToList();
 
                 if (distinctImporters.Count == 1)
                 {
-                    entityPM.IsMultiCustomers = distinctImporters.First().First().LocalName;
+                    var localName = distinctImporters.FirstOrDefault()?.FirstOrDefault()?.Card?.LocalName;
+                    if (!string.IsNullOrWhiteSpace(localName))
+                    {
+                        entityPM.IsMultiCustomers = localName;
+                    }
                 }
                 else if (distinctImporters.Count > 1)
                 {
