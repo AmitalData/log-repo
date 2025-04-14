@@ -98,8 +98,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             args.CloseWithoutInvoice = interestReportArguments.CloseWithoutInvoice;
             if (interestReportArguments.AllSelected)
             {
-                List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
-                List<InterestReportPM> interestReportsFillteredByCategory = interestReportQueryService.GetNotInvoicedInterestReportsByCategory(interestReports, interestReportArguments);
+                IQueryable<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
+                IQueryable<InterestReportPM> interestReportsFillteredByCategory = interestReportQueryService.GetNotInvoicedInterestReportsByCategory(interestReports, interestReportArguments);
                 List<InterestReportLinesByDatePM> LinesByDatesForSelectedReports = interestReportQueryService.GetFirstAndLastInterestReportLineByDatesForInterestReports(interestReportsFillteredByCategory.Select(s => s.Id).ToList()).ToList();
 
                 foreach (InterestReportPM report in interestReportsFillteredByCategory)
