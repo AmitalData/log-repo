@@ -179,7 +179,6 @@ export class EntityResourceService {
   }
 
   private GetResourcesFile(objectTableName: string, tenant: number) {
-    debugger
     var url = this._apiUrl + '?objectTableName=' + objectTableName + '&tenant=' + tenant;
 
     return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(share());
