@@ -69,11 +69,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 CalculateDeclarationCourierStatus.UpdateCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId);
 
                 // Sending Auto Restore Declaration Request #113942
-                if (_MyDeclarationPM.DeclarationNumber == null)
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Canceled because of declaration number not exist!");
-                    throw new Exception("Sending Restore Declaration Request Canceled because of declaration number not exist!");
-                }
                 DeclarationRestoreResponseData declarationRestoreResponseData = RestoreDeclarationRequest(requestParams);
             }
             base.OnRequestFail(customResponse, requestParams);
@@ -1401,6 +1396,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 requestParamsData.ShowData = true;
                 if (_MyDeclarationPM != null)
                 {
+                    if (_MyDeclarationPM.DeclarationNumber == null)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Canceled because of declaration number not exist!");
+                        throw new Exception("Sending Restore Declaration Request Canceled because of declaration number not exist!");
+                    }
                     requestParamsData.CustomsFile = _MyDeclarationPM.CustomFileNo;
                     requestParamsData.DeclarationNumber = _MyDeclarationPM.DeclarationNumber;
                     requestParamsData.DeclarationId = _MyDeclarationPM.Id;
