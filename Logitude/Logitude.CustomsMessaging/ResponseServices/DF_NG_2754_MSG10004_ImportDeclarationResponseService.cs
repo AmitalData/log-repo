@@ -1410,7 +1410,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     DeclarationQueryService declarationQuery = new DeclarationQueryService(requestParams.Tenant);
                     DeclarationPM decData = declarationQuery.GetSingle(requestParamsData.AppicationId, false, false);
-                    if (decData == null)
+                    if (decData == null || decData.DeclarationNumber == null)
                     {
                         NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Failed because of declaration data is not found!");
                         throw new Exception("declaration data is not found !");
