@@ -857,12 +857,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             {
 
 
-             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count));
 
-
-                shipments = shipments.Where(d =>
-                            shipmentSearchInput.CustomersIds.Contains(d.CustomerId)
-                        );
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count));
+                var customersSet = new HashSet<string>(shipmentSearchInput.CustomersIds);
+                shipments = shipments.Where(d => customersSet.Contains(d.CustomerId));
             }
             return shipments;
         }
