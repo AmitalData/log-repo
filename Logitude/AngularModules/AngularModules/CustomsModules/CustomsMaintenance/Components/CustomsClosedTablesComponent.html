@@ -130,7 +130,7 @@
 
                                 <td style="width: 40px;padding-right:10px;">
                                     <button class="Button" 
-                                            (click)="UpdateAll()" disabled>
+                                            (click)="UpdateAll()" [disabled]="!isTableUpdateButtonEnabled">
                                         {{'Customs.CustomsClosedTable.B.UpdateAll'  | TextCodeTranslationPipe }}
                                     </button>
                                 </td>
