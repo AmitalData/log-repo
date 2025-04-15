@@ -109,7 +109,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        EstimatedArrivalColor =
                                                        a.EstimatedArrivalDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) == today ? "Blue" :
                                                        (System.Data.Entity.DbFunctions.TruncateTime(a.EstimatedArrivalDate.Value) < today ? "Red" : "Black")) : "Black",
-                                                       OpenDeclarations = a.OpenDeclarations,
+                                                       //OpenDeclarations = a.OpenDeclarations,
+                                                       OpenDeclarations = context.DeclarationCourierStatuses.Count(dcs => !dcs.IsClosedForFollowUp && context.CourierDeclarations.Any(cd => cd.CourierMasterId == a.Id && cd.DeclarationId == dcs.DeclarationId)),
                                                        CourierMasterRemarks = a.CourierMasterRemarks,
                                                        EstimatedArrivalTimeOnly = a.EstimatedArrivalDate,
                                                        EstimatedArrivalDateOnly = a.EstimatedArrivalDate,
