@@ -30,9 +30,10 @@ import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/Requ
 export class CustomsClosedTablesListTemplate {
 
     _CustomsClosedTable: CustomsClosedTableList;
-    public fieldName: any;
+    public fieldName: any;      
     TableUpdateButtonIsEnabled: boolean = false;
     UpdateButtonVisibility: boolean = false;
+    isTableUpdateButtonEnabled: boolean = false;
     TableUpdateButtonOpacity: string = "1";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -44,7 +45,9 @@ export class CustomsClosedTablesListTemplate {
                 .subscribe((response:any) => {
                     CustomsClosedTablesListTemplate.translate_CommunicationLogBView = TextCodeTranslator.Translate("CommunicationLog.B.View");// itzik : Translate +_entityResourceService - its bad :due that i done this- 
                 });
-        }
+        } 
+        this.isTableUpdateButtonEnabled = SessionLocator?.LoggedUserPM?.IsCustomerCare;
+
     }
 
     static translate_CommunicationLogBView: string = "";

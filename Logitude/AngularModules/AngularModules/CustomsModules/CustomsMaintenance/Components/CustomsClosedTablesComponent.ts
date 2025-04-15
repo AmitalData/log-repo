@@ -40,6 +40,7 @@ export class CustomsClosedTablesComponent implements OnInit {
     onQueryChangeEvent = new EventEmitter();
 
     private _entityListService: EntityListService;
+    isTableUpdateButtonEnabled: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this._entityListService = new EntityListService();
@@ -53,6 +54,9 @@ export class CustomsClosedTablesComponent implements OnInit {
             //    console.warn(err);
             //}
         });
+        this.isTableUpdateButtonEnabled = SessionLocator?.LoggedUserPM?.IsCustomerCare;
+
+
     }
     _IsLoaded: boolean = false;
     ngOnInit() {
