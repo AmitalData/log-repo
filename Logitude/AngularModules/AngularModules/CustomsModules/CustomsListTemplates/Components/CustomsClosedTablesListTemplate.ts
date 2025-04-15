@@ -32,7 +32,6 @@ export class CustomsClosedTablesListTemplate {
     _CustomsClosedTable: CustomsClosedTableList;
     public fieldName: any;      
     TableUpdateButtonIsEnabled: boolean = false;
-
     UpdateButtonVisibility: boolean = false;
     isTableUpdateButtonEnabled: boolean = false;
     TableUpdateButtonOpacity: string = "1";
