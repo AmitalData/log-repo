@@ -25,6 +25,7 @@ import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { TaxReportLineTransmitStatusListService } from 'Accounting/Services/StandardLists/TaxReportLineTransmitStatusListService';
 import { HttpResponse } from '@angular/common/http';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 declare var window: any;
 
@@ -51,6 +52,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
     public QueryColumns: QueryColumnPM[] = [];
     IsTesterButtonVisibile: boolean = false;
+    IsFixDupButtonVisibile: boolean = false;
     ReportLines: ObservableCollection;
     OriginalReportLines: ObservableCollection;
     isReady: boolean = false;
@@ -255,6 +257,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     ListFilters: ApiQueryFilters = new ApiQueryFilters();
     FilterLines() {
 
+        this.IsFixDupButtonVisibile = this.SelectedStatusItems.length === 1 && this.SelectedStatusItems.includes("5"); // "Duplicate: There is another transaction with the same VAT No. and Reference"
+ 
 
         var filters = new ApiQueryFilters;
 
@@ -705,6 +709,31 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         }, error => {
             console.error('Error downloading the file:', error);
         });
+    }
+
+
+    OnFixDupButtonClicked() {
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this._TaxReportLineExtendedListService.FixDuplicates(this.EntityPM.Id)
+            .subscribe((response: ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
+                if (response.HasError) {
+                    const message = new MessageWindow();
+                    message.ShowErrorIcon = true;
+                    message.Width = 400;
+                    message.Show(response.ErrorsArray.join('\n'));
+                } else {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                    const message = new MessageWindow();
+                    message.ShowSuccessIcon = true;
+                    message.Width = 400;
+                    //may be to write message.Show(TextCodeTranslator.Translate(TextCode.TaxReportDuplicatesFixed));  but the text is not defined yet
+                }
+            }, (error) => {
+                 new MessageWindow().Show(error || 'Something wrong happened!');
+            });
     }
 
     EditLine(entity) {

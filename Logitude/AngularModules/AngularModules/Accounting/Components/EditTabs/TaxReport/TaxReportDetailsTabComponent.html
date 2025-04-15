@@ -584,6 +584,13 @@
                                         </div>
                                     </div>
                                 </dropdown-button>
+
+                                    <!-- Fix Duplicates -->
+                                     <div *ngIf="IsFixDupButtonVisibile" style="padding: 4px;width: 100px;" [style.float]="isRTL ? 'right' : 'left'">
+                                        <button class="Button" style="padding: 4px;width: 1100px;" (click)="OnFixDupButtonClicked()">
+                                            {{'TaxReport.O.FixDuplicates' | TextCodeTranslationPipe}}
+                                        </button>
+                                    </div>
                             </div>
 
                             <!-- Search -->
