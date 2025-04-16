@@ -11203,11 +11203,11 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
-                trailReportParam.Category1 = null;
-                trailReportParam.Category2 = null;
-                trailReportParam.Category3 = null;
-                trailReportParam.Category4 = null;
-                trailReportParam.Category5 = null;
+                trailReportParam.Category1 = category1;
+                trailReportParam.Category2 = category2;
+                trailReportParam.Category3 = category3;
+                trailReportParam.Category4 = category4;
+                trailReportParam.Category5 = category5;
                 trailReportParam.MyTrailReportLevel = ReportLevel.ChartofaccountType;
                 if (level == "GLAccount")
                 {
@@ -11301,11 +11301,11 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
-                trailReportParam.Category1 = null;
-                trailReportParam.Category2 = null;
-                trailReportParam.Category3 = null;
-                trailReportParam.Category4 = null;
-                trailReportParam.Category5 = null;
+                trailReportParam.Category1 = category1;
+                trailReportParam.Category2 = category2;
+                trailReportParam.Category3 = category3;
+                trailReportParam.Category4 = category4;
+                trailReportParam.Category5 = category5;
                 if (level == "GLAccount")
                 {
                     if (chartOfAccountsTypeCodeList != null && chartOfAccountsTypeCodeList.Count > 0) trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountsTypeCodeList;
