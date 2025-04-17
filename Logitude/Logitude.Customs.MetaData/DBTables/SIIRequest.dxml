@@ -26,6 +26,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="RequestNo"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="DeclarationId"
     Type="varchar"
     Size="15">
@@ -59,4 +66,9 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Relation
+    ForeignKeyColumn="Status"
+    ReferencedTable="SIIRequestStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>
