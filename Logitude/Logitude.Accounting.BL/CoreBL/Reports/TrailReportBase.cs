@@ -482,77 +482,7 @@ into groupBy_currency
             };
         }
 
-        private void GetGLAccountCardPopulationByParam()
-        {
-            var repoGLAccount = new GLAccountRepository(_AccountingContext);
-            var myQBaseAllCardsAndDetailsAccType = //Get The Account List
-                repoGLAccount.
-                GetQAllCardsAndDetailsAccType(
-                _TrailReportParam.Tenant,
-                GetClientContolAcc(_FullAccountingSetting),
-                GetVendorContolAcc(_FullAccountingSetting),
-                GetJobContolAcc(_FullAccountingSetting),
-                GetFileContolAcc(_FullAccountingSetting))
-                //.Where(a => !a.Inactive)
-                ;
-            if (_TrailReportParam.ChartOfAccountsIdList.Count > 0)
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(r => _TrailReportParam.ChartOfAccountsIdList.Contains(r.ChartOfAccountsId));
-            }
-            if (_TrailReportParam.ChartOfAccountsTypeCodeList.Count > 0)
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(r => _TrailReportParam.ChartOfAccountsTypeCodeList.Contains(r.ChartOfAccountsTypeCode));
-            }
 
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category1))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category1Id == _TrailReportParam.Category1);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category2))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category2Id == _TrailReportParam.Category2);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category3))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category3Id == _TrailReportParam.Category3);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category4))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category4Id == _TrailReportParam.Category4);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category5))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category5Id == _TrailReportParam.Category5);
-            }
-
-
-            QBaseAllCardsAndDetailsAccType = (
-                from a in myQBaseAllCardsAndDetailsAccType
-                select new AccountCOAM //Made 4 Short(Projoction) +Algant+Fast SQL
-                {
-                    Id = a.Id,
-                    Tenant = a.Tenant,
-                    AccountTypeCode = a.AccountTypeCode,
-                    EnglishName = a.EnglishName,
-                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
-                    ChartOfAccountsId = a.ChartOfAccountsId,
-                    IsControlAccount = a.IsControlAccount,
-                    ParentId = a.ParentAccountId,
-                    DisplayNumber = a.DisplayNumber,
-                    LocalName = a.LocalName,
-                    CurrencyId = a.CurrencyId,
-                    IsMultiCurrency = a.IsMultiCurrency,
-
-                }
-                );
-        }
 
         private void GetGLAccountCardPopulationByParam_Upper()
         {
@@ -858,43 +788,7 @@ into groupBy_currency
         {
 
 
-            if (ReportLevel.GLAccount != trailReportParam.MyTrailReportLevel && !trailReportParam.Skip)
-            {
 
-
-
-                /*if (trailReportParam.DetailedControlClients
-                    ||
-                    trailReportParam.DetailedControlFile
-                    ||
-                    trailReportParam.DetailedControlJob
-                    ||
-                    trailReportParam.DetailedControlVendors
-                    ||
-                    trailReportParam.Suppress_DoNotShowCardWithoutActivity
-                    ||
-                    trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero
-                    )
-                {
-                    throw new Exception("Only in TrailReportLevel.GLAccount DetailedControl is allowed !!!");
-                }*/
-                if (!string.IsNullOrWhiteSpace(trailReportParam.Category1)
-                    ||
-                    !string.IsNullOrWhiteSpace(trailReportParam.Category2)
-                    ||
-                    !string.IsNullOrWhiteSpace(trailReportParam.Category3)
-                    ||
-                    !string.IsNullOrWhiteSpace(trailReportParam.Category4)
-                    ||
-                    !string.IsNullOrWhiteSpace(trailReportParam.Category5)
-
-                    )
-                {
-                    throw new Exception("Only in TrailReportLevel.GLAccount Fillter by Category is allowed !!!");
-                }
-
-
-            }
 
             if (
 trailReportParam.ChartOfAccountsIdList.Count > 0
