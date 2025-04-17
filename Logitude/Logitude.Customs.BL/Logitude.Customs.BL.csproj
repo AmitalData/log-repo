@@ -447,9 +447,11 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\RegularitySourceDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RenewalMethodDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\RequestHandlingAuthorityDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RequestToAdvanceAQueueDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RequestReasonCodeEnumDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SIIRequestStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\StatusFieldTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\StorageStatusTableDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\StuffingSiteTypeDetails.Generated.cs" />
@@ -1243,6 +1245,7 @@
     <Compile Include="EntityDataMappings\Generated\ReleaseMessageTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RemarksClassificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RenewalMethodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RequestHandlingAuthorityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequestReasonCodeEnumDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequestToAdvanceAQueueDataMapping.Generated.cs" />
@@ -1260,6 +1263,8 @@
     <Compile Include="EntityDataMappings\Generated\ServersNameDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SignatureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SignStationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SIIRequestDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SIIRequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SiteLookupDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SpecialActionDescriptionTypeDataMapping.Generated.cs" />
@@ -1291,6 +1296,7 @@
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemProcesTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsPriceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsProdIdentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsReqListDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsSerialNumDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemsTaxDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SupplierInvoiceItemVehicleAddDataMapping.Generated.cs" />
@@ -1449,6 +1455,7 @@
     <Compile Include="EntityDataMappings\ReleaseMessageTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RemarksClassificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\RenewalMethodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RequestHandlingAuthorityDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequestReasonCodeEnumDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequestToAdvanceAQueueDataMapping.cs" />
@@ -1466,6 +1473,8 @@
     <Compile Include="EntityDataMappings\ServersNameDataMapping.cs" />
     <Compile Include="EntityDataMappings\SignatureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SignStationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SIIRequestDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SIIRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\SiteLookupDataMapping.cs" />
     <Compile Include="EntityDataMappings\SiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SpecialActionDescriptionTypeDataMapping.cs" />
@@ -1497,6 +1506,7 @@
     <Compile Include="EntityDataMappings\SupplierInvoiceItemProcesTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsPriceDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsProdIdentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SupplierInvoiceItemsReqListDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsSerialNumDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemsTaxDataMapping.cs" />
     <Compile Include="EntityDataMappings\SupplierInvoiceItemVehicleAddDataMapping.cs" />
@@ -1552,6 +1562,10 @@
     <Compile Include="EntityQueryServices\Generated\CB_PreferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginConnectionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RequestHandlingAuthorityQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SIIRequestQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SIIRequestStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SupplierInvoiceItemsReqListQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_CustomsItemComputedDataQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RequirementComputedDataQueryService.cs" />
@@ -2186,6 +2200,10 @@
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CB_PreferenceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_PreferenceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\RequestHandlingAuthorityUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SIIRequestStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SIIRequestUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SupplierInvoiceItemsReqListUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GovernmentProcTypeTenantUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CarEngineVolumeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CarWeightUpdateService.Generated.cs" />

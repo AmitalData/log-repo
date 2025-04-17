@@ -142,6 +142,7 @@
     <Compile Include="EntityPMs\Generated\RemarksClassificationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RenewalMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LevyTrustPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\RequestHandlingAuthorityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestToAdvanceAQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConfirmationNumberTokenLogPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CertificateOfOriginInvoicePM.Generated.cs" />
@@ -152,7 +153,10 @@
     <Compile Include="EntityPMs\Generated\CertificateOfOriginTypeCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OriginCriterionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestReasonCodeEnumPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SIIRequestPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SIIRequestStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SupplierInvioceItemCertificatDefaultPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SupplierInvoiceItemsReqListPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TarifRelatedToQuotaPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TradeLevyStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\InternalBorderSiteTypePM.cs" />

@@ -425,6 +425,7 @@
     <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
     <Compile Include="EntityKeys\RemarksClassificationKeys.cs" />
     <Compile Include="EntityKeys\RenewalMethodKeys.cs" />
+    <Compile Include="EntityKeys\RequestHandlingAuthorityKeys.cs" />
     <Compile Include="EntityKeys\RequestToAdvanceAQueueKeys.cs" />
     <Compile Include="EntityKeys\RequestReasonCodeEnumKeys.cs" />
     <Compile Include="EntityKeys\RequestTypeKeys.cs" />
@@ -437,6 +438,8 @@
     <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
     <Compile Include="EntityKeys\SignStationKeys.cs" />
     <Compile Include="EntityKeys\ServersNameKeys.cs" />
+    <Compile Include="EntityKeys\SIIRequestKeys.cs" />
+    <Compile Include="EntityKeys\SIIRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
     <Compile Include="EntityKeys\StatusCodeKeys.cs" />
     <Compile Include="EntityKeys\StatusFieldTypeKeys.cs" />
@@ -446,6 +449,7 @@
     <Compile Include="EntityKeys\SupplierInvioceExportDefaultKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvioceItemCertificatDefaultKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceItemsPriceKeys.cs" />
+    <Compile Include="EntityKeys\SupplierInvoiceItemsReqListKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoicePaymentKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceUCRKeys.cs" />
     <Compile Include="EntityKeys\SupplierPartyTypeKeys.cs" />
@@ -812,6 +816,7 @@
     <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RemarksClassificationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RenewalMethodListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\RequestHandlingAuthorityListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestToAdvanceAQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestReasonCodeEnumListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
@@ -823,6 +828,8 @@
     <Compile Include="EntityListQueryServices\Generated\SeizureFactorTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SeizureMethodTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ServersNameListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SIIRequestListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SIIRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StatusCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StatusFieldTypeListQueryService.Generated.cs" />
@@ -832,6 +839,7 @@
     <Compile Include="EntityListQueryServices\Generated\SupplierInvioceExportDefaultListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvioceItemCertificatDefaultListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsPriceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsReqListListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoicePaymentListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceUCRListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierPartyTypeListQueryService.Generated.cs" />
@@ -895,6 +903,7 @@
     <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RemarksClassificationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RenewalMethodListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\RequestHandlingAuthorityListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestToAdvanceAQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestReasonCodeEnumListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
@@ -906,6 +915,8 @@
     <Compile Include="EntityListQueryServices\SeizureFactorTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SeizureMethodTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ServersNameListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SIIRequestListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SIIRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StatusCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StatusFieldTypeListQueryService.cs" />
@@ -915,6 +926,7 @@
     <Compile Include="EntityListQueryServices\SupplierInvioceExportDefaultListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvioceItemCertificatDefaultListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceItemsPriceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SupplierInvoiceItemsReqListListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoicePaymentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceUCRListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierPartyTypeListQueryService.cs" />
@@ -1005,10 +1017,14 @@
     <Compile Include="EntityLists\Generated\RemarksClassificationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RenewalMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LevyTrustList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\RequestHandlingAuthorityList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SIIRequestList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SIIRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OriginCriterionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestReasonCodeEnumList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceItemCertificatDefaultList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SupplierInvoiceItemsReqListList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TarifRelatedToQuotaList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TradeLevyStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestToAdvanceAQueueList.Generated.cs" />
@@ -1370,6 +1386,7 @@
     <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
     <Compile Include="EntityMapping\RemarksClassificationMap.cs" />
     <Compile Include="EntityMapping\RenewalMethodMap.cs" />
+    <Compile Include="EntityMapping\RequestHandlingAuthorityMap.cs" />
     <Compile Include="EntityMapping\RequestToAdvanceAQueueMap.cs" />
     <Compile Include="EntityMapping\RequestReasonCodeEnumMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
@@ -1382,6 +1399,8 @@
     <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
     <Compile Include="EntityMapping\SignStationMap.cs" />
     <Compile Include="EntityMapping\ServersNameMap.cs" />
+    <Compile Include="EntityMapping\SIIRequestMap.cs" />
+    <Compile Include="EntityMapping\SIIRequestStatusMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
     <Compile Include="EntityMapping\StatusCodeMap.cs" />
     <Compile Include="EntityMapping\StatusFieldTypeMap.cs" />
@@ -1391,6 +1410,7 @@
     <Compile Include="EntityMapping\SupplierInvioceExportDefaultMap.cs" />
     <Compile Include="EntityMapping\SupplierInvioceItemCertificatDefaultMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceItemsPriceMap.cs" />
+    <Compile Include="EntityMapping\SupplierInvoiceItemsReqListMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoicePaymentMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceUCRMap.cs" />
     <Compile Include="EntityMapping\SupplierPartyTypeMap.cs" />
@@ -1607,6 +1627,7 @@
     <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
     <Compile Include="EntityPOCOs\RemarksClassification.cs" />
     <Compile Include="EntityPOCOs\RenewalMethod.cs" />
+    <Compile Include="EntityPOCOs\RequestHandlingAuthority.cs" />
     <Compile Include="EntityPOCOs\RequestToAdvanceAQueue.cs" />
     <Compile Include="EntityPOCOs\RequestReasonCodeEnum.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
@@ -1619,6 +1640,8 @@
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
     <Compile Include="EntityPOCOs\SignStation.cs" />
     <Compile Include="EntityPOCOs\ServersName.cs" />
+    <Compile Include="EntityPOCOs\SIIRequest.cs" />
+    <Compile Include="EntityPOCOs\SIIRequestStatus.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
     <Compile Include="EntityPOCOs\StatusCode.cs" />
     <Compile Include="EntityPOCOs\StatusFieldType.cs" />
@@ -1628,6 +1651,7 @@
     <Compile Include="EntityPOCOs\SupplierInvioceExportDefault.cs" />
     <Compile Include="EntityPOCOs\SupplierInvioceItemCertificatDefault.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceItemsPrice.cs" />
+    <Compile Include="EntityPOCOs\SupplierInvoiceItemsReqList.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoicePayment.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceUCR.cs" />
     <Compile Include="EntityPOCOs\SupplierPartyType.cs" />
@@ -1995,6 +2019,7 @@
     <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RemarksClassificationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RenewalMethodRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\RequestHandlingAuthorityRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestToAdvanceAQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestReasonCodeEnumRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
@@ -2007,6 +2032,8 @@
     <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SignStationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ServersNameRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SIIRequestRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SIIRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StatusCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StatusFieldTypeRepository.Generated.cs" />
@@ -2016,6 +2043,7 @@
     <Compile Include="Repsitories\Generated\SupplierInvioceExportDefaultRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvioceItemCertificatDefaultRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceItemsPriceRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SupplierInvoiceItemsReqListRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoicePaymentRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceUCRRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierPartyTypeRepository.Generated.cs" />
@@ -2078,6 +2106,7 @@
     <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
     <Compile Include="Repsitories\RemarksClassificationRepository.cs" />
     <Compile Include="Repsitories\RenewalMethodRepository.cs" />
+    <Compile Include="Repsitories\RequestHandlingAuthorityRepository.cs" />
     <Compile Include="Repsitories\RequestToAdvanceAQueueRepository.cs" />
     <Compile Include="Repsitories\RequestReasonCodeEnumRepository.cs" />
     <Compile Include="Repsitories\RequestTypeRepository.cs" />
@@ -2090,6 +2119,8 @@
     <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
     <Compile Include="Repsitories\SignStationRepository.cs" />
     <Compile Include="Repsitories\ServersNameRepository.cs" />
+    <Compile Include="Repsitories\SIIRequestRepository.cs" />
+    <Compile Include="Repsitories\SIIRequestStatusRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
     <Compile Include="Repsitories\StatusCodeRepository.cs" />
     <Compile Include="Repsitories\StatusFieldTypeRepository.cs" />
@@ -2099,6 +2130,7 @@
     <Compile Include="Repsitories\SupplierInvioceExportDefaultRepository.cs" />
     <Compile Include="Repsitories\SupplierInvioceItemCertificatDefaultRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceItemsPriceRepository.cs" />
+    <Compile Include="Repsitories\SupplierInvoiceItemsReqListRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoicePaymentRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceUCRRepository.cs" />
     <Compile Include="Repsitories\SupplierPartyTypeRepository.cs" />

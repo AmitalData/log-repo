@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class SupplierInvoiceItemsReqListQueryService: EntityQueryService<SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListKeys,SupplierInvoiceItemsReqListPM,object,SupplierInvoiceItemsReqListKeys>
+   {
+   
+        SupplierInvoiceItemsReqListRepository repository;
+		ICustomContext  context;
+        public SupplierInvoiceItemsReqListQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new SupplierInvoiceItemsReqListRepository(context);
+            Repository = repository;
+            mapping = new SupplierInvoiceItemsReqListDataMapping();
+        }
+
+        public SupplierInvoiceItemsReqListQueryService(SupplierInvoiceItemsReqListRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new SupplierInvoiceItemsReqListDataMapping();
+        }
+
+        public SupplierInvoiceItemsReqListQueryService(ICustomContext context)
+        {
+            this.repository = new SupplierInvoiceItemsReqListRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new SupplierInvoiceItemsReqListDataMapping();
+        }
+		 
+		public  SupplierInvoiceItemsReqListPM GetSingle(string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new SupplierInvoiceItemsReqListKeys(){ DeclarationId = declarationid, LineNumber = linenumber, InvoiceCounterKey = invoicecounterkey, InvoiceItemLineNumber = invoiceitemlinenumber };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(SupplierInvoiceItemsReqList entityPOCO)
+        {
+            SupplierInvoiceItemsReqListKeys entityKeys = new SupplierInvoiceItemsReqListKeys() { DeclarationId = entityPOCO.DeclarationId, LineNumber = entityPOCO.LineNumber, InvoiceCounterKey = entityPOCO.InvoiceCounterKey, InvoiceItemLineNumber = entityPOCO.InvoiceItemLineNumber,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

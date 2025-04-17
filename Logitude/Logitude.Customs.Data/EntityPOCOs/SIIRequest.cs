@@ -1,0 +1,45 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class SIIRequest
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [Column("RequestNo")]
+	    public string RequestNo { get; set; }
+        [Column("DeclarationId")]
+	    public string DeclarationId { get; set; }
+        [ForeignKey("SIIRequestStatus")]
+        [Column("Status")]
+	    public string Status { get; set; }
+	      
+        public virtual SIIRequestStatus SIIRequestStatus { get; set; }
+        [Column("WareHouseAddress")]
+	    public string WareHouseAddress { get; set; }
+        [Column("WareHouseCity")]
+	    public string WareHouseCity { get; set; }
+        [Column("IsClosed")]
+	    public bool IsClosed { get; set; }
+    }
+}
+	 

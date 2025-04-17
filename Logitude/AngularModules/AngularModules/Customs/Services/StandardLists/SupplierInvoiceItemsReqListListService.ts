@@ -19,30 +19,30 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {CustomsCountryList} from '../../EntityLists/CustomsCountryList';
+import {SupplierInvoiceItemsReqListList} from '../../EntityLists/SupplierInvoiceItemsReqListList';
 
 @Injectable()
 
-export class CustomsCountryListService {
+export class SupplierInvoiceItemsReqListListService {
 	private _http: HttpClient;
     private _apiUrl: string;   
-	public static CachedData: Array<CustomsCountryList> = [];
+	public static CachedData: Array<SupplierInvoiceItemsReqListList> = [];
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/customscountryviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/supplierinvoiceitemsreqlistviews';  
     }
 
-	getSingle(code: string) {
+	getSingle(declarationid: string, linenumber: number, invoicecounterkey: number, invoiceitemlinenumber: number) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid+'&'+'linenumber=' + linenumber+'&'+'invoicecounterkey=' + invoicecounterkey+'&'+'invoiceitemlinenumber=' + invoiceitemlinenumber, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
 						var list = response.body;                   
-						var entity: CustomsCountryList;
+						var entity: SupplierInvoiceItemsReqListList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
 						}   
@@ -52,7 +52,7 @@ export class CustomsCountryListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsCountry", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SupplierInvoiceItemsReqList", "GetSingleList", 'declarationid=' + declarationid+'&'+'linenumber=' + linenumber+'&'+'invoicecounterkey=' + invoicecounterkey+'&'+'invoiceitemlinenumber=' + invoiceitemlinenumber); 
 
 						return serviceResponse;
 					}),
@@ -71,10 +71,10 @@ export class CustomsCountryListService {
 					map((response: HttpResponse<any>) => {
 
 						var allLists = response.body;
-						var _mappedListsArray: Array<CustomsCountryList> = [];
+						var _mappedListsArray: Array<SupplierInvoiceItemsReqListList> = [];
 						if (allLists) {
 							for (var key in allLists) {				
-								var entity: CustomsCountryList = this.MapJsonToEntityList(allLists[key]);
+								var entity: SupplierInvoiceItemsReqListList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
@@ -84,7 +84,7 @@ export class CustomsCountryListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsCountry", "GetAllLists", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SupplierInvoiceItemsReqList", "GetAllLists", ""); 
 
 						return serviceResponse;
 					}),
@@ -139,11 +139,11 @@ export class CustomsCountryListService {
 					map((response: HttpResponse<any>) => {
 
 						var serviceResponse: ServiceResponse = response.body;
-						var _mappedListsArray: Array<CustomsCountryList> = [];
+						var _mappedListsArray: Array<SupplierInvoiceItemsReqListList> = [];
 
 						if (serviceResponse.Result) {
 							for (var key in serviceResponse.Result) {				
-								var entity: CustomsCountryList = this.MapJsonToEntityList(serviceResponse.Result[key]);
+								var entity: SupplierInvoiceItemsReqListList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
 						}   
@@ -152,7 +152,7 @@ export class CustomsCountryListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsCountry", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SupplierInvoiceItemsReqList", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
 						return serviceResponse;
 					}),
@@ -164,8 +164,8 @@ export class CustomsCountryListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: CustomsCountryList;
-            entityList = new CustomsCountryList();
+            var entityList: SupplierInvoiceItemsReqListList;
+            entityList = new SupplierInvoiceItemsReqListList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

@@ -399,6 +399,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
 		 IDbSet<RemarksClassification> RemarksClassifications { get; }
 		 IDbSet<RenewalMethod> RenewalMethods { get; }
+		 IDbSet<RequestHandlingAuthority> RequestHandlingAuthorities { get; }
 		 IDbSet<RequestReasonCodeEnum> RequestReasonCodeEnums { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
 		 IDbSet<RequestToAdvanceAQueue> RequestToAdvanceAQueues { get; }
@@ -416,6 +417,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<ServersName> ServersNames { get; }
 		 IDbSet<SignatureType> SignatureTypes { get; }
 		 IDbSet<SignStation> SignStations { get; }
+		 IDbSet<SIIRequest> SIIRequests { get; }
+		 IDbSet<SIIRequestStatus> SIIRequestStatuses { get; }
 		 IDbSet<SiteLookup> SiteLookups { get; }
 		 IDbSet<SiteType> SiteTypes { get; }
 		 IDbSet<SpecialActionDescriptionType> SpecialActionDescriptionTypes { get; }
@@ -443,6 +446,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<SupplierInvoiceItemsMod> SupplierInvoiceItemsMods { get; }
 		 IDbSet<SupplierInvoiceItemsPrice> SupplierInvoiceItemsPrices { get; }
 		 IDbSet<SupplierInvoiceItemsProdIdent> SupplierInvoiceItemsProdIdents { get; }
+		 IDbSet<SupplierInvoiceItemsReqList> SupplierInvoiceItemsReqLists { get; }
 		 IDbSet<SupplierInvoiceItemsSerialNum> SupplierInvoiceItemsSerialNums { get; }
 		 IDbSet<SupplierInvoiceItemsTax> SupplierInvoiceItemsTaxes { get; }
 		 IDbSet<SupplierInvoiceItemVehicle> SupplierInvoiceItemVehicles { get; }

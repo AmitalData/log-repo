@@ -832,6 +832,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new RenewalMethodMap());
 	
+            modelBuilder.Configurations.Add(new RequestHandlingAuthorityMap());
+	
             modelBuilder.Configurations.Add(new RequestReasonCodeEnumMap());
 	
             modelBuilder.Configurations.Add(new RequestStatusMap());
@@ -865,6 +867,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new SignatureTypeMap());
 	
             modelBuilder.Configurations.Add(new SignStationMap());
+	
+            modelBuilder.Configurations.Add(new SIIRequestMap());
+	
+            modelBuilder.Configurations.Add(new SIIRequestStatusMap());
 	
             modelBuilder.Configurations.Add(new SiteLookupMap());
 	
@@ -919,6 +925,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsPriceMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsProdIdentMap());
+	
+            modelBuilder.Configurations.Add(new SupplierInvoiceItemsReqListMap());
 	
             modelBuilder.Configurations.Add(new SupplierInvoiceItemsSerialNumMap());
 	
@@ -3835,6 +3843,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<RequestHandlingAuthority> RequestHandlingAuthorities 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<RequestReasonCodeEnum> RequestReasonCodeEnums 
 	 {
 	      get; set;
@@ -3932,6 +3946,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SignStation> SignStations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SIIRequest> SIIRequests 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SIIRequestStatus> SIIRequestStatuses 
 	 {
 	      get; set;
 	 
@@ -4094,6 +4120,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SupplierInvoiceItemsProdIdent> SupplierInvoiceItemsProdIdents 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SupplierInvoiceItemsReqList> SupplierInvoiceItemsReqLists 
 	 {
 	      get; set;
 	 

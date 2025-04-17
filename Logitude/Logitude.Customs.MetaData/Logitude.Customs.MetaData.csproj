@@ -641,6 +641,7 @@
     <None Include="DBTables\ReleaseMessageType.dxml" />
     <None Include="DBTables\RemarksClassification.dxml" />
     <None Include="DBTables\RenewalMethod.dxml" />
+    <None Include="DBTables\RequestHandlingAuthority.dxml" />
     <None Include="DBTables\RequestReasonCodeEnum.dxml" />
     <None Include="DBTables\RequestStatus.dxml" />
     <None Include="DBTables\RequestToAdvanceAQueue.dxml" />
@@ -656,6 +657,7 @@
     <None Include="DBTables\SignatureType.dxml" />
     <None Include="DBTables\SignStation.dxml" />
     <None Include="DBTables\SIIRequest.dxml" />
+    <None Include="DBTables\SIIRequestStatus.dxml" />
     <None Include="DBTables\SiteLookup.dxml" />
     <None Include="DBTables\SiteType.dxml" />
     <None Include="DBTables\SpecialActionDescriptionType.dxml" />
