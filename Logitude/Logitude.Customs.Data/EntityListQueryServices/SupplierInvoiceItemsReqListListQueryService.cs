@@ -47,7 +47,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<SupplierInvoiceItemsReqList> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SupplierInvoiceItemsReqList> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 
