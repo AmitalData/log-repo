@@ -66,6 +66,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AmitalClassesGenerator.cs</LastGenOutput>
     </Content>
+    <None Include="DBTables\AutoCreated\ObjectTableType.dxml" />
+    <None Include="DBTables\AutoCreated\Screen.dxml" />
+    <None Include="DBTables\AutoCreated\Tip.dxml" />
+    <None Include="DBTables\ObjectTable.dxml" />
     <None Include="EntityFiles\MenuButton.lxml" />
     <None Include="AutoGenerators\ContextGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -618,8 +622,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DBTables\AutoCreated\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
