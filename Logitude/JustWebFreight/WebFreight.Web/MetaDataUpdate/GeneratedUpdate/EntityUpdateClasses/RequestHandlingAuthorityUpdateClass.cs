@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RequestHandlingAuthorityUpdateClass
    {  		
-		public const string HashString = "05e70636c231dcca39555dc74b0e932d";
+		public const string HashString = "6db5369b6781ca5e81f6cafe8d60c90b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -106,7 +106,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
-			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -136,10 +135,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultTextBack_up =  "גורם מטפל",
 			      				    LocalDefaultText =  "BS64:IteS15XXqNedINee15jXpNecIg==",
 			      				    DefaultText =  "Request Handling Authority",
-			      				    Code =  "1977",
+			      				    Code =  "04c6",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "EnglishName",
@@ -393,7 +391,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "LocalName",
-					  						FullLocalDefaultTextBack_up =  "שם בעברית",
 					  						FullLocalDefaultText =  "BS64:Itep150g15HXoteR16jXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
