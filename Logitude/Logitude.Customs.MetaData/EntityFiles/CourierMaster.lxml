@@ -6748,7 +6748,7 @@
       Code="&quot;ExportMasterExtended&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.ExportCourierMasterExtended&quot;"
-      FeatureDefaultText="&quot;יצא לאקסל מורכב&quot;"
+      FeatureDefaultText="&quot;Export Master Extended&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
@@ -6809,13 +6809,13 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;SendPaymentOn900Close&quot;"
-      FeatureTypeCode="&quot; שליחת תשלום בסגירת PENDING גביה&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.SendPaymentOn900Close&quot;"
-      FeatureDefaultText="&quot;SendPaymentOn900Close&quot;"
+      FeatureDefaultText="&quot;Send Payment On Closing 900&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false"
-      ToggleCode="&quot;ACT&quot;" />
+      ToggleCode="&quot;&quot;" />
   </AdditionalFeatures>
 </entity>

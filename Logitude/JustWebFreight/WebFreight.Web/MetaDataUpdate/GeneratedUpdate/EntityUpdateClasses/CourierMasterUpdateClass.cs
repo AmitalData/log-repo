@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CourierMasterUpdateClass
    {  		
-		public const string HashString = "85a7724f8f5c4ce220d047ecbbe19cf6";
+		public const string HashString = "d6ce38ab10d6635158867a1f86738779";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5296,7 +5296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature CourierMasterFeature_StatusDeclarationOldVersion = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "StatusDeclarationOldVersion", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.StatusDeclarationOldVersion", NameTextCodeDefaultText = @"Status Declaration Old Version" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
-		   Feature CourierMasterFeature_ExportMasterExtended = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportMasterExtended", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.ExportCourierMasterExtended", NameTextCodeDefaultText = @"יצא לאקסל מורכב" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+		   Feature CourierMasterFeature_ExportMasterExtended = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportMasterExtended", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.ExportCourierMasterExtended", NameTextCodeDefaultText = @"Export Master Extended" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
 		   Feature CourierMasterFeature_AllowBulkPendind = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowBulkPendind", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.AllowBulkPendind", NameTextCodeDefaultText = @"AllowBulkPendind" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
@@ -5310,7 +5310,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature CourierMasterFeature_ClassificationApprovedFromMasterCourier = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ClassificationApprovedFromMasterCourier", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.ClassificationApprovedFromMasterCourier", NameTextCodeDefaultText = @"Classification Approved From Master Courier" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
-		   Feature CourierMasterFeature_SendPaymentOn900Close = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendPaymentOn900Close", FeatureTypeCode = " שליחת תשלום בסגירת PENDING גביה", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.SendPaymentOn900Close", NameTextCodeDefaultText = @"SendPaymentOn900Close", ToggleCode = "ACT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
+		   Feature CourierMasterFeature_SendPaymentOn900Close = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendPaymentOn900Close", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CourierMasterObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CourierMaster.Features.SendPaymentOn900Close", NameTextCodeDefaultText = @"Send Payment On Closing 900", ToggleCode = "" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CourierMasterObjectTable);
 
    
 	    
