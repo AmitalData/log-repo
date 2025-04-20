@@ -161,7 +161,8 @@ namespace CustomsWorkerRole
 						Dictionary<string, string> inParams = new Dictionary<string, string>();
 						inParams.Add("REMARKS", "document from api");
 						inParams.Add("base64data", "true");
-						var filedata = Convert.ToBase64String(File.ReadAllBytes(filePath));
+						byte[] filedataByte  = File.ReadAllBytes(filePath);
+						string filedata = Convert.ToBase64String(filedataByte);
 						logs += "before CreateNewFiling " + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 						UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message,isFromCloud: true);
 						logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
@@ -170,7 +171,7 @@ namespace CustomsWorkerRole
 						{
 							#region Save document and metadata
 							logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-							response = SaveDocument(filePath, outParams["COM_ID"]);
+							response = SaveDocument(filePath, outParams["COM_ID"], filedataByte);
 							logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 							#endregion
 							if (!response.HasError)
@@ -230,7 +231,7 @@ namespace CustomsWorkerRole
 			ExecuteQueue();
 		}
 
-		private Response SaveDocument(string filePath, string commId)
+		private Response SaveDocument(string filePath, string commId, byte[] filedataByte)
 		{
 			string fileName = Path.GetFileName(filePath);
 			long fileSize = new System.IO.FileInfo(filePath).Length;
@@ -340,6 +341,7 @@ namespace CustomsWorkerRole
 			documentsFilingPM.UpdatedByUserCode = user.Code;
 			documentsFilingPM.UpdatedByUserId = user.Code;
 			documentsFilingPM.IsFromCloud = true;
+			documentsFilingPM.FileData = filedataByte;
 
 			var res = UpsertDocumentData(documentsFilingPM);
 			return res;
@@ -389,7 +391,7 @@ namespace CustomsWorkerRole
 						if (documentInPM == null)
 						{
 							service.SetChangeSet(entityPM.DocumentsFilingMetaDataValues);
-							service.Create(entityPM, entityPM.FileData, null, false);
+							service.Create(entityPM, entityPM.FileData, null, entityPM.FileData == null ? true : false);
 							commonContext.SaveChanges();
 						}
 						response.Result = entityPM.Id;
