@@ -41,7 +41,8 @@ namespace Logitude.Customs.BL.BL
         }
         public void CheckAndSendMessageis(DeclarationCourierStatusPM declarationCourierStatusPM)
         {
-            
+
+
             if (!_featureSendManifest && !_featureSendDeclaration && !_featureSendPayment)
             {
                 return;
@@ -180,7 +181,7 @@ namespace Logitude.Customs.BL.BL
                         LoggingEnabled = true,
                         LoggingObjectTableId = declarationObjectTableId,
                         LoggingEntityId = declarationCourierStatusPM.DeclarationId,
-                        FromAutomate = true, 
+                        FromAutomate = true,
                         AppicationId = declarationCourierStatusPM.DeclarationId,
                         InterfaceTypeCode = "2750",
                         LoggingUserId = userId,
