@@ -15,6 +15,8 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
+using Logitude.Customs.BL.EntityQueryServices;
+
 //using Logitude.BL.CommonDataModel.EntityPMs;
 //using Logitude.BL.CommonDataModel.EntityQueries;
 //using Logitude.BL.Security;
@@ -26,12 +28,14 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
+using System.ServiceModel.DomainServices.Server;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -225,7 +229,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                     break;
                             }
                         }
+                    }
+                }
 
+
+                if (FeatureToggleHelper.HasFeatureToggle("RFR", entityPM.Tenant))
+                {
+                    var glaccountQueryService = new GLAccountQueryService(entityPM.Tenant);
+                    var glAccountPM = glaccountQueryService.GetSingle(entityPM.AccountId, false, true);
+                    if (glAccountPM != null 
+                        && glAccountPM.ReconcileMethodCode == ReconcileMethodValues.ForeignCurrency)
+                    {
+                        if (Math.Round(entityPM.ReconciliationLines
+                            .Where(x => x.CurrencyRate != null)
+                            .Sum(x => x.ReconciliationAmount * x.CurrencyRate) ?? 0, 2) != 0)
+                        {
+                            CreateRevaluationJournal(entityPM, glAccountPM.ControlAccountId);
+                        }
                     }
                 }
 
@@ -242,6 +262,93 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
+        private void CreateRevaluationJournal(ReconciliationPM reconciliationPM, string controlAccountId)
+        {
+            try
+            {
+                FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(this.MainContext as IAccountingContext);
+                var settings = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(reconciliationPM.Tenant);
+                var diffAccountId = settings.ExchangeRateDiffGLAccountId;
+                if (String.IsNullOrEmpty(diffAccountId))
+                {
+                    throw new ApplicationException("Exchange Rate Diff GLA. is not set");
+                }
+
+                // Start
+                JournalPM newJournal = new JournalPM();
+
+                newJournal.Tenant = reconciliationPM.Tenant;
+                newJournal.CreateDate = DateTime.Now;
+                newJournal.AccountingDate = reconciliationPM.CreateDate.Date;
+                newJournal.TypeCode = JournalTypeValues.Regular;
+                newJournal.StatusCode = JournalStatusTypeValues.InProcessing; 
+                newJournal.CreatedByUserId = reconciliationPM.CreatedByUserId;
+                newJournal.AccountingEntityId = reconciliationPM.Id;
+                newJournal.AccountingEntityReference = reconciliationPM.Number.ToString();
+                newJournal.ExternalNo = null;
+                newJournal.UpdateDate = DateTime.Now;
+                newJournal.UpdatedByUserId = reconciliationPM.CreatedByUserId;
+                newJournal.ApproveDate = reconciliationPM.CreateDate;
+                newJournal.ApprovedByUserId = reconciliationPM.CreatedByUserId;
+                newJournal.JournalLines = new List<JournalLinePM>();
+                newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                int lineCounter = 0;
+
+                // Lines one pair for each currency
+                var groupedReconciliationLines = reconciliationPM.ReconciliationLines
+                    .GroupBy(line => line.CurrencyId);
+
+                foreach (var group in groupedReconciliationLines)
+                {
+                    var groupLocalRecoAmount = Math.Round(group
+                        .Where(x => x.CurrencyRate != null)
+                        .Sum(x => x.ReconciliationAmount * x.CurrencyRate) ?? 0, 2);
+
+                    if (groupLocalRecoAmount != 0)
+                    {
+                        newJournal.JournalLines.Add(new JournalLinePM()
+                        {
+                            Tenant = reconciliationPM.Tenant,
+                            Line = ++lineCounter,
+                            ActionTypeCode = JournalActionTypes.Debit,
+                            DebitAccountId = reconciliationPM.AccountId,
+                            CreditAccountId = diffAccountId,
+                            DebitControlAccountId = controlAccountId,
+                            CreditControlAccountId = null,
+                            LocalAmount = groupLocalRecoAmount,
+                            ForeignAmount = 0,
+                            CurrencyId = group.Key,
+                            ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        });
+
+                        newJournal.JournalLines.Add(new JournalLinePM()
+                        {
+                            Tenant = reconciliationPM.Tenant,
+                            Line = ++lineCounter,
+                            ActionTypeCode = JournalActionTypes.Credit,
+                            DebitAccountId = null,
+                            CreditAccountId = diffAccountId,
+                            DebitControlAccountId = null,
+                            CreditControlAccountId = null,
+                            LocalAmount = groupLocalRecoAmount,
+                            ForeignAmount = 0,
+                            CurrencyId = group.Key,
+                            ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        });
+
+                    }
+                }
+
+                JournalUpdateService journalUpdateService = new JournalUpdateService(this.MainContext, this.AdditionalContexts, reconciliationPM.Tenant);
+                journalUpdateService.Update(newJournal, true);
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Unable to create revaluation journal", ex);
+            }
+        }
         private static IQueryable<String> GetReconcileTransactionJournalIds(List<string> ledgerTransactionIds, int tenant)
         {
             LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(tenant);
