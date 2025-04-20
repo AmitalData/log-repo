@@ -423,10 +423,24 @@
                             <div></div>
                         </td>
 
+                        <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
+                            <span>חיפוש מהיר:</span>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+                        
+                        <td style="width: 5px;">                            
+                            <CheckBox [IsChecked]="fastSearch" (Checked)="fastSearchCheck($event)"></CheckBox>                            
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
 
                         <td style="width: 250px; vertical-align: middle;">
-                            <SearchTextBox [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [DataCy]="'Search' + ObjectTableName"></SearchTextBox>
-
+                            <SearchTextBox [appSearchListDDL]="searchDropdownOptions" (optionSelected)="searchDropdownSelected($event)" [maxResults]="20" [displayPattern]="displayPattern" [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [DataCy]="'Search' + ObjectTableName"></SearchTextBox>
                         </td>
 
 

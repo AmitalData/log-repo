@@ -11,7 +11,7 @@ namespace WebFreight.Web.Controllers.WebServices
 {
     public class AzureSearchController : ApiController
     {
-        public async Task<HttpResponseMessage> GetFastSerach([FromUri] ApiQueryFilters filters, string search, string index)
+        public async Task<HttpResponseMessage> GetFastSearch([FromUri] ApiQueryFilters filters, string searchText, string index)
         {
             int tenant = HeaderHelper.Authenticate().Tenant;
 
@@ -21,7 +21,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 switch (index)
                 {
                     case "declarations":
-                        result = await DeclarationAzureSearchService.Search(filters, tenant, search);
+                        result = await DeclarationAzureSearchService.Search(filters, tenant, searchText);
                         break;
 
                     default:

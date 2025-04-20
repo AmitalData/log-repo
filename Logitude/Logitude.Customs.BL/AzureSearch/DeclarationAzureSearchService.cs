@@ -30,6 +30,10 @@ namespace Logitude.Customs.BL.AzureSearch
             {
                 List<QueryFilterItem> additionalFilters = JsonConvert.DeserializeObject<List<QueryFilterItem>>(apiQueryFilters.AdditionalFilters);
 
+                QueryFilterItem transportModeFilter = additionalFilters.Find(x => x.FieldName == "TransportModeForExport");
+                if (transportModeFilter != null)
+                    transportModeFilter.FieldName = "TransportModeId";
+
                 List<QueryFilterItem> simpleFilters = additionalFilters.Where(x => x.IsCustom == false).ToList();
                 filters = FilterHelper.ConvertQueryFilter(simpleFilters);
 

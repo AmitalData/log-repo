@@ -71,5 +71,8 @@ namespace Logitude.Customs.Data.AzureSearch.Entities
 
         [SearchableField(AnalyzerName = LexicalAnalyzerName.Values.HeMicrosoft, IsFilterable = true)]
         public string customerName { get; set; }
+
+        [SimpleField(IsFilterable = true, IsFacetable = true)]
+        public string transportModeId { get; set; }
     }
 }

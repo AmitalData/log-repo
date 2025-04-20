@@ -4,7 +4,7 @@ declare var window: any;
 import { Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild, QueryList, ViewChildren, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { ServiceArgs } from '../../DataContracts/ServiceArgs';
 import { SessionLocator } from '../../Utilities/SessionLocator';
@@ -45,7 +45,6 @@ import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGrid
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import { VariableAst } from '@angular/compiler';
 import { EditComponent } from '../EditComponent/EditComponent';
 import { AWBWizardLoadComponent } from 'ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardLoadComponent';
 import { AWBWizardComponent } from 'ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardComponent';
@@ -68,6 +67,7 @@ import { CustomizationPermissionService } from '../../../InfrastructureModules/I
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
+import { AzureSearchWebService, FastSearchResult } from 'Customs/Services/WebServices/AzureSearchWebService';
  
 @Component({
 
@@ -110,6 +110,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsLogisticActionRequestObjectTable: boolean = false;
      WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
     private _declarationWebService: DeclarationWebService = new DeclarationWebService();
+    private readonly azureSearchWebService: AzureSearchWebService = new AzureSearchWebService();
     public onChangeCheckBoxesState: EventEmitter<any> = new EventEmitter();
     public ScreenQueryAction = {};
     private ScreenQueryActions = {
@@ -143,10 +144,15 @@ export class ListComponent implements OnInit, AfterViewInit {
     public AddButtonTitle: string = "";
     public serviceArgs: ServiceArgs;
     CurrentQueryFilters: ApiQueryFilters;
+    orginalCurrentAdditionalFilters: FilterItem[] = null;
     AdvanceFilters: ApiQueryFilters;
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() onRefershQueryEvent = new EventEmitter();
     @Output() onSelectedQueryChangeEvent = new EventEmitter();
+    searchDropdownOptions: any[] = [];
+    displayPattern: string = '';
+    fastSearch: boolean = true;
+
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
     }
@@ -192,29 +198,56 @@ export class ListComponent implements OnInit, AfterViewInit {
         //this.SearchFieldchangeevent.emit(this.searchFields);
     }
 
-    SearchMethod() {
-        //this.ApplyPreDefinedFilters();
-
-        var searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
-
-
+    SearchMethod() {        
+        const searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
         this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != searchFieldName);
-        //if (this.searchFields && this.searchFields != "") {
-        //    this.searchFields = this.searchFields.replace(/"/g, '');
-        //    //this.searchFields = this.searchFields.replace(/\//g, '');//("\\", "\\");
-        //    this.searchFields = this.searchFields.replace(/\\/g, "\\\\");
-        //    //this.searchFields = this.searchFields.replace('"', '');
-        //    //this.searchFields = this.searchFields.trim();
-        //}
-        //if (this.ClearMySearch == false) {
+
+        if (this.fastSearch && this.ObjectTableName === 'Customs.Declaration') {
+            if(this.searchFields?.length > 0)
+                {
+                    this.orginalCurrentAdditionalFilters = [...this.CurrentQueryFilters.AdditionalFilters];
+                    this.azureSearchWebService.fastSearch(this.CurrentQueryFilters, this.searchFields, "declarations").then((result: FastSearchResult[]) => {
+                        this.displayPattern = '{transportModeId} {exportFile} {customFileNo} {createDateTime} {declarationNumber:110} {customerName:110}';
+                        this.searchDropdownOptions = result;
+                        this.CD.detectChanges();
+                    });
+                    
+                    return;
+                }
+            else if(this.orginalCurrentAdditionalFilters != null)
+                this.CurrentQueryFilters.AdditionalFilters = this.orginalCurrentAdditionalFilters;
+        }
+            
         this.CurrentQueryFilters.addAdditionalFilter(searchFieldName, this.searchFields, null, null, "Contains", false, true, false, "String");
         this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
-        //}
-        //else {
-        //    this.ClearMySearch = false;
-        //}
+        this.CD.detectChanges();            
     }
 
+    fastSearchCheck(check: boolean) {
+        this.fastSearch = check;
+        if(!check && this.orginalCurrentAdditionalFilters != null) {
+            this.CurrentQueryFilters.AdditionalFilters = [...this.orginalCurrentAdditionalFilters];
+            this.orginalCurrentAdditionalFilters = null;
+        }
+
+        this.SearchMethod();
+    }
+
+    searchDropdownSelected(optionSelected: FastSearchResult | string) {
+        if (optionSelected === 'all') {
+            const ids: string[] = this.searchDropdownOptions.map((x: FastSearchResult) => x.id);
+            ids.pop();
+            this.CurrentQueryFilters.AdditionalFilters = [];
+            this.CurrentQueryFilters.addAdditionalFilter("Id", ids.join(','), null, null, "InListExact", false, true, false, "String");
+            this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
+        } else
+            this._entityListService.getSingle((optionSelected as FastSearchResult).id, this.ObjectTableName, this.MethodName == undefined ? null : this.MethodName).then((res: any) => {
+                res.subscribe(myResponse => {
+                    if (myResponse != null)
+                        this.onRowSelected({ rowData: myResponse instanceof ServiceResponse ? myResponse.Result : myResponse });
+                });
+            });
+    }
 
     GetMethodName() {
         if (this.MenuTableQuerySection) return this.ObjectTableName;
@@ -773,6 +806,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.EnglishView = true;
         }
 
+        this.MenuHeaderchangeevent.subscribe(() => this.orginalCurrentAdditionalFilters = null);
     }
     public ReloadAllListEvent: any = null;
     Listen() {

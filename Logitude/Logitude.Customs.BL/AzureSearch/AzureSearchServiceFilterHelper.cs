@@ -82,7 +82,7 @@ namespace Logitude.Customs.BL.AzureSearch
 
                     default:
                         if ((_operator == "eq" || _operator == "ne") &&
-                        (filter.FieldDataType == "Text" || filter.FieldDataType == "nText" || filter.FieldDataType == "LookUp" || filter.FieldDataType == "PickList"))
+                        (filter.FieldDataType == "Text" || filter.FieldDataType == "nText" || filter.FieldDataType == "LookUp" || filter.FieldDataType == "PickList" || filter.FieldDataType?.ToLower() == "string"))
                             value1 = "'" + value1 + "'";
 
                         filterParts.Add($"{filter.FieldName} {_operator} {value1}");

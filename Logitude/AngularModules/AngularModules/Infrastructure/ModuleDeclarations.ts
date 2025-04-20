@@ -212,6 +212,8 @@ import { AddEditChildEntityComponent } from './Components/LogitudeComponents/Cus
 import { NewCustomObjectComponent } from './Components/NewEntity/NewCustomObjectComponent';
 import { DataProviderFieldsNestedList } from '../Report/Components/DataProviderFieldsNestedList';
 import { TreeComponent } from './Components/LogitudeComponents/tree';
+import { SearchListDDLDirective } from './Directives/SearchListDDL/SearchListDDLDirective';
+import { SearchListDDLComponent } from './Directives/SearchListDDL/SearchListDDLComponent';
 
  //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives = [
@@ -224,6 +226,7 @@ export const Directives = [
     FloatEndDirective,
     TextAlignStart,
     TextAlignEnd,
+    SearchListDDLDirective,
 ];
 export const Pipes = [
     NumbersPipe,
@@ -433,6 +436,7 @@ export const Components = [
     GridScreenSectionComponent,
     AddEditChildEntityComponent,
     NewCustomObjectComponent,
+    SearchListDDLComponent,
  ];
  
 export class ModuleDeclarations {
@@ -563,6 +567,7 @@ export class ModuleDeclarations {
             case 'GridScreenSectionComponent': { myResult = GridScreenSectionComponent; break; }
             case 'AddEditChildEntityComponent': { myResult = AddEditChildEntityComponent; break; }
             case "NewCustomObjectComponent": { myResult = NewCustomObjectComponent; break; }
+            case "SearchListDDLComponent": { myResult = SearchListDDLComponent; break; }
             
              case 'SatisfactionSurveyComponent': {
                 myResult = SatisfactionSurveyComponent;
