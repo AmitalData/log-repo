@@ -10,24 +10,25 @@
 AS
 BEGIN
 SELECT
+MAX(gt.MONTH),
 AccountId AS ACCOUNTID,
-gt.Month,
+
 max(g.ChartOfAccountsId) as chartOfAccount,
 max(g.LocalName) as LocalName,
-max(g.EnglishName) as EnglishName,  
+max(g.EnglishName) as EnglishName,
 max(g.DisplayNumber) as DisplayNumber,
-SUM(CASE WHEN (gt.Month <= 1 OR gt.Year < @Year )THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH1,
-SUM(CASE WHEN (gt.Month <= 2 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH2,
-SUM(CASE WHEN (gt.Month <= 3 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH3,
-SUM(CASE WHEN (gt.Month <= 4 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH4,
-SUM(CASE WHEN (gt.Month <= 5 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH5,
-SUM(CASE WHEN (gt.Month <= 6 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH6,
-SUM(CASE WHEN (gt.Month <= 7 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH7,
-SUM(CASE WHEN (gt.Month <= 8 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH8,
-SUM(CASE WHEN (gt.Month <= 9 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH9,
-SUM(CASE WHEN (gt.Month <= 10 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH10,
-SUM(CASE WHEN (gt.Month <= 11 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH11,
-SUM(CASE WHEN (gt.Month <= 12 OR gt.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH12,
+SUM(CASE WHEN (gt.Month = 1  and gt.Year  = @Year )THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH1,
+SUM(CASE WHEN (gt.Month = 2  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH2,
+SUM(CASE WHEN (gt.Month = 3  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH3,
+SUM(CASE WHEN (gt.Month = 4  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH4,
+SUM(CASE WHEN (gt.Month = 5  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH5,
+SUM(CASE WHEN (gt.Month = 6  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH6,
+SUM(CASE WHEN (gt.Month = 7  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH7,
+SUM(CASE WHEN (gt.Month = 8  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH8,
+SUM(CASE WHEN (gt.Month = 9  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH9,
+SUM(CASE WHEN (gt.Month = 10 and  gt.Year =  @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH10,
+SUM(CASE WHEN (gt.Month = 11 and  gt.Year =  @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH11,
+SUM(CASE WHEN (gt.Month = 12 and  gt.Year =  @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH12,
 SUM(gt.LocalAmountDebit - gt.LocalAmountCredit) AS TOTAL_MONTHS
 FROM
 GLAccounts g
@@ -35,11 +36,11 @@ INNER JOIN
 GLAccountTotalByMonths gt ON g.Id = gt.AccountId
 WHERE
 g.Tenant = @Tenant
-AND gt.Year <= @Year 
+AND gt.Year = @Year
 AND g.IsControlAccount = 0
 and gt.DateTypeCode = 1
 GROUP BY
-gt.AccountId,gt.Month 
+gt.AccountId
 order by chartOfAccount
 END
 
