@@ -849,7 +849,7 @@ namespace Logitude.Accounting.BL.DataContract
                     taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (vendorsWithoutVatNumberCache.Count > 1
                         ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes
                         : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + vendorsWithoutVatNumberCache[0].Code);
-                    VendorsWithoutGLAccountCache.UnionWith(vendorsWithoutVatNumberCache.Select(d => d.Code).Distinct());
+                    VendorsWithoutVatNumberCache.UnionWith(vendorsWithoutVatNumberCache.Select(d => d.Code).Distinct());
 
                 }
             }
