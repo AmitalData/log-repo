@@ -30,7 +30,8 @@ namespace MeatadataGeneratorTool
     public partial class App : Application
     {
         public static string DirectOpenPath { get; set; }
-        public static ObjectTableControl CurrentControl { get; set; }
+        public static string ProjectName { get; set; } = "Logitude";
+		public static ObjectTableControl CurrentControl { get; set; }
         public static MainWindowControl MainControl { get; set; }
 
         public static List<string> LXMLFilesPaths { get; set; }
@@ -87,16 +88,17 @@ namespace MeatadataGeneratorTool
                 //e.Args[0].ToString();//@@"C:\LatestTool\MetaDataGenerator\MetaDataGenerator\Teeeeem.lxml";//
                 DirectOpenPath = e.Args[0].ToString();//@"C:\LatestTool\MetaDataGenerator\MetaDataGenerator\Test121.lxml";//"C:\LogitudeWorld - Offline 29-9-2015\main\Logitude.CRM.MetaData\EntityFiles\CallType.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//;e.Args[0].ToString(); //@"C:\LogitudeWorld - OffLine 21-9-2015\main\Logitude.CRM.MetaData\EntityFiles\Test1.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - New Offline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - NewOffline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//
                 //DirectOpenPath = @"C:\LogitudeWorld\main\Logitude.MetaData\EntityFiles\QuoteModel\Quote.lxml";//e.Args[0].ToString();//@"C:\LatestTool\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//"C:\LogitudeWorld - Offline 29-9-2015\main\Logitude.CRM.MetaData\EntityFiles\CallType.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//;e.Args[0].ToString(); //@"C:\LogitudeWorld - OffLine 21-9-2015\main\Logitude.CRM.MetaData\EntityFiles\Test1.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - New Offline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - NewOffline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//
+				ProjectName = GetSolutionFolderName(DirectOpenPath) ?? ProjectName;
 
 
-                if (!string.IsNullOrEmpty(App.DirectOpenPath))
+				if (!string.IsNullOrEmpty(App.DirectOpenPath))
                 {
                     //MessageBox.Show(App.DirectOpenPath);
+					
 
-
-                    // byte[] byteArray = new byte[stream.Length];
-                    //stream.Read(byteArray, 0, byteArray.Length);
-                    FileStream stream = null;
+					// byte[] byteArray = new byte[stream.Length];
+					//stream.Read(byteArray, 0, byteArray.Length);
+					FileStream stream = null;
                     try
                     {
                         stream = new FileStream(App.DirectOpenPath, FileMode.Open);
@@ -134,15 +136,15 @@ namespace MeatadataGeneratorTool
                         LXMLFilesPaths = new List<string>();
                         DXMLFilesPaths = new List<string>();
 
-						Thread thread = new Thread(new ThreadStart(() => GetLXMLAndDXMLFilesPaths("")));
-                        thread.Start();
+						Thread thread = new Thread(new ThreadStart(GetLXMLAndDXMLFilesPaths));
+						thread.Start();
                     }
                     catch (Exception err)
                     {
                         LXMLFilesPaths = new List<string>();
                         DXMLFilesPaths = new List<string>();
 
-						Thread thread = new Thread(new ThreadStart(() => GetLXMLAndDXMLFilesPaths("")));
+						Thread thread = new Thread(new ThreadStart(GetLXMLAndDXMLFilesPaths));
 						thread.Start();
                         //MessageBox.Show(err.Message);
                         if (DirectOpenPath.Contains(".lxml"))
@@ -177,24 +179,34 @@ namespace MeatadataGeneratorTool
             base.OnStartup(e);
         }
 
-        public void GetLXMLAndDXMLFilesPaths(string projectName)
+		static string GetSolutionFolderName(string filePath)
+		{
+			var directory = Path.GetDirectoryName(filePath);
+
+			while (directory != null)
+			{
+				if (Directory.GetFiles(directory, "*.sln").Length > 0)
+				{
+					return Path.GetFileName(directory); 
+				}
+
+				directory = Directory.GetParent(directory)?.FullName;
+			}
+
+			return null; 
+		}
+
+		public void GetLXMLAndDXMLFilesPaths()
         {
             try
             {
                 string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + @"\";
-                if (projectDirectory.Contains(@"\Logitude\"))
+                if (projectDirectory.Contains(@"\" + ProjectName + @"\"))
                 {
-                    string logitudePath = projectDirectory.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0];
-                    LXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.lxml", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
-                    DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\Logitude\", "*.dxml", SearchOption.AllDirectories).ToList();
+                    string logitudePath = projectDirectory.Split(new string[] { @"\" + ProjectName + @"\" }, StringSplitOptions.None)[0];
+                    LXMLFilesPaths = Directory.GetFiles(logitudePath + @"\" + ProjectName + @"\", "*.lxml", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
+                    DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\" + ProjectName + @"\", "*.dxml", SearchOption.AllDirectories).ToList();
                 }
-                else
-                {
-					string logitudePath = projectDirectory.Split(new string[] { @"\AmitalCloud\" }, StringSplitOptions.None)[0];
-
-					LXMLFilesPaths = Directory.GetFiles(logitudePath + @"\AmitalCloud\", "*.lxml", SearchOption.AllDirectories).Where(l => !l.ToLower().Contains("logitudefrontend")).ToList();
-					DXMLFilesPaths = Directory.GetFiles(logitudePath + @"\AmitalCloud\", "*.dxml", SearchOption.AllDirectories).ToList();
-				}
             }
             catch (Exception exception)
             {
