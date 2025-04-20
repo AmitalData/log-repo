@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RequestHandlingAuthorityUpdateClass
    {  		
-		public const string HashString = "be18fbd7b1f879411358cd9c652a592c";
+		public const string HashString = "05e70636c231dcca39555dc74b0e932d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -106,6 +106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
+			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -135,8 +136,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "גורם מטפל",
-			      				    Code =  "4a37",
+			      				    LocalDefaultTextBack_up =  "גורם מטפל",
+			      				    LocalDefaultText =  "BS64:IteS15XXqNedINee15jXpNecIg==",
+			      				    DefaultText =  "Request Handling Authority",
+			      				    Code =  "1977",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "EnglishName",
@@ -390,7 +393,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "LocalName",
-					  						FullLocalDefaultText =  "שם בעברית",
+					  						FullLocalDefaultTextBack_up =  "שם בעברית",
+					  						FullLocalDefaultText =  "BS64:Itep150g15HXoteR16jXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
