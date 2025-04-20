@@ -58,7 +58,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IInfrastructureContext infrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
                 ICommonDataContext commonContext = CommonDataContext.GetContext(authToken.Tenant);
                 UserService userService = new UserService(commonContext, authToken.Tenant);
-                bool isCustomerCare = userService.CheckIsUserCustomerCareById(userId);
+                bool isCustomerCare = userService.CheckIsUserCustomerCareById(userId, entityPM.Tenant);
                 if (!isCustomerCare)
                 {
                     LastRunDetailUpdateService service = new LastRunDetailUpdateService(infrastructureContext, new Dictionary<string, IContext>(), entityPM.Tenant);

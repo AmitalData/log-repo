@@ -6,6 +6,7 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.GlobalModel.Tools.Validating;
 using Logitude.BL.Helpers;
 using Logitude.BL.Security;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
@@ -1082,10 +1083,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             return hasRoles;
         }
 
-        public bool CheckIsUserCustomerCareById(string id)
+        public bool CheckIsUserCustomerCareById(string id, int tenant)
         {
             bool isCustomerCare = false;
-            isCustomerCare = entityRepository.IsContactIdExist(id,0);
+            isCustomerCare = entityRepository.IsContactIdExist(id, tenant);
             return isCustomerCare;
         }
     }
