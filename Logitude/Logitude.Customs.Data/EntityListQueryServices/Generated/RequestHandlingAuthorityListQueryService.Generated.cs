@@ -24,24 +24,24 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class VendorTypeListQueryService
+    public partial class RequestHandlingAuthorityListQueryService
     {
          private ICustomContext context;
-        public VendorTypeListQueryService(ICustomContext context)
+        public RequestHandlingAuthorityListQueryService(ICustomContext context)
         {
             this.context = context;
         }
 
-        public List<VendorTypeList> GetList(QueryOperations queryOperations, int tenant ){
+        public List<RequestHandlingAuthorityList> GetList(QueryOperations queryOperations, int tenant ){
 		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
 		 }
 
-        public List<VendorTypeList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
+        public List<RequestHandlingAuthorityList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<POCO.VendorType> iQueryable = (from a in context.VendorTypes
+            IQueryable<POCO.RequestHandlingAuthority> iQueryable = (from a in context.RequestHandlingAuthorities
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -50,21 +50,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
-            iQueryable = filter.GetFilteredQuery<POCO.VendorType>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<POCO.RequestHandlingAuthority>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<VendorTypeList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<RequestHandlingAuthorityList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<VendorTypeList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<VendorTypeList>(query2, treeFilterQueryArgs);
+            query2 = filter.GetFilteredQuery<RequestHandlingAuthorityList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<RequestHandlingAuthorityList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(VendorTypeList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> VendorTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.VendorType",tenant).ToList();
+                PropertyInfo propInfo = typeof(RequestHandlingAuthorityList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> RequestHandlingAuthorityObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.RequestHandlingAuthority",tenant).ToList();
 
-                ObjectField objectField = (from a in VendorTypeObjectFields
+                ObjectField objectField = (from a in RequestHandlingAuthorityObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -72,7 +72,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<VendorTypeList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<RequestHandlingAuthorityList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -81,42 +81,42 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<RequestHandlingAuthorityList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<RequestHandlingAuthorityList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
 						case "datetime2": 
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<RequestHandlingAuthorityList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<RequestHandlingAuthorityList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<RequestHandlingAuthorityList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<RequestHandlingAuthorityList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.Code);
+                                query2 = query2.OrderByDescending(d => d.Code);
                                 break;
                             }
                     }
@@ -125,7 +125,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.Code);
+                query2 = query2.OrderByDescending(d => d.Code);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -137,21 +137,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     
         }
 
-         public List<VendorTypeList> GetList(int tenant)
+         public List<RequestHandlingAuthorityList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public VendorTypeList GetSingle(string code)
+        public RequestHandlingAuthorityList GetSingle(string code)
         {
-            IQueryable<POCO.VendorType> VendorTypeQuery = (from a in context.VendorTypes
+            IQueryable<POCO.RequestHandlingAuthority> RequestHandlingAuthorityQuery = (from a in context.RequestHandlingAuthorities
                                                        where a.Code == code
                                                        select a);
 
              
-            IQueryable<VendorTypeList> VendorTypeListQuery = GetIqueryableList( VendorTypeQuery);
-            VendorTypeList VendorTypeList = VendorTypeListQuery.FirstOrDefault();
-            return VendorTypeList;
+            IQueryable<RequestHandlingAuthorityList> RequestHandlingAuthorityListQuery = GetIqueryableList( RequestHandlingAuthorityQuery);
+            RequestHandlingAuthorityList RequestHandlingAuthorityList = RequestHandlingAuthorityListQuery.FirstOrDefault();
+            return RequestHandlingAuthorityList;
            
         }
 
@@ -174,7 +174,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<POCO.VendorType> iQueryable = (from a in context.VendorTypes  select a);
+            IQueryable<POCO.RequestHandlingAuthority> iQueryable = (from a in context.RequestHandlingAuthorities  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -183,14 +183,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
-			iQueryable = filter.GetFilteredQuery<POCO.VendorType>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<POCO.RequestHandlingAuthority>(nonListQueryOperation, iQueryable);
 
 
 
-            IQueryable<VendorTypeList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<RequestHandlingAuthorityList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<VendorTypeList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<VendorTypeList>(query2, treeFilterQueryArgs);
+            query2 = filter.GetFilteredQuery<RequestHandlingAuthorityList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<RequestHandlingAuthorityList>(query2, treeFilterQueryArgs);
 
             int count = query2.Count();
             return count;

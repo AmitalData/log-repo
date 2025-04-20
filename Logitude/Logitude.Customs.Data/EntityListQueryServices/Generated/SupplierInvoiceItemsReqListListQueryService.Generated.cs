@@ -24,47 +24,48 @@ using Logitude.Customs.Data;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class VendorTypeListQueryService
+    public partial class SupplierInvoiceItemsReqListListQueryService
     {
          private ICustomContext context;
-        public VendorTypeListQueryService(ICustomContext context)
+        public SupplierInvoiceItemsReqListListQueryService(ICustomContext context)
         {
             this.context = context;
         }
 
-        public List<VendorTypeList> GetList(QueryOperations queryOperations, int tenant ){
+        public List<SupplierInvoiceItemsReqListList> GetList(QueryOperations queryOperations, int tenant ){
 		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
 		 }
 
-        public List<VendorTypeList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
+        public List<SupplierInvoiceItemsReqListList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<POCO.VendorType> iQueryable = (from a in context.VendorTypes
-                                               select a);
-            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+            IQueryable<POCO.SupplierInvoiceItemsReqList> iQueryable = (from a in context.SupplierInvoiceItemsReqLists
+                                              
+                   where a.Tenant == tenant select a);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
-            iQueryable = filter.GetFilteredQuery<POCO.VendorType>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<POCO.SupplierInvoiceItemsReqList>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<VendorTypeList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<SupplierInvoiceItemsReqListList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<VendorTypeList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<VendorTypeList>(query2, treeFilterQueryArgs);
+            query2 = filter.GetFilteredQuery<SupplierInvoiceItemsReqListList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<SupplierInvoiceItemsReqListList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(VendorTypeList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> VendorTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.VendorType",tenant).ToList();
+                PropertyInfo propInfo = typeof(SupplierInvoiceItemsReqListList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> SupplierInvoiceItemsReqListObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.SupplierInvoiceItemsReqList",tenant).ToList();
 
-                ObjectField objectField = (from a in VendorTypeObjectFields
+                ObjectField objectField = (from a in SupplierInvoiceItemsReqListObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -72,7 +73,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<VendorTypeList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<SupplierInvoiceItemsReqListList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -81,42 +82,42 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<SupplierInvoiceItemsReqListList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<SupplierInvoiceItemsReqListList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
 						case "datetime2": 
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<SupplierInvoiceItemsReqListList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<SupplierInvoiceItemsReqListList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<SupplierInvoiceItemsReqListList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<VendorTypeList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<SupplierInvoiceItemsReqListList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.Code);
+                                query2 = query2.OrderByDescending(d => d.DeclarationId);
                                 break;
                             }
                     }
@@ -125,7 +126,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.Code);
+                query2 = query2.OrderByDescending(d => d.DeclarationId);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -137,28 +138,28 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     
         }
 
-         public List<VendorTypeList> GetList(int tenant)
+         public List<SupplierInvoiceItemsReqListList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public VendorTypeList GetSingle(string code)
+        public SupplierInvoiceItemsReqListList GetSingle(string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber)
         {
-            IQueryable<POCO.VendorType> VendorTypeQuery = (from a in context.VendorTypes
-                                                       where a.Code == code
+            IQueryable<POCO.SupplierInvoiceItemsReqList> SupplierInvoiceItemsReqListQuery = (from a in context.SupplierInvoiceItemsReqLists
+                                                       where a.DeclarationId == declarationid && a.LineNumber == linenumber && a.InvoiceCounterKey == invoicecounterkey && a.InvoiceItemLineNumber == invoiceitemlinenumber
                                                        select a);
 
              
-            IQueryable<VendorTypeList> VendorTypeListQuery = GetIqueryableList( VendorTypeQuery);
-            VendorTypeList VendorTypeList = VendorTypeListQuery.FirstOrDefault();
-            return VendorTypeList;
+            IQueryable<SupplierInvoiceItemsReqListList> SupplierInvoiceItemsReqListListQuery = GetIqueryableList( SupplierInvoiceItemsReqListQuery);
+            SupplierInvoiceItemsReqListList SupplierInvoiceItemsReqListList = SupplierInvoiceItemsReqListListQuery.FirstOrDefault();
+            return SupplierInvoiceItemsReqListList;
            
         }
 
 
 		
-        public int GetListCount(QueryOperations queryOperations ){
-		 		  return GetListCount(queryOperations, new TreeFilterQueryArgs());
+        public int GetListCount(QueryOperations queryOperations, int tenant ){
+		 		  return GetListCount(queryOperations,tenant, new TreeFilterQueryArgs());
 
 		 }
 
@@ -169,28 +170,29 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
 
-        public int GetListCount(QueryOperations queryOperations  ,TreeFilterQueryArgs treeFilterQueryArgs )
+        public int GetListCount(QueryOperations queryOperations, int tenant  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<POCO.VendorType> iQueryable = (from a in context.VendorTypes  select a);
+            IQueryable<POCO.SupplierInvoiceItemsReqList> iQueryable = (from a in context.SupplierInvoiceItemsReqLists 
+                   where a.Tenant == tenant select a);
 
-			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
-			iQueryable = filter.GetFilteredQuery<POCO.VendorType>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<POCO.SupplierInvoiceItemsReqList>(nonListQueryOperation, iQueryable);
 
 
 
-            IQueryable<VendorTypeList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<SupplierInvoiceItemsReqListList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<VendorTypeList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<VendorTypeList>(query2, treeFilterQueryArgs);
+            query2 = filter.GetFilteredQuery<SupplierInvoiceItemsReqListList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<SupplierInvoiceItemsReqListList>(query2, treeFilterQueryArgs);
 
             int count = query2.Count();
             return count;
