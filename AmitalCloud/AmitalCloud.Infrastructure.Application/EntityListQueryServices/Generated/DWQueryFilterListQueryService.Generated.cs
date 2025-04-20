@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class DWQueryFilterListQueryService  : BaseEntityListQueryService<DWQueryFilterList,POCO.DWQueryFilter,  DWQueryFilterKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.DWQueryFilter> contextEntity => (context as IAmitalCloudContext).DWQueryFilters;
-		public DWQueryFilterListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public DWQueryFilterListQueryService(int tenant) : base(tenant) { }
         public DWQueryFilterList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

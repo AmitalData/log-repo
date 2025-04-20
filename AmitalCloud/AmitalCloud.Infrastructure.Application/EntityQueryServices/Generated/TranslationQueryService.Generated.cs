@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TranslationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Translation,TranslationKeys<string>,TranslationPM,TranslationList,string>
+   public partial class TranslationQueryService: BaseEntityQueryService<POCO.Translation,TranslationKeys<string>,TranslationPM,TranslationList,string>
    {
-        public TranslationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TranslationQueryService(int tenant) : base(new Repository<POCO.Translation>(tenant),new TranslationDataMapping()) {}
         public TranslationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Translation>(context),new TranslationDataMapping()) {}
 		public  TranslationPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TranslationKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Translation,string> GetKeys(POCO.Translation entityPOCO) => new TranslationKeys<string>() { Id = entityPOCO.Id,  };

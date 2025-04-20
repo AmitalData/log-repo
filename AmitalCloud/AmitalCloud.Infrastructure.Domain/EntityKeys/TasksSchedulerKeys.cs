@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class TasksSchedulerKeys<T> : BaseEntityKeyFields<EntityPOCOs.TasksScheduler,T> 
+   public class TasksSchedulerKeys<T> : BaseEntityKeyFields<ENTITIES.TasksScheduler,T> 
    {
 		public TasksSchedulerKeys() : base() {}
         public TasksSchedulerKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "TasksSchedulerPM";
-	  public override Expression<Func<EntityPOCOs.TasksScheduler, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.TasksScheduler, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

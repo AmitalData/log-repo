@@ -1,6 +1,11 @@
 ﻿//using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.Enums;
+using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model;
+using AmitalCloud.Infrastructure.Model.Enums;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -21,9 +26,15 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         private string _errorMessage = string.Empty;
         private bool _isDisposed;
         IUnitOfWork _unitOfWork;
-
         protected System.Data.Entity.IDbSet<TEntity> DbSet => _dbSet;
-        protected IContext DbContext => _dbContext;
+        //protected IContext DbContext => _dbContext;
+        internal Repository(int tenant)
+        {
+            _dbContext = GetContext(tenant);
+            _isDisposed = false;
+            _dbSet = (_dbContext).Set<TEntity>();
+        }
+
 
         internal Repository(IUnitOfWork unitOfWork) : this(unitOfWork.Context)
         {
@@ -31,6 +42,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         internal Repository(IContext dbContext)
         {
+            //todo: validate if entity match dbcontext schema
             _isDisposed = false;
             _dbContext = dbContext;
             _dbSet = (dbContext).Set<TEntity>();
@@ -169,7 +181,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select) => _dbSet.Where(predicate).Select(select).ToList();
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include) => ApplyInclude(predicate, include).Select(select).ToList();
 
-        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList().AsEnumerable().Select(a=>NewObject<TResult>(a)).ToList();
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, string include) => ApplyInclude(predicate, include).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
 
 
@@ -199,7 +211,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include, Expression<Func<TResult, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
                     => (orderByDirection == OrderByDirection.Ascending) ?
             ApplyInclude(predicate, include).Select(select).OrderBy(orderBy).ToList() : ApplyInclude(predicate, include).Select(select).OrderByDescending(orderBy).ToList();
-        public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate,  string include, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
+        public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, string include, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
                     => (orderByDirection == OrderByDirection.Ascending) ?
             ApplyInclude(predicate, include).OrderBy(orderBy).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList() : ApplyInclude(predicate, include).OrderByDescending(orderBy).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
         public List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, Expression<Func<TResult, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending)
@@ -383,6 +395,24 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             => (TResult)typeof(TResult).GetConstructor(new Type[] { typeof(TEntity) }).Invoke(new object[] { entity });
         private IQueryable<TEntity> ApplyInclude(Expression<Func<TEntity, bool>> predicate, string include)
         => include.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Aggregate(_dbSet.Where(predicate), (current, next) => { return current.Include(next); });
+        private IContext GetContext(int tenant)
+        {
+            Type type = typeof(TEntity);
+            var attribute = (DataBaseAttribute)Attribute.GetCustomAttribute(type, typeof(DataBaseAttribute));
+            switch (attribute.Name)
+            {
+                case AmitalCloudDBSchema.AMITAL_MAIN:
+                    return AmitalCloudContext.GetContext(tenant);
+                case AmitalCloudDBSchema.AMITAL_LOGS:
+                case AmitalCloudDBSchema.AMITAL_SYSTEMLOGS:
+                    return SystemLogContext.GetContext(tenant);
+                case AmitalCloudDBSchema.AMITAL_GLOBAL:
+                    return GlobalContext.GetContext(tenant);
+                default:
+                    throw new Exception("Invalid schema");
+            }
+        }
+
         #endregion  Private Methods 
     }
 }

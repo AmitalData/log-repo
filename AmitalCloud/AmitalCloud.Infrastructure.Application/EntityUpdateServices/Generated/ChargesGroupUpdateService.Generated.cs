@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ChargesGroupUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ChargesGroup,ChargesGroupPM,IEntityPM,ChargesGroupList,string>
+   public partial class ChargesGroupUpdateService:BaseEntityUpdateService<POCO.ChargesGroup,ChargesGroupPM,IEntityPM,ChargesGroupList,string>
    {
    			
-        public ChargesGroupUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ChargesGroupUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ChargesGroupDataMapping();
-            Repository = new Repository<POCO.ChargesGroup>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ChargesGroup>(mainContext);
         }
-        public ChargesGroupUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ChargesGroupUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ChargesGroupUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ChargesGroupDataMapping();
+            Repository = new Repository<POCO.ChargesGroup>(tenant);
+		}
+        public ChargesGroupUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ChargesGroup,string> GetKeys(ChargesGroupPM entityPM) => new ChargesGroupKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ChargesGroupPM entityPM)
 		{

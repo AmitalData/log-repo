@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class MenuButtonGroupKeys<T> : BaseEntityKeyFields<EntityPOCOs.MenuButtonGroup,T> 
+   public class MenuButtonGroupKeys<T> : BaseEntityKeyFields<ENTITIES.MenuButtonGroup,T> 
    {
 		public MenuButtonGroupKeys() : base() {}
         public MenuButtonGroupKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "MenuButtonGroupsPM";
-	  public override Expression<Func<EntityPOCOs.MenuButtonGroup, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.MenuButtonGroup, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class RoleUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Role,RolePM,IEntityPM,RoleList,string>
+   public partial class RoleUpdateService:BaseEntityUpdateService<POCO.Role,RolePM,IEntityPM,RoleList,string>
    {
    			
-        public RoleUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public RoleUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new RoleDataMapping();
-            Repository = new Repository<POCO.Role>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Role>(mainContext);
         }
-        public RoleUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public RoleUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public RoleUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new RoleDataMapping();
+            Repository = new Repository<POCO.Role>(tenant);
+		}
+        public RoleUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Role,string> GetKeys(RolePM entityPM) => new RoleKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(RolePM entityPM)
 		{

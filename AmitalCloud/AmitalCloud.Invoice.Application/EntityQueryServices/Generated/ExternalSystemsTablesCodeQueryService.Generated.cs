@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ExternalSystemsTablesCodeQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ExternalSystemsTablesCode,ExternalSystemsTablesCodeKeys<string>,ExternalSystemsTablesCodePM,ExternalSystemsTablesCodeList,string>
+   public partial class ExternalSystemsTablesCodeQueryService: BaseEntityQueryService<POCO.ExternalSystemsTablesCode,ExternalSystemsTablesCodeKeys<string>,ExternalSystemsTablesCodePM,ExternalSystemsTablesCodeList,string>
    {
-        public ExternalSystemsTablesCodeQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ExternalSystemsTablesCodeQueryService(IInvoiceContext context) : base(new Repository<POCO.ExternalSystemsTablesCode>(context),new ExternalSystemsTablesCodeDataMapping()) {}
+        public ExternalSystemsTablesCodeQueryService(int tenant) : base(new Repository<POCO.ExternalSystemsTablesCode>(tenant),new ExternalSystemsTablesCodeDataMapping()) {}
+        public ExternalSystemsTablesCodeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ExternalSystemsTablesCode>(context),new ExternalSystemsTablesCodeDataMapping()) {}
 		public  ExternalSystemsTablesCodePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ExternalSystemsTablesCodeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ExternalSystemsTablesCode,string> GetKeys(POCO.ExternalSystemsTablesCode entityPOCO) => new ExternalSystemsTablesCodeKeys<string>() { Id = entityPOCO.Id,  };
    }

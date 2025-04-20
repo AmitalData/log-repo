@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CountryQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Country,CountryKeys<string>,CountryPM,CountryList,string>
+   public partial class CountryQueryService: BaseEntityQueryService<POCO.Country,CountryKeys<string>,CountryPM,CountryList,string>
    {
-        public CountryQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CountryQueryService(int tenant) : base(new Repository<POCO.Country>(tenant),new CountryDataMapping()) {}
         public CountryQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Country>(context),new CountryDataMapping()) {}
 		public  CountryPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CountryKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Country,string> GetKeys(POCO.Country entityPOCO) => new CountryKeys<string>() { Id = entityPOCO.Id,  };

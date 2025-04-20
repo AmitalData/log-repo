@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class WarehouseStoragePricingKeys<T> : BaseEntityKeyFields<EntityPOCOs.WarehouseStoragePricing,T> 
+   public class WarehouseStoragePricingKeys<T> : BaseEntityKeyFields<ENTITIES.WarehouseStoragePricing,T> 
    {
 		public WarehouseStoragePricingKeys() : base() {}
         public WarehouseStoragePricingKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "WarehouseStoragePricingsPM";
-	  public override Expression<Func<EntityPOCOs.WarehouseStoragePricing, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.WarehouseStoragePricing, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

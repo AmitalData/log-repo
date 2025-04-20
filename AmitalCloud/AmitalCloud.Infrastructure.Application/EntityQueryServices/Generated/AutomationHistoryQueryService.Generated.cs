@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AutomationHistoryQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AutomationHistory,AutomationHistoryKeys<string>,AutomationHistoryPM,AutomationHistoryList,string>
+   public partial class AutomationHistoryQueryService: BaseEntityQueryService<POCO.AutomationHistory,AutomationHistoryKeys<string>,AutomationHistoryPM,AutomationHistoryList,string>
    {
-        public AutomationHistoryQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AutomationHistoryQueryService(int tenant) : base(new Repository<POCO.AutomationHistory>(tenant),new AutomationHistoryDataMapping()) {}
         public AutomationHistoryQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AutomationHistory>(context),new AutomationHistoryDataMapping()) {}
 		public  AutomationHistoryPM GetSingle(int version, string automationsid,bool getComposition, bool getFromCache) => base.GetSingle(new AutomationHistoryKeys<string>(){ Version = version, AutomationsId = automationsid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AutomationHistory,string> GetKeys(POCO.AutomationHistory entityPOCO) => new AutomationHistoryKeys<string>() { Version = entityPOCO.Version, AutomationsId = entityPOCO.AutomationsId,  };

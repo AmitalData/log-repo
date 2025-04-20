@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class QuoteTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QuoteType,QuoteTypeKeys<string>,QuoteTypePM,QuoteTypeList,string>
+   public partial class QuoteTypeQueryService: BaseEntityQueryService<POCO.QuoteType,QuoteTypeKeys<string>,QuoteTypePM,QuoteTypeList,string>
    {
-        public QuoteTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public QuoteTypeQueryService(int tenant) : base(new Repository<POCO.QuoteType>(tenant),new QuoteTypeDataMapping()) {}
         public QuoteTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QuoteType>(context),new QuoteTypeDataMapping()) {}
 		public  QuoteTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new QuoteTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QuoteType,string> GetKeys(POCO.QuoteType entityPOCO) => new QuoteTypeKeys<string>() { Code = entityPOCO.Code,  };

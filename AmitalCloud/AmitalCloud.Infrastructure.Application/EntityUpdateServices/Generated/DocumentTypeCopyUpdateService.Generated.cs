@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DocumentTypeCopyUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DocumentTypeCopy,DocumentTypeCopyPM,DocumentTypePM,DocumentTypeCopyList,string>
+   public partial class DocumentTypeCopyUpdateService:BaseEntityUpdateService<POCO.DocumentTypeCopy,DocumentTypeCopyPM,DocumentTypePM,DocumentTypeCopyList,string>
    {
    			
-        public DocumentTypeCopyUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DocumentTypeCopyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DocumentTypeCopyDataMapping();
-            Repository = new Repository<POCO.DocumentTypeCopy>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DocumentTypeCopy>(mainContext);
         }
-        public DocumentTypeCopyUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DocumentTypeCopyUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DocumentTypeCopyUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DocumentTypeCopyDataMapping();
+            Repository = new Repository<POCO.DocumentTypeCopy>(tenant);
+		}
+        public DocumentTypeCopyUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DocumentTypeCopy,string> GetKeys(DocumentTypeCopyPM entityPM) => new DocumentTypeCopyKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DocumentTypeCopyPM entityPM)
 		{

@@ -1,5 +1,5 @@
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityClasses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;

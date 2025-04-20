@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DWObjectTableUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DWObjectTable,DWObjectTablePM,IEntityPM,DWObjectTableList,string>
+   public partial class DWObjectTableUpdateService:BaseEntityUpdateService<POCO.DWObjectTable,DWObjectTablePM,IEntityPM,DWObjectTableList,string>
    {
    			
-        public DWObjectTableUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DWObjectTableUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DWObjectTableDataMapping();
-            Repository = new Repository<POCO.DWObjectTable>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DWObjectTable>(mainContext);
         }
-        public DWObjectTableUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DWObjectTableUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DWObjectTableUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DWObjectTableDataMapping();
+            Repository = new Repository<POCO.DWObjectTable>(tenant);
+		}
+        public DWObjectTableUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DWObjectTable,string> GetKeys(DWObjectTablePM entityPM) => new DWObjectTableKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(DWObjectTablePM entityPM)
 		{

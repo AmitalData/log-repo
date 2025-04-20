@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class AccountingSystemUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.AccountingSystem,AccountingSystemPM,IEntityPM,AccountingSystemList,string>
+   public partial class AccountingSystemUpdateService:BaseEntityUpdateService<POCO.AccountingSystem,AccountingSystemPM,IEntityPM,AccountingSystemList,string>
    {
    			
-        public AccountingSystemUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public AccountingSystemUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AccountingSystemDataMapping();
-            Repository = new Repository<POCO.AccountingSystem>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.AccountingSystem>(mainContext);
         }
-        public AccountingSystemUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public AccountingSystemUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public AccountingSystemUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AccountingSystemDataMapping();
+            Repository = new Repository<POCO.AccountingSystem>(tenant);
+		}
+        public AccountingSystemUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AccountingSystem,string> GetKeys(AccountingSystemPM entityPM) => new AccountingSystemKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(AccountingSystemPM entityPM)
 		{

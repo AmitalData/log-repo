@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ToggleQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Toggle,ToggleKeys<string>,TogglePM,ToggleList,string>
+   public partial class ToggleQueryService: BaseEntityQueryService<POCO.Toggle,ToggleKeys<string>,TogglePM,ToggleList,string>
    {
-        public ToggleQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ToggleQueryService(int tenant) : base(new Repository<POCO.Toggle>(tenant),new ToggleDataMapping()) {}
         public ToggleQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Toggle>(context),new ToggleDataMapping()) {}
 		public  TogglePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ToggleKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Toggle,string> GetKeys(POCO.Toggle entityPOCO) => new ToggleKeys<string>() { Code = entityPOCO.Code,  };

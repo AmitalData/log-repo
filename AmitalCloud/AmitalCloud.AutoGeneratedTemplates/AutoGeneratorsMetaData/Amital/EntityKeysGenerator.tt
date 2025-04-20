@@ -125,9 +125,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = <#= NamespacesDictionary["pocosspacestring"] #>;
 namespace <#= keynamespacestring #>
 {
-   public class <#=tableName #>Keys<T> : BaseEntityKeyFields<EntityPOCOs.<#=tableName #>,T> 
+   public class <#=tableName #>Keys<T> : BaseEntityKeyFields<ENTITIES.<#=tableName #>,T> 
    {
 		public <#=tableName #>Keys() : base() {}
         public <#=tableName #>Keys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -199,7 +200,7 @@ namespace <#= keynamespacestring #>
 	  public override T GetFullKey() => <#+   if(!keynamespacestring.Contains("CargoTracking")){ #>  (T)Convert.ChangeType(<#=fullKey #>,typeof(T)) ;  <#+ } else{  #> (<#=fullKey#>).ToString() ;
         <#+        }         #>         
       public override string GetEntityPMName() => "<#= dBTableName #>PM";
-	  public override Expression<Func<EntityPOCOs.<#=tableName #>, bool>> Predicate => a => <#= predicatestring #>;
+	  public override Expression<Func<ENTITIES.<#=tableName #>, bool>> Predicate => a => <#= predicatestring #>;
    }
 }
 	 <#+

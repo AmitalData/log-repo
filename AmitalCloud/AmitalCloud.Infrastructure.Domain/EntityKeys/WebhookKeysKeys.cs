@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class WebhookKeysKeys<T> : BaseEntityKeyFields<EntityPOCOs.WebhookKeys,T> 
+   public class WebhookKeysKeys<T> : BaseEntityKeyFields<ENTITIES.WebhookKeys,T> 
    {
 		public WebhookKeysKeys() : base() {}
         public WebhookKeysKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "WebhookKeysPM";
-	  public override Expression<Func<EntityPOCOs.WebhookKeys, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.WebhookKeys, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

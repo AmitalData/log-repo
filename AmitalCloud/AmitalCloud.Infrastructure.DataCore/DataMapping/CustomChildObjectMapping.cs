@@ -1,6 +1,6 @@
 ﻿using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityClasses;
 using System.Reflection;
 
 namespace AmitalCloud.Infrastructure.Data.DataMapping

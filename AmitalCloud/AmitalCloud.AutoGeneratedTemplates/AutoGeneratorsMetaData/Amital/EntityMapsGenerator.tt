@@ -19,10 +19,9 @@
 
 dynamic entitymapnamespacestring;
  
-public void GenerateAllEntityMaps(string sourceFolder,string destinationFolder)
+public void GenerateAllEntityMaps(string sourceFolder,string destinationFolder,Dictionary<string,string> namespacesparam)
 {
-	 
-
+ NamespacesDictionary = namespacesparam;
  entitymapnamespacestring = GetEntityMapNameSpace(destinationFolder);
  string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
  string sourceFilePath = Path.Combine(templateDirectory, sourceFolder);
@@ -156,7 +155,7 @@ using System.Threading.Tasks;
 }
 #>
 using System.Data.Entity.ModelConfiguration;
-using POCO = <#= pocosspacestring #>
+using <#= NamespacesDictionary["pocosspacestring"] #>;
  
 namespace <#= entitymapnamespacestring #>
 {

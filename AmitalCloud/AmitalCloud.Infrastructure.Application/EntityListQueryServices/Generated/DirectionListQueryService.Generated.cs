@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class DirectionListQueryService  : BaseEntityListQueryService<DirectionList,POCO.Direction,  DirectionKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.Direction> contextEntity => (context as IAmitalCloudContext).Directions;
-		public DirectionListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public DirectionListQueryService(int tenant) : base(tenant) { }
         public DirectionList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

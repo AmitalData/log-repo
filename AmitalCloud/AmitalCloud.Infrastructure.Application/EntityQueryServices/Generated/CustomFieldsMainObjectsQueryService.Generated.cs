@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomFieldsMainObjectQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomFieldsMainObject,CustomFieldsMainObjectKeys<string>,CustomFieldsMainObjectPM,CustomFieldsMainObjectList,string>
+   public partial class CustomFieldsMainObjectQueryService: BaseEntityQueryService<POCO.CustomFieldsMainObject,CustomFieldsMainObjectKeys<string>,CustomFieldsMainObjectPM,CustomFieldsMainObjectList,string>
    {
-        public CustomFieldsMainObjectQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomFieldsMainObjectQueryService(int tenant) : base(new Repository<POCO.CustomFieldsMainObject>(tenant),new CustomFieldsMainObjectDataMapping()) {}
         public CustomFieldsMainObjectQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomFieldsMainObject>(context),new CustomFieldsMainObjectDataMapping()) {}
 		public  CustomFieldsMainObjectPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomFieldsMainObjectKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomFieldsMainObject,string> GetKeys(POCO.CustomFieldsMainObject entityPOCO) => new CustomFieldsMainObjectKeys<string>() { Id = entityPOCO.Id,  };

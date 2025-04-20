@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class BluesnapTransactionQueryService: BaseEntityQueryService<IGlobalContext,POCO.BluesnapTransaction,BluesnapTransactionKeys<string>,BluesnapTransactionPM,BluesnapTransactionList,string>
+   public partial class BluesnapTransactionQueryService: BaseEntityQueryService<POCO.BluesnapTransaction,BluesnapTransactionKeys<string>,BluesnapTransactionPM,BluesnapTransactionList,string>
    {
-        public BluesnapTransactionQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public BluesnapTransactionQueryService(int tenant) : base(new Repository<POCO.BluesnapTransaction>(tenant),new BluesnapTransactionDataMapping()) {}
         public BluesnapTransactionQueryService(IGlobalContext context) : base(new Repository<POCO.BluesnapTransaction>(context),new BluesnapTransactionDataMapping()) {}
 		public  BluesnapTransactionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BluesnapTransactionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BluesnapTransaction,string> GetKeys(POCO.BluesnapTransaction entityPOCO) => new BluesnapTransactionKeys<string>() { Id = entityPOCO.Id,  };

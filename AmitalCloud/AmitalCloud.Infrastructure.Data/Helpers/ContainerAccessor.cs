@@ -1,4 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Data.Services;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Microsoft.Practices.Unity;
 

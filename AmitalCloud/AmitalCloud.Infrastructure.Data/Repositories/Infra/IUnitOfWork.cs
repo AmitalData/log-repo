@@ -1,4 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System;
 using System.Transactions;
 namespace AmitalCloud.Infrastructure.Data.Repositories

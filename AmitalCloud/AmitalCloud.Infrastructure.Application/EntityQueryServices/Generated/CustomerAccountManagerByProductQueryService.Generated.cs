@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerAccountManagerByProductQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerAccountManagerByProduct,CustomerAccountManagerByProductKeys<string>,CustomerAccountManagerByProductPM,CustomerAccountManagerByProductList,string>
+   public partial class CustomerAccountManagerByProductQueryService: BaseEntityQueryService<POCO.CustomerAccountManagerByProduct,CustomerAccountManagerByProductKeys<string>,CustomerAccountManagerByProductPM,CustomerAccountManagerByProductList,string>
    {
-        public CustomerAccountManagerByProductQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerAccountManagerByProductQueryService(int tenant) : base(new Repository<POCO.CustomerAccountManagerByProduct>(tenant),new CustomerAccountManagerByProductDataMapping()) {}
         public CustomerAccountManagerByProductQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerAccountManagerByProduct>(context),new CustomerAccountManagerByProductDataMapping()) {}
 		public  CustomerAccountManagerByProductPM GetSingle(string producttypecode, string customerid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerAccountManagerByProductKeys<string>(){ ProductTypeCode = producttypecode, CustomerId = customerid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerAccountManagerByProduct,string> GetKeys(POCO.CustomerAccountManagerByProduct entityPOCO) => new CustomerAccountManagerByProductKeys<string>() { ProductTypeCode = entityPOCO.ProductTypeCode, CustomerId = entityPOCO.CustomerId,  };

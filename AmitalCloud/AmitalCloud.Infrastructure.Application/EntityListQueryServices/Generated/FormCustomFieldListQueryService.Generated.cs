@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class FormCustomFieldListQueryService  : BaseEntityListQueryService<FormCustomFieldList,POCO.FormCustomField,  FormCustomFieldKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.FormCustomField> contextEntity => (context as IAmitalCloudContext).FormCustomFields1;
-		public FormCustomFieldListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public FormCustomFieldListQueryService(int tenant) : base(tenant) { }
         public FormCustomFieldList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

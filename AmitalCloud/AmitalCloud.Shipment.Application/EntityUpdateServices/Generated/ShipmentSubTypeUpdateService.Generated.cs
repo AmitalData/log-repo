@@ -9,34 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ShipmentSubTypeUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ShipmentSubType,ShipmentSubTypePM,IEntityPM,ShipmentSubTypeList,string>
+   public partial class ShipmentSubTypeUpdateService:BaseEntityUpdateService<POCO.ShipmentSubType,ShipmentSubTypePM,IEntityPM,ShipmentSubTypeList,string>
    {
    			
-        public ShipmentSubTypeUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ShipmentSubTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ShipmentSubTypeDataMapping();
-            Repository = new Repository<POCO.ShipmentSubType>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ShipmentSubType>(mainContext);
         }
-        public ShipmentSubTypeUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ShipmentSubTypeUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ShipmentSubTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ShipmentSubTypeDataMapping();
+            Repository = new Repository<POCO.ShipmentSubType>(tenant);
+		}
+        public ShipmentSubTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ShipmentSubType,string> GetKeys(ShipmentSubTypePM entityPM) => new ShipmentSubTypeKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ShipmentSubTypePM entityPM)
 		{

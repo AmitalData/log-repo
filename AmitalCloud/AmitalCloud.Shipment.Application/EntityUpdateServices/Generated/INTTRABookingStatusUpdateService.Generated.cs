@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class INTTRABookingStatusUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.INTTRABookingStatus,INTTRABookingStatusPM,IEntityPM,INTTRABookingStatusList,string>
+   public partial class INTTRABookingStatusUpdateService:BaseEntityUpdateService<POCO.INTTRABookingStatus,INTTRABookingStatusPM,IEntityPM,INTTRABookingStatusList,string>
    {
    			
-        public INTTRABookingStatusUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public INTTRABookingStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new INTTRABookingStatusDataMapping();
-            Repository = new Repository<POCO.INTTRABookingStatus>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.INTTRABookingStatus>(mainContext);
         }
-        public INTTRABookingStatusUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public INTTRABookingStatusUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public INTTRABookingStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new INTTRABookingStatusDataMapping();
+            Repository = new Repository<POCO.INTTRABookingStatus>(tenant);
+		}
+        public INTTRABookingStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.INTTRABookingStatus,string> GetKeys(INTTRABookingStatusPM entityPM) => new INTTRABookingStatusKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(INTTRABookingStatusPM entityPM)
 		{

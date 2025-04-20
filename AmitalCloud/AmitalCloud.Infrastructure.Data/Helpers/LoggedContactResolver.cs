@@ -1,6 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Data.Mocks;
-using AmitalCloud.Infrastructure.Data.Security;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Microsoft.Practices.Unity;
 

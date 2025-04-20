@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class VatFormatTypeKeys<T> : BaseEntityKeyFields<EntityPOCOs.VatFormatType,T> 
+   public class VatFormatTypeKeys<T> : BaseEntityKeyFields<ENTITIES.VatFormatType,T> 
    {
 		public VatFormatTypeKeys() : base() {}
         public VatFormatTypeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "VatFormatTypePM";
-	  public override Expression<Func<EntityPOCOs.VatFormatType, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.VatFormatType, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

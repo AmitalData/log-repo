@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentQueryService: BaseEntityQueryService<IShipmentContext,POCO.Shipment,ShipmentKeys<string>,ShipmentPM,ShipmentList,string>
+   public partial class ShipmentQueryService: BaseEntityQueryService<POCO.Shipment,ShipmentKeys<string>,ShipmentPM,ShipmentList,string>
    {
-        public ShipmentQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentQueryService(IShipmentContext context) : base(new Repository<POCO.Shipment>(context),new ShipmentDataMapping()) {}
+        public ShipmentQueryService(int tenant) : base(new Repository<POCO.Shipment>(tenant),new ShipmentDataMapping()) {}
+        public ShipmentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Shipment>(context),new ShipmentDataMapping()) {}
 		public  ShipmentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Shipment,string> GetKeys(POCO.Shipment entityPOCO) => new ShipmentKeys<string>() { Id = entityPOCO.Id,  };
    }

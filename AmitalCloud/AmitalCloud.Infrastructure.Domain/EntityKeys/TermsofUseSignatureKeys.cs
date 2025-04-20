@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class TermsofUseSignatureKeys<T> : BaseEntityKeyFields<EntityPOCOs.TermsofUseSignature,T> 
+   public class TermsofUseSignatureKeys<T> : BaseEntityKeyFields<ENTITIES.TermsofUseSignature,T> 
    {
 		public TermsofUseSignatureKeys() : base() {}
         public TermsofUseSignatureKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "TermsofUseSignaturesPM";
-	  public override Expression<Func<EntityPOCOs.TermsofUseSignature, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.TermsofUseSignature, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

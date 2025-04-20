@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DocumentTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DocumentType,DocumentTypePM,IEntityPM,DocumentTypeList,string>
+   public partial class DocumentTypeUpdateService:BaseEntityUpdateService<POCO.DocumentType,DocumentTypePM,IEntityPM,DocumentTypeList,string>
    {
    			
-        public DocumentTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DocumentTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DocumentTypeDataMapping();
-            Repository = new Repository<POCO.DocumentType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DocumentType>(mainContext);
         }
-        public DocumentTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DocumentTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DocumentTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DocumentTypeDataMapping();
+            Repository = new Repository<POCO.DocumentType>(tenant);
+		}
+        public DocumentTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DocumentType,string> GetKeys(DocumentTypePM entityPM) => new DocumentTypeKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DocumentTypePM entityPM)
 		{

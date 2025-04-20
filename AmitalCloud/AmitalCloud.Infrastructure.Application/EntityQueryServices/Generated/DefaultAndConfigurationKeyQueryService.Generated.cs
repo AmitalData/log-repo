@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DefaultAndConfigurationKeyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DefaultAndConfigurationKey,DefaultAndConfigurationKeyKeys<string>,DefaultAndConfigurationKeyPM,DefaultAndConfigurationKeyList,string>
+   public partial class DefaultAndConfigurationKeyQueryService: BaseEntityQueryService<POCO.DefaultAndConfigurationKey,DefaultAndConfigurationKeyKeys<string>,DefaultAndConfigurationKeyPM,DefaultAndConfigurationKeyList,string>
    {
-        public DefaultAndConfigurationKeyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DefaultAndConfigurationKeyQueryService(int tenant) : base(new Repository<POCO.DefaultAndConfigurationKey>(tenant),new DefaultAndConfigurationKeyDataMapping()) {}
         public DefaultAndConfigurationKeyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DefaultAndConfigurationKey>(context),new DefaultAndConfigurationKeyDataMapping()) {}
 		public  DefaultAndConfigurationKeyPM GetSingle(int tenant, string setkey,bool getComposition, bool getFromCache) => base.GetSingle(new DefaultAndConfigurationKeyKeys<string>(){ Tenant = tenant, SetKey = setkey }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DefaultAndConfigurationKey,string> GetKeys(POCO.DefaultAndConfigurationKey entityPOCO) => new DefaultAndConfigurationKeyKeys<string>() { Tenant = entityPOCO.Tenant, SetKey = entityPOCO.SetKey,  };

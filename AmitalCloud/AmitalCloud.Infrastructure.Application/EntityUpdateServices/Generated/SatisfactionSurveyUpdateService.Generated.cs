@@ -9,32 +9,34 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class SatisfactionSurveyUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.SatisfactionSurvey,SatisfactionSurveyPM,IEntityPM,SatisfactionSurveyList,string>
+   public partial class SatisfactionSurveyUpdateService:BaseEntityUpdateService<POCO.SatisfactionSurvey,SatisfactionSurveyPM,IEntityPM,SatisfactionSurveyList,string>
    {
    			
-        public SatisfactionSurveyUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public SatisfactionSurveyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new SatisfactionSurveyDataMapping();
-            Repository = new Repository<POCO.SatisfactionSurvey>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.SatisfactionSurvey>(mainContext);
         }
-        public SatisfactionSurveyUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public SatisfactionSurveyUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public SatisfactionSurveyUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new SatisfactionSurveyDataMapping();
+            Repository = new Repository<POCO.SatisfactionSurvey>(tenant);
+		}
+        public SatisfactionSurveyUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.SatisfactionSurvey,string> GetKeys(SatisfactionSurveyPM entityPM) => new SatisfactionSurveyKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(SatisfactionSurveyPM entityPM)
 		{

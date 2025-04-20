@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class UserPermittedBranchQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.UserPermittedBranch,UserPermittedBranchKeys<string>,UserPermittedBranchPM,UserPermittedBranchList,string>
+   public partial class UserPermittedBranchQueryService: BaseEntityQueryService<POCO.UserPermittedBranch,UserPermittedBranchKeys<string>,UserPermittedBranchPM,UserPermittedBranchList,string>
    {
-        public UserPermittedBranchQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public UserPermittedBranchQueryService(int tenant) : base(new Repository<POCO.UserPermittedBranch>(tenant),new UserPermittedBranchDataMapping()) {}
         public UserPermittedBranchQueryService(IAmitalCloudContext context) : base(new Repository<POCO.UserPermittedBranch>(context),new UserPermittedBranchDataMapping()) {}
 		public  UserPermittedBranchPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new UserPermittedBranchKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.UserPermittedBranch,string> GetKeys(POCO.UserPermittedBranch entityPOCO) => new UserPermittedBranchKeys<string>() { Id = entityPOCO.Id,  };

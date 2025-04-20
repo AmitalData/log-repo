@@ -1,3 +1,4 @@
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using System;
 using System.Linq;

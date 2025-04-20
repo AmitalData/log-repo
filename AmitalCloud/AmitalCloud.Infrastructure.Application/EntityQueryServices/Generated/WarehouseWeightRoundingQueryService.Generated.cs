@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class WarehouseWeightRoundingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.WarehouseWeightRounding,WarehouseWeightRoundingKeys<string>,WarehouseWeightRoundingPM,WarehouseWeightRoundingList,string>
+   public partial class WarehouseWeightRoundingQueryService: BaseEntityQueryService<POCO.WarehouseWeightRounding,WarehouseWeightRoundingKeys<string>,WarehouseWeightRoundingPM,WarehouseWeightRoundingList,string>
    {
-        public WarehouseWeightRoundingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public WarehouseWeightRoundingQueryService(int tenant) : base(new Repository<POCO.WarehouseWeightRounding>(tenant),new WarehouseWeightRoundingDataMapping()) {}
         public WarehouseWeightRoundingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.WarehouseWeightRounding>(context),new WarehouseWeightRoundingDataMapping()) {}
 		public  WarehouseWeightRoundingPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new WarehouseWeightRoundingKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.WarehouseWeightRounding,string> GetKeys(POCO.WarehouseWeightRounding entityPOCO) => new WarehouseWeightRoundingKeys<string>() { Code = entityPOCO.Code,  };

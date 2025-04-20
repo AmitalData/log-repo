@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class SharedLogisticsInvitationStatusListQueryService  : BaseEntityListQueryService<SharedLogisticsInvitationStatusList,POCO.SharedLogisticsInvitationStatus,  SharedLogisticsInvitationStatusKeys<int>,int>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.SharedLogisticsInvitationStatus> contextEntity => (context as IAmitalCloudContext).SharedLogisticsInvitationStatus;
-		public SharedLogisticsInvitationStatusListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public SharedLogisticsInvitationStatusListQueryService(int tenant) : base(tenant) { }
         public SharedLogisticsInvitationStatusList GetSingle(int code)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

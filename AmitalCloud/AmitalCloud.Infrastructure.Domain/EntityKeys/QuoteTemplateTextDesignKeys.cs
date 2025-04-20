@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class QuoteTemplateTextDesignKeys<T> : BaseEntityKeyFields<EntityPOCOs.QuoteTemplateTextDesign,T> 
+   public class QuoteTemplateTextDesignKeys<T> : BaseEntityKeyFields<ENTITIES.QuoteTemplateTextDesign,T> 
    {
 		public QuoteTemplateTextDesignKeys() : base() {}
         public QuoteTemplateTextDesignKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "QuoteTemplateTextDesignsPM";
-	  public override Expression<Func<EntityPOCOs.QuoteTemplateTextDesign, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.QuoteTemplateTextDesign, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

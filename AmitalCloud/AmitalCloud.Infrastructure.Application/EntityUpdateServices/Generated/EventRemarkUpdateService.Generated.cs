@@ -9,34 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class EventRemarkUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.EventRemark,EventRemarkPM,IEntityPM,EventRemarkList,string>
+   public partial class EventRemarkUpdateService:BaseEntityUpdateService<POCO.EventRemark,EventRemarkPM,IEntityPM,EventRemarkList,string>
    {
    			
-        public EventRemarkUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public EventRemarkUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new EventRemarkDataMapping();
-            Repository = new Repository<POCO.EventRemark>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.EventRemark>(mainContext);
         }
-        public EventRemarkUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public EventRemarkUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public EventRemarkUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new EventRemarkDataMapping();
+            Repository = new Repository<POCO.EventRemark>(tenant);
+		}
+        public EventRemarkUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.EventRemark,string> GetKeys(EventRemarkPM entityPM) => new EventRemarkKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(EventRemarkPM entityPM)
 		{

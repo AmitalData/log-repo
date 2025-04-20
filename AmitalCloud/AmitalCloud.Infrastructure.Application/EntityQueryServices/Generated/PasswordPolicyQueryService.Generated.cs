@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class PasswordPolicyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PasswordPolicy,PasswordPolicyKeys<string>,PasswordPolicyPM,PasswordPolicyList,string>
+   public partial class PasswordPolicyQueryService: BaseEntityQueryService<POCO.PasswordPolicy,PasswordPolicyKeys<string>,PasswordPolicyPM,PasswordPolicyList,string>
    {
-        public PasswordPolicyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public PasswordPolicyQueryService(int tenant) : base(new Repository<POCO.PasswordPolicy>(tenant),new PasswordPolicyDataMapping()) {}
         public PasswordPolicyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PasswordPolicy>(context),new PasswordPolicyDataMapping()) {}
 		public  PasswordPolicyPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new PasswordPolicyKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PasswordPolicy,string> GetKeys(POCO.PasswordPolicy entityPOCO) => new PasswordPolicyKeys<string>() { Code = entityPOCO.Code,  };

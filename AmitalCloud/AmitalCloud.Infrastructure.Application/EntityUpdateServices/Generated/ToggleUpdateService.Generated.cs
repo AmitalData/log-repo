@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ToggleUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Toggle,TogglePM,IEntityPM,ToggleList,string>
+   public partial class ToggleUpdateService:BaseEntityUpdateService<POCO.Toggle,TogglePM,IEntityPM,ToggleList,string>
    {
    			
-        public ToggleUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ToggleUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ToggleDataMapping();
-            Repository = new Repository<POCO.Toggle>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Toggle>(mainContext);
         }
-        public ToggleUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ToggleUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ToggleUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ToggleDataMapping();
+            Repository = new Repository<POCO.Toggle>(tenant);
+		}
+        public ToggleUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Toggle,string> GetKeys(TogglePM entityPM) => new ToggleKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(TogglePM entityPM)
 		{

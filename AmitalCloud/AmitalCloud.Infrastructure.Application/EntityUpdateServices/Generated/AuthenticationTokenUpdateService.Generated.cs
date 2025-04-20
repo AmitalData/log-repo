@@ -5,24 +5,21 @@
 //     the code is regenerated.
 // </auto-generated> EntityUpdateServicesGenerator.tt from AmitalClassesGenerator.tt
 //--- 
-using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using System.Threading.Tasks;
-using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.EntityDataMappings;
+using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.EntityKeys;
+using AmitalCloud.Infrastructure.Domain.EntityLists;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using System.Collections.Generic;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
-{ 
-   public partial class AuthenticationTokenUpdateService:BaseEntityUpdateService<GlobalContext, POCO.AuthenticationToken,AuthenticationTokenPM,IEntityPM,AuthenticationTokenList,string>
+{
+    public partial class AuthenticationTokenUpdateService:BaseEntityUpdateService< POCO.AuthenticationToken,AuthenticationTokenPM,IEntityPM,AuthenticationTokenList,string>
    {
    			
         public AuthenticationTokenUpdateService(IGlobalContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)

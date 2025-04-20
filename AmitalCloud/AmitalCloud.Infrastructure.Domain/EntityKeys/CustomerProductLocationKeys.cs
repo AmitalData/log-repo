@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class CustomerProductLocationKeys<T> : BaseEntityKeyFields<EntityPOCOs.CustomerProductLocation,T> 
+   public class CustomerProductLocationKeys<T> : BaseEntityKeyFields<ENTITIES.CustomerProductLocation,T> 
    {
 		public CustomerProductLocationKeys() : base() {}
         public CustomerProductLocationKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -30,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(CustomerId.ToString()+'_'+ProductTypeCode.ToString()+'_'+CountryId.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CustomerProductLocationsPM";
-	  public override Expression<Func<EntityPOCOs.CustomerProductLocation, bool>> Predicate => a => a.CustomerId == CustomerId && a.ProductTypeCode == ProductTypeCode && a.CountryId == CountryId;
+	  public override Expression<Func<ENTITIES.CustomerProductLocation, bool>> Predicate => a => a.CustomerId == CustomerId && a.ProductTypeCode == ProductTypeCode && a.CountryId == CountryId;
    }
 }
 	 

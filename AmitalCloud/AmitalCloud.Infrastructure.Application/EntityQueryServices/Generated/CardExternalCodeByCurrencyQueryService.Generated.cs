@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CardExternalCodeByCurrencyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CardExternalCodeByCurrency,CardExternalCodeByCurrencyKeys<string>,CardExternalCodeByCurrencyPM,CardExternalCodeByCurrencyList,string>
+   public partial class CardExternalCodeByCurrencyQueryService: BaseEntityQueryService<POCO.CardExternalCodeByCurrency,CardExternalCodeByCurrencyKeys<string>,CardExternalCodeByCurrencyPM,CardExternalCodeByCurrencyList,string>
    {
-        public CardExternalCodeByCurrencyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CardExternalCodeByCurrencyQueryService(int tenant) : base(new Repository<POCO.CardExternalCodeByCurrency>(tenant),new CardExternalCodeByCurrencyDataMapping()) {}
         public CardExternalCodeByCurrencyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CardExternalCodeByCurrency>(context),new CardExternalCodeByCurrencyDataMapping()) {}
 		public  CardExternalCodeByCurrencyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CardExternalCodeByCurrencyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CardExternalCodeByCurrency,string> GetKeys(POCO.CardExternalCodeByCurrency entityPOCO) => new CardExternalCodeByCurrencyKeys<string>() { Id = entityPOCO.Id,  };

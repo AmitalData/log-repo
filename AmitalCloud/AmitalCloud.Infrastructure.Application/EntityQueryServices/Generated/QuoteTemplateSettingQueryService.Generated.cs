@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class QuoteTemplateSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QuoteTemplateSetting,QuoteTemplateSettingKeys<string>,QuoteTemplateSettingPM,QuoteTemplateSettingList,string>
+   public partial class QuoteTemplateSettingQueryService: BaseEntityQueryService<POCO.QuoteTemplateSetting,QuoteTemplateSettingKeys<string>,QuoteTemplateSettingPM,QuoteTemplateSettingList,string>
    {
-        public QuoteTemplateSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public QuoteTemplateSettingQueryService(int tenant) : base(new Repository<POCO.QuoteTemplateSetting>(tenant),new QuoteTemplateSettingDataMapping()) {}
         public QuoteTemplateSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QuoteTemplateSetting>(context),new QuoteTemplateSettingDataMapping()) {}
 		public  QuoteTemplateSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new QuoteTemplateSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QuoteTemplateSetting,string> GetKeys(POCO.QuoteTemplateSetting entityPOCO) => new QuoteTemplateSettingKeys<string>() { Id = entityPOCO.Id,  };

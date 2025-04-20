@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class MobileNotificationLogUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.MobileNotificationLog,MobileNotificationLogPM,IEntityPM,MobileNotificationLogList,string>
+   public partial class MobileNotificationLogUpdateService:BaseEntityUpdateService<POCO.MobileNotificationLog,MobileNotificationLogPM,IEntityPM,MobileNotificationLogList,string>
    {
    			
-        public MobileNotificationLogUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public MobileNotificationLogUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new MobileNotificationLogDataMapping();
-            Repository = new Repository<POCO.MobileNotificationLog>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.MobileNotificationLog>(mainContext);
         }
-        public MobileNotificationLogUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public MobileNotificationLogUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public MobileNotificationLogUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new MobileNotificationLogDataMapping();
+            Repository = new Repository<POCO.MobileNotificationLog>(tenant);
+		}
+        public MobileNotificationLogUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.MobileNotificationLog,string> GetKeys(MobileNotificationLogPM entityPM) => new MobileNotificationLogKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(MobileNotificationLogPM entityPM)
 		{

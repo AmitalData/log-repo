@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class UserLicenseQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.UserLicense,UserLicenseKeys<string>,UserLicensePM,UserLicenseList,string>
+   public partial class UserLicenseQueryService: BaseEntityQueryService<POCO.UserLicense,UserLicenseKeys<string>,UserLicensePM,UserLicenseList,string>
    {
-        public UserLicenseQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public UserLicenseQueryService(int tenant) : base(new Repository<POCO.UserLicense>(tenant),new UserLicenseDataMapping()) {}
         public UserLicenseQueryService(IAmitalCloudContext context) : base(new Repository<POCO.UserLicense>(context),new UserLicenseDataMapping()) {}
 		public  UserLicensePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new UserLicenseKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.UserLicense,string> GetKeys(POCO.UserLicense entityPOCO) => new UserLicenseKeys<string>() { Id = entityPOCO.Id,  };

@@ -9,34 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DeploymentPackagesVersionUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DeploymentPackagesVersion,DeploymentPackagesVersionPM,IEntityPM,DeploymentPackagesVersionList,string>
+   public partial class DeploymentPackagesVersionUpdateService:BaseEntityUpdateService<POCO.DeploymentPackagesVersion,DeploymentPackagesVersionPM,IEntityPM,DeploymentPackagesVersionList,string>
    {
    			
-        public DeploymentPackagesVersionUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DeploymentPackagesVersionUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DeploymentPackagesVersionDataMapping();
-            Repository = new Repository<POCO.DeploymentPackagesVersion>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DeploymentPackagesVersion>(mainContext);
         }
-        public DeploymentPackagesVersionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DeploymentPackagesVersionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DeploymentPackagesVersionUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DeploymentPackagesVersionDataMapping();
+            Repository = new Repository<POCO.DeploymentPackagesVersion>(tenant);
+		}
+        public DeploymentPackagesVersionUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DeploymentPackagesVersion,string> GetKeys(DeploymentPackagesVersionPM entityPM) => new DeploymentPackagesVersionKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(DeploymentPackagesVersionPM entityPM)
 		{

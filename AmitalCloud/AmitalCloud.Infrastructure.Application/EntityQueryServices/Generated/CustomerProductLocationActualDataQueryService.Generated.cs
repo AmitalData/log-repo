@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerProductLocationActualDataQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerProductLocationActualData,CustomerProductLocationActualDataKeys<string>,CustomerProductLocationActualDataPM,CustomerProductLocationActualDataList,string>
+   public partial class CustomerProductLocationActualDataQueryService: BaseEntityQueryService<POCO.CustomerProductLocationActualData,CustomerProductLocationActualDataKeys<string>,CustomerProductLocationActualDataPM,CustomerProductLocationActualDataList,string>
    {
-        public CustomerProductLocationActualDataQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerProductLocationActualDataQueryService(int tenant) : base(new Repository<POCO.CustomerProductLocationActualData>(tenant),new CustomerProductLocationActualDataDataMapping()) {}
         public CustomerProductLocationActualDataQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerProductLocationActualData>(context),new CustomerProductLocationActualDataDataMapping()) {}
 		public  CustomerProductLocationActualDataPM GetSingle(string customerid, string producttypecode, int month, int year, string countryid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerProductLocationActualDataKeys<string>(){ CustomerId = customerid, ProductTypeCode = producttypecode, Month = month, Year = year, CountryId = countryid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerProductLocationActualData,string> GetKeys(POCO.CustomerProductLocationActualData entityPOCO) => new CustomerProductLocationActualDataKeys<string>() { CustomerId = entityPOCO.CustomerId, ProductTypeCode = entityPOCO.ProductTypeCode, Month = entityPOCO.Month, Year = entityPOCO.Year, CountryId = entityPOCO.CountryId,  };

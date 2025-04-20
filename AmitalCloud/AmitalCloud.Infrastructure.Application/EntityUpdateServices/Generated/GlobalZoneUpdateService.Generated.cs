@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class GlobalZoneUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.GlobalZone,GlobalZonePM,IEntityPM,GlobalZoneList,string>
+   public partial class GlobalZoneUpdateService:BaseEntityUpdateService<POCO.GlobalZone,GlobalZonePM,IEntityPM,GlobalZoneList,string>
    {
    			
-        public GlobalZoneUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public GlobalZoneUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new GlobalZoneDataMapping();
-            Repository = new Repository<POCO.GlobalZone>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.GlobalZone>(mainContext);
         }
-        public GlobalZoneUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public GlobalZoneUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public GlobalZoneUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new GlobalZoneDataMapping();
+            Repository = new Repository<POCO.GlobalZone>(tenant);
+		}
+        public GlobalZoneUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.GlobalZone,string> GetKeys(GlobalZonePM entityPM) => new GlobalZoneKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(GlobalZonePM entityPM)
 		{

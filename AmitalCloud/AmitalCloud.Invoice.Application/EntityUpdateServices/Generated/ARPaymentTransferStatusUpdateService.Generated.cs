@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data;
 using AmitalCloud.Invoice.Domain.EntityLists;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
-using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Data.Context;
 
 namespace AmitalCloud.Invoice.Application.EntityUpdateServices
 { 
-   public partial class ARPaymentTransferStatusUpdateService:BaseEntityUpdateService<InvoiceContext,POCO.ARPaymentTransferStatus,ARPaymentTransferStatusPM,IEntityPM,ARPaymentTransferStatusList,string>
+   public partial class ARPaymentTransferStatusUpdateService:BaseEntityUpdateService<POCO.ARPaymentTransferStatus,ARPaymentTransferStatusPM,IEntityPM,ARPaymentTransferStatusList,string>
    {
    			
-        public ARPaymentTransferStatusUpdateService(IInvoiceContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((InvoiceContext)mainContext,additionalContexts, tenant)
+        public ARPaymentTransferStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ARPaymentTransferStatusDataMapping();
-            Repository = new Repository<POCO.ARPaymentTransferStatus>((InvoiceContext)mainContext);
+            Repository = new Repository<POCO.ARPaymentTransferStatus>(mainContext);
         }
-        public ARPaymentTransferStatusUpdateService(int tenant) : this(InvoiceContext.GetContext(tenant), null, tenant) {}
-        public ARPaymentTransferStatusUpdateService(IInvoiceContext context) :  this(context, null, 0) {}
+        public ARPaymentTransferStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ARPaymentTransferStatusDataMapping();
+            Repository = new Repository<POCO.ARPaymentTransferStatus>(tenant);
+		}
+        public ARPaymentTransferStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ARPaymentTransferStatus,string> GetKeys(ARPaymentTransferStatusPM entityPM) => new ARPaymentTransferStatusKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(ARPaymentTransferStatusPM entityPM)
 		{

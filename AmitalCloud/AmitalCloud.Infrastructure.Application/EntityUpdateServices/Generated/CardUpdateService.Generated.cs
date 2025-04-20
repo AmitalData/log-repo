@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CardUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Card,CardPM,IEntityPM,CardList,string>
+   public partial class CardUpdateService:BaseEntityUpdateService<POCO.Card,CardPM,IEntityPM,CardList,string>
    {
    			
-        public CardUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CardUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CardDataMapping();
-            Repository = new Repository<POCO.Card>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Card>(mainContext);
         }
-        public CardUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CardUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CardUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CardDataMapping();
+            Repository = new Repository<POCO.Card>(tenant);
+		}
+        public CardUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Card,string> GetKeys(CardPM entityPM) => new CardKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CardPM entityPM)
 		{

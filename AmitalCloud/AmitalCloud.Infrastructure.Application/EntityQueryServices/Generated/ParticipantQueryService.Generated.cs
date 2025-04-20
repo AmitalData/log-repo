@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ParticipantQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Participant,ParticipantKeys<string>,ParticipantPM,ParticipantList,string>
+   public partial class ParticipantQueryService: BaseEntityQueryService<POCO.Participant,ParticipantKeys<string>,ParticipantPM,ParticipantList,string>
    {
-        public ParticipantQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ParticipantQueryService(int tenant) : base(new Repository<POCO.Participant>(tenant),new ParticipantDataMapping()) {}
         public ParticipantQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Participant>(context),new ParticipantDataMapping()) {}
 		public  ParticipantPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ParticipantKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Participant,string> GetKeys(POCO.Participant entityPOCO) => new ParticipantKeys<string>() { Id = entityPOCO.Id,  };

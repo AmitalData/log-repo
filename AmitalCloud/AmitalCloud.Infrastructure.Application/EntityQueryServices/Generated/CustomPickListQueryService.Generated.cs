@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomPickListQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomPickList,CustomPickListKeys<string>,CustomPickListPM,CustomPickListList,string>
+   public partial class CustomPickListQueryService: BaseEntityQueryService<POCO.CustomPickList,CustomPickListKeys<string>,CustomPickListPM,CustomPickListList,string>
    {
-        public CustomPickListQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomPickListQueryService(int tenant) : base(new Repository<POCO.CustomPickList>(tenant),new CustomPickListDataMapping()) {}
         public CustomPickListQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomPickList>(context),new CustomPickListDataMapping()) {}
 		public  CustomPickListPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomPickListKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomPickList,string> GetKeys(POCO.CustomPickList entityPOCO) => new CustomPickListKeys<string>() { Id = entityPOCO.Id,  };

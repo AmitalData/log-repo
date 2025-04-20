@@ -9,33 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ContainerTrackingRequestUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ContainerTrackingRequest,ContainerTrackingRequestPM,IEntityPM,ContainerTrackingRequestList,string>
+   public partial class ContainerTrackingRequestUpdateService:BaseEntityUpdateService<POCO.ContainerTrackingRequest,ContainerTrackingRequestPM,IEntityPM,ContainerTrackingRequestList,string>
    {
    			
-        public ContainerTrackingRequestUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ContainerTrackingRequestUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ContainerTrackingRequestDataMapping();
-            Repository = new Repository<POCO.ContainerTrackingRequest>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ContainerTrackingRequest>(mainContext);
         }
-        public ContainerTrackingRequestUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ContainerTrackingRequestUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ContainerTrackingRequestUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ContainerTrackingRequestDataMapping();
+            Repository = new Repository<POCO.ContainerTrackingRequest>(tenant);
+		}
+        public ContainerTrackingRequestUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ContainerTrackingRequest,string> GetKeys(ContainerTrackingRequestPM entityPM) => new ContainerTrackingRequestKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ContainerTrackingRequestPM entityPM)
 		{

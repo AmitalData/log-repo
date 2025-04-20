@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DWObjectFieldCategoriesUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DWObjectFieldCategories,DWObjectFieldCategoriesPM,IEntityPM,DWObjectFieldCategoriesList,string>
+   public partial class DWObjectFieldCategoriesUpdateService:BaseEntityUpdateService<POCO.DWObjectFieldCategories,DWObjectFieldCategoriesPM,IEntityPM,DWObjectFieldCategoriesList,string>
    {
    			
-        public DWObjectFieldCategoriesUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DWObjectFieldCategoriesUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DWObjectFieldCategoriesDataMapping();
-            Repository = new Repository<POCO.DWObjectFieldCategories>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DWObjectFieldCategories>(mainContext);
         }
-        public DWObjectFieldCategoriesUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DWObjectFieldCategoriesUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DWObjectFieldCategoriesUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DWObjectFieldCategoriesDataMapping();
+            Repository = new Repository<POCO.DWObjectFieldCategories>(tenant);
+		}
+        public DWObjectFieldCategoriesUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DWObjectFieldCategories,string> GetKeys(DWObjectFieldCategoriesPM entityPM) => new DWObjectFieldCategoriesKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DWObjectFieldCategoriesPM entityPM)
 		{

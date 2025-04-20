@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class DefaultAndConfigurationKeyKeys<T> : BaseEntityKeyFields<EntityPOCOs.DefaultAndConfigurationKey,T> 
+   public class DefaultAndConfigurationKeyKeys<T> : BaseEntityKeyFields<ENTITIES.DefaultAndConfigurationKey,T> 
    {
 		public DefaultAndConfigurationKeyKeys() : base() {}
         public DefaultAndConfigurationKeyKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -27,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Tenant.ToString()+'_'+SetKey.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "DefaultAndConfigurationKeysPM";
-	  public override Expression<Func<EntityPOCOs.DefaultAndConfigurationKey, bool>> Predicate => a => a.Tenant == Tenant && a.SetKey == SetKey;
+	  public override Expression<Func<ENTITIES.DefaultAndConfigurationKey, bool>> Predicate => a => a.Tenant == Tenant && a.SetKey == SetKey;
    }
 }
 	 

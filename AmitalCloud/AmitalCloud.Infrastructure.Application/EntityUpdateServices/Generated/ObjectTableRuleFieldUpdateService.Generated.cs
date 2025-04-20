@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ObjectTableRuleFieldUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ObjectTableRuleField,ObjectTableRuleFieldPM,IEntityPM,ObjectTableRuleFieldList,string>
+   public partial class ObjectTableRuleFieldUpdateService:BaseEntityUpdateService<POCO.ObjectTableRuleField,ObjectTableRuleFieldPM,IEntityPM,ObjectTableRuleFieldList,string>
    {
    			
-        public ObjectTableRuleFieldUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ObjectTableRuleFieldUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ObjectTableRuleFieldDataMapping();
-            Repository = new Repository<POCO.ObjectTableRuleField>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ObjectTableRuleField>(mainContext);
         }
-        public ObjectTableRuleFieldUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ObjectTableRuleFieldUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ObjectTableRuleFieldUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ObjectTableRuleFieldDataMapping();
+            Repository = new Repository<POCO.ObjectTableRuleField>(tenant);
+		}
+        public ObjectTableRuleFieldUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ObjectTableRuleField,string> GetKeys(ObjectTableRuleFieldPM entityPM) => new ObjectTableRuleFieldKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ObjectTableRuleFieldPM entityPM)
 		{

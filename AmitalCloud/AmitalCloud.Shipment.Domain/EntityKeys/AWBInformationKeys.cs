@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Shipment.Domain.EntityKeys
 {
-   public class AWBInformationKeys<T> : BaseEntityKeyFields<EntityPOCOs.AWBInformation,T> 
+   public class AWBInformationKeys<T> : BaseEntityKeyFields<ENTITIES.AWBInformation,T> 
    {
 		public AWBInformationKeys() : base() {}
         public AWBInformationKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Shipment.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "AWBInformationsPM";
-	  public override Expression<Func<EntityPOCOs.AWBInformation, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.AWBInformation, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

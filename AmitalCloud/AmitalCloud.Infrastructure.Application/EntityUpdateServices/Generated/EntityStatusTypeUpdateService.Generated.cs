@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class EntityStatusTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.EntityStatusType,EntityStatusTypePM,IEntityPM,EntityStatusTypeList,string>
+   public partial class EntityStatusTypeUpdateService:BaseEntityUpdateService<POCO.EntityStatusType,EntityStatusTypePM,IEntityPM,EntityStatusTypeList,string>
    {
    			
-        public EntityStatusTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public EntityStatusTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new EntityStatusTypeDataMapping();
-            Repository = new Repository<POCO.EntityStatusType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.EntityStatusType>(mainContext);
         }
-        public EntityStatusTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public EntityStatusTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public EntityStatusTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new EntityStatusTypeDataMapping();
+            Repository = new Repository<POCO.EntityStatusType>(tenant);
+		}
+        public EntityStatusTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.EntityStatusType,string> GetKeys(EntityStatusTypePM entityPM) => new EntityStatusTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(EntityStatusTypePM entityPM)
 		{

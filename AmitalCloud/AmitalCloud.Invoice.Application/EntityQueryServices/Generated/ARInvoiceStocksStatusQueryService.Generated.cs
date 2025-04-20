@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ARInvoiceStocksStatusQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ARInvoiceStocksStatus,ARInvoiceStocksStatusKeys<string>,ARInvoiceStocksStatusPM,ARInvoiceStocksStatusList,string>
+   public partial class ARInvoiceStocksStatusQueryService: BaseEntityQueryService<POCO.ARInvoiceStocksStatus,ARInvoiceStocksStatusKeys<string>,ARInvoiceStocksStatusPM,ARInvoiceStocksStatusList,string>
    {
-        public ARInvoiceStocksStatusQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ARInvoiceStocksStatusQueryService(IInvoiceContext context) : base(new Repository<POCO.ARInvoiceStocksStatus>(context),new ARInvoiceStocksStatusDataMapping()) {}
+        public ARInvoiceStocksStatusQueryService(int tenant) : base(new Repository<POCO.ARInvoiceStocksStatus>(tenant),new ARInvoiceStocksStatusDataMapping()) {}
+        public ARInvoiceStocksStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ARInvoiceStocksStatus>(context),new ARInvoiceStocksStatusDataMapping()) {}
 		public  ARInvoiceStocksStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ARInvoiceStocksStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ARInvoiceStocksStatus,string> GetKeys(POCO.ARInvoiceStocksStatus entityPOCO) => new ARInvoiceStocksStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

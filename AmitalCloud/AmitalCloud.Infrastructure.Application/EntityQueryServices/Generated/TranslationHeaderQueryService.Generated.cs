@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TranslationHeaderQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TranslationHeader,TranslationHeaderKeys<string>,TranslationHeaderPM,TranslationHeaderList,string>
+   public partial class TranslationHeaderQueryService: BaseEntityQueryService<POCO.TranslationHeader,TranslationHeaderKeys<string>,TranslationHeaderPM,TranslationHeaderList,string>
    {
-        public TranslationHeaderQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TranslationHeaderQueryService(int tenant) : base(new Repository<POCO.TranslationHeader>(tenant),new TranslationHeaderDataMapping()) {}
         public TranslationHeaderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TranslationHeader>(context),new TranslationHeaderDataMapping()) {}
 		public  TranslationHeaderPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new TranslationHeaderKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TranslationHeader,string> GetKeys(POCO.TranslationHeader entityPOCO) => new TranslationHeaderKeys<string>() { Code = entityPOCO.Code,  };

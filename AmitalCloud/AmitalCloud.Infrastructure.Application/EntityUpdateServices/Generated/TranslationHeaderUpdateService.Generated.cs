@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class TranslationHeaderUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.TranslationHeader,TranslationHeaderPM,IEntityPM,TranslationHeaderList,string>
+   public partial class TranslationHeaderUpdateService:BaseEntityUpdateService<POCO.TranslationHeader,TranslationHeaderPM,IEntityPM,TranslationHeaderList,string>
    {
    			
-        public TranslationHeaderUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public TranslationHeaderUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new TranslationHeaderDataMapping();
-            Repository = new Repository<POCO.TranslationHeader>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.TranslationHeader>(mainContext);
         }
-        public TranslationHeaderUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public TranslationHeaderUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public TranslationHeaderUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new TranslationHeaderDataMapping();
+            Repository = new Repository<POCO.TranslationHeader>(tenant);
+		}
+        public TranslationHeaderUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.TranslationHeader,string> GetKeys(TranslationHeaderPM entityPM) => new TranslationHeaderKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(TranslationHeaderPM entityPM)
 		{

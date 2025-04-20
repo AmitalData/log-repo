@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class RankUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Rank,RankPM,IEntityPM,RankList,string>
+   public partial class RankUpdateService:BaseEntityUpdateService<POCO.Rank,RankPM,IEntityPM,RankList,string>
    {
    			
-        public RankUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public RankUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new RankDataMapping();
-            Repository = new Repository<POCO.Rank>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Rank>(mainContext);
         }
-        public RankUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public RankUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public RankUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new RankDataMapping();
+            Repository = new Repository<POCO.Rank>(tenant);
+		}
+        public RankUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Rank,string> GetKeys(RankPM entityPM) => new RankKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(RankPM entityPM)
 		{

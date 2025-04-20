@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ContainerStatusQueryService: BaseEntityQueryService<IShipmentContext,POCO.ContainerStatus,ContainerStatusKeys<string>,ContainerStatusPM,ContainerStatusList,string>
+   public partial class ContainerStatusQueryService: BaseEntityQueryService<POCO.ContainerStatus,ContainerStatusKeys<string>,ContainerStatusPM,ContainerStatusList,string>
    {
-        public ContainerStatusQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ContainerStatusQueryService(IShipmentContext context) : base(new Repository<POCO.ContainerStatus>(context),new ContainerStatusDataMapping()) {}
+        public ContainerStatusQueryService(int tenant) : base(new Repository<POCO.ContainerStatus>(tenant),new ContainerStatusDataMapping()) {}
+        public ContainerStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContainerStatus>(context),new ContainerStatusDataMapping()) {}
 		public  ContainerStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ContainerStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContainerStatus,string> GetKeys(POCO.ContainerStatus entityPOCO) => new ContainerStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

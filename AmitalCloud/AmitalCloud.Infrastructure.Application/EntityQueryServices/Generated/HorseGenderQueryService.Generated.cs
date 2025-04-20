@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class HorseGenderQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.HorseGender,HorseGenderKeys<string>,HorseGenderPM,HorseGenderList,string>
+   public partial class HorseGenderQueryService: BaseEntityQueryService<POCO.HorseGender,HorseGenderKeys<string>,HorseGenderPM,HorseGenderList,string>
    {
-        public HorseGenderQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public HorseGenderQueryService(int tenant) : base(new Repository<POCO.HorseGender>(tenant),new HorseGenderDataMapping()) {}
         public HorseGenderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HorseGender>(context),new HorseGenderDataMapping()) {}
 		public  HorseGenderPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new HorseGenderKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HorseGender,string> GetKeys(POCO.HorseGender entityPOCO) => new HorseGenderKeys<string>() { Code = entityPOCO.Code,  };

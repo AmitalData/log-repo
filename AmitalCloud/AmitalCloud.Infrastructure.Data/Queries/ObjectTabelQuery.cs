@@ -1,10 +1,9 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,11 +44,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             {
                 return (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(tenantZeroObjectTablesCacheKeyName);
             }
-            List<ObjectTablePM> zeroObjectTables = 
+            List<ObjectTablePM> zeroObjectTables =
                 repository.GetMulti(a => a.Tenant == 0, a => new ObjectTablePM(a)
                 {
                     //FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                }, "HeaderScreen,DescriptionTextCode,NewButtonTextCode,FullNameTextCode").ToList();    
+                }, "HeaderScreen,DescriptionTextCode,NewButtonTextCode,FullNameTextCode").ToList();
 
             CacheManager.CacheWrapper.Insert(tenantZeroObjectTablesCacheKeyName, zeroObjectTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
             return zeroObjectTables;
@@ -115,7 +114,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                     IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                         where (a.Tenant == 0 && a.InActive == false)
-                                        select new ObjectTablePM(a )
+                                        select new ObjectTablePM(a)
                                         {
                                             //FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                         }).ToList();

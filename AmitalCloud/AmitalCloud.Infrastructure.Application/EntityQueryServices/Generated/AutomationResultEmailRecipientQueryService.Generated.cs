@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AutomationResultEmailRecipientQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AutomationResultEmailRecipient,AutomationResultEmailRecipientKeys<string>,AutomationResultEmailRecipientPM,AutomationResultEmailRecipientList,string>
+   public partial class AutomationResultEmailRecipientQueryService: BaseEntityQueryService<POCO.AutomationResultEmailRecipient,AutomationResultEmailRecipientKeys<string>,AutomationResultEmailRecipientPM,AutomationResultEmailRecipientList,string>
    {
-        public AutomationResultEmailRecipientQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AutomationResultEmailRecipientQueryService(int tenant) : base(new Repository<POCO.AutomationResultEmailRecipient>(tenant),new AutomationResultEmailRecipientDataMapping()) {}
         public AutomationResultEmailRecipientQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AutomationResultEmailRecipient>(context),new AutomationResultEmailRecipientDataMapping()) {}
 		public  AutomationResultEmailRecipientPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AutomationResultEmailRecipientKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AutomationResultEmailRecipient,string> GetKeys(POCO.AutomationResultEmailRecipient entityPOCO) => new AutomationResultEmailRecipientKeys<string>() { Id = entityPOCO.Id,  };

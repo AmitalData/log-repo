@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class FilingInboxUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.FilingInbox,FilingInboxPM,IEntityPM,FilingInboxList,string>
+   public partial class FilingInboxUpdateService:BaseEntityUpdateService<POCO.FilingInbox,FilingInboxPM,IEntityPM,FilingInboxList,string>
    {
    			
-        public FilingInboxUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public FilingInboxUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new FilingInboxDataMapping();
-            Repository = new Repository<POCO.FilingInbox>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.FilingInbox>(mainContext);
         }
-        public FilingInboxUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public FilingInboxUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public FilingInboxUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new FilingInboxDataMapping();
+            Repository = new Repository<POCO.FilingInbox>(tenant);
+		}
+        public FilingInboxUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.FilingInbox,string> GetKeys(FilingInboxPM entityPM) => new FilingInboxKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(FilingInboxPM entityPM)
 		{

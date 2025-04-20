@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ConvertProgramInfoUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ConvertProgramInfo,ConvertProgramInfoPM,IEntityPM,ConvertProgramInfoList,string>
+   public partial class ConvertProgramInfoUpdateService:BaseEntityUpdateService<POCO.ConvertProgramInfo,ConvertProgramInfoPM,IEntityPM,ConvertProgramInfoList,string>
    {
    			
-        public ConvertProgramInfoUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ConvertProgramInfoUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ConvertProgramInfoDataMapping();
-            Repository = new Repository<POCO.ConvertProgramInfo>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ConvertProgramInfo>(mainContext);
         }
-        public ConvertProgramInfoUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ConvertProgramInfoUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ConvertProgramInfoUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ConvertProgramInfoDataMapping();
+            Repository = new Repository<POCO.ConvertProgramInfo>(tenant);
+		}
+        public ConvertProgramInfoUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ConvertProgramInfo,string> GetKeys(ConvertProgramInfoPM entityPM) => new ConvertProgramInfoKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ConvertProgramInfoPM entityPM)
 		{

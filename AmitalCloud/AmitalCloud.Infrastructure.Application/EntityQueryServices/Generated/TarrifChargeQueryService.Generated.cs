@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TarrifChargeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TarrifCharge,TarrifChargeKeys<string>,TarrifChargePM,TarrifChargeList,string>
+   public partial class TarrifChargeQueryService: BaseEntityQueryService<POCO.TarrifCharge,TarrifChargeKeys<string>,TarrifChargePM,TarrifChargeList,string>
    {
-        public TarrifChargeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TarrifChargeQueryService(int tenant) : base(new Repository<POCO.TarrifCharge>(tenant),new TarrifChargeDataMapping()) {}
         public TarrifChargeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TarrifCharge>(context),new TarrifChargeDataMapping()) {}
 		public  TarrifChargePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TarrifChargeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TarrifCharge,string> GetKeys(POCO.TarrifCharge entityPOCO) => new TarrifChargeKeys<string>() { Id = entityPOCO.Id,  };

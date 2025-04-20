@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CardContactProductUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CardContactProduct,CardContactProductPM,ContactPM,CardContactProductList,string>
+   public partial class CardContactProductUpdateService:BaseEntityUpdateService<POCO.CardContactProduct,CardContactProductPM,ContactPM,CardContactProductList,string>
    {
    			
-        public CardContactProductUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CardContactProductUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CardContactProductDataMapping();
-            Repository = new Repository<POCO.CardContactProduct>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CardContactProduct>(mainContext);
         }
-        public CardContactProductUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CardContactProductUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CardContactProductUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CardContactProductDataMapping();
+            Repository = new Repository<POCO.CardContactProduct>(tenant);
+		}
+        public CardContactProductUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CardContactProduct,string> GetKeys(CardContactProductPM entityPM) => new CardContactProductKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(CardContactProductPM entityPM)
 		{

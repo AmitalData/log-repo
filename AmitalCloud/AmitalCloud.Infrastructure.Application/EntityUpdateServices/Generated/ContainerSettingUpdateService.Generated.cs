@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ContainerSettingUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ContainerSetting,ContainerSettingPM,IEntityPM,ContainerSettingList,string>
+   public partial class ContainerSettingUpdateService:BaseEntityUpdateService<POCO.ContainerSetting,ContainerSettingPM,IEntityPM,ContainerSettingList,string>
    {
    			
-        public ContainerSettingUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ContainerSettingUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ContainerSettingDataMapping();
-            Repository = new Repository<POCO.ContainerSetting>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ContainerSetting>(mainContext);
         }
-        public ContainerSettingUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ContainerSettingUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ContainerSettingUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ContainerSettingDataMapping();
+            Repository = new Repository<POCO.ContainerSetting>(tenant);
+		}
+        public ContainerSettingUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ContainerSetting,string> GetKeys(ContainerSettingPM entityPM) => new ContainerSettingKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ContainerSettingPM entityPM)
 		{

@@ -1,11 +1,12 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -31,7 +32,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                            where a.Tenant == tenant && a.Id == id
                                            select new CardContactProductPM(a)
                                            {
-                                                //ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
+                                               //ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
                                            }).FirstOrDefault();
 
             return entity;
@@ -44,7 +45,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                  where a.Tenant == tenant && a.CardContactId == CardContactId
                  select new CardContactProductPM(a)
                  {
-                      //ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
+                     //ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
                  }).ToList();
 
             return result;

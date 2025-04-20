@@ -41,11 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoGenerators\ContextGenerator1.cs">
-      <DependentUpon>ContextGenerator.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="AutoGenerators\InvoiceClassesGenerator.cs">
       <DependentUpon>InvoiceClassesGenerator.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -54,10 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AutoGenerators\ContextGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ContextGenerator1.cs</LastGenOutput>
-    </Content>
     <Content Include="AutoGenerators\InvoiceClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>

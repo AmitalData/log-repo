@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class CargoTenantMilestoneDefinitionKeys<T> : BaseEntityKeyFields<EntityPOCOs.CargoTenantMilestoneDefinition,T> 
+   public class CargoTenantMilestoneDefinitionKeys<T> : BaseEntityKeyFields<ENTITIES.CargoTenantMilestoneDefinition,T> 
    {
 		public CargoTenantMilestoneDefinitionKeys() : base() {}
         public CargoTenantMilestoneDefinitionKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CargoTenantMilestoneDefinitionsPM";
-	  public override Expression<Func<EntityPOCOs.CargoTenantMilestoneDefinition, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.CargoTenantMilestoneDefinition, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

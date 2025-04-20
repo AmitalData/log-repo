@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class HybridPartnersPermissionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.HybridPartnersPermission,HybridPartnersPermissionKeys<string>,HybridPartnersPermissionPM,HybridPartnersPermissionList,string>
+   public partial class HybridPartnersPermissionQueryService: BaseEntityQueryService<POCO.HybridPartnersPermission,HybridPartnersPermissionKeys<string>,HybridPartnersPermissionPM,HybridPartnersPermissionList,string>
    {
-        public HybridPartnersPermissionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public HybridPartnersPermissionQueryService(int tenant) : base(new Repository<POCO.HybridPartnersPermission>(tenant),new HybridPartnersPermissionDataMapping()) {}
         public HybridPartnersPermissionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HybridPartnersPermission>(context),new HybridPartnersPermissionDataMapping()) {}
 		public  HybridPartnersPermissionPM GetSingle(string hybridpartnerid, string allowedbyhybridpartnerid,bool getComposition, bool getFromCache) => base.GetSingle(new HybridPartnersPermissionKeys<string>(){ HybridPartnerId = hybridpartnerid, AllowedByHybridPartnerId = allowedbyhybridpartnerid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HybridPartnersPermission,string> GetKeys(POCO.HybridPartnersPermission entityPOCO) => new HybridPartnersPermissionKeys<string>() { HybridPartnerId = entityPOCO.HybridPartnerId, AllowedByHybridPartnerId = entityPOCO.AllowedByHybridPartnerId,  };

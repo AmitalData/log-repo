@@ -16,7 +16,8 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
+using Logitude.Accounting.Def.EntityPMs;
 
 
 
@@ -27,7 +28,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    public partial class ARPaymentPM :  ChildEntitiesCustomFieldPM   {
    #region Constructors
    public ARPaymentPM() : base() {} 
-   public ARPaymentPM(ARPayment entity) : base()
+   public ARPaymentPM(POCO.ARPayment entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

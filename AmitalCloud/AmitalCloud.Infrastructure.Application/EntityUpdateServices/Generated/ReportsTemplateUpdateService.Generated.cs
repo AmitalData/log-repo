@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ReportsTemplateUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ReportsTemplate,ReportsTemplatePM,IEntityPM,ReportsTemplateList,string>
+   public partial class ReportsTemplateUpdateService:BaseEntityUpdateService<POCO.ReportsTemplate,ReportsTemplatePM,IEntityPM,ReportsTemplateList,string>
    {
    			
-        public ReportsTemplateUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ReportsTemplateUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ReportsTemplateDataMapping();
-            Repository = new Repository<POCO.ReportsTemplate>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ReportsTemplate>(mainContext);
         }
-        public ReportsTemplateUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ReportsTemplateUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ReportsTemplateUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ReportsTemplateDataMapping();
+            Repository = new Repository<POCO.ReportsTemplate>(tenant);
+		}
+        public ReportsTemplateUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ReportsTemplate,string> GetKeys(ReportsTemplatePM entityPM) => new ReportsTemplateKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ReportsTemplatePM entityPM)
 		{

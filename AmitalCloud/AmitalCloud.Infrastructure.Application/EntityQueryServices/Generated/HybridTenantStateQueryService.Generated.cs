@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class HybridTenantStateQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.HybridTenantState,HybridTenantStateKeys<int>,HybridTenantStatePM,HybridTenantStateList,int>
+   public partial class HybridTenantStateQueryService: BaseEntityQueryService<POCO.HybridTenantState,HybridTenantStateKeys<int>,HybridTenantStatePM,HybridTenantStateList,int>
    {
-        public HybridTenantStateQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public HybridTenantStateQueryService(int tenant) : base(new Repository<POCO.HybridTenantState>(tenant),new HybridTenantStateDataMapping()) {}
         public HybridTenantStateQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HybridTenantState>(context),new HybridTenantStateDataMapping()) {}
 		public  HybridTenantStatePM GetSingle(int tenant,bool getComposition, bool getFromCache) => base.GetSingle(new HybridTenantStateKeys<int>(){ Tenant = tenant }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HybridTenantState,int> GetKeys(POCO.HybridTenantState entityPOCO) => new HybridTenantStateKeys<int>() { Tenant = entityPOCO.Tenant,  };

@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class HybridTenantStateListQueryService  : BaseEntityListQueryService<HybridTenantStateList,POCO.HybridTenantState,  HybridTenantStateKeys<int>,int>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.HybridTenantState> contextEntity => (context as IAmitalCloudContext).HybridTenantStates;
-		public HybridTenantStateListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public HybridTenantStateListQueryService(int tenant) : base(tenant) { }
         public HybridTenantStateList GetSingle(int tenant)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

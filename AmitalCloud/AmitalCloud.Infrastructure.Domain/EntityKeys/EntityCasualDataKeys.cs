@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class EntityCasualDataKeys<T> : BaseEntityKeyFields<EntityPOCOs.EntityCasualData,T> 
+   public class EntityCasualDataKeys<T> : BaseEntityKeyFields<ENTITIES.EntityCasualData,T> 
    {
 		public EntityCasualDataKeys() : base() {}
         public EntityCasualDataKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "EntityCasualDataPM";
-	  public override Expression<Func<EntityPOCOs.EntityCasualData, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.EntityCasualData, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class EventRemarkQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.EventRemark,EventRemarkKeys<string>,EventRemarkPM,EventRemarkList,string>
+   public partial class EventRemarkQueryService: BaseEntityQueryService<POCO.EventRemark,EventRemarkKeys<string>,EventRemarkPM,EventRemarkList,string>
    {
-        public EventRemarkQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public EventRemarkQueryService(int tenant) : base(new Repository<POCO.EventRemark>(tenant),new EventRemarkDataMapping()) {}
         public EventRemarkQueryService(IAmitalCloudContext context) : base(new Repository<POCO.EventRemark>(context),new EventRemarkDataMapping()) {}
 		public  EventRemarkPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new EventRemarkKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.EventRemark,string> GetKeys(POCO.EventRemark entityPOCO) => new EventRemarkKeys<string>() { Id = entityPOCO.Id,  };

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class VesselQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Vessel,VesselKeys<string>,VesselPM,VesselList,string>
+   public partial class VesselQueryService: BaseEntityQueryService<POCO.Vessel,VesselKeys<string>,VesselPM,VesselList,string>
    {
-        public VesselQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public VesselQueryService(int tenant) : base(new Repository<POCO.Vessel>(tenant),new VesselDataMapping()) {}
         public VesselQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Vessel>(context),new VesselDataMapping()) {}
 		public  VesselPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new VesselKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Vessel,string> GetKeys(POCO.Vessel entityPOCO) => new VesselKeys<string>() { Id = entityPOCO.Id,  };

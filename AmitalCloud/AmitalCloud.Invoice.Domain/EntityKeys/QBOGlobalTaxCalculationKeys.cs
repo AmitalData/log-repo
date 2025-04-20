@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Invoice.Domain.EntityKeys
 {
-   public class QBOGlobalTaxCalculationKeys<T> : BaseEntityKeyFields<EntityPOCOs.QBOGlobalTaxCalculation,T> 
+   public class QBOGlobalTaxCalculationKeys<T> : BaseEntityKeyFields<ENTITIES.QBOGlobalTaxCalculation,T> 
    {
 		public QBOGlobalTaxCalculationKeys() : base() {}
         public QBOGlobalTaxCalculationKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Invoice.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "QBOGlobalTaxCalculationsPM";
-	  public override Expression<Func<EntityPOCOs.QBOGlobalTaxCalculation, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.QBOGlobalTaxCalculation, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

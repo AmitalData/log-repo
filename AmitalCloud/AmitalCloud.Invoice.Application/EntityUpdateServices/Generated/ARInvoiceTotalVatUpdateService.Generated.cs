@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data;
 using AmitalCloud.Invoice.Domain.EntityLists;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
-using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Data.Context;
 
 namespace AmitalCloud.Invoice.Application.EntityUpdateServices
 { 
-   public partial class ARInvoiceTotalVATUpdateService:BaseEntityUpdateService<InvoiceContext,POCO.ARInvoiceTotalVAT,ARInvoiceTotalVATPM,ARInvoicePM,ARInvoiceTotalVATList,string>
+   public partial class ARInvoiceTotalVATUpdateService:BaseEntityUpdateService<POCO.ARInvoiceTotalVAT,ARInvoiceTotalVATPM,ARInvoicePM,ARInvoiceTotalVATList,string>
    {
    			
-        public ARInvoiceTotalVATUpdateService(IInvoiceContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((InvoiceContext)mainContext,additionalContexts, tenant)
+        public ARInvoiceTotalVATUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ARInvoiceTotalVATDataMapping();
-            Repository = new Repository<POCO.ARInvoiceTotalVAT>((InvoiceContext)mainContext);
+            Repository = new Repository<POCO.ARInvoiceTotalVAT>(mainContext);
         }
-        public ARInvoiceTotalVATUpdateService(int tenant) : this(InvoiceContext.GetContext(tenant), null, tenant) {}
-        public ARInvoiceTotalVATUpdateService(IInvoiceContext context) :  this(context, null, 0) {}
+        public ARInvoiceTotalVATUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ARInvoiceTotalVATDataMapping();
+            Repository = new Repository<POCO.ARInvoiceTotalVAT>(tenant);
+		}
+        public ARInvoiceTotalVATUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ARInvoiceTotalVAT,string> GetKeys(ARInvoiceTotalVATPM entityPM) => new ARInvoiceTotalVATKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ARInvoiceTotalVATPM entityPM)
 		{

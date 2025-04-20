@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class DocumentsFilingKeys<T> : BaseEntityKeyFields<EntityPOCOs.DocumentsFiling,T> 
+   public class DocumentsFilingKeys<T> : BaseEntityKeyFields<ENTITIES.DocumentsFiling,T> 
    {
 		public DocumentsFilingKeys() : base() {}
         public DocumentsFilingKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "DocumentsFilingsPM";
-	  public override Expression<Func<EntityPOCOs.DocumentsFiling, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.DocumentsFiling, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

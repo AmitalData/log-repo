@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class APILogsUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.APILogs,APILogsPM,IEntityPM,APILogsList,string>
+   public partial class APILogsUpdateService:BaseEntityUpdateService<POCO.APILogs,APILogsPM,IEntityPM,APILogsList,string>
    {
    			
-        public APILogsUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public APILogsUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new APILogsDataMapping();
-            Repository = new Repository<POCO.APILogs>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.APILogs>(mainContext);
         }
-        public APILogsUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public APILogsUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public APILogsUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new APILogsDataMapping();
+            Repository = new Repository<POCO.APILogs>(tenant);
+		}
+        public APILogsUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.APILogs,string> GetKeys(APILogsPM entityPM) => new APILogsKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(APILogsPM entityPM)
 		{

@@ -9,32 +9,34 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DefaultAndConfigurationKeyUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DefaultAndConfigurationKey,DefaultAndConfigurationKeyPM,IEntityPM,DefaultAndConfigurationKeyList,string>
+   public partial class DefaultAndConfigurationKeyUpdateService:BaseEntityUpdateService<POCO.DefaultAndConfigurationKey,DefaultAndConfigurationKeyPM,IEntityPM,DefaultAndConfigurationKeyList,string>
    {
    			
-        public DefaultAndConfigurationKeyUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DefaultAndConfigurationKeyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DefaultAndConfigurationKeyDataMapping();
-            Repository = new Repository<POCO.DefaultAndConfigurationKey>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DefaultAndConfigurationKey>(mainContext);
         }
-        public DefaultAndConfigurationKeyUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DefaultAndConfigurationKeyUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DefaultAndConfigurationKeyUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DefaultAndConfigurationKeyDataMapping();
+            Repository = new Repository<POCO.DefaultAndConfigurationKey>(tenant);
+		}
+        public DefaultAndConfigurationKeyUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DefaultAndConfigurationKey,string> GetKeys(DefaultAndConfigurationKeyPM entityPM) => new DefaultAndConfigurationKeyKeys<string>() { Tenant = entityPM.Tenant, SetKey = entityPM.SetKey };
 		protected override void FillDefaultValuesOnCreate(DefaultAndConfigurationKeyPM entityPM)
 		{

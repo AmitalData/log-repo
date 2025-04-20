@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class CommunicationLogStepKeys<T> : BaseEntityKeyFields<EntityPOCOs.CommunicationLogStep,T> 
+   public class CommunicationLogStepKeys<T> : BaseEntityKeyFields<ENTITIES.CommunicationLogStep,T> 
    {
 		public CommunicationLogStepKeys() : base() {}
         public CommunicationLogStepKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -27,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(StepNumber.ToString()+'_'+CommunicationLogId.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CommunicationLogStepsPM";
-	  public override Expression<Func<EntityPOCOs.CommunicationLogStep, bool>> Predicate => a => a.StepNumber == StepNumber && a.CommunicationLogId == CommunicationLogId;
+	  public override Expression<Func<ENTITIES.CommunicationLogStep, bool>> Predicate => a => a.StepNumber == StepNumber && a.CommunicationLogId == CommunicationLogId;
    }
 }
 	 

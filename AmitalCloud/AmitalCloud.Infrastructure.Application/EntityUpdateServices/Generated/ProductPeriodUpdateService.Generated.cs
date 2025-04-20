@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ProductPeriodUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ProductPeriod,ProductPeriodPM,IEntityPM,ProductPeriodList,string>
+   public partial class ProductPeriodUpdateService:BaseEntityUpdateService<POCO.ProductPeriod,ProductPeriodPM,IEntityPM,ProductPeriodList,string>
    {
    			
-        public ProductPeriodUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ProductPeriodUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ProductPeriodDataMapping();
-            Repository = new Repository<POCO.ProductPeriod>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ProductPeriod>(mainContext);
         }
-        public ProductPeriodUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ProductPeriodUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ProductPeriodUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ProductPeriodDataMapping();
+            Repository = new Repository<POCO.ProductPeriod>(tenant);
+		}
+        public ProductPeriodUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ProductPeriod,string> GetKeys(ProductPeriodPM entityPM) => new ProductPeriodKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(ProductPeriodPM entityPM)
 		{

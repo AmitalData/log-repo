@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ContainerSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ContainerSetting,ContainerSettingKeys<string>,ContainerSettingPM,ContainerSettingList,string>
+   public partial class ContainerSettingQueryService: BaseEntityQueryService<POCO.ContainerSetting,ContainerSettingKeys<string>,ContainerSettingPM,ContainerSettingList,string>
    {
-        public ContainerSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ContainerSettingQueryService(int tenant) : base(new Repository<POCO.ContainerSetting>(tenant),new ContainerSettingDataMapping()) {}
         public ContainerSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContainerSetting>(context),new ContainerSettingDataMapping()) {}
 		public  ContainerSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ContainerSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContainerSetting,string> GetKeys(POCO.ContainerSetting entityPOCO) => new ContainerSettingKeys<string>() { Id = entityPOCO.Id,  };

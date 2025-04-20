@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DocumentFolderUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DocumentFolder,DocumentFolderPM,IEntityPM,DocumentFolderList,string>
+   public partial class DocumentFolderUpdateService:BaseEntityUpdateService<POCO.DocumentFolder,DocumentFolderPM,IEntityPM,DocumentFolderList,string>
    {
    			
-        public DocumentFolderUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DocumentFolderUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DocumentFolderDataMapping();
-            Repository = new Repository<POCO.DocumentFolder>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DocumentFolder>(mainContext);
         }
-        public DocumentFolderUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DocumentFolderUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DocumentFolderUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DocumentFolderDataMapping();
+            Repository = new Repository<POCO.DocumentFolder>(tenant);
+		}
+        public DocumentFolderUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DocumentFolder,string> GetKeys(DocumentFolderPM entityPM) => new DocumentFolderKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DocumentFolderPM entityPM)
 		{

@@ -1,8 +1,9 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Linq;
@@ -159,7 +160,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
         private static WorkerRoleName GetEntity(string workerName, int tenant)
         {
-            return new Repository<WorkerRoleName>(AmitalCloudContext.GetContext(tenant)).GetSingle(new WorkerRoleNameKeys<string>() { Name = workerName });
+            return new Repository<WorkerRoleName>(tenant).GetSingle(new WorkerRoleNameKeys<string>() { Name = workerName });
             //GetSingleWorkerRoleName(workerName);
         }
     }

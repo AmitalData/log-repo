@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DocumentTypeMetaDataQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentTypeMetaData,DocumentTypeMetaDataKeys<string>,DocumentTypeMetaDataPM,DocumentTypeMetaDataList,string>
+   public partial class DocumentTypeMetaDataQueryService: BaseEntityQueryService<POCO.DocumentTypeMetaData,DocumentTypeMetaDataKeys<string>,DocumentTypeMetaDataPM,DocumentTypeMetaDataList,string>
    {
-        public DocumentTypeMetaDataQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DocumentTypeMetaDataQueryService(int tenant) : base(new Repository<POCO.DocumentTypeMetaData>(tenant),new DocumentTypeMetaDataDataMapping()) {}
         public DocumentTypeMetaDataQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentTypeMetaData>(context),new DocumentTypeMetaDataDataMapping()) {}
 		public  DocumentTypeMetaDataPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentTypeMetaDataKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentTypeMetaData,string> GetKeys(POCO.DocumentTypeMetaData entityPOCO) => new DocumentTypeMetaDataKeys<string>() { Id = entityPOCO.Id,  };

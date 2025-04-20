@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class VATTypesGroupQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.VATTypesGroup,VATTypesGroupKeys<string>,VATTypesGroupPM,VATTypesGroupList,string>
+   public partial class VATTypesGroupQueryService: BaseEntityQueryService<POCO.VATTypesGroup,VATTypesGroupKeys<string>,VATTypesGroupPM,VATTypesGroupList,string>
    {
-        public VATTypesGroupQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public VATTypesGroupQueryService(int tenant) : base(new Repository<POCO.VATTypesGroup>(tenant),new VATTypesGroupDataMapping()) {}
         public VATTypesGroupQueryService(IAmitalCloudContext context) : base(new Repository<POCO.VATTypesGroup>(context),new VATTypesGroupDataMapping()) {}
 		public  VATTypesGroupPM GetSingle(string groupvattypeid, string singlevattypeid,bool getComposition, bool getFromCache) => base.GetSingle(new VATTypesGroupKeys<string>(){ GroupVATTypeId = groupvattypeid, SingleVATTypeId = singlevattypeid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.VATTypesGroup,string> GetKeys(POCO.VATTypesGroup entityPOCO) => new VATTypesGroupKeys<string>() { GroupVATTypeId = entityPOCO.GroupVATTypeId, SingleVATTypeId = entityPOCO.SingleVATTypeId,  };

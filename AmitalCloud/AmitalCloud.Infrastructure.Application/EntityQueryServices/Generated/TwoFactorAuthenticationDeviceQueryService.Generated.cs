@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TwoFactorAuthenticationDeviceQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TwoFactorAuthenticationDevice,TwoFactorAuthenticationDeviceKeys<string>,TwoFactorAuthenticationDevicePM,TwoFactorAuthenticationDeviceList,string>
+   public partial class TwoFactorAuthenticationDeviceQueryService: BaseEntityQueryService<POCO.TwoFactorAuthenticationDevice,TwoFactorAuthenticationDeviceKeys<string>,TwoFactorAuthenticationDevicePM,TwoFactorAuthenticationDeviceList,string>
    {
-        public TwoFactorAuthenticationDeviceQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TwoFactorAuthenticationDeviceQueryService(int tenant) : base(new Repository<POCO.TwoFactorAuthenticationDevice>(tenant),new TwoFactorAuthenticationDeviceDataMapping()) {}
         public TwoFactorAuthenticationDeviceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TwoFactorAuthenticationDevice>(context),new TwoFactorAuthenticationDeviceDataMapping()) {}
 		public  TwoFactorAuthenticationDevicePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TwoFactorAuthenticationDeviceKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TwoFactorAuthenticationDevice,string> GetKeys(POCO.TwoFactorAuthenticationDevice entityPOCO) => new TwoFactorAuthenticationDeviceKeys<string>() { Id = entityPOCO.Id,  };

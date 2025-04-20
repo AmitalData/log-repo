@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerProductActualDataUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerProductActualData,CustomerProductActualDataPM,CustomerPM,CustomerProductActualDataList,int>
+   public partial class CustomerProductActualDataUpdateService:BaseEntityUpdateService<POCO.CustomerProductActualData,CustomerProductActualDataPM,CustomerPM,CustomerProductActualDataList,int>
    {
    			
-        public CustomerProductActualDataUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerProductActualDataUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerProductActualDataDataMapping();
-            Repository = new Repository<POCO.CustomerProductActualData>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerProductActualData>(mainContext);
         }
-        public CustomerProductActualDataUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerProductActualDataUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerProductActualDataUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerProductActualDataDataMapping();
+            Repository = new Repository<POCO.CustomerProductActualData>(tenant);
+		}
+        public CustomerProductActualDataUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerProductActualData,int> GetKeys(CustomerProductActualDataPM entityPM) => new CustomerProductActualDataKeys<int>() { CustomerId = entityPM.CustomerId, ProductTypeCode = entityPM.ProductTypeCode, Month = entityPM.Month, Year = entityPM.Year };
 protected override void FillDefaultValuesOnCreate(CustomerProductActualDataPM entityPM)
 		{

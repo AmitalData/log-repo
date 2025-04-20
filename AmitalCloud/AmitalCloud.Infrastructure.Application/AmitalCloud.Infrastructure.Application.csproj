@@ -142,7 +142,6 @@
     <Compile Include="EntityListQueryServices\Generated\BusinessProcessQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessRoleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessUnitListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CaptchaKeyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CardContactAdditionalServiceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CardContactListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CardContactProductListQueryService.Generated.cs" />
@@ -180,7 +179,6 @@
     <Compile Include="EntityListQueryServices\Generated\ContactListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContactLoginLogListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContactMobileDeviceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ContactPasswordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContactTenantListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContactTenantRoleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerSettingListQueryService.Generated.cs" />
@@ -287,7 +285,6 @@
     <Compile Include="EntityListQueryServices\Generated\EventRemarkListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EventTypeCategoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EventTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\FailedLoginLogListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FailedTokenLogListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FeatureAccessLevelListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FeatureChangeListQueryService.Generated.cs" />
@@ -416,8 +413,6 @@
     <Compile Include="EntityListQueryServices\Generated\ScreenListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ScreenModificationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ScreenSectionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SessionPolicyListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsContactLastLoginListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsInvitationStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsSettingListQueryService.Generated.cs" />
@@ -681,7 +676,6 @@
     <Compile Include="EntityQueryServices\Generated\EventRemarkQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EventTypeCategoryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EventTypeQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\FailedLoginLogQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FailedTokenLogQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FeatureAccessLevelQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FeatureChangeQueryService.Generated.cs" />
@@ -1210,7 +1204,6 @@
     <Compile Include="EntityUpdateServices\Generated\ScreenModificationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ScreenSectionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ScreenUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\SessionPolicyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SharedLogisticsContactLastLoginUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SharedLogisticsInvitationStatusUpdateService.Generated.cs" />
@@ -1283,6 +1276,7 @@
     <Compile Include="EntityUpdateServices\Generated\WarehouseWeightRoundingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WeightUnitUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\WorkerRoleNameUpdateService.Generated.cs" />
+    <Compile Include="Helpers\AmitalCloudSecurityUtility.cs" />
     <Compile Include="Helpers\EntityListFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1297,6 +1291,10 @@
     <ProjectReference Include="..\AmitalCloud.Infrastructure.Domain\AmitalCloud.Infrastructure.Domain.csproj">
       <Project>{1cb82e4e-88ff-4772-bfd6-5ec33b23f1cf}</Project>
       <Name>AmitalCloud.Infrastructure.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Model\AmitalCloud.Infrastructure.Model.csproj">
+      <Project>{b03864c5-0c52-465b-9206-3fff150413b9}</Project>
+      <Name>AmitalCloud.Infrastructure.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AutomationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Automation,AutomationKeys<string>,AutomationPM,AutomationList,string>
+   public partial class AutomationQueryService: BaseEntityQueryService<POCO.Automation,AutomationKeys<string>,AutomationPM,AutomationList,string>
    {
-        public AutomationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AutomationQueryService(int tenant) : base(new Repository<POCO.Automation>(tenant),new AutomationDataMapping()) {}
         public AutomationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Automation>(context),new AutomationDataMapping()) {}
 		public  AutomationPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AutomationKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Automation,string> GetKeys(POCO.Automation entityPOCO) => new AutomationKeys<string>() { Id = entityPOCO.Id,  };

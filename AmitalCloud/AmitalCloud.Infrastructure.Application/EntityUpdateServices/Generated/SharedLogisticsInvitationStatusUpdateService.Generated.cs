@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class SharedLogisticsInvitationStatusUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatusPM,IEntityPM,SharedLogisticsInvitationStatusList,int>
+   public partial class SharedLogisticsInvitationStatusUpdateService:BaseEntityUpdateService<POCO.SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatusPM,IEntityPM,SharedLogisticsInvitationStatusList,int>
    {
    			
-        public SharedLogisticsInvitationStatusUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public SharedLogisticsInvitationStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new SharedLogisticsInvitationStatusDataMapping();
-            Repository = new Repository<POCO.SharedLogisticsInvitationStatus>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.SharedLogisticsInvitationStatus>(mainContext);
         }
-        public SharedLogisticsInvitationStatusUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public SharedLogisticsInvitationStatusUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public SharedLogisticsInvitationStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new SharedLogisticsInvitationStatusDataMapping();
+            Repository = new Repository<POCO.SharedLogisticsInvitationStatus>(tenant);
+		}
+        public SharedLogisticsInvitationStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.SharedLogisticsInvitationStatus,int> GetKeys(SharedLogisticsInvitationStatusPM entityPM) => new SharedLogisticsInvitationStatusKeys<int>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(SharedLogisticsInvitationStatusPM entityPM)
 		{

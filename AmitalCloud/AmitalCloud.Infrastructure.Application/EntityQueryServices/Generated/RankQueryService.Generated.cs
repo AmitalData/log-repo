@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class RankQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Rank,RankKeys<string>,RankPM,RankList,string>
+   public partial class RankQueryService: BaseEntityQueryService<POCO.Rank,RankKeys<string>,RankPM,RankList,string>
    {
-        public RankQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public RankQueryService(int tenant) : base(new Repository<POCO.Rank>(tenant),new RankDataMapping()) {}
         public RankQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Rank>(context),new RankDataMapping()) {}
 		public  RankPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new RankKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Rank,string> GetKeys(POCO.Rank entityPOCO) => new RankKeys<string>() { Id = entityPOCO.Id,  };

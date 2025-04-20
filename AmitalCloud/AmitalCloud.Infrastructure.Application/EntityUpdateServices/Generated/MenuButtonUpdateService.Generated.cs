@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class MenuButtonUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.MenuButton,MenuButtonPM,IEntityPM,MenuButtonList,string>
+   public partial class MenuButtonUpdateService:BaseEntityUpdateService<POCO.MenuButton,MenuButtonPM,IEntityPM,MenuButtonList,string>
    {
    			
-        public MenuButtonUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public MenuButtonUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new MenuButtonDataMapping();
-            Repository = new Repository<POCO.MenuButton>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.MenuButton>(mainContext);
         }
-        public MenuButtonUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public MenuButtonUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public MenuButtonUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new MenuButtonDataMapping();
+            Repository = new Repository<POCO.MenuButton>(tenant);
+		}
+        public MenuButtonUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.MenuButton,string> GetKeys(MenuButtonPM entityPM) => new MenuButtonKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(MenuButtonPM entityPM)
 		{

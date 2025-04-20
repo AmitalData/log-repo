@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class UserUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.User,UserPM,IEntityPM,UserList,string>
+   public partial class UserUpdateService:BaseEntityUpdateService<POCO.User,UserPM,IEntityPM,UserList,string>
    {
    			
-        public UserUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public UserUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new UserDataMapping();
-            Repository = new Repository<POCO.User>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.User>(mainContext);
         }
-        public UserUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public UserUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public UserUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new UserDataMapping();
+            Repository = new Repository<POCO.User>(tenant);
+		}
+        public UserUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.User,string> GetKeys(UserPM entityPM) => new UserKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(UserPM entityPM)
 		{

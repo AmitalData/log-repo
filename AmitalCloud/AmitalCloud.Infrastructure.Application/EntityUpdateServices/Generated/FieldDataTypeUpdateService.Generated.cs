@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class FieldDataTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.FieldDataType,FieldDataTypePM,IEntityPM,FieldDataTypeList,string>
+   public partial class FieldDataTypeUpdateService:BaseEntityUpdateService<POCO.FieldDataType,FieldDataTypePM,IEntityPM,FieldDataTypeList,string>
    {
    			
-        public FieldDataTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public FieldDataTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new FieldDataTypeDataMapping();
-            Repository = new Repository<POCO.FieldDataType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.FieldDataType>(mainContext);
         }
-        public FieldDataTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public FieldDataTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public FieldDataTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new FieldDataTypeDataMapping();
+            Repository = new Repository<POCO.FieldDataType>(tenant);
+		}
+        public FieldDataTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.FieldDataType,string> GetKeys(FieldDataTypePM entityPM) => new FieldDataTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(FieldDataTypePM entityPM)
 		{

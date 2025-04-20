@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Invoice.Domain.EntityKeys
 {
-   public class SATTransferStatusKeys<T> : BaseEntityKeyFields<EntityPOCOs.SATTransferStatus,T> 
+   public class SATTransferStatusKeys<T> : BaseEntityKeyFields<ENTITIES.SATTransferStatus,T> 
    {
 		public SATTransferStatusKeys() : base() {}
         public SATTransferStatusKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Invoice.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "SATTransferStatusPM";
-	  public override Expression<Func<EntityPOCOs.SATTransferStatus, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.SATTransferStatus, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

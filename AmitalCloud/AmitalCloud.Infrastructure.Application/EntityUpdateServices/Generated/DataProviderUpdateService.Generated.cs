@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DataProviderUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DataProvider,DataProviderPM,IEntityPM,DataProviderList,string>
+   public partial class DataProviderUpdateService:BaseEntityUpdateService<POCO.DataProvider,DataProviderPM,IEntityPM,DataProviderList,string>
    {
    			
-        public DataProviderUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DataProviderUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DataProviderDataMapping();
-            Repository = new Repository<POCO.DataProvider>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DataProvider>(mainContext);
         }
-        public DataProviderUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DataProviderUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DataProviderUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DataProviderDataMapping();
+            Repository = new Repository<POCO.DataProvider>(tenant);
+		}
+        public DataProviderUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DataProvider,string> GetKeys(DataProviderPM entityPM) => new DataProviderKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(DataProviderPM entityPM)
 		{

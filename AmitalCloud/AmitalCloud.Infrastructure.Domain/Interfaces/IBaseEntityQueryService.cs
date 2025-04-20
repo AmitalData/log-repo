@@ -1,11 +1,12 @@
-﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+﻿using AmitalCloud.Infrastructure.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace AmitalCloud.Infrastructure.Domain.Interfaces
 {
-    public interface IBaseEntityQueryService<TEntityPM, TEntityPOCO> where TEntityPM : IEntityPM, new()
+    public interface IBaseEntityQueryService<TEntityPM, TEntityPOCO> 
+        where TEntityPM : IEntityPM, new()
         where TEntityPOCO : IEntity
     {
         TEntityPM GetSingle(IEnumerable<KeyValuePair<string, string>> paramList, bool getComposition, bool getFromCache);

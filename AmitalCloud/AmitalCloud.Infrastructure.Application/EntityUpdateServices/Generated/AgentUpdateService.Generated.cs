@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class AgentUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Agent,AgentPM,IEntityPM,AgentList,string>
+   public partial class AgentUpdateService:BaseEntityUpdateService<POCO.Agent,AgentPM,IEntityPM,AgentList,string>
    {
    			
-        public AgentUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public AgentUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AgentDataMapping();
-            Repository = new Repository<POCO.Agent>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Agent>(mainContext);
         }
-        public AgentUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public AgentUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public AgentUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AgentDataMapping();
+            Repository = new Repository<POCO.Agent>(tenant);
+		}
+        public AgentUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Agent,string> GetKeys(AgentPM entityPM) => new AgentKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(AgentPM entityPM)
 		{

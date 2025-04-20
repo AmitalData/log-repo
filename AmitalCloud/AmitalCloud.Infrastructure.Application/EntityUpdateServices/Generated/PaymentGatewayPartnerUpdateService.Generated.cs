@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class PaymentGatewayPartnerUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.PaymentGatewayPartner,PaymentGatewayPartnerPM,IEntityPM,PaymentGatewayPartnerList,string>
+   public partial class PaymentGatewayPartnerUpdateService:BaseEntityUpdateService<POCO.PaymentGatewayPartner,PaymentGatewayPartnerPM,IEntityPM,PaymentGatewayPartnerList,string>
    {
    			
-        public PaymentGatewayPartnerUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public PaymentGatewayPartnerUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new PaymentGatewayPartnerDataMapping();
-            Repository = new Repository<POCO.PaymentGatewayPartner>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.PaymentGatewayPartner>(mainContext);
         }
-        public PaymentGatewayPartnerUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public PaymentGatewayPartnerUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public PaymentGatewayPartnerUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new PaymentGatewayPartnerDataMapping();
+            Repository = new Repository<POCO.PaymentGatewayPartner>(tenant);
+		}
+        public PaymentGatewayPartnerUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.PaymentGatewayPartner,string> GetKeys(PaymentGatewayPartnerPM entityPM) => new PaymentGatewayPartnerKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(PaymentGatewayPartnerPM entityPM)
 		{
