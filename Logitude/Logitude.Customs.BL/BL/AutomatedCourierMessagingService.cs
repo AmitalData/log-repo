@@ -41,6 +41,7 @@ namespace Logitude.Customs.BL.BL
         }
         public void CheckAndSendMessageis(DeclarationCourierStatusPM declarationCourierStatusPM)
         {
+
             if (!_featureSendManifest && !_featureSendDeclaration && !_featureSendPayment)
             {
                 return;
@@ -179,10 +180,9 @@ namespace Logitude.Customs.BL.BL
                         LoggingEnabled = true,
                         LoggingObjectTableId = declarationObjectTableId,
                         LoggingEntityId = declarationCourierStatusPM.DeclarationId,
-                        FromAutomate = true, 
+                        FromAutomate = true,
                         AppicationId = declarationCourierStatusPM.DeclarationId,
                         InterfaceTypeCode = "2750",
-                        //LoggingEntityReference = declarationNumber,
                         LoggingUserId = userId,
                         RequestVIA = SendRequestVIA.WebServiceBatch,
                     };
@@ -214,18 +214,15 @@ namespace Logitude.Customs.BL.BL
                 var requestParams1170 = new MANIFESTRequestRequestParams()
                 {
                     Tenant = declarationCourierStatusPM.Tenant,
-                    //IsFakeResponse = true,
-                    //RequestName = requestName,
-                    //ResponseName = responseName,
+
                     LoggingEnabled = true,
                     LoggingObjectTableId = declarationObjectTableId,
                     LoggingEntityId = declarationCourierStatusPM.DeclarationId,
                     LoggingObjectTableId2 = objectTableIdCourierMaster,
                     LoggingEntityId2 = objectTableIdCourierMaster,
-                    //AppicationId = itemPM.DeclarationId,
+
                     InterfaceTypeCode = "1170",
 
-                    //LoggingEntityReference = declarationNumber,
                     LoggingUserId = userId,
                     RequestVIA = SendRequestVIA.WebServiceBatch,
                     DeclarationId = declarationCourierStatusPM.DeclarationId,
