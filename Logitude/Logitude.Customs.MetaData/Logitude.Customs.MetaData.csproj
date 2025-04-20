@@ -802,6 +802,7 @@
     <None Include="EntityFiles\RemarksClassification.lxml" />
     <None Include="EntityFiles\RequestHandlingAuthority.lxml" />
     <None Include="EntityFiles\SIIRequest.lxml" />
+    <None Include="EntityFiles\SIIRequestStatus.lxml" />
     <None Include="EntityFiles\SupplierInvioceItemCertificatDefault.lxml" />
     <None Include="EntityFiles\SupplierInvoiceItemsReqList.lxml" />
     <None Include="EntityFiles\TradeAgreementDetailsHistory_777.lxml" />
@@ -1363,9 +1364,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EntityFiles\CB_QuotaRenewal.lxml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="EntityFiles\SIIRequestStatus.lxml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
