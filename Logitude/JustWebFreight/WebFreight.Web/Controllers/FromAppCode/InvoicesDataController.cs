@@ -240,6 +240,7 @@ namespace WebFreight.Web.App_Code
                              TransferError = entity.TransferError,
                              AmountInProfitCurrency = entity.AmountInProfitCurrency,
                              AccountingExternalCode = entity.AccountingExternalCode,
+                             ReferenceDate = entity.ReferenceDate,
                          };
 
             query2 = filter.GetFilteredQuery<ARInvoiceList>(listQueryOperation, query2);

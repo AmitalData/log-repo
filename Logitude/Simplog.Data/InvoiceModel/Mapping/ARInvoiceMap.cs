@@ -227,6 +227,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TotalEquation).HasColumnName("TotalEquation");
             this.Property(t => t.DocumentTemplateId).HasColumnName("DocumentTemplateId");
             this.Property(t => t.ConfirmationNumber).HasColumnName("ConfirmationNumber");
+            this.Property(t => t.ReferenceDate).HasColumnName("ReferenceDate");
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);
