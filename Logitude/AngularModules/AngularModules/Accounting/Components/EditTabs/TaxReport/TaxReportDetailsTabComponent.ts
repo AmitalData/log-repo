@@ -729,7 +729,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
                     const message = new MessageWindow();
                     message.ShowSuccessIcon = true;
                     message.Width = 400;
-                    //may be to write message.Show(TextCodeTranslator.Translate(TextCode.TaxReportDuplicatesFixed));  but the text is not defined yet
                 }
             }, (error) => {
                  new MessageWindow().Show(error || 'Something wrong happened!');
