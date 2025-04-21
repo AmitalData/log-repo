@@ -11,6 +11,10 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -223,6 +227,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         if (vendorCard != null)
                         {
                             item.VendorName = vendorCard.EnglishName;
+                        }
+                    }
+                    else
+                    {
+                        ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+                        CurrencyRepository currencyRepository = new CurrencyRepository(myCommonContext);
+                        Currency foreignCurrency = currencyRepository.GetSingleCurrency(item.ForiegnCurrencyId, tenant);
+                        if (foreignCurrency != null)
+                        {
+                            item.ForiegnCurrencyCode = foreignCurrency.Code;
                         }
                     }
 
