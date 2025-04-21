@@ -32,13 +32,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return interestReportRepository.GetSumOfExReportsOrInterestOpenBalance(tenant, glaccountId);
         }
 
-        public decimal GetSumOfExReportsOrInterestOpenBalance(int tenant, string glaccountId)
-        {
-            decimal closedBalance = 0;
-            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
-            closedBalance = interestReportRepository.GetSumOfExReportsOrInterestOpenBalance(tenant, glaccountId);
-            return closedBalance;
-        }
+   
 
         public override void GetComposition(EntityKeyFields entityKeys, InterestReportPM entityPM)
         {
