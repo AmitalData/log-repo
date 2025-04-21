@@ -121,12 +121,13 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         this.chartOfAccountListService.getByFilters(apiQueryFilters)
             .subscribe((arg: any) =>
             {
-                this.chartOfAccounts = arg.Result;                
+                this.chartOfAccounts = arg.Result;
+              
                 this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,
                     Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`,
-                    Checked: this.selectedChartOfAccounts?.some(selectedItem =>this.ChartOfAccountsComboBoxValue=="NotAll" && (selectedItem === item.Id || selectedItem === item.Code))
-
-                }}).sort((a, b) => a.Code - b.Code);            });
+                    Checked: this.ChartOfAccountsComboBoxValue == "All" || (this.selectedChartOfAccounts.indexOf(item.Id) > -1 || this.selectedChartOfAccounts.indexOf(item.Code) > -1) 
+                }}).sort((a, b) => a.Code - b.Code);
+                this.SetChartOfAccountsFilterProperties(); });
     }
     OnChartOfAccountsItemClicked(items){
 
@@ -170,11 +171,14 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                 case "ChartOfAccountsIdList":
                     {
                         this.selectedChartOfAccounts = queryFilterItem.FieldValue;
-                        if(this.selectedChartOfAccounts?.length>0 )
+                        if(this.selectedChartOfAccounts?.length>0 ){
                             this.chartOfAccountsComboBoxValue="NotAll";
+                        }
                         else
                             this.chartOfAccountsComboBoxValue="All";
+
                         break;
+
     
                     }
                                  
