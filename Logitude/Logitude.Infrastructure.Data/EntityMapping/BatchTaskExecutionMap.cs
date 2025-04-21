@@ -44,6 +44,7 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             {
               this.Property(t => t.PrametersXml).HasMaxLength(4000);
 			}
+            this.Property(t => t.NotDisplayInMenu).HasColumnName("NotDisplayInMenu");
 
 
             this.Property(t => t.PrametersXml).HasColumnName("PrametersXml").IsUnicode(true);

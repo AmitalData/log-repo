@@ -18,6 +18,7 @@ import { QueryFilterItem } from './Filters/QueryFilterItem';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { MenuTypes } from './ProcessMenuComponent';
 
 @Component({
     selector: 'ReportsPreviewComponent',
@@ -544,15 +545,15 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 messageWindow.ShowSuccessIcon = true;
 
                 messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
-                SessionLocator.HomeComponent.IsReportPanelVisible = true;
-                SessionLocator.HomeComponent.CurrentReportId = myResponse.Result.ReportKey;
+                SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                SessionLocator.HomeComponent.CurrentProcessId  = myResponse.Result.ReportKey;
+                SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog;
                 SessionLocator.HomeComponent.isPinned = true;
 
                 this.BackButtonClicked()
                 this.ReportFliter = myResponse.Result;
                 this.StopBusyIndicator();
                 
-                //this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
             } else {
 
                 filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = false;

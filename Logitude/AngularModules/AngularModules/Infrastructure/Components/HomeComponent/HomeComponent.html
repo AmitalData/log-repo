@@ -286,11 +286,11 @@
                                             <td style="width: 5px;">
                                                 <div></div>
                                             </td>
-                                            <td *ngIf="HasFeatureReport" [title]="'General.MH.Reports' | TextCodeTranslationPipe" style="width: 20px; position: relative;" class="DocsListButton" (click)="IsReportPanelVisibleChanged()"
-                                                [class.BrdrRt]="IsReportPanelVisible">
+                                            <td *ngIf="HasFeatureProcessMenu" [title]="'General.MH.Reports' | TextCodeTranslationPipe" style="width: 20px; position: relative;" class="DocsListButton" (click)="IsProcessMenuVisibleChanged()"
+                                                [class.BrdrRt]="IsProcessMenuVisible">
                                                 <img src="./Images/Split/report.png" style="padding-left: 5px; margin-top: -4px; height: 19px;" />
                                                 <div  class="circle" style="position: absolute; top: -3px; right: -6px;">
-                                                    {{countDoneRepors}}
+                                                    {{countCompletedProcesses}}
                                                 </div>
                                             </td>
                                             <td style="width: 5px;">
@@ -578,6 +578,6 @@
         </td>
     </tr>
 </table>
-<div *ngIf="IsReportPanelVisible"  (mouseleave)="CloseReportPanel()" >
-    <ReportMenuComponent (PinnedChanged)="TogglePinReportPanel($event)"  (mouseenter)="KeepReportPanelOpen()" (mouseleave)="CloseReportPanel()" [CurrentReportId]="CurrentReportId" [IsReportPanelVisible]="IsReportPanelVisible" [IsPinned]="isPinned" (CloseMenu)="CloseReportPanel()"></ReportMenuComponent>
+<div *ngIf="IsProcessMenuVisible"  (mouseleave)="CloseMenu()" >
+    <ProcessMenuComponent (PinnedChanged)="TogglePinMenu($event)" (mouseenter)="KeepMenuOpen()" (mouseleave)="CloseMenu()"  [IsProcessMenuVisible]="IsProcessMenuVisible" [IsPinned]="isPinned" [CurrentProcessId ]="CurrentProcessId" [CurrentSelectedTab]="SelectedTab" (CloseMenu)="CloseReportPanel()"></ProcessMenuComponent>
 </div>
