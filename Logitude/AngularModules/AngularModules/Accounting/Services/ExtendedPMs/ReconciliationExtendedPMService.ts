@@ -12,9 +12,10 @@ import { JournalPM } from '../../EntityPMs/JournalPM';
 import { ReconciliationLinePM } from '../../EntityPMs/ReconciliationLinePM';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
+import { ReconciliationList } from 'Accounting/EntityLists/ReconciliationList';
 
 @Injectable()
 
@@ -69,7 +70,18 @@ export class ReconciliationExtendedPMService {
             catchError(ServiceHelper.HandleServiceError));
 
     }
+    GetReconciliationsByJournalId(journalId: string) {
 
+        return this.httpClient.get(this._apiUrl + '/GetReconciliationsByJournalId?journalId=' + journalId, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response: ServiceResponse) => {
+
+                if(response?.Result && !response.HasError){
+                    return response;
+                }
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
     
     RecheckDraftReconciliationTransactions(transactions: LedgerTransactionPM[]) {
         return this.httpClient.put(this._apiUrl + '/RecheckDraftReconciliationTransactions/', JSON.stringify(transactions), ServiceHelper.GetHttpHeaders()).pipe(
