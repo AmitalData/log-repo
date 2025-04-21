@@ -95,7 +95,7 @@
       Nullable="false" />
   </Column>
   <Relation
-    ForeignKeyColumn="DeclarationId,InvoiceCounterKey"
+    ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber"
     ReferencedTable="SupplierInvoiceItems"
     ReferencedColumn="DeclarationId,CounterKey,LineNumber"
     ReferencedTableSchema="Customs" />

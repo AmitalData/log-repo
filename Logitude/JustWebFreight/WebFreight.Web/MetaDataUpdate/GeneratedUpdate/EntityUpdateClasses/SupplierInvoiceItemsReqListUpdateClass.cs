@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "786f61d09e4df179ce8ef5ae2985b70d";
+		public const string HashString = "af0aa346ee8b6eccb5bd22d54a9f7a72";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,13 +121,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "DeclarationId",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רשימת בקשות",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "9fe8",
+			      				    Code =  "0539",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -352,7 +352,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -368,6 +368,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LineNumber",
 					  						ListPropertyPath =  "LineNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -430,6 +431,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SIIRequestID",
 					  						ListPropertyPath =  "SIIRequestID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -489,6 +491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InvoiceCounterKey",
 					  						ListPropertyPath =  "InvoiceCounterKey",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -553,6 +556,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InvoiceItemLineNumber",
 					  						ListPropertyPath =  "InvoiceItemLineNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -573,7 +577,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Invoice Item Line Number",
 					  						ListFieldLable =  "InvoiceItemLineNumberListLable",
 					  						ListLableDefaultText =  "Invoice Item Line Number",
-					  						IsForeignKey =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "SupplierInvoiceItem",
+					  						NavigationPropertyName =  "SupplierInvoiceItem",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -617,6 +623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RequestType",
 					  						ListPropertyPath =  "RequestType",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -681,6 +688,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ProductFileNumber",
 					  						ListPropertyPath =  "ProductFileNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -747,6 +755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ManufactureCountryCode",
 					  						ListPropertyPath =  "ManufactureCountryCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -813,6 +822,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ManufactureCountryName",
 					  						ListPropertyPath =  "ManufactureCountryName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -878,6 +888,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ManufacturerName",
 					  						ListPropertyPath =  "ManufacturerName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -942,6 +953,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Remarks",
 					  						ListPropertyPath =  "Remarks",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1006,6 +1018,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "DutchRequested",
 					  						ListPropertyPath =  "DutchRequested",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1073,13 +1086,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable SupplierInvoiceItemsReqListObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvoiceItemsReqList" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature SupplierInvoiceItemsReqListFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable);
-		   Feature SupplierInvoiceItemsReqListFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable);
-		   Feature SupplierInvoiceItemsReqListFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable);
-		   Feature SupplierInvoiceItemsReqListFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.PackageFeature", NameTextCodeDefaultText = "SupplierInvoiceItemsReqList Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable);    
+	    {     
 	    
 		}
 

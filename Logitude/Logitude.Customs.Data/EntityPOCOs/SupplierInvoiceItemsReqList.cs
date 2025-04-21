@@ -24,21 +24,22 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
      [Key]
         [ForeignKey("SupplierInvoiceItem")]
-        [Column("DeclarationId")]
+        [Column("DeclarationId" ,Order = 1)]
 	    public string DeclarationId { get; set; }
 	      
         public virtual SupplierInvoiceItem SupplierInvoiceItem { get; set; }
      [Key]
-        [Column("LineNumber")]
+        [Column("LineNumber" ,Order = 4)]
 	    public int LineNumber { get; set; }
         [Column("SIIRequestID")]
 	    public string SIIRequestID { get; set; }
      [Key]
         [ForeignKey("SupplierInvoiceItem")]
-        [Column("InvoiceCounterKey")]
+        [Column("InvoiceCounterKey" ,Order = 2)]
 	    public int InvoiceCounterKey { get; set; }
      [Key]
-        [Column("InvoiceItemLineNumber")]
+        [ForeignKey("SupplierInvoiceItem")]
+        [Column("InvoiceItemLineNumber" ,Order = 3)]
 	    public int InvoiceItemLineNumber { get; set; }
         [Column("RequestType")]
 	    public string RequestType { get; set; }
