@@ -2776,6 +2776,30 @@ namespace MeatadataGeneratorTool
 				return false;
 
 			}
+            if(IsClosed && string.IsNullOrEmpty(CloseTableCode))
+            {
+                ErrorMessages = "Close Table Code is required ..";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+            if (IsClosed && string.IsNullOrEmpty(CloseTableName))
+            {
+                ErrorMessages = "Close Table Name is required ..";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+            if (IsClosed && ObsList.First(f => f.FieldName == closeTableCode).FieldDataType != "Text")
+            {
+                ErrorMessages = "The value for 'CloseTableCode' must be of type Text";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+            if (IsClosed && ObsList.First(f => f.FieldName == CloseTableName).FieldDataType != "Text")
+            {
+                ErrorMessages = "The value for 'CloseTableName' must be of type Text";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
             try
             {
                 ErrorsVisibility = Visibility.Collapsed;

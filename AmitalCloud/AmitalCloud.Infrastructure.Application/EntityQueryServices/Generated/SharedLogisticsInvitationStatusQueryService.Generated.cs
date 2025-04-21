@@ -24,11 +24,11 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class SharedLogisticsInvitationStatusQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatusKeys<int>,SharedLogisticsInvitationStatusPM,SharedLogisticsInvitationStatusList,int>
+   public partial class SharedLogisticsInvitationStatusQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatusKeys<string>,SharedLogisticsInvitationStatusPM,SharedLogisticsInvitationStatusList,string>
    {
         public SharedLogisticsInvitationStatusQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
         public SharedLogisticsInvitationStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SharedLogisticsInvitationStatus>(context),new SharedLogisticsInvitationStatusDataMapping()) {}
-		public  SharedLogisticsInvitationStatusPM GetSingle(int code,bool getComposition, bool getFromCache) => base.GetSingle(new SharedLogisticsInvitationStatusKeys<int>(){ Code = code }, getComposition, getFromCache);
-	    protected override IEntityKeyFields<POCO.SharedLogisticsInvitationStatus,int> GetKeys(POCO.SharedLogisticsInvitationStatus entityPOCO) => new SharedLogisticsInvitationStatusKeys<int>() { Code = entityPOCO.Code,  };
+		public  SharedLogisticsInvitationStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new SharedLogisticsInvitationStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
+	    protected override IEntityKeyFields<POCO.SharedLogisticsInvitationStatus,string> GetKeys(POCO.SharedLogisticsInvitationStatus entityPOCO) => new SharedLogisticsInvitationStatusKeys<string>() { Code = entityPOCO.Code,  };
    }
 }
