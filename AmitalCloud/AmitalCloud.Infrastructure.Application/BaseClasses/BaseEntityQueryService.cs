@@ -22,17 +22,13 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         protected TEntityPM EntityPM;
         protected IRepository<TEntityPOCO> Repository;
         protected IContext MainContext;
-        //protected TEntityParentPM EntityParentPM;
         protected TEntityKeys EntityKeys;
-        //protected TEntityKeys EntityParentKeys;
-        //protected TEntityParentKeys EntityParentKeys; vladi TODO - check if this is needed
         public BaseEntityQueryService()
         {
 
         }
         public BaseEntityQueryService(IRepository<TEntityPOCO> repository, IMapping<TEntityPM, TEntityPOCO, TEntityList> mapping)
         {
-            //this.MainContext = mainContext;
             this.Repository = repository;
             this.mapping = mapping;
             this.InitializeSettings();

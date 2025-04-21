@@ -112,11 +112,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             iQueryable = filter.GetFilteredQuery<TEntity>(nonListQueryOperation, iQueryable);
             skippedPorts = queryOperations.PageIndex;
             IQueryable<TEntityList> query = filter.GetFilteredQuery<TEntityList>(listQueryOperation, GetIqueryableList(iQueryable));
-            //if (Convert.ToBoolean(typeof(TEntity).GetField("HasTenant").GetValue(null)))
-            //{
-            //query = query.Where<TEntityList>(Predicate);
             treeFilterQueryArgs.Tenant = context.Tenant;
-            //}
             return InjectionUtil.Instance.ApplyTreeFilter<TEntityList>(query, treeFilterQueryArgs);
         }
         public int GetListCount(QueryOperations queryOperations) => GetListCount(queryOperations, 0, new TreeFilterQueryArgs());
@@ -126,11 +122,6 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             GenericSort sortClass;
             int skippedPorts;
             var query = GetQuery(queryOperations, treeFilterQueryArgs, out sortClass, out skippedPorts);
-            //if (Convert.ToBoolean(typeof(TEntity).GetField("HasTenant").GetValue(null)))
-            //{
-            //    query = query.Where<TEntityList>(Predicate);
-            //}
-
             return query.Count();
         }
         public TEntityList GetSingle(IEnumerable<KeyValuePair<string, string>> paramList)
@@ -143,7 +134,6 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         protected virtual IQueryable<TEntity> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<TEntity> iQueryable) => iQueryable;
         private IQueryable<TEntity> Query() => (from a in contextEntity select a);
         protected abstract IDbSet<TEntity> contextEntity { get; }
-        //protected abstract IQueryable<TEntityList> GetIqueryableList(IQueryable<TEntity> iQueryable);
 
         protected virtual IQueryable<TEntityList> GetIqueryableList(IQueryable<TEntity> iQueryable)
         {

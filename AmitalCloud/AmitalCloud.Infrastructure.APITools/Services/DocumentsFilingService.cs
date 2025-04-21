@@ -25,40 +25,22 @@ namespace AmitalCloud.Infrastructure.APITools.Services
         bool isNewEntity;
         private int tenant;
         public DocumentsFiling Poco { get; set; }
-        //private DocumentsFilingPM entityPM;
-        //    //private ICustomContext customContext;
         private IAmitalCloudContext currentContext;
         protected DocumentsFilingRepository entityRepository;
         private DocumentsFilingMetaDataValueRepository documentsFilingMetaDataValueRepository;
-        //private CustomsDocumentMetaDataValueRepository customsDocumentMetaDataValueRepository;
         private IRepository<DocumentType> documentTypeRepository;
         protected DocumentRepository documentRepository;
         protected ObjectTableRepository objectTableRepository;
-        //    private ShipmentComputedFieldsRepository shipmentComputedFieldsRepository;
-        //    private TenantQuery tenantQuery;
         private bool _OnCreateUnifreightFillingMode;
-        //    private const int FileSizeOnUnifreightConst = 20160220;
         HybridPartnerPM CurrentHybridPartner;
         private List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValueChangeSet;
-        //    private bool HaveENDOC_DocumentsFilingMetaDataValues = false;
         private bool _Connect2EntityId;
         protected IUnitOfWork unitOfWork;
-
 
         public DocumentsFilingService(IAmitalCloudContext currentContext, int tenant)
         {
             this.tenant = tenant;
             this.currentContext = currentContext;
-            //IUnitOfWork unitOfWork = new UnitOfWork<IAmitalCloudContext>(currentContext);
-            ////this.customContext = CustomContext.GetContext(tenant);
-            //this.entityRepository = new DocumentsFilingRepository(currentContext);
-            //this.documentsFilingMetaDataValueRepository = new DocumentsFilingMetaDataValueRepository(currentContext);
-            ////this.customsDocumentMetaDataValueRepository = new CustomsDocumentMetaDataValueRepository(customContext);
-            //this.documentTypeRepository = new DocumentTypeRepository(currentContext);
-            //this.documentRepository = new DocumentRepository(currentContext);
-            ////shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant);
-            //ObjectTableRepository = new ObjectTableRepository(tenant);
-            //SetHybridPartner(tenant);
         }
 
         private void SetHybridPartner(int myTenant)
@@ -566,22 +548,17 @@ namespace AmitalCloud.Infrastructure.APITools.Services
                     document.HasFile = true;
                     document.FileSize = uFileData.Length;
                 }
-                //else
-                //{ 
-                //    document.HasFile = false;
-                //    document.FileSize = entityPM.FileSize; 
-                //}
 
                 documentRepository.Insert(document);
             }
-            else //if (!!!!isnew) = update
+            else
             {
                 if (!string.IsNullOrEmpty(entityPM.DocumentId))
                 {
                     document = documentRepository.GetSingleDocument(tenant, entityPM.DocumentId);
                 }
 
-                if (entityPM.IsDeleted ) //&& !entityPM.DontDeleteRealFile)
+                if (entityPM.IsDeleted )
                 {
                     if (document != null)
                     {

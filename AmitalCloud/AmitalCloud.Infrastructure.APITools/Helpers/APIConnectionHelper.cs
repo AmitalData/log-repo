@@ -10,8 +10,6 @@ namespace AmitalCloud.Infrastructure.APITools.Helpers
 
     public class APIConnectionHelper : BaseInstance<APIConnectionHelper>
     {
-        //example:  var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response>("api/DocumentIn/Upsert", new object[] { docPM, false });
-
         private HttpClient client;
         private void InitnClient(string baseuri)
         {

@@ -48,9 +48,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         protected TEntityParentPM EntityParentPM;
         protected List<string> ErrorsList;
         protected bool ThrowValidationException;
-
         protected List<FieldChange> FieldChanges;
-        //protected AuditLogRepository AuditLogRepository;
 
         public BaseEntityUpdateService()
         {
@@ -66,19 +64,15 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             this.ThrowValidationException = true;
 
             FieldChanges = new List<FieldChange>();
-            //AuditLogRepository = new AuditLogRepository(tenant);
         }
 
         public void UpdateMulti(List<TEntityPM> entityPMList, List<TEntityPM> deletedEntityPMList, TEntityParentPM entityParentPM, bool commit)
         {
             try
             {
-                //this.SetState(
-
                 EntityParentPM = entityParentPM;
                 if (EntityParentPM.ChangeSetOp == ChangeSetOperation.Insert)
                 {
-                    //SubmitChanges();
                 }
 
                 foreach (TEntityPM entityPM in entityPMList)
@@ -170,7 +164,6 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                             OldEntityPM = new TEntityPM();
                             ChangeTrackingEntityPM = new TEntityPM();
                             Mapping.POCOToPM(OldEntityPM, EntityPOCO);
-                            //Mapping.CustomPOCOToPM(OldEntityPM, EntityPOCO);
 
                             Mapping.POCOToPM(ChangeTrackingEntityPM, EntityPOCO);
                             Mapping.PMToOldPM(entityPM, ChangeTrackingEntityPM);

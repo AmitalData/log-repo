@@ -12,15 +12,10 @@ namespace AmitalCloud.Infrastructure.APITools.DataMapping
     {
         public static void MapEntity(DocumentsFilingPM entityPM, DocumentsFiling poco, bool isNewState)
         {
-
-
-
             ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
-            //var resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant); //contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
             DocumentType docType = new Repository<DocumentType>(AmitalCloudContext.GetContext(entityPM.Tenant)).GetMulti(a => a.Tenant == entityPM.Tenant && a.Id == entityPM.DocumentTypeId).FirstOrDefault();
 
-            //            return (from record in context.DocumentTypes.Include("ObjectTable").Include("TemplateFormat").Include("CustomerRole").Include("AgentRole").Include("DocumentTypeCategory") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
             if (isNewState)
             {
                 poco.Code = entityPM.Code;
