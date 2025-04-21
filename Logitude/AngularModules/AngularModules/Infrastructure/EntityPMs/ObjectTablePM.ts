@@ -363,7 +363,7 @@ export class ObjectTablePM {
     private defaultTextPlural: string;
     public get DefaultTextPlural() { return this.defaultTextPlural; }
     public set DefaultTextPlural(newValue: string) { if (this.defaultTextPlural != newValue) { this.defaultTextPlural = newValue; this.MarkAsDirty("DefaultTextPlural"); } }
-
+       
     private isNew: boolean;
     public get IsNew() { return this.isNew; }
     public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
@@ -391,11 +391,16 @@ export class ObjectTablePM {
     private fullNameTextCodeDefaultText: string;
     public get FullNameTextCodeDefaultText() { return this.fullNameTextCodeDefaultText; }
     public set FullNameTextCodeDefaultText(newValue: string) { if (this.fullNameTextCodeDefaultText != newValue) { this.fullNameTextCodeDefaultText = newValue; this.MarkAsDirty("FullNameTextCodeDefaultText"); } }
-       
+       	 
     private availableInDocumentTypes: boolean;
     public get AvailableInDocumentTypes() { return this.availableInDocumentTypes }
     public set AvailableInDocumentTypes(newValue: boolean) { if (this.availableInDocumentTypes != newValue) { this.availableInDocumentTypes = newValue; this.MarkAsDirty("AvailableInDocumentTypes"); }}
-
+       
+	 
+    private showFastSearch: boolean;
+    public get ShowFastSearch() { return this.showFastSearch; }
+    public set ShowFastSearch(newValue: boolean) { if (this.showFastSearch != newValue) { this.showFastSearch = newValue; this.MarkAsDirty("ShowFastSearch"); } }
+       
 
     public OldEntityPM: ObjectTablePM;
 		

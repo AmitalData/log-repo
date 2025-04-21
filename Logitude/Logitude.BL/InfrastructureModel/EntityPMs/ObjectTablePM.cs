@@ -81,5 +81,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string FullNameTextCodeCode { get; set; }
         public string FullNameTextCodeDefaultText { get; set; }
         public bool AvailableInDocumentTypes { get; set; }
+        public bool ShowFastSearch { get; set; }
     }
 }
