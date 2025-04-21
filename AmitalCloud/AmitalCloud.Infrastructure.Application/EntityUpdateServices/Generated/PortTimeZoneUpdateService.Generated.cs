@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class PortTimeZoneUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.PortTimeZone,PortTimeZonePM,IEntityPM,PortTimeZoneList,string>
+   public partial class PortTimeZoneUpdateService:BaseEntityUpdateService<POCO.PortTimeZone,PortTimeZonePM,IEntityPM,PortTimeZoneList,string>
    {
    			
-        public PortTimeZoneUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public PortTimeZoneUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new PortTimeZoneDataMapping();
-            Repository = new Repository<POCO.PortTimeZone>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.PortTimeZone>(mainContext);
         }
-        public PortTimeZoneUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public PortTimeZoneUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public PortTimeZoneUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new PortTimeZoneDataMapping();
+            Repository = new Repository<POCO.PortTimeZone>(tenant);
+		}
+        public PortTimeZoneUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.PortTimeZone,string> GetKeys(PortTimeZonePM entityPM) => new PortTimeZoneKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(PortTimeZonePM entityPM)
 		{

@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class FailedLoginLogKeys<T> : BaseEntityKeyFields<EntityPOCOs.FailedLoginLog,T> 
+   public class FailedLoginLogKeys<T> : BaseEntityKeyFields<ENTITIES.FailedLoginLog,T> 
    {
 		public FailedLoginLogKeys() : base() {}
         public FailedLoginLogKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "FailedLoginLogsPM";
-	  public override Expression<Func<EntityPOCOs.FailedLoginLog, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.FailedLoginLog, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

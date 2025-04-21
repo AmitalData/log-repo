@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class SchedulerProcedureUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.SchedulerProcedure,SchedulerProcedurePM,IEntityPM,SchedulerProcedureList,string>
+   public partial class SchedulerProcedureUpdateService:BaseEntityUpdateService<POCO.SchedulerProcedure,SchedulerProcedurePM,IEntityPM,SchedulerProcedureList,string>
    {
    			
-        public SchedulerProcedureUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public SchedulerProcedureUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new SchedulerProcedureDataMapping();
-            Repository = new Repository<POCO.SchedulerProcedure>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.SchedulerProcedure>(mainContext);
         }
-        public SchedulerProcedureUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public SchedulerProcedureUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public SchedulerProcedureUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new SchedulerProcedureDataMapping();
+            Repository = new Repository<POCO.SchedulerProcedure>(tenant);
+		}
+        public SchedulerProcedureUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.SchedulerProcedure,string> GetKeys(SchedulerProcedurePM entityPM) => new SchedulerProcedureKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(SchedulerProcedurePM entityPM)
 		{

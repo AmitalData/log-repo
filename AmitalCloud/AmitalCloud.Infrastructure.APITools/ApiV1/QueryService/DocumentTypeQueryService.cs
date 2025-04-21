@@ -5,10 +5,11 @@ using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 namespace AmitalCloud.Infrastructure.APITools.ApiV1
 {
     public class DocumentTypeQueryService

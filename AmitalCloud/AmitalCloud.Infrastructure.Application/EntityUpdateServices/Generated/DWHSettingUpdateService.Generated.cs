@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DWHSettingUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DWHSetting,DWHSettingPM,IEntityPM,DWHSettingList,int>
+   public partial class DWHSettingUpdateService:BaseEntityUpdateService<POCO.DWHSetting,DWHSettingPM,IEntityPM,DWHSettingList,int>
    {
    			
-        public DWHSettingUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DWHSettingUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DWHSettingDataMapping();
-            Repository = new Repository<POCO.DWHSetting>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DWHSetting>(mainContext);
         }
-        public DWHSettingUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DWHSettingUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DWHSettingUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DWHSettingDataMapping();
+            Repository = new Repository<POCO.DWHSetting>(tenant);
+		}
+        public DWHSettingUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DWHSetting,int> GetKeys(DWHSettingPM entityPM) => new DWHSettingKeys<int>() { Tenant = entityPM.Tenant };
 protected override void FillDefaultValuesOnCreate(DWHSettingPM entityPM)
 		{

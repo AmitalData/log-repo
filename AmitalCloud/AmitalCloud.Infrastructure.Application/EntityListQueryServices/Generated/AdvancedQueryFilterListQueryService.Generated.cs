@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class AdvancedQueryFilterListQueryService  : BaseEntityListQueryService<AdvancedQueryFilterList,POCO.AdvancedQueryFilter,  AdvancedQueryFilterKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.AdvancedQueryFilter> contextEntity => (context as IAmitalCloudContext).AdvancedQueryFilters;
-		public AdvancedQueryFilterListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public AdvancedQueryFilterListQueryService(int tenant) : base(tenant) { }
         public AdvancedQueryFilterList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

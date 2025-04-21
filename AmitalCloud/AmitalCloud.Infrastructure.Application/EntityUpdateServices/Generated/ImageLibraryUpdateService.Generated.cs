@@ -9,34 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ImageLibraryUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ImageLibrary,ImageLibraryPM,IEntityPM,ImageLibraryList,string>
+   public partial class ImageLibraryUpdateService:BaseEntityUpdateService<POCO.ImageLibrary,ImageLibraryPM,IEntityPM,ImageLibraryList,string>
    {
    			
-        public ImageLibraryUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ImageLibraryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ImageLibraryDataMapping();
-            Repository = new Repository<POCO.ImageLibrary>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ImageLibrary>(mainContext);
         }
-        public ImageLibraryUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ImageLibraryUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ImageLibraryUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ImageLibraryDataMapping();
+            Repository = new Repository<POCO.ImageLibrary>(tenant);
+		}
+        public ImageLibraryUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ImageLibrary,string> GetKeys(ImageLibraryPM entityPM) => new ImageLibraryKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ImageLibraryPM entityPM)
 		{

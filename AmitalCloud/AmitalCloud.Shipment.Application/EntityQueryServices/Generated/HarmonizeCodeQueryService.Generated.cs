@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class HarmonizeCodeQueryService: BaseEntityQueryService<IShipmentContext,POCO.HarmonizeCode,HarmonizeCodeKeys<string>,HarmonizeCodePM,HarmonizeCodeList,string>
+   public partial class HarmonizeCodeQueryService: BaseEntityQueryService<POCO.HarmonizeCode,HarmonizeCodeKeys<string>,HarmonizeCodePM,HarmonizeCodeList,string>
    {
-        public HarmonizeCodeQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public HarmonizeCodeQueryService(IShipmentContext context) : base(new Repository<POCO.HarmonizeCode>(context),new HarmonizeCodeDataMapping()) {}
+        public HarmonizeCodeQueryService(int tenant) : base(new Repository<POCO.HarmonizeCode>(tenant),new HarmonizeCodeDataMapping()) {}
+        public HarmonizeCodeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HarmonizeCode>(context),new HarmonizeCodeDataMapping()) {}
 		public  HarmonizeCodePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new HarmonizeCodeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HarmonizeCode,string> GetKeys(POCO.HarmonizeCode entityPOCO) => new HarmonizeCodeKeys<string>() { Code = entityPOCO.Code,  };
    }

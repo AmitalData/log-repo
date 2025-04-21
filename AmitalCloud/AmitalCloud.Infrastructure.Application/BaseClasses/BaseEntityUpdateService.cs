@@ -1,7 +1,8 @@
-﻿using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -14,6 +15,9 @@ using System.Transactions;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using AmitalCloud.Infrastructure.Model;
+using AmitalCloud.Infrastructure.Model.Enums;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {
@@ -22,16 +26,15 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         void InitializeEntityPM(TEntityPM entityPM);
         void Update(TEntityPM entityPM, bool commit, TimeSpan? transactionTimeout = null);
     }
-    public abstract partial class BaseEntityUpdateService<TContext, TEntityPOCO, TEntityPM, TEntityParentPM, TEntityList, TkeyType> : IBaseEntityUpdateService<TEntityPM> where TEntityPOCO : class, new()
+    public abstract partial class BaseEntityUpdateService<TEntity, TEntityPM, TEntityParentPM, TEntityList, TkeyType> : IBaseEntityUpdateService<TEntityPM>
+        where TEntity : class, new()
         where TEntityPM : IEntityPM, new()
         where TEntityParentPM : IEntityPM
         where TEntityList : class, new()
-        where TContext : class, IContext
-
     {
         protected bool IsNewEntity;
         protected int Tenant;
-        protected TEntityPOCO EntityPOCO { get; set; }
+        protected TEntity EntityPOCO { get; set; }
         protected TEntityPM OldEntityPM { get; set; }
         protected TEntityPM ChangeTrackingEntityPM { get; set; }
         protected string EntityChangeFieldXml { get; set; }
@@ -41,21 +44,18 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             get { return additionalContexts; }
             set { additionalContexts = value; }
         }
-        protected IMapping<TEntityPM, TEntityPOCO, TEntityList> Mapping;
+        protected IMapping<TEntityPM, TEntity, TEntityList> Mapping;
         protected TEntityPM EntityPM;
-        protected IRepository<TEntityPOCO> Repository;
-        protected TContext MainContext;
+        protected IRepository<TEntity> Repository;
+        protected IContext MainContext;
         protected TEntityParentPM EntityParentPM;
         protected List<string> ErrorsList;
         protected bool ThrowValidationException;
         protected List<FieldChange> FieldChanges;
 
-        public BaseEntityUpdateService()
-        {
+        public BaseEntityUpdateService() { }
 
-        }
-
-        public BaseEntityUpdateService(TContext mainContext, Dictionary<string, IContext> additionalContexts, int tenant)
+        public BaseEntityUpdateService(IContext mainContext, Dictionary<string, IContext> additionalContexts, int tenant)
         {
             this.Tenant = tenant;
             this.AdditionalContexts = additionalContexts;
@@ -64,6 +64,17 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             this.ThrowValidationException = true;
 
             FieldChanges = new List<FieldChange>();
+        }
+        public BaseEntityUpdateService(int tenant)
+        {
+            this.Tenant = tenant;
+            this.AdditionalContexts = null;
+            this.MainContext = GetContext(tenant);
+            this.ErrorsList = new List<string>();
+            this.ThrowValidationException = true;
+
+            FieldChanges = new List<FieldChange>();
+            //AuditLogRepository = new AuditLogRepository(tenant);
         }
 
         public void UpdateMulti(List<TEntityPM> entityPMList, List<TEntityPM> deletedEntityPMList, TEntityParentPM entityParentPM, bool commit)
@@ -133,10 +144,9 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                 return "";
             }
         }
-
         private void PerformUpdate(TEntityPM entityPM, bool commit)
         {
-            IEntityKeyFields<TEntityPOCO, TkeyType> entityKeys = GetKeys(entityPM);
+            IEntityKeyFields<TEntity, TkeyType> entityKeys = GetKeys(entityPM);
             var iMapConvertFromBase64StringNVARCHARFields = Mapping as IMappingEncodeBase64NVARCHARFields<TEntityPM>;
             if (iMapConvertFromBase64StringNVARCHARFields != null)
             {
@@ -149,7 +159,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                 {
                     case ChangeSetOperation.Insert:
                         {
-                            EntityPOCO = new TEntityPOCO();
+                            EntityPOCO = new TEntity();
                             FillDefaultValuesOnCreate(entityPM);
                             OnCreating(EntityPM, EntityParentPM);
                             break;
@@ -158,7 +168,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                         {
 
                             EntityPOCO = Repository.GetSingle(entityKeys);
-                            AddStepTrace("GetEntityPOCO");
+                            AddStepTrace("GeTEntity");
                             CheckConcurrency(entityPM, EntityPOCO);
                             AddStepTrace("CheckConcurrency");
                             OldEntityPM = new TEntityPM();
@@ -244,16 +254,12 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             }
             //scope.Complete();
         }
-
-
         protected virtual void SubmitChanges()
         {
             try
             {
-
+                MainContext.SaveChanges();
                 //todo implement Unit of Work pattern
-
-                typeof(TContext).GetMethod("SaveChanges").Invoke(MainContext, null);
             }
             catch (DbEntityValidationException e)
             {
@@ -267,41 +273,33 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                 }
             }
         }
-
         protected virtual void OnCreating(TEntityPM entityPM, TEntityParentPM entityParentPM)
         {
         }
-
         protected virtual void FillDefaultValuesOnCreate(TEntityPM entityPM)
         {
         }
-
         protected virtual void FillDefaultValuesOnUpdate(TEntityPM entityPM)
         {
         }
-
         protected virtual void UpdateComposition(TEntityPM entityPM)
         {
 
         }
-
         protected virtual void OnUpdating(TEntityPM entityPM)
         {
 
         }
-
         protected virtual void AfterUpdating(TEntityPM entityPM, TEntityParentPM entityParentPM)
         {
 
         }
-        protected virtual void UpdateCalculatedFields(TEntityPM entityPM, TEntityParentPM entityParentPM, TEntityPOCO entityPOCO)
+        protected virtual void UpdateCalculatedFields(TEntityPM entityPM, TEntityParentPM entityParentPM, TEntity entityPOCO)
         {
 
         }
-
-        protected abstract IEntityKeyFields<TEntityPOCO, TkeyType> GetKeys(TEntityPM entityPM);
-
-        protected virtual void Trace(TEntityPM entityPM, TEntityPOCO entityPOCO, string changesXml)
+        protected abstract IEntityKeyFields<TEntity, TkeyType> GetKeys(TEntityPM entityPM);
+        protected virtual void Trace(TEntityPM entityPM, TEntity entityPOCO, string changesXml)
         {
 
         }
@@ -309,11 +307,10 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         {
 
         }
-        protected virtual void OnUpdating(TEntityPM entityPM, TEntityPOCO entityPOCO)
+        protected virtual void OnUpdating(TEntityPM entityPM, TEntity entityPOCO)
         {
 
         }
-
         private string GetChangesDetectedXml(TEntityPM changesTrackingEntityPM)
         {
             string xml = null;
@@ -399,7 +396,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             return content;
         }
 
-        protected virtual void CheckConcurrency(TEntityPM entityPM, TEntityPOCO entityPOCO)
+        protected virtual void CheckConcurrency(TEntityPM entityPM, TEntity entityPOCO)
         {
 
         }
@@ -421,6 +418,24 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         {
 
         }
+        private IContext GetContext(int tenant)
+        {
+            Type type = typeof(TEntity);
+            var attribute = (DataBaseAttribute)Attribute.GetCustomAttribute(type, typeof(DataBaseAttribute));
+            switch (attribute.Name)
+            {
+                case AmitalCloudDBSchema.AMITAL_MAIN:
+                    return AmitalCloudContext.GetContext(tenant);
+                case AmitalCloudDBSchema.AMITAL_LOGS:
+                case AmitalCloudDBSchema.AMITAL_SYSTEMLOGS:
+                    return SystemLogContext.GetContext(tenant);
+                case AmitalCloudDBSchema.AMITAL_GLOBAL:
+                    return GlobalContext.GetContext(tenant);
+                default:
+                    throw new Exception("Invalid schema");
+            }
+        }
+
     }
 
 

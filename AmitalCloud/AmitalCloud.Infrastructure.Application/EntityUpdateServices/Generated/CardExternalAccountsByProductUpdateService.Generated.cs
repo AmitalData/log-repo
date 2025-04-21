@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CardExternalAccountsByProductUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CardExternalAccountsByProduct,CardExternalAccountsByProductPM,IEntityPM,CardExternalAccountsByProductList,string>
+   public partial class CardExternalAccountsByProductUpdateService:BaseEntityUpdateService<POCO.CardExternalAccountsByProduct,CardExternalAccountsByProductPM,IEntityPM,CardExternalAccountsByProductList,string>
    {
    			
-        public CardExternalAccountsByProductUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CardExternalAccountsByProductUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CardExternalAccountsByProductDataMapping();
-            Repository = new Repository<POCO.CardExternalAccountsByProduct>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CardExternalAccountsByProduct>(mainContext);
         }
-        public CardExternalAccountsByProductUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CardExternalAccountsByProductUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CardExternalAccountsByProductUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CardExternalAccountsByProductDataMapping();
+            Repository = new Repository<POCO.CardExternalAccountsByProduct>(tenant);
+		}
+        public CardExternalAccountsByProductUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CardExternalAccountsByProduct,string> GetKeys(CardExternalAccountsByProductPM entityPM) => new CardExternalAccountsByProductKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CardExternalAccountsByProductPM entityPM)
 		{

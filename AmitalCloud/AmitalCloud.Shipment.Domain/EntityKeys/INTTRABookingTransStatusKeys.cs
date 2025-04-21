@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Shipment.Domain.EntityKeys
 {
-   public class INTTRABookingTransStatusKeys<T> : BaseEntityKeyFields<EntityPOCOs.INTTRABookingTransStatus,T> 
+   public class INTTRABookingTransStatusKeys<T> : BaseEntityKeyFields<ENTITIES.INTTRABookingTransStatus,T> 
    {
 		public INTTRABookingTransStatusKeys() : base() {}
         public INTTRABookingTransStatusKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Shipment.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "INTTRABookingTransStatusesPM";
-	  public override Expression<Func<EntityPOCOs.INTTRABookingTransStatus, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.INTTRABookingTransStatus, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class BatchServicesDefinitionModsQueryService: BaseEntityQueryService<IGlobalContext,POCO.BatchServicesDefinitionMods,BatchServicesDefinitionModsKeys<string>,BatchServicesDefinitionModsPM,BatchServicesDefinitionModsList,string>
+   public partial class BatchServicesDefinitionModsQueryService: BaseEntityQueryService<POCO.BatchServicesDefinitionMods,BatchServicesDefinitionModsKeys<string>,BatchServicesDefinitionModsPM,BatchServicesDefinitionModsList,string>
    {
-        public BatchServicesDefinitionModsQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public BatchServicesDefinitionModsQueryService(int tenant) : base(new Repository<POCO.BatchServicesDefinitionMods>(tenant),new BatchServicesDefinitionModsDataMapping()) {}
         public BatchServicesDefinitionModsQueryService(IGlobalContext context) : base(new Repository<POCO.BatchServicesDefinitionMods>(context),new BatchServicesDefinitionModsDataMapping()) {}
 		public  BatchServicesDefinitionModsPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new BatchServicesDefinitionModsKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BatchServicesDefinitionMods,string> GetKeys(POCO.BatchServicesDefinitionMods entityPOCO) => new BatchServicesDefinitionModsKeys<string>() { Code = entityPOCO.Code,  };

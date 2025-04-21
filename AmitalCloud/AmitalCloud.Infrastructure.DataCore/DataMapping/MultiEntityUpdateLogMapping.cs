@@ -1,7 +1,7 @@
 ﻿using AmitalCloud.Infrastructure.Data.Counters;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityClasses;
 
 namespace AmitalCloud.Infrastructure.Data.DataMapping
 {

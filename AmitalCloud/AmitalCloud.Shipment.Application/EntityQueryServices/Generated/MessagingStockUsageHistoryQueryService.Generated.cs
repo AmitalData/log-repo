@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class MessagingStockUsageHistoryQueryService: BaseEntityQueryService<IShipmentContext,POCO.MessagingStockUsageHistory,MessagingStockUsageHistoryKeys<string>,MessagingStockUsageHistoryPM,MessagingStockUsageHistoryList,string>
+   public partial class MessagingStockUsageHistoryQueryService: BaseEntityQueryService<POCO.MessagingStockUsageHistory,MessagingStockUsageHistoryKeys<string>,MessagingStockUsageHistoryPM,MessagingStockUsageHistoryList,string>
    {
-        public MessagingStockUsageHistoryQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public MessagingStockUsageHistoryQueryService(IShipmentContext context) : base(new Repository<POCO.MessagingStockUsageHistory>(context),new MessagingStockUsageHistoryDataMapping()) {}
+        public MessagingStockUsageHistoryQueryService(int tenant) : base(new Repository<POCO.MessagingStockUsageHistory>(tenant),new MessagingStockUsageHistoryDataMapping()) {}
+        public MessagingStockUsageHistoryQueryService(IAmitalCloudContext context) : base(new Repository<POCO.MessagingStockUsageHistory>(context),new MessagingStockUsageHistoryDataMapping()) {}
 		public  MessagingStockUsageHistoryPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new MessagingStockUsageHistoryKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.MessagingStockUsageHistory,string> GetKeys(POCO.MessagingStockUsageHistory entityPOCO) => new MessagingStockUsageHistoryKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
@@ -22,7 +22,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
    {
        #region Constructors
        public QBOGlobalTaxCalculationList() : base() {}
-       public QBOGlobalTaxCalculationList(QBOGlobalTaxCalculation entity) : base()
+       public QBOGlobalTaxCalculationList(POCO.QBOGlobalTaxCalculation entity) : base()
        {
           Code  = entity.Code;
           Name  = entity.Name;

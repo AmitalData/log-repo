@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class AccountingPaymentMethodQueryService: BaseEntityQueryService<IInvoiceContext,POCO.AccountingPaymentMethod,AccountingPaymentMethodKeys<string>,AccountingPaymentMethodPM,AccountingPaymentMethodList,string>
+   public partial class AccountingPaymentMethodQueryService: BaseEntityQueryService<POCO.AccountingPaymentMethod,AccountingPaymentMethodKeys<string>,AccountingPaymentMethodPM,AccountingPaymentMethodList,string>
    {
-        public AccountingPaymentMethodQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public AccountingPaymentMethodQueryService(IInvoiceContext context) : base(new Repository<POCO.AccountingPaymentMethod>(context),new AccountingPaymentMethodDataMapping()) {}
+        public AccountingPaymentMethodQueryService(int tenant) : base(new Repository<POCO.AccountingPaymentMethod>(tenant),new AccountingPaymentMethodDataMapping()) {}
+        public AccountingPaymentMethodQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AccountingPaymentMethod>(context),new AccountingPaymentMethodDataMapping()) {}
 		public  AccountingPaymentMethodPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AccountingPaymentMethodKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AccountingPaymentMethod,string> GetKeys(POCO.AccountingPaymentMethod entityPOCO) => new AccountingPaymentMethodKeys<string>() { Id = entityPOCO.Id,  };
    }

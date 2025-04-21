@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomsShipperUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomsShipper,CustomsShipperPM,IEntityPM,CustomsShipperList,string>
+   public partial class CustomsShipperUpdateService:BaseEntityUpdateService<POCO.CustomsShipper,CustomsShipperPM,IEntityPM,CustomsShipperList,string>
    {
    			
-        public CustomsShipperUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomsShipperUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomsShipperDataMapping();
-            Repository = new Repository<POCO.CustomsShipper>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomsShipper>(mainContext);
         }
-        public CustomsShipperUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomsShipperUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomsShipperUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomsShipperDataMapping();
+            Repository = new Repository<POCO.CustomsShipper>(tenant);
+		}
+        public CustomsShipperUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomsShipper,string> GetKeys(CustomsShipperPM entityPM) => new CustomsShipperKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(CustomsShipperPM entityPM)
 		{

@@ -1,8 +1,7 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using System.Linq;
 
@@ -14,7 +13,7 @@ namespace AmitalCloud.Infrastructure.APITools.DataMapping
         {
             ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
             ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant); //contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
-            DocumentType docType = new Repository<DocumentType>(AmitalCloudContext.GetContext(entityPM.Tenant)).GetMulti(a => a.Tenant == entityPM.Tenant && a.Id == entityPM.DocumentTypeId).FirstOrDefault();
+            DocumentType docType = new Repository<DocumentType>(entityPM.Tenant).GetMulti(a => a.Tenant == entityPM.Tenant && a.Id == entityPM.DocumentTypeId).FirstOrDefault();
 
             if (isNewState)
             {

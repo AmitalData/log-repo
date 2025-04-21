@@ -9,32 +9,34 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class WorkerRoleNameUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.WorkerRoleName,WorkerRoleNamePM,IEntityPM,WorkerRoleNameList,string>
+   public partial class WorkerRoleNameUpdateService:BaseEntityUpdateService<POCO.WorkerRoleName,WorkerRoleNamePM,IEntityPM,WorkerRoleNameList,string>
    {
    			
-        public WorkerRoleNameUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public WorkerRoleNameUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new WorkerRoleNameDataMapping();
-            Repository = new Repository<POCO.WorkerRoleName>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.WorkerRoleName>(mainContext);
         }
-        public WorkerRoleNameUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public WorkerRoleNameUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public WorkerRoleNameUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new WorkerRoleNameDataMapping();
+            Repository = new Repository<POCO.WorkerRoleName>(tenant);
+		}
+        public WorkerRoleNameUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.WorkerRoleName,string> GetKeys(WorkerRoleNamePM entityPM) => new WorkerRoleNameKeys<string>() { Name = entityPM.Name };
 		protected override void FillDefaultValuesOnCreate(WorkerRoleNamePM entityPM)
 		{

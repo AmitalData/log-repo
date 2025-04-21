@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ContactLastLoginUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ContactLastLogin,ContactLastLoginPM,IEntityPM,ContactLastLoginList,string>
+   public partial class ContactLastLoginUpdateService:BaseEntityUpdateService<POCO.ContactLastLogin,ContactLastLoginPM,IEntityPM,ContactLastLoginList,string>
    {
    			
-        public ContactLastLoginUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ContactLastLoginUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ContactLastLoginDataMapping();
-            Repository = new Repository<POCO.ContactLastLogin>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ContactLastLogin>(mainContext);
         }
-        public ContactLastLoginUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ContactLastLoginUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ContactLastLoginUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ContactLastLoginDataMapping();
+            Repository = new Repository<POCO.ContactLastLogin>(tenant);
+		}
+        public ContactLastLoginUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ContactLastLogin,string> GetKeys(ContactLastLoginPM entityPM) => new ContactLastLoginKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ContactLastLoginPM entityPM)
 		{

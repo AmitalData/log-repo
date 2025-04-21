@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Invoice.Domain.EntityKeys
 {
-   public class ARPaymentBankTranferKeys<T> : BaseEntityKeyFields<EntityPOCOs.ARPaymentBankTranfer,T> 
+   public class ARPaymentBankTranferKeys<T> : BaseEntityKeyFields<ENTITIES.ARPaymentBankTranfer,T> 
    {
 		public ARPaymentBankTranferKeys() : base() {}
         public ARPaymentBankTranferKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Invoice.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "ARPaymentBankTranfersPM";
-	  public override Expression<Func<EntityPOCOs.ARPaymentBankTranfer, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.ARPaymentBankTranfer, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class VatMandatoryTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.VatMandatoryType,VatMandatoryTypePM,IEntityPM,VatMandatoryTypeList,string>
+   public partial class VatMandatoryTypeUpdateService:BaseEntityUpdateService<POCO.VatMandatoryType,VatMandatoryTypePM,IEntityPM,VatMandatoryTypeList,string>
    {
    			
-        public VatMandatoryTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public VatMandatoryTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new VatMandatoryTypeDataMapping();
-            Repository = new Repository<POCO.VatMandatoryType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.VatMandatoryType>(mainContext);
         }
-        public VatMandatoryTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public VatMandatoryTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public VatMandatoryTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new VatMandatoryTypeDataMapping();
+            Repository = new Repository<POCO.VatMandatoryType>(tenant);
+		}
+        public VatMandatoryTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.VatMandatoryType,string> GetKeys(VatMandatoryTypePM entityPM) => new VatMandatoryTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(VatMandatoryTypePM entityPM)
 		{

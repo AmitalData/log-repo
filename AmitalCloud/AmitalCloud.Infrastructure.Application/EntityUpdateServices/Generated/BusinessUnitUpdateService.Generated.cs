@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class BusinessUnitUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.BusinessUnit,BusinessUnitPM,IEntityPM,BusinessUnitList,string>
+   public partial class BusinessUnitUpdateService:BaseEntityUpdateService<POCO.BusinessUnit,BusinessUnitPM,IEntityPM,BusinessUnitList,string>
    {
    			
-        public BusinessUnitUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public BusinessUnitUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new BusinessUnitDataMapping();
-            Repository = new Repository<POCO.BusinessUnit>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.BusinessUnit>(mainContext);
         }
-        public BusinessUnitUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public BusinessUnitUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public BusinessUnitUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new BusinessUnitDataMapping();
+            Repository = new Repository<POCO.BusinessUnit>(tenant);
+		}
+        public BusinessUnitUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.BusinessUnit,string> GetKeys(BusinessUnitPM entityPM) => new BusinessUnitKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(BusinessUnitPM entityPM)
 		{

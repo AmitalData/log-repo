@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
+﻿using AmitalCloud.Infrastructure.Model.Interfaces;
 using System;
 using System.Data.Entity.Validation;
 using System.Reflection;

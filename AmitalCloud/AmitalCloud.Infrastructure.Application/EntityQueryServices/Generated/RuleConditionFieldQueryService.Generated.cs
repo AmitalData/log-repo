@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class RuleConditionFieldQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.RuleConditionField,RuleConditionFieldKeys<string>,RuleConditionFieldPM,RuleConditionFieldList,string>
+   public partial class RuleConditionFieldQueryService: BaseEntityQueryService<POCO.RuleConditionField,RuleConditionFieldKeys<string>,RuleConditionFieldPM,RuleConditionFieldList,string>
    {
-        public RuleConditionFieldQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public RuleConditionFieldQueryService(int tenant) : base(new Repository<POCO.RuleConditionField>(tenant),new RuleConditionFieldDataMapping()) {}
         public RuleConditionFieldQueryService(IAmitalCloudContext context) : base(new Repository<POCO.RuleConditionField>(context),new RuleConditionFieldDataMapping()) {}
 		public  RuleConditionFieldPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new RuleConditionFieldKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.RuleConditionField,string> GetKeys(POCO.RuleConditionField entityPOCO) => new RuleConditionFieldKeys<string>() { Id = entityPOCO.Id,  };

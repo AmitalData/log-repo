@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class SharedLogisticsInvitationStatusKeys<T> : BaseEntityKeyFields<EntityPOCOs.SharedLogisticsInvitationStatus,T> 
+   public class SharedLogisticsInvitationStatusKeys<T> : BaseEntityKeyFields<ENTITIES.SharedLogisticsInvitationStatus,T> 
    {
 		public SharedLogisticsInvitationStatusKeys() : base() {}
         public SharedLogisticsInvitationStatusKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "SharedLogisticsInvitationStatusPM";
-	  public override Expression<Func<EntityPOCOs.SharedLogisticsInvitationStatus, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.SharedLogisticsInvitationStatus, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

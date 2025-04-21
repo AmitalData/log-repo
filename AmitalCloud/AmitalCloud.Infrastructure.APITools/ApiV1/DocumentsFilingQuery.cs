@@ -1,7 +1,6 @@
-﻿using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Queries;
+﻿using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System;
@@ -9,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 
 namespace AmitalCloud.Infrastructure.APITools.ApiV1
 {
@@ -112,7 +111,7 @@ namespace AmitalCloud.Infrastructure.APITools.ApiV1
 
         public List<string> GetCOOEDocument(string declarationId, string certificateOfOriginId, int tenant)
         {
-            var type = new Repository<POCO.DocumentType>(AmitalCloudContext.GetContext(tenant)).GetSingle(new DocumentTypeKeys<string>() { Id = "COOE" });
+            var type = new Repository<POCO.DocumentType>(tenant).GetSingle(new DocumentTypeKeys<string>() { Id = "COOE" });
             ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
             POCO.ObjectTable objectTable = objectTableRep.GetObjectTableByName("Customs.Declaration", tenant, true);
             POCO.ObjectTable objectTableCertificate = objectTableRep.GetObjectTableByName("Customs.CertificateOfOrigin", tenant, true);

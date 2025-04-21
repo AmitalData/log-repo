@@ -194,6 +194,7 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 <#+ 
 if(tableName != "Task" && tableName != "TaskStatus")
 {
@@ -213,19 +214,18 @@ using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
 <#+ }#>
 <#+ if(Contact) { #>
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 <#+ }#>
 using POCO = <#= NamespacesDictionary["pocosspacestring"] #> ;
 using <#= NamespacesDictionary["pmsspacestring"] #>;
 using <#= NamespacesDictionary["keysspacestring"] #>;
-using <#= NamespacesDictionary["dataprojectnamespace"] #>;
 using <#= NamespacesDictionary["entitylistsnamespace"] #>;
 using <#= NamespacesDictionary["datamappingspacestring"] #>;
-using <#= NamespacesDictionary["domaininterfacesspacestring"] #>;
 <#+ 
-if(NamespacesDictionary["dataprojectnamespace"]!=NamespacesDictionary["contextspacestring"])
+if(1==0)   //NamespacesDictionary["dataprojectnamespace"]!=NamespacesDictionary["contextspacestring"])
 {
 #>
+using <#= NamespacesDictionary["dataprojectnamespace"] #>;
+using <#= NamespacesDictionary["domaininterfacesspacestring"] #>;
 using <#= NamespacesDictionary["contextspacestring"] #>;
 <#+
 }
@@ -233,18 +233,22 @@ using <#= NamespacesDictionary["contextspacestring"] #>;
 
 namespace <#= servicenamespacestring #>
 { 
-   public partial class <#=tableName #>UpdateService:BaseEntityUpdateService<<#= contextName #>,POCO.<#=tableName #>,<#= pmName #>,<#= parententity #>,<#= listName #>,<#= keytype #>>
+   public partial class <#=tableName #>UpdateService:BaseEntityUpdateService<POCO.<#=tableName #>,<#= pmName #>,<#= parententity #>,<#= listName #>,<#= keytype #>>
    {
    		<#+  if (false) { #>
 		<#+ } #>	
-        public <#=tableName #>UpdateService(I<#= contextName #> mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((<#= contextName #>)mainContext,additionalContexts, tenant)
+        public <#=tableName #>UpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new <#=tableName #>DataMapping();
-            Repository = new Repository<POCO.<#=tableName #>>((<#= contextName #>)mainContext);
+            Repository = new Repository<POCO.<#=tableName #>>(mainContext);
         }
-        public <#=tableName #>UpdateService(int tenant) : this(<#= contextName #>.GetContext(tenant), null, tenant) {}
-        public <#=tableName #>UpdateService(I<#= contextName #> context) :  this(context, null, 0) {}
+        public <#=tableName #>UpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new <#=tableName #>DataMapping();
+            Repository = new Repository<POCO.<#=tableName #>>(tenant);
+		}
+        public <#=tableName #>UpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.<#=tableName #>,<#= keytype #>> GetKeys(<#= pmName #> entityPM) => new <#=tableName #>Keys<<#= keytype #>>() { <#= keysstring #> };
 <#+   if (IsAutoFill)  {  #>
 		protected override void FillDefaultValuesOnCreate(<#= pmName #> entityPM)

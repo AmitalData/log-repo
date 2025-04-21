@@ -1,6 +1,7 @@
 ﻿using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model.BaseClasses;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Data.Entity;
 using System.Linq;
 namespace AmitalCloud.Infrastructure.Data.BaseClasses

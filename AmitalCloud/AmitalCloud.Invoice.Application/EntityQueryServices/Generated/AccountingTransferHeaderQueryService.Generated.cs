@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class AccountingTransferHeaderQueryService: BaseEntityQueryService<IInvoiceContext,POCO.AccountingTransferHeader,AccountingTransferHeaderKeys<string>,AccountingTransferHeaderPM,AccountingTransferHeaderList,string>
+   public partial class AccountingTransferHeaderQueryService: BaseEntityQueryService<POCO.AccountingTransferHeader,AccountingTransferHeaderKeys<string>,AccountingTransferHeaderPM,AccountingTransferHeaderList,string>
    {
-        public AccountingTransferHeaderQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public AccountingTransferHeaderQueryService(IInvoiceContext context) : base(new Repository<POCO.AccountingTransferHeader>(context),new AccountingTransferHeaderDataMapping()) {}
+        public AccountingTransferHeaderQueryService(int tenant) : base(new Repository<POCO.AccountingTransferHeader>(tenant),new AccountingTransferHeaderDataMapping()) {}
+        public AccountingTransferHeaderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AccountingTransferHeader>(context),new AccountingTransferHeaderDataMapping()) {}
 		public  AccountingTransferHeaderPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AccountingTransferHeaderKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AccountingTransferHeader,string> GetKeys(POCO.AccountingTransferHeader entityPOCO) => new AccountingTransferHeaderKeys<string>() { Id = entityPOCO.Id,  };
    }

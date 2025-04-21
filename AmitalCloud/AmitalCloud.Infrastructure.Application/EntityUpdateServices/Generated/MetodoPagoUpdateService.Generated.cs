@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class MetodoPagoUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.MetodoPago,MetodoPagoPM,IEntityPM,MetodoPagoList,string>
+   public partial class MetodoPagoUpdateService:BaseEntityUpdateService<POCO.MetodoPago,MetodoPagoPM,IEntityPM,MetodoPagoList,string>
    {
    			
-        public MetodoPagoUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public MetodoPagoUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new MetodoPagoDataMapping();
-            Repository = new Repository<POCO.MetodoPago>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.MetodoPago>(mainContext);
         }
-        public MetodoPagoUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public MetodoPagoUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public MetodoPagoUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new MetodoPagoDataMapping();
+            Repository = new Repository<POCO.MetodoPago>(tenant);
+		}
+        public MetodoPagoUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.MetodoPago,string> GetKeys(MetodoPagoPM entityPM) => new MetodoPagoKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(MetodoPagoPM entityPM)
 		{

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class QuoteGroupSectionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QuoteGroupSection,QuoteGroupSectionKeys<string>,QuoteGroupSectionPM,QuoteGroupSectionList,string>
+   public partial class QuoteGroupSectionQueryService: BaseEntityQueryService<POCO.QuoteGroupSection,QuoteGroupSectionKeys<string>,QuoteGroupSectionPM,QuoteGroupSectionList,string>
    {
-        public QuoteGroupSectionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public QuoteGroupSectionQueryService(int tenant) : base(new Repository<POCO.QuoteGroupSection>(tenant),new QuoteGroupSectionDataMapping()) {}
         public QuoteGroupSectionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QuoteGroupSection>(context),new QuoteGroupSectionDataMapping()) {}
 		public  QuoteGroupSectionPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new QuoteGroupSectionKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QuoteGroupSection,string> GetKeys(POCO.QuoteGroupSection entityPOCO) => new QuoteGroupSectionKeys<string>() { Code = entityPOCO.Code,  };

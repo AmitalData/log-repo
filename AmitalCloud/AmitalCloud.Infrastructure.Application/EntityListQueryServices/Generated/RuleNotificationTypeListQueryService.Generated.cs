@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class RuleNotificationTypeListQueryService  : BaseEntityListQueryService<RuleNotificationTypeList,POCO.RuleNotificationType,  RuleNotificationTypeKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.RuleNotificationType> contextEntity => (context as IAmitalCloudContext).RuleNotificationTypes;
-		public RuleNotificationTypeListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public RuleNotificationTypeListQueryService(int tenant) : base(tenant) { }
         public RuleNotificationTypeList GetSingle(string code)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

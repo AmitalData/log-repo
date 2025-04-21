@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ProductPeriodQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ProductPeriod,ProductPeriodKeys<string>,ProductPeriodPM,ProductPeriodList,string>
+   public partial class ProductPeriodQueryService: BaseEntityQueryService<POCO.ProductPeriod,ProductPeriodKeys<string>,ProductPeriodPM,ProductPeriodList,string>
    {
-        public ProductPeriodQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ProductPeriodQueryService(int tenant) : base(new Repository<POCO.ProductPeriod>(tenant),new ProductPeriodDataMapping()) {}
         public ProductPeriodQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ProductPeriod>(context),new ProductPeriodDataMapping()) {}
 		public  ProductPeriodPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ProductPeriodKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ProductPeriod,string> GetKeys(POCO.ProductPeriod entityPOCO) => new ProductPeriodKeys<string>() { Code = entityPOCO.Code,  };

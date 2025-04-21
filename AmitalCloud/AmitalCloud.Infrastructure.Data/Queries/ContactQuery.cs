@@ -1,9 +1,9 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,13 +11,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Transactions;
 using System.Web;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class ContactQuery
     {
         IRepository<Contact> repository;
         IAmitalCloudContext context;
- 
+
         public ContactQuery(int tenant)
         {
             context = AmitalCloudContext.GetContext(tenant);
@@ -51,15 +52,15 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
         private IQueryable<ContactPM> GetContactPMQuery()
         => (from a in context.Contacts
-                    where a.UserType == "R"
-                    let contact = new ContactPM(a)
-                    {
-                        //ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                        //DontShowLocal = a.DontShowLocalLabels,
-                        ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
-                        //ContactDoneMethodName = a.ContactDoneMethod != null ? a.ContactDoneMethod.Name : null,
-                    }
-                    select contact);
+            where a.UserType == "R"
+            let contact = new ContactPM(a)
+            {
+                //ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                //DontShowLocal = a.DontShowLocalLabels,
+                ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                //ContactDoneMethodName = a.ContactDoneMethod != null ? a.ContactDoneMethod.Name : null,
+            }
+            select contact);
         private void GetContactPassword(ContactPM instance)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -101,8 +102,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public ContactPM GetSingleByEmail(string email, int tenant) => GetSingleContact(email, tenant);
         #endregion GetSingle ContactPM  
         public IQueryable<ContactList> GetContactListsByListIds(List<string> contactIds, int tenant)
-        => (from a in context.Contacts where contactIds.Contains(a.Id) && a.Tenant == tenant
-                                                    select new ContactList(a));
+        => (from a in context.Contacts
+            where contactIds.Contains(a.Id) && a.Tenant == tenant
+            select new ContactList(a));
 
     }
 }

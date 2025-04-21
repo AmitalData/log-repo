@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class AuthenticationTokenKeys<T> : BaseEntityKeyFields<EntityPOCOs.AuthenticationToken,T> 
+   public class AuthenticationTokenKeys<T> : BaseEntityKeyFields<ENTITIES.AuthenticationToken,T> 
    {
 		public AuthenticationTokenKeys() : base() {}
         public AuthenticationTokenKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Token.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "AuthenticationTokensPM";
-	  public override Expression<Func<EntityPOCOs.AuthenticationToken, bool>> Predicate => a => a.Token == Token;
+	  public override Expression<Func<ENTITIES.AuthenticationToken, bool>> Predicate => a => a.Token == Token;
    }
 }
 	 

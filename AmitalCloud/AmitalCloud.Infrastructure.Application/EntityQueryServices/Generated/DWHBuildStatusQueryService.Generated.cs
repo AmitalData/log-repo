@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DWHBuildStatusQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DWHBuildStatus,DWHBuildStatusKeys<string>,DWHBuildStatusPM,DWHBuildStatusList,string>
+   public partial class DWHBuildStatusQueryService: BaseEntityQueryService<POCO.DWHBuildStatus,DWHBuildStatusKeys<string>,DWHBuildStatusPM,DWHBuildStatusList,string>
    {
-        public DWHBuildStatusQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DWHBuildStatusQueryService(int tenant) : base(new Repository<POCO.DWHBuildStatus>(tenant),new DWHBuildStatusDataMapping()) {}
         public DWHBuildStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DWHBuildStatus>(context),new DWHBuildStatusDataMapping()) {}
 		public  DWHBuildStatusPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DWHBuildStatusKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DWHBuildStatus,string> GetKeys(POCO.DWHBuildStatus entityPOCO) => new DWHBuildStatusKeys<string>() { Id = entityPOCO.Id,  };

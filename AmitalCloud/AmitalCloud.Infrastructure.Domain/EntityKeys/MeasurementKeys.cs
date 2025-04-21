@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class MeasurementKeys<T> : BaseEntityKeyFields<EntityPOCOs.Measurement,T> 
+   public class MeasurementKeys<T> : BaseEntityKeyFields<ENTITIES.Measurement,T> 
    {
 		public MeasurementKeys() : base() {}
         public MeasurementKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "MeasurementsPM";
-	  public override Expression<Func<EntityPOCOs.Measurement, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.Measurement, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

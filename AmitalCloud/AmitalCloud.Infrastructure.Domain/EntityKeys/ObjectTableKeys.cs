@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class ObjectTableKeys<T> : BaseEntityKeyFields<EntityPOCOs.ObjectTable,T> 
+   public class ObjectTableKeys<T> : BaseEntityKeyFields<ENTITIES.ObjectTable,T> 
    {
 		public ObjectTableKeys() : base() {}
         public ObjectTableKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "ObjectTablesPM";
-	  public override Expression<Func<EntityPOCOs.ObjectTable, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.ObjectTable, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

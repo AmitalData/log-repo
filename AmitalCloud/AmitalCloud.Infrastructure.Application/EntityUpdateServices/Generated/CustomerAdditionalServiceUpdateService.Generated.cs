@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerAdditionalServiceUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerAdditionalService,CustomerAdditionalServicePM,CustomerPM,CustomerAdditionalServiceList,string>
+   public partial class CustomerAdditionalServiceUpdateService:BaseEntityUpdateService<POCO.CustomerAdditionalService,CustomerAdditionalServicePM,CustomerPM,CustomerAdditionalServiceList,string>
    {
    			
-        public CustomerAdditionalServiceUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerAdditionalServiceUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerAdditionalServiceDataMapping();
-            Repository = new Repository<POCO.CustomerAdditionalService>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerAdditionalService>(mainContext);
         }
-        public CustomerAdditionalServiceUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerAdditionalServiceUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerAdditionalServiceUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerAdditionalServiceDataMapping();
+            Repository = new Repository<POCO.CustomerAdditionalService>(tenant);
+		}
+        public CustomerAdditionalServiceUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerAdditionalService,string> GetKeys(CustomerAdditionalServicePM entityPM) => new CustomerAdditionalServiceKeys<string>() { CustomerId = entityPM.CustomerId, AdditionalServiceId = entityPM.AdditionalServiceId };
 protected override void FillDefaultValuesOnCreate(CustomerAdditionalServicePM entityPM)
 		{

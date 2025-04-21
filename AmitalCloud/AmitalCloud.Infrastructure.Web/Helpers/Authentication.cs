@@ -1,14 +1,14 @@
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Application.EntityUpdateServices;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Counters;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Data.Services;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -24,6 +24,7 @@ using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Security;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Application.Helpers
 {

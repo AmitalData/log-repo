@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerCompetitorUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerCompetitor,CustomerCompetitorPM,IEntityPM,CustomerCompetitorList,string>
+   public partial class CustomerCompetitorUpdateService:BaseEntityUpdateService<POCO.CustomerCompetitor,CustomerCompetitorPM,IEntityPM,CustomerCompetitorList,string>
    {
    			
-        public CustomerCompetitorUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerCompetitorUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerCompetitorDataMapping();
-            Repository = new Repository<POCO.CustomerCompetitor>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerCompetitor>(mainContext);
         }
-        public CustomerCompetitorUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerCompetitorUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerCompetitorUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerCompetitorDataMapping();
+            Repository = new Repository<POCO.CustomerCompetitor>(tenant);
+		}
+        public CustomerCompetitorUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerCompetitor,string> GetKeys(CustomerCompetitorPM entityPM) => new CustomerCompetitorKeys<string>() { CustomerId = entityPM.CustomerId, CompetitorId = entityPM.CompetitorId };
 protected override void FillDefaultValuesOnCreate(CustomerCompetitorPM entityPM)
 		{

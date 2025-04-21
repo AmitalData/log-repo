@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ConfirmationNumberDefaultQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ConfirmationNumberDefault,ConfirmationNumberDefaultKeys<string>,ConfirmationNumberDefaultPM,ConfirmationNumberDefaultList,string>
+   public partial class ConfirmationNumberDefaultQueryService: BaseEntityQueryService<POCO.ConfirmationNumberDefault,ConfirmationNumberDefaultKeys<string>,ConfirmationNumberDefaultPM,ConfirmationNumberDefaultList,string>
    {
-        public ConfirmationNumberDefaultQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ConfirmationNumberDefaultQueryService(IInvoiceContext context) : base(new Repository<POCO.ConfirmationNumberDefault>(context),new ConfirmationNumberDefaultDataMapping()) {}
+        public ConfirmationNumberDefaultQueryService(int tenant) : base(new Repository<POCO.ConfirmationNumberDefault>(tenant),new ConfirmationNumberDefaultDataMapping()) {}
+        public ConfirmationNumberDefaultQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ConfirmationNumberDefault>(context),new ConfirmationNumberDefaultDataMapping()) {}
 		public  ConfirmationNumberDefaultPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ConfirmationNumberDefaultKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ConfirmationNumberDefault,string> GetKeys(POCO.ConfirmationNumberDefault entityPOCO) => new ConfirmationNumberDefaultKeys<string>() { Id = entityPOCO.Id,  };
    }

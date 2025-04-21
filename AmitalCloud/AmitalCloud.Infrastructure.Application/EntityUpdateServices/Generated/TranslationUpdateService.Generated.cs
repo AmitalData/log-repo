@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class TranslationUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Translation,TranslationPM,IEntityPM,TranslationList,string>
+   public partial class TranslationUpdateService:BaseEntityUpdateService<POCO.Translation,TranslationPM,IEntityPM,TranslationList,string>
    {
    			
-        public TranslationUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public TranslationUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new TranslationDataMapping();
-            Repository = new Repository<POCO.Translation>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Translation>(mainContext);
         }
-        public TranslationUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public TranslationUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public TranslationUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new TranslationDataMapping();
+            Repository = new Repository<POCO.Translation>(tenant);
+		}
+        public TranslationUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Translation,string> GetKeys(TranslationPM entityPM) => new TranslationKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(TranslationPM entityPM)
 		{

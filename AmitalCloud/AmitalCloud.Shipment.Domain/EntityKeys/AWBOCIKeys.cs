@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Shipment.Domain.EntityKeys
 {
-   public class AWBOCIKeys<T> : BaseEntityKeyFields<EntityPOCOs.AWBOCI,T> 
+   public class AWBOCIKeys<T> : BaseEntityKeyFields<ENTITIES.AWBOCI,T> 
    {
 		public AWBOCIKeys() : base() {}
         public AWBOCIKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Shipment.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "AWBOCIsPM";
-	  public override Expression<Func<EntityPOCOs.AWBOCI, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.AWBOCI, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

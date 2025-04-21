@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class FollowUpQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.FollowUp,FollowUpKeys<string>,FollowUpPM,FollowUpList,string>
+   public partial class FollowUpQueryService: BaseEntityQueryService<POCO.FollowUp,FollowUpKeys<string>,FollowUpPM,FollowUpList,string>
    {
-        public FollowUpQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public FollowUpQueryService(int tenant) : base(new Repository<POCO.FollowUp>(tenant),new FollowUpDataMapping()) {}
         public FollowUpQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FollowUp>(context),new FollowUpDataMapping()) {}
 		public  FollowUpPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new FollowUpKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FollowUp,string> GetKeys(POCO.FollowUp entityPOCO) => new FollowUpKeys<string>() { Id = entityPOCO.Id,  };

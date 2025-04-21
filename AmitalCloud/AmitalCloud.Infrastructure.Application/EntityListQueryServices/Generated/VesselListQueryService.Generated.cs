@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class VesselListQueryService  : BaseEntityListQueryService<VesselList,POCO.Vessel,  VesselKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.Vessel> contextEntity => (context as IAmitalCloudContext).Vessels;
-		public VesselListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public VesselListQueryService(int tenant) : base(tenant) { }
         public VesselList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

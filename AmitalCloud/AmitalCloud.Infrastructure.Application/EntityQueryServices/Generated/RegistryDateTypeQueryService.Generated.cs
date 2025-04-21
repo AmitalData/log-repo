@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class RegistryDateTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.RegistryDateType,RegistryDateTypeKeys<string>,RegistryDateTypePM,RegistryDateTypeList,string>
+   public partial class RegistryDateTypeQueryService: BaseEntityQueryService<POCO.RegistryDateType,RegistryDateTypeKeys<string>,RegistryDateTypePM,RegistryDateTypeList,string>
    {
-        public RegistryDateTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public RegistryDateTypeQueryService(int tenant) : base(new Repository<POCO.RegistryDateType>(tenant),new RegistryDateTypeDataMapping()) {}
         public RegistryDateTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.RegistryDateType>(context),new RegistryDateTypeDataMapping()) {}
 		public  RegistryDateTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new RegistryDateTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.RegistryDateType,string> GetKeys(POCO.RegistryDateType entityPOCO) => new RegistryDateTypeKeys<string>() { Code = entityPOCO.Code,  };

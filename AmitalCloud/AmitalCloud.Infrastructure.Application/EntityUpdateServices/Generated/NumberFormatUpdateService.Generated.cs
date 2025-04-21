@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class NumberFormatUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.NumberFormat,NumberFormatPM,IEntityPM,NumberFormatList,string>
+   public partial class NumberFormatUpdateService:BaseEntityUpdateService<POCO.NumberFormat,NumberFormatPM,IEntityPM,NumberFormatList,string>
    {
    			
-        public NumberFormatUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public NumberFormatUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new NumberFormatDataMapping();
-            Repository = new Repository<POCO.NumberFormat>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.NumberFormat>(mainContext);
         }
-        public NumberFormatUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public NumberFormatUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public NumberFormatUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new NumberFormatDataMapping();
+            Repository = new Repository<POCO.NumberFormat>(tenant);
+		}
+        public NumberFormatUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.NumberFormat,string> GetKeys(NumberFormatPM entityPM) => new NumberFormatKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(NumberFormatPM entityPM)
 		{

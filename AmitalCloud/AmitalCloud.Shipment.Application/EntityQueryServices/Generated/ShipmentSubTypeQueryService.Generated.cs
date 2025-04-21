@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentSubTypeQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentSubType,ShipmentSubTypeKeys<string>,ShipmentSubTypePM,ShipmentSubTypeList,string>
+   public partial class ShipmentSubTypeQueryService: BaseEntityQueryService<POCO.ShipmentSubType,ShipmentSubTypeKeys<string>,ShipmentSubTypePM,ShipmentSubTypeList,string>
    {
-        public ShipmentSubTypeQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentSubTypeQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentSubType>(context),new ShipmentSubTypeDataMapping()) {}
+        public ShipmentSubTypeQueryService(int tenant) : base(new Repository<POCO.ShipmentSubType>(tenant),new ShipmentSubTypeDataMapping()) {}
+        public ShipmentSubTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentSubType>(context),new ShipmentSubTypeDataMapping()) {}
 		public  ShipmentSubTypePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentSubTypeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentSubType,string> GetKeys(POCO.ShipmentSubType entityPOCO) => new ShipmentSubTypeKeys<string>() { Id = entityPOCO.Id,  };
    }

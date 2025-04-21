@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class CustomsTransmissionsStatusQueryService: BaseEntityQueryService<IShipmentContext,POCO.CustomsTransmissionsStatus,CustomsTransmissionsStatusKeys<string>,CustomsTransmissionsStatusPM,CustomsTransmissionsStatusList,string>
+   public partial class CustomsTransmissionsStatusQueryService: BaseEntityQueryService<POCO.CustomsTransmissionsStatus,CustomsTransmissionsStatusKeys<string>,CustomsTransmissionsStatusPM,CustomsTransmissionsStatusList,string>
    {
-        public CustomsTransmissionsStatusQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public CustomsTransmissionsStatusQueryService(IShipmentContext context) : base(new Repository<POCO.CustomsTransmissionsStatus>(context),new CustomsTransmissionsStatusDataMapping()) {}
+        public CustomsTransmissionsStatusQueryService(int tenant) : base(new Repository<POCO.CustomsTransmissionsStatus>(tenant),new CustomsTransmissionsStatusDataMapping()) {}
+        public CustomsTransmissionsStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomsTransmissionsStatus>(context),new CustomsTransmissionsStatusDataMapping()) {}
 		public  CustomsTransmissionsStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new CustomsTransmissionsStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomsTransmissionsStatus,string> GetKeys(POCO.CustomsTransmissionsStatus entityPOCO) => new CustomsTransmissionsStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

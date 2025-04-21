@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class QueueDefinitionUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.QueueDefinition,QueueDefinitionPM,IEntityPM,QueueDefinitionList,string>
+   public partial class QueueDefinitionUpdateService:BaseEntityUpdateService<POCO.QueueDefinition,QueueDefinitionPM,IEntityPM,QueueDefinitionList,string>
    {
    			
-        public QueueDefinitionUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public QueueDefinitionUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new QueueDefinitionDataMapping();
-            Repository = new Repository<POCO.QueueDefinition>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.QueueDefinition>(mainContext);
         }
-        public QueueDefinitionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public QueueDefinitionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public QueueDefinitionUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new QueueDefinitionDataMapping();
+            Repository = new Repository<POCO.QueueDefinition>(tenant);
+		}
+        public QueueDefinitionUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.QueueDefinition,string> GetKeys(QueueDefinitionPM entityPM) => new QueueDefinitionKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(QueueDefinitionPM entityPM)
 		{

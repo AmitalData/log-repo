@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentComputedFieldsQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentComputedFields,ShipmentComputedFieldsKeys<string>,ShipmentComputedFieldsPM,ShipmentComputedFieldsList,string>
+   public partial class ShipmentComputedFieldsQueryService: BaseEntityQueryService<POCO.ShipmentComputedFields,ShipmentComputedFieldsKeys<string>,ShipmentComputedFieldsPM,ShipmentComputedFieldsList,string>
    {
-        public ShipmentComputedFieldsQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentComputedFieldsQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentComputedFields>(context),new ShipmentComputedFieldsDataMapping()) {}
+        public ShipmentComputedFieldsQueryService(int tenant) : base(new Repository<POCO.ShipmentComputedFields>(tenant),new ShipmentComputedFieldsDataMapping()) {}
+        public ShipmentComputedFieldsQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentComputedFields>(context),new ShipmentComputedFieldsDataMapping()) {}
 		public  ShipmentComputedFieldsPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentComputedFieldsKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentComputedFields,string> GetKeys(POCO.ShipmentComputedFields entityPOCO) => new ShipmentComputedFieldsKeys<string>() { Id = entityPOCO.Id,  };
    }

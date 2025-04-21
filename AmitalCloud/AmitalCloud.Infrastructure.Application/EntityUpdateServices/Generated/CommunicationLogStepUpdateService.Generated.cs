@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CommunicationLogStepUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CommunicationLogStep,CommunicationLogStepPM,IEntityPM,CommunicationLogStepList,string>
+   public partial class CommunicationLogStepUpdateService:BaseEntityUpdateService<POCO.CommunicationLogStep,CommunicationLogStepPM,IEntityPM,CommunicationLogStepList,string>
    {
    			
-        public CommunicationLogStepUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CommunicationLogStepUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CommunicationLogStepDataMapping();
-            Repository = new Repository<POCO.CommunicationLogStep>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CommunicationLogStep>(mainContext);
         }
-        public CommunicationLogStepUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CommunicationLogStepUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CommunicationLogStepUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CommunicationLogStepDataMapping();
+            Repository = new Repository<POCO.CommunicationLogStep>(tenant);
+		}
+        public CommunicationLogStepUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CommunicationLogStep,string> GetKeys(CommunicationLogStepPM entityPM) => new CommunicationLogStepKeys<string>() { StepNumber = entityPM.StepNumber, CommunicationLogId = entityPM.CommunicationLogId };
 protected override void FillDefaultValuesOnCreate(CommunicationLogStepPM entityPM)
 		{

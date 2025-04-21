@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ShipmentAWBPrintOnlyUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ShipmentAWBPrintOnly,ShipmentAWBPrintOnlyPM,ShipmentPM,ShipmentAWBPrintOnlyList,string>
+   public partial class ShipmentAWBPrintOnlyUpdateService:BaseEntityUpdateService<POCO.ShipmentAWBPrintOnly,ShipmentAWBPrintOnlyPM,ShipmentPM,ShipmentAWBPrintOnlyList,string>
    {
    			
-        public ShipmentAWBPrintOnlyUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ShipmentAWBPrintOnlyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ShipmentAWBPrintOnlyDataMapping();
-            Repository = new Repository<POCO.ShipmentAWBPrintOnly>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ShipmentAWBPrintOnly>(mainContext);
         }
-        public ShipmentAWBPrintOnlyUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ShipmentAWBPrintOnlyUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ShipmentAWBPrintOnlyUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ShipmentAWBPrintOnlyDataMapping();
+            Repository = new Repository<POCO.ShipmentAWBPrintOnly>(tenant);
+		}
+        public ShipmentAWBPrintOnlyUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ShipmentAWBPrintOnly,string> GetKeys(ShipmentAWBPrintOnlyPM entityPM) => new ShipmentAWBPrintOnlyKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ShipmentAWBPrintOnlyPM entityPM)
 		{

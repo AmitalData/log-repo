@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class ChargeTypeAccountingListQueryService  : BaseEntityListQueryService<ChargeTypeAccountingList,POCO.ChargeTypeAccounting,  ChargeTypeAccountingKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ChargeTypeAccounting> contextEntity => (context as IAmitalCloudContext).ChargeTypeAccountings;
-		public ChargeTypeAccountingListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public ChargeTypeAccountingListQueryService(int tenant) : base(tenant) { }
         public ChargeTypeAccountingList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

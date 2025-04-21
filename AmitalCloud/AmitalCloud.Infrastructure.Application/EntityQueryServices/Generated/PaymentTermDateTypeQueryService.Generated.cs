@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class PaymentTermDateTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PaymentTermDateType,PaymentTermDateTypeKeys<string>,PaymentTermDateTypePM,PaymentTermDateTypeList,string>
+   public partial class PaymentTermDateTypeQueryService: BaseEntityQueryService<POCO.PaymentTermDateType,PaymentTermDateTypeKeys<string>,PaymentTermDateTypePM,PaymentTermDateTypeList,string>
    {
-        public PaymentTermDateTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public PaymentTermDateTypeQueryService(int tenant) : base(new Repository<POCO.PaymentTermDateType>(tenant),new PaymentTermDateTypeDataMapping()) {}
         public PaymentTermDateTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PaymentTermDateType>(context),new PaymentTermDateTypeDataMapping()) {}
 		public  PaymentTermDateTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new PaymentTermDateTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PaymentTermDateType,string> GetKeys(POCO.PaymentTermDateType entityPOCO) => new PaymentTermDateTypeKeys<string>() { Code = entityPOCO.Code,  };

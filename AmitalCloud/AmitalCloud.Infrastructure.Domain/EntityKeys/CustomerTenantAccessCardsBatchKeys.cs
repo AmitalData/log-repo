@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class CustomerTenantAccessCardsBatchKeys<T> : BaseEntityKeyFields<EntityPOCOs.CustomerTenantAccessCardsBatch,T> 
+   public class CustomerTenantAccessCardsBatchKeys<T> : BaseEntityKeyFields<ENTITIES.CustomerTenantAccessCardsBatch,T> 
    {
 		public CustomerTenantAccessCardsBatchKeys() : base() {}
         public CustomerTenantAccessCardsBatchKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -30,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(CustomerId.ToString()+'_'+CustomerTenantAccessId.ToString()+'_'+BatchNumber.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CustomerTenantAccessCardsBatchesPM";
-	  public override Expression<Func<EntityPOCOs.CustomerTenantAccessCardsBatch, bool>> Predicate => a => a.CustomerId == CustomerId && a.CustomerTenantAccessId == CustomerTenantAccessId && a.BatchNumber == BatchNumber;
+	  public override Expression<Func<ENTITIES.CustomerTenantAccessCardsBatch, bool>> Predicate => a => a.CustomerId == CustomerId && a.CustomerTenantAccessId == CustomerTenantAccessId && a.BatchNumber == BatchNumber;
    }
 }
 	 

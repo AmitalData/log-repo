@@ -15,7 +15,8 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
+using Logitude.Accounting.Def.EntityPMs;
 
 
 
@@ -26,7 +27,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    public partial class ARPaymentChequeReplicaPM : BaseEntityPM   {
    #region Constructors
    public ARPaymentChequeReplicaPM() : base() {} 
-   public ARPaymentChequeReplicaPM(ARPaymentChequeReplica entity) : base()
+   public ARPaymentChequeReplicaPM(POCO.ARPaymentChequeReplica entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

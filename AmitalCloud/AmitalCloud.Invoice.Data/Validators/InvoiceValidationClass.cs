@@ -2,7 +2,7 @@
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Validators;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Invoice.Domain.Interfaces;
 using Microsoft.Practices.Unity;

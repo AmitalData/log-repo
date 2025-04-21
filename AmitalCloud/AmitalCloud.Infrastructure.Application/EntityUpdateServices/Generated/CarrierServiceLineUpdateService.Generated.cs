@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CarrierServiceLineUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CarrierServiceLine,CarrierServiceLinePM,IEntityPM,CarrierServiceLineList,string>
+   public partial class CarrierServiceLineUpdateService:BaseEntityUpdateService<POCO.CarrierServiceLine,CarrierServiceLinePM,IEntityPM,CarrierServiceLineList,string>
    {
    			
-        public CarrierServiceLineUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CarrierServiceLineUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CarrierServiceLineDataMapping();
-            Repository = new Repository<POCO.CarrierServiceLine>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CarrierServiceLine>(mainContext);
         }
-        public CarrierServiceLineUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CarrierServiceLineUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CarrierServiceLineUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CarrierServiceLineDataMapping();
+            Repository = new Repository<POCO.CarrierServiceLine>(tenant);
+		}
+        public CarrierServiceLineUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CarrierServiceLine,string> GetKeys(CarrierServiceLinePM entityPM) => new CarrierServiceLineKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(CarrierServiceLinePM entityPM)
 		{

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class WeightUnitUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.WeightUnit,WeightUnitPM,IEntityPM,WeightUnitList,string>
+   public partial class WeightUnitUpdateService:BaseEntityUpdateService<POCO.WeightUnit,WeightUnitPM,IEntityPM,WeightUnitList,string>
    {
    			
-        public WeightUnitUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public WeightUnitUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new WeightUnitDataMapping();
-            Repository = new Repository<POCO.WeightUnit>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.WeightUnit>(mainContext);
         }
-        public WeightUnitUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public WeightUnitUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public WeightUnitUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new WeightUnitDataMapping();
+            Repository = new Repository<POCO.WeightUnit>(tenant);
+		}
+        public WeightUnitUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.WeightUnit,string> GetKeys(WeightUnitPM entityPM) => new WeightUnitKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(WeightUnitPM entityPM)
 		{

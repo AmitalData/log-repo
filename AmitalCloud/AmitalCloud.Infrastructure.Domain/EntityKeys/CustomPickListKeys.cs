@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class CustomPickListKeys<T> : BaseEntityKeyFields<EntityPOCOs.CustomPickList,T> 
+   public class CustomPickListKeys<T> : BaseEntityKeyFields<ENTITIES.CustomPickList,T> 
    {
 		public CustomPickListKeys() : base() {}
         public CustomPickListKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CustomPickListsPM";
-	  public override Expression<Func<EntityPOCOs.CustomPickList, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.CustomPickList, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class PickUpDeliveryFromToTypeUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.PickUpDeliveryFromToType,PickUpDeliveryFromToTypePM,IEntityPM,PickUpDeliveryFromToTypeList,string>
+   public partial class PickUpDeliveryFromToTypeUpdateService:BaseEntityUpdateService<POCO.PickUpDeliveryFromToType,PickUpDeliveryFromToTypePM,IEntityPM,PickUpDeliveryFromToTypeList,string>
    {
    			
-        public PickUpDeliveryFromToTypeUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public PickUpDeliveryFromToTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new PickUpDeliveryFromToTypeDataMapping();
-            Repository = new Repository<POCO.PickUpDeliveryFromToType>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.PickUpDeliveryFromToType>(mainContext);
         }
-        public PickUpDeliveryFromToTypeUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public PickUpDeliveryFromToTypeUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public PickUpDeliveryFromToTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new PickUpDeliveryFromToTypeDataMapping();
+            Repository = new Repository<POCO.PickUpDeliveryFromToType>(tenant);
+		}
+        public PickUpDeliveryFromToTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.PickUpDeliveryFromToType,string> GetKeys(PickUpDeliveryFromToTypePM entityPM) => new PickUpDeliveryFromToTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(PickUpDeliveryFromToTypePM entityPM)
 		{

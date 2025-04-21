@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace AmitalCloud.Infrastructure.Domain.Interfaces
 {
     public interface IRepository<TEntity>
-        //where TContext : class , IContext
         where TEntity : class
     {
         void Insert(TEntity entity);

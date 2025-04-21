@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class PaymentTermKeys<T> : BaseEntityKeyFields<EntityPOCOs.PaymentTerm,T> 
+   public class PaymentTermKeys<T> : BaseEntityKeyFields<ENTITIES.PaymentTerm,T> 
    {
 		public PaymentTermKeys() : base() {}
         public PaymentTermKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "PaymentTermsPM";
-	  public override Expression<Func<EntityPOCOs.PaymentTerm, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.PaymentTerm, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

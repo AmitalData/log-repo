@@ -1,9 +1,6 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityLists;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +12,12 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         IRepository<Address> repository;
         public AddressQuery(int tenant)
         {
-            repository = new Repository<Address>(AmitalCloudContext.GetContext(tenant));
+            repository = new Repository<Address>(tenant);
         }
         public AddressQuery(IRepository<Address> addressRepository) => repository = addressRepository;
         #region Get Single AddressPM
-        public AddressPM GetAddressPMByTypeAndCard(string cardId, string typeId, int tenant) => 
-            repository.GetMulti(a => a.Tenant == tenant && a.CardId == cardId && a.AddressTypeId.ToUpper() == typeId.ToUpper(),a=> GetNewAddressPM(a), "Country,State").FirstOrDefault();
+        public AddressPM GetAddressPMByTypeAndCard(string cardId, string typeId, int tenant) =>
+            repository.GetMulti(a => a.Tenant == tenant && a.CardId == cardId && a.AddressTypeId.ToUpper() == typeId.ToUpper(), a => GetNewAddressPM(a), "Country,State").FirstOrDefault();
         #endregion Get Single AddressPM
         #region Get List<AddressList>
         public List<AddressPM> GetAddressesByCardId(string cardId, int tenant) => repository.GetMulti(a => a.Tenant == tenant && a.CardId == cardId, a => GetNewAddressPM(a), "Country,State").ToList();

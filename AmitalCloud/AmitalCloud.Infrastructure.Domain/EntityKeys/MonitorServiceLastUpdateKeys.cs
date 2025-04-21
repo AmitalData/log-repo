@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class MonitorServiceLastUpdateKeys<T> : BaseEntityKeyFields<EntityPOCOs.MonitorServiceLastUpdate,T> 
+   public class MonitorServiceLastUpdateKeys<T> : BaseEntityKeyFields<ENTITIES.MonitorServiceLastUpdate,T> 
    {
 		public MonitorServiceLastUpdateKeys() : base() {}
         public MonitorServiceLastUpdateKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "MonitorServiceLastUpdatesPM";
-	  public override Expression<Func<EntityPOCOs.MonitorServiceLastUpdate, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.MonitorServiceLastUpdate, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

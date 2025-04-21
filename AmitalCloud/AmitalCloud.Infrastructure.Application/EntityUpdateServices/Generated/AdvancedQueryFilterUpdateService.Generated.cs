@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class AdvancedQueryFilterUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.AdvancedQueryFilter,AdvancedQueryFilterPM,IEntityPM,AdvancedQueryFilterList,string>
+   public partial class AdvancedQueryFilterUpdateService:BaseEntityUpdateService<POCO.AdvancedQueryFilter,AdvancedQueryFilterPM,IEntityPM,AdvancedQueryFilterList,string>
    {
    			
-        public AdvancedQueryFilterUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public AdvancedQueryFilterUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AdvancedQueryFilterDataMapping();
-            Repository = new Repository<POCO.AdvancedQueryFilter>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.AdvancedQueryFilter>(mainContext);
         }
-        public AdvancedQueryFilterUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public AdvancedQueryFilterUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public AdvancedQueryFilterUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AdvancedQueryFilterDataMapping();
+            Repository = new Repository<POCO.AdvancedQueryFilter>(tenant);
+		}
+        public AdvancedQueryFilterUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AdvancedQueryFilter,string> GetKeys(AdvancedQueryFilterPM entityPM) => new AdvancedQueryFilterKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(AdvancedQueryFilterPM entityPM)
 		{

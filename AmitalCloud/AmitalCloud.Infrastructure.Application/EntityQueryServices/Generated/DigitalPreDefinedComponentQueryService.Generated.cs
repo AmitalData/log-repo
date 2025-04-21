@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DigitalPreDefinedComponentQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalPreDefinedComponent,DigitalPreDefinedComponentKeys<string>,DigitalPreDefinedComponentPM,DigitalPreDefinedComponentList,string>
+   public partial class DigitalPreDefinedComponentQueryService: BaseEntityQueryService<POCO.DigitalPreDefinedComponent,DigitalPreDefinedComponentKeys<string>,DigitalPreDefinedComponentPM,DigitalPreDefinedComponentList,string>
    {
-        public DigitalPreDefinedComponentQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DigitalPreDefinedComponentQueryService(int tenant) : base(new Repository<POCO.DigitalPreDefinedComponent>(tenant),new DigitalPreDefinedComponentDataMapping()) {}
         public DigitalPreDefinedComponentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalPreDefinedComponent>(context),new DigitalPreDefinedComponentDataMapping()) {}
 		public  DigitalPreDefinedComponentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalPreDefinedComponentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalPreDefinedComponent,string> GetKeys(POCO.DigitalPreDefinedComponent entityPOCO) => new DigitalPreDefinedComponentKeys<string>() { Id = entityPOCO.Id,  };

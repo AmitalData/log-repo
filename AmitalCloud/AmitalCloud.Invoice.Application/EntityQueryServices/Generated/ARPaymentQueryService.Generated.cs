@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ARPaymentQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ARPayment,ARPaymentKeys<string>,ARPaymentPM,ARPaymentList,string>
+   public partial class ARPaymentQueryService: BaseEntityQueryService<POCO.ARPayment,ARPaymentKeys<string>,ARPaymentPM,ARPaymentList,string>
    {
-        public ARPaymentQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ARPaymentQueryService(IInvoiceContext context) : base(new Repository<POCO.ARPayment>(context),new ARPaymentDataMapping()) {}
+        public ARPaymentQueryService(int tenant) : base(new Repository<POCO.ARPayment>(tenant),new ARPaymentDataMapping()) {}
+        public ARPaymentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ARPayment>(context),new ARPaymentDataMapping()) {}
 		public  ARPaymentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ARPaymentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ARPayment,string> GetKeys(POCO.ARPayment entityPOCO) => new ARPaymentKeys<string>() { Id = entityPOCO.Id,  };
    }

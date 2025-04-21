@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class TeamMemberBusinessRoleUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.TeamMemberBusinessRole,TeamMemberBusinessRolePM,LBPTeamMemberPM,TeamMemberBusinessRoleList,string>
+   public partial class TeamMemberBusinessRoleUpdateService:BaseEntityUpdateService<POCO.TeamMemberBusinessRole,TeamMemberBusinessRolePM,LBPTeamMemberPM,TeamMemberBusinessRoleList,string>
    {
    			
-        public TeamMemberBusinessRoleUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public TeamMemberBusinessRoleUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new TeamMemberBusinessRoleDataMapping();
-            Repository = new Repository<POCO.TeamMemberBusinessRole>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.TeamMemberBusinessRole>(mainContext);
         }
-        public TeamMemberBusinessRoleUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public TeamMemberBusinessRoleUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public TeamMemberBusinessRoleUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new TeamMemberBusinessRoleDataMapping();
+            Repository = new Repository<POCO.TeamMemberBusinessRole>(tenant);
+		}
+        public TeamMemberBusinessRoleUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.TeamMemberBusinessRole,string> GetKeys(TeamMemberBusinessRolePM entityPM) => new TeamMemberBusinessRoleKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(TeamMemberBusinessRolePM entityPM)
 		{

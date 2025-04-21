@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class QueryGroupUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.QueryGroup,QueryGroupPM,IEntityPM,QueryGroupList,string>
+   public partial class QueryGroupUpdateService:BaseEntityUpdateService<POCO.QueryGroup,QueryGroupPM,IEntityPM,QueryGroupList,string>
    {
    			
-        public QueryGroupUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public QueryGroupUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new QueryGroupDataMapping();
-            Repository = new Repository<POCO.QueryGroup>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.QueryGroup>(mainContext);
         }
-        public QueryGroupUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public QueryGroupUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public QueryGroupUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new QueryGroupDataMapping();
+            Repository = new Repository<POCO.QueryGroup>(tenant);
+		}
+        public QueryGroupUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.QueryGroup,string> GetKeys(QueryGroupPM entityPM) => new QueryGroupKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(QueryGroupPM entityPM)
 		{

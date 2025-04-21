@@ -9,34 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class TariffCarrierTranslationUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.TariffCarrierTranslation,TariffCarrierTranslationPM,IEntityPM,TariffCarrierTranslationList,string>
+   public partial class TariffCarrierTranslationUpdateService:BaseEntityUpdateService<POCO.TariffCarrierTranslation,TariffCarrierTranslationPM,IEntityPM,TariffCarrierTranslationList,string>
    {
    			
-        public TariffCarrierTranslationUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public TariffCarrierTranslationUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new TariffCarrierTranslationDataMapping();
-            Repository = new Repository<POCO.TariffCarrierTranslation>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.TariffCarrierTranslation>(mainContext);
         }
-        public TariffCarrierTranslationUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public TariffCarrierTranslationUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public TariffCarrierTranslationUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new TariffCarrierTranslationDataMapping();
+            Repository = new Repository<POCO.TariffCarrierTranslation>(tenant);
+		}
+        public TariffCarrierTranslationUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.TariffCarrierTranslation,string> GetKeys(TariffCarrierTranslationPM entityPM) => new TariffCarrierTranslationKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(TariffCarrierTranslationPM entityPM)
 		{

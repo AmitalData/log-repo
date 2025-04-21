@@ -9,34 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class AuditLogUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.AuditLog,AuditLogPM,IEntityPM,AuditLogList,string>
+   public partial class AuditLogUpdateService:BaseEntityUpdateService<POCO.AuditLog,AuditLogPM,IEntityPM,AuditLogList,string>
    {
    			
-        public AuditLogUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public AuditLogUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AuditLogDataMapping();
-            Repository = new Repository<POCO.AuditLog>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.AuditLog>(mainContext);
         }
-        public AuditLogUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public AuditLogUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public AuditLogUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AuditLogDataMapping();
+            Repository = new Repository<POCO.AuditLog>(tenant);
+		}
+        public AuditLogUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AuditLog,string> GetKeys(AuditLogPM entityPM) => new AuditLogKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(AuditLogPM entityPM)
 		{
@@ -44,7 +45,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
  
 			//entityPM.UpdateDate =  entityPM.CreateDate;
  
-			//entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
+			////entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
 		}
 		protected override void FillDefaultValuesOnUpdate(AuditLogPM entityPM)
         {       

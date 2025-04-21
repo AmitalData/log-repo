@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class PaymentCurrencyQueryService: BaseEntityQueryService<IGlobalContext,POCO.PaymentCurrency,PaymentCurrencyKeys<string>,PaymentCurrencyPM,PaymentCurrencyList,string>
+   public partial class PaymentCurrencyQueryService: BaseEntityQueryService<POCO.PaymentCurrency,PaymentCurrencyKeys<string>,PaymentCurrencyPM,PaymentCurrencyList,string>
    {
-        public PaymentCurrencyQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public PaymentCurrencyQueryService(int tenant) : base(new Repository<POCO.PaymentCurrency>(tenant),new PaymentCurrencyDataMapping()) {}
         public PaymentCurrencyQueryService(IGlobalContext context) : base(new Repository<POCO.PaymentCurrency>(context),new PaymentCurrencyDataMapping()) {}
 		public  PaymentCurrencyPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new PaymentCurrencyKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PaymentCurrency,string> GetKeys(POCO.PaymentCurrency entityPOCO) => new PaymentCurrencyKeys<string>() { Code = entityPOCO.Code,  };

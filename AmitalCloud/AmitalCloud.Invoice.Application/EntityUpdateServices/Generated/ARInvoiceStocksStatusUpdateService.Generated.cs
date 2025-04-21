@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data;
 using AmitalCloud.Invoice.Domain.EntityLists;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
-using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Data.Context;
 
 namespace AmitalCloud.Invoice.Application.EntityUpdateServices
 { 
-   public partial class ARInvoiceStocksStatusUpdateService:BaseEntityUpdateService<InvoiceContext,POCO.ARInvoiceStocksStatus,ARInvoiceStocksStatusPM,IEntityPM,ARInvoiceStocksStatusList,string>
+   public partial class ARInvoiceStocksStatusUpdateService:BaseEntityUpdateService<POCO.ARInvoiceStocksStatus,ARInvoiceStocksStatusPM,IEntityPM,ARInvoiceStocksStatusList,string>
    {
    			
-        public ARInvoiceStocksStatusUpdateService(IInvoiceContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((InvoiceContext)mainContext,additionalContexts, tenant)
+        public ARInvoiceStocksStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ARInvoiceStocksStatusDataMapping();
-            Repository = new Repository<POCO.ARInvoiceStocksStatus>((InvoiceContext)mainContext);
+            Repository = new Repository<POCO.ARInvoiceStocksStatus>(mainContext);
         }
-        public ARInvoiceStocksStatusUpdateService(int tenant) : this(InvoiceContext.GetContext(tenant), null, tenant) {}
-        public ARInvoiceStocksStatusUpdateService(IInvoiceContext context) :  this(context, null, 0) {}
+        public ARInvoiceStocksStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ARInvoiceStocksStatusDataMapping();
+            Repository = new Repository<POCO.ARInvoiceStocksStatus>(tenant);
+		}
+        public ARInvoiceStocksStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ARInvoiceStocksStatus,string> GetKeys(ARInvoiceStocksStatusPM entityPM) => new ARInvoiceStocksStatusKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(ARInvoiceStocksStatusPM entityPM)
 		{

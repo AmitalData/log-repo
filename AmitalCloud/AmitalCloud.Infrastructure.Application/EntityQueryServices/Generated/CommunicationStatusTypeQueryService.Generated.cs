@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CommunicationStatusTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CommunicationStatusType,CommunicationStatusTypeKeys<string>,CommunicationStatusTypePM,CommunicationStatusTypeList,string>
+   public partial class CommunicationStatusTypeQueryService: BaseEntityQueryService<POCO.CommunicationStatusType,CommunicationStatusTypeKeys<string>,CommunicationStatusTypePM,CommunicationStatusTypeList,string>
    {
-        public CommunicationStatusTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CommunicationStatusTypeQueryService(int tenant) : base(new Repository<POCO.CommunicationStatusType>(tenant),new CommunicationStatusTypeDataMapping()) {}
         public CommunicationStatusTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CommunicationStatusType>(context),new CommunicationStatusTypeDataMapping()) {}
 		public  CommunicationStatusTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new CommunicationStatusTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CommunicationStatusType,string> GetKeys(POCO.CommunicationStatusType entityPOCO) => new CommunicationStatusTypeKeys<string>() { Code = entityPOCO.Code,  };

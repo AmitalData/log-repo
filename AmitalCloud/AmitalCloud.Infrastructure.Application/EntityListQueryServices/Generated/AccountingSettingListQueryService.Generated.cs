@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class AccountingSettingListQueryService  : BaseEntityListQueryService<AccountingSettingList,POCO.AccountingSetting,  AccountingSettingKeys<int>,int>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.AccountingSetting> contextEntity => (context as IAmitalCloudContext).AccountingSettings;
-		public AccountingSettingListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public AccountingSettingListQueryService(int tenant) : base(tenant) { }
         public AccountingSettingList GetSingle(int id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

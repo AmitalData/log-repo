@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityLists ;
 using AmitalCloud.Shipment.Domain.EntityKeys ;
-using AmitalCloud.Shipment.Data.Context ;
-using AmitalCloud.Shipment.Domain.Interfaces ;
 namespace AmitalCloud.Shipment.Application.EntityListQueryServices
 { 
     public partial class ShipmentReceivableListQueryService  : BaseEntityListQueryService<ShipmentReceivableList,POCO.ShipmentReceivable,  ShipmentReceivableKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ShipmentReceivable> contextEntity => (context as IShipmentContext).ShipmentReceivables;
-		public ShipmentReceivableListQueryService(int tenant) : base(ShipmentContext.GetContext(tenant)) { }
+		public ShipmentReceivableListQueryService(int tenant) : base(tenant) { }
         public ShipmentReceivableList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

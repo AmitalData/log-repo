@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TruckerQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Trucker,TruckerKeys<string>,TruckerPM,TruckerList,string>
+   public partial class TruckerQueryService: BaseEntityQueryService<POCO.Trucker,TruckerKeys<string>,TruckerPM,TruckerList,string>
    {
-        public TruckerQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TruckerQueryService(int tenant) : base(new Repository<POCO.Trucker>(tenant),new TruckerDataMapping()) {}
         public TruckerQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Trucker>(context),new TruckerDataMapping()) {}
 		public  TruckerPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TruckerKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Trucker,string> GetKeys(POCO.Trucker entityPOCO) => new TruckerKeys<string>() { Id = entityPOCO.Id,  };

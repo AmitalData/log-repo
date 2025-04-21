@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CardContactAdditionalServiceUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CardContactAdditionalService,CardContactAdditionalServicePM,ContactPM,CardContactAdditionalServiceList,string>
+   public partial class CardContactAdditionalServiceUpdateService:BaseEntityUpdateService<POCO.CardContactAdditionalService,CardContactAdditionalServicePM,ContactPM,CardContactAdditionalServiceList,string>
    {
    			
-        public CardContactAdditionalServiceUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CardContactAdditionalServiceUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CardContactAdditionalServiceDataMapping();
-            Repository = new Repository<POCO.CardContactAdditionalService>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CardContactAdditionalService>(mainContext);
         }
-        public CardContactAdditionalServiceUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CardContactAdditionalServiceUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CardContactAdditionalServiceUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CardContactAdditionalServiceDataMapping();
+            Repository = new Repository<POCO.CardContactAdditionalService>(tenant);
+		}
+        public CardContactAdditionalServiceUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CardContactAdditionalService,string> GetKeys(CardContactAdditionalServicePM entityPM) => new CardContactAdditionalServiceKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(CardContactAdditionalServicePM entityPM)
 		{

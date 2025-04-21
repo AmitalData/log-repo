@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class BusinessHourQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BusinessHour,BusinessHourKeys<string>,BusinessHourPM,BusinessHourList,string>
+   public partial class BusinessHourQueryService: BaseEntityQueryService<POCO.BusinessHour,BusinessHourKeys<string>,BusinessHourPM,BusinessHourList,string>
    {
-        public BusinessHourQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public BusinessHourQueryService(int tenant) : base(new Repository<POCO.BusinessHour>(tenant),new BusinessHourDataMapping()) {}
         public BusinessHourQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BusinessHour>(context),new BusinessHourDataMapping()) {}
 		public  BusinessHourPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BusinessHourKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BusinessHour,string> GetKeys(POCO.BusinessHour entityPOCO) => new BusinessHourKeys<string>() { Id = entityPOCO.Id,  };

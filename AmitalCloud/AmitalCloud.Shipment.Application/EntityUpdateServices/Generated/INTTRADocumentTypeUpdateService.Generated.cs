@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class INTTRADocumentTypeUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.INTTRADocumentType,INTTRADocumentTypePM,IEntityPM,INTTRADocumentTypeList,string>
+   public partial class INTTRADocumentTypeUpdateService:BaseEntityUpdateService<POCO.INTTRADocumentType,INTTRADocumentTypePM,IEntityPM,INTTRADocumentTypeList,string>
    {
    			
-        public INTTRADocumentTypeUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public INTTRADocumentTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new INTTRADocumentTypeDataMapping();
-            Repository = new Repository<POCO.INTTRADocumentType>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.INTTRADocumentType>(mainContext);
         }
-        public INTTRADocumentTypeUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public INTTRADocumentTypeUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public INTTRADocumentTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new INTTRADocumentTypeDataMapping();
+            Repository = new Repository<POCO.INTTRADocumentType>(tenant);
+		}
+        public INTTRADocumentTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.INTTRADocumentType,string> GetKeys(INTTRADocumentTypePM entityPM) => new INTTRADocumentTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(INTTRADocumentTypePM entityPM)
 		{

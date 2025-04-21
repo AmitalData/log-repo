@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class UsoCFDIKeys<T> : BaseEntityKeyFields<EntityPOCOs.UsoCFDI,T> 
+   public class UsoCFDIKeys<T> : BaseEntityKeyFields<ENTITIES.UsoCFDI,T> 
    {
 		public UsoCFDIKeys() : base() {}
         public UsoCFDIKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "UsoCFDIsPM";
-	  public override Expression<Func<EntityPOCOs.UsoCFDI, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.UsoCFDI, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

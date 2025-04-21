@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DocumentsFilingMetaDataValueUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DocumentsFilingMetaDataValue,DocumentsFilingMetaDataValuePM,IEntityPM,DocumentsFilingMetaDataValueList,string>
+   public partial class DocumentsFilingMetaDataValueUpdateService:BaseEntityUpdateService<POCO.DocumentsFilingMetaDataValue,DocumentsFilingMetaDataValuePM,IEntityPM,DocumentsFilingMetaDataValueList,string>
    {
    			
-        public DocumentsFilingMetaDataValueUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DocumentsFilingMetaDataValueUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DocumentsFilingMetaDataValueDataMapping();
-            Repository = new Repository<POCO.DocumentsFilingMetaDataValue>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DocumentsFilingMetaDataValue>(mainContext);
         }
-        public DocumentsFilingMetaDataValueUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DocumentsFilingMetaDataValueUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DocumentsFilingMetaDataValueUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DocumentsFilingMetaDataValueDataMapping();
+            Repository = new Repository<POCO.DocumentsFilingMetaDataValue>(tenant);
+		}
+        public DocumentsFilingMetaDataValueUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DocumentsFilingMetaDataValue,string> GetKeys(DocumentsFilingMetaDataValuePM entityPM) => new DocumentsFilingMetaDataValueKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DocumentsFilingMetaDataValuePM entityPM)
 		{

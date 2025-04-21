@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class ConvertProgramInfoListQueryService  : BaseEntityListQueryService<ConvertProgramInfoList,POCO.ConvertProgramInfo,  ConvertProgramInfoKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ConvertProgramInfo> contextEntity => (context as IAmitalCloudContext).ConvertProgramInfoes;
-		public ConvertProgramInfoListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public ConvertProgramInfoListQueryService(int tenant) : base(tenant) { }
         public ConvertProgramInfoList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

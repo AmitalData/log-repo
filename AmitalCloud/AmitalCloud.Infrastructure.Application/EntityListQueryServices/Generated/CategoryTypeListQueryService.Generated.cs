@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class CategoryTypeListQueryService  : BaseEntityListQueryService<CategoryTypeList,POCO.CategoryType,  CategoryTypeKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.CategoryType> contextEntity => (context as IAmitalCloudContext).CategoryTypes;
-		public CategoryTypeListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public CategoryTypeListQueryService(int tenant) : base(tenant) { }
         public CategoryTypeList GetSingle(string code)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

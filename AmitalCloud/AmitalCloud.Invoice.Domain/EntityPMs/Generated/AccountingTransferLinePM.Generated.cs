@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -26,7 +26,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    public partial class AccountingTransferLinePM : BaseEntityPM   {
    #region Constructors
    public AccountingTransferLinePM() : base() {} 
-   public AccountingTransferLinePM(AccountingTransferLine entity) : base()
+   public AccountingTransferLinePM(POCO.AccountingTransferLine entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

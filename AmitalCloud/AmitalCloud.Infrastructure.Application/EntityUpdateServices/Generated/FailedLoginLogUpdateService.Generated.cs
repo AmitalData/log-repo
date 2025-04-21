@@ -11,18 +11,18 @@ using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
 using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class FailedLoginLogUpdateService:BaseEntityUpdateService<SystemLogContext,POCO.FailedLoginLog,FailedLoginLogPM,IEntityPM,FailedLoginLogList,string>
+   public partial class FailedLoginLogUpdateService:BaseEntityUpdateService<POCO.FailedLoginLog,FailedLoginLogPM,IEntityPM,FailedLoginLogList,string>
    {
    			
         public FailedLoginLogUpdateService(ISystemLogContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)

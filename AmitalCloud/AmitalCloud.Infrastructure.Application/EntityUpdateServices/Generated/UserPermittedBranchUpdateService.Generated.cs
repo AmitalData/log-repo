@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class UserPermittedBranchUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.UserPermittedBranch,UserPermittedBranchPM,IEntityPM,UserPermittedBranchList,string>
+   public partial class UserPermittedBranchUpdateService:BaseEntityUpdateService<POCO.UserPermittedBranch,UserPermittedBranchPM,IEntityPM,UserPermittedBranchList,string>
    {
    			
-        public UserPermittedBranchUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public UserPermittedBranchUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new UserPermittedBranchDataMapping();
-            Repository = new Repository<POCO.UserPermittedBranch>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.UserPermittedBranch>(mainContext);
         }
-        public UserPermittedBranchUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public UserPermittedBranchUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public UserPermittedBranchUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new UserPermittedBranchDataMapping();
+            Repository = new Repository<POCO.UserPermittedBranch>(tenant);
+		}
+        public UserPermittedBranchUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.UserPermittedBranch,string> GetKeys(UserPermittedBranchPM entityPM) => new UserPermittedBranchKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(UserPermittedBranchPM entityPM)
 		{

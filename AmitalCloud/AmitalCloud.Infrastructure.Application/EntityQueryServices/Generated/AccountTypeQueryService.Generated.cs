@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AccountTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AccountType,AccountTypeKeys<string>,AccountTypePM,AccountTypeList,string>
+   public partial class AccountTypeQueryService: BaseEntityQueryService<POCO.AccountType,AccountTypeKeys<string>,AccountTypePM,AccountTypeList,string>
    {
-        public AccountTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AccountTypeQueryService(int tenant) : base(new Repository<POCO.AccountType>(tenant),new AccountTypeDataMapping()) {}
         public AccountTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AccountType>(context),new AccountTypeDataMapping()) {}
 		public  AccountTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new AccountTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AccountType,string> GetKeys(POCO.AccountType entityPOCO) => new AccountTypeKeys<string>() { Code = entityPOCO.Code,  };

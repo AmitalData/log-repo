@@ -1,5 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityClasses;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {

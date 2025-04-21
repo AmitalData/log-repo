@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class TaskSchedulerHistoryUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.TaskSchedulerHistory,TaskSchedulerHistoryPM,IEntityPM,TaskSchedulerHistoryList,string>
+   public partial class TaskSchedulerHistoryUpdateService:BaseEntityUpdateService<POCO.TaskSchedulerHistory,TaskSchedulerHistoryPM,IEntityPM,TaskSchedulerHistoryList,string>
    {
    			
-        public TaskSchedulerHistoryUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public TaskSchedulerHistoryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new TaskSchedulerHistoryDataMapping();
-            Repository = new Repository<POCO.TaskSchedulerHistory>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.TaskSchedulerHistory>(mainContext);
         }
-        public TaskSchedulerHistoryUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public TaskSchedulerHistoryUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public TaskSchedulerHistoryUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new TaskSchedulerHistoryDataMapping();
+            Repository = new Repository<POCO.TaskSchedulerHistory>(tenant);
+		}
+        public TaskSchedulerHistoryUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.TaskSchedulerHistory,string> GetKeys(TaskSchedulerHistoryPM entityPM) => new TaskSchedulerHistoryKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(TaskSchedulerHistoryPM entityPM)
 		{

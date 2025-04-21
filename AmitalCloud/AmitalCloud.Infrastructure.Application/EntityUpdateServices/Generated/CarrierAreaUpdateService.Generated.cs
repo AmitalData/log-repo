@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CarrierAreaUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CarrierArea,CarrierAreaPM,IEntityPM,CarrierAreaList,string>
+   public partial class CarrierAreaUpdateService:BaseEntityUpdateService<POCO.CarrierArea,CarrierAreaPM,IEntityPM,CarrierAreaList,string>
    {
    			
-        public CarrierAreaUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CarrierAreaUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CarrierAreaDataMapping();
-            Repository = new Repository<POCO.CarrierArea>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CarrierArea>(mainContext);
         }
-        public CarrierAreaUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CarrierAreaUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CarrierAreaUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CarrierAreaDataMapping();
+            Repository = new Repository<POCO.CarrierArea>(tenant);
+		}
+        public CarrierAreaUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CarrierArea,string> GetKeys(CarrierAreaPM entityPM) => new CarrierAreaKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CarrierAreaPM entityPM)
 		{

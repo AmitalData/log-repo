@@ -1,6 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using System.Linq;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
@@ -12,7 +11,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public static bool HasFeatureToggle(string toggleCode, int tenant, int baseTenant)
         {
-            return new Repository<FeatureToggle>(AmitalCloudContext.GetContext(baseTenant)).GetMulti(a => a.ToggleCode == toggleCode && a.Tenant == tenant).Any();
+            return new Repository<FeatureToggle>(baseTenant).GetMulti(a => a.ToggleCode == toggleCode && a.Tenant == tenant).Any();
         }
 
     }

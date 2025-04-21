@@ -1,5 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;

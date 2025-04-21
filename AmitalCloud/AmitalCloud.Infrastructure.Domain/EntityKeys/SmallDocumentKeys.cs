@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class SmallDocumentKeys<T> : BaseEntityKeyFields<EntityPOCOs.SmallDocument,T> 
+   public class SmallDocumentKeys<T> : BaseEntityKeyFields<ENTITIES.SmallDocument,T> 
    {
 		public SmallDocumentKeys() : base() {}
         public SmallDocumentKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "SmallDocumentsPM";
-	  public override Expression<Func<EntityPOCOs.SmallDocument, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.SmallDocument, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

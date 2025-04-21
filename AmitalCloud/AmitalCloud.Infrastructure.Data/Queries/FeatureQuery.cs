@@ -1,15 +1,14 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityLists;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class FeatureQuery
@@ -160,7 +159,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
             LoggedUserFeatures loggedUserFeatures;
             if (true)
-                //!AmitalCloudSettings.DeploymentStage.IsDBStage(AmitalCloudSettings.DeploymentStage.LogboxAndAccountingProduction))
+            //!AmitalCloudSettings.DeploymentStage.IsDBStage(AmitalCloudSettings.DeploymentStage.LogboxAndAccountingProduction))
             {
                 string key = $"GetAllowedFeaturesForLoggedUser,{loggedUserId},{tenant}";
                 loggedUserFeatures = CacheManager.GetOrInsertNewObject<LoggedUserFeatures>(key, () =>
@@ -185,11 +184,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             ContactTenantPM contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, tenant);
             if (contactTenant == null)
             {
-                    contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, 0);
-                    UserQuery userQuery = new UserQuery(0);
-                    UserPM user = userQuery.GetSinglePM(loggedUserId, 0);
-                    isDistributor = user.IsDistributor;
-                    isCustomerCare = !user.IsDistributor;
+                contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, 0);
+                UserQuery userQuery = new UserQuery(0);
+                UserPM user = userQuery.GetSinglePM(loggedUserId, 0);
+                isDistributor = user.IsDistributor;
+                isCustomerCare = !user.IsDistributor;
             }
 
             else if (contactTenant.TenantId == 0)

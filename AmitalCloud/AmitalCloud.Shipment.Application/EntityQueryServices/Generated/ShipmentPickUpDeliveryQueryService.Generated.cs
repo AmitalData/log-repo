@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentPickUpDeliveryQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentPickUpDelivery,ShipmentPickUpDeliveryKeys<string>,ShipmentPickUpDeliveryPM,ShipmentPickUpDeliveryList,string>
+   public partial class ShipmentPickUpDeliveryQueryService: BaseEntityQueryService<POCO.ShipmentPickUpDelivery,ShipmentPickUpDeliveryKeys<string>,ShipmentPickUpDeliveryPM,ShipmentPickUpDeliveryList,string>
    {
-        public ShipmentPickUpDeliveryQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentPickUpDeliveryQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentPickUpDelivery>(context),new ShipmentPickUpDeliveryDataMapping()) {}
+        public ShipmentPickUpDeliveryQueryService(int tenant) : base(new Repository<POCO.ShipmentPickUpDelivery>(tenant),new ShipmentPickUpDeliveryDataMapping()) {}
+        public ShipmentPickUpDeliveryQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentPickUpDelivery>(context),new ShipmentPickUpDeliveryDataMapping()) {}
 		public  ShipmentPickUpDeliveryPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentPickUpDeliveryKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentPickUpDelivery,string> GetKeys(POCO.ShipmentPickUpDelivery entityPOCO) => new ShipmentPickUpDeliveryKeys<string>() { Id = entityPOCO.Id,  };
    }

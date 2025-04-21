@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerProductLocationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerProductLocation,CustomerProductLocationKeys<string>,CustomerProductLocationPM,CustomerProductLocationList,string>
+   public partial class CustomerProductLocationQueryService: BaseEntityQueryService<POCO.CustomerProductLocation,CustomerProductLocationKeys<string>,CustomerProductLocationPM,CustomerProductLocationList,string>
    {
-        public CustomerProductLocationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerProductLocationQueryService(int tenant) : base(new Repository<POCO.CustomerProductLocation>(tenant),new CustomerProductLocationDataMapping()) {}
         public CustomerProductLocationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerProductLocation>(context),new CustomerProductLocationDataMapping()) {}
 		public  CustomerProductLocationPM GetSingle(string customerid, string producttypecode, string countryid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerProductLocationKeys<string>(){ CustomerId = customerid, ProductTypeCode = producttypecode, CountryId = countryid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerProductLocation,string> GetKeys(POCO.CustomerProductLocation entityPOCO) => new CustomerProductLocationKeys<string>() { CustomerId = entityPOCO.CustomerId, ProductTypeCode = entityPOCO.ProductTypeCode, CountryId = entityPOCO.CountryId,  };

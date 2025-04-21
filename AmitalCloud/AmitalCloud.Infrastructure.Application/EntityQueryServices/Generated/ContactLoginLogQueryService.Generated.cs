@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ContactLoginLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ContactLoginLog,ContactLoginLogKeys<string>,ContactLoginLogPM,ContactLoginLogList,string>
+   public partial class ContactLoginLogQueryService: BaseEntityQueryService<POCO.ContactLoginLog,ContactLoginLogKeys<string>,ContactLoginLogPM,ContactLoginLogList,string>
    {
-        public ContactLoginLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ContactLoginLogQueryService(int tenant) : base(new Repository<POCO.ContactLoginLog>(tenant),new ContactLoginLogDataMapping()) {}
         public ContactLoginLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContactLoginLog>(context),new ContactLoginLogDataMapping()) {}
 		public  ContactLoginLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ContactLoginLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContactLoginLog,string> GetKeys(POCO.ContactLoginLog entityPOCO) => new ContactLoginLogKeys<string>() { Id = entityPOCO.Id,  };

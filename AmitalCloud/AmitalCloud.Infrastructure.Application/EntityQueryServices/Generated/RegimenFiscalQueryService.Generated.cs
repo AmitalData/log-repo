@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class RegimenFiscalQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.RegimenFiscal,RegimenFiscalKeys<string>,RegimenFiscalPM,RegimenFiscalList,string>
+   public partial class RegimenFiscalQueryService: BaseEntityQueryService<POCO.RegimenFiscal,RegimenFiscalKeys<string>,RegimenFiscalPM,RegimenFiscalList,string>
    {
-        public RegimenFiscalQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public RegimenFiscalQueryService(int tenant) : base(new Repository<POCO.RegimenFiscal>(tenant),new RegimenFiscalDataMapping()) {}
         public RegimenFiscalQueryService(IAmitalCloudContext context) : base(new Repository<POCO.RegimenFiscal>(context),new RegimenFiscalDataMapping()) {}
 		public  RegimenFiscalPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new RegimenFiscalKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.RegimenFiscal,string> GetKeys(POCO.RegimenFiscal entityPOCO) => new RegimenFiscalKeys<string>() { Code = entityPOCO.Code,  };

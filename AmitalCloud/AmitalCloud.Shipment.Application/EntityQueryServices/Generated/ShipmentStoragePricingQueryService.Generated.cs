@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentStoragePricingQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentStoragePricing,ShipmentStoragePricingKeys<string>,ShipmentStoragePricingPM,ShipmentStoragePricingList,string>
+   public partial class ShipmentStoragePricingQueryService: BaseEntityQueryService<POCO.ShipmentStoragePricing,ShipmentStoragePricingKeys<string>,ShipmentStoragePricingPM,ShipmentStoragePricingList,string>
    {
-        public ShipmentStoragePricingQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentStoragePricingQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentStoragePricing>(context),new ShipmentStoragePricingDataMapping()) {}
+        public ShipmentStoragePricingQueryService(int tenant) : base(new Repository<POCO.ShipmentStoragePricing>(tenant),new ShipmentStoragePricingDataMapping()) {}
+        public ShipmentStoragePricingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentStoragePricing>(context),new ShipmentStoragePricingDataMapping()) {}
 		public  ShipmentStoragePricingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentStoragePricingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentStoragePricing,string> GetKeys(POCO.ShipmentStoragePricing entityPOCO) => new ShipmentStoragePricingKeys<string>() { Id = entityPOCO.Id,  };
    }

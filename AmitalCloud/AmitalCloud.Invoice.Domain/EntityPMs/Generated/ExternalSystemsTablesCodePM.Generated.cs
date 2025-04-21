@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -26,7 +26,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    public partial class ExternalSystemsTablesCodePM : BaseEntityPM   {
    #region Constructors
    public ExternalSystemsTablesCodePM() : base() {} 
-   public ExternalSystemsTablesCodePM(ExternalSystemsTablesCode entity) : base()
+   public ExternalSystemsTablesCodePM(POCO.ExternalSystemsTablesCode entity) : base()
    {
 		_id = entity.Id;
 		_code = entity.Code;

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CounterDefinitionUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CounterDefinition,CounterDefinitionPM,IEntityPM,CounterDefinitionList,string>
+   public partial class CounterDefinitionUpdateService:BaseEntityUpdateService<POCO.CounterDefinition,CounterDefinitionPM,IEntityPM,CounterDefinitionList,string>
    {
    			
-        public CounterDefinitionUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CounterDefinitionUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CounterDefinitionDataMapping();
-            Repository = new Repository<POCO.CounterDefinition>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CounterDefinition>(mainContext);
         }
-        public CounterDefinitionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CounterDefinitionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CounterDefinitionUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CounterDefinitionDataMapping();
+            Repository = new Repository<POCO.CounterDefinition>(tenant);
+		}
+        public CounterDefinitionUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CounterDefinition,string> GetKeys(CounterDefinitionPM entityPM) => new CounterDefinitionKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CounterDefinitionPM entityPM)
 		{

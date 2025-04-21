@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class SpecialServiceListQueryService  : BaseEntityListQueryService<SpecialServiceList,POCO.SpecialService,  SpecialServiceKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.SpecialService> contextEntity => (context as IAmitalCloudContext).SpecialServices;
-		public SpecialServiceListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public SpecialServiceListQueryService(int tenant) : base(tenant) { }
         public SpecialServiceList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

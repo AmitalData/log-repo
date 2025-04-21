@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentCustomsMessageTypeQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentCustomsMessageType,ShipmentCustomsMessageTypeKeys<string>,ShipmentCustomsMessageTypePM,ShipmentCustomsMessageTypeList,string>
+   public partial class ShipmentCustomsMessageTypeQueryService: BaseEntityQueryService<POCO.ShipmentCustomsMessageType,ShipmentCustomsMessageTypeKeys<string>,ShipmentCustomsMessageTypePM,ShipmentCustomsMessageTypeList,string>
    {
-        public ShipmentCustomsMessageTypeQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentCustomsMessageTypeQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentCustomsMessageType>(context),new ShipmentCustomsMessageTypeDataMapping()) {}
+        public ShipmentCustomsMessageTypeQueryService(int tenant) : base(new Repository<POCO.ShipmentCustomsMessageType>(tenant),new ShipmentCustomsMessageTypeDataMapping()) {}
+        public ShipmentCustomsMessageTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentCustomsMessageType>(context),new ShipmentCustomsMessageTypeDataMapping()) {}
 		public  ShipmentCustomsMessageTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentCustomsMessageTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentCustomsMessageType,string> GetKeys(POCO.ShipmentCustomsMessageType entityPOCO) => new ShipmentCustomsMessageTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

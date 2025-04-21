@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class RuleTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.RuleType,RuleTypePM,IEntityPM,RuleTypeList,string>
+   public partial class RuleTypeUpdateService:BaseEntityUpdateService<POCO.RuleType,RuleTypePM,IEntityPM,RuleTypeList,string>
    {
    			
-        public RuleTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public RuleTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new RuleTypeDataMapping();
-            Repository = new Repository<POCO.RuleType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.RuleType>(mainContext);
         }
-        public RuleTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public RuleTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public RuleTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new RuleTypeDataMapping();
+            Repository = new Repository<POCO.RuleType>(tenant);
+		}
+        public RuleTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.RuleType,string> GetKeys(RuleTypePM entityPM) => new RuleTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(RuleTypePM entityPM)
 		{
