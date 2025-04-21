@@ -2788,7 +2788,7 @@ namespace MeatadataGeneratorTool
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
-            if (IsClosed && ObsList.First(f => f.FieldName == closeTableCode).FieldDataType != "Text")
+            if (IsClosed && ObsList.First(f => f.FieldName == CloseTableCode).FieldDataType != "Text")
             {
                 ErrorMessages = "The value for 'CloseTableCode' must be of type Text";
                 ErrorsVisibility = Visibility.Visible;
