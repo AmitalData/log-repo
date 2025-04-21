@@ -200,6 +200,16 @@ MainInterfaceCode ="5002"
                     Param2= @"{}",
                     MainInterfaceCode="3050",
                 },
+                new SincroTestCaseDetail()
+                {
+                    Code = "3050",
+                    Name = "הוראת תשלום לבדלרות",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""paymentStatus"":""3"",  ""paymentProcess"" :""1""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="3053",
+                },
 
                    new SincroTestCaseDetail()
                 {
