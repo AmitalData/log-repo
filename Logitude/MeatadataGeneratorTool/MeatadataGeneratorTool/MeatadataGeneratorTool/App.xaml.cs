@@ -85,19 +85,12 @@ namespace MeatadataGeneratorTool
                     return;
 
                 }
-                //e.Args[0].ToString();//@@"C:\LatestTool\MetaDataGenerator\MetaDataGenerator\Teeeeem.lxml";//
-                DirectOpenPath = e.Args[0].ToString();//@"C:\LatestTool\MetaDataGenerator\MetaDataGenerator\Test121.lxml";//"C:\LogitudeWorld - Offline 29-9-2015\main\Logitude.CRM.MetaData\EntityFiles\CallType.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//;e.Args[0].ToString(); //@"C:\LogitudeWorld - OffLine 21-9-2015\main\Logitude.CRM.MetaData\EntityFiles\Test1.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - New Offline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - NewOffline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//
-                //DirectOpenPath = @"C:\LogitudeWorld\main\Logitude.MetaData\EntityFiles\QuoteModel\Quote.lxml";//e.Args[0].ToString();//@"C:\LatestTool\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//"C:\LogitudeWorld - Offline 29-9-2015\main\Logitude.CRM.MetaData\EntityFiles\CallType.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//;e.Args[0].ToString(); //@"C:\LogitudeWorld - OffLine 21-9-2015\main\Logitude.CRM.MetaData\EntityFiles\Test1.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - New Offline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString(); //@"C:\LogitudeWorld - NewOffline\main\Logitude.CRM.MetaData\EntityFiles\Activity.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\TestClose.lxml";//e.Args[0].ToString();//@"C:\LogitudeWorld\MetaDataGenerator\MetaDataGenerator\testXMLFile1.lxml";//
-				ProjectName = GetSolutionFolderName(DirectOpenPath) ?? ProjectName;
+                DirectOpenPath = e.Args[0].ToString();
+                ProjectName = GetSolutionFolderName(DirectOpenPath) ?? ProjectName;
 
 
 				if (!string.IsNullOrEmpty(App.DirectOpenPath))
                 {
-                    //MessageBox.Show(App.DirectOpenPath);
-					
-
-					// byte[] byteArray = new byte[stream.Length];
-					//stream.Read(byteArray, 0, byteArray.Length);
 					FileStream stream = null;
                     try
                     {
