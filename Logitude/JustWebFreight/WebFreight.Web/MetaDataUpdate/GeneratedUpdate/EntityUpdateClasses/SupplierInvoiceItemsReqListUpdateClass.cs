@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "924dd2b15a88a42b6b9ba643ef956110";
+		public const string HashString = "85cfad02ff3d869a671d5eac54b88c1d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -72,7 +72,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "רשימת בקשות",
 			      				    LocalDefaultText =  "BS64:Iteo16nXmdee16og15HXp9ep15XXqiI=",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "11f4",
+			      				    Code =  "0539",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -715,11 +715,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManufactureCountryCode",
 					  						DefaultText =  "Manufacture Country Code",
-					  						FullLocalDefaultTextBack_up =  "םרץ יצור ",
+					  						FullLocalDefaultTextBack_up =  "ארץ יצור ",
 					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCAi",
 					  						ListFieldLable =  "ManufactureCountryCodeListLable",
 					  						ListLableDefaultText =  "Manufacture Country Code",
-					  						ListLocalDefaultTextBack_up =  "םרץ יצור ",
+					  						ListLocalDefaultTextBack_up =  "ארץ יצור ",
 					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCAi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsCountry",
@@ -784,11 +784,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManufactureCountryName",
 					  						DefaultText =  "Manufacture Country Name",
-					  						FullLocalDefaultTextBack_up =  "םרץ יצור ",
+					  						FullLocalDefaultTextBack_up =  "ארץ יצור ",
 					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCAi",
 					  						ListFieldLable =  "ManufactureCountryNameListLable",
 					  						ListLableDefaultText =  "Manufacture Country Name",
-					  						ListLocalDefaultTextBack_up =  "םרץ יצור ",
+					  						ListLocalDefaultTextBack_up =  "ארץ יצור ",
 					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCAi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
