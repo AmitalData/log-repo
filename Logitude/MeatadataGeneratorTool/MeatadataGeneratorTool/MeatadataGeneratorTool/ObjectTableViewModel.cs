@@ -2776,30 +2776,41 @@ namespace MeatadataGeneratorTool
 				return false;
 
 			}
-            if(IsClosed && string.IsNullOrEmpty(CloseTableCode))
+            
+            
+            if (IsClosed)
             {
-                ErrorMessages = "Close Table Code is required ..";
-                ErrorsVisibility = Visibility.Visible;
-                return false;
+                var closeTableCodeField = ObsList.FirstOrDefault(f => f.FieldName == CloseTableCode);
+                if (closeTableCodeField == null)
+                {
+                    ErrorMessages = "The field 'CloseTableCode' is required.";
+                    ErrorsVisibility = Visibility.Visible;
+                    return false;
+                }
+                else if (closeTableCodeField.FieldDataType != "Text")
+                {
+                    ErrorMessages = "The field 'CloseTableCode' must be of type Text.";
+                    ErrorsVisibility = Visibility.Visible;
+                    return false;
+                }
+
+                var closeTableNameField = ObsList.FirstOrDefault(f => f.FieldName == CloseTableName);
+                if (closeTableNameField == null)
+                {
+                    ErrorMessages = "The field 'CloseTableName' is required.";
+                    ErrorsVisibility = Visibility.Visible;
+                    return false;
+                }
+                else if (closeTableNameField.FieldDataType != "Text")
+                {
+                    ErrorMessages = "The field 'CloseTableName' must be of type Text.";
+                    ErrorsVisibility = Visibility.Visible;
+                    return false;
+                }
             }
-            if (IsClosed && string.IsNullOrEmpty(CloseTableName))
-            {
-                ErrorMessages = "Close Table Name is required ..";
-                ErrorsVisibility = Visibility.Visible;
-                return false;
-            }
-            if (IsClosed && ObsList.First(f => f.FieldName == CloseTableCode).FieldDataType != "Text")
-            {
-                ErrorMessages = "The value for 'CloseTableCode' must be of type Text";
-                ErrorsVisibility = Visibility.Visible;
-                return false;
-            }
-            if (IsClosed && ObsList.First(f => f.FieldName == CloseTableName).FieldDataType != "Text")
-            {
-                ErrorMessages = "The value for 'CloseTableName' must be of type Text";
-                ErrorsVisibility = Visibility.Visible;
-                return false;
-            }
+
+            
+            
             try
             {
                 ErrorsVisibility = Visibility.Collapsed;
