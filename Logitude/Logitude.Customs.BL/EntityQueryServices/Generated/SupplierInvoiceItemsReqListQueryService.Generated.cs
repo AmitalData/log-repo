@@ -24,7 +24,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class SupplierInvoiceItemsReqListQueryService: EntityQueryService<SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListKeys,SupplierInvoiceItemsReqListPM,SupplierInvoiceItemPM,SupplierInvoiceItemKeys>
+   public partial class SupplierInvoiceItemsReqListQueryService: EntityQueryService<POCO.SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListKeys,SupplierInvoiceItemsReqListPM,object,SupplierInvoiceItemsReqListKeys>
    {
    
         SupplierInvoiceItemsReqListRepository repository;
