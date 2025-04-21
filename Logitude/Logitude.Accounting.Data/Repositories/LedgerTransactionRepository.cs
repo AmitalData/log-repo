@@ -1327,21 +1327,22 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromTo(string accountId, DateTime fromDate, DateTime toDate, int tenant)
         {
 
-            var mysumlist = (from r in context.LedgerTransactions
-                             where r.AccountId == accountId && r.AccountingDate >= fromDate && r.AccountingDate <= toDate && r.Tenant == tenant
-                             group r by new
-                             {
-                                 r.CurrencyId
-                             } into g
-                             select new CurrencySum
-                             {
-                                 AccountId = accountId,
-                                 CurrencyId = g.Key.CurrencyId,
-                                 LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
-                                 LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
-                                 ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
-                                 ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
-                             }).ToList();
+            var q = (from r in context.LedgerTransactions
+                     where r.AccountId == accountId && r.AccountingDate >= fromDate && r.AccountingDate <= toDate && r.Tenant == tenant
+                     group r by new
+                     {
+                         r.CurrencyId
+                     } into g
+                     select new CurrencySum
+                     {
+                         AccountId = accountId,
+                         CurrencyId = g.Key.CurrencyId,
+                         LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
+                         LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
+                         ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
+                         ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
+                     });
+            List<CurrencySum> mysumlist = q != null ? q.ToList() : new List<CurrencySum>();
             return mysumlist;
         }
 
