@@ -57,13 +57,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "DeclarationId",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
+			      				    IsComposition =  true,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
@@ -289,7 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -514,7 +514,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Invoice Item Line Number",
 					  						ListFieldLable =  "InvoiceItemLineNumberListLable",
 					  						ListLableDefaultText =  "Invoice Item Line Number",
-					  						IsForeignKey =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "SupplierInvoiceItem",
+					  						NavigationPropertyName =  "SupplierInvoiceItem",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -713,11 +715,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManufactureCountryCode",
 					  						DefaultText =  "Manufacture Country Code",
-					  						FullLocalDefaultTextBack_up =  "ארץ יצור ",
+					  						FullLocalDefaultTextBack_up =  "םרץ יצור ",
 					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCAi",
 					  						ListFieldLable =  "ManufactureCountryCodeListLable",
 					  						ListLableDefaultText =  "Manufacture Country Code",
-					  						ListLocalDefaultTextBack_up =  "ארץ יצור ",
+					  						ListLocalDefaultTextBack_up =  "םרץ יצור ",
 					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCAi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsCountry",
@@ -782,11 +784,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManufactureCountryName",
 					  						DefaultText =  "Manufacture Country Name",
-					  						FullLocalDefaultTextBack_up =  "ארץ יצור ",
+					  						FullLocalDefaultTextBack_up =  "םרץ יצור ",
 					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCAi",
 					  						ListFieldLable =  "ManufactureCountryNameListLable",
 					  						ListLableDefaultText =  "Manufacture Country Name",
-					  						ListLocalDefaultTextBack_up =  "ארץ יצור ",
+					  						ListLocalDefaultTextBack_up =  "םרץ יצור ",
 					  						ListLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCAi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1034,13 +1036,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable SupplierInvoiceItemsReqListObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvoiceItemsReqList" && d.Tenant == 0).FirstOrDefault(); 
-
-		   Feature SupplierInvoiceItemsReqListFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable);
-		   Feature SupplierInvoiceItemsReqListFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable);
-		   Feature SupplierInvoiceItemsReqListFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable);
-		   Feature SupplierInvoiceItemsReqListFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupplierInvoiceItemsReqList.Features.PackageFeature", NameTextCodeDefaultText = "SupplierInvoiceItemsReqList Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupplierInvoiceItemsReqListObjectTable);    
+	    {     
 	    
 		}
 
