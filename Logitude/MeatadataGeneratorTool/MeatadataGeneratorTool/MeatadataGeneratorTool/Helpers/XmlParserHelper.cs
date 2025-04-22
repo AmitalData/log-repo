@@ -1058,6 +1058,7 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.LovDisplayMemberPath = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPath"]);
                 objectTable.LovDisplayMemberPathLocal = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPathLocal"]);
                 objectTable.TenantZeroData = GetAttributeBoolValue(entity.Attributes["TenantZeroData"]);
+                objectTable.ShowFastSearch = GetAttributeBoolValue(entity.Attributes["ShowFastSearch"]);
 
                 if (entity.Attributes["NoViewController"] != null)
                 {

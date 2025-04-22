@@ -263,6 +263,7 @@
                                             <TextBlock Grid.Row="26" Grid.Column="0" VerticalAlignment="Center" Text="Has Menu Buttons:" />
                                             <TextBlock Grid.Row="27" Grid.Column="0" VerticalAlignment="Center" Text="Apply OnProperty Changed Code:" />
                                             <TextBlock Grid.Row="28" Grid.Column="0" VerticalAlignment="Center" Text="Tenant Zero Data:" />
+                                            <TextBlock Grid.Row="29" Grid.Column="0" VerticalAlignment="Center" Text="Show Fast Search:" />
 
                                             <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IsNewWizard, Mode=TwoWay}" />
                                             <TextBox Grid.Row="1" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding NewWizardControlName, Mode=TwoWay}" />
@@ -293,6 +294,7 @@
                                             <CheckBox Grid.Row="26" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasMenuButtons, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="27" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ApplyOnPropertyChangedCode, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="28" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding TenantZeroData, Mode=TwoWay}" />
+                                            <CheckBox Grid.Row="29" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ShowFastSearch, Mode=TwoWay}" />
                                         </Grid>
 
                                         <Grid Grid.Column="4">
