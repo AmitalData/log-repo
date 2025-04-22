@@ -56,8 +56,17 @@ export class ProcessMenuService {
 
         return this._http.post(this._apiUrl + '/PostDeleteFromMenu?reportId=' + reportId + '&type=' + type, null, ServiceHelper.GetHttpHeaders()).pipe(
             map(response => {
-                let serviceResponse = response;
+                let serviceResponse :any= response;
+                if(!serviceResponse.HasError){
+                    this.relatedProcess = this.relatedProcess
+                    ?.filter(item => item.Id !== reportId)
+                    ?.sort((a, b) => new Date(b.CreateDate).getTime() - new Date(a.CreateDate).getTime());
+                this.relatedProcessSubject.next(this.relatedProcess);
+                this.processCount.next(this.relatedProcess.filter(item => item.StatusCode === 'D').length);
+
                 return serviceResponse;
+                }
+                
             }),
             catchError(ServiceHelper.HandleServiceError));
     }

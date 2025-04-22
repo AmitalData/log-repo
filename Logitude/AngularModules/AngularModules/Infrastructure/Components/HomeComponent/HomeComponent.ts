@@ -34,7 +34,8 @@ import { ProcessMenuService } from 'Common/Services/ProcessMenuService';
 
 @Component({
     templateUrl: './HomeComponent.html',
-    
+    providers: [ProcessMenuService]
+
 
 })
 
@@ -53,7 +54,6 @@ export class HomeComponent implements OnDestroy{
     public IfBlueSnapContracts: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private BluesnapContractService: BluesnapContractPMService = new BluesnapContractPMService();
-    private processMenuService : ProcessMenuService = new ProcessMenuService();
     public ShowNewReleaseToolTip: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public EAWBStockBuyingLable = "";
@@ -68,7 +68,7 @@ export class HomeComponent implements OnDestroy{
     selectedTab: number = 0;
 
 
-    constructor() {
+    constructor(private processMenuService: ProcessMenuService) {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
         SessionLocator.AllSessions = new Array<SessionComponent>();
@@ -812,7 +812,7 @@ export class HomeComponent implements OnDestroy{
 
         }
     }
-    get CurrentProcessId () { return this.CurrentProcessId ; }
+    get CurrentProcessId () { return this.currentProcessId ; }
     set CurrentProcessId (newValue: string) {
         
         if (this.currentProcessId  != newValue) {

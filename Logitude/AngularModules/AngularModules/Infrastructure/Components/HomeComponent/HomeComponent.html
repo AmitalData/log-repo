@@ -579,5 +579,5 @@
     </tr>
 </table>
 <div *ngIf="IsProcessMenuVisible"  (mouseleave)="CloseMenu()" >
-    <ProcessMenuComponent (PinnedChanged)="TogglePinMenu($event)" (mouseenter)="KeepMenuOpen()" (mouseleave)="CloseMenu()"  [IsProcessMenuVisible]="IsProcessMenuVisible" [IsPinned]="isPinned" [CurrentProcessId ]="CurrentProcessId" [CurrentSelectedTab]="SelectedTab"></ProcessMenuComponent>
+    <ProcessMenuComponent (PinnedChanged)="TogglePinMenu($event)" (mouseenter)="KeepMenuOpen()" (mouseleave)="CloseMenu()"  [IsProcessMenuVisible]="IsProcessMenuVisible" [IsPinned]="isPinned" [CurrentProcessId]="CurrentProcessId" [CurrentSelectedTab]="SelectedTab"></ProcessMenuComponent>
 </div>

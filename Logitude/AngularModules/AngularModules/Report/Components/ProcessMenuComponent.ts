@@ -36,14 +36,13 @@ export class ProcessMenuComponent implements OnDestroy {
     MenuItems$ = this.menuItemsSubject.asObservable();
     showExceptionMessage = false
     isProcessMenuVisible: boolean = false;
-    public selectedTab: string = ''; 
+    public selectedTab: string = '0'; 
     public currentSelectedTab: number = 0; 
 
     currentProcessId: string = "";
     public isPinned: boolean = false;
     public LayoutDirection: string = 'ltr';
     ReportExecutionLogPMService: ReportExecutionLogPMService = new ReportExecutionLogPMService();
-    processMenuService: ProcessMenuService = new ProcessMenuService();
     private subscription: Subscription | null = null;
     reportPMService: ReportPMService = new ReportPMService();
     reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
@@ -54,7 +53,7 @@ export class ProcessMenuComponent implements OnDestroy {
         [MenuTypes.ReportExecutionLog]: TextCodeTranslator.Translate("General.MH.Reports"),
         [MenuTypes.BatchTaskExecution]: TextCodeTranslator.Translate("Accounting.General.O.TaxReport"),
     };
-    constructor() {
+    constructor(private processMenuService: ProcessMenuService) {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
       
         this.GroupMenuItemsByType();
@@ -71,9 +70,10 @@ export class ProcessMenuComponent implements OnDestroy {
                 groups[type].push(menuItem); 
                 return groups;
             }, {});
-            this.selectedTab =  (!AppTool.IsNullOrEmpty(this.selectedTab) && AppTool.IsNullOrEmpty(this.CurrentProcessId)) ? this.selectedTab: Object.keys(this.groupedMenuItems)[this.CurrentSelectedTab];
+            this.selectedTab =  (!AppTool.IsNullOrEmpty(this.selectedTab) && AppTool.IsNullOrEmpty(this.CurrentSelectedTab)) ? this.selectedTab: !AppTool.IsNullOrEmpty(this.CurrentSelectedTab) && Object.keys(this.groupedMenuItems)[this.CurrentSelectedTab] ? Object.keys(this.groupedMenuItems)[this.CurrentSelectedTab] : "0";
 
         });
+
     }
     selectTab(tab: string) {
         this.currentSelectedTab = null;
@@ -129,7 +129,6 @@ export class ProcessMenuComponent implements OnDestroy {
 
         this.processMenuService.DeleteFromMenu(relatedRep.Id,relatedRep.ItemType).subscribe((res: any) => {
             if (!res.HasError) {
-                this.processMenuService.LoadMenuItems();
                 SessionLocator.HomeComponent.IsProcessMenuVisible = true;
 
             }
