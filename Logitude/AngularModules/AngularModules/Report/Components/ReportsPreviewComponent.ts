@@ -480,7 +480,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         filter.UserId = SessionLocator.LoggedUserId;
         filter.ReportId = this.Report.Id;
         filter.DisablePreview = this.Report.DisablePreview;
-
+        filter.NotDisplayInMenu = this.IsSchedulerReport;
         if (this.ReportsTemplateLists) {
             var reportTemplate: any = this.ReportsTemplateLists.filter(d => d.Id == filter.DefaultTemplateId)[0];
             if (reportTemplate) {
@@ -541,18 +541,24 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
 
             if (!myResponse.HasError) {
-                var messageWindow = new MessageWindow();
-                messageWindow.ShowSuccessIcon = true;
+                this.ReportFliter = myResponse.Result;
 
-                messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
+               if(!this.IsSchedulerReport){
+                    var messageWindow = new MessageWindow();
+                    messageWindow.ShowSuccessIcon = true;
+      
+                    messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
                 SessionLocator.HomeComponent.IsProcessMenuVisible = true;
                 SessionLocator.HomeComponent.CurrentProcessId  = myResponse.Result.ReportKey;
                 SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog;
-                SessionLocator.HomeComponent.isPinned = true;
-
-                this.BackButtonClicked()
-                this.ReportFliter = myResponse.Result;
-                this.StopBusyIndicator();
+                    SessionLocator.HomeComponent.isPinned = true;
+      
+                    this.BackButtonClicked()
+                    this.StopBusyIndicator();
+                }
+                else{
+                    this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
+                }
                 
             } else {
 

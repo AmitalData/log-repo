@@ -3560,7 +3560,7 @@ namespace WebFreight.Web.Helpers
                 ReportId = reportFliter.ReportId,
                 ReportTemplateId = string.IsNullOrWhiteSpace(reportFliter.DefaultTemplateId) ? null : reportFliter.DefaultTemplateId,
                 DisablePreview = reportFliter.DisablePreview,
-
+                NotDisplayInMenu = reportFliter.NotDisplayInMenu ,
             };
 
             reportExecutionLogRepository.Add(reportExecutionLog);
