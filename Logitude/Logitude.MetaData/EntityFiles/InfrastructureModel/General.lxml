@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;8ed5&quot;"
+  Code="&quot;6a77&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -8462,7 +8462,7 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;FASTESEARCH&quot;"
+      Code="&quot;FASTSEARCH&quot;"
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.FASESEARCH&quot;"
       FeatureDefaultText="&quot;Fast Search&quot;"
