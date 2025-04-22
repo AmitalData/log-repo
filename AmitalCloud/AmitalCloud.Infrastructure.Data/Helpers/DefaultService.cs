@@ -83,10 +83,10 @@ namespace Logitude.BL.Helpers
         private List<DefaultAndConfiguration_Ext> Fetch(int tenant, string setKey) =>
             Get(tenant).Where(s => s.SetKey == setKey).ToList();
 
-        private List<DefaultAndConfiguration_Ext> FetchByTenant(int tenant)
+		private List<DefaultAndConfiguration_Ext> FetchByTenant(int tenant)
         {
             Repository<DefaultAndConfiguration> repository = new Repository<DefaultAndConfiguration>(AmitalCloudContext.GetContext(tenant));
-			List<DefaultAndConfiguration_Ext> result = (tenant == 0 ? repository.GetQueryable() : repository.GetMulti(a => a.Tenant == tenant).AsQueryable()).Select(a => new DefaultAndConfiguration_Ext(a)).ToList();
+			List<DefaultAndConfiguration_Ext> result = (tenant == 0 ? repository.GetQueryable() : repository.GetMulti(a => a.Tenant == tenant || (a.Tenant == 0 && a.AllowInheritance)).AsQueryable()).Select(a => new DefaultAndConfiguration_Ext(a)).ToList();
             return result;
         }
 
