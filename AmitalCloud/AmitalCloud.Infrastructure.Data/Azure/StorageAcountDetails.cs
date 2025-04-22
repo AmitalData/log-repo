@@ -1,3 +1,4 @@
+using Logitude.BL.Helpers;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.Storage;
@@ -397,36 +398,7 @@ namespace AmitalCloud.Infrastructure.Data.Azure
 
         public static string GetSettingByName(string enviroment)
         {
-            string result = "";
-
-            switch (enviroment)
-            {
-                case "amitalstorage":
-                    result = "Endpoint=sb://sb-amitalcloud-prod-il-01.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=srzCxGuZnOAjNkceq6mP1UGxDI6S2USz4+ASbI5qRXE=";
-                    break;
-
-                case "Test2":
-                    result = "Endpoint=sb://logitudetest2.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Uo7BHCCC7xAQIs1gO27hmruaGpFvoXDhwqATqVsH6PY=";
-                    break;
-
-                case "logitudepreproduction":
-                    result = "Endpoint=sb://logitudepreproduction.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=I7E9gyzPLLpD5+Qqub6/97l0f8WyckwMWAwsRcfVyqo=";
-                    break;
-
-                case "logboxwe1":
-                    result = "Endpoint=sb://logboxwe1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=1ICW1EzCyGOnpj8nkC3wklYdM/4WFwCZJPAiWTNJFvs=";
-                    break;
-
-                //case "Dev":
-                //case "Test1":
-                default:
-                    result = "Endpoint=sb://logitudetest2.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Uo7BHCCC7xAQIs1gO27hmruaGpFvoXDhwqATqVsH6PY=";
-                    //result = "Endpoint=sb://logitudetest1.servicebus.windows.net;SharedSecretIssuer=owner;SharedSecretValue=5iKNFIINnT+5u3Zj5SFkaRou/0QYxx7OWzZL/Wlh7us=";
-                    break;
-
-            }
-
-            return result;
+            return DefaultService.Instance.Get(0, "StorageAcount", "StorageAcountDetails." + enviroment)?.Value1;
         }
 
     }
