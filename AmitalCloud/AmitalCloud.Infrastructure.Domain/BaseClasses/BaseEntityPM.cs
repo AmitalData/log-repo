@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 namespace AmitalCloud.Infrastructure.Domain.BaseClasses
 {
+    [DataContract]
     public abstract class BaseEntityPM : IEntityPM
     {
         protected BaseEntityPM()

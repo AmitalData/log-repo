@@ -11,11 +11,10 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         TEntityPM GetSingle(IEnumerable<KeyValuePair<string, string>> paramList, bool getComposition, bool getFromCache);
         List<TEntityPM> GetMultiByParent<TEntityParentKeys>(TEntityParentKeys entityParentKeys, bool getFromCache, bool getComposition = true);
         List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate);
-        List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, string include);
-        List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TEntityPM>> select);
-        List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TEntityPM>> select, string include);
-        List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TResult>> select);
-        List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TResult>> select, string include);
+        List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TEntityPM> select);
+        List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TEntityPM> select, string include);
+        List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TResult> select);
+        List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TResult> select, string include);
 
     }
 }

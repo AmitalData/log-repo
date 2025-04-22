@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,23 +10,25 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
 {
     public class JSGlobalSettings
     {
-        public JSGlobalSettings(Setting mySetting) 
+        public JSGlobalSettings(SettingPM mySetting = null) 
         {
-            Id = mySetting.Id;
-            AmitalURL = mySetting.LogitudeURL;
-            LogoCode = mySetting.LogoCode;
-            WorkEnvironment = mySetting.WorkEnvironment;
-            SameUserLoginEnabled = (bool)mySetting.SameUserLoginEnabled;
-            LayoutDirection = mySetting.LayoutDirection;
-            ReportsRunUsingWR = (bool)mySetting.ReportsRunUsingWR;
-            DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
-            DeploymentStage = mySetting.DeploymentStage;
-            ReleaseNotesURL = mySetting.ReleaseNotesURL;
-			AmitalDemoTenants = mySetting.LogitudeDemoTenants;
-            TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
-            ReleaseDateString = mySetting.ReleaseDateString;
-            DNSZone = mySetting.DNSZone;
-
+            if (mySetting != null)
+            {
+                Id = mySetting.Id;
+                AmitalURL = mySetting.LogitudeURL;
+                LogoCode = mySetting.LogoCode;
+                WorkEnvironment = mySetting.WorkEnvironment;
+                SameUserLoginEnabled = (bool)mySetting.SameUserLoginEnabled;
+                LayoutDirection = mySetting.LayoutDirection;
+                ReportsRunUsingWR = (bool)mySetting.ReportsRunUsingWR;
+                DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
+                DeploymentStage = mySetting.DeploymentStage;
+                ReleaseNotesURL = mySetting.ReleaseNotesURL;
+                AmitalDemoTenants = mySetting.LogitudeDemoTenants;
+                TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
+                ReleaseDateString = mySetting.ReleaseDateString;
+                DNSZone = mySetting.DNSZone;
+            }
         }
 
         [Key]

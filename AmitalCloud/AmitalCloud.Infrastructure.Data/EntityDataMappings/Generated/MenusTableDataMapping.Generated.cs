@@ -54,7 +54,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Code, 
 	         HtmlView, 
 	         FeatureUniqeCode, 
-	         QuerySection,	      }
+	         QuerySection, 
+	         ObjectTableName, 
+	         FeatureCode,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(MenusTablePM entityPM, POCO.MenusTable entityPOCO)

@@ -24,27 +24,38 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         Code,	      }
+	         Code, 
+	         MenuButtonGroupId,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         Code,	      }
+	         Code, 
+	         MenuButtonGroupId,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(MenuButtonPM entityPM, POCO.MenuButton entityPOCO)
         {
-			 }
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MenuButtonGroupId)) { entityPOCO.MenuButtonGroupId = entityPM.MenuButtonGroupId;}
+					}
 		public void POCOToPM(MenuButtonPM entityPM, POCO.MenuButton entityPOCO)
         {
 			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
             {
 					entityPM.Code = entityPOCO.Code;
             }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MenuButtonGroupId))
+            {
+					entityPM.MenuButtonGroupId = entityPOCO.MenuButtonGroupId;
+            }
 		}
 		public void PMToOldPM(MenuButtonPM entityPM, MenuButtonPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 		}
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MenuButtonGroupId))
+            {
+                oldEntityPM.MenuButtonGroupId = entityPM.MenuButtonGroupId;
+            }
+					}
 		public void POCOToList(POCO.MenuButton entityPOCO, MenuButtonList entityList)
         {
             //entityList.Code = entityPOCO.Code;

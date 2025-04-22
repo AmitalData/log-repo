@@ -52,7 +52,14 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         UserId, 
 	         ObjectFieldCode, 
 	         QueryCode, 
-	         CustomPredefined,	      }
+	         CustomPredefined, 
+	         DisplayInList, 
+	         IsCustomFilter, 
+	         ObjectFieldName, 
+	         DataTypeCode, 
+	         ObjectFieldOperator, 
+	         QueryObjectTableName, 
+	         QueryUserId,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(AdvancedQueryFilterPM entityPM, POCO.AdvancedQueryFilter entityPOCO)

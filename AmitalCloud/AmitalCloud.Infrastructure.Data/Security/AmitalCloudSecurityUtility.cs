@@ -684,6 +684,10 @@ namespace AmitalCloud.Infrastructure.Data.Security
         public static int AuthenticationOnTenant()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new AutenticationException("missing token");
+            }
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             AuthenticationOnTenant(authToken.Tenant);
             return authToken.Tenant;

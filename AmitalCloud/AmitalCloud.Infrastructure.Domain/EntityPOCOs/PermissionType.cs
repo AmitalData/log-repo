@@ -27,8 +27,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
 	    public string Name { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
-		public virtual ICollection<ObjectField> ObjectFields_Agentpermissiontypecode { get; set; }
-		public virtual ICollection<ObjectField> ObjectFields_Customerpermissiontypecode { get; set; }
     }
 }
 	 

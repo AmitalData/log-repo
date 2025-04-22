@@ -10,6 +10,9 @@ using AmitalCloud.Shipment.WebAPI;
 using System;
 using System.Web;
 using System.Web.Http;
+using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Web.Helpers.TreeFilterQuery;
+using AmitalCloud.Infrastructure.Data.Queries;
 
 namespace AmitalCloud.Infrastructure.WebAPI
 {
@@ -23,20 +26,22 @@ namespace AmitalCloud.Infrastructure.WebAPI
                 AmitalCloudSettings.DatabaseManagementSystem = dbms;
                 AmitalCloudSettings.DebugKey = System.Configuration.ConfigurationManager.AppSettings.Get("DebugKey");
                 FillAppSettings();
+                LogitudeSettings_AmitalInit();
             }
 
             CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
 
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            LoggedContactResolver.RegisterLoggedContactUtil();
 
-            //InfraRegistrationHelper.Register();
+            GlobalConfiguration.Configure(WebApiConfig.Register);
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            if (!string.IsNullOrEmpty(token))
+            if (HttpContext.Current?.Request?.Headers != null && !string.IsNullOrEmpty(HttpContext.Current.Request.Headers["Token"]))
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 if (authToken != null)
                 {
@@ -101,7 +106,7 @@ namespace AmitalCloud.Infrastructure.WebAPI
         private void FillAppSettings()
         {
             SettingQueryService settingQueryService = new SettingQueryService(0);
-            SettingPM setting = settingQueryService.GetSingle("1", false, true);
+            SettingPM setting = settingQueryService.GetSingle(SettingQuery.GetDefaultSettingId(), false, true);
             AmitalCloudSettings.Id = setting.Id;
             AmitalCloudSettings.ChampEnv = setting.ChampEnv;
             AmitalCloudSettings.ChampURL = setting.ChampURL;
@@ -165,6 +170,22 @@ namespace AmitalCloud.Infrastructure.WebAPI
             AmitalCloudSettings.WindWardSettings = setting.WindWardSettings;
             AmitalCloudSettings.AmitalIISURL = setting.LogitudeIISURL;
             AmitalCloudSettings.TempStorageConnection = setting.TempStorageConnection;
+        }
+
+        private static void LogitudeSettings_AmitalInit()
+        {
+            Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
+
+            Func<int> getTenantFromToken = () =>
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                return authToken?.Tenant ?? 0;
+            };
+
+            InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, AmitalCloudSecurityUtility.CheckContactFeature,
+                () => (new ByteCompressorUtil()) as IByteCompressorUtil,
+                () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
         }
     }
 }

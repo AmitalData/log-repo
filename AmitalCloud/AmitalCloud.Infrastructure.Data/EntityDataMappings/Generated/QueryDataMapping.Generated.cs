@@ -98,7 +98,12 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         NameTextCodeCode, 
 	         FeatureUniqeCode, 
 	         IsViewOnly, 
-	         IsDefault,	      }
+	         IsDefault, 
+	         ObjectTableName, 
+	         ObjectTableIsNewWizard, 
+	         ObjectTableNewWizardControlName, 
+	         QueryGroupIndexOrder, 
+	         NewViewName,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(QueryPM entityPM, POCO.Query entityPOCO)

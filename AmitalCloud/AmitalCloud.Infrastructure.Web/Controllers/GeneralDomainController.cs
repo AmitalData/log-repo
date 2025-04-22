@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             try
             {
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant(); ;
-                List<ObjectFieldModificationPM> result = new ObjectFieldModificationQueryService(tenant).GetMulti(a => a.Tenant == tenant, "");
+                List<ObjectFieldModificationPM> result = new ObjectFieldModificationQueryService(tenant).GetMulti(a=> a.Tenant == tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 

@@ -40,10 +40,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_userControlName = entity.UserControlName;
 		_objectTableId = entity.ObjectTableId;
 		_featureId = entity.FeatureId;
-		_code = entity.Code;
+		_feature = entity.Feature !=null ? new FeaturePM(entity.Feature) : null;
+			_code = entity.Code;
 		_htmlView = entity.HtmlView;
 		_featureUniqeCode = entity.FeatureUniqeCode;
 		_querySection = entity.QuerySection;
+        _objectTableName = null;
+        _featureCode = null;
    }
    #endregion Constructors
    #region Properties
@@ -224,6 +227,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private FeaturePM _feature;
+		[Include]
+        [DataMember]
+        public virtual FeaturePM Feature 
+		{ 
+		get { return _feature; } 
+		set { _feature = value; }
+		}
 	  private string _code ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -285,6 +296,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuerySection",OldValue=_querySection,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _querySection=value;
+		   }
+		 }
+	   }
+	  private string _objectTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableName  
+	   {
+	     get { return _objectTableName; }
+		 set
+		 {
+		   if(_objectTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableName=value;
+		   }
+		 }
+	   }
+	  private string _featureCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FeatureCode  
+	   {
+	     get { return _featureCode; }
+		 set
+		 {
+		   if(_featureCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FeatureCode",OldValue=_featureCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _featureCode=value;
 		   }
 		 }
 	   }

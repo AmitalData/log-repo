@@ -54,6 +54,9 @@
     <Reference Include="Marvin.JsonPatch, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Marvin.JsonPatch.2.2.1\lib\net45\Marvin.JsonPatch.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
@@ -79,8 +82,8 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -88,10 +91,19 @@
       <HintPath>..\Library\Bin\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.4\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -133,10 +145,13 @@
     <Compile Include="Controllers\GeneralDomainController.cs" />
     <Compile Include="Controllers\GlobalDomainController.cs" />
     <Compile Include="Controllers\InfrastructureDomainController.cs" />
+    <Compile Include="Controllers\UserExtendedController.cs" />
+    <Compile Include="Controllers\ObjectTableRuleFieldsController.cs" />
     <Compile Include="Controllers\MetaDataController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ReportGroupController.cs" />
     <Compile Include="Controllers\UserLastLoginsController.cs" />
+    <Compile Include="DataContracts\FieldsTranslations.cs" />
     <Compile Include="DataContracts\UserData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -146,12 +161,29 @@
     <Compile Include="DataContracts\LoginParameters.cs" />
     <Compile Include="Helpers\AmitalCloudSettingConfigration.cs" />
     <Compile Include="Helpers\Authentication.cs" />
+    <Compile Include="Helpers\AuthenticationExceptionFilter.cs" />
     <Compile Include="Helpers\MixPanel\AuthenticationMixPanelService.cs" />
     <Compile Include="Helpers\CaptchaHelper.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelEvent.cs" />
     <Compile Include="Helpers\MixPanel\MixPanelEventTracker.cs" />
     <Compile Include="Helpers\MixPanel\TrackingEventProperty.cs" />
     <Compile Include="Helpers\PasswordParameter.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Expression\OperatorExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Expression\PartnerEntityExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Expression\WhereExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\CustomFieldExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\DateGroupFilterExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\IQueryTreeFilterExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\JavaScriptSerializerExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\PartnerEntityQueryFilterExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\PartnerEntityResloveFieldValueExpression.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\QueryTreeFilterInterpreter.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\QueryTreeFilterResetValueExpresion.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Interpreter\QueryTreeFilterValidateExpresion.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Iterator\QueryTreeFilterCollection.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Iterator\QueryTreeFilterIterator.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\Services\QueryTreeFilterFieldValueResolver.cs" />
+    <Compile Include="Helpers\TreeFilterQuery\TreeFilterQueryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

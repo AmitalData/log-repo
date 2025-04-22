@@ -1,9 +1,9 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Data;
+using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
 using System.Linq;
@@ -43,18 +43,14 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             try
             {
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                JSGlobalSettings myResult;
-                //todo: 
-                //SettingRepository mySettingRepository = new SettingRepository();
-                Setting mySetting = null;// mySettingRepository.GetSingleSetting("1");
-                if (mySetting == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, new JSGlobalSettings(new Setting()));
-                }
-                myResult = new JSGlobalSettings(mySetting);
+                SettingQueryService settingQueryService = new SettingQueryService(tenant);
+
+                SettingPM mySetting = settingQueryService.GetSingle(SettingQuery.GetDefaultSettingId(), false, true);
+
+                JSGlobalSettings myResult = new JSGlobalSettings(mySetting);
                 if (AmitalCloudSettings.IsCostomsDeploy)
                 {
-                    myResult.ProductInfo = AmitalCloudSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
+                    myResult.ProductInfo = AmitalCloudSettings.ProductInfo;
                     myResult.ProductMessage = AmitalCloudSettings.ProductMessage;
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -80,7 +76,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             try
             {
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                return Request.CreateResponse(HttpStatusCode.OK, new TenantSettingQueryService(tenant).GetMulti(a => a.Tenant == tenant, "ObjectTable").ToList());
+                return Request.CreateResponse(HttpStatusCode.OK, new TenantSettingQueryService(tenant).GetMulti(a => a.Tenant == tenant));
             }
             catch (Exception ex)
             {
@@ -93,7 +89,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             {
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
                 TenantManagementPM entityPM = new TenantManagementQueryService(tenant).GetSingle(tenant, true, true);
-                //bool isLogboxSystem = CheckIsLogboxSystem();
+                bool isLogboxSystem = CheckIsLogboxSystem();
                 if (entityPM == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new TenantManagementJS(new TenantManagementPM()));
@@ -181,6 +177,14 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
         }
-    }
 
+        private static bool CheckIsLogboxSystem()
+        {
+            bool isLogboxSystem = false;
+            string url = AmitalCloudSecurityUtility.getLoggedDomain();
+            if (url.Contains("system.logbox.co.il") || url.Contains("pre.logbox.co.il") || url.Contains("test.logitudeworld.com")) //Test env acts Like Logbox
+                isLogboxSystem = true;
+            return isLogboxSystem;
+        }
+    }
 }

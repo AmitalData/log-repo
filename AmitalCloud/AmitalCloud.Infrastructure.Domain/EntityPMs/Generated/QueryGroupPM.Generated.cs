@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_indexOrder = entity.IndexOrder;
-		querys = entity.Querys != null ? entity.Querys.Select(a=>new QueryPM(a)).ToList() : null;
+		//querys = entity.Querys != null ? entity.Querys.Select(a=>new QueryPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties

@@ -18,5 +18,10 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
             return loggedcontact;
         }
+
+        public static void RegisterLoggedContactUtil()
+        {
+            ContainerAccessor.Container.RegisterType<ILoggedContactUtil, LoggedContactUtil>("LoggedContactUtil", new InjectionFactory(c => new LoggedContactUtil()));
+        }
     }
 }

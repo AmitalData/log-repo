@@ -23,6 +23,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		    this.HasKey(t => new { t.Code });
 	 
             this.Property(t => t.Code).HasColumnName("Code").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.MenuButtonGroupId).HasColumnName("MenuButtonGroupId").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

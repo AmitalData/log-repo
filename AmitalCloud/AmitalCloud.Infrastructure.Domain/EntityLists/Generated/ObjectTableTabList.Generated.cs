@@ -40,7 +40,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           ScreenCode  = entity.ScreenCode;
           OriginalTabCode  = entity.OriginalTabCode;
           HideTabNameInScreen  = entity.HideTabNameInScreen;
-          Islocked  = entity.Islocked;
+          IsLocked  = entity.IsLocked;
        }
        #endregion Constructors
        #region Properties
@@ -79,7 +79,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public bool HideTabNameInScreen  { get; set; }
        [DataMember]
-       public bool Islocked  { get; set; }
+       public bool IsLocked  { get; set; }
          #endregion Properties
    }
 

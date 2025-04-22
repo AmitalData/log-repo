@@ -29,7 +29,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public MenuButtonPM(POCO.MenuButton entity) : base()
    {
 		_code = entity.Code;
-   }
+		_menuButtonGroupId = entity.MenuButtonGroupId;
+		_menubuttongroup = entity.MenuButtonGroup !=null ? new MenuButtonGroupPM(entity.MenuButtonGroup) : null;
+	   }
    #endregion Constructors
    #region Properties
    	  private string _code ;
@@ -49,6 +51,30 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _menuButtonGroupId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MenuButtonGroupId  
+	   {
+	     get { return _menuButtonGroupId; }
+		 set
+		 {
+		   if(_menuButtonGroupId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MenuButtonGroupId",OldValue=_menuButtonGroupId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _menuButtonGroupId=value;
+		   }
+		 }
+	   }
+		private MenuButtonGroupPM _menubuttongroup;
+		[Include]
+        [DataMember]
+        public virtual MenuButtonGroupPM MenuButtonGroup 
+		{ 
+		get { return _menubuttongroup; } 
+		set { _menubuttongroup = value; }
+		}
 	 }
 #endregion Properties
 }

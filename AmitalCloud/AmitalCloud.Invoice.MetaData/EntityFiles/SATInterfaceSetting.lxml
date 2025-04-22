@@ -43,7 +43,7 @@
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
   NoViewController="true"
-  NoPMController="true"
+  NoPMController="false"
   NoTS="false"
   NoDefaultFeatures="true"
   HasCompactSearch="false"

@@ -109,7 +109,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
         [Column("HasDynamicHeader")]
 	    public bool HasDynamicHeader { get; set; }
         [Column("EntityResource")]
-	    public string EntityResource { get; set; }
+	    public byte[] EntityResource { get; set; }
         [Column("IsLookUp")]
 	    public bool IsLookUp { get; set; }
         [ForeignKey("NewButtonTextCode")]
