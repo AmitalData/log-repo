@@ -230,13 +230,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             item.VendorName = vendorCard.EnglishName;
                         }
                     }
-                    GLAccount PayableDebitGLAcount = gLAccountRepository.GetSingle(item.PayableDebitGLAcountId,tenant);
-                    if (PayableDebitGLAcount != null)
-                    {
-                        item.PayableDebitGLAcountName = PayableDebitGLAcount.LocalName;
 
-
-                    }
+                   
                     if (!string.IsNullOrEmpty(item.VatTypeId))
                     {
                         VatType vatType = VatTypeRepository.GetSingleVatType(item.VatTypeId, tenant, true);
@@ -251,11 +246,24 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     if (!string.IsNullOrEmpty(item.ChargesTypeId))
                     {
                         ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
+                        
                         if (chargesType != null)
                         {
                             item.ChargesTypeCode = chargesType.Code;
                             item.ChargesTypeName = chargesType.EnglishName;
+                            if (!string.IsNullOrEmpty(chargesType.PayableDebitGLAcountId) && string.IsNullOrEmpty(item.PayableDebitGLAcountId))
+                            {
+                                item.PayableDebitGLAcountId = chargesType.PayableDebitGLAcountId;
+                            }
                         }
+                    }
+
+                    GLAccount PayableDebitGLAcount = gLAccountRepository.GetSingle(item.PayableDebitGLAcountId, tenant);
+                    if (PayableDebitGLAcount != null)
+                    {
+                        item.PayableDebitGLAcountName = PayableDebitGLAcount.LocalName;
+
+
                     }
                 }
             }
