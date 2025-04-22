@@ -84,7 +84,9 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ClosingJournalNumber  { get; set; }
        [DataMember]
        public string ClosingJournalId  { get; set; }
-   }
+       [DataMember]
+       public bool RemoveDuplicates { get; set; }
+    }
 
 }
 	 

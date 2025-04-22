@@ -15,6 +15,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { TaxReportLineStatusListService } from '../../../Services/StandardLists/TaxReportLineStatusListService';
 import { TaxReportLineExtendedListService } from '../../../Services/ExtendedLists/TaxReportLineExtendedListService';
+import { TaxReportPMService } from '../../../Services/StandardPMs/TaxReportPMService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
@@ -25,7 +26,7 @@ import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { TaxReportLineTransmitStatusListService } from 'Accounting/Services/StandardLists/TaxReportLineTransmitStatusListService';
 import { HttpResponse } from '@angular/common/http';
-import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 declare var window: any;
 
@@ -42,7 +43,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     public isRTL: boolean = false;
     public showLocals: boolean = false;
     public LogitudeGridExportToExcelComponent: LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
-
+    private _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     private _entityListService: EntityListService = new EntityListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
@@ -713,10 +714,17 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
 
     OnFixDupButtonClicked() {
-
+debugger;
         this.CurrentSession.StartBusyIndicatorCreating();
 
-        this._TaxReportLineExtendedListService.FixDuplicates(this.EntityPM.Id)
+        //remove duplicates
+        this.EntityPM.RemoveDuplicates = true;
+
+        //update report
+        this.EntityPM.NeedsRebulid = true;
+
+
+        this._TaxReportPMService.update(this.EntityPM)
             .subscribe((response: ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
                 if (response.HasError) {

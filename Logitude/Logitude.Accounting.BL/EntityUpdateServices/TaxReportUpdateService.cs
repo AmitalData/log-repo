@@ -194,6 +194,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public void MarkDuplicateLines(TaxReportPM taxReportPM)
         {
+            if (taxReportPM.RemoveDuplicates) 
+            {
+                string test = "aaa";
+            }
+
             // See also TaxReportService.MarkCreatedDuplicateLines 
 
             IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
@@ -243,8 +248,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     isUpdate = true;
                     row.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
+                    if (taxReportPM.RemoveDuplicates) row.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
                 }
-                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference || row.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
+                {
+                    isUpdate = true;
+                    row.StatusCode = taxReportPM.RemoveDuplicates? TaxReportLineTransmitStatusValues.Notfortransmitatall : TaxReportLineStatusValues.Readyfortransmit;
+                }
+                else if (row.StatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                 {
                     isUpdate = true;
                     row.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
