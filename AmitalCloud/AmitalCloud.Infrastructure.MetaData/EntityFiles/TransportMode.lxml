@@ -40,8 +40,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Transport Mode&quot;"
-  Code="&quot;d37f&quot;"
+  Code="&quot;c2f9&quot;"
   Name="&quot;TransportMode&quot;"
+  CloseTableCode="&quot;Id&quot;"
   CloseTableName="&quot;Name&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
@@ -136,6 +137,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -212,6 +214,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -285,6 +288,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Name&quot;"
@@ -356,6 +360,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -432,6 +437,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -478,12 +484,15 @@
   </EventTypes>
   <Records>
     <Record
+      Id="&quot;A&quot;"
       SearchFields="&quot;a,air&quot;"
       Name="&quot;Air&quot;" />
     <Record
+      Id="&quot;I&quot;"
       SearchFields="&quot;i,inland&quot;"
       Name="&quot;Inland&quot;" />
     <Record
+      Id="&quot;O&quot;"
       SearchFields="&quot;o,ocean&quot;"
       Name="&quot;Ocean&quot;" />
   </Records>

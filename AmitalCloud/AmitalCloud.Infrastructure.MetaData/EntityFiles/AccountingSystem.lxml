@@ -1969,7 +1969,7 @@
     <Record
       Code="&quot;QBO&quot;"
       SearchFields="&quot;QBO,QuickBooks Online (US)&quot;"
-      Name="&quot;QuickBooks Online (US)&quot;"
+      Name="&quot;QuickBooks Online_US&quot;"
       IsExternalCodesSyncEnabled="true"
       IsSingleTaxPerInvoice="true"
       IsSingleCurrencyAccount="true"
@@ -1990,7 +1990,7 @@
     <Record
       Code="&quot;QBOG&quot;"
       SearchFields="&quot;QBOG,QuickBooks Online (Global)&quot;"
-      Name="&quot;QuickBooks Online (Global)&quot;"
+      Name="&quot;QuickBooks Online_Global&quot;"
       IsExternalCodesSyncEnabled="true"
       IsSingleTaxPerInvoice="false"
       IsSingleCurrencyAccount="true"

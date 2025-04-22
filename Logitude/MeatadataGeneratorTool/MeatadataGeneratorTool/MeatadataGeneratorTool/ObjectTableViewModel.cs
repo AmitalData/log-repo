@@ -2776,6 +2776,43 @@ namespace MeatadataGeneratorTool
 				return false;
 
 			}
+
+
+
+            if (IsClosed)
+            {
+                var errorMessagesBuilder = new StringBuilder();
+
+                var closeTableCodeField = ObsList.FirstOrDefault(f => f.FieldName == CloseTableCode);
+                if (closeTableCodeField == null)
+                {
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableCode' is required.");
+                }
+                else if (closeTableCodeField.FieldDataType != "Text")
+                {
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableCode' must be of type Text.");
+                }
+
+                var closeTableNameField = ObsList.FirstOrDefault(f => f.FieldName == CloseTableName);
+                if (closeTableNameField == null)
+                {
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableName' is required.");
+                }
+                else if (closeTableNameField.FieldDataType != "Text")
+                {
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableName' must be of type Text.");
+                }
+
+                if (errorMessagesBuilder.Length > 0)
+                {
+                    ErrorMessages = errorMessagesBuilder.ToString().Trim();
+                    ErrorsVisibility = Visibility.Visible;
+                    return false;
+                }
+            }
+
+
+
             try
             {
                 ErrorsVisibility = Visibility.Collapsed;

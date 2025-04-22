@@ -9,6 +9,10 @@
   ObjectTablePlural="&quot;BluesnapContractTypes&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -40,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Bluesnap Contract Type&quot;"
-  Code="&quot;7aba&quot;"
+  Code="&quot;d5ec&quot;"
   Name="&quot;BluesnapContractType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -56,6 +60,8 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;944a&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -88,6 +94,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -135,6 +142,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Code&quot;"
@@ -165,6 +173,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -212,6 +221,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Name&quot;"
@@ -242,6 +252,7 @@
     SystemMaxLength="40"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -288,6 +299,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -343,7 +355,7 @@
       SearchFields="&quot;CRM,CRM&quot;" />
     <Record
       Code="&quot;EAWB&quot;"
-      Name="&quot;e-AWB&quot;"
+      Name="&quot;e_AWB&quot;"
       SearchFields="&quot;EAWB,e-AWB&quot;" />
     <Record
       Code="&quot;OT&quot;"
@@ -352,7 +364,7 @@
     <Record
       SearchFields="&quot;EABS,e-AWB stock&quot;"
       Code="&quot;EABS&quot;"
-      Name="&quot;e-AWB stock&quot;" />
+      Name="&quot;e_AWB stock&quot;" />
     <Record
       Name="&quot;INTTRA stock&quot;"
       Code="&quot;INTS&quot;"

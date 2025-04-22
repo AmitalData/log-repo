@@ -87,7 +87,11 @@ GenerateAllUpdateServices("../EntityFiles","../../AmitalCloud.Infrastructure.App
 GenerateAllQueryServices("../EntityFiles","../../AmitalCloud.Infrastructure.Application/EntityQueryServices","AmitalCloudContext",namespaces);
 GenerateAllQueryServices("../EntityFiles/GlobalModel","../../AmitalCloud.Infrastructure.Application/EntityQueryServices","GlobalContext",namespaces);
 GenerateAllListQueryServices("../EntityFiles","../../AmitalCloud.Infrastructure.Application/EntityListQueryServices","AmitalCloudContext",namespaces);
-//GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../AmitalCloud.Infrastructure.Application/CloseTables");
+GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../AmitalCloud.Infrastructure.Application/CloseTables" ,namespaces);
+GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/AutoCreated","../../AmitalCloud.Infrastructure.Application/CloseTables" ,namespaces);
+GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/GlobalModel","../../AmitalCloud.Infrastructure.Application/CloseTables" ,namespaces);
+GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/LogsModel","../../AmitalCloud.Infrastructure.Application/CloseTables" ,namespaces);
+
 //GenerateAllDomainServices("../EntityFiles","../../AmitalCloud.Infrastructure.Application/Model","ShipmentContext","AmitalCloud.Shipment","ShipmentDomainService");
 
 

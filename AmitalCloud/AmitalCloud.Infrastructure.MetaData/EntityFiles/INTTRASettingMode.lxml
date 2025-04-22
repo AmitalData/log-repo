@@ -4,11 +4,15 @@
   ObjectTableName="&quot;INTTRASettingMode&quot;"
   IsNew="false"
   DBTableName="&quot;INTTRASettingModes&quot;"
-  OldDBTableName="&quot;INTTRASettingModes&quot;"
+  DBTableOldNames="INTTRASettingModes"
   ObjectTableSingular="&quot;INTTRA Setting Mode&quot;"
   ObjectTablePlural="&quot;INTTRA Setting Modes&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -36,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;INTTRA Setting Mode&quot;"
-  Code="&quot;b3a2&quot;"
+  Code="&quot;ddcb&quot;"
   Name="&quot;INTTRASettingMode&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -52,6 +56,8 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;da32&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -65,7 +71,7 @@
   <field
     Id="&quot;73b258d5-f573-4c96-ab13-facdfa43dadb&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -84,6 +90,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -113,6 +120,7 @@
     DefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="false"
@@ -127,6 +135,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Code&quot;"
@@ -138,7 +147,7 @@
   <field
     Id="&quot;39ea7a65-a384-46cf-b437-54d4796fa3ea&quot;"
     FieldName="&quot;Name&quot;"
-    OldFieldName="&quot;Name&quot;"
+    OldNames="Name"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -157,6 +166,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -186,6 +196,7 @@
     DefaultText="&quot;Name&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -200,6 +211,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Name&quot;"
@@ -211,7 +223,7 @@
   <field
     Id="&quot;9f24adc4-5afe-43a6-b6b4-931f12f7eecd&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -230,6 +242,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -258,6 +271,7 @@
     DefaultText="&quot;Search..&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="false"
@@ -272,6 +286,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;SearchFields&quot;"
@@ -317,7 +332,16 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records />
+  <Records>
+    <Record
+      Code="&quot;PROD&quot;"
+      Name="&quot;Production&quot;"
+      SearchFields="&quot;PROD,Production&quot;" />
+    <Record
+      Code="&quot;TEST&quot;"
+      Name="&quot;Test&quot;"
+      SearchFields="&quot;TEST,Test&quot;" />
+  </Records>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

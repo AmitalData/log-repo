@@ -32,11 +32,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Code });
 	 
-            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasDatabaseGeneratedOption(null);
+            this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
+   
+       // Relationship 
+      
         }
     }
 }
