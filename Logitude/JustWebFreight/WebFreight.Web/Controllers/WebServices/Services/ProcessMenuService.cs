@@ -48,8 +48,8 @@ namespace WebFreight.Web.Controllers.WebServices.Services
                     CreateDate = a.CreateDate,
                     FilterXML = a.PrametersXml,
 
-                    Name = TextCodesTranslator.TranslateText($"Accounting.General.O.{a.Subject.Trim()}", tenant, false),
-                    LocalName = TextCodesTranslator.TranslateText($"Accounting.General.O.{a.Subject.Trim()}", tenant, true),
+                    Name = TextCodesTranslator.TranslateText($"Accounting.General.O.{a.Subject.Replace(" ", string.Empty)}", tenant, false),
+                    LocalName = TextCodesTranslator.TranslateText($"Accounting.General.O.{a.Subject.Replace(" ", string.Empty)}", tenant, true),
                     NotDisplayInMenu = a.NotDisplayInMenu,
                     ItemType = (int)MenuTypes.BatchTaskExecution
                 }).ToList();
@@ -90,8 +90,8 @@ namespace WebFreight.Web.Controllers.WebServices.Services
                     ExceptionMessage = a.ErrorLog,
                     CreateDate = a.CreateDate,
                     FilterXML = a.PrametersXml,
-                    Name = a.Subject,
-                    LocalName = a.Subject,
+                    Name = TextCodesTranslator.TranslateText($"Accounting.General.O.{a.Subject.Replace(" ", string.Empty)}", tenant, false),
+                    LocalName = TextCodesTranslator.TranslateText($"Accounting.General.O.{a.Subject.Replace(" ", string.Empty)}", tenant, true),
                     NotDisplayInMenu =  a.NotDisplayInMenu,
                     ItemType = (int)MenuTypes.BatchTaskExecution
                 }).ToList();
@@ -117,11 +117,12 @@ namespace WebFreight.Web.Controllers.WebServices.Services
 
                 case ((int)MenuTypes.BatchTaskExecution):
                     {
-                        var batchTaskExecution = InfrastructureContext.GetContext(tenant).BatchTaskExecutions.FirstOrDefault(a => a.Id == reportId);
+                        var MyContext = InfrastructureContext.GetContext(tenant);
+                        var batchTaskExecution = MyContext.BatchTaskExecutions.FirstOrDefault(a => a.Id == reportId);
                         if (batchTaskExecution != null)
                         {
                             UpdateEntity(batchTaskExecution);
-                            InfrastructureContext.GetContext(tenant).SaveChanges();
+                            MyContext.SaveChanges();
                         }
                         break;
                     }

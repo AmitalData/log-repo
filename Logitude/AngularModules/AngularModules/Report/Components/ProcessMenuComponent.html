@@ -130,6 +130,8 @@
         display: flex;
         justify-content: flex-start;
         overflow-x: auto;
+        border-bottom: 2px solid #ccc; 
+
     }
 
     .TabHeader {
@@ -152,14 +154,12 @@
         background-color: white;
         color: #0271ba;
         border: 1px solid #ccc;
-        border-bottom: 1px solid white;
+        border-bottom: 2px solid white;
     }
 
     .TabContent {
         padding: 10px;
         background-color: #f7f7f7;
-        border: 1px solid #ccc;
-        border-radius: 5px;
     }
 </style>
 
@@ -178,16 +178,17 @@
                             src="./Images/Buttons/pinned.png" (click)="togglePin()" />
                     </div>
 
-                    <div class="TabsContainer">
-                        <div *ngFor="let tab of groupedMenuItems | keyvalue" class="TabHeader"
-                            [class.active]="selectedTab === tab.key" (click)="selectTab(tab.key)">
+                    <div class="TabsContainer" style="border-radius: 5px; overflow: hidden;" [ngStyle]="LayoutDirection == 'rtl' ? {'direction': 'rtl'} : {'direction': 'ltr'}">
+                        <div *ngFor="let tab of MenuTypeNames | keyvalue" class="TabHeader"
+                            [class.active]="selectedTab === tab.key" (click)="selectTab(tab.key)"
+                            style="padding: 8px 15px; font-size: 12px; border-radius: 3px;">
 
                             <span *ngIf="MenuTypeNames && MenuTypeNames[tab.key]">{{ MenuTypeNames[tab.key]}}</span>
                         </div>
                     </div>
                     <div class="TabContent">
 
-                        <ul *ngIf="groupedMenuItems[selectedTab]">
+                        <ul >
                             <li *ngIf="!groupedMenuItems[selectedTab]?.length"
                                 style="width: 100%; padding: 10px;  text-align: center;height: 20px;line-height: 20px; font-size: 18px; color: #1B90CB;">
                                 {{'Accounting.General.O.NoReportsDisplay' | TextCodeTranslationPipe}} </li>
