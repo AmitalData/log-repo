@@ -1091,10 +1091,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<LedgerTransaction> GetTransactionsDeduction(string whAccountId, DateTime startDate, DateTime endDate, int tenant)
         {
             var dto = this.repository.GetTransactionsDeductionDTO(whAccountId, startDate, endDate, tenant).ToList();
-            if (!dto.Any())
-            {
-                return new List<LedgerTransaction>();
-            }
+
             return dto.Select(x => new LedgerTransaction()
             {
                 Id = x.Id,
