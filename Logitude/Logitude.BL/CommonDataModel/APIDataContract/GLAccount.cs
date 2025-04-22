@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -141,6 +142,11 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
 
                 throw ex;
             }
+        }
+        public string GetExchangeRateIdById(string glaccountId, int tenant)
+        { 
+            GLAccountRepository repository = new GLAccountRepository(tenant);
+            return repository.GetExchangeRateIdById(glaccountId, tenant);
         }
 
 

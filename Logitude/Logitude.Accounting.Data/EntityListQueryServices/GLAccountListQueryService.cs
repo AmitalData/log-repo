@@ -160,7 +160,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
                              InterestCalculationStartDate = a.InterestCalculationStartDate,
 
-
+                             ExchangeRateId = a.ExchangeRateId,
                              // Created & Updated
                              CreateDate = a.CreateDate,
                              CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
@@ -655,10 +655,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
                                                    CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
                                                    CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                                                   ExchangeRateId = a.ExchangeRateId,
+
                                                    BalanceInLocalCurrency = (!settings.IsSecurityLevelActivated
                                                             || (settings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                                             || (settings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.BalanceInLocalCurrency : 0,
-
 
 
                                                }); ;
