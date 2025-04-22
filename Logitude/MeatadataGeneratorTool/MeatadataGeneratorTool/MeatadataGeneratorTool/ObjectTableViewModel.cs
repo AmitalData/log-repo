@@ -2776,41 +2776,43 @@ namespace MeatadataGeneratorTool
 				return false;
 
 			}
-            
-            
+
+
+
             if (IsClosed)
             {
+                var errorMessagesBuilder = new StringBuilder();
+
                 var closeTableCodeField = ObsList.FirstOrDefault(f => f.FieldName == CloseTableCode);
                 if (closeTableCodeField == null)
                 {
-                    ErrorMessages = "The field 'CloseTableCode' is required.";
-                    ErrorsVisibility = Visibility.Visible;
-                    return false;
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableCode' is required.");
                 }
                 else if (closeTableCodeField.FieldDataType != "Text")
                 {
-                    ErrorMessages = "The field 'CloseTableCode' must be of type Text.";
-                    ErrorsVisibility = Visibility.Visible;
-                    return false;
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableCode' must be of type Text.");
                 }
 
                 var closeTableNameField = ObsList.FirstOrDefault(f => f.FieldName == CloseTableName);
                 if (closeTableNameField == null)
                 {
-                    ErrorMessages = "The field 'CloseTableName' is required.";
-                    ErrorsVisibility = Visibility.Visible;
-                    return false;
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableName' is required.");
                 }
                 else if (closeTableNameField.FieldDataType != "Text")
                 {
-                    ErrorMessages = "The field 'CloseTableName' must be of type Text.";
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableName' must be of type Text.");
+                }
+
+                if (errorMessagesBuilder.Length > 0)
+                {
+                    ErrorMessages = errorMessagesBuilder.ToString().Trim();
                     ErrorsVisibility = Visibility.Visible;
                     return false;
                 }
             }
 
-            
-            
+
+
             try
             {
                 ErrorsVisibility = Visibility.Collapsed;
