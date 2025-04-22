@@ -384,6 +384,7 @@
     <Compile Include="AmitalContextUtil.cs" />
     <Compile Include="AzureSearch\CustomsBookAzureSearchService.cs" />
     <Compile Include="BL\AutomatedCourierMessagingService.cs" />
+    <Compile Include="BL\AutoMsgScope.cs" />
     <Compile Include="BL\AutoPaymentService.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
     <Compile Include="BL\CheckHealthService.cs" />

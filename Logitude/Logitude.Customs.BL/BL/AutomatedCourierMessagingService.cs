@@ -204,14 +204,14 @@ namespace Logitude.Customs.BL.BL
         {
             try
             {
-
+                LogMessagingUtil.Instance.AppendLine($" Automated SendManifest({declarationCourierStatusPM.DeclarationId})");
                 var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
                 var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "1170", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
                 if (requestInProgressList != null && requestInProgressList.Any())
                 {
                     return;
                 }
-
+                LogMessagingUtil.Instance.AppendLine($"Didnt return Automated SendManifest({declarationCourierStatusPM.DeclarationId})");
                 var requestParams1170 = new MANIFESTRequestRequestParams()
                 {
                     Tenant = declarationCourierStatusPM.Tenant,
