@@ -432,7 +432,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var serializer = new XmlSerializer(typeof(InterestReportArgs));
             serializer.Serialize(stringwriter, args);
             string xmlParameters = stringwriter.ToString();
-
+            bool delay2Min = true;
 
             taskExe = new BatchTaskExecutionPM()
             {
@@ -443,7 +443,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CreateDate = DateTime.Now,
                 PrametersXml = xmlParameters,
                 StatusCode = "C",
-
+                
             };
 
 
@@ -454,11 +454,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // 2- Send to queue
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+            TimeSpan? myTimeSpan = null;
+            if (delay2Min) { myTimeSpan = TimeSpan.FromMinutes(2); }
             queueservice.Send(new Dictionary<string, string>()
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", entityPM.Tenant.ToString() }
-                }, Tenant);
+                }, Tenant, myTimeSpan);
         }
 
         private void CreateBatchTaskExecutionForRecalculatingData(InterestReportPM entityPM)

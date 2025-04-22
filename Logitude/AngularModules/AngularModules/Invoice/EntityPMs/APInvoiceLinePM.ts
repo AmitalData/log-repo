@@ -21,7 +21,7 @@ export class APInvoiceLinePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	            this.EntityParentPM = _entityParentPM;
+	  		            this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
        }
@@ -266,6 +266,16 @@ export class APInvoiceLinePM {
     private localAmountWithVatRecognized: number;
     public get LocalAmountWithVatRecognized() { return this.localAmountWithVatRecognized; }
     public set LocalAmountWithVatRecognized(newValue: number) { if (this.localAmountWithVatRecognized != newValue) { this.localAmountWithVatRecognized = newValue; this.MarkAsDirty("LocalAmountWithVatRecognized"); } }
+       
+	 
+    private payableDebitGLAcountName: string;
+    public get PayableDebitGLAcountName() { return this.payableDebitGLAcountName; }
+    public set PayableDebitGLAcountName(newValue: string) { if (this.payableDebitGLAcountName != newValue) { this.payableDebitGLAcountName = newValue; this.MarkAsDirty("PayableDebitGLAcountName"); } }
+       
+	 
+    private payableDebitGLAcountId: string;
+    public get PayableDebitGLAcountId() { return this.payableDebitGLAcountId; }
+    public set PayableDebitGLAcountId(newValue: string) { if (this.payableDebitGLAcountId != newValue) { this.payableDebitGLAcountId = newValue; this.MarkAsDirty("PayableDebitGLAcountId"); } }
        
 	 
 
