@@ -14,7 +14,9 @@ namespace Logitude.Accounting.BL.CloseTables
        public const string WaitingforApproval = "1";  
        public const string Approved = "2";  
        public const string Voided = "3";  
-       public const string Failed = "4";  
+       public const string Failed = "4";
+       public const string Cancelled = "5";
+       public const string InProcessing = "6";
     }
 }
 
