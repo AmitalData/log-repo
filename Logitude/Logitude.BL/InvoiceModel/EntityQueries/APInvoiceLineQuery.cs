@@ -14,6 +14,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -239,6 +240,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
 
                     }
+                    else
+                    {
+                        ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+                        CurrencyRepository currencyRepository = new CurrencyRepository(myCommonContext);
+                        Currency foreignCurrency = currencyRepository.GetSingleCurrency(item.ForiegnCurrencyId, tenant);
+                        if (foreignCurrency != null)
+                        {
+                            item.ForiegnCurrencyCode = foreignCurrency.Code;
+                        }
+                    }
+
                     if (!string.IsNullOrEmpty(item.VatTypeId))
                     {
                         VatType vatType = VatTypeRepository.GetSingleVatType(item.VatTypeId, tenant, true);
