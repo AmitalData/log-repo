@@ -26,7 +26,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             List<Translation> AllTranslations = new Repository<Translation>(AmitalCloudContext.GetContext(tenant)).GetMulti(a => a.Tenant == tenant);
             
             Repository<Tenant> tenantRepo = new Repository<Tenant>(context);
-            Tenant tenantPoco = tenantRepo.GetMulti(a => a.Id == tenant).FirstOrDefault();
+            Tenant tenantPoco = tenantRepo.GetSingle(a => a.Id == tenant);
 
             ModifyTranslationByPrivateLabel(tenant, AllTranslations, tenantPoco?.Language);
             return AllTranslations;
@@ -52,7 +52,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             if (privatelabel != null)
             {
                 Repository<TextCode> textCodeRepo = new Repository<TextCode>(context);
-                TextCode textCode = textCodeRepo.GetMulti(a => a.Code == "General.MH.Importers" && a.Tenant == tenant).FirstOrDefault();
+                TextCode textCode = textCodeRepo.GetSingle(a => a.Code == "General.MH.Importers" && a.Tenant == tenant);
                 Translation tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
                 if (tra != null)
                 {
@@ -73,7 +73,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
                     AllTranslations.Add(tra);
                 }
-                textCode = textCodeRepo.GetMulti(a => a.Code == "General.MH.ActivationWizard" && a.Tenant == tenant).FirstOrDefault();
+                textCode = textCodeRepo.GetSingle(a => a.Code == "General.MH.ActivationWizard" && a.Tenant == tenant);
                 tra = AllTranslations.FirstOrDefault(t => t.TextCodeCode == textCode.Code);
                 if (tra != null)
                 {

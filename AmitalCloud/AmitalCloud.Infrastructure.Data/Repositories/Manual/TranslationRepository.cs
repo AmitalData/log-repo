@@ -53,18 +53,18 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             Translation lastTranslation = (Translation)CacheManager.CacheWrapper.Get(cacheKey);
             if (lastTranslation == null)
             {
+                lastTranslation = GetQueryable().Where(a => a.Tenant == tenant && a.UpdateDateGMT != null).OrderByDescending(a => a.UpdateDateGMT).FirstOrDefault();
 
-                lastTranslation = (from a in context.Translations
-                                   where a.Tenant == tenant && a.UpdateDateGMT != null
-                                   select a).OrderByDescending(a => a.UpdateDateGMT).FirstOrDefault();
                 if (CacheManager.CacheWrapper.Get(cacheKey) == null)
                 {
                     if (lastTranslation != null)
                     {
                         CacheManager.CacheWrapper.Insert(cacheKey, lastTranslation, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     }
-                    else   // cache a default value
+                    else
+                    {
                         CacheManager.CacheWrapper.Insert(cacheKey, new Translation() { UpdateDateGMT = new DateTime(2015, 1, 1) }, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    }
                 }
             }
             return lastTranslation;

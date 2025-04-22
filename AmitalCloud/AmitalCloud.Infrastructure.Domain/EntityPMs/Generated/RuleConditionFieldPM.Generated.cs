@@ -35,6 +35,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_value = entity.Value;
 		_operator = entity.Operator;
 		_objectFieldCode = entity.ObjectFieldCode;
+        _objectFieldName = null;
    }
    #endregion Constructors
    #region Properties
@@ -148,6 +149,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldCode",OldValue=_objectFieldCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _objectFieldCode=value;
+		   }
+		 }
+	   }
+	  private string _objectFieldName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectFieldName  
+	   {
+	     get { return _objectFieldName; }
+		 set
+		 {
+		   if(_objectFieldName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldName",OldValue=_objectFieldName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectFieldName=value;
 		   }
 		 }
 	   }

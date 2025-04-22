@@ -28,7 +28,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    public TermsofUsePM() : base() {} 
    public TermsofUsePM(POCO.TermsofUse entity) : base()
    {
-		_dropVersion = entity.DropVersion;
 		_date = entity.Date;
 		_versionNumber = entity.VersionNumber;
 		_tenant = entity.Tenant;
@@ -41,23 +40,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    }
    #endregion Constructors
    #region Properties
-   	  private int? _dropVersion ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int? DropVersion  
-	   {
-	     get { return _dropVersion; }
-		 set
-		 {
-		   if(_dropVersion != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DropVersion",OldValue=_dropVersion,NewValue=value,PropertyType="int?"};
-		    NotifyPropertyChanged(values);
-		   _dropVersion=value;
-		   }
-		 }
-	   }
-	  private DateTime _date ;
+   	  private DateTime _date ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
        public DateTime Date  

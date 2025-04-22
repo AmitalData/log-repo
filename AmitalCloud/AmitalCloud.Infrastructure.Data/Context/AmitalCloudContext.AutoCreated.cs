@@ -119,7 +119,6 @@ public IDbSet<AdvancedQueryFilter> AdvancedQueryFilters  {  get; set; }
 	public IDbSet<SharedUserQuery> shareduserqueries  {  get; set; }
 	public IDbSet<SmallDocument> SmallDocuments  {  get; set; }
 	public IDbSet<SpecialService> SpecialServices  {  get; set; }
-	public IDbSet<SystemMetadataLastUpdate> SystemMetadataLastUpdates  {  get; set; }
 	public IDbSet<TenantSetting> TenantSettings  {  get; set; }
 	public IDbSet<TermsofUse> TermsofUses  {  get; set; }
 	public IDbSet<TextCodeType> TextCodeTypes  {  get; set; }

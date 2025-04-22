@@ -33,6 +33,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_lastUpdateDate = entity.LastUpdateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_objectTableId = entity.ObjectTableId;
+        _objectTableName = null;
    }
    #endregion Constructors
    #region Properties
@@ -114,6 +115,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableId",OldValue=_objectTableId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _objectTableId=value;
+		   }
+		 }
+	   }
+	  private string _objectTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableName  
+	   {
+	     get { return _objectTableName; }
+		 set
+		 {
+		   if(_objectTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableName=value;
 		   }
 		 }
 	   }

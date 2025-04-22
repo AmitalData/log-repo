@@ -46,6 +46,8 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 
         IEnumerable<TEntity> GetMulti<TKey>(ISpecification<TEntity, TKey> spec);
         TEntity GetSingle<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys);
+        TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, string include = null);
+        TResult GetSingle<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select = null, string include = null);
         List<TEntity> GetMultiByParent<TEntityParentKeys>(TEntityParentKeys entityKeys);
     }
 

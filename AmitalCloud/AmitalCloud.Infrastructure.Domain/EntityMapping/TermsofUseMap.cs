@@ -22,8 +22,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.DropVersion).HasColumnName("DropVersion").IsRequired();
-
             this.Property(t => t.Date).HasColumnName("Date").IsRequired();
 
             this.Property(t => t.VersionNumber).HasColumnName("VersionNumber").IsRequired();

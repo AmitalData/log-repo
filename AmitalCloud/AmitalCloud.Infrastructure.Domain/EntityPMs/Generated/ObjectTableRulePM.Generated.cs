@@ -51,6 +51,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_triggerFieldCode = entity.TriggerFieldCode;
 		//objectTableRuleFields = entity.ObjectTableRuleFields != null ? entity.ObjectTableRuleFields.Select(a=>new ObjectTableRuleFieldPM(a)).ToList() : null;
 		ruleConditionFields = entity.RuleConditionFields != null ? entity.RuleConditionFields.Select(a=>new RuleConditionFieldPM(a)).ToList() : null;
+        _ruleTypeName = null;
+        _isCreatedFromSystemRule = default;
    }
    #endregion Constructors
    #region Properties
@@ -429,6 +431,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedRuleConditionFields = value; }
 	    }
+	  private string _ruleTypeName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RuleTypeName  
+	   {
+	     get { return _ruleTypeName; }
+		 set
+		 {
+		   if(_ruleTypeName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RuleTypeName",OldValue=_ruleTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _ruleTypeName=value;
+		   }
+		 }
+	   }
+	  private bool _isCreatedFromSystemRule ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCreatedFromSystemRule  
+	   {
+	     get { return _isCreatedFromSystemRule; }
+		 set
+		 {
+		   if(_isCreatedFromSystemRule != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCreatedFromSystemRule",OldValue=_isCreatedFromSystemRule,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isCreatedFromSystemRule=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

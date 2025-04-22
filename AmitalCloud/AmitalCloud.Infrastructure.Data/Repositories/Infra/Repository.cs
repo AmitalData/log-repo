@@ -181,7 +181,20 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
 
         public IEnumerable<TEntity> GetMulti<TKey>(ISpecification<TEntity, TKey> spec) => GetQuery(spec).AsEnumerable();
+
         public TEntity GetSingle<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys) => GetMulti(entityKeys.Predicate).FirstOrDefault();
+
+        public TResult GetSingle<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include = null)
+        {
+            IQueryable<TEntity> entity = include != null ? ApplyInclude(predicate, include) : _dbSet.Where(predicate);
+            return entity.Select(select).FirstOrDefault();
+        }
+        public TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, string include = null)
+        {
+            IQueryable<TEntity> entity = include != null ? ApplyInclude(predicate, include) : _dbSet.Where(predicate);
+            return entity.FirstOrDefault();
+        }
+
         public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, int skip, int take) => _dbSet.Where(predicate).OrderBy(orderBy).Skip(skip).Take(take).ToList();
         public List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, int skip, int take)
             => _dbSet.Where(predicate).Select(select).OrderBy(orderBy).Skip(skip).Take(take).ToList();

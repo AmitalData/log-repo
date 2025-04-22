@@ -1,5 +1,6 @@
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
@@ -343,9 +344,9 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public ObjectFieldModification GetLastObjectFieldModificationByTenant(int tenant)
         {
-            return (from a in context.ObjectFieldModifications
-                    where a.Tenant == tenant && a.UpdateDateGMT != null
-                    select a).OrderByDescending(a => a.UpdateDateGMT).FirstOrDefault();
+            Repository<ObjectFieldModification> objectFieldModificationRepo = new Repository<ObjectFieldModification>(context);
+            return objectFieldModificationRepo.GetQueryable().Where(a => a.Tenant == tenant && a.UpdateDateGMT != null)
+                .OrderByDescending(a => a.UpdateDateGMT).FirstOrDefault();
         }
         public List<ObjectFieldModification> GetAllObjectFieldModificationByTenant(int tenant)
         {

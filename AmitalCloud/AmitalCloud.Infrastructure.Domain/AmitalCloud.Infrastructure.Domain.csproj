@@ -85,6 +85,7 @@
     <Compile Include="DataContracts\CustomFieldClass.cs" />
     <Compile Include="DataContracts\FilterCriteria.cs" />
     <Compile Include="DataContracts\JSGlobalSettings.cs" />
+    <Compile Include="DataContracts\MetaDataLastUpdateDates.cs" />
     <Compile Include="DataContracts\MultiEntityUpdateData.cs" />
     <Compile Include="DataContracts\NotifyPropertyChangeValues.cs" />
     <Compile Include="DataContracts\QueryFilterItem.cs" />

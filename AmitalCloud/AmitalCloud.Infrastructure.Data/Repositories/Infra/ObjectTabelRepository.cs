@@ -46,39 +46,22 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
         public ObjectTable GetObjectTableByName(string name, int tenant, bool getFromCache)
         {
-            ObjectTable entity;
-            if (getFromCache)
+            ObjectTable entity = null;
+            string entityName = "ObjectTable" + name + tenant;
+
+            if (getFromCache && CacheManager.CacheWrapper.Get(entityName) != null)
             {
-                string entityName = "ObjectTable" + name + tenant;
-
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
-                {
-                    entity = context.ObjectTables.Where(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
-                    {
-                        if (entity != null)
-                        {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                        }
-                    }
-                }
-
-                else
-                {
-                    entity = (ObjectTable)CacheManager.CacheWrapper.Get(entityName);
-
-                }
-
-
-
+                entity = (ObjectTable)CacheManager.CacheWrapper.Get(entityName);
             }
 
-            else
+            if (entity == null) 
             {
-                entity = context.ObjectTables.Where(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
+                entity = GetSingle(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0));
+                if (entity != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
             }
-
             return entity;
         }
 

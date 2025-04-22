@@ -17,8 +17,8 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class SystemMetadataLastUpdateListQueryService  : BaseEntityListQueryService<SystemMetadataLastUpdateList,POCO.SystemMetadataLastUpdate,  SystemMetadataLastUpdateKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.SystemMetadataLastUpdate> contextEntity => (context as IAmitalCloudContext).SystemMetadataLastUpdates;
-		public SystemMetadataLastUpdateListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+	    protected override System.Data.Entity.IDbSet<POCO.SystemMetadataLastUpdate> contextEntity => (context as IGlobalContext).SystemMetadataLastUpdates;
+		public SystemMetadataLastUpdateListQueryService(int tenant) : base(GlobalContext.GetContext(tenant)) { }
         public SystemMetadataLastUpdateList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

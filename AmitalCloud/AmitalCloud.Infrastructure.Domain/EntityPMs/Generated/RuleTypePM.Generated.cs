@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_searchFields = entity.SearchFields;
-		objectTableRules = entity.ObjectTableRules != null ? entity.ObjectTableRules.Select(a=>new ObjectTableRulePM(a)).ToList() : null;
+		//objectTableRules = entity.ObjectTableRules != null ? entity.ObjectTableRules.Select(a=>new ObjectTableRulePM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties

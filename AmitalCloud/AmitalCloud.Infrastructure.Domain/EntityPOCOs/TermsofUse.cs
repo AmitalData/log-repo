@@ -19,9 +19,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
     public class TermsofUse : BaseEntity
 	{
 		
-           [Column("DropVersion")]
-	    public int? DropVersion { get; set; }
-        [Column("Date")]
+           [Column("Date")]
 	    public DateTime Date { get; set; }
         [Column("VersionNumber")]
 	    public int? VersionNumber { get; set; }

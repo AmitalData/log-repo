@@ -24,10 +24,10 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class SystemMetadataLastUpdateQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SystemMetadataLastUpdate,SystemMetadataLastUpdateKeys<string>,SystemMetadataLastUpdatePM,SystemMetadataLastUpdateList,string>
+   public partial class SystemMetadataLastUpdateQueryService: BaseEntityQueryService<IGlobalContext,POCO.SystemMetadataLastUpdate,SystemMetadataLastUpdateKeys<string>,SystemMetadataLastUpdatePM,SystemMetadataLastUpdateList,string>
    {
-        public SystemMetadataLastUpdateQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
-        public SystemMetadataLastUpdateQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SystemMetadataLastUpdate>(context),new SystemMetadataLastUpdateDataMapping()) {}
+        public SystemMetadataLastUpdateQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public SystemMetadataLastUpdateQueryService(IGlobalContext context) : base(new Repository<POCO.SystemMetadataLastUpdate>(context),new SystemMetadataLastUpdateDataMapping()) {}
 		public  SystemMetadataLastUpdatePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new SystemMetadataLastUpdateKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SystemMetadataLastUpdate,string> GetKeys(POCO.SystemMetadataLastUpdate entityPOCO) => new SystemMetadataLastUpdateKeys<string>() { Id = entityPOCO.Id,  };
    }

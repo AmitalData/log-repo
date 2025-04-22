@@ -152,7 +152,7 @@ namespace AmitalCloud.Infrastructure.Data.Validators
             string result = string.Empty;
 
             TranslationRepository translationRepository = new TranslationRepository(tenant);
-            Tenant myTenant = new Repository<Tenant>(translationRepository.context).GetMulti(a => a.Id == tenant).FirstOrDefault();
+            Tenant myTenant = new Repository<Tenant>(translationRepository.context).GetSingle(a => a.Id == tenant);
 
             if (myTenant != null)
             {

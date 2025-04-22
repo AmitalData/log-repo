@@ -35,7 +35,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             if (contactid != null)
             {
                 Repository<ContactTenant> contactTenant= new Repository<ContactTenant>(context);
-                ContactTenant contacttenant = contactTenant.GetMulti(a => a.ContactId == contactid && a.TenantId == tenant).FirstOrDefault();
+                ContactTenant contacttenant = contactTenant.GetSingle(a => a.ContactId == contactid && a.TenantId == tenant);
                 if (contacttenant == null)
                 {
                     throw new Exception($"contacttenant not exist in DB ({contactid})");
