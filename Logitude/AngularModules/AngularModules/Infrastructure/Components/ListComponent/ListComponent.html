@@ -440,7 +440,7 @@
                         </td>
 
                         <td style="width: 250px; vertical-align: middle;">
-                            <SearchTextBox [appSearchListDDL]="searchDropdownOptions" (optionSelected)="searchDropdownSelected($event)" [maxResults]="fastSearchSettings?.showTopResults" [displayPattern]="displayPattern" [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [DataCy]="'Search' + ObjectTableName"></SearchTextBox>
+                            <SearchTextBox (focus)="onSearchFocus()" [appSearchListDDL]="searchDropdownOptions" (optionSelected)="searchDropdownSelected($event)" [maxResults]="fastSearchSettings?.showTopResults" [displayPattern]="displayPattern" [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [DataCy]="'Search' + ObjectTableName"></SearchTextBox>
                         </td>
 
 

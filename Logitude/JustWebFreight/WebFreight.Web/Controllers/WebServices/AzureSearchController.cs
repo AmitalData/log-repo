@@ -1,7 +1,10 @@
-﻿using Logitude.Customs.BL.AzureSearch;
-using Newtonsoft.Json;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.Security;
+using Logitude.Customs.BL.AzureSearch;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -18,6 +21,9 @@ namespace WebFreight.Web.Controllers.WebServices
 
             try
             {
+                if (string.IsNullOrEmpty(index))
+                    throw new ArgumentNullException("index", "index cannot be null or empty");
+
                 dynamic settings = await ASHelper.GetIndexSettingsAsync(tenant, index);
                 return Request.CreateResponse(HttpStatusCode.OK, (object)settings);
             }
@@ -44,6 +50,27 @@ namespace WebFreight.Web.Controllers.WebServices
                         throw new Exception($"Index {index} not found");
                 }
 
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetLastSearch(string screen, string entname, int size = 20)
+        {
+            int tenant = HeaderHelper.Authenticate().Tenant;
+
+            if (string.IsNullOrEmpty(screen))
+                throw new ArgumentNullException("screen", "screen cannot be null or empty");
+            if (string.IsNullOrEmpty(entname))
+                throw new ArgumentNullException("entname", "entname cannot be null or empty");
+
+            try
+            {
+                ContactPM loggedUser = new LoggedContactUtil().GetLoggedContact(tenant);
+                List<string> result = new SearchIndexEditHistoryService(tenant).GetRecent(tenant, screen, entname, loggedUser.Id, size);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

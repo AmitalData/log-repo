@@ -2878,7 +2878,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
-
+        public IDbSet<SearchIndexEditHistory> SearchIndexEditHistories { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

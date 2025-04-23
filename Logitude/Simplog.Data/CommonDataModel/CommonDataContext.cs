@@ -1089,6 +1089,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; set; }
 
         public IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
+        public IDbSet<SearchIndexEditHistory> SearchIndexEditHistories { get; set; }
 
 
 

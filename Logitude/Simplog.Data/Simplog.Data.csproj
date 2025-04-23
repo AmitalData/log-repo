@@ -291,6 +291,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PostalCode.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AllARPaymentChequesView.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\SearchIndexEditHistory.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TotalOpenTransInBankView.cs" />
     <Compile Include="CommonDataModel\Mapping\CarrierServiceLineMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AllActiveGLAccountsViewMap.cs" />
@@ -303,6 +304,7 @@
     <Compile Include="CommonDataModel\Mapping\MentionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PostalCodeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ProductItemMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\SearchIndexEditHistoryMap.cs" />
     <Compile Include="CommonDataModel\Repositories\CarrierServiceLineRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
@@ -311,6 +313,7 @@
     <Compile Include="CommonDataModel\Repositories\MentionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PortGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\SearchIndexEditHistoryRepository.cs" />
     <Compile Include="Helpers\DocumentOutCopyArgs.cs" />
     <Compile Include="Helpers\FieldValueValidator.cs" />
     <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />

@@ -1,5 +1,4 @@
-﻿using Logitude.BL.Helpers;
-using Logitude.Customs.Data;
+﻿using Logitude.Customs.Data;
 using Logitude.Customs.Data.AzureSearch.Entities;
 using Logitude.Customs.Data.AzureSearch.Repo;
 using Logitude.Customs.Data.EntityListQueryServices;

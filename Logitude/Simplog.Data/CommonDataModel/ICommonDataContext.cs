@@ -255,6 +255,7 @@ namespace Simplog.Data.CommonDataModel
 
 
         IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
+        IDbSet<SearchIndexEditHistory> SearchIndexEditHistories { get; set; }
 
         void SetAsModified(object entity);
         void DetectChanges();
