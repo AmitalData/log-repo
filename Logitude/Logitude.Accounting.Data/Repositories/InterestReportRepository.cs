@@ -92,7 +92,7 @@ namespace Logitude.Accounting.Data.Repositories
         public decimal GetSumOfExReportsOrInterestOpenBalance(int tenant, string glAccountId)
         {
             var gLAccount = context.GLAccounts
-                .FirstOrDefault(ga => ga.Tenant == tenant && ga.Id == glAccountId);
+                  .SingleOrDefault(ga => ga.Tenant == tenant && ga.Id == glAccountId);
 
             // If a matching GLAccount doesn't exist, return 0
             if (gLAccount == null)
