@@ -73,13 +73,13 @@
         color: #e50a0a !important;
     }
     .MediaFillAbsolute {
-        z-index: 2;
+        /* z-index: 2; */
     }
 </style>
 <LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnCTRL_S_HotKeyPressed()"  (ESCHotKey)="OnEscHotKeyPressed()"></LogitudeHotKeysComponent>
 <div class="ConfirmWindowLayout" tabindex="-1" contenteditable="false" *ngIf="ShowModal"></div>
 
-<div class="MediaFillAbsolute">
+<div class="MediaFillAbsolute" [ngStyle]="{'z-index': ZIndex}">
     <div class="MediaFillRelative">
         <div [attr.id]="WindowId" class="ConfirmWindow" [ngStyle]="{left: Left, top: Top, width: Width, height: Height}">
             <table>
