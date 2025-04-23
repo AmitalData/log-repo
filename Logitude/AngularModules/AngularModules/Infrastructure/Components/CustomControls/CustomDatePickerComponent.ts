@@ -469,8 +469,8 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     private EmitBetweenChanges() {
         let fromDate = this.CloneDate(this.FromDate);
         let toDate = this.CloneDate(this.ToDate)
-        fromDate.setHours(this.GetTimezoneOffsetHours(), 0, 0, 0);
-        toDate.setHours(23 + this.GetTimezoneOffsetHours(), 59, 59, 999);
+        fromDate.setHours(this.GetTimezoneOffsetHours(fromDate), 0, 0, 0);
+        toDate.setHours(23 + this.GetTimezoneOffsetHours(toDate), 59, 59, 999);
 
         this.SelectedItemChanged.emit({ FromDate: fromDate, ToDate: toDate, Operation: "Between" });
     }
@@ -510,8 +510,8 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         this.mouseOver = false;
     }
 
-    GetTimezoneOffsetHours() {
-        let timezoneOffsetHours = new Date().getTimezoneOffset() / 60;
+    GetTimezoneOffsetHours(date: Date) {
+        let timezoneOffsetHours = date.getTimezoneOffset() / 60;
         return timezoneOffsetHours * (-1);
     }
 }
