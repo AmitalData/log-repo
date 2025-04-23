@@ -31,7 +31,7 @@ namespace Logitude.BL.Helpers
         public static DefaultAndConfigurationKey GetByTenant(int tenant, string key)
         {
             var settings = GetByTenant(tenant);
-            return settings.FirstOrDefault(s => s.SetKey == key);
+			return settings.SingleOrDefault(s => string.Equals(s.SetKey, key, StringComparison.OrdinalIgnoreCase));
         }
 
         public static void ClearCacheByTenant(string tenant)

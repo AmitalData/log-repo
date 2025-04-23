@@ -13,9 +13,8 @@ namespace Logitude.BL.Helpers
 {
     public class DefaultService : BaseClasses.BaseInstance<DefaultService>
     {
-        private int expirationTime = Environment.GetEnvironmentVariable("CacheDefaultExpirationTime") != null ? Convert.ToInt32(Environment.GetEnvironmentVariable("CacheDefaultExpirationTime")) : 30;
-
-        private const string CachePrefix = "SettingsHelper_{0}";
+        private int expirationTime = int.TryParse(Environment.GetEnvironmentVariable("CacheDefaultExpirationTime"), out var t) ? t : 30;
+		private const string CachePrefix = "SettingsHelper_{0}";
         public List<DefaultAndConfiguration_Ext> Get(int tenant)
         {
             string cacheKey = GetCacheKey(tenant);
@@ -39,11 +38,6 @@ namespace Logitude.BL.Helpers
             if (CacheManager.CacheWrapper == null)
             {
                 Dictionary<int, string> globalDBs = new Dictionary<int, string>();
-                //List<GlobalTenant> globalTenants = new GlobalDomainService().GetActiveTenants();
-                //foreach (var item in globalTenants)
-                //{
-                //    globalDBs.Add(item.Id, item.GlobalDBId);
-                //}
                 CacheManager.CacheWrapper = new CacheWrapper(HttpRuntime.Cache,globalDBs);
             }
             return CacheManager.GetOrInsertNewObject(
