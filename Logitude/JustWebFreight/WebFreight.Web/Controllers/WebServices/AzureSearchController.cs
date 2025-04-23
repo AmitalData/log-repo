@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.BL.AzureSearch;
+using Newtonsoft.Json;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Net;
@@ -11,6 +12,21 @@ namespace WebFreight.Web.Controllers.WebServices
 {
     public class AzureSearchController : ApiController
     {
+        public async Task<HttpResponseMessage> GetSettings(string index)
+        {
+            int tenant = HeaderHelper.Authenticate().Tenant;
+
+            try
+            {
+                dynamic settings = await ASHelper.GetIndexSettingsAsync(tenant, index);
+                return Request.CreateResponse(HttpStatusCode.OK, (object)settings);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public async Task<HttpResponseMessage> GetFastSearch([FromUri] ApiQueryFilters filters, string searchText, string index)
         {
             int tenant = HeaderHelper.Authenticate().Tenant;
@@ -27,7 +43,7 @@ namespace WebFreight.Web.Controllers.WebServices
                     default:
                         throw new Exception($"Index {index} not found");
                 }
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

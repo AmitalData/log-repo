@@ -27,6 +27,19 @@ export class AzureSearchWebService {
         const res: Observable<ServiceResponse> = this.logtuideTableDataService.standartSendAjax(ajax);
         return this.logtuideTableDataService.getDataFromService(res)
     }
+
+    GetSettings(index: string): Promise<FastSearchSettings> {
+        const ajax: Observable<any> = this._http.get(
+            this._apiUrl + '/GetSettings',
+            {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+                params: { index }
+            }
+        );
+
+        const res: Observable<ServiceResponse> = this.logtuideTableDataService.standartSendAjax(ajax);
+        return this.logtuideTableDataService.getDataFromService(res)
+    }
 }
 
 
@@ -56,3 +69,17 @@ export interface FastSearchResult {
     customerName: string;
     transportModeId: string;
   }
+
+ export interface FastSearchSettings {
+    maxResults: number;
+    idleSearchTimeMs: number;
+    showTopResults: number;
+    showRecent: boolean;
+    showRecentObject: string;
+    ddlHtmlLine: string;
+    recentLineHeader: string;
+    recentShowTopResults: number;
+    recentEditScreen: string;
+    recentEditScreenParam: string;
+    addAsteriskToNumberSearch: string;
+}

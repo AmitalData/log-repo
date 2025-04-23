@@ -328,6 +328,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmitalContextUtil.cs" />
+    <Compile Include="AzureSearch\ASHelper.cs" />
     <Compile Include="AzureSearch\AzureSearchServiceFilterHelper.cs" />
     <Compile Include="AzureSearch\CustomsBookAzureSearchService.cs" />
     <Compile Include="AzureSearch\DeclarationAzureSearchService.cs" />

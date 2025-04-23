@@ -67,7 +67,7 @@ import { CustomizationPermissionService } from '../../../InfrastructureModules/I
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
-import { AzureSearchWebService, FastSearchResult } from 'Customs/Services/WebServices/AzureSearchWebService';
+import { AzureSearchWebService, FastSearchResult, FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
  
 @Component({
 
@@ -133,6 +133,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     //public Title: string;
     private title: string;//= "";
     customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+    fastSearchSettings: FastSearchSettings = null;
+    private indexName: string = '';
     get Title() { return this.title; }
     set Title(newValue: string) {
         if (this.title != newValue) {
@@ -184,37 +186,32 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     onSearchTextChangeEvent(searchtext) {
+        const timer: number = this.fastSearchSettings.idleSearchTimeMs || 400; 
+
         console.log("Search");
         if ((this.searchFields != searchtext) && !(searchtext == null && this.searchFields == "")) {
             this.searchFields = searchtext;
             if (this.timerToken) {
                 clearTimeout(this.timerToken);
             }
-            this.timerToken = setTimeout(() => this.SearchMethod(), 400);
-
+            this.timerToken = setTimeout(() => this.SearchMethod(), timer);
         }
-        //this.searchFields = searchtext;
-
-        //this.SearchFieldchangeevent.emit(this.searchFields);
     }
 
-    SearchMethod() {        
+    async SearchMethod() {        
         const searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
         this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != searchFieldName);
-
-        if (this.fastSearch && this.ObjectTableName === 'Customs.Declaration') {
-            if(this.searchFields?.length > 0)
-                {
-                    this.orginalCurrentAdditionalFilters = [...this.CurrentQueryFilters.AdditionalFilters];
-                    this.azureSearchWebService.fastSearch(this.CurrentQueryFilters, this.searchFields, "declarations").then((result: FastSearchResult[]) => {
-                        this.displayPattern = '{transportModeId} {exportFile} {customFileNo} {createDateTime} {declarationNumber:110} {customerName:110}';
-                        this.searchDropdownOptions = result;
-                        this.CD.detectChanges();
-                    });
-                    
-                    return;
-                }
-            else if(this.orginalCurrentAdditionalFilters != null)
+        
+        if (this.fastSearch) {
+            if(this.searchFields?.length > 0) {
+                this.orginalCurrentAdditionalFilters = [...this.CurrentQueryFilters.AdditionalFilters];
+                const result: FastSearchResult[] = await this.azureSearchWebService.fastSearch(this.CurrentQueryFilters, this.searchFields, this.indexName)
+                this.displayPattern = this.fastSearchSettings.ddlHtmlLine;
+                this.searchDropdownOptions = result;
+                this.CD.detectChanges();                    
+                
+                return;
+            } else if(this.orginalCurrentAdditionalFilters != null)
                 this.CurrentQueryFilters.AdditionalFilters = this.orginalCurrentAdditionalFilters;
         }
             
@@ -1080,6 +1077,27 @@ export class ListComponent implements OnInit, AfterViewInit {
                 this.RunComponentTimer();
             }
         }
+        
+        this.initFastSearch();
+    }
+    
+    private async initFastSearch() {
+        const havePermission = FeatureLocator.HasFeaturePermession("General", "FASTSEARCH");
+        const enabled = this.ObjectTable.ShowFastSearch;
+        if(!havePermission || !enabled) return;
+
+        let indexName: string = this.ObjectTableName.replace('Customs.', '').toLowerCase();
+        if(!indexName.endsWith('s'))
+            indexName += 's';
+    
+        this.indexName = indexName;
+        if (this.MenuTableQuerySection == "Customs.ExportDeclaration") 
+            indexName = 'exportDeclarations';
+        else return; // Disabled fase search for import declaration
+
+        const settings: FastSearchSettings = await this.azureSearchWebService.GetSettings(indexName);
+        this.fastSearchSettings = settings;
+        this.fastSearch = true;
     }
 
     private Retries: number = 0;

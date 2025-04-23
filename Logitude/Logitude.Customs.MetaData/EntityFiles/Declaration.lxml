@@ -61,6 +61,7 @@
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
   TenantZeroData="false"
+  ShowFastSearch="true"
   Code1="&quot;DECL&quot;"
   Name1="&quot;Customs.Declaration&quot;"
   CustomFieldsCount="0"

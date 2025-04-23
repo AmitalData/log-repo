@@ -109,6 +109,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public IQueryable<DefaultAndConfiguration> GetDefaultAndConfigurations(int tenant) =>
             tenant == 0 ? context.DefaultAndConfigurations.AsQueryable() :
-            context.DefaultAndConfigurations.Where(a => a.Tenant == tenant).AsQueryable();
+            context.DefaultAndConfigurations.Where(a => a.Tenant == tenant || (a.Tenant == 0 && a.AllowInheritance.HasValue && a.AllowInheritance.Value)).AsQueryable();
     }
 }

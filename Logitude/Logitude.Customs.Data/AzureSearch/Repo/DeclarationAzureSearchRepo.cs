@@ -20,14 +20,14 @@ namespace Logitude.Customs.Data.AzureSearch.Repo
             )
         { }
 
-        public async Task<List<DeclarationASEntity>> SearchAsync(string filter, string searchText)
+        public async Task<List<DeclarationASEntity>> SearchAsync(string filter, string searchText, int maxResult)
         {            
             searchText += "*";
 
             SearchOptions options = new SearchOptions
             {
                 Filter = filter,
-                Size = 500,
+                Size = maxResult,
             };
 
             List<DeclarationASEntity> res = await SearchAsync(searchText, options);

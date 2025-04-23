@@ -284,6 +284,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            FullNameTextCodeCode = a.FullNameTextCodeCode,
                                            FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                            AvailableInDocumentTypes = a.AvailableInDocumentTypes,
+                                           ShowFastSearch = a.ShowFastSearch.HasValue && a.ShowFastSearch.Value,
                                        }).ToList();
             }
             if (tenant != 0)
@@ -383,6 +384,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                             AvailableInDocumentTypes = a.AvailableInDocumentTypes,
+                                            ShowFastSearch = a.ShowFastSearch.HasValue && a.ShowFastSearch.Value,
                                         }).ToList();
 
             CacheManager.CacheWrapper.Insert(tenantZeroObjectTablesCacheKeyName, zeroObjectTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);

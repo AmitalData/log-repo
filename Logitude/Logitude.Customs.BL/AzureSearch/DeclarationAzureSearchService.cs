@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.Data;
+﻿using Logitude.BL.Helpers;
+using Logitude.Customs.Data;
 using Logitude.Customs.Data.AzureSearch.Entities;
 using Logitude.Customs.Data.AzureSearch.Repo;
 using Logitude.Customs.Data.EntityListQueryServices;
@@ -26,7 +27,7 @@ namespace Logitude.Customs.BL.AzureSearch
             if (tenant == null)
                 throw new ArgumentNullException(nameof(tenant), "tenant is null");
 
-            if (apiQueryFilters != null)
+            if (apiQueryFilters?.AdditionalFilters != null)
             {
                 List<QueryFilterItem> additionalFilters = JsonConvert.DeserializeObject<List<QueryFilterItem>>(apiQueryFilters.AdditionalFilters);
 
@@ -52,9 +53,10 @@ namespace Logitude.Customs.BL.AzureSearch
             else
                 filters = "tenant eq " + tenant;
 
-            List<DeclarationASEntity> declarationList = await new DeclarationAzureSearchRepo(FilterHelper.serviceName, FilterHelper.apiKey).SearchAsync(filters, searchText);
-            //List<string> displayFields = new List<string>() { "CustomFileNo", "DeclarationNumber" }; TO DO: Implement display fields like "{תאריך פתיחה} {סוג משלוח ICON } {מספר תיק יצוא} / {מספר תיק מכס{ {לקוח} "
-            //List<string> result = declarationList.Select( x => $"{x.CustomFileNo} {x.DeclarationNumber}").ToList();
+            string indexSettingsName = filters.Contains("(direction eq 'E')") ?  "exportDeclarations" : "declarations";
+            dynamic settings = ASHelper.GetIndexSettings(tenant, indexSettingsName);
+            
+            List<DeclarationASEntity> declarationList = await new DeclarationAzureSearchRepo(FilterHelper.serviceName, FilterHelper.apiKey).SearchAsync(filters, searchText, (int)settings.maxResults);
             return declarationList;
         }
 
