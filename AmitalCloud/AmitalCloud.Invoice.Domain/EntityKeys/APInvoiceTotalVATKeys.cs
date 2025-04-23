@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Invoice.Domain.EntityKeys
 {
-   public class APInvoiceTotalVATKeys<T> : BaseEntityKeyFields<EntityPOCOs.APInvoiceTotalVAT,T> 
+   public class APInvoiceTotalVATKeys<T> : BaseEntityKeyFields<ENTITIES.APInvoiceTotalVAT,T> 
    {
 		public APInvoiceTotalVATKeys() : base() {}
         public APInvoiceTotalVATKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Invoice.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "APInvoiceTotalVATsPM";
-	  public override Expression<Func<EntityPOCOs.APInvoiceTotalVAT, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.APInvoiceTotalVAT, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

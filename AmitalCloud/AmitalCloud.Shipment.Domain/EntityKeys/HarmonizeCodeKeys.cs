@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Shipment.Domain.EntityKeys
 {
-   public class HarmonizeCodeKeys<T> : BaseEntityKeyFields<EntityPOCOs.HarmonizeCode,T> 
+   public class HarmonizeCodeKeys<T> : BaseEntityKeyFields<ENTITIES.HarmonizeCode,T> 
    {
 		public HarmonizeCodeKeys() : base() {}
         public HarmonizeCodeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Shipment.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "HarmonizeCodesPM";
-	  public override Expression<Func<EntityPOCOs.HarmonizeCode, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.HarmonizeCode, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

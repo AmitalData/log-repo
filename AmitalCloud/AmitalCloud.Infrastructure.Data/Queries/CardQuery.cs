@@ -1,10 +1,9 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Services;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +23,18 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public CardPM GetSinglePMFromCache(string id, int tenant)
         {
             string entityKeyString = $"GetSinglePMFromCache({id},{tenant})";
-            return CacheManager.GetOrInsertNewObject<CardPM>(entityKeyString, () => this.GetSinglePM(id, tenant) );
+            return CacheManager.GetOrInsertNewObject<CardPM>(entityKeyString, () => this.GetSinglePM(id, tenant));
         }
 
         public CardPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))
             {
-                string entityKeyString = $"CardPM({id},{tenant})" ;
+                string entityKeyString = $"CardPM({id},{tenant})";
                 CardPM entity;
-                var repository = new Repository<Address>(AmitalCloudContext.GetContext(tenant));
+                var repository = new Repository<Address>(tenant);
                 var addresslist = repository.GetMulti(a => a.Tenant == tenant && a.CardId == id, a => new AddressPM(a), "Country,State").ToList();
-                string myMainAddressId = addresslist.Where(a=> a.AddressTypeId.ToUpper() == "M").FirstOrDefault().Id;
+                string myMainAddressId = addresslist.Where(a => a.AddressTypeId.ToUpper() == "M").FirstOrDefault().Id;
                 string myBillingAddressId = addresslist.Where(a => a.AddressTypeId.ToUpper() == "B").FirstOrDefault().Id;
                 string myPickupDeliveryAddressId = addresslist.Where(a => a.AddressTypeId.ToUpper() == "P").FirstOrDefault().Id;
                 if (HttpContext.Current != null)
@@ -60,7 +59,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         private CardPM GetEntity(string id, int tenant, string myMainAddressId, string myBillingAddressId, string myPickupDeliveryAddressId)
         {
-            CardPM entity = new Repository<Card>(AmitalCloudContext.GetContext(tenant)).GetMulti(a => a.Id == id, a => GetNewPM(myMainAddressId, myBillingAddressId, myPickupDeliveryAddressId, a), "Customer,SalesmanUser,PartnerType,SharedLogisticsInvitationStatus,Airline").FirstOrDefault();
+            CardPM entity = new Repository<Card>(tenant).GetMulti(a => a.Id == id, a => GetNewPM(myMainAddressId, myBillingAddressId, myPickupDeliveryAddressId, a), "Customer,SalesmanUser,PartnerType,SharedLogisticsInvitationStatus,Airline").FirstOrDefault();
             if (entity != null)
             {
                 entity.Addresses = new AddressQuery(tenant).GetAddressesByCardId(id, tenant);
@@ -68,7 +67,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             }
             return entity;
         }
-        private CardPM GetNewPM(string myMainAddressId, string myBillingAddressId, string myPickupDeliveryAddressId, Card a )
+        private CardPM GetNewPM(string myMainAddressId, string myBillingAddressId, string myPickupDeliveryAddressId, Card a)
             => new CardPM(a)
             {
                 //PartnerTypeName = a.PartnerType == null ? null : a.PartnerType.Name,

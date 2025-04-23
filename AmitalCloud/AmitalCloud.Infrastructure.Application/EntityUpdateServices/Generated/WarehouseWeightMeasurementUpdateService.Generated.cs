@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class WarehouseWeightMeasurementUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.WarehouseWeightMeasurement,WarehouseWeightMeasurementPM,IEntityPM,WarehouseWeightMeasurementList,string>
+   public partial class WarehouseWeightMeasurementUpdateService:BaseEntityUpdateService<POCO.WarehouseWeightMeasurement,WarehouseWeightMeasurementPM,IEntityPM,WarehouseWeightMeasurementList,string>
    {
    			
-        public WarehouseWeightMeasurementUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public WarehouseWeightMeasurementUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new WarehouseWeightMeasurementDataMapping();
-            Repository = new Repository<POCO.WarehouseWeightMeasurement>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.WarehouseWeightMeasurement>(mainContext);
         }
-        public WarehouseWeightMeasurementUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public WarehouseWeightMeasurementUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public WarehouseWeightMeasurementUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new WarehouseWeightMeasurementDataMapping();
+            Repository = new Repository<POCO.WarehouseWeightMeasurement>(tenant);
+		}
+        public WarehouseWeightMeasurementUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.WarehouseWeightMeasurement,string> GetKeys(WarehouseWeightMeasurementPM entityPM) => new WarehouseWeightMeasurementKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(WarehouseWeightMeasurementPM entityPM)
 		{

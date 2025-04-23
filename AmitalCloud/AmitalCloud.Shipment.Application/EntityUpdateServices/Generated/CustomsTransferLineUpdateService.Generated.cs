@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class CustomsTransferLineUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.CustomsTransferLine,CustomsTransferLinePM,CustomsTransferHeaderPM,CustomsTransferLineList,string>
+   public partial class CustomsTransferLineUpdateService:BaseEntityUpdateService<POCO.CustomsTransferLine,CustomsTransferLinePM,CustomsTransferHeaderPM,CustomsTransferLineList,string>
    {
    			
-        public CustomsTransferLineUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public CustomsTransferLineUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomsTransferLineDataMapping();
-            Repository = new Repository<POCO.CustomsTransferLine>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.CustomsTransferLine>(mainContext);
         }
-        public CustomsTransferLineUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public CustomsTransferLineUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public CustomsTransferLineUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomsTransferLineDataMapping();
+            Repository = new Repository<POCO.CustomsTransferLine>(tenant);
+		}
+        public CustomsTransferLineUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomsTransferLine,string> GetKeys(CustomsTransferLinePM entityPM) => new CustomsTransferLineKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(CustomsTransferLinePM entityPM)
 		{

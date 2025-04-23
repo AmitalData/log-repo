@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class DocumentTypeTemplateKeys<T> : BaseEntityKeyFields<EntityPOCOs.DocumentTypeTemplate,T> 
+   public class DocumentTypeTemplateKeys<T> : BaseEntityKeyFields<ENTITIES.DocumentTypeTemplate,T> 
    {
 		public DocumentTypeTemplateKeys() : base() {}
         public DocumentTypeTemplateKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "DocumentTypeTemplatesPM";
-	  public override Expression<Func<EntityPOCOs.DocumentTypeTemplate, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.DocumentTypeTemplate, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

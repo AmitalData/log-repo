@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class LeadSourceUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.LeadSource,LeadSourcePM,IEntityPM,LeadSourceList,string>
+   public partial class LeadSourceUpdateService:BaseEntityUpdateService<POCO.LeadSource,LeadSourcePM,IEntityPM,LeadSourceList,string>
    {
    			
-        public LeadSourceUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public LeadSourceUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new LeadSourceDataMapping();
-            Repository = new Repository<POCO.LeadSource>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.LeadSource>(mainContext);
         }
-        public LeadSourceUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public LeadSourceUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public LeadSourceUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new LeadSourceDataMapping();
+            Repository = new Repository<POCO.LeadSource>(tenant);
+		}
+        public LeadSourceUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.LeadSource,string> GetKeys(LeadSourcePM entityPM) => new LeadSourceKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(LeadSourcePM entityPM)
 		{

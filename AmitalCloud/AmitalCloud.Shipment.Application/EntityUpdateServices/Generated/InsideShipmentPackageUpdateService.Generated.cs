@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class InsideShipmentPackageUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.InsideShipmentPackage,InsideShipmentPackagePM,ShipmentPackagePM,InsideShipmentPackageList,string>
+   public partial class InsideShipmentPackageUpdateService:BaseEntityUpdateService<POCO.InsideShipmentPackage,InsideShipmentPackagePM,ShipmentPackagePM,InsideShipmentPackageList,string>
    {
    			
-        public InsideShipmentPackageUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public InsideShipmentPackageUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new InsideShipmentPackageDataMapping();
-            Repository = new Repository<POCO.InsideShipmentPackage>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.InsideShipmentPackage>(mainContext);
         }
-        public InsideShipmentPackageUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public InsideShipmentPackageUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public InsideShipmentPackageUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new InsideShipmentPackageDataMapping();
+            Repository = new Repository<POCO.InsideShipmentPackage>(tenant);
+		}
+        public InsideShipmentPackageUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.InsideShipmentPackage,string> GetKeys(InsideShipmentPackagePM entityPM) => new InsideShipmentPackageKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(InsideShipmentPackagePM entityPM)
 		{

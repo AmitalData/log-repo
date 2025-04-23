@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class SharedLogisticsSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SharedLogisticsSetting,SharedLogisticsSettingKeys<string>,SharedLogisticsSettingPM,SharedLogisticsSettingList,string>
+   public partial class SharedLogisticsSettingQueryService: BaseEntityQueryService<POCO.SharedLogisticsSetting,SharedLogisticsSettingKeys<string>,SharedLogisticsSettingPM,SharedLogisticsSettingList,string>
    {
-        public SharedLogisticsSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public SharedLogisticsSettingQueryService(int tenant) : base(new Repository<POCO.SharedLogisticsSetting>(tenant),new SharedLogisticsSettingDataMapping()) {}
         public SharedLogisticsSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SharedLogisticsSetting>(context),new SharedLogisticsSettingDataMapping()) {}
 		public  SharedLogisticsSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new SharedLogisticsSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SharedLogisticsSetting,string> GetKeys(POCO.SharedLogisticsSetting entityPOCO) => new SharedLogisticsSettingKeys<string>() { Id = entityPOCO.Id,  };

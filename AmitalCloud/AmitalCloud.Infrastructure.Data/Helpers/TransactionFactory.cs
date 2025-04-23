@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AmitalCloud.Infrastructure.Domain.DataContracts;
+using Newtonsoft.Json;
 using System;
 using System.Reflection;
 using System.Transactions;

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class AWBInformationUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.AWBInformation,AWBInformationPM,IEntityPM,AWBInformationList,string>
+   public partial class AWBInformationUpdateService:BaseEntityUpdateService<POCO.AWBInformation,AWBInformationPM,IEntityPM,AWBInformationList,string>
    {
    			
-        public AWBInformationUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public AWBInformationUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AWBInformationDataMapping();
-            Repository = new Repository<POCO.AWBInformation>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.AWBInformation>(mainContext);
         }
-        public AWBInformationUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public AWBInformationUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public AWBInformationUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AWBInformationDataMapping();
+            Repository = new Repository<POCO.AWBInformation>(tenant);
+		}
+        public AWBInformationUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AWBInformation,string> GetKeys(AWBInformationPM entityPM) => new AWBInformationKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(AWBInformationPM entityPM)
 		{

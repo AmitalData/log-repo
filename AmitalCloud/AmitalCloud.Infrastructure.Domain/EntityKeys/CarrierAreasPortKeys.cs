@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class CarrierAreasPortKeys<T> : BaseEntityKeyFields<EntityPOCOs.CarrierAreasPort,T> 
+   public class CarrierAreasPortKeys<T> : BaseEntityKeyFields<ENTITIES.CarrierAreasPort,T> 
    {
 		public CarrierAreasPortKeys() : base() {}
         public CarrierAreasPortKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CarrierAreasPortsPM";
-	  public override Expression<Func<EntityPOCOs.CarrierAreasPort, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.CarrierAreasPort, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class HybridTenantThresholdUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.HybridTenantThreshold,HybridTenantThresholdPM,IEntityPM,HybridTenantThresholdList,int>
+   public partial class HybridTenantThresholdUpdateService:BaseEntityUpdateService<POCO.HybridTenantThreshold,HybridTenantThresholdPM,IEntityPM,HybridTenantThresholdList,int>
    {
    			
-        public HybridTenantThresholdUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public HybridTenantThresholdUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new HybridTenantThresholdDataMapping();
-            Repository = new Repository<POCO.HybridTenantThreshold>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.HybridTenantThreshold>(mainContext);
         }
-        public HybridTenantThresholdUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public HybridTenantThresholdUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public HybridTenantThresholdUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new HybridTenantThresholdDataMapping();
+            Repository = new Repository<POCO.HybridTenantThreshold>(tenant);
+		}
+        public HybridTenantThresholdUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.HybridTenantThreshold,int> GetKeys(HybridTenantThresholdPM entityPM) => new HybridTenantThresholdKeys<int>() { Tenant = entityPM.Tenant, TypeCode = entityPM.TypeCode };
 protected override void FillDefaultValuesOnCreate(HybridTenantThresholdPM entityPM)
 		{

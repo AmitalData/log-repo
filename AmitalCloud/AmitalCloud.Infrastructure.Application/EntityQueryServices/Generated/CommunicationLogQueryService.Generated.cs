@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CommunicationLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CommunicationLog,CommunicationLogKeys<string>,CommunicationLogPM,CommunicationLogList,string>
+   public partial class CommunicationLogQueryService: BaseEntityQueryService<POCO.CommunicationLog,CommunicationLogKeys<string>,CommunicationLogPM,CommunicationLogList,string>
    {
-        public CommunicationLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CommunicationLogQueryService(int tenant) : base(new Repository<POCO.CommunicationLog>(tenant),new CommunicationLogDataMapping()) {}
         public CommunicationLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CommunicationLog>(context),new CommunicationLogDataMapping()) {}
 		public  CommunicationLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CommunicationLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CommunicationLog,string> GetKeys(POCO.CommunicationLog entityPOCO) => new CommunicationLogKeys<string>() { Id = entityPOCO.Id,  };

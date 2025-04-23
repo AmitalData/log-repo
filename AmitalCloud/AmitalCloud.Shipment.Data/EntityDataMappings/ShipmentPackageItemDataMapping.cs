@@ -8,7 +8,7 @@
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Domain.EntityPMs;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 
 
 namespace AmitalCloud.Shipment.Data.EntityDataMappings

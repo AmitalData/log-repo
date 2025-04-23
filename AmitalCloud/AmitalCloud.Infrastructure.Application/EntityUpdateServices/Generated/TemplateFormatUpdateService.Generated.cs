@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class TemplateFormatUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.TemplateFormat,TemplateFormatPM,IEntityPM,TemplateFormatList,string>
+   public partial class TemplateFormatUpdateService:BaseEntityUpdateService<POCO.TemplateFormat,TemplateFormatPM,IEntityPM,TemplateFormatList,string>
    {
    			
-        public TemplateFormatUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public TemplateFormatUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new TemplateFormatDataMapping();
-            Repository = new Repository<POCO.TemplateFormat>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.TemplateFormat>(mainContext);
         }
-        public TemplateFormatUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public TemplateFormatUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public TemplateFormatUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new TemplateFormatDataMapping();
+            Repository = new Repository<POCO.TemplateFormat>(tenant);
+		}
+        public TemplateFormatUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.TemplateFormat,string> GetKeys(TemplateFormatPM entityPM) => new TemplateFormatKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(TemplateFormatPM entityPM)
 		{

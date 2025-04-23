@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class DigitalTextCodeKeys<T> : BaseEntityKeyFields<EntityPOCOs.DigitalTextCode,T> 
+   public class DigitalTextCodeKeys<T> : BaseEntityKeyFields<ENTITIES.DigitalTextCode,T> 
    {
 		public DigitalTextCodeKeys() : base() {}
         public DigitalTextCodeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "DigitalTextCodesPM";
-	  public override Expression<Func<EntityPOCOs.DigitalTextCode, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.DigitalTextCode, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

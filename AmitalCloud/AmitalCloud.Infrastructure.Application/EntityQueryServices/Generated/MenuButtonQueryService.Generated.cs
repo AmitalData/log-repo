@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class MenuButtonQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.MenuButton,MenuButtonKeys<string>,MenuButtonPM,MenuButtonList,string>
+   public partial class MenuButtonQueryService: BaseEntityQueryService<POCO.MenuButton,MenuButtonKeys<string>,MenuButtonPM,MenuButtonList,string>
    {
-        public MenuButtonQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public MenuButtonQueryService(int tenant) : base(new Repository<POCO.MenuButton>(tenant),new MenuButtonDataMapping()) {}
         public MenuButtonQueryService(IAmitalCloudContext context) : base(new Repository<POCO.MenuButton>(context),new MenuButtonDataMapping()) {}
 		public  MenuButtonPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new MenuButtonKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.MenuButton,string> GetKeys(POCO.MenuButton entityPOCO) => new MenuButtonKeys<string>() { Code = entityPOCO.Code,  };

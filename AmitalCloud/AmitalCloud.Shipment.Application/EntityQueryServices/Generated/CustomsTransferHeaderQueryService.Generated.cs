@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class CustomsTransferHeaderQueryService: BaseEntityQueryService<IShipmentContext,POCO.CustomsTransferHeader,CustomsTransferHeaderKeys<string>,CustomsTransferHeaderPM,CustomsTransferHeaderList,string>
+   public partial class CustomsTransferHeaderQueryService: BaseEntityQueryService<POCO.CustomsTransferHeader,CustomsTransferHeaderKeys<string>,CustomsTransferHeaderPM,CustomsTransferHeaderList,string>
    {
-        public CustomsTransferHeaderQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public CustomsTransferHeaderQueryService(IShipmentContext context) : base(new Repository<POCO.CustomsTransferHeader>(context),new CustomsTransferHeaderDataMapping()) {}
+        public CustomsTransferHeaderQueryService(int tenant) : base(new Repository<POCO.CustomsTransferHeader>(tenant),new CustomsTransferHeaderDataMapping()) {}
+        public CustomsTransferHeaderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomsTransferHeader>(context),new CustomsTransferHeaderDataMapping()) {}
 		public  CustomsTransferHeaderPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomsTransferHeaderKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomsTransferHeader,string> GetKeys(POCO.CustomsTransferHeader entityPOCO) => new CustomsTransferHeaderKeys<string>() { Id = entityPOCO.Id,  };
    }

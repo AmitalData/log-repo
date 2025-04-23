@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Shipment.Domain.EntityKeys
 {
-   public class ContainerTrackingProviderKeys<T> : BaseEntityKeyFields<EntityPOCOs.ContainerTrackingProvider,T> 
+   public class ContainerTrackingProviderKeys<T> : BaseEntityKeyFields<ENTITIES.ContainerTrackingProvider,T> 
    {
 		public ContainerTrackingProviderKeys() : base() {}
         public ContainerTrackingProviderKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Shipment.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "ContainerTrackingProvidersPM";
-	  public override Expression<Func<EntityPOCOs.ContainerTrackingProvider, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.ContainerTrackingProvider, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

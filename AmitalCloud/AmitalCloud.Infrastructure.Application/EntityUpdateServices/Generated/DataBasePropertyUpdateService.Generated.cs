@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DataBasePropertyUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DataBaseProperty,DataBasePropertyPM,IEntityPM,DataBasePropertyList,int>
+   public partial class DataBasePropertyUpdateService:BaseEntityUpdateService<POCO.DataBaseProperty,DataBasePropertyPM,IEntityPM,DataBasePropertyList,int>
    {
    			
-        public DataBasePropertyUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DataBasePropertyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DataBasePropertyDataMapping();
-            Repository = new Repository<POCO.DataBaseProperty>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DataBaseProperty>(mainContext);
         }
-        public DataBasePropertyUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DataBasePropertyUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DataBasePropertyUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DataBasePropertyDataMapping();
+            Repository = new Repository<POCO.DataBaseProperty>(tenant);
+		}
+        public DataBasePropertyUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DataBaseProperty,int> GetKeys(DataBasePropertyPM entityPM) => new DataBasePropertyKeys<int>() { DataBaseNumber = entityPM.DataBaseNumber };
 protected override void FillDefaultValuesOnCreate(DataBasePropertyPM entityPM)
 		{

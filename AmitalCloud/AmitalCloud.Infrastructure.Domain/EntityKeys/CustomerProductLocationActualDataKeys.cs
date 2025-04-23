@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class CustomerProductLocationActualDataKeys<T> : BaseEntityKeyFields<EntityPOCOs.CustomerProductLocationActualData,T> 
+   public class CustomerProductLocationActualDataKeys<T> : BaseEntityKeyFields<ENTITIES.CustomerProductLocationActualData,T> 
    {
 		public CustomerProductLocationActualDataKeys() : base() {}
         public CustomerProductLocationActualDataKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -36,7 +37,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(CustomerId.ToString()+'_'+ProductTypeCode.ToString()+'_'+Month.ToString()+'_'+Year.ToString()+'_'+CountryId.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CustomerProductLocationActualDatasPM";
-	  public override Expression<Func<EntityPOCOs.CustomerProductLocationActualData, bool>> Predicate => a => a.CustomerId == CustomerId && a.ProductTypeCode == ProductTypeCode && a.Month == Month && a.Year == Year && a.CountryId == CountryId;
+	  public override Expression<Func<ENTITIES.CustomerProductLocationActualData, bool>> Predicate => a => a.CustomerId == CustomerId && a.ProductTypeCode == ProductTypeCode && a.Month == Month && a.Year == Year && a.CountryId == CountryId;
    }
 }
 	 

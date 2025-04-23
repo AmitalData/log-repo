@@ -1,11 +1,14 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
-using AmitalCloud.Infrastructure.Data;
+using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Data.Security;
+//using AmitalCloud.Infrastructure.Data.Helpers;
+//using AmitalCloud.Infrastructure.Data.Repositories;
+//using AmitalCloud.Infrastructure.Data.Security;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Helpers;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.WebAPI;
 using System;
 using System.Web;

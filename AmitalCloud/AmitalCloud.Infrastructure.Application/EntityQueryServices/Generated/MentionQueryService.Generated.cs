@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class MentionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Mention,MentionKeys<string>,MentionPM,MentionList,string>
+   public partial class MentionQueryService: BaseEntityQueryService<POCO.Mention,MentionKeys<string>,MentionPM,MentionList,string>
    {
-        public MentionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public MentionQueryService(int tenant) : base(new Repository<POCO.Mention>(tenant),new MentionDataMapping()) {}
         public MentionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Mention>(context),new MentionDataMapping()) {}
 		public  MentionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new MentionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Mention,string> GetKeys(POCO.Mention entityPOCO) => new MentionKeys<string>() { Id = entityPOCO.Id,  };

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerCompetitorQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerCompetitor,CustomerCompetitorKeys<string>,CustomerCompetitorPM,CustomerCompetitorList,string>
+   public partial class CustomerCompetitorQueryService: BaseEntityQueryService<POCO.CustomerCompetitor,CustomerCompetitorKeys<string>,CustomerCompetitorPM,CustomerCompetitorList,string>
    {
-        public CustomerCompetitorQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerCompetitorQueryService(int tenant) : base(new Repository<POCO.CustomerCompetitor>(tenant),new CustomerCompetitorDataMapping()) {}
         public CustomerCompetitorQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerCompetitor>(context),new CustomerCompetitorDataMapping()) {}
 		public  CustomerCompetitorPM GetSingle(string customerid, string competitorid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerCompetitorKeys<string>(){ CustomerId = customerid, CompetitorId = competitorid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerCompetitor,string> GetKeys(POCO.CustomerCompetitor entityPOCO) => new CustomerCompetitorKeys<string>() { CustomerId = entityPOCO.CustomerId, CompetitorId = entityPOCO.CompetitorId,  };

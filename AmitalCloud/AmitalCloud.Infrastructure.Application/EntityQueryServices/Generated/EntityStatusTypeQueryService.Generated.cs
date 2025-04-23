@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class EntityStatusTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.EntityStatusType,EntityStatusTypeKeys<string>,EntityStatusTypePM,EntityStatusTypeList,string>
+   public partial class EntityStatusTypeQueryService: BaseEntityQueryService<POCO.EntityStatusType,EntityStatusTypeKeys<string>,EntityStatusTypePM,EntityStatusTypeList,string>
    {
-        public EntityStatusTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public EntityStatusTypeQueryService(int tenant) : base(new Repository<POCO.EntityStatusType>(tenant),new EntityStatusTypeDataMapping()) {}
         public EntityStatusTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.EntityStatusType>(context),new EntityStatusTypeDataMapping()) {}
 		public  EntityStatusTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new EntityStatusTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.EntityStatusType,string> GetKeys(POCO.EntityStatusType entityPOCO) => new EntityStatusTypeKeys<string>() { Code = entityPOCO.Code,  };

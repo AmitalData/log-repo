@@ -15,7 +15,8 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
+using Logitude.Accounting.Def.EntityPMs;
 
 
 
@@ -26,7 +27,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    public partial class ARPaymentBankTranferPM : BaseEntityPM   {
    #region Constructors
    public ARPaymentBankTranferPM() : base() {} 
-   public ARPaymentBankTranferPM(ARPaymentBankTranfer entity) : base()
+   public ARPaymentBankTranferPM(POCO.ARPaymentBankTranfer entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

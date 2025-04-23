@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class DueTypeKeys<T> : BaseEntityKeyFields<EntityPOCOs.DueType,T> 
+   public class DueTypeKeys<T> : BaseEntityKeyFields<ENTITIES.DueType,T> 
    {
 		public DueTypeKeys() : base() {}
         public DueTypeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "DueTypesPM";
-	  public override Expression<Func<EntityPOCOs.DueType, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.DueType, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

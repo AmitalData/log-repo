@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class HybridPartnerUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.HybridPartner,HybridPartnerPM,IEntityPM,HybridPartnerList,string>
+   public partial class HybridPartnerUpdateService:BaseEntityUpdateService<POCO.HybridPartner,HybridPartnerPM,IEntityPM,HybridPartnerList,string>
    {
    			
-        public HybridPartnerUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public HybridPartnerUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new HybridPartnerDataMapping();
-            Repository = new Repository<POCO.HybridPartner>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.HybridPartner>(mainContext);
         }
-        public HybridPartnerUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public HybridPartnerUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public HybridPartnerUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new HybridPartnerDataMapping();
+            Repository = new Repository<POCO.HybridPartner>(tenant);
+		}
+        public HybridPartnerUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.HybridPartner,string> GetKeys(HybridPartnerPM entityPM) => new HybridPartnerKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(HybridPartnerPM entityPM)
 		{

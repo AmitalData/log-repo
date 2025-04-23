@@ -165,18 +165,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using POCO = <#= Namespaces["pocosspacestring"] #>;
 using <#= Namespaces["pmsspacestring"] #>;
 using <#= Namespaces["datamappingspacestring"] #>;
 using <#= Namespaces["keysspacestring"] #>;
-using <#= Namespaces["contextspacestring"] #>;
 using <#= Namespaces["entitylistsnamespace"] #>;
-using <#= Namespaces["domaininterfacesspacestring"] #>;
+<#+ if(1 == 0) {#>using <#= Namespaces["domaininterfacesspacestring"] #>;<#+}#>
+
+
 namespace <#= queryservicenamespacestring #>
 { 
-   public partial class <#=tableName #>QueryService: BaseEntityQueryService<I<#= contextName #>,POCO.<#=tableName #>,<#=keysName #><<#=keyType #>>,<#= pmName #>,<#= listName #>,<#=keyType #>>
+   public partial class <#=tableName #>QueryService: BaseEntityQueryService<POCO.<#=tableName #>,<#=keysName #><<#=keyType #>>,<#= pmName #>,<#= listName #>,<#=keyType #>>
    {
-        public <#=tableName #>QueryService(int tenant) : this(<#= contextName #>.GetContext(tenant))  { }
+        public <#=tableName #>QueryService(int tenant) : base(new Repository<POCO.<#=tableName #>>(tenant),new <#=tableName #>DataMapping()) {}
         public <#=tableName #>QueryService(I<#= contextName #> context) : base(new Repository<POCO.<#=tableName #>>(context),new <#=tableName #>DataMapping()) {}
 		public  <#=pmName #> GetSingle(<#= primarykeyParam #>,bool getComposition, bool getFromCache) => base.GetSingle(new <#=keysName #><<#=keyType #>>(){ <#= keysstring #> }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.<#= tableName #>,<#=keyType #>> GetKeys(POCO.<#= tableName #> entityPOCO) => new <#=tableName #>Keys<<#=keyType #>>() { <#= pocokeystring #> };

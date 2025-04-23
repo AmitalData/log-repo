@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class IncotermUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Incoterm,IncotermPM,IEntityPM,IncotermList,string>
+   public partial class IncotermUpdateService:BaseEntityUpdateService<POCO.Incoterm,IncotermPM,IEntityPM,IncotermList,string>
    {
    			
-        public IncotermUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public IncotermUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new IncotermDataMapping();
-            Repository = new Repository<POCO.Incoterm>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Incoterm>(mainContext);
         }
-        public IncotermUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public IncotermUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public IncotermUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new IncotermDataMapping();
+            Repository = new Repository<POCO.Incoterm>(tenant);
+		}
+        public IncotermUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Incoterm,string> GetKeys(IncotermPM entityPM) => new IncotermKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(IncotermPM entityPM)
 		{

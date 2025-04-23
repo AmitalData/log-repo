@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class VatTypePercentageKeys<T> : BaseEntityKeyFields<EntityPOCOs.VatTypePercentage,T> 
+   public class VatTypePercentageKeys<T> : BaseEntityKeyFields<ENTITIES.VatTypePercentage,T> 
    {
 		public VatTypePercentageKeys() : base() {}
         public VatTypePercentageKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "VatTypePercentagesPM";
-	  public override Expression<Func<EntityPOCOs.VatTypePercentage, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.VatTypePercentage, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

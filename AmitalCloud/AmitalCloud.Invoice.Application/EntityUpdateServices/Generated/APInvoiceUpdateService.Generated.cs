@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data;
 using AmitalCloud.Invoice.Domain.EntityLists;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
-using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Data.Context;
 
 namespace AmitalCloud.Invoice.Application.EntityUpdateServices
 { 
-   public partial class APInvoiceUpdateService:BaseEntityUpdateService<InvoiceContext,POCO.APInvoice,APInvoicePM,IEntityPM,APInvoiceList,string>
+   public partial class APInvoiceUpdateService:BaseEntityUpdateService<POCO.APInvoice,APInvoicePM,IEntityPM,APInvoiceList,string>
    {
    			
-        public APInvoiceUpdateService(IInvoiceContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((InvoiceContext)mainContext,additionalContexts, tenant)
+        public APInvoiceUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new APInvoiceDataMapping();
-            Repository = new Repository<POCO.APInvoice>((InvoiceContext)mainContext);
+            Repository = new Repository<POCO.APInvoice>(mainContext);
         }
-        public APInvoiceUpdateService(int tenant) : this(InvoiceContext.GetContext(tenant), null, tenant) {}
-        public APInvoiceUpdateService(IInvoiceContext context) :  this(context, null, 0) {}
+        public APInvoiceUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new APInvoiceDataMapping();
+            Repository = new Repository<POCO.APInvoice>(tenant);
+		}
+        public APInvoiceUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.APInvoice,string> GetKeys(APInvoicePM entityPM) => new APInvoiceKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(APInvoicePM entityPM)
 		{

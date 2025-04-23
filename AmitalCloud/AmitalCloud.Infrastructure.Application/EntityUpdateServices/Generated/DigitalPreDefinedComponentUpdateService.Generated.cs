@@ -9,33 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DigitalPreDefinedComponentUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DigitalPreDefinedComponent,DigitalPreDefinedComponentPM,IEntityPM,DigitalPreDefinedComponentList,string>
+   public partial class DigitalPreDefinedComponentUpdateService:BaseEntityUpdateService<POCO.DigitalPreDefinedComponent,DigitalPreDefinedComponentPM,IEntityPM,DigitalPreDefinedComponentList,string>
    {
    			
-        public DigitalPreDefinedComponentUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DigitalPreDefinedComponentUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DigitalPreDefinedComponentDataMapping();
-            Repository = new Repository<POCO.DigitalPreDefinedComponent>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DigitalPreDefinedComponent>(mainContext);
         }
-        public DigitalPreDefinedComponentUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DigitalPreDefinedComponentUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DigitalPreDefinedComponentUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DigitalPreDefinedComponentDataMapping();
+            Repository = new Repository<POCO.DigitalPreDefinedComponent>(tenant);
+		}
+        public DigitalPreDefinedComponentUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DigitalPreDefinedComponent,string> GetKeys(DigitalPreDefinedComponentPM entityPM) => new DigitalPreDefinedComponentKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(DigitalPreDefinedComponentPM entityPM)
 		{

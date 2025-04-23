@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DocumentTypeCustomFieldQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentTypeCustomField,DocumentTypeCustomFieldKeys<string>,DocumentTypeCustomFieldPM,DocumentTypeCustomFieldList,string>
+   public partial class DocumentTypeCustomFieldQueryService: BaseEntityQueryService<POCO.DocumentTypeCustomField,DocumentTypeCustomFieldKeys<string>,DocumentTypeCustomFieldPM,DocumentTypeCustomFieldList,string>
    {
-        public DocumentTypeCustomFieldQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DocumentTypeCustomFieldQueryService(int tenant) : base(new Repository<POCO.DocumentTypeCustomField>(tenant),new DocumentTypeCustomFieldDataMapping()) {}
         public DocumentTypeCustomFieldQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentTypeCustomField>(context),new DocumentTypeCustomFieldDataMapping()) {}
 		public  DocumentTypeCustomFieldPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentTypeCustomFieldKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentTypeCustomField,string> GetKeys(POCO.DocumentTypeCustomField entityPOCO) => new DocumentTypeCustomFieldKeys<string>() { Id = entityPOCO.Id,  };

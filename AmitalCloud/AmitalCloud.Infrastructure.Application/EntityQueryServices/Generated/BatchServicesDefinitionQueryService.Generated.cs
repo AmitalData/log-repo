@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class BatchServicesDefinitionQueryService: BaseEntityQueryService<IGlobalContext,POCO.BatchServicesDefinition,BatchServicesDefinitionKeys<string>,BatchServicesDefinitionPM,BatchServicesDefinitionList,string>
+   public partial class BatchServicesDefinitionQueryService: BaseEntityQueryService<POCO.BatchServicesDefinition,BatchServicesDefinitionKeys<string>,BatchServicesDefinitionPM,BatchServicesDefinitionList,string>
    {
-        public BatchServicesDefinitionQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public BatchServicesDefinitionQueryService(int tenant) : base(new Repository<POCO.BatchServicesDefinition>(tenant),new BatchServicesDefinitionDataMapping()) {}
         public BatchServicesDefinitionQueryService(IGlobalContext context) : base(new Repository<POCO.BatchServicesDefinition>(context),new BatchServicesDefinitionDataMapping()) {}
 		public  BatchServicesDefinitionPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new BatchServicesDefinitionKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BatchServicesDefinition,string> GetKeys(POCO.BatchServicesDefinition entityPOCO) => new BatchServicesDefinitionKeys<string>() { Code = entityPOCO.Code,  };

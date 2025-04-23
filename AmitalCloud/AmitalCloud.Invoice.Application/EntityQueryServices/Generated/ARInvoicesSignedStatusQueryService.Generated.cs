@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ARInvoicesSignedStatusQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ARInvoicesSignedStatus,ARInvoicesSignedStatusKeys<string>,ARInvoicesSignedStatusPM,ARInvoicesSignedStatusList,string>
+   public partial class ARInvoicesSignedStatusQueryService: BaseEntityQueryService<POCO.ARInvoicesSignedStatus,ARInvoicesSignedStatusKeys<string>,ARInvoicesSignedStatusPM,ARInvoicesSignedStatusList,string>
    {
-        public ARInvoicesSignedStatusQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ARInvoicesSignedStatusQueryService(IInvoiceContext context) : base(new Repository<POCO.ARInvoicesSignedStatus>(context),new ARInvoicesSignedStatusDataMapping()) {}
+        public ARInvoicesSignedStatusQueryService(int tenant) : base(new Repository<POCO.ARInvoicesSignedStatus>(tenant),new ARInvoicesSignedStatusDataMapping()) {}
+        public ARInvoicesSignedStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ARInvoicesSignedStatus>(context),new ARInvoicesSignedStatusDataMapping()) {}
 		public  ARInvoicesSignedStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ARInvoicesSignedStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ARInvoicesSignedStatus,string> GetKeys(POCO.ARInvoicesSignedStatus entityPOCO) => new ARInvoicesSignedStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AirlineMessagingRuleQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AirlineMessagingRule,AirlineMessagingRuleKeys<string>,AirlineMessagingRulePM,AirlineMessagingRuleList,string>
+   public partial class AirlineMessagingRuleQueryService: BaseEntityQueryService<POCO.AirlineMessagingRule,AirlineMessagingRuleKeys<string>,AirlineMessagingRulePM,AirlineMessagingRuleList,string>
    {
-        public AirlineMessagingRuleQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AirlineMessagingRuleQueryService(int tenant) : base(new Repository<POCO.AirlineMessagingRule>(tenant),new AirlineMessagingRuleDataMapping()) {}
         public AirlineMessagingRuleQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AirlineMessagingRule>(context),new AirlineMessagingRuleDataMapping()) {}
 		public  AirlineMessagingRulePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AirlineMessagingRuleKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AirlineMessagingRule,string> GetKeys(POCO.AirlineMessagingRule entityPOCO) => new AirlineMessagingRuleKeys<string>() { Id = entityPOCO.Id,  };

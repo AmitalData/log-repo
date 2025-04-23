@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class CustomerCompetitorProductListQueryService  : BaseEntityListQueryService<CustomerCompetitorProductList,POCO.CustomerCompetitorProduct,  CustomerCompetitorProductKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.CustomerCompetitorProduct> contextEntity => (context as IAmitalCloudContext).CustomerCompetitorProducts;
-		public CustomerCompetitorProductListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public CustomerCompetitorProductListQueryService(int tenant) : base(tenant) { }
         public CustomerCompetitorProductList GetSingle(string producttypecode, string customerid, string competitorid)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

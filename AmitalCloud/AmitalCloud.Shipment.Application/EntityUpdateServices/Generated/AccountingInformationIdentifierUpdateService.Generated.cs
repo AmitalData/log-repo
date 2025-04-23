@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class AccountingInformationIdentifierUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.AccountingInformationIdentifier,AccountingInformationIdentifierPM,IEntityPM,AccountingInformationIdentifierList,string>
+   public partial class AccountingInformationIdentifierUpdateService:BaseEntityUpdateService<POCO.AccountingInformationIdentifier,AccountingInformationIdentifierPM,IEntityPM,AccountingInformationIdentifierList,string>
    {
    			
-        public AccountingInformationIdentifierUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public AccountingInformationIdentifierUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AccountingInformationIdentifierDataMapping();
-            Repository = new Repository<POCO.AccountingInformationIdentifier>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.AccountingInformationIdentifier>(mainContext);
         }
-        public AccountingInformationIdentifierUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public AccountingInformationIdentifierUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public AccountingInformationIdentifierUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AccountingInformationIdentifierDataMapping();
+            Repository = new Repository<POCO.AccountingInformationIdentifier>(tenant);
+		}
+        public AccountingInformationIdentifierUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AccountingInformationIdentifier,string> GetKeys(AccountingInformationIdentifierPM entityPM) => new AccountingInformationIdentifierKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(AccountingInformationIdentifierPM entityPM)
 		{

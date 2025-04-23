@@ -1,8 +1,7 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Repositories;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         private int numberOfCustomFields = 50;
         public CustomChildObjectQuery(int tenant)
         {
-            repository = new Repository<CustomChildObject>(AmitalCloudContext.GetContext(tenant));
+            repository = new Repository<CustomChildObject>(tenant);
             objectTables = new List<ObjectTable>();
             this.tenant = tenant;
 

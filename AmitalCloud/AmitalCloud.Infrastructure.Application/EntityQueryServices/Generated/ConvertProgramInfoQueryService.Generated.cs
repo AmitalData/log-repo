@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ConvertProgramInfoQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ConvertProgramInfo,ConvertProgramInfoKeys<string>,ConvertProgramInfoPM,ConvertProgramInfoList,string>
+   public partial class ConvertProgramInfoQueryService: BaseEntityQueryService<POCO.ConvertProgramInfo,ConvertProgramInfoKeys<string>,ConvertProgramInfoPM,ConvertProgramInfoList,string>
    {
-        public ConvertProgramInfoQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ConvertProgramInfoQueryService(int tenant) : base(new Repository<POCO.ConvertProgramInfo>(tenant),new ConvertProgramInfoDataMapping()) {}
         public ConvertProgramInfoQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ConvertProgramInfo>(context),new ConvertProgramInfoDataMapping()) {}
 		public  ConvertProgramInfoPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ConvertProgramInfoKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ConvertProgramInfo,string> GetKeys(POCO.ConvertProgramInfo entityPOCO) => new ConvertProgramInfoKeys<string>() { Id = entityPOCO.Id,  };

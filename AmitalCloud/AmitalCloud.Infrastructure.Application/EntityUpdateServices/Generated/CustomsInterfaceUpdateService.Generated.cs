@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomsInterfaceUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomsInterface,CustomsInterfacePM,IEntityPM,CustomsInterfaceList,string>
+   public partial class CustomsInterfaceUpdateService:BaseEntityUpdateService<POCO.CustomsInterface,CustomsInterfacePM,IEntityPM,CustomsInterfaceList,string>
    {
    			
-        public CustomsInterfaceUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomsInterfaceUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomsInterfaceDataMapping();
-            Repository = new Repository<POCO.CustomsInterface>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomsInterface>(mainContext);
         }
-        public CustomsInterfaceUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomsInterfaceUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomsInterfaceUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomsInterfaceDataMapping();
+            Repository = new Repository<POCO.CustomsInterface>(tenant);
+		}
+        public CustomsInterfaceUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomsInterface,string> GetKeys(CustomsInterfacePM entityPM) => new CustomsInterfaceKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(CustomsInterfacePM entityPM)
 		{

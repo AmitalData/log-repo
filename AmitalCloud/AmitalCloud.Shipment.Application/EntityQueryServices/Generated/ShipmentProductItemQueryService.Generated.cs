@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentProductItemQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentProductItem,ShipmentProductItemKeys<string>,ShipmentProductItemPM,ShipmentProductItemList,string>
+   public partial class ShipmentProductItemQueryService: BaseEntityQueryService<POCO.ShipmentProductItem,ShipmentProductItemKeys<string>,ShipmentProductItemPM,ShipmentProductItemList,string>
    {
-        public ShipmentProductItemQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentProductItemQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentProductItem>(context),new ShipmentProductItemDataMapping()) {}
+        public ShipmentProductItemQueryService(int tenant) : base(new Repository<POCO.ShipmentProductItem>(tenant),new ShipmentProductItemDataMapping()) {}
+        public ShipmentProductItemQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentProductItem>(context),new ShipmentProductItemDataMapping()) {}
 		public  ShipmentProductItemPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentProductItemKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentProductItem,string> GetKeys(POCO.ShipmentProductItem entityPOCO) => new ShipmentProductItemKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class LogBoxTenantSettingListQueryService  : BaseEntityListQueryService<LogBoxTenantSettingList,POCO.LogBoxTenantSetting,  LogBoxTenantSettingKeys<int>,int>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.LogBoxTenantSetting> contextEntity => (context as IAmitalCloudContext).LogBoxTenantSettings;
-		public LogBoxTenantSettingListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public LogBoxTenantSettingListQueryService(int tenant) : base(tenant) { }
         public LogBoxTenantSettingList GetSingle(int id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

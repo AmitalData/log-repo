@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class AWBMessagesCCSTypeKeys<T> : BaseEntityKeyFields<EntityPOCOs.AWBMessagesCCSType,T> 
+   public class AWBMessagesCCSTypeKeys<T> : BaseEntityKeyFields<ENTITIES.AWBMessagesCCSType,T> 
    {
 		public AWBMessagesCCSTypeKeys() : base() {}
         public AWBMessagesCCSTypeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "AWBMessagesCCSTypesPM";
-	  public override Expression<Func<EntityPOCOs.AWBMessagesCCSType, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.AWBMessagesCCSType, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

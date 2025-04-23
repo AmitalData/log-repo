@@ -21,6 +21,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.Customs.Data.EntityPOCOs
 {
     [Table("Banks", Schema = "Customs")]
+
     public class Bank
     {
 	 string dbms;

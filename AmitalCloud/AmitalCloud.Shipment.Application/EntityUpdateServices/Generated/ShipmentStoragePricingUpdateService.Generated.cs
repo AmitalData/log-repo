@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ShipmentStoragePricingUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ShipmentStoragePricing,ShipmentStoragePricingPM,ShipmentPM,ShipmentStoragePricingList,string>
+   public partial class ShipmentStoragePricingUpdateService:BaseEntityUpdateService<POCO.ShipmentStoragePricing,ShipmentStoragePricingPM,ShipmentPM,ShipmentStoragePricingList,string>
    {
    			
-        public ShipmentStoragePricingUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ShipmentStoragePricingUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ShipmentStoragePricingDataMapping();
-            Repository = new Repository<POCO.ShipmentStoragePricing>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ShipmentStoragePricing>(mainContext);
         }
-        public ShipmentStoragePricingUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ShipmentStoragePricingUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ShipmentStoragePricingUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ShipmentStoragePricingDataMapping();
+            Repository = new Repository<POCO.ShipmentStoragePricing>(tenant);
+		}
+        public ShipmentStoragePricingUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ShipmentStoragePricing,string> GetKeys(ShipmentStoragePricingPM entityPM) => new ShipmentStoragePricingKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ShipmentStoragePricingPM entityPM)
 		{

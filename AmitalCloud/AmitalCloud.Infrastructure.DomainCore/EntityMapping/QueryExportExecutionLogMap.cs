@@ -8,7 +8,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Data.Entity.ModelConfiguration;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityClasses;
  
 namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 {

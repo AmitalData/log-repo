@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class SharedUserQueryUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.SharedUserQuery,SharedUserQueryPM,IEntityPM,SharedUserQueryList,string>
+   public partial class SharedUserQueryUpdateService:BaseEntityUpdateService<POCO.SharedUserQuery,SharedUserQueryPM,IEntityPM,SharedUserQueryList,string>
    {
    			
-        public SharedUserQueryUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public SharedUserQueryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new SharedUserQueryDataMapping();
-            Repository = new Repository<POCO.SharedUserQuery>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.SharedUserQuery>(mainContext);
         }
-        public SharedUserQueryUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public SharedUserQueryUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public SharedUserQueryUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new SharedUserQueryDataMapping();
+            Repository = new Repository<POCO.SharedUserQuery>(tenant);
+		}
+        public SharedUserQueryUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.SharedUserQuery,string> GetKeys(SharedUserQueryPM entityPM) => new SharedUserQueryKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(SharedUserQueryPM entityPM)
 		{

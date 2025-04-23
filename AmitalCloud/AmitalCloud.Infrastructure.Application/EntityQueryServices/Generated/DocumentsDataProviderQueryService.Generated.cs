@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DocumentsDataProviderQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentsDataProvider,DocumentsDataProviderKeys<string>,DocumentsDataProviderPM,DocumentsDataProviderList,string>
+   public partial class DocumentsDataProviderQueryService: BaseEntityQueryService<POCO.DocumentsDataProvider,DocumentsDataProviderKeys<string>,DocumentsDataProviderPM,DocumentsDataProviderList,string>
    {
-        public DocumentsDataProviderQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DocumentsDataProviderQueryService(int tenant) : base(new Repository<POCO.DocumentsDataProvider>(tenant),new DocumentsDataProviderDataMapping()) {}
         public DocumentsDataProviderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentsDataProvider>(context),new DocumentsDataProviderDataMapping()) {}
 		public  DocumentsDataProviderPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentsDataProviderKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentsDataProvider,string> GetKeys(POCO.DocumentsDataProvider entityPOCO) => new DocumentsDataProviderKeys<string>() { Code = entityPOCO.Code,  };

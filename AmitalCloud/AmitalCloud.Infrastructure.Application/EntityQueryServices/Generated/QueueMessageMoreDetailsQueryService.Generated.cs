@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class QueueMessageMoreDetailsQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QueueMessageMoreDetails,QueueMessageMoreDetailsKeys<string>,QueueMessageMoreDetailsPM,QueueMessageMoreDetailsList,string>
+   public partial class QueueMessageMoreDetailsQueryService: BaseEntityQueryService<POCO.QueueMessageMoreDetails,QueueMessageMoreDetailsKeys<string>,QueueMessageMoreDetailsPM,QueueMessageMoreDetailsList,string>
    {
-        public QueueMessageMoreDetailsQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public QueueMessageMoreDetailsQueryService(int tenant) : base(new Repository<POCO.QueueMessageMoreDetails>(tenant),new QueueMessageMoreDetailsDataMapping()) {}
         public QueueMessageMoreDetailsQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QueueMessageMoreDetails>(context),new QueueMessageMoreDetailsDataMapping()) {}
 		public  QueueMessageMoreDetailsPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new QueueMessageMoreDetailsKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QueueMessageMoreDetails,string> GetKeys(POCO.QueueMessageMoreDetails entityPOCO) => new QueueMessageMoreDetailsKeys<string>() { Id = entityPOCO.Id,  };

@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class CustomerTenantAccessRequestListQueryService  : BaseEntityListQueryService<CustomerTenantAccessRequestList,POCO.CustomerTenantAccessRequest,  CustomerTenantAccessRequestKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.CustomerTenantAccessRequest> contextEntity => (context as IAmitalCloudContext).CustomerTenantAccessRequests;
-		public CustomerTenantAccessRequestListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public CustomerTenantAccessRequestListQueryService(int tenant) : base(tenant) { }
         public CustomerTenantAccessRequestList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

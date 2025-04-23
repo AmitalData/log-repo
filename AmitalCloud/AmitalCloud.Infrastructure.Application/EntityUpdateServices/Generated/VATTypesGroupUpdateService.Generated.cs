@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class VATTypesGroupUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.VATTypesGroup,VATTypesGroupPM,VatTypePM,VATTypesGroupList,string>
+   public partial class VATTypesGroupUpdateService:BaseEntityUpdateService<POCO.VATTypesGroup,VATTypesGroupPM,VatTypePM,VATTypesGroupList,string>
    {
    			
-        public VATTypesGroupUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public VATTypesGroupUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new VATTypesGroupDataMapping();
-            Repository = new Repository<POCO.VATTypesGroup>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.VATTypesGroup>(mainContext);
         }
-        public VATTypesGroupUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public VATTypesGroupUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public VATTypesGroupUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new VATTypesGroupDataMapping();
+            Repository = new Repository<POCO.VATTypesGroup>(tenant);
+		}
+        public VATTypesGroupUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.VATTypesGroup,string> GetKeys(VATTypesGroupPM entityPM) => new VATTypesGroupKeys<string>() { GroupVATTypeId = entityPM.GroupVATTypeId, SingleVATTypeId = entityPM.SingleVATTypeId };
 protected override void FillDefaultValuesOnCreate(VATTypesGroupPM entityPM)
 		{

@@ -1,17 +1,15 @@
-﻿using AmitalCloud.Infrastructure.Data.BaseClasses;
-using AmitalCloud.Infrastructure.Data.DBHelpers;
+﻿using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
+using AmitalCloud.Infrastructure.Model.Enums;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using AmitalCloud.Infrastructure.Data.BaseClasses;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.Migrations;
-using AmitalCloud.Infrastructure.Domain.EntityMapping;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Enums;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using Devart.Data.Oracle.Entity.Configuration;
 using System;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Transactions;
+using AmitalCloud.Infrastructure.Data.DBHelpers;
 namespace AmitalCloud.Infrastructure.Data.Context
 
 {
@@ -62,36 +60,13 @@ namespace AmitalCloud.Infrastructure.Data.Context
 
             }
         }
-        public static SystemLogContext GetContextByDBId(string dbId)
-        {
-            GlobalDB currentDb;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                currentDb = GlobalDbHelper.GetGlobalDBById(dbId);
-            }
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            SystemLogContext context = new SystemLogContext(connection);
-            return context;
-        }
         protected override AmitalCloudDBSchema AmitalCloudDBSchema
         {
             get { return AmitalCloudDBSchema.AMITAL_LOGS; }
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
-            {
-                var config = OracleEntityProviderConfig.Instance;
-                config.Workarounds.DisableQuoting = true;
-            }
             Database.SetInitializer<SystemLogContext>(null);
-            modelBuilder.Configurations.Add(new ContactActivityLogMap());
-            modelBuilder.Configurations.Add(new ErrorLogMap());
-            modelBuilder.Configurations.Add(new BatchServicesLogMap());
-            modelBuilder.Configurations.Add(new FailedLoginLogMap());
-            modelBuilder.Configurations.Add(new FailedTokenLogMap());
             base.OnModelCreating(modelBuilder);
         }
         public IDbSet<ErrorLog> ErrorLogs { get; set; }

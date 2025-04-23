@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class FollowUpKeys<T> : BaseEntityKeyFields<EntityPOCOs.FollowUp,T> 
+   public class FollowUpKeys<T> : BaseEntityKeyFields<ENTITIES.FollowUp,T> 
    {
 		public FollowUpKeys() : base() {}
         public FollowUpKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "FollowUpsPM";
-	  public override Expression<Func<EntityPOCOs.FollowUp, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.FollowUp, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

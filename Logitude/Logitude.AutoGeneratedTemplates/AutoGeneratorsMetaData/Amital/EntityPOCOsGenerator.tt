@@ -112,6 +112,7 @@ void SavePocoOutput(string outputFileName)
 	string classAttribute = "[Table(,Schema=\"Customs\")]";
 	string usingStatements = "";
 	string pocostr = "";
+	string databaseName = entity.DxmlDatabaseTypeCode.Trim('"');
 	if(tableName.ToString().Trim('"').Contains(".") && dBTableName.ToString().Trim('"').Contains("."))
     {
 		tableName = tableName.ToString().Split('.')[1];
@@ -174,12 +175,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using AmitalCloud.Infrastructure.Domain.Helpers;
 <#+ if(infraNameSpace !=namespacestring) { #>
 using <#=infraNameSpace #>
 <#+ } #>
 <#+ if (!string.IsNullOrEmpty(usingStatements)) { #><#= usingStatements #><#+ } #>
 namespace <#= namespacestring #>
 {
+	[Database("<#=databaseName #>")]
 	<#=classAttribute #>
     public class <#=tableName #> : BaseEntity
 	{

@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class BusinessProcessQueueKeys<T> : BaseEntityKeyFields<EntityPOCOs.BusinessProcessQueue,T> 
+   public class BusinessProcessQueueKeys<T> : BaseEntityKeyFields<ENTITIES.BusinessProcessQueue,T> 
    {
 		public BusinessProcessQueueKeys() : base() {}
         public BusinessProcessQueueKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "BusinessProcessQueuesPM";
-	  public override Expression<Func<EntityPOCOs.BusinessProcessQueue, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.BusinessProcessQueue, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

@@ -1,5 +1,5 @@
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
-using AmitalCloud.Infrastructure.Data;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Web.DataContracts;
 
 namespace AmitalCloud.Infrastructure.Web.Helpers.MixPanel

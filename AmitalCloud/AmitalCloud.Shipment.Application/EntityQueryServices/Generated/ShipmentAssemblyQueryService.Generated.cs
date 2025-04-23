@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentAssemblyQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentAssembly,ShipmentAssemblyKeys<string>,ShipmentAssemblyPM,ShipmentAssemblyList,string>
+   public partial class ShipmentAssemblyQueryService: BaseEntityQueryService<POCO.ShipmentAssembly,ShipmentAssemblyKeys<string>,ShipmentAssemblyPM,ShipmentAssemblyList,string>
    {
-        public ShipmentAssemblyQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentAssemblyQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentAssembly>(context),new ShipmentAssemblyDataMapping()) {}
+        public ShipmentAssemblyQueryService(int tenant) : base(new Repository<POCO.ShipmentAssembly>(tenant),new ShipmentAssemblyDataMapping()) {}
+        public ShipmentAssemblyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentAssembly>(context),new ShipmentAssemblyDataMapping()) {}
 		public  ShipmentAssemblyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentAssemblyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentAssembly,string> GetKeys(POCO.ShipmentAssembly entityPOCO) => new ShipmentAssemblyKeys<string>() { Id = entityPOCO.Id,  };
    }

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class EmailAlertSettingUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.EmailAlertSetting,EmailAlertSettingPM,IEntityPM,EmailAlertSettingList,string>
+   public partial class EmailAlertSettingUpdateService:BaseEntityUpdateService<POCO.EmailAlertSetting,EmailAlertSettingPM,IEntityPM,EmailAlertSettingList,string>
    {
    			
-        public EmailAlertSettingUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public EmailAlertSettingUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new EmailAlertSettingDataMapping();
-            Repository = new Repository<POCO.EmailAlertSetting>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.EmailAlertSetting>(mainContext);
         }
-        public EmailAlertSettingUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public EmailAlertSettingUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public EmailAlertSettingUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new EmailAlertSettingDataMapping();
+            Repository = new Repository<POCO.EmailAlertSetting>(tenant);
+		}
+        public EmailAlertSettingUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.EmailAlertSetting,string> GetKeys(EmailAlertSettingPM entityPM) => new EmailAlertSettingKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(EmailAlertSettingPM entityPM)
 		{

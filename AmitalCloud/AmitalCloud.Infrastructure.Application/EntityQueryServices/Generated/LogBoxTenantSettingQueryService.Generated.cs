@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class LogBoxTenantSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.LogBoxTenantSetting,LogBoxTenantSettingKeys<int>,LogBoxTenantSettingPM,LogBoxTenantSettingList,int>
+   public partial class LogBoxTenantSettingQueryService: BaseEntityQueryService<POCO.LogBoxTenantSetting,LogBoxTenantSettingKeys<int>,LogBoxTenantSettingPM,LogBoxTenantSettingList,int>
    {
-        public LogBoxTenantSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public LogBoxTenantSettingQueryService(int tenant) : base(new Repository<POCO.LogBoxTenantSetting>(tenant),new LogBoxTenantSettingDataMapping()) {}
         public LogBoxTenantSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.LogBoxTenantSetting>(context),new LogBoxTenantSettingDataMapping()) {}
 		public  LogBoxTenantSettingPM GetSingle(int id,bool getComposition, bool getFromCache) => base.GetSingle(new LogBoxTenantSettingKeys<int>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.LogBoxTenantSetting,int> GetKeys(POCO.LogBoxTenantSetting entityPOCO) => new LogBoxTenantSettingKeys<int>() { Id = entityPOCO.Id,  };

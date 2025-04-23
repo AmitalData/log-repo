@@ -1,5 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
-using AmitalCloud.Infrastructure.Data;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
 using System.Linq;

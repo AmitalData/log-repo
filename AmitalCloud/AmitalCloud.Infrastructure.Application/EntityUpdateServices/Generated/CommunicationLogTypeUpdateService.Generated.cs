@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CommunicationLogTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CommunicationLogType,CommunicationLogTypePM,IEntityPM,CommunicationLogTypeList,string>
+   public partial class CommunicationLogTypeUpdateService:BaseEntityUpdateService<POCO.CommunicationLogType,CommunicationLogTypePM,IEntityPM,CommunicationLogTypeList,string>
    {
    			
-        public CommunicationLogTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CommunicationLogTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CommunicationLogTypeDataMapping();
-            Repository = new Repository<POCO.CommunicationLogType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CommunicationLogType>(mainContext);
         }
-        public CommunicationLogTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CommunicationLogTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CommunicationLogTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CommunicationLogTypeDataMapping();
+            Repository = new Repository<POCO.CommunicationLogType>(tenant);
+		}
+        public CommunicationLogTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CommunicationLogType,string> GetKeys(CommunicationLogTypePM entityPM) => new CommunicationLogTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(CommunicationLogTypePM entityPM)
 		{

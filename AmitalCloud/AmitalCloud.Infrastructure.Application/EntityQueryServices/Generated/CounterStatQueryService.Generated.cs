@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CounterStatQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CounterStat,CounterStatKeys<int>,CounterStatPM,CounterStatList,int>
+   public partial class CounterStatQueryService: BaseEntityQueryService<POCO.CounterStat,CounterStatKeys<int>,CounterStatPM,CounterStatList,int>
    {
-        public CounterStatQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CounterStatQueryService(int tenant) : base(new Repository<POCO.CounterStat>(tenant),new CounterStatDataMapping()) {}
         public CounterStatQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CounterStat>(context),new CounterStatDataMapping()) {}
 		public  CounterStatPM GetSingle(int id,bool getComposition, bool getFromCache) => base.GetSingle(new CounterStatKeys<int>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CounterStat,int> GetKeys(POCO.CounterStat entityPOCO) => new CounterStatKeys<int>() { Id = entityPOCO.Id,  };

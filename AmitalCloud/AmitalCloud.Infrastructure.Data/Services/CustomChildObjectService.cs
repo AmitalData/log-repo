@@ -3,13 +3,14 @@ using AmitalCloud.Infrastructure.Data.Counters;
 using AmitalCloud.Infrastructure.Data.DataMapping;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 namespace AmitalCloud.Infrastructure.Data.Services
 {
     public class CustomChildObjectService

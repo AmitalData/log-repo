@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerTeamQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerTeam,CustomerTeamKeys<string>,CustomerTeamPM,CustomerTeamList,string>
+   public partial class CustomerTeamQueryService: BaseEntityQueryService<POCO.CustomerTeam,CustomerTeamKeys<string>,CustomerTeamPM,CustomerTeamList,string>
    {
-        public CustomerTeamQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerTeamQueryService(int tenant) : base(new Repository<POCO.CustomerTeam>(tenant),new CustomerTeamDataMapping()) {}
         public CustomerTeamQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerTeam>(context),new CustomerTeamDataMapping()) {}
 		public  CustomerTeamPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerTeamKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerTeam,string> GetKeys(POCO.CustomerTeam entityPOCO) => new CustomerTeamKeys<string>() { Id = entityPOCO.Id,  };

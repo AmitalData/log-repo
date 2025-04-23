@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class SmallDocumentUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.SmallDocument,SmallDocumentPM,IEntityPM,SmallDocumentList,string>
+   public partial class SmallDocumentUpdateService:BaseEntityUpdateService<POCO.SmallDocument,SmallDocumentPM,IEntityPM,SmallDocumentList,string>
    {
    			
-        public SmallDocumentUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public SmallDocumentUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new SmallDocumentDataMapping();
-            Repository = new Repository<POCO.SmallDocument>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.SmallDocument>(mainContext);
         }
-        public SmallDocumentUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public SmallDocumentUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public SmallDocumentUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new SmallDocumentDataMapping();
+            Repository = new Repository<POCO.SmallDocument>(tenant);
+		}
+        public SmallDocumentUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.SmallDocument,string> GetKeys(SmallDocumentPM entityPM) => new SmallDocumentKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(SmallDocumentPM entityPM)
 		{

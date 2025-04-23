@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Shipment.Domain.EntityKeys
 {
-   public class FBLStockKeys<T> : BaseEntityKeyFields<EntityPOCOs.FBLStock,T> 
+   public class FBLStockKeys<T> : BaseEntityKeyFields<ENTITIES.FBLStock,T> 
    {
 		public FBLStockKeys() : base() {}
         public FBLStockKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Shipment.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "FBLStocksPM";
-	  public override Expression<Func<EntityPOCOs.FBLStock, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.FBLStock, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

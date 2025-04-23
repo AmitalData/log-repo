@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityLists ;
 using AmitalCloud.Shipment.Domain.EntityKeys ;
-using AmitalCloud.Shipment.Data.Context ;
-using AmitalCloud.Shipment.Domain.Interfaces ;
 namespace AmitalCloud.Shipment.Application.EntityListQueryServices
 { 
     public partial class INTTRABookingStatusListQueryService  : BaseEntityListQueryService<INTTRABookingStatusList,POCO.INTTRABookingStatus,  INTTRABookingStatusKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.INTTRABookingStatus> contextEntity => (context as IShipmentContext).INTTRABookingStatuses;
-		public INTTRABookingStatusListQueryService(int tenant) : base(ShipmentContext.GetContext(tenant)) { }
+		public INTTRABookingStatusListQueryService(int tenant) : base(tenant) { }
         public INTTRABookingStatusList GetSingle(string code)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

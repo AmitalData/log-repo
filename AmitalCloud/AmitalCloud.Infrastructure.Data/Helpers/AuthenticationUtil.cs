@@ -1,7 +1,7 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Exceptions;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Threading;
 using System.Web;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -124,7 +125,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 return null;
             }
 
-            IRepository<Contact> contactRep = new Repository<Contact>(AmitalCloudContext.GetContext(Tenant));
+            IRepository<Contact> contactRep = new Repository<Contact>(Tenant);
             var contact = contactRep.GetMulti(d => d.Email == systemEmail && d.Tenant == Tenant).FirstOrDefault();
             if (contact == null)
             {
@@ -183,7 +184,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
         public static string ResolveUserId(int Tenant, bool fromSign = false)
         {
-            IRepository<Contact> contactRep = new Repository<Contact>(AmitalCloudContext.GetContext(Tenant));
+            IRepository<Contact> contactRep = new Repository<Contact>(Tenant);
 
             string resolveUserIdentityName = ResolveUserIdentityName(Tenant);
 
@@ -220,7 +221,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             //TO:
             string resolveUserIdentityName = AuthenticationUtil.ResolveUserIdentityName(Tenant);
 
-            IRepository<User> userRep = new Repository<User>(AmitalCloudContext.GetContext(Tenant));
+            IRepository<User> userRep = new Repository<User>(Tenant);
             User user = userRep.GetMulti(d => d.Contact.Email == resolveUserIdentityName && d.Tenant == Tenant).FirstOrDefault();             //.GetSingleUserByEmail(resolveUserIdentityName, Tenant, true);
             if (user == null)
             {
@@ -238,7 +239,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             string resolveUserIdentityName = AuthenticationUtil.ResolveUserIdentityName(Tenant);
 
-            IRepository<User> userRep = new Repository<User>(AmitalCloudContext.GetContext(Tenant));
+            IRepository<User> userRep = new Repository<User>(Tenant);
             User user = userRep.GetMulti(d => d.Contact.Email == resolveUserIdentityName && d.Tenant == Tenant).FirstOrDefault();
             if (user == null)
             {
@@ -252,7 +253,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
         public static string ResolveUnifreightUserById(string Id, int Tenant)
         {
-            IRepository<Contact> contactRep = new Repository<Contact>(AmitalCloudContext.GetContext(Tenant));
+            IRepository<Contact> contactRep = new Repository<Contact>(Tenant);
             var contact = contactRep.GetMulti(d => d.Id == Id && d.Tenant == Tenant).FirstOrDefault();
             if (contact == null)
             {
@@ -287,7 +288,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 }
 
                 int tenant1 = iTenanat;
-                IRepository<Contact> contactRep = new Repository<Contact>(AmitalCloudContext.GetContext(iTenanat));
+                IRepository<Contact> contactRep = new Repository<Contact>(iTenanat);
                 var contact = contactRep.GetMulti(a => a.Tenant == tenant1 && a.ExternalId == UniUser).FirstOrDefault();    //GetSingleContactByExternalId(UniUser, iTenanat);
                 if (contact == null)
                 {
@@ -357,7 +358,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 ///ContactRepository contactRep = new ContactRepository(iTenanat);
                 ///
                 int tenant1 = iTenanat;
-                var userRepository = new Repository<User>(AmitalCloudContext.GetContext(tenant1));
+                var userRepository = new Repository<User>(tenant1);
                 var //contact =
                     user =
                     //contactRep.GetSingleContactByExternalId(UniUser, iTenanat);
@@ -531,7 +532,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             return exists;
         }
 
-        public static ContactPassword VerifyContactPassword(string email, string password,  bool isHashPassword = false)
+        public static ContactPassword VerifyContactPassword(string email, string password, bool isHashPassword = false)
         {
             IGlobalContext globalContext = GlobalContext.GetContext();
             ContactPassword contactPassword = null;

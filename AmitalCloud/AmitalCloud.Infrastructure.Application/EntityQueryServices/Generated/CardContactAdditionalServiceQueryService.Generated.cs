@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CardContactAdditionalServiceQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CardContactAdditionalService,CardContactAdditionalServiceKeys<string>,CardContactAdditionalServicePM,CardContactAdditionalServiceList,string>
+   public partial class CardContactAdditionalServiceQueryService: BaseEntityQueryService<POCO.CardContactAdditionalService,CardContactAdditionalServiceKeys<string>,CardContactAdditionalServicePM,CardContactAdditionalServiceList,string>
    {
-        public CardContactAdditionalServiceQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CardContactAdditionalServiceQueryService(int tenant) : base(new Repository<POCO.CardContactAdditionalService>(tenant),new CardContactAdditionalServiceDataMapping()) {}
         public CardContactAdditionalServiceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CardContactAdditionalService>(context),new CardContactAdditionalServiceDataMapping()) {}
 		public  CardContactAdditionalServicePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CardContactAdditionalServiceKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CardContactAdditionalService,string> GetKeys(POCO.CardContactAdditionalService entityPOCO) => new CardContactAdditionalServiceKeys<string>() { Id = entityPOCO.Id,  };

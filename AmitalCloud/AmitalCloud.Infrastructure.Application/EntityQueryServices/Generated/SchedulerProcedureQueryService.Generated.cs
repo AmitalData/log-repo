@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class SchedulerProcedureQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SchedulerProcedure,SchedulerProcedureKeys<string>,SchedulerProcedurePM,SchedulerProcedureList,string>
+   public partial class SchedulerProcedureQueryService: BaseEntityQueryService<POCO.SchedulerProcedure,SchedulerProcedureKeys<string>,SchedulerProcedurePM,SchedulerProcedureList,string>
    {
-        public SchedulerProcedureQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public SchedulerProcedureQueryService(int tenant) : base(new Repository<POCO.SchedulerProcedure>(tenant),new SchedulerProcedureDataMapping()) {}
         public SchedulerProcedureQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SchedulerProcedure>(context),new SchedulerProcedureDataMapping()) {}
 		public  SchedulerProcedurePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new SchedulerProcedureKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SchedulerProcedure,string> GetKeys(POCO.SchedulerProcedure entityPOCO) => new SchedulerProcedureKeys<string>() { Code = entityPOCO.Code,  };

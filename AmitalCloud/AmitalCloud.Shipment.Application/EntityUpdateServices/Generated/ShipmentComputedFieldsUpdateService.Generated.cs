@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ShipmentComputedFieldsUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ShipmentComputedFields,ShipmentComputedFieldsPM,IEntityPM,ShipmentComputedFieldsList,string>
+   public partial class ShipmentComputedFieldsUpdateService:BaseEntityUpdateService<POCO.ShipmentComputedFields,ShipmentComputedFieldsPM,IEntityPM,ShipmentComputedFieldsList,string>
    {
    			
-        public ShipmentComputedFieldsUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ShipmentComputedFieldsUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ShipmentComputedFieldsDataMapping();
-            Repository = new Repository<POCO.ShipmentComputedFields>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ShipmentComputedFields>(mainContext);
         }
-        public ShipmentComputedFieldsUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ShipmentComputedFieldsUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ShipmentComputedFieldsUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ShipmentComputedFieldsDataMapping();
+            Repository = new Repository<POCO.ShipmentComputedFields>(tenant);
+		}
+        public ShipmentComputedFieldsUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ShipmentComputedFields,string> GetKeys(ShipmentComputedFieldsPM entityPM) => new ShipmentComputedFieldsKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ShipmentComputedFieldsPM entityPM)
 		{

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DataProviderQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DataProvider,DataProviderKeys<string>,DataProviderPM,DataProviderList,string>
+   public partial class DataProviderQueryService: BaseEntityQueryService<POCO.DataProvider,DataProviderKeys<string>,DataProviderPM,DataProviderList,string>
    {
-        public DataProviderQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DataProviderQueryService(int tenant) : base(new Repository<POCO.DataProvider>(tenant),new DataProviderDataMapping()) {}
         public DataProviderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DataProvider>(context),new DataProviderDataMapping()) {}
 		public  DataProviderPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DataProviderKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DataProvider,string> GetKeys(POCO.DataProvider entityPOCO) => new DataProviderKeys<string>() { Code = entityPOCO.Code,  };

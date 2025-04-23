@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class OneTimePasswordKeys<T> : BaseEntityKeyFields<EntityPOCOs.OneTimePassword,T> 
+   public class OneTimePasswordKeys<T> : BaseEntityKeyFields<ENTITIES.OneTimePassword,T> 
    {
 		public OneTimePasswordKeys() : base() {}
         public OneTimePasswordKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "OneTimePasswordsPM";
-	  public override Expression<Func<EntityPOCOs.OneTimePassword, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.OneTimePassword, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

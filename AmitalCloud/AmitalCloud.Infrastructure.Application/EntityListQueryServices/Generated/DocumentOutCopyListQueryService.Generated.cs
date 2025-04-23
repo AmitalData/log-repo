@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class DocumentOutCopyListQueryService  : BaseEntityListQueryService<DocumentOutCopyList,POCO.DocumentOutCopy,  DocumentOutCopyKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.DocumentOutCopy> contextEntity => (context as IAmitalCloudContext).documentoutcopies;
-		public DocumentOutCopyListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public DocumentOutCopyListQueryService(int tenant) : base(tenant) { }
         public DocumentOutCopyList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

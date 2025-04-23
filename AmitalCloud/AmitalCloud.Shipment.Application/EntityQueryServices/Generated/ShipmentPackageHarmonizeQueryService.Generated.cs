@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentPackageHarmonizeQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentPackageHarmonize,ShipmentPackageHarmonizeKeys<string>,ShipmentPackageHarmonizePM,ShipmentPackageHarmonizeList,string>
+   public partial class ShipmentPackageHarmonizeQueryService: BaseEntityQueryService<POCO.ShipmentPackageHarmonize,ShipmentPackageHarmonizeKeys<string>,ShipmentPackageHarmonizePM,ShipmentPackageHarmonizeList,string>
    {
-        public ShipmentPackageHarmonizeQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentPackageHarmonizeQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentPackageHarmonize>(context),new ShipmentPackageHarmonizeDataMapping()) {}
+        public ShipmentPackageHarmonizeQueryService(int tenant) : base(new Repository<POCO.ShipmentPackageHarmonize>(tenant),new ShipmentPackageHarmonizeDataMapping()) {}
+        public ShipmentPackageHarmonizeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentPackageHarmonize>(context),new ShipmentPackageHarmonizeDataMapping()) {}
 		public  ShipmentPackageHarmonizePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentPackageHarmonizeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentPackageHarmonize,string> GetKeys(POCO.ShipmentPackageHarmonize entityPOCO) => new ShipmentPackageHarmonizeKeys<string>() { Id = entityPOCO.Id,  };
    }

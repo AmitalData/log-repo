@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AirlineQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Airline,AirlineKeys<string>,AirlinePM,AirlineList,string>
+   public partial class AirlineQueryService: BaseEntityQueryService<POCO.Airline,AirlineKeys<string>,AirlinePM,AirlineList,string>
    {
-        public AirlineQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AirlineQueryService(int tenant) : base(new Repository<POCO.Airline>(tenant),new AirlineDataMapping()) {}
         public AirlineQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Airline>(context),new AirlineDataMapping()) {}
 		public  AirlinePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AirlineKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Airline,string> GetKeys(POCO.Airline entityPOCO) => new AirlineKeys<string>() { Id = entityPOCO.Id,  };

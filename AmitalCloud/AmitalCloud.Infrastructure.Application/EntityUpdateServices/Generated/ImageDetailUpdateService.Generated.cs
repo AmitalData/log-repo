@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ImageDetailUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ImageDetail,ImageDetailPM,IEntityPM,ImageDetailList,string>
+   public partial class ImageDetailUpdateService:BaseEntityUpdateService<POCO.ImageDetail,ImageDetailPM,IEntityPM,ImageDetailList,string>
    {
    			
-        public ImageDetailUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ImageDetailUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ImageDetailDataMapping();
-            Repository = new Repository<POCO.ImageDetail>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ImageDetail>(mainContext);
         }
-        public ImageDetailUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ImageDetailUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ImageDetailUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ImageDetailDataMapping();
+            Repository = new Repository<POCO.ImageDetail>(tenant);
+		}
+        public ImageDetailUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ImageDetail,string> GetKeys(ImageDetailPM entityPM) => new ImageDetailKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ImageDetailPM entityPM)
 		{

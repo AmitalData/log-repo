@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ReportQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Report,ReportKeys<string>,ReportPM,ReportList,string>
+   public partial class ReportQueryService: BaseEntityQueryService<POCO.Report,ReportKeys<string>,ReportPM,ReportList,string>
    {
-        public ReportQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ReportQueryService(int tenant) : base(new Repository<POCO.Report>(tenant),new ReportDataMapping()) {}
         public ReportQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Report>(context),new ReportDataMapping()) {}
 		public  ReportPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ReportKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Report,string> GetKeys(POCO.Report entityPOCO) => new ReportKeys<string>() { Id = entityPOCO.Id,  };

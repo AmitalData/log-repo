@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class HybridTenantThresholdKeys<T> : BaseEntityKeyFields<EntityPOCOs.HybridTenantThreshold,T> 
+   public class HybridTenantThresholdKeys<T> : BaseEntityKeyFields<ENTITIES.HybridTenantThreshold,T> 
    {
 		public HybridTenantThresholdKeys() : base() {}
         public HybridTenantThresholdKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -27,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Tenant.ToString()+'_'+TypeCode.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "HybridTenantThresholdsPM";
-	  public override Expression<Func<EntityPOCOs.HybridTenantThreshold, bool>> Predicate => a => a.Tenant == Tenant && a.TypeCode == TypeCode;
+	  public override Expression<Func<ENTITIES.HybridTenantThreshold, bool>> Predicate => a => a.Tenant == Tenant && a.TypeCode == TypeCode;
    }
 }
 	 

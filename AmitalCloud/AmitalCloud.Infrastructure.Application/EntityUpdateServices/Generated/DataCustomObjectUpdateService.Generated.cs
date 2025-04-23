@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DataCustomObjectUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DataCustomObject,DataCustomObjectPM,IEntityPM,DataCustomObjectList,string>
+   public partial class DataCustomObjectUpdateService:BaseEntityUpdateService<POCO.DataCustomObject,DataCustomObjectPM,IEntityPM,DataCustomObjectList,string>
    {
    			
-        public DataCustomObjectUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DataCustomObjectUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DataCustomObjectDataMapping();
-            Repository = new Repository<POCO.DataCustomObject>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DataCustomObject>(mainContext);
         }
-        public DataCustomObjectUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DataCustomObjectUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DataCustomObjectUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DataCustomObjectDataMapping();
+            Repository = new Repository<POCO.DataCustomObject>(tenant);
+		}
+        public DataCustomObjectUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DataCustomObject,string> GetKeys(DataCustomObjectPM entityPM) => new DataCustomObjectKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(DataCustomObjectPM entityPM)
 		{

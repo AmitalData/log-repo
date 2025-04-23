@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TeamMemberBusinessRoleQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TeamMemberBusinessRole,TeamMemberBusinessRoleKeys<string>,TeamMemberBusinessRolePM,TeamMemberBusinessRoleList,string>
+   public partial class TeamMemberBusinessRoleQueryService: BaseEntityQueryService<POCO.TeamMemberBusinessRole,TeamMemberBusinessRoleKeys<string>,TeamMemberBusinessRolePM,TeamMemberBusinessRoleList,string>
    {
-        public TeamMemberBusinessRoleQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TeamMemberBusinessRoleQueryService(int tenant) : base(new Repository<POCO.TeamMemberBusinessRole>(tenant),new TeamMemberBusinessRoleDataMapping()) {}
         public TeamMemberBusinessRoleQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TeamMemberBusinessRole>(context),new TeamMemberBusinessRoleDataMapping()) {}
 		public  TeamMemberBusinessRolePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TeamMemberBusinessRoleKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TeamMemberBusinessRole,string> GetKeys(POCO.TeamMemberBusinessRole entityPOCO) => new TeamMemberBusinessRoleKeys<string>() { Id = entityPOCO.Id,  };

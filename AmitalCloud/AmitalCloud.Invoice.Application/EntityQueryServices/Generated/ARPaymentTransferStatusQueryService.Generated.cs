@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ARPaymentTransferStatusQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ARPaymentTransferStatus,ARPaymentTransferStatusKeys<string>,ARPaymentTransferStatusPM,ARPaymentTransferStatusList,string>
+   public partial class ARPaymentTransferStatusQueryService: BaseEntityQueryService<POCO.ARPaymentTransferStatus,ARPaymentTransferStatusKeys<string>,ARPaymentTransferStatusPM,ARPaymentTransferStatusList,string>
    {
-        public ARPaymentTransferStatusQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ARPaymentTransferStatusQueryService(IInvoiceContext context) : base(new Repository<POCO.ARPaymentTransferStatus>(context),new ARPaymentTransferStatusDataMapping()) {}
+        public ARPaymentTransferStatusQueryService(int tenant) : base(new Repository<POCO.ARPaymentTransferStatus>(tenant),new ARPaymentTransferStatusDataMapping()) {}
+        public ARPaymentTransferStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ARPaymentTransferStatus>(context),new ARPaymentTransferStatusDataMapping()) {}
 		public  ARPaymentTransferStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ARPaymentTransferStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ARPaymentTransferStatus,string> GetKeys(POCO.ARPaymentTransferStatus entityPOCO) => new ARPaymentTransferStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

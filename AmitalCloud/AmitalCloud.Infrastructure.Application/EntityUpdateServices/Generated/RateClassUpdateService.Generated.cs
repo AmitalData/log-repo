@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class RateClassUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.RateClass,RateClassPM,IEntityPM,RateClassList,string>
+   public partial class RateClassUpdateService:BaseEntityUpdateService<POCO.RateClass,RateClassPM,IEntityPM,RateClassList,string>
    {
    			
-        public RateClassUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public RateClassUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new RateClassDataMapping();
-            Repository = new Repository<POCO.RateClass>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.RateClass>(mainContext);
         }
-        public RateClassUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public RateClassUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public RateClassUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new RateClassDataMapping();
+            Repository = new Repository<POCO.RateClass>(tenant);
+		}
+        public RateClassUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.RateClass,string> GetKeys(RateClassPM entityPM) => new RateClassKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(RateClassPM entityPM)
 		{

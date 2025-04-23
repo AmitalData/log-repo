@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class BIReportsTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.BIReportsType,BIReportsTypePM,IEntityPM,BIReportsTypeList,string>
+   public partial class BIReportsTypeUpdateService:BaseEntityUpdateService<POCO.BIReportsType,BIReportsTypePM,IEntityPM,BIReportsTypeList,string>
    {
    			
-        public BIReportsTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public BIReportsTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new BIReportsTypeDataMapping();
-            Repository = new Repository<POCO.BIReportsType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.BIReportsType>(mainContext);
         }
-        public BIReportsTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public BIReportsTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public BIReportsTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new BIReportsTypeDataMapping();
+            Repository = new Repository<POCO.BIReportsType>(tenant);
+		}
+        public BIReportsTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.BIReportsType,string> GetKeys(BIReportsTypePM entityPM) => new BIReportsTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(BIReportsTypePM entityPM)
 		{

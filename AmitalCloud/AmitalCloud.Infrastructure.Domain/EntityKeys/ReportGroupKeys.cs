@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class ReportGroupKeys<T> : BaseEntityKeyFields<EntityPOCOs.ReportGroup,T> 
+   public class ReportGroupKeys<T> : BaseEntityKeyFields<ENTITIES.ReportGroup,T> 
    {
 		public ReportGroupKeys() : base() {}
         public ReportGroupKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "ReportGroupsPM";
-	  public override Expression<Func<EntityPOCOs.ReportGroup, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.ReportGroup, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

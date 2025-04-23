@@ -183,6 +183,7 @@ private void WriteCustomEntityListQueryServiceMethod(dynamic entity,dynamic cont
 // </auto-generated> EntityListQueryServicesGenerator.tt from <#= Path.GetFileName(Host.TemplateFile) #>
 //---
 using System.Linq;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using <#= NamespacesDictionary["entitylistsnamespace"] #> ;
 using POCO =<#= NamespacesDictionary["pocosspacestring"] #> ;
 namespace <#= querylistservicenamespacestring #>
@@ -333,14 +334,11 @@ using System.Linq;
 using POCO = <#= NamespacesDictionary["pocosspacestring"] #> ;
 using <#= NamespacesDictionary["entitylistsnamespace"] #> ;
 using <#= NamespacesDictionary["keysspacestring"] #> ;
-using <#= NamespacesDictionary["contextspacestring"] #> ;
-using <#= NamespacesDictionary["domaininterfacesspacestring"] #> ;
 namespace <#= querylistservicenamespacestring #>
 { 
     public partial class <#= listName #>QueryService  : BaseEntityListQueryService<<#= listName #>,POCO.<#= tableName #>,  <#= tableName #>Keys<<#= keyType #>>,<#= keyType #>>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.<#= tableName #>> contextEntity => (context as I<#= contextName #>).<#= dBTableName #>;
-		public <#= listName #>QueryService(int tenant) : base(<#= contextName #>.GetContext(tenant)) { }
+		public <#= listName #>QueryService(int tenant) : base(tenant) { }
         public <#= listName #> GetSingle(<#= primarykeyParam #>)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DWQueryFilterUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DWQueryFilter,DWQueryFilterPM,IEntityPM,DWQueryFilterList,string>
+   public partial class DWQueryFilterUpdateService:BaseEntityUpdateService<POCO.DWQueryFilter,DWQueryFilterPM,IEntityPM,DWQueryFilterList,string>
    {
    			
-        public DWQueryFilterUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DWQueryFilterUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DWQueryFilterDataMapping();
-            Repository = new Repository<POCO.DWQueryFilter>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DWQueryFilter>(mainContext);
         }
-        public DWQueryFilterUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DWQueryFilterUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DWQueryFilterUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DWQueryFilterDataMapping();
+            Repository = new Repository<POCO.DWQueryFilter>(tenant);
+		}
+        public DWQueryFilterUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DWQueryFilter,string> GetKeys(DWQueryFilterPM entityPM) => new DWQueryFilterKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DWQueryFilterPM entityPM)
 		{

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class AWBOCIUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.AWBOCI,AWBOCIPM,ShipmentPM,AWBOCIList,string>
+   public partial class AWBOCIUpdateService:BaseEntityUpdateService<POCO.AWBOCI,AWBOCIPM,ShipmentPM,AWBOCIList,string>
    {
    			
-        public AWBOCIUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public AWBOCIUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AWBOCIDataMapping();
-            Repository = new Repository<POCO.AWBOCI>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.AWBOCI>(mainContext);
         }
-        public AWBOCIUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public AWBOCIUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public AWBOCIUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AWBOCIDataMapping();
+            Repository = new Repository<POCO.AWBOCI>(tenant);
+		}
+        public AWBOCIUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AWBOCI,string> GetKeys(AWBOCIPM entityPM) => new AWBOCIKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(AWBOCIPM entityPM)
 		{

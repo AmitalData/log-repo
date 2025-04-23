@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class ContactPasswordKeys<T> : BaseEntityKeyFields<EntityPOCOs.ContactPassword,T> 
+   public class ContactPasswordKeys<T> : BaseEntityKeyFields<ENTITIES.ContactPassword,T> 
    {
 		public ContactPasswordKeys() : base() {}
         public ContactPasswordKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Email.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "ContactPasswordsPM";
-	  public override Expression<Func<EntityPOCOs.ContactPassword, bool>> Predicate => a => a.Email == Email;
+	  public override Expression<Func<ENTITIES.ContactPassword, bool>> Predicate => a => a.Email == Email;
    }
 }
 	 

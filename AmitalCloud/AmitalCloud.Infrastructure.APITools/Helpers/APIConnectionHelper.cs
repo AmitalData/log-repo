@@ -1,5 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
+﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -10,8 +10,6 @@ namespace AmitalCloud.Infrastructure.APITools.Helpers
 
     public class APIConnectionHelper : BaseInstance<APIConnectionHelper>
     {
-        //example:  var respnse = APIConnectionHelper.Instance.PostViaWebAPI<Response>("api/DocumentIn/Upsert", new object[] { docPM, false });
-
         private HttpClient client;
         private void InitnClient(string baseuri)
         {

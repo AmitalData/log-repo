@@ -1,6 +1,8 @@
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Enums;
+using AmitalCloud.Infrastructure.Model.Enums;
 using Devart.Data.Oracle;
 using System;
 using System.Collections.Generic;
@@ -148,8 +150,8 @@ namespace AmitalCloud.Infrastructure.Data.Counters
 
                             cmd.Connection = cn;
                             cmd.CommandText =
-							//Enums.AmitalCloudDBSchema.AMITAL_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
-							DBHelpers.DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdsRange", AmitalCloudDBSchema.AMITAL_MAIN,
+                            //Enums.AmitalCloudDBSchema.AMITAL_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
+                            DBHelpers.DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdsRange", AmitalCloudDBSchema.AMITAL_MAIN,
                             cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -290,8 +292,8 @@ namespace AmitalCloud.Infrastructure.Data.Counters
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
                             cmd.CommandText =
-							//Enums.AmitalCloudDBSchema.AMITAL_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
-							DBHelpers.DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", AmitalCloudDBSchema.AMITAL_MAIN,
+                            //Enums.AmitalCloudDBSchema.AMITAL_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
+                            DBHelpers.DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", AmitalCloudDBSchema.AMITAL_MAIN,
                             cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
                             /*

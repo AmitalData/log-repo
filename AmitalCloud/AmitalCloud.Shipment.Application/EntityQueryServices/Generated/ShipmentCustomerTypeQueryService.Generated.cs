@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentCustomerTypeQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentCustomerType,ShipmentCustomerTypeKeys<string>,ShipmentCustomerTypePM,ShipmentCustomerTypeList,string>
+   public partial class ShipmentCustomerTypeQueryService: BaseEntityQueryService<POCO.ShipmentCustomerType,ShipmentCustomerTypeKeys<string>,ShipmentCustomerTypePM,ShipmentCustomerTypeList,string>
    {
-        public ShipmentCustomerTypeQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentCustomerTypeQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentCustomerType>(context),new ShipmentCustomerTypeDataMapping()) {}
+        public ShipmentCustomerTypeQueryService(int tenant) : base(new Repository<POCO.ShipmentCustomerType>(tenant),new ShipmentCustomerTypeDataMapping()) {}
+        public ShipmentCustomerTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentCustomerType>(context),new ShipmentCustomerTypeDataMapping()) {}
 		public  ShipmentCustomerTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentCustomerTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentCustomerType,string> GetKeys(POCO.ShipmentCustomerType entityPOCO) => new ShipmentCustomerTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

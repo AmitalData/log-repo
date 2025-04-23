@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class HTSCodeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.HTSCode,HTSCodePM,ProductItemPM,HTSCodeList,string>
+   public partial class HTSCodeUpdateService:BaseEntityUpdateService<POCO.HTSCode,HTSCodePM,ProductItemPM,HTSCodeList,string>
    {
    			
-        public HTSCodeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public HTSCodeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new HTSCodeDataMapping();
-            Repository = new Repository<POCO.HTSCode>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.HTSCode>(mainContext);
         }
-        public HTSCodeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public HTSCodeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public HTSCodeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new HTSCodeDataMapping();
+            Repository = new Repository<POCO.HTSCode>(tenant);
+		}
+        public HTSCodeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.HTSCode,string> GetKeys(HTSCodePM entityPM) => new HTSCodeKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(HTSCodePM entityPM)
 		{

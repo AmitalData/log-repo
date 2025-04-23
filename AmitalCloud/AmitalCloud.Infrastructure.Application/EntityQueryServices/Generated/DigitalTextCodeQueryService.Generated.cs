@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DigitalTextCodeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalTextCode,DigitalTextCodeKeys<string>,DigitalTextCodePM,DigitalTextCodeList,string>
+   public partial class DigitalTextCodeQueryService: BaseEntityQueryService<POCO.DigitalTextCode,DigitalTextCodeKeys<string>,DigitalTextCodePM,DigitalTextCodeList,string>
    {
-        public DigitalTextCodeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DigitalTextCodeQueryService(int tenant) : base(new Repository<POCO.DigitalTextCode>(tenant),new DigitalTextCodeDataMapping()) {}
         public DigitalTextCodeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalTextCode>(context),new DigitalTextCodeDataMapping()) {}
 		public  DigitalTextCodePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalTextCodeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalTextCode,string> GetKeys(POCO.DigitalTextCode entityPOCO) => new DigitalTextCodeKeys<string>() { Id = entityPOCO.Id,  };

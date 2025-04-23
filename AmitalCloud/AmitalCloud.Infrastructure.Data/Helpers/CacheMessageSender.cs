@@ -1,4 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Data.Azure;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using Microsoft.ServiceBus.Messaging;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers

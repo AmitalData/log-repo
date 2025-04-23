@@ -1,10 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Shipment.Domain.EntityPMs
 {

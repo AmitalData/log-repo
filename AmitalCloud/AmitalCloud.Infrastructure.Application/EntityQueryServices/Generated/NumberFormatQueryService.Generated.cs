@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class NumberFormatQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.NumberFormat,NumberFormatKeys<string>,NumberFormatPM,NumberFormatList,string>
+   public partial class NumberFormatQueryService: BaseEntityQueryService<POCO.NumberFormat,NumberFormatKeys<string>,NumberFormatPM,NumberFormatList,string>
    {
-        public NumberFormatQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public NumberFormatQueryService(int tenant) : base(new Repository<POCO.NumberFormat>(tenant),new NumberFormatDataMapping()) {}
         public NumberFormatQueryService(IAmitalCloudContext context) : base(new Repository<POCO.NumberFormat>(context),new NumberFormatDataMapping()) {}
 		public  NumberFormatPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new NumberFormatKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.NumberFormat,string> GetKeys(POCO.NumberFormat entityPOCO) => new NumberFormatKeys<string>() { Code = entityPOCO.Code,  };

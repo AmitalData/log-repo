@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class INTTRABranchRegisteredCarrierUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.INTTRABranchRegisteredCarrier,INTTRABranchRegisteredCarrierPM,IEntityPM,INTTRABranchRegisteredCarrierList,string>
+   public partial class INTTRABranchRegisteredCarrierUpdateService:BaseEntityUpdateService<POCO.INTTRABranchRegisteredCarrier,INTTRABranchRegisteredCarrierPM,IEntityPM,INTTRABranchRegisteredCarrierList,string>
    {
    			
-        public INTTRABranchRegisteredCarrierUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public INTTRABranchRegisteredCarrierUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new INTTRABranchRegisteredCarrierDataMapping();
-            Repository = new Repository<POCO.INTTRABranchRegisteredCarrier>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.INTTRABranchRegisteredCarrier>(mainContext);
         }
-        public INTTRABranchRegisteredCarrierUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public INTTRABranchRegisteredCarrierUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public INTTRABranchRegisteredCarrierUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new INTTRABranchRegisteredCarrierDataMapping();
+            Repository = new Repository<POCO.INTTRABranchRegisteredCarrier>(tenant);
+		}
+        public INTTRABranchRegisteredCarrierUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.INTTRABranchRegisteredCarrier,string> GetKeys(INTTRABranchRegisteredCarrierPM entityPM) => new INTTRABranchRegisteredCarrierKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(INTTRABranchRegisteredCarrierPM entityPM)
 		{

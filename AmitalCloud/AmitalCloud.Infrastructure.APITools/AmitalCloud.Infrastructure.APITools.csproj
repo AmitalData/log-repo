@@ -241,6 +241,10 @@
       <Project>{1cb82e4e-88ff-4772-bfd6-5ec33b23f1cf}</Project>
       <Name>AmitalCloud.Infrastructure.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Model\AmitalCloud.Infrastructure.Model.csproj">
+      <Project>{b03864c5-0c52-465b-9206-3fff150413b9}</Project>
+      <Name>AmitalCloud.Infrastructure.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

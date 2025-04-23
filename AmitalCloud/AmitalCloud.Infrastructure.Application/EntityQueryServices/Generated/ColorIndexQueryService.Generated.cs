@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ColorIndexQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ColorIndex,ColorIndexKeys<int>,ColorIndexPM,ColorIndexList,int>
+   public partial class ColorIndexQueryService: BaseEntityQueryService<POCO.ColorIndex,ColorIndexKeys<int>,ColorIndexPM,ColorIndexList,int>
    {
-        public ColorIndexQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ColorIndexQueryService(int tenant) : base(new Repository<POCO.ColorIndex>(tenant),new ColorIndexDataMapping()) {}
         public ColorIndexQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ColorIndex>(context),new ColorIndexDataMapping()) {}
 		public  ColorIndexPM GetSingle(int indexnumber,bool getComposition, bool getFromCache) => base.GetSingle(new ColorIndexKeys<int>(){ IndexNumber = indexnumber }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ColorIndex,int> GetKeys(POCO.ColorIndex entityPOCO) => new ColorIndexKeys<int>() { IndexNumber = entityPOCO.IndexNumber,  };

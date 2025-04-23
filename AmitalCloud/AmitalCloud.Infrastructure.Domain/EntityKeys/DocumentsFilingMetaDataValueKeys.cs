@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class DocumentsFilingMetaDataValueKeys<T> : BaseEntityKeyFields<EntityPOCOs.DocumentsFilingMetaDataValue,T> 
+   public class DocumentsFilingMetaDataValueKeys<T> : BaseEntityKeyFields<ENTITIES.DocumentsFilingMetaDataValue,T> 
    {
 		public DocumentsFilingMetaDataValueKeys() : base() {}
         public DocumentsFilingMetaDataValueKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "DocumentsFilingMetaDataValuesPM";
-	  public override Expression<Func<EntityPOCOs.DocumentsFilingMetaDataValue, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.DocumentsFilingMetaDataValue, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

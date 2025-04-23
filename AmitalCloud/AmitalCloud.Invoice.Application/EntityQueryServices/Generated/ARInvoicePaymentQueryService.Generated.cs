@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ARInvoicePaymentQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ARInvoicePayment,ARInvoicePaymentKeys<string>,ARInvoicePaymentPM,ARInvoicePaymentList,string>
+   public partial class ARInvoicePaymentQueryService: BaseEntityQueryService<POCO.ARInvoicePayment,ARInvoicePaymentKeys<string>,ARInvoicePaymentPM,ARInvoicePaymentList,string>
    {
-        public ARInvoicePaymentQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ARInvoicePaymentQueryService(IInvoiceContext context) : base(new Repository<POCO.ARInvoicePayment>(context),new ARInvoicePaymentDataMapping()) {}
+        public ARInvoicePaymentQueryService(int tenant) : base(new Repository<POCO.ARInvoicePayment>(tenant),new ARInvoicePaymentDataMapping()) {}
+        public ARInvoicePaymentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ARInvoicePayment>(context),new ARInvoicePaymentDataMapping()) {}
 		public  ARInvoicePaymentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ARInvoicePaymentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ARInvoicePayment,string> GetKeys(POCO.ARInvoicePayment entityPOCO) => new ARInvoicePaymentKeys<string>() { Id = entityPOCO.Id,  };
    }

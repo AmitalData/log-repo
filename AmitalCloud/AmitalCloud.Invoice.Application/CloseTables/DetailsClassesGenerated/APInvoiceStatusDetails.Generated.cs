@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 
 namespace AmitalCloud.Invoice.Application
 {

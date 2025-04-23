@@ -1,7 +1,7 @@
 using AmitalCloud.Infrastructure.Data.Azure;
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;

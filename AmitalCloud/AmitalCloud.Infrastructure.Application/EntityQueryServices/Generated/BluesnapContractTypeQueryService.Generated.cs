@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class BluesnapContractTypeQueryService: BaseEntityQueryService<IGlobalContext,POCO.BluesnapContractType,BluesnapContractTypeKeys<string>,BluesnapContractTypePM,BluesnapContractTypeList,string>
+   public partial class BluesnapContractTypeQueryService: BaseEntityQueryService<POCO.BluesnapContractType,BluesnapContractTypeKeys<string>,BluesnapContractTypePM,BluesnapContractTypeList,string>
    {
-        public BluesnapContractTypeQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public BluesnapContractTypeQueryService(int tenant) : base(new Repository<POCO.BluesnapContractType>(tenant),new BluesnapContractTypeDataMapping()) {}
         public BluesnapContractTypeQueryService(IGlobalContext context) : base(new Repository<POCO.BluesnapContractType>(context),new BluesnapContractTypeDataMapping()) {}
 		public  BluesnapContractTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new BluesnapContractTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BluesnapContractType,string> GetKeys(POCO.BluesnapContractType entityPOCO) => new BluesnapContractTypeKeys<string>() { Code = entityPOCO.Code,  };
