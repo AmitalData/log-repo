@@ -1422,7 +1422,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     FileSize = fileData.Length,
 
                 };
-                if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode(isnew))
+                if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode(isnew) || (entityPM.IsFromCloud && LogitudeSettings.StorageServiceMode != "db"))
                 {
                     var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
                     if (isnew)
