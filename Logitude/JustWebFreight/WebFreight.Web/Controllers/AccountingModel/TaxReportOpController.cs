@@ -732,6 +732,34 @@ namespace WebFreight.Web.Controllers.AccountingModel
             return winHebrewString.Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
 
         }
+        public HttpResponseMessage PutTaxReportIsEdited(TaxReportPM entityPM)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, authToken.Tenant);
+                    IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
+
+                    TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), entityPM.Tenant); 
+                    var poco = taxReportUpdateService.UpdateTaxReportIsEdited(entityPM);
+
+                    scope.Complete();
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                    return Request.CreateResponse(HttpStatusCode.OK, poco);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
     }
 }

@@ -19,6 +19,7 @@ namespace Logitude.Accounting.BL.CloseTables
        public const string Invoicenotpreviouslyreported = "7";  
        public const string TheVATamountintherecordishigherthanthepercentageofVATallowed = "9";
        public const string SmallCashAPinvoiceFromThePreviousMonth = "10";
+        public const string MissingConfirmationNumber = "11";
 
     }
 }
