@@ -467,8 +467,10 @@ namespace Logitude.Accounting.BL.CoreBL
 				count++;
             }
             if(totalDebit != totalCredit) 
-            { 
-			   this.AddErrorRow($"סה\"כ שורות חובה (לאחר עיגול) שונה מסה\"כ שורות זכות (לאחר עיגול). יש לוודא שהסכומים המעוגלים תקינים בקובץ ולנסות שנית.\r\n");
+            {
+				text = TranslateTextsClassTranslate("JournalsCSV.O.TotalCreditDebitNotEqual", 0, useLocal);
+				if (String.IsNullOrEmpty(text)) text = "Total debit lines (after rounding) is different from total credit lines (after rounding). Please make sure that the rounded amounts are correct in the file and try again.";
+				this.AddErrorRow(text);
 			}
 
 		}
