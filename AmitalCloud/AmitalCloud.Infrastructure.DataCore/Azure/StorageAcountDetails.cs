@@ -12,7 +12,6 @@ namespace AmitalCloud.Infrastructure.Data.Azure
     public class StorageAcountDetails
     {
 
-        //private static CloudStorageAccount storageAccount;
         private static CloudStorageAccount storageaccount = null;
         public static CloudStorageAccount StorageAccount
         {
@@ -20,7 +19,6 @@ namespace AmitalCloud.Infrastructure.Data.Azure
             {
                 if (storageaccount == null)
                 {
-                    //CloudStorageAccount storageaccount = null;
                     if (AmitalCloudSettings.StorageType.ToLower() == "azureemulator")
                     {
                         storageaccount = new CloudStorageAccount(new StorageCredentials(AmitalCloudSettings.StorageAccountName, AmitalCloudSettings.StorageAccountKey),
