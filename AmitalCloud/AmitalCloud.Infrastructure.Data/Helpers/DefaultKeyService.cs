@@ -8,7 +8,7 @@ using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
 
-namespace Logitude.BL.Helpers
+namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class DefaultKeyService
     {

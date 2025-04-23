@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Linq;
 
-namespace Logitude.BL.Helpers
+namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class DefaultAndConfiguration_Ext : DefaultAndConfiguration
     {

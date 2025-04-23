@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Logitude.BL.Helpers.BaseClasses
+namespace AmitalCloud.Infrastructure.Data.Helpers.BaseClasses
 {
     public abstract class BaseInstance<T> where T : new()
     {

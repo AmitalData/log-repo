@@ -1,4 +1,3 @@
-using Logitude.BL.Helpers;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.Storage;
@@ -7,6 +6,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
+using AmitalCloud.Infrastructure.Data.Helpers;
 
 namespace AmitalCloud.Infrastructure.Data.Azure
 {

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Windows.Input;
 
-namespace Logitude.BL.Helpers
+namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class DefaultService : BaseClasses.BaseInstance<DefaultService>
     {
