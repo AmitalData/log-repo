@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ReportGroupUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ReportGroup,ReportGroupPM,IEntityPM,ReportGroupList,string>
+   public partial class ReportGroupUpdateService:BaseEntityUpdateService<POCO.ReportGroup,ReportGroupPM,IEntityPM,ReportGroupList,string>
    {
    			
-        public ReportGroupUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ReportGroupUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ReportGroupDataMapping();
-            Repository = new Repository<POCO.ReportGroup>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ReportGroup>(mainContext);
         }
-        public ReportGroupUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ReportGroupUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ReportGroupUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ReportGroupDataMapping();
+            Repository = new Repository<POCO.ReportGroup>(tenant);
+		}
+        public ReportGroupUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ReportGroup,string> GetKeys(ReportGroupPM entityPM) => new ReportGroupKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ReportGroupPM entityPM)
 		{

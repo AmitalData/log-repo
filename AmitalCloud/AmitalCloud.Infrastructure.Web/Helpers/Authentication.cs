@@ -1,14 +1,14 @@
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Application.EntityUpdateServices;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Counters;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Data.Services;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -24,6 +24,7 @@ using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Security;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Application.Helpers
 {
@@ -432,8 +433,8 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 user.Technology = "AG";
 
                 #region KeepUserLoggedIn
-                TenantLoginPolicyQueryService securityPolicyQueryService = new TenantLoginPolicyQueryService(tenant);
-                TenantLoginPolicyPM securityPolicy = securityPolicyQueryService.GetMulti(d => d.Tenant == tenant, "LoginPolicy").FirstOrDefault();
+                TenantLoginPolicyQueryService securityPolicyQueryService = new TenantLoginPolicyQueryService(amitalCloudContext);
+                TenantLoginPolicyPM securityPolicy = securityPolicyQueryService.GetMulti(d => d.Tenant == tenant).FirstOrDefault();
 
                 if (securityPolicy != null)
                 {
@@ -1413,8 +1414,8 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
         private bool IsUserAdmin(string email, int tenant)
         {
-            UserQueryService userQueryService = new UserQueryService(tenant);
-            List<UserPM> entities = userQueryService.GetMulti(record => record.Contact.Email == email && (record.Tenant == tenant || record.Tenant == 0), "Contact");
+            UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
+            List<UserPM> entities = userQueryService.GetMulti(record => record.Contact.Email == email && (record.Tenant == tenant || record.Tenant == 0));
             UserPM loggedUser = entities.Where(a => a.Tenant == tenant).FirstOrDefault() ?? entities.Where(a => a.Tenant == 0).FirstOrDefault();
             return loggedUser?.UserRoles != null && loggedUser.UserRoles.Contains("Administrator");
         }

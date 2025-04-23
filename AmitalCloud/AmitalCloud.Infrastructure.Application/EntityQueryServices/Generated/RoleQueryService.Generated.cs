@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class RoleQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Role,RoleKeys<string>,RolePM,RoleList,string>
+   public partial class RoleQueryService: BaseEntityQueryService<POCO.Role,RoleKeys<string>,RolePM,RoleList,string>
    {
-        public RoleQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public RoleQueryService(int tenant) : base(new Repository<POCO.Role>(tenant),new RoleDataMapping()) {}
         public RoleQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Role>(context),new RoleDataMapping()) {}
 		public  RolePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new RoleKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Role,string> GetKeys(POCO.Role entityPOCO) => new RoleKeys<string>() { Id = entityPOCO.Id,  };

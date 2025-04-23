@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class EntityLastActivityListQueryService  : BaseEntityListQueryService<EntityLastActivityList,POCO.EntityLastActivity,  EntityLastActivityKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.EntityLastActivity> contextEntity => (context as IAmitalCloudContext).EntityLastActivities;
-		public EntityLastActivityListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public EntityLastActivityListQueryService(int tenant) : base(tenant) { }
         public EntityLastActivityList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

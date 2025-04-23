@@ -9,34 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class MultiEntityUpdateLogUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.MultiEntityUpdateLog,MultiEntityUpdateLogPM,IEntityPM,MultiEntityUpdateLogList,string>
+   public partial class MultiEntityUpdateLogUpdateService:BaseEntityUpdateService<POCO.MultiEntityUpdateLog,MultiEntityUpdateLogPM,IEntityPM,MultiEntityUpdateLogList,string>
    {
    			
-        public MultiEntityUpdateLogUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public MultiEntityUpdateLogUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new MultiEntityUpdateLogDataMapping();
-            Repository = new Repository<POCO.MultiEntityUpdateLog>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.MultiEntityUpdateLog>(mainContext);
         }
-        public MultiEntityUpdateLogUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public MultiEntityUpdateLogUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public MultiEntityUpdateLogUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new MultiEntityUpdateLogDataMapping();
+            Repository = new Repository<POCO.MultiEntityUpdateLog>(tenant);
+		}
+        public MultiEntityUpdateLogUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.MultiEntityUpdateLog,string> GetKeys(MultiEntityUpdateLogPM entityPM) => new MultiEntityUpdateLogKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(MultiEntityUpdateLogPM entityPM)
 		{

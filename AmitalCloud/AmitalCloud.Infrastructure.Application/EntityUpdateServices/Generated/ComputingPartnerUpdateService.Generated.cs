@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ComputingPartnerUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ComputingPartner,ComputingPartnerPM,IEntityPM,ComputingPartnerList,string>
+   public partial class ComputingPartnerUpdateService:BaseEntityUpdateService<POCO.ComputingPartner,ComputingPartnerPM,IEntityPM,ComputingPartnerList,string>
    {
    			
-        public ComputingPartnerUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ComputingPartnerUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ComputingPartnerDataMapping();
-            Repository = new Repository<POCO.ComputingPartner>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ComputingPartner>(mainContext);
         }
-        public ComputingPartnerUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ComputingPartnerUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ComputingPartnerUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ComputingPartnerDataMapping();
+            Repository = new Repository<POCO.ComputingPartner>(tenant);
+		}
+        public ComputingPartnerUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ComputingPartner,string> GetKeys(ComputingPartnerPM entityPM) => new ComputingPartnerKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ComputingPartnerPM entityPM)
 		{

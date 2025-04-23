@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AgentSharedLogisticsKeyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AgentSharedLogisticsKey,AgentSharedLogisticsKeyKeys<string>,AgentSharedLogisticsKeyPM,AgentSharedLogisticsKeyList,string>
+   public partial class AgentSharedLogisticsKeyQueryService: BaseEntityQueryService<POCO.AgentSharedLogisticsKey,AgentSharedLogisticsKeyKeys<string>,AgentSharedLogisticsKeyPM,AgentSharedLogisticsKeyList,string>
    {
-        public AgentSharedLogisticsKeyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AgentSharedLogisticsKeyQueryService(int tenant) : base(new Repository<POCO.AgentSharedLogisticsKey>(tenant),new AgentSharedLogisticsKeyDataMapping()) {}
         public AgentSharedLogisticsKeyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AgentSharedLogisticsKey>(context),new AgentSharedLogisticsKeyDataMapping()) {}
 		public  AgentSharedLogisticsKeyPM GetSingle(string sharedkey,bool getComposition, bool getFromCache) => base.GetSingle(new AgentSharedLogisticsKeyKeys<string>(){ SharedKey = sharedkey }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AgentSharedLogisticsKey,string> GetKeys(POCO.AgentSharedLogisticsKey entityPOCO) => new AgentSharedLogisticsKeyKeys<string>() { SharedKey = entityPOCO.SharedKey,  };

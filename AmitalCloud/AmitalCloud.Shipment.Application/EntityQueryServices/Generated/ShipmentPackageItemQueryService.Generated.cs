@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentPackageItemQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentPackageItem,ShipmentPackageItemKeys<int>,ShipmentPackageItemPM,ShipmentPackageItemList,int>
+   public partial class ShipmentPackageItemQueryService: BaseEntityQueryService<POCO.ShipmentPackageItem,ShipmentPackageItemKeys<int>,ShipmentPackageItemPM,ShipmentPackageItemList,int>
    {
-        public ShipmentPackageItemQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentPackageItemQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentPackageItem>(context),new ShipmentPackageItemDataMapping()) {}
+        public ShipmentPackageItemQueryService(int tenant) : base(new Repository<POCO.ShipmentPackageItem>(tenant),new ShipmentPackageItemDataMapping()) {}
+        public ShipmentPackageItemQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentPackageItem>(context),new ShipmentPackageItemDataMapping()) {}
 		public  ShipmentPackageItemPM GetSingle(string packageid, int linenumber,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentPackageItemKeys<int>(){ PackageId = packageid, LineNumber = linenumber }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentPackageItem,int> GetKeys(POCO.ShipmentPackageItem entityPOCO) => new ShipmentPackageItemKeys<int>() { PackageId = entityPOCO.PackageId, LineNumber = entityPOCO.LineNumber,  };
    }

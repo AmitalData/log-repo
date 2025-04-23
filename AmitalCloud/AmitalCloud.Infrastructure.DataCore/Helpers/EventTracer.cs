@@ -2,7 +2,7 @@
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using System;
 using System.Collections.Generic;

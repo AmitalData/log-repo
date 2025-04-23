@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TenantAdditionalDataQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TenantAdditionalData,TenantAdditionalDataKeys<int>,TenantAdditionalDataPM,TenantAdditionalDataList,int>
+   public partial class TenantAdditionalDataQueryService: BaseEntityQueryService<POCO.TenantAdditionalData,TenantAdditionalDataKeys<int>,TenantAdditionalDataPM,TenantAdditionalDataList,int>
    {
-        public TenantAdditionalDataQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TenantAdditionalDataQueryService(int tenant) : base(new Repository<POCO.TenantAdditionalData>(tenant),new TenantAdditionalDataDataMapping()) {}
         public TenantAdditionalDataQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TenantAdditionalData>(context),new TenantAdditionalDataDataMapping()) {}
 		public  TenantAdditionalDataPM GetSingle(int id,bool getComposition, bool getFromCache) => base.GetSingle(new TenantAdditionalDataKeys<int>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TenantAdditionalData,int> GetKeys(POCO.TenantAdditionalData entityPOCO) => new TenantAdditionalDataKeys<int>() { Id = entityPOCO.Id,  };

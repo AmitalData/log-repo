@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DigitalPortalScreenQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalPortalScreen,DigitalPortalScreenKeys<string>,DigitalPortalScreenPM,DigitalPortalScreenList,string>
+   public partial class DigitalPortalScreenQueryService: BaseEntityQueryService<POCO.DigitalPortalScreen,DigitalPortalScreenKeys<string>,DigitalPortalScreenPM,DigitalPortalScreenList,string>
    {
-        public DigitalPortalScreenQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DigitalPortalScreenQueryService(int tenant) : base(new Repository<POCO.DigitalPortalScreen>(tenant),new DigitalPortalScreenDataMapping()) {}
         public DigitalPortalScreenQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalPortalScreen>(context),new DigitalPortalScreenDataMapping()) {}
 		public  DigitalPortalScreenPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalPortalScreenKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalPortalScreen,string> GetKeys(POCO.DigitalPortalScreen entityPOCO) => new DigitalPortalScreenKeys<string>() { Id = entityPOCO.Id,  };

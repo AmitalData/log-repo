@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class TriggerTypeKeys<T> : BaseEntityKeyFields<EntityPOCOs.TriggerType,T> 
+   public class TriggerTypeKeys<T> : BaseEntityKeyFields<ENTITIES.TriggerType,T> 
    {
 		public TriggerTypeKeys() : base() {}
         public TriggerTypeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "TriggerTypesPM";
-	  public override Expression<Func<EntityPOCOs.TriggerType, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.TriggerType, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

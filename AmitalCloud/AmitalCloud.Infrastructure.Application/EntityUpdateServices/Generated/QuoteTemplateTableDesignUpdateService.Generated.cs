@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class QuoteTemplateTableDesignUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.QuoteTemplateTableDesign,QuoteTemplateTableDesignPM,IEntityPM,QuoteTemplateTableDesignList,string>
+   public partial class QuoteTemplateTableDesignUpdateService:BaseEntityUpdateService<POCO.QuoteTemplateTableDesign,QuoteTemplateTableDesignPM,IEntityPM,QuoteTemplateTableDesignList,string>
    {
    			
-        public QuoteTemplateTableDesignUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public QuoteTemplateTableDesignUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new QuoteTemplateTableDesignDataMapping();
-            Repository = new Repository<POCO.QuoteTemplateTableDesign>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.QuoteTemplateTableDesign>(mainContext);
         }
-        public QuoteTemplateTableDesignUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public QuoteTemplateTableDesignUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public QuoteTemplateTableDesignUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new QuoteTemplateTableDesignDataMapping();
+            Repository = new Repository<POCO.QuoteTemplateTableDesign>(tenant);
+		}
+        public QuoteTemplateTableDesignUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.QuoteTemplateTableDesign,string> GetKeys(QuoteTemplateTableDesignPM entityPM) => new QuoteTemplateTableDesignKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(QuoteTemplateTableDesignPM entityPM)
 		{

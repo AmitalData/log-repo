@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ContainersExternalDataQueryService: BaseEntityQueryService<IShipmentContext,POCO.ContainersExternalData,ContainersExternalDataKeys<string>,ContainersExternalDataPM,ContainersExternalDataList,string>
+   public partial class ContainersExternalDataQueryService: BaseEntityQueryService<POCO.ContainersExternalData,ContainersExternalDataKeys<string>,ContainersExternalDataPM,ContainersExternalDataList,string>
    {
-        public ContainersExternalDataQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ContainersExternalDataQueryService(IShipmentContext context) : base(new Repository<POCO.ContainersExternalData>(context),new ContainersExternalDataDataMapping()) {}
+        public ContainersExternalDataQueryService(int tenant) : base(new Repository<POCO.ContainersExternalData>(tenant),new ContainersExternalDataDataMapping()) {}
+        public ContainersExternalDataQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContainersExternalData>(context),new ContainersExternalDataDataMapping()) {}
 		public  ContainersExternalDataPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ContainersExternalDataKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContainersExternalData,string> GetKeys(POCO.ContainersExternalData entityPOCO) => new ContainersExternalDataKeys<string>() { Id = entityPOCO.Id,  };
    }

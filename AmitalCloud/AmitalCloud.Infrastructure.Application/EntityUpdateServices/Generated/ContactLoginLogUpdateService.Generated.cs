@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ContactLoginLogUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ContactLoginLog,ContactLoginLogPM,IEntityPM,ContactLoginLogList,string>
+   public partial class ContactLoginLogUpdateService:BaseEntityUpdateService<POCO.ContactLoginLog,ContactLoginLogPM,IEntityPM,ContactLoginLogList,string>
    {
    			
-        public ContactLoginLogUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ContactLoginLogUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ContactLoginLogDataMapping();
-            Repository = new Repository<POCO.ContactLoginLog>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ContactLoginLog>(mainContext);
         }
-        public ContactLoginLogUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ContactLoginLogUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ContactLoginLogUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ContactLoginLogDataMapping();
+            Repository = new Repository<POCO.ContactLoginLog>(tenant);
+		}
+        public ContactLoginLogUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ContactLoginLog,string> GetKeys(ContactLoginLogPM entityPM) => new ContactLoginLogKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ContactLoginLogPM entityPM)
 		{

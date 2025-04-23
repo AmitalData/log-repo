@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ImageDetailQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ImageDetail,ImageDetailKeys<string>,ImageDetailPM,ImageDetailList,string>
+   public partial class ImageDetailQueryService: BaseEntityQueryService<POCO.ImageDetail,ImageDetailKeys<string>,ImageDetailPM,ImageDetailList,string>
    {
-        public ImageDetailQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ImageDetailQueryService(int tenant) : base(new Repository<POCO.ImageDetail>(tenant),new ImageDetailDataMapping()) {}
         public ImageDetailQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ImageDetail>(context),new ImageDetailDataMapping()) {}
 		public  ImageDetailPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ImageDetailKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ImageDetail,string> GetKeys(POCO.ImageDetail entityPOCO) => new ImageDetailKeys<string>() { Id = entityPOCO.Id,  };

@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityLists ;
 using AmitalCloud.Shipment.Domain.EntityKeys ;
-using AmitalCloud.Shipment.Data.Context ;
-using AmitalCloud.Shipment.Domain.Interfaces ;
 namespace AmitalCloud.Shipment.Application.EntityListQueryServices
 { 
     public partial class AWBSpecialHandlingCodeListQueryService  : BaseEntityListQueryService<AWBSpecialHandlingCodeList,POCO.AWBSpecialHandlingCode,  AWBSpecialHandlingCodeKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.AWBSpecialHandlingCode> contextEntity => (context as IShipmentContext).AWBSpecialHandlingCodes;
-		public AWBSpecialHandlingCodeListQueryService(int tenant) : base(ShipmentContext.GetContext(tenant)) { }
+		public AWBSpecialHandlingCodeListQueryService(int tenant) : base(tenant) { }
         public AWBSpecialHandlingCodeList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class UserLicenseUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.UserLicense,UserLicensePM,IEntityPM,UserLicenseList,string>
+   public partial class UserLicenseUpdateService:BaseEntityUpdateService<POCO.UserLicense,UserLicensePM,IEntityPM,UserLicenseList,string>
    {
    			
-        public UserLicenseUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public UserLicenseUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new UserLicenseDataMapping();
-            Repository = new Repository<POCO.UserLicense>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.UserLicense>(mainContext);
         }
-        public UserLicenseUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public UserLicenseUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public UserLicenseUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new UserLicenseDataMapping();
+            Repository = new Repository<POCO.UserLicense>(tenant);
+		}
+        public UserLicenseUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.UserLicense,string> GetKeys(UserLicensePM entityPM) => new UserLicenseKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(UserLicensePM entityPM)
 		{

@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_name = entity.Name;
 		_indexOrder = entity.IndexOrder;
-		querys = entity.Querys != null ? entity.Querys.Select(a=>new QueryPM(a)).ToList() : null;
+		//querys = entity.Querys != null ? entity.Querys.Select(a=>new QueryPM(a)).ToList() : null;
    }
    #endregion Constructors
    #region Properties

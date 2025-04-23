@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class PackageTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.PackageType,PackageTypePM,IEntityPM,PackageTypeList,string>
+   public partial class PackageTypeUpdateService:BaseEntityUpdateService<POCO.PackageType,PackageTypePM,IEntityPM,PackageTypeList,string>
    {
    			
-        public PackageTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public PackageTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new PackageTypeDataMapping();
-            Repository = new Repository<POCO.PackageType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.PackageType>(mainContext);
         }
-        public PackageTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public PackageTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public PackageTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new PackageTypeDataMapping();
+            Repository = new Repository<POCO.PackageType>(tenant);
+		}
+        public PackageTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.PackageType,string> GetKeys(PackageTypePM entityPM) => new PackageTypeKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(PackageTypePM entityPM)
 		{

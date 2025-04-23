@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ReportsTemplateQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ReportsTemplate,ReportsTemplateKeys<string>,ReportsTemplatePM,ReportsTemplateList,string>
+   public partial class ReportsTemplateQueryService: BaseEntityQueryService<POCO.ReportsTemplate,ReportsTemplateKeys<string>,ReportsTemplatePM,ReportsTemplateList,string>
    {
-        public ReportsTemplateQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ReportsTemplateQueryService(int tenant) : base(new Repository<POCO.ReportsTemplate>(tenant),new ReportsTemplateDataMapping()) {}
         public ReportsTemplateQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ReportsTemplate>(context),new ReportsTemplateDataMapping()) {}
 		public  ReportsTemplatePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ReportsTemplateKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ReportsTemplate,string> GetKeys(POCO.ReportsTemplate entityPOCO) => new ReportsTemplateKeys<string>() { Id = entityPOCO.Id,  };

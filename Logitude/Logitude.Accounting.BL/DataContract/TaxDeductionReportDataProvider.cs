@@ -52,6 +52,8 @@ namespace Logitude.Accounting.BL.DataContract
         public List<TaxDeductionReportLine> deductionLines;
         private TenantPM tenantPM;
         private const string completedStatusCode = "3";
+        private HashSet<string> VendorsWithoutVatNumberCache = new HashSet<string>();
+        private HashSet<string> VendorsWithoutGLAccountCache = new HashSet<string>();
         int? ReportYear;
         List<CardList> transactionsVendors;
         HashSet<Address> addresses;
@@ -171,18 +173,22 @@ namespace Logitude.Accounting.BL.DataContract
             List<TaxDeductionReportLine> lines = new List<TaxDeductionReportLine>();
             string id = null;
             string paymentOrderText = TextCodesTranslator.TranslateText("TaxDeductionReport.O.PaymentOrder", Tenant);
-            var vendorsWithoutGLAccount = payments.Where(d => d.VendorCard != null && d.VendorCard.GLAccountId == null).ToList();
+            var vendorsWithoutGLAccount = payments.Where(d => d.VendorCard != null && d.VendorCard.GLAccountId == null
+                                                            && !VendorsWithoutGLAccountCache.Contains(d.VendorCard.Code)).ToHashSet();
             if (vendorsWithoutGLAccount.Any() && taxDeductionReport != null)
             {
                 taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") 
                     + BuildVendorErrorMessage(vendorsWithoutGLAccount, paymentOrderText, TextCodesTranslator.TranslateText("TaxDeductionReport.O.VendorWithoutAccount", Tenant));
+                VendorsWithoutGLAccountCache.UnionWith(vendorsWithoutGLAccount.Select(d => d.VendorCard.Code).Distinct());
             }
 
-            var vendorsWithoutVatNumber = payments.Where(d => d.VendorCard != null && d.VendorCard.VatNumber == null).ToHashSet();
+            var vendorsWithoutVatNumber = payments.Where(d => d.VendorCard != null && d.VendorCard.VatNumber == null 
+                                                            && !VendorsWithoutVatNumberCache.Contains(d.VendorCard.Code)).ToHashSet();
             if (vendorsWithoutVatNumber.Any() && taxDeductionReport != null)
             {
                 taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "")
                     + BuildVendorErrorMessage(vendorsWithoutVatNumber, paymentOrderText, TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant));
+                VendorsWithoutVatNumberCache.UnionWith(vendorsWithoutVatNumber.Select(d => d.VendorCard.Code).Distinct());
             }
             foreach (APPayment payment in payments) {
 
@@ -850,11 +856,22 @@ namespace Logitude.Accounting.BL.DataContract
         {
             if (groupedbyVendor.VATNumber == null)
             {
-                taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (selectedVendors.Count > 1 ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code);
+                var vendorsWithoutVatNumberCache = selectedVendors.Where(d => d.VatNumber == null
+                                                            && !VendorsWithoutVatNumberCache.Contains(d.Code)).ToList();
+                if (vendorsWithoutVatNumberCache.Any())
+                {
+                    taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (vendorsWithoutVatNumberCache.Count > 1
+                        ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain a VAT number" + cardsCodes
+                        : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + vendorsWithoutVatNumberCache[0].Code);
+                    VendorsWithoutVatNumberCache.UnionWith(vendorsWithoutVatNumberCache.Select(d => d.Code).Distinct());
+
+                }
             }
             if (groupedbyVendor.VendorAddress == null && groupedbyVendor.VendorCity == null)
             {
-                taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (selectedVendors.Count > 1 ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain an address" + cardsCodes : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutAddress", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code);
+                taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + (selectedVendors.Count > 1 
+                    ? " Vendor GLAccount " + groupedbyVendor.DisplayNumber + " is connected to more than one Operational Vendor Card and none of them contain an address" + cardsCodes 
+                    : TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutAddress", Tenant) + ", " + TextCodesTranslator.TranslateText("Card.F.Code", Tenant) + ":" + selectedVendors[0].Code);
             }
         }
 

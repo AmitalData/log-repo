@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ParticipantUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Participant,ParticipantPM,IEntityPM,ParticipantList,string>
+   public partial class ParticipantUpdateService:BaseEntityUpdateService<POCO.Participant,ParticipantPM,IEntityPM,ParticipantList,string>
    {
    			
-        public ParticipantUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ParticipantUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ParticipantDataMapping();
-            Repository = new Repository<POCO.Participant>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Participant>(mainContext);
         }
-        public ParticipantUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ParticipantUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ParticipantUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ParticipantDataMapping();
+            Repository = new Repository<POCO.Participant>(tenant);
+		}
+        public ParticipantUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Participant,string> GetKeys(ParticipantPM entityPM) => new ParticipantKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ParticipantPM entityPM)
 		{

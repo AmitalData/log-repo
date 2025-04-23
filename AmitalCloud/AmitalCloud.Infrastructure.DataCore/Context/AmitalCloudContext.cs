@@ -6,7 +6,7 @@
 // </auto-generated>
 //-----
 using AmitalCloud.Infrastructure.Data.BaseClasses;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityMapping;
 using AmitalCloud.Infrastructure.Domain.Interfaces;

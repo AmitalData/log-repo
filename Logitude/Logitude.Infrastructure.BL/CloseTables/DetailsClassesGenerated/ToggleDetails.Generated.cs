@@ -940,7 +940,16 @@ namespace Logitude.Infrastructure.BL
                 Description = "Payment Status based on Reco", 
                 Name = " A/P Invoice Payment Status based on Reconciliation", 
 			});
-			 
+
+
+            all.Add(new ToggleDetails()
+            {
+                SearchFields = "RFR, Revaluation on Foreign Reco",
+                Code = "RFR",
+                Description = "Revaluation on Foreign Reco",
+                Name = "Revaluation Journal on Foreign Currency Reconciliation",
+            });
+
             all.Add(new ToggleDetails()
             {    
                 Code = "RE2", 

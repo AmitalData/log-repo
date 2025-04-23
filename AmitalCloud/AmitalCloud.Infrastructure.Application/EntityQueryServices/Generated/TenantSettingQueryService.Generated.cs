@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TenantSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TenantSetting,TenantSettingKeys<string>,TenantSettingPM,TenantSettingList,string>
+   public partial class TenantSettingQueryService: BaseEntityQueryService<POCO.TenantSetting,TenantSettingKeys<string>,TenantSettingPM,TenantSettingList,string>
    {
-        public TenantSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TenantSettingQueryService(int tenant) : base(new Repository<POCO.TenantSetting>(tenant),new TenantSettingDataMapping()) {}
         public TenantSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TenantSetting>(context),new TenantSettingDataMapping()) {}
 		public  TenantSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TenantSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TenantSetting,string> GetKeys(POCO.TenantSetting entityPOCO) => new TenantSettingKeys<string>() { Id = entityPOCO.Id,  };

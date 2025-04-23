@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerTenantAccessCardQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerTenantAccessCard,CustomerTenantAccessCardKeys<string>,CustomerTenantAccessCardPM,CustomerTenantAccessCardList,string>
+   public partial class CustomerTenantAccessCardQueryService: BaseEntityQueryService<POCO.CustomerTenantAccessCard,CustomerTenantAccessCardKeys<string>,CustomerTenantAccessCardPM,CustomerTenantAccessCardList,string>
    {
-        public CustomerTenantAccessCardQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerTenantAccessCardQueryService(int tenant) : base(new Repository<POCO.CustomerTenantAccessCard>(tenant),new CustomerTenantAccessCardDataMapping()) {}
         public CustomerTenantAccessCardQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerTenantAccessCard>(context),new CustomerTenantAccessCardDataMapping()) {}
 		public  CustomerTenantAccessCardPM GetSingle(string customerid, string customertenantaccessid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerTenantAccessCardKeys<string>(){ CustomerId = customerid, CustomerTenantAccessId = customertenantaccessid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerTenantAccessCard,string> GetKeys(POCO.CustomerTenantAccessCard entityPOCO) => new CustomerTenantAccessCardKeys<string>() { CustomerId = entityPOCO.CustomerId, CustomerTenantAccessId = entityPOCO.CustomerTenantAccessId,  };

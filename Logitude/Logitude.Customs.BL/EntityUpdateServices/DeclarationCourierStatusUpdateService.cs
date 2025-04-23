@@ -29,6 +29,7 @@ using Logitude.Customs.BL.Messaging.Maman;
 using System.Data.Entity.Validation;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
+using Logitude.Customs.BL.Infrastructure;
 
 
 namespace Logitude.Customs.BL.EntityUpdateServices
@@ -309,6 +310,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             }
 
+            DetectEdges(entityPM, entityPOCO);
+
             UpdateUnifreight(entityPM);
 
             base.OnUpdating(entityPM, entityPOCO);
@@ -352,11 +355,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void AfterUpdating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
-            LogMessagingUtil.Instance.AppendLine("DeclarationCourierStatusPM.DocumentStatusCode: " + entityPM.DocumentStatusCode);
-            AutomatedCustomsMessagingService automatedCustomsMessagingService = new AutomatedCustomsMessagingService(entityPM.Tenant);
-
-			automatedCustomsMessagingService.CheckAndSendMessageis(entityPM);
+            LogMessagingUtil.Instance.AppendLine("DeclarationCourierStatusPM.DocumentStatusCode: " + entityPM.DocumentStatusCode);  
+            HandleAutomatedMessaging(entityPM);
         }
+
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
         {
@@ -470,6 +472,49 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-        
+        private void DetectEdges(DeclarationCourierStatusPM pm,
+                                  DeclarationCourierStatus poco)
+        {
+            pm.EdgeManifest =
+                poco.CourierManifestStatusCode != "R" &&
+                pm.CourierManifestStatusCode == "R";
+
+            pm.EdgeDeclaration =
+                pm.CourierManifestStatusCode == "V" &&
+                pm.CourierDeclarationStatusCode == "R" &&
+                pm.DocumentStatusCode == "V" &&
+               (poco.CourierManifestStatusCode != "V" ||
+                poco.CourierDeclarationStatusCode != "R" ||
+                poco.DocumentStatusCode != "V");
+
+            pm.EdgePayment = poco.CourierDeclarationStatusCode != "V" && pm.CourierDeclarationStatusCode == "V";
+
+        }
+        private void HandleAutomatedMessaging(DeclarationCourierStatusPM pm)
+        {
+            bool run =
+                (pm.EdgeManifest && AutoMsgScope.FirstTime($"{pm.DeclarationId}:M")) ||
+                (pm.EdgeDeclaration && AutoMsgScope.FirstTime($"{pm.DeclarationId}:D")) ||
+                (pm.EdgePayment && AutoMsgScope.FirstTime($"{pm.DeclarationId}:P"));
+
+            if (!run) return;
+
+            LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] CALL AutomatedCustomsMessagingService  DeclId={pm.DeclarationId}");
+
+            try
+            {
+                var svc = new AutomatedCustomsMessagingService(pm.Tenant);
+                svc.CheckAndSendMessageis(pm);
+
+                LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] DONE  AutomatedCustomsMessagingService  DeclId={pm.DeclarationId}");
+            }
+            catch (Exception ex)
+            {
+                LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] ERROR DeclId={pm.DeclarationId} - {ex.Message} - {ex.StackTrace}");
+                throw;
+            }
+        }
+
+
     }
 }

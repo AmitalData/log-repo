@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -36,7 +36,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_objecttablerule = entity.ObjectTableRule !=null ? new ObjectTableRulePM(entity.ObjectTableRule) : null;
 			_expression = entity.Expression;
 		_ruleNotificationTypeCode = entity.RuleNotificationTypeCode;
-		_objectFieldCode = entity.ObjectFieldCode;
+		_rulenotificationtype = entity.RuleNotificationType !=null ? new RuleNotificationTypePM(entity.RuleNotificationType) : null;
+			_objectFieldCode = entity.ObjectFieldCode;
+        _objectFieldName = null;
+        _objectTableRuleCode = null;
+        _objectTableRuleTypeCode = null;
    }
    #endregion Constructors
    #region Properties
@@ -161,6 +165,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private RuleNotificationTypePM _rulenotificationtype;
+		[Include]
+        [DataMember]
+        public virtual RuleNotificationTypePM RuleNotificationType 
+		{ 
+		get { return _rulenotificationtype; } 
+		set { _rulenotificationtype = value; }
+		}
 	  private string _objectFieldCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -174,6 +186,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldCode",OldValue=_objectFieldCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _objectFieldCode=value;
+		   }
+		 }
+	   }
+	  private string _objectFieldName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectFieldName  
+	   {
+	     get { return _objectFieldName; }
+		 set
+		 {
+		   if(_objectFieldName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldName",OldValue=_objectFieldName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectFieldName=value;
+		   }
+		 }
+	   }
+	  private string _objectTableRuleCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableRuleCode  
+	   {
+	     get { return _objectTableRuleCode; }
+		 set
+		 {
+		   if(_objectTableRuleCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableRuleCode",OldValue=_objectTableRuleCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableRuleCode=value;
+		   }
+		 }
+	   }
+	  private string _objectTableRuleTypeCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableRuleTypeCode  
+	   {
+	     get { return _objectTableRuleTypeCode; }
+		 set
+		 {
+		   if(_objectTableRuleTypeCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableRuleTypeCode",OldValue=_objectTableRuleTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableRuleTypeCode=value;
 		   }
 		 }
 	   }

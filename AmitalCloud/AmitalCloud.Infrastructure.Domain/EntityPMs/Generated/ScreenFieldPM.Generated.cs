@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -37,6 +37,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_objectFieldCode = entity.ObjectFieldCode;
 		_screenCode = entity.ScreenCode;
 		_sectionNumber = entity.SectionNumber;
+        _objectFieldName = null;
+        _objectFieldObjectTableName = null;
    }
    #endregion Constructors
    #region Properties
@@ -182,6 +184,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SectionNumber",OldValue=_sectionNumber,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _sectionNumber=value;
+		   }
+		 }
+	   }
+	  private string _objectFieldName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectFieldName  
+	   {
+	     get { return _objectFieldName; }
+		 set
+		 {
+		   if(_objectFieldName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldName",OldValue=_objectFieldName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectFieldName=value;
+		   }
+		 }
+	   }
+	  private string _objectFieldObjectTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectFieldObjectTableName  
+	   {
+	     get { return _objectFieldObjectTableName; }
+		 set
+		 {
+		   if(_objectFieldObjectTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectFieldObjectTableName",OldValue=_objectFieldObjectTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectFieldObjectTableName=value;
 		   }
 		 }
 	   }

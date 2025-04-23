@@ -103,7 +103,10 @@ export class BatchTaskExecutionPM {
     public get Subject() { return this.subject; }
     public set Subject(newValue: string) { if (this.subject != newValue) { this.subject = newValue; this.MarkAsDirty("Subject"); } }
        
-	 
+    private notDisplayInMenu: boolean;
+    public get NotDisplayInMenu() { return this.notDisplayInMenu; }
+    public set NotDisplayInMenu(newValue: boolean) { if (this.notDisplayInMenu != newValue) { this.notDisplayInMenu = newValue; this.MarkAsDirty("NotDisplayInMenu"); } }
+       
     private callStack: string;
     public get CallStack() { return this.callStack; }
     public set CallStack(newValue: string) { if (this.callStack != newValue) { this.callStack = newValue; this.MarkAsDirty("CallStack"); } }
@@ -137,4 +140,4 @@ export class BatchTaskExecutionPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

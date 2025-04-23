@@ -10,21 +10,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class SharedLogisticsInvitationStatusKeys<T> : BaseEntityKeyFields<EntityPOCOs.SharedLogisticsInvitationStatus,T> 
+   public class SharedLogisticsInvitationStatusKeys<T> : BaseEntityKeyFields<ENTITIES.SharedLogisticsInvitationStatus,T> 
    {
 		public SharedLogisticsInvitationStatusKeys() : base() {}
         public SharedLogisticsInvitationStatusKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
         public override void Initialize(IEnumerable<KeyValuePair<string, string>> paramList)
         {
-			Code = (int)Convert.ChangeType((paramList.Single(t => t.Key == "Code").Value), typeof(int));
+			Code = (string)Convert.ChangeType((paramList.Single(t => t.Key == "Code").Value), typeof(string));
         }
-   	  public int Code  { get; set; }
+   	  public string Code  { get; set; }
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "SharedLogisticsInvitationStatusPM";
-	  public override Expression<Func<EntityPOCOs.SharedLogisticsInvitationStatus, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.SharedLogisticsInvitationStatus, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

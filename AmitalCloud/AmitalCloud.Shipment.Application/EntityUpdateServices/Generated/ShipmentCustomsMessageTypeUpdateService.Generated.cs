@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ShipmentCustomsMessageTypeUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ShipmentCustomsMessageType,ShipmentCustomsMessageTypePM,IEntityPM,ShipmentCustomsMessageTypeList,string>
+   public partial class ShipmentCustomsMessageTypeUpdateService:BaseEntityUpdateService<POCO.ShipmentCustomsMessageType,ShipmentCustomsMessageTypePM,IEntityPM,ShipmentCustomsMessageTypeList,string>
    {
    			
-        public ShipmentCustomsMessageTypeUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ShipmentCustomsMessageTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ShipmentCustomsMessageTypeDataMapping();
-            Repository = new Repository<POCO.ShipmentCustomsMessageType>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ShipmentCustomsMessageType>(mainContext);
         }
-        public ShipmentCustomsMessageTypeUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ShipmentCustomsMessageTypeUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ShipmentCustomsMessageTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ShipmentCustomsMessageTypeDataMapping();
+            Repository = new Repository<POCO.ShipmentCustomsMessageType>(tenant);
+		}
+        public ShipmentCustomsMessageTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ShipmentCustomsMessageType,string> GetKeys(ShipmentCustomsMessageTypePM entityPM) => new ShipmentCustomsMessageTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(ShipmentCustomsMessageTypePM entityPM)
 		{

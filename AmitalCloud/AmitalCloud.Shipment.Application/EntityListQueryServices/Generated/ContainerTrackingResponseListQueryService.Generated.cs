@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityLists ;
 using AmitalCloud.Shipment.Domain.EntityKeys ;
-using AmitalCloud.Shipment.Data.Context ;
-using AmitalCloud.Shipment.Domain.Interfaces ;
 namespace AmitalCloud.Shipment.Application.EntityListQueryServices
 { 
     public partial class ContainerTrackingResponseListQueryService  : BaseEntityListQueryService<ContainerTrackingResponseList,POCO.ContainerTrackingResponse,  ContainerTrackingResponseKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ContainerTrackingResponse> contextEntity => (context as IShipmentContext).ContainerTrackingResponses;
-		public ContainerTrackingResponseListQueryService(int tenant) : base(ShipmentContext.GetContext(tenant)) { }
+		public ContainerTrackingResponseListQueryService(int tenant) : base(tenant) { }
         public ContainerTrackingResponseList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

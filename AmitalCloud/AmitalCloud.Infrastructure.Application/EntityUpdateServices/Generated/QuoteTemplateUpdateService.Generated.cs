@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class QuoteTemplateUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.QuoteTemplate,QuoteTemplatePM,IEntityPM,QuoteTemplateList,string>
+   public partial class QuoteTemplateUpdateService:BaseEntityUpdateService<POCO.QuoteTemplate,QuoteTemplatePM,IEntityPM,QuoteTemplateList,string>
    {
    			
-        public QuoteTemplateUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public QuoteTemplateUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new QuoteTemplateDataMapping();
-            Repository = new Repository<POCO.QuoteTemplate>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.QuoteTemplate>(mainContext);
         }
-        public QuoteTemplateUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public QuoteTemplateUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public QuoteTemplateUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new QuoteTemplateDataMapping();
+            Repository = new Repository<POCO.QuoteTemplate>(tenant);
+		}
+        public QuoteTemplateUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.QuoteTemplate,string> GetKeys(QuoteTemplatePM entityPM) => new QuoteTemplateKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(QuoteTemplatePM entityPM)
 		{

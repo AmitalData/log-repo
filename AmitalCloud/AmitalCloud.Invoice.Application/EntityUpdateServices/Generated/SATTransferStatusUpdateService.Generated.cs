@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data;
 using AmitalCloud.Invoice.Domain.EntityLists;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
-using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Data.Context;
 
 namespace AmitalCloud.Invoice.Application.EntityUpdateServices
 { 
-   public partial class SATTransferStatusUpdateService:BaseEntityUpdateService<InvoiceContext,POCO.SATTransferStatus,SATTransferStatusPM,IEntityPM,SATTransferStatusList,string>
+   public partial class SATTransferStatusUpdateService:BaseEntityUpdateService<POCO.SATTransferStatus,SATTransferStatusPM,IEntityPM,SATTransferStatusList,string>
    {
    			
-        public SATTransferStatusUpdateService(IInvoiceContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((InvoiceContext)mainContext,additionalContexts, tenant)
+        public SATTransferStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new SATTransferStatusDataMapping();
-            Repository = new Repository<POCO.SATTransferStatus>((InvoiceContext)mainContext);
+            Repository = new Repository<POCO.SATTransferStatus>(mainContext);
         }
-        public SATTransferStatusUpdateService(int tenant) : this(InvoiceContext.GetContext(tenant), null, tenant) {}
-        public SATTransferStatusUpdateService(IInvoiceContext context) :  this(context, null, 0) {}
+        public SATTransferStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new SATTransferStatusDataMapping();
+            Repository = new Repository<POCO.SATTransferStatus>(tenant);
+		}
+        public SATTransferStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.SATTransferStatus,string> GetKeys(SATTransferStatusPM entityPM) => new SATTransferStatusKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(SATTransferStatusPM entityPM)
 		{

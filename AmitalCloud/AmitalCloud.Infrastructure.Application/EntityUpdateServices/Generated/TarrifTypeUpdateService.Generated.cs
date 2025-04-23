@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class TarrifTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.TarrifType,TarrifTypePM,IEntityPM,TarrifTypeList,string>
+   public partial class TarrifTypeUpdateService:BaseEntityUpdateService<POCO.TarrifType,TarrifTypePM,IEntityPM,TarrifTypeList,string>
    {
    			
-        public TarrifTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public TarrifTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new TarrifTypeDataMapping();
-            Repository = new Repository<POCO.TarrifType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.TarrifType>(mainContext);
         }
-        public TarrifTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public TarrifTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public TarrifTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new TarrifTypeDataMapping();
+            Repository = new Repository<POCO.TarrifType>(tenant);
+		}
+        public TarrifTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.TarrifType,string> GetKeys(TarrifTypePM entityPM) => new TarrifTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(TarrifTypePM entityPM)
 		{

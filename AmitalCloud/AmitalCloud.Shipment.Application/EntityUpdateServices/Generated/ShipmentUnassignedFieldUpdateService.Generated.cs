@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ShipmentUnassignedFieldUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ShipmentUnassignedField,ShipmentUnassignedFieldPM,ShipmentPM,ShipmentUnassignedFieldList,string>
+   public partial class ShipmentUnassignedFieldUpdateService:BaseEntityUpdateService<POCO.ShipmentUnassignedField,ShipmentUnassignedFieldPM,ShipmentPM,ShipmentUnassignedFieldList,string>
    {
    			
-        public ShipmentUnassignedFieldUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ShipmentUnassignedFieldUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ShipmentUnassignedFieldDataMapping();
-            Repository = new Repository<POCO.ShipmentUnassignedField>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ShipmentUnassignedField>(mainContext);
         }
-        public ShipmentUnassignedFieldUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ShipmentUnassignedFieldUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ShipmentUnassignedFieldUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ShipmentUnassignedFieldDataMapping();
+            Repository = new Repository<POCO.ShipmentUnassignedField>(tenant);
+		}
+        public ShipmentUnassignedFieldUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ShipmentUnassignedField,string> GetKeys(ShipmentUnassignedFieldPM entityPM) => new ShipmentUnassignedFieldKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ShipmentUnassignedFieldPM entityPM)
 		{

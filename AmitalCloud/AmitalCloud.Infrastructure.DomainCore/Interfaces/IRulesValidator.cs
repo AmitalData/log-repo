@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Domain.EntityClasses;
 using System.Collections.Generic;
 
 namespace AmitalCloud.Infrastructure.Domain.Interfaces

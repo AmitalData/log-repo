@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerSizeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerSize,CustomerSizeKeys<string>,CustomerSizePM,CustomerSizeList,string>
+   public partial class CustomerSizeQueryService: BaseEntityQueryService<POCO.CustomerSize,CustomerSizeKeys<string>,CustomerSizePM,CustomerSizeList,string>
    {
-        public CustomerSizeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerSizeQueryService(int tenant) : base(new Repository<POCO.CustomerSize>(tenant),new CustomerSizeDataMapping()) {}
         public CustomerSizeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerSize>(context),new CustomerSizeDataMapping()) {}
 		public  CustomerSizePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerSizeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerSize,string> GetKeys(POCO.CustomerSize entityPOCO) => new CustomerSizeKeys<string>() { Id = entityPOCO.Id,  };

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AddressQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Address,AddressKeys<string>,AddressPM,AddressList,string>
+   public partial class AddressQueryService: BaseEntityQueryService<POCO.Address,AddressKeys<string>,AddressPM,AddressList,string>
    {
-        public AddressQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AddressQueryService(int tenant) : base(new Repository<POCO.Address>(tenant),new AddressDataMapping()) {}
         public AddressQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Address>(context),new AddressDataMapping()) {}
 		public  AddressPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AddressKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Address,string> GetKeys(POCO.Address entityPOCO) => new AddressKeys<string>() { Id = entityPOCO.Id,  };

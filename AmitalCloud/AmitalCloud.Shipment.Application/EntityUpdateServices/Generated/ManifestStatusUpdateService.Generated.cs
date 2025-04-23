@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ManifestStatusUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ManifestStatus,ManifestStatusPM,IEntityPM,ManifestStatusList,string>
+   public partial class ManifestStatusUpdateService:BaseEntityUpdateService<POCO.ManifestStatus,ManifestStatusPM,IEntityPM,ManifestStatusList,string>
    {
    			
-        public ManifestStatusUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ManifestStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ManifestStatusDataMapping();
-            Repository = new Repository<POCO.ManifestStatus>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ManifestStatus>(mainContext);
         }
-        public ManifestStatusUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ManifestStatusUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ManifestStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ManifestStatusDataMapping();
+            Repository = new Repository<POCO.ManifestStatus>(tenant);
+		}
+        public ManifestStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ManifestStatus,string> GetKeys(ManifestStatusPM entityPM) => new ManifestStatusKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(ManifestStatusPM entityPM)
 		{

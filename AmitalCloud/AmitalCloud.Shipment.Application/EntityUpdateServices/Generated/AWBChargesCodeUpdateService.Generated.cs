@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class AWBChargesCodeUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.AWBChargesCode,AWBChargesCodePM,IEntityPM,AWBChargesCodeList,string>
+   public partial class AWBChargesCodeUpdateService:BaseEntityUpdateService<POCO.AWBChargesCode,AWBChargesCodePM,IEntityPM,AWBChargesCodeList,string>
    {
    			
-        public AWBChargesCodeUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public AWBChargesCodeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AWBChargesCodeDataMapping();
-            Repository = new Repository<POCO.AWBChargesCode>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.AWBChargesCode>(mainContext);
         }
-        public AWBChargesCodeUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public AWBChargesCodeUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public AWBChargesCodeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AWBChargesCodeDataMapping();
+            Repository = new Repository<POCO.AWBChargesCode>(tenant);
+		}
+        public AWBChargesCodeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AWBChargesCode,string> GetKeys(AWBChargesCodePM entityPM) => new AWBChargesCodeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(AWBChargesCodePM entityPM)
 		{

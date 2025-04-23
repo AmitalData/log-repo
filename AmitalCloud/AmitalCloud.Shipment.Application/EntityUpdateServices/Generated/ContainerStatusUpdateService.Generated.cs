@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ContainerStatusUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ContainerStatus,ContainerStatusPM,IEntityPM,ContainerStatusList,string>
+   public partial class ContainerStatusUpdateService:BaseEntityUpdateService<POCO.ContainerStatus,ContainerStatusPM,IEntityPM,ContainerStatusList,string>
    {
    			
-        public ContainerStatusUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ContainerStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ContainerStatusDataMapping();
-            Repository = new Repository<POCO.ContainerStatus>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ContainerStatus>(mainContext);
         }
-        public ContainerStatusUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ContainerStatusUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ContainerStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ContainerStatusDataMapping();
+            Repository = new Repository<POCO.ContainerStatus>(tenant);
+		}
+        public ContainerStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ContainerStatus,string> GetKeys(ContainerStatusPM entityPM) => new ContainerStatusKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(ContainerStatusPM entityPM)
 		{

@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class LeadSourceKeys<T> : BaseEntityKeyFields<EntityPOCOs.LeadSource,T> 
+   public class LeadSourceKeys<T> : BaseEntityKeyFields<ENTITIES.LeadSource,T> 
    {
 		public LeadSourceKeys() : base() {}
         public LeadSourceKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "LeadSourcesPM";
-	  public override Expression<Func<EntityPOCOs.LeadSource, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.LeadSource, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

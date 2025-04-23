@@ -1,5 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Configuration;

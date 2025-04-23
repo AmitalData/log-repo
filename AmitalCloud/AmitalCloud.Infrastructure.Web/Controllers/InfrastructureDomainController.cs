@@ -1,11 +1,11 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityListQueryServices;
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
+using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Data.Security;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
 using System.Collections.Generic;
@@ -26,8 +26,10 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
                 int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 string loggedUserEmail = AuthenticationTokenRepository.GetSingleTokenFromCache(token).Email;
-                ContactPM contact = new ContactQueryService(tenant).GetMulti(a => a.Email == loggedUserEmail && a.Tenant == tenant, "").FirstOrDefault();
-                string loggedUserId = contact?.Id;
+
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                string loggedUserId = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant)?.Id;
+
                 FeatureQuery featureQuery = new FeatureQuery(tenant);
                 LoggedUserFeatures loggedUserFeatures = featureQuery.GetAllowedFeaturesForLoggedUser(loggedUserId, tenant);
                 List<FeaturePM> myResult1 = loggedUserFeatures.Features;

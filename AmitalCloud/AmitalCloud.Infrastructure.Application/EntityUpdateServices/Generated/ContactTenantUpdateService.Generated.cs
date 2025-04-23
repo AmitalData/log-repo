@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ContactTenantUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ContactTenant,ContactTenantPM,IEntityPM,ContactTenantList,string>
+   public partial class ContactTenantUpdateService:BaseEntityUpdateService<POCO.ContactTenant,ContactTenantPM,IEntityPM,ContactTenantList,string>
    {
    			
-        public ContactTenantUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ContactTenantUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ContactTenantDataMapping();
-            Repository = new Repository<POCO.ContactTenant>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ContactTenant>(mainContext);
         }
-        public ContactTenantUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ContactTenantUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ContactTenantUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ContactTenantDataMapping();
+            Repository = new Repository<POCO.ContactTenant>(tenant);
+		}
+        public ContactTenantUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ContactTenant,string> GetKeys(ContactTenantPM entityPM) => new ContactTenantKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ContactTenantPM entityPM)
 		{

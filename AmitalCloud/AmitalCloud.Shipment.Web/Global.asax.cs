@@ -1,10 +1,8 @@
-﻿using AmitalCloud.Infrastructure.Application.Helpers;
-using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 using System;
-using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
 

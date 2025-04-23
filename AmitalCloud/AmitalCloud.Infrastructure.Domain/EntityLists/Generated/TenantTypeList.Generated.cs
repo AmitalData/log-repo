@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
@@ -34,10 +34,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [Key]
        [DataMember]
        public string Code  { get; set; }
-   
        [DataMember]
        public string Name  { get; set; }
-   
        [DataMember]
        public string SearchFields  { get; set; }
          #endregion Properties

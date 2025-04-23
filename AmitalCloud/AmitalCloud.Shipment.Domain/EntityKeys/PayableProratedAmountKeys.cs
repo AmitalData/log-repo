@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Shipment.Domain.EntityKeys
 {
-   public class PayableProratedAmountKeys<T> : BaseEntityKeyFields<EntityPOCOs.PayableProratedAmount,T> 
+   public class PayableProratedAmountKeys<T> : BaseEntityKeyFields<ENTITIES.PayableProratedAmount,T> 
    {
 		public PayableProratedAmountKeys() : base() {}
         public PayableProratedAmountKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Shipment.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "PayableProratedAmountsPM";
-	  public override Expression<Func<EntityPOCOs.PayableProratedAmount, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.PayableProratedAmount, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

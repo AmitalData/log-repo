@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DueTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DueType,DueTypeKeys<string>,DueTypePM,DueTypeList,string>
+   public partial class DueTypeQueryService: BaseEntityQueryService<POCO.DueType,DueTypeKeys<string>,DueTypePM,DueTypeList,string>
    {
-        public DueTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DueTypeQueryService(int tenant) : base(new Repository<POCO.DueType>(tenant),new DueTypeDataMapping()) {}
         public DueTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DueType>(context),new DueTypeDataMapping()) {}
 		public  DueTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DueTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DueType,string> GetKeys(POCO.DueType entityPOCO) => new DueTypeKeys<string>() { Code = entityPOCO.Code,  };

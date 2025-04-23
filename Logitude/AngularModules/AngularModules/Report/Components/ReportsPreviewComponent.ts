@@ -18,6 +18,7 @@ import { QueryFilterItem } from './Filters/QueryFilterItem';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { MenuTypes } from './ProcessMenuComponent';
 
 @Component({
     selector: 'ReportsPreviewComponent',
@@ -479,7 +480,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         filter.UserId = SessionLocator.LoggedUserId;
         filter.ReportId = this.Report.Id;
         filter.DisablePreview = this.Report.DisablePreview;
-
+        filter.NotDisplayInMenu = this.IsSchedulerReport;
         if (this.ReportsTemplateLists) {
             var reportTemplate: any = this.ReportsTemplateLists.filter(d => d.Id == filter.DefaultTemplateId)[0];
             if (reportTemplate) {
@@ -540,19 +541,25 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
 
             if (!myResponse.HasError) {
-                var messageWindow = new MessageWindow();
-                messageWindow.ShowSuccessIcon = true;
-
-                messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
-                SessionLocator.HomeComponent.IsReportPanelVisible = true;
-                SessionLocator.HomeComponent.CurrentReportId = myResponse.Result.ReportKey;
-                SessionLocator.HomeComponent.isPinned = true;
-
-                this.BackButtonClicked()
                 this.ReportFliter = myResponse.Result;
-                this.StopBusyIndicator();
+
+               if(!this.IsSchedulerReport){
+                    var messageWindow = new MessageWindow();
+                    messageWindow.ShowSuccessIcon = true;
+      
+                    messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
+                SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                SessionLocator.HomeComponent.CurrentProcessId  = myResponse.Result.ReportKey;
+                SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog;
+                    SessionLocator.HomeComponent.isPinned = true;
+      
+                    this.BackButtonClicked()
+                    this.StopBusyIndicator();
+                }
+                else{
+                    this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
+                }
                 
-                //this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
             } else {
 
                 filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = false;

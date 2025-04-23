@@ -1,6 +1,7 @@
 ﻿using Amital.UpDown.Common;
 using Amital.UpDown.Common.Client;
 using Amital.UpDown.Common.ModelShared.Filling;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using System;
 using System.Configuration;

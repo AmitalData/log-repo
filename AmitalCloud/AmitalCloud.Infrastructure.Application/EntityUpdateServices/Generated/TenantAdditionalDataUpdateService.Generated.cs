@@ -9,32 +9,34 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 using System;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class TenantAdditionalDataUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.TenantAdditionalData,TenantAdditionalDataPM,IEntityPM,TenantAdditionalDataList,int>
+   public partial class TenantAdditionalDataUpdateService:BaseEntityUpdateService<POCO.TenantAdditionalData,TenantAdditionalDataPM,IEntityPM,TenantAdditionalDataList,int>
    {
    			
-        public TenantAdditionalDataUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public TenantAdditionalDataUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new TenantAdditionalDataDataMapping();
-            Repository = new Repository<POCO.TenantAdditionalData>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.TenantAdditionalData>(mainContext);
         }
-        public TenantAdditionalDataUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public TenantAdditionalDataUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public TenantAdditionalDataUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new TenantAdditionalDataDataMapping();
+            Repository = new Repository<POCO.TenantAdditionalData>(tenant);
+		}
+        public TenantAdditionalDataUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.TenantAdditionalData,int> GetKeys(TenantAdditionalDataPM entityPM) => new TenantAdditionalDataKeys<int>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(TenantAdditionalDataPM entityPM)
 		{

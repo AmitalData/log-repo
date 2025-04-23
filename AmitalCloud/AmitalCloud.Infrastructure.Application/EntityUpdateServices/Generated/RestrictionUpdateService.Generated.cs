@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class RestrictionUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Restriction,RestrictionPM,IEntityPM,RestrictionList,string>
+   public partial class RestrictionUpdateService:BaseEntityUpdateService<POCO.Restriction,RestrictionPM,IEntityPM,RestrictionList,string>
    {
    			
-        public RestrictionUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public RestrictionUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new RestrictionDataMapping();
-            Repository = new Repository<POCO.Restriction>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Restriction>(mainContext);
         }
-        public RestrictionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public RestrictionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public RestrictionUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new RestrictionDataMapping();
+            Repository = new Repository<POCO.Restriction>(tenant);
+		}
+        public RestrictionUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Restriction,string> GetKeys(RestrictionPM entityPM) => new RestrictionKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(RestrictionPM entityPM)
 		{

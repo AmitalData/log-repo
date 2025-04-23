@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ManifestStatusQueryService: BaseEntityQueryService<IShipmentContext,POCO.ManifestStatus,ManifestStatusKeys<string>,ManifestStatusPM,ManifestStatusList,string>
+   public partial class ManifestStatusQueryService: BaseEntityQueryService<POCO.ManifestStatus,ManifestStatusKeys<string>,ManifestStatusPM,ManifestStatusList,string>
    {
-        public ManifestStatusQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ManifestStatusQueryService(IShipmentContext context) : base(new Repository<POCO.ManifestStatus>(context),new ManifestStatusDataMapping()) {}
+        public ManifestStatusQueryService(int tenant) : base(new Repository<POCO.ManifestStatus>(tenant),new ManifestStatusDataMapping()) {}
+        public ManifestStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ManifestStatus>(context),new ManifestStatusDataMapping()) {}
 		public  ManifestStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ManifestStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ManifestStatus,string> GetKeys(POCO.ManifestStatus entityPOCO) => new ManifestStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerTenantAccessCardUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerTenantAccessCard,CustomerTenantAccessCardPM,CustomerTenantAccessPM,CustomerTenantAccessCardList,string>
+   public partial class CustomerTenantAccessCardUpdateService:BaseEntityUpdateService<POCO.CustomerTenantAccessCard,CustomerTenantAccessCardPM,CustomerTenantAccessPM,CustomerTenantAccessCardList,string>
    {
    			
-        public CustomerTenantAccessCardUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerTenantAccessCardUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerTenantAccessCardDataMapping();
-            Repository = new Repository<POCO.CustomerTenantAccessCard>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerTenantAccessCard>(mainContext);
         }
-        public CustomerTenantAccessCardUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerTenantAccessCardUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerTenantAccessCardUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerTenantAccessCardDataMapping();
+            Repository = new Repository<POCO.CustomerTenantAccessCard>(tenant);
+		}
+        public CustomerTenantAccessCardUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerTenantAccessCard,string> GetKeys(CustomerTenantAccessCardPM entityPM) => new CustomerTenantAccessCardKeys<string>() { CustomerId = entityPM.CustomerId, CustomerTenantAccessId = entityPM.CustomerTenantAccessId };
 protected override void FillDefaultValuesOnCreate(CustomerTenantAccessCardPM entityPM)
 		{

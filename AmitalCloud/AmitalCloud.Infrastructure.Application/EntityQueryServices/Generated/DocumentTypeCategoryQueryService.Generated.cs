@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DocumentTypeCategoryQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentTypeCategory,DocumentTypeCategoryKeys<string>,DocumentTypeCategoryPM,DocumentTypeCategoryList,string>
+   public partial class DocumentTypeCategoryQueryService: BaseEntityQueryService<POCO.DocumentTypeCategory,DocumentTypeCategoryKeys<string>,DocumentTypeCategoryPM,DocumentTypeCategoryList,string>
    {
-        public DocumentTypeCategoryQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DocumentTypeCategoryQueryService(int tenant) : base(new Repository<POCO.DocumentTypeCategory>(tenant),new DocumentTypeCategoryDataMapping()) {}
         public DocumentTypeCategoryQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentTypeCategory>(context),new DocumentTypeCategoryDataMapping()) {}
 		public  DocumentTypeCategoryPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentTypeCategoryKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentTypeCategory,string> GetKeys(POCO.DocumentTypeCategory entityPOCO) => new DocumentTypeCategoryKeys<string>() { Code = entityPOCO.Code,  };

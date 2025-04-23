@@ -9,33 +9,34 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class BIReportsExecutionLogUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.BIReportsExecutionLog,BIReportsExecutionLogPM,IEntityPM,BIReportsExecutionLogList,string>
+   public partial class BIReportsExecutionLogUpdateService:BaseEntityUpdateService<POCO.BIReportsExecutionLog,BIReportsExecutionLogPM,IEntityPM,BIReportsExecutionLogList,string>
    {
    			
-        public BIReportsExecutionLogUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public BIReportsExecutionLogUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new BIReportsExecutionLogDataMapping();
-            Repository = new Repository<POCO.BIReportsExecutionLog>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.BIReportsExecutionLog>(mainContext);
         }
-        public BIReportsExecutionLogUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public BIReportsExecutionLogUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public BIReportsExecutionLogUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new BIReportsExecutionLogDataMapping();
+            Repository = new Repository<POCO.BIReportsExecutionLog>(tenant);
+		}
+        public BIReportsExecutionLogUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.BIReportsExecutionLog,string> GetKeys(BIReportsExecutionLogPM entityPM) => new BIReportsExecutionLogKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(BIReportsExecutionLogPM entityPM)
 		{

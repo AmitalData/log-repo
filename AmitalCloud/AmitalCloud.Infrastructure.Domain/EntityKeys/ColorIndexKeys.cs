@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class ColorIndexKeys<T> : BaseEntityKeyFields<EntityPOCOs.ColorIndex,T> 
+   public class ColorIndexKeys<T> : BaseEntityKeyFields<ENTITIES.ColorIndex,T> 
    {
 		public ColorIndexKeys() : base() {}
         public ColorIndexKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(IndexNumber.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "ColorIndexsPM";
-	  public override Expression<Func<EntityPOCOs.ColorIndex, bool>> Predicate => a => a.IndexNumber == IndexNumber;
+	  public override Expression<Func<ENTITIES.ColorIndex, bool>> Predicate => a => a.IndexNumber == IndexNumber;
    }
 }
 	 

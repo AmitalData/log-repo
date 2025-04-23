@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class VolumeUnitQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.VolumeUnit,VolumeUnitKeys<string>,VolumeUnitPM,VolumeUnitList,string>
+   public partial class VolumeUnitQueryService: BaseEntityQueryService<POCO.VolumeUnit,VolumeUnitKeys<string>,VolumeUnitPM,VolumeUnitList,string>
    {
-        public VolumeUnitQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public VolumeUnitQueryService(int tenant) : base(new Repository<POCO.VolumeUnit>(tenant),new VolumeUnitDataMapping()) {}
         public VolumeUnitQueryService(IAmitalCloudContext context) : base(new Repository<POCO.VolumeUnit>(context),new VolumeUnitDataMapping()) {}
 		public  VolumeUnitPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new VolumeUnitKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.VolumeUnit,string> GetKeys(POCO.VolumeUnit entityPOCO) => new VolumeUnitKeys<string>() { Code = entityPOCO.Code,  };

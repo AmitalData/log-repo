@@ -3,13 +3,13 @@ using AmitalCloud.Infrastructure.Data.Counters;
 using AmitalCloud.Infrastructure.Data.DataMapping;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -22,8 +22,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         {
             repository = new DocumentsFilingMetaDataValueRepository(context);
         }
-        public DocumentsFilingMetaDataValueQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
+        public DocumentsFilingMetaDataValueQuery(int tenant)
         {
+            repository = new DocumentsFilingMetaDataValueRepository(tenant);
         }
 
         public void Create(DocumentsFilingPM parentPM, DocumentsFilingMetaDataValuePM itemPM)
@@ -204,8 +205,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         public IQueryable<DocumentsFilingMetaDataValuePM> GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(string documentsFilingId, int tenant)
         => from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")
-                                                                   where a.Tenant == tenant && a.DocumentsFilingId == documentsFilingId
-                                                                   select new DocumentsFilingMetaDataValuePM(a);
+           where a.Tenant == tenant && a.DocumentsFilingId == documentsFilingId
+           select new DocumentsFilingMetaDataValuePM(a);
 
 
         public IQueryable<DocumentsFilingMetaDataValuePM> GetDocumentsFilingMetaDataValuePMsByTenant1(int tenant)
@@ -240,8 +241,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         public DocumentsFilingMetaDataValuePM GetDocumentsFilingMetaDataValuePMsByDocumentIdTypeTenant(string documentsFilingId, string Type, int tenant)
         => (from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")
-                                                        where a.Tenant == tenant && a.DocumentsFilingId == documentsFilingId && a.DocumentsMetaDataTypeId == Type
-                                                        select new DocumentsFilingMetaDataValuePM(a)).FirstOrDefault();
+            where a.Tenant == tenant && a.DocumentsFilingId == documentsFilingId && a.DocumentsMetaDataTypeId == Type
+            select new DocumentsFilingMetaDataValuePM(a)).FirstOrDefault();
         public List<string> GetDocumentsFilingMetaDataValuesPMsByTenantMetaDataValueDocumentsMetaDataTypeId(int tenant, string CARFI, string courierhawb, string INTGR_R, string integratorCode)
         {
             var documents = (from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")

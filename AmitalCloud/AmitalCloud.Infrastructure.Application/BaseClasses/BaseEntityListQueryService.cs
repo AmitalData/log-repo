@@ -1,10 +1,14 @@
-﻿using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model;
+using AmitalCloud.Infrastructure.Model.BaseClasses;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
+using AmitalCloud.Infrastructure.Model.Enums;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,8 +22,18 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             where TEntity : BaseEntity
             where TEntityKeys : IEntityKeyFields<TEntity, TKeyType>, new()
     {
-        protected IContext context;
-        protected BaseEntityListQueryService(IContext context) => this.context = context;
+        private readonly IContext _context;
+        private readonly System.Data.Entity.IDbSet<TEntity> _dbSet;
+        protected BaseEntityListQueryService(IContext context)
+        {
+            _context = context;
+            _dbSet = (context).Set<TEntity>();
+        }
+        protected BaseEntityListQueryService(int tenant)
+        {
+            _context = GetContext(tenant);
+            _dbSet = (_context).Set<TEntity>();
+        }
         public List<TEntityList> GetList(int tenant) => GetList(new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), PageIndex = 0, GetAll = true }, tenant);
         public List<TEntityList> GetList(QueryOperations queryOperations, int tenant) => GetList(queryOperations, tenant, new TreeFilterQueryArgs());
         public List<TEntityList> GetList(QueryOperations queryOperations, int tenant, TreeFilterQueryArgs treeFilterQueryArgs)
@@ -112,11 +126,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             iQueryable = filter.GetFilteredQuery<TEntity>(nonListQueryOperation, iQueryable);
             skippedPorts = queryOperations.PageIndex;
             IQueryable<TEntityList> query = filter.GetFilteredQuery<TEntityList>(listQueryOperation, GetIqueryableList(iQueryable));
-            //if (Convert.ToBoolean(typeof(TEntity).GetField("HasTenant").GetValue(null)))
-            //{
-            //query = query.Where<TEntityList>(Predicate);
             treeFilterQueryArgs.Tenant = context.Tenant;
-            //}
             return InjectionUtil.Instance.ApplyTreeFilter<TEntityList>(query, treeFilterQueryArgs);
         }
         public int GetListCount(QueryOperations queryOperations) => GetListCount(queryOperations, 0, new TreeFilterQueryArgs());
@@ -126,11 +136,6 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             GenericSort sortClass;
             int skippedPorts;
             var query = GetQuery(queryOperations, treeFilterQueryArgs, out sortClass, out skippedPorts);
-            //if (Convert.ToBoolean(typeof(TEntity).GetField("HasTenant").GetValue(null)))
-            //{
-            //    query = query.Where<TEntityList>(Predicate);
-            //}
-
             return query.Count();
         }
         public TEntityList GetSingle(IEnumerable<KeyValuePair<string, string>> paramList)
@@ -141,9 +146,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         }
         protected IQueryable<TEntity> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<TEntity> iQueryable) => iQueryable;
         protected virtual IQueryable<TEntity> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<TEntity> iQueryable) => iQueryable;
-        private IQueryable<TEntity> Query() => (from a in contextEntity select a);
-        protected abstract IDbSet<TEntity> contextEntity { get; }
-        //protected abstract IQueryable<TEntityList> GetIqueryableList(IQueryable<TEntity> iQueryable);
+        private IQueryable<TEntity> Query() => (from a in _dbSet select a);
 
         protected virtual IQueryable<TEntityList> GetIqueryableList(IQueryable<TEntity> iQueryable)
         {
@@ -152,6 +155,23 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         private TEntityList GetNewList(TEntity entity)
         {
             return (TEntityList)typeof(TEntityList).GetConstructor(new Type[] { typeof(TEntity) }).Invoke(entity, null);
+        }
+        private IContext GetContext(int tenant)
+        {
+            Type type = typeof(TEntity);
+            var attribute = (DataBaseAttribute)Attribute.GetCustomAttribute(type, typeof(DataBaseAttribute));
+            switch (attribute.Name)
+            {
+                case AmitalCloudDBSchema.AMITAL_MAIN:
+                    return AmitalCloudContext.GetContext(tenant);
+                case AmitalCloudDBSchema.AMITAL_LOGS:
+                case AmitalCloudDBSchema.AMITAL_SYSTEMLOGS:
+                    return SystemLogContext.GetContext(tenant);
+                case AmitalCloudDBSchema.AMITAL_GLOBAL:
+                    return GlobalContext.GetContext(tenant);
+                default:
+                    throw new Exception("Invalid schema");
+            }
         }
 
     }

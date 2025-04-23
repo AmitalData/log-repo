@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class EntityChangeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.EntityChange,EntityChangePM,IEntityPM,EntityChangeList,string>
+   public partial class EntityChangeUpdateService:BaseEntityUpdateService<POCO.EntityChange,EntityChangePM,IEntityPM,EntityChangeList,string>
    {
    			
-        public EntityChangeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public EntityChangeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new EntityChangeDataMapping();
-            Repository = new Repository<POCO.EntityChange>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.EntityChange>(mainContext);
         }
-        public EntityChangeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public EntityChangeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public EntityChangeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new EntityChangeDataMapping();
+            Repository = new Repository<POCO.EntityChange>(tenant);
+		}
+        public EntityChangeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.EntityChange,string> GetKeys(EntityChangePM entityPM) => new EntityChangeKeys<string>() { Id = entityPM.Id, FollowUpAutomationFailedXml = entityPM.FollowUpAutomationFailedXml, SetSLAAutomationFailedXml = entityPM.SetSLAAutomationFailedXml };
 protected override void FillDefaultValuesOnCreate(EntityChangePM entityPM)
 		{

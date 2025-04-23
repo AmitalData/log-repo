@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ShipmentPayableStatusUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ShipmentPayableStatus,ShipmentPayableStatusPM,IEntityPM,ShipmentPayableStatusList,string>
+   public partial class ShipmentPayableStatusUpdateService:BaseEntityUpdateService<POCO.ShipmentPayableStatus,ShipmentPayableStatusPM,IEntityPM,ShipmentPayableStatusList,string>
    {
    			
-        public ShipmentPayableStatusUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ShipmentPayableStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ShipmentPayableStatusDataMapping();
-            Repository = new Repository<POCO.ShipmentPayableStatus>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ShipmentPayableStatus>(mainContext);
         }
-        public ShipmentPayableStatusUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ShipmentPayableStatusUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ShipmentPayableStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ShipmentPayableStatusDataMapping();
+            Repository = new Repository<POCO.ShipmentPayableStatus>(tenant);
+		}
+        public ShipmentPayableStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ShipmentPayableStatus,string> GetKeys(ShipmentPayableStatusPM entityPM) => new ShipmentPayableStatusKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(ShipmentPayableStatusPM entityPM)
 		{

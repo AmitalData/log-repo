@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ProductItemUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ProductItem,ProductItemPM,CustomerPM,ProductItemList,string>
+   public partial class ProductItemUpdateService:BaseEntityUpdateService<POCO.ProductItem,ProductItemPM,CustomerPM,ProductItemList,string>
    {
    			
-        public ProductItemUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ProductItemUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ProductItemDataMapping();
-            Repository = new Repository<POCO.ProductItem>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ProductItem>(mainContext);
         }
-        public ProductItemUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ProductItemUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ProductItemUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ProductItemDataMapping();
+            Repository = new Repository<POCO.ProductItem>(tenant);
+		}
+        public ProductItemUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ProductItem,string> GetKeys(ProductItemPM entityPM) => new ProductItemKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ProductItemPM entityPM)
 		{

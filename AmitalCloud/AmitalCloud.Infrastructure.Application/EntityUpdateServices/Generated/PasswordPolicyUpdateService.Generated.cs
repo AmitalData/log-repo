@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class PasswordPolicyUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.PasswordPolicy,PasswordPolicyPM,IEntityPM,PasswordPolicyList,string>
+   public partial class PasswordPolicyUpdateService:BaseEntityUpdateService<POCO.PasswordPolicy,PasswordPolicyPM,IEntityPM,PasswordPolicyList,string>
    {
    			
-        public PasswordPolicyUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public PasswordPolicyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new PasswordPolicyDataMapping();
-            Repository = new Repository<POCO.PasswordPolicy>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.PasswordPolicy>(mainContext);
         }
-        public PasswordPolicyUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public PasswordPolicyUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public PasswordPolicyUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new PasswordPolicyDataMapping();
+            Repository = new Repository<POCO.PasswordPolicy>(tenant);
+		}
+        public PasswordPolicyUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.PasswordPolicy,string> GetKeys(PasswordPolicyPM entityPM) => new PasswordPolicyKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(PasswordPolicyPM entityPM)
 		{

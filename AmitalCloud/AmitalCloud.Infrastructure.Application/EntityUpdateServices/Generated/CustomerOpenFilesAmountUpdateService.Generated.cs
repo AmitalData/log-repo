@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerOpenFilesAmountUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerOpenFilesAmount,CustomerOpenFilesAmountPM,IEntityPM,CustomerOpenFilesAmountList,string>
+   public partial class CustomerOpenFilesAmountUpdateService:BaseEntityUpdateService<POCO.CustomerOpenFilesAmount,CustomerOpenFilesAmountPM,IEntityPM,CustomerOpenFilesAmountList,string>
    {
    			
-        public CustomerOpenFilesAmountUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerOpenFilesAmountUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerOpenFilesAmountDataMapping();
-            Repository = new Repository<POCO.CustomerOpenFilesAmount>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerOpenFilesAmount>(mainContext);
         }
-        public CustomerOpenFilesAmountUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerOpenFilesAmountUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerOpenFilesAmountUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerOpenFilesAmountDataMapping();
+            Repository = new Repository<POCO.CustomerOpenFilesAmount>(tenant);
+		}
+        public CustomerOpenFilesAmountUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerOpenFilesAmount,string> GetKeys(CustomerOpenFilesAmountPM entityPM) => new CustomerOpenFilesAmountKeys<string>() { CustomerId = entityPM.CustomerId };
 protected override void FillDefaultValuesOnCreate(CustomerOpenFilesAmountPM entityPM)
 		{

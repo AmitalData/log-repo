@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class BIFoldersPermissionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.BIFoldersPermission,BIFoldersPermissionKeys<string>,BIFoldersPermissionPM,BIFoldersPermissionList,string>
+   public partial class BIFoldersPermissionQueryService: BaseEntityQueryService<POCO.BIFoldersPermission,BIFoldersPermissionKeys<string>,BIFoldersPermissionPM,BIFoldersPermissionList,string>
    {
-        public BIFoldersPermissionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public BIFoldersPermissionQueryService(int tenant) : base(new Repository<POCO.BIFoldersPermission>(tenant),new BIFoldersPermissionDataMapping()) {}
         public BIFoldersPermissionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.BIFoldersPermission>(context),new BIFoldersPermissionDataMapping()) {}
 		public  BIFoldersPermissionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BIFoldersPermissionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BIFoldersPermission,string> GetKeys(POCO.BIFoldersPermission entityPOCO) => new BIFoldersPermissionKeys<string>() { Id = entityPOCO.Id,  };

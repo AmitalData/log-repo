@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DocumentsExecutionLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentsExecutionLog,DocumentsExecutionLogKeys<string>,DocumentsExecutionLogPM,DocumentsExecutionLogList,string>
+   public partial class DocumentsExecutionLogQueryService: BaseEntityQueryService<POCO.DocumentsExecutionLog,DocumentsExecutionLogKeys<string>,DocumentsExecutionLogPM,DocumentsExecutionLogList,string>
    {
-        public DocumentsExecutionLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DocumentsExecutionLogQueryService(int tenant) : base(new Repository<POCO.DocumentsExecutionLog>(tenant),new DocumentsExecutionLogDataMapping()) {}
         public DocumentsExecutionLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentsExecutionLog>(context),new DocumentsExecutionLogDataMapping()) {}
 		public  DocumentsExecutionLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentsExecutionLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentsExecutionLog,string> GetKeys(POCO.DocumentsExecutionLog entityPOCO) => new DocumentsExecutionLogKeys<string>() { Id = entityPOCO.Id,  };

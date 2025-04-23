@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerAdditionalServiceQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerAdditionalService,CustomerAdditionalServiceKeys<string>,CustomerAdditionalServicePM,CustomerAdditionalServiceList,string>
+   public partial class CustomerAdditionalServiceQueryService: BaseEntityQueryService<POCO.CustomerAdditionalService,CustomerAdditionalServiceKeys<string>,CustomerAdditionalServicePM,CustomerAdditionalServiceList,string>
    {
-        public CustomerAdditionalServiceQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerAdditionalServiceQueryService(int tenant) : base(new Repository<POCO.CustomerAdditionalService>(tenant),new CustomerAdditionalServiceDataMapping()) {}
         public CustomerAdditionalServiceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerAdditionalService>(context),new CustomerAdditionalServiceDataMapping()) {}
 		public  CustomerAdditionalServicePM GetSingle(string customerid, string additionalserviceid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerAdditionalServiceKeys<string>(){ CustomerId = customerid, AdditionalServiceId = additionalserviceid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerAdditionalService,string> GetKeys(POCO.CustomerAdditionalService entityPOCO) => new CustomerAdditionalServiceKeys<string>() { CustomerId = entityPOCO.CustomerId, AdditionalServiceId = entityPOCO.AdditionalServiceId,  };

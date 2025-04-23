@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ContainerTrackingProviderQueryService: BaseEntityQueryService<IShipmentContext,POCO.ContainerTrackingProvider,ContainerTrackingProviderKeys<string>,ContainerTrackingProviderPM,ContainerTrackingProviderList,string>
+   public partial class ContainerTrackingProviderQueryService: BaseEntityQueryService<POCO.ContainerTrackingProvider,ContainerTrackingProviderKeys<string>,ContainerTrackingProviderPM,ContainerTrackingProviderList,string>
    {
-        public ContainerTrackingProviderQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ContainerTrackingProviderQueryService(IShipmentContext context) : base(new Repository<POCO.ContainerTrackingProvider>(context),new ContainerTrackingProviderDataMapping()) {}
+        public ContainerTrackingProviderQueryService(int tenant) : base(new Repository<POCO.ContainerTrackingProvider>(tenant),new ContainerTrackingProviderDataMapping()) {}
+        public ContainerTrackingProviderQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContainerTrackingProvider>(context),new ContainerTrackingProviderDataMapping()) {}
 		public  ContainerTrackingProviderPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ContainerTrackingProviderKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContainerTrackingProvider,string> GetKeys(POCO.ContainerTrackingProvider entityPOCO) => new ContainerTrackingProviderKeys<string>() { Id = entityPOCO.Id,  };
    }

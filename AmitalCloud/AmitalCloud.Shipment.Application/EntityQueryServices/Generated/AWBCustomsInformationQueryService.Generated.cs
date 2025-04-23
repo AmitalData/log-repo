@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class AWBCustomsInformationQueryService: BaseEntityQueryService<IShipmentContext,POCO.AWBCustomsInformation,AWBCustomsInformationKeys<string>,AWBCustomsInformationPM,AWBCustomsInformationList,string>
+   public partial class AWBCustomsInformationQueryService: BaseEntityQueryService<POCO.AWBCustomsInformation,AWBCustomsInformationKeys<string>,AWBCustomsInformationPM,AWBCustomsInformationList,string>
    {
-        public AWBCustomsInformationQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public AWBCustomsInformationQueryService(IShipmentContext context) : base(new Repository<POCO.AWBCustomsInformation>(context),new AWBCustomsInformationDataMapping()) {}
+        public AWBCustomsInformationQueryService(int tenant) : base(new Repository<POCO.AWBCustomsInformation>(tenant),new AWBCustomsInformationDataMapping()) {}
+        public AWBCustomsInformationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AWBCustomsInformation>(context),new AWBCustomsInformationDataMapping()) {}
 		public  AWBCustomsInformationPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new AWBCustomsInformationKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AWBCustomsInformation,string> GetKeys(POCO.AWBCustomsInformation entityPOCO) => new AWBCustomsInformationKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class IATACodeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.IATACode,IATACodePM,IEntityPM,IATACodeList,string>
+   public partial class IATACodeUpdateService:BaseEntityUpdateService<POCO.IATACode,IATACodePM,IEntityPM,IATACodeList,string>
    {
    			
-        public IATACodeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public IATACodeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new IATACodeDataMapping();
-            Repository = new Repository<POCO.IATACode>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.IATACode>(mainContext);
         }
-        public IATACodeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public IATACodeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public IATACodeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new IATACodeDataMapping();
+            Repository = new Repository<POCO.IATACode>(tenant);
+		}
+        public IATACodeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.IATACode,string> GetKeys(IATACodePM entityPM) => new IATACodeKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(IATACodePM entityPM)
 		{

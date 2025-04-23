@@ -36,7 +36,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.LineNumber).HasColumnName("LineNumber").IsRequired().HasDatabaseGeneratedOption(null);
+            this.Property(t => t.LineNumber).HasColumnName("LineNumber").HasDatabaseGeneratedOption(null);
 
             this.Property(t => t.SIIRequestID).HasColumnName("SIIRequestID").HasMaxLength(15).IsUnicode(false);
 

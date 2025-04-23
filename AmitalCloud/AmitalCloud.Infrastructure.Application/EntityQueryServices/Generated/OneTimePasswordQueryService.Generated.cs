@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class OneTimePasswordQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.OneTimePassword,OneTimePasswordKeys<string>,OneTimePasswordPM,OneTimePasswordList,string>
+   public partial class OneTimePasswordQueryService: BaseEntityQueryService<POCO.OneTimePassword,OneTimePasswordKeys<string>,OneTimePasswordPM,OneTimePasswordList,string>
    {
-        public OneTimePasswordQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public OneTimePasswordQueryService(int tenant) : base(new Repository<POCO.OneTimePassword>(tenant),new OneTimePasswordDataMapping()) {}
         public OneTimePasswordQueryService(IAmitalCloudContext context) : base(new Repository<POCO.OneTimePassword>(context),new OneTimePasswordDataMapping()) {}
 		public  OneTimePasswordPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new OneTimePasswordKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.OneTimePassword,string> GetKeys(POCO.OneTimePassword entityPOCO) => new OneTimePasswordKeys<string>() { Id = entityPOCO.Id,  };

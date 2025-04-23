@@ -9,6 +9,10 @@
   ObjectTablePlural="&quot;Directions&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -36,8 +40,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Direction&quot;"
-  Code="&quot;0c75&quot;"
+  Code="&quot;302f&quot;"
   Name="&quot;Direction&quot;"
+  CloseTableCode="&quot;Id&quot;"
   CloseTableName="&quot;Name&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Infrastructure&quot;"
@@ -51,6 +56,8 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;74f2&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -83,6 +90,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -129,6 +137,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -158,6 +167,7 @@
     SystemMaxLength="40"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -204,6 +214,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -233,6 +244,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -279,6 +291,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     HelpTextCode="&quot;Name&quot;"
@@ -309,6 +322,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -349,6 +363,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -395,25 +410,31 @@
   </EventTypes>
   <Records>
     <Record
+      Id="&quot;C&quot;"
       SearchFields="&quot;c,customs import&quot;"
       Name="&quot;Customs Import&quot;" />
     <Record
+      Id="&quot;D&quot;"
       SearchFields="&quot;d,domestic&quot;"
       Name="&quot;Domestic&quot;" />
     <Record
+      Id="&quot;R&quot;"
       SearchFields="&quot;r,drop&quot;"
       Name="&quot;Drop&quot;" />
     <Record
+      Id="&quot;E&quot;"
       SearchFields="&quot;e,export&quot;"
       Name="&quot;Export&quot;" />
     <Record
+      Id="&quot;I&quot;"
       SearchFields="&quot;i,import&quot;"
       Name="&quot;Import&quot;" />
   </Records>
   <DataContracts>
     <DataContract
       Name="&quot;Direction&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Id&quot;"
@@ -427,7 +448,8 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Name&quot;"
         FieldName="&quot;Name&quot;"
@@ -441,7 +463,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

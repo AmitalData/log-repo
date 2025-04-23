@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CheckDigitControlAlgorithmUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CheckDigitControlAlgorithm,CheckDigitControlAlgorithmPM,IEntityPM,CheckDigitControlAlgorithmList,string>
+   public partial class CheckDigitControlAlgorithmUpdateService:BaseEntityUpdateService<POCO.CheckDigitControlAlgorithm,CheckDigitControlAlgorithmPM,IEntityPM,CheckDigitControlAlgorithmList,string>
    {
    			
-        public CheckDigitControlAlgorithmUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CheckDigitControlAlgorithmUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CheckDigitControlAlgorithmDataMapping();
-            Repository = new Repository<POCO.CheckDigitControlAlgorithm>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CheckDigitControlAlgorithm>(mainContext);
         }
-        public CheckDigitControlAlgorithmUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CheckDigitControlAlgorithmUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CheckDigitControlAlgorithmUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CheckDigitControlAlgorithmDataMapping();
+            Repository = new Repository<POCO.CheckDigitControlAlgorithm>(tenant);
+		}
+        public CheckDigitControlAlgorithmUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CheckDigitControlAlgorithm,string> GetKeys(CheckDigitControlAlgorithmPM entityPM) => new CheckDigitControlAlgorithmKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(CheckDigitControlAlgorithmPM entityPM)
 		{

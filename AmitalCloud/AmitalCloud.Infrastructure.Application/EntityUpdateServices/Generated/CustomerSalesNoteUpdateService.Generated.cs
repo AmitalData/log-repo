@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerSalesNoteUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerSalesNote,CustomerSalesNotePM,CustomerPM,CustomerSalesNoteList,string>
+   public partial class CustomerSalesNoteUpdateService:BaseEntityUpdateService<POCO.CustomerSalesNote,CustomerSalesNotePM,CustomerPM,CustomerSalesNoteList,string>
    {
    			
-        public CustomerSalesNoteUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerSalesNoteUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerSalesNoteDataMapping();
-            Repository = new Repository<POCO.CustomerSalesNote>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerSalesNote>(mainContext);
         }
-        public CustomerSalesNoteUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerSalesNoteUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerSalesNoteUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerSalesNoteDataMapping();
+            Repository = new Repository<POCO.CustomerSalesNote>(tenant);
+		}
+        public CustomerSalesNoteUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerSalesNote,string> GetKeys(CustomerSalesNotePM entityPM) => new CustomerSalesNoteKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CustomerSalesNotePM entityPM)
 		{

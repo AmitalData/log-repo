@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class WarehouseUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Warehouse,WarehousePM,IEntityPM,WarehouseList,string>
+   public partial class WarehouseUpdateService:BaseEntityUpdateService<POCO.Warehouse,WarehousePM,IEntityPM,WarehouseList,string>
    {
    			
-        public WarehouseUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public WarehouseUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new WarehouseDataMapping();
-            Repository = new Repository<POCO.Warehouse>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Warehouse>(mainContext);
         }
-        public WarehouseUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public WarehouseUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public WarehouseUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new WarehouseDataMapping();
+            Repository = new Repository<POCO.Warehouse>(tenant);
+		}
+        public WarehouseUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Warehouse,string> GetKeys(WarehousePM entityPM) => new WarehouseKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(WarehousePM entityPM)
 		{

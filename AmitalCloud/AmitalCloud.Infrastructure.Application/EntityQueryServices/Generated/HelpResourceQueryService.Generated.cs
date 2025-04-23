@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class HelpResourceQueryService: BaseEntityQueryService<IGlobalContext,POCO.HelpResource,HelpResourceKeys<string>,HelpResourcePM,HelpResourceList,string>
+   public partial class HelpResourceQueryService: BaseEntityQueryService<POCO.HelpResource,HelpResourceKeys<string>,HelpResourcePM,HelpResourceList,string>
    {
-        public HelpResourceQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public HelpResourceQueryService(int tenant) : base(new Repository<POCO.HelpResource>(tenant),new HelpResourceDataMapping()) {}
         public HelpResourceQueryService(IGlobalContext context) : base(new Repository<POCO.HelpResource>(context),new HelpResourceDataMapping()) {}
 		public  HelpResourcePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new HelpResourceKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HelpResource,string> GetKeys(POCO.HelpResource entityPOCO) => new HelpResourceKeys<string>() { Code = entityPOCO.Code,  };

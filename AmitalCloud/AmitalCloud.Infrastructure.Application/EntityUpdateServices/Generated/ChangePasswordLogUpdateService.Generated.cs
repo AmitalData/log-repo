@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ChangePasswordLogUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ChangePasswordLog,ChangePasswordLogPM,IEntityPM,ChangePasswordLogList,string>
+   public partial class ChangePasswordLogUpdateService:BaseEntityUpdateService<POCO.ChangePasswordLog,ChangePasswordLogPM,IEntityPM,ChangePasswordLogList,string>
    {
    			
-        public ChangePasswordLogUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ChangePasswordLogUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ChangePasswordLogDataMapping();
-            Repository = new Repository<POCO.ChangePasswordLog>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ChangePasswordLog>(mainContext);
         }
-        public ChangePasswordLogUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ChangePasswordLogUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ChangePasswordLogUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ChangePasswordLogDataMapping();
+            Repository = new Repository<POCO.ChangePasswordLog>(tenant);
+		}
+        public ChangePasswordLogUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ChangePasswordLog,string> GetKeys(ChangePasswordLogPM entityPM) => new ChangePasswordLogKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ChangePasswordLogPM entityPM)
 		{

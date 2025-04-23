@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DirectionQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Direction,DirectionKeys<string>,DirectionPM,DirectionList,string>
+   public partial class DirectionQueryService: BaseEntityQueryService<POCO.Direction,DirectionKeys<string>,DirectionPM,DirectionList,string>
    {
-        public DirectionQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DirectionQueryService(int tenant) : base(new Repository<POCO.Direction>(tenant),new DirectionDataMapping()) {}
         public DirectionQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Direction>(context),new DirectionDataMapping()) {}
 		public  DirectionPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DirectionKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Direction,string> GetKeys(POCO.Direction entityPOCO) => new DirectionKeys<string>() { Id = entityPOCO.Id,  };

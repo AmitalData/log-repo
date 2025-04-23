@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class AWBCustomsInformationUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.AWBCustomsInformation,AWBCustomsInformationPM,IEntityPM,AWBCustomsInformationList,string>
+   public partial class AWBCustomsInformationUpdateService:BaseEntityUpdateService<POCO.AWBCustomsInformation,AWBCustomsInformationPM,IEntityPM,AWBCustomsInformationList,string>
    {
    			
-        public AWBCustomsInformationUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public AWBCustomsInformationUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AWBCustomsInformationDataMapping();
-            Repository = new Repository<POCO.AWBCustomsInformation>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.AWBCustomsInformation>(mainContext);
         }
-        public AWBCustomsInformationUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public AWBCustomsInformationUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public AWBCustomsInformationUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AWBCustomsInformationDataMapping();
+            Repository = new Repository<POCO.AWBCustomsInformation>(tenant);
+		}
+        public AWBCustomsInformationUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AWBCustomsInformation,string> GetKeys(AWBCustomsInformationPM entityPM) => new AWBCustomsInformationKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(AWBCustomsInformationPM entityPM)
 		{

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class UserLastSettingsQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.UserLastSettings,UserLastSettingsKeys<string>,UserLastSettingsPM,UserLastSettingsList,string>
+   public partial class UserLastSettingsQueryService: BaseEntityQueryService<POCO.UserLastSettings,UserLastSettingsKeys<string>,UserLastSettingsPM,UserLastSettingsList,string>
    {
-        public UserLastSettingsQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public UserLastSettingsQueryService(int tenant) : base(new Repository<POCO.UserLastSettings>(tenant),new UserLastSettingsDataMapping()) {}
         public UserLastSettingsQueryService(IAmitalCloudContext context) : base(new Repository<POCO.UserLastSettings>(context),new UserLastSettingsDataMapping()) {}
 		public  UserLastSettingsPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new UserLastSettingsKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.UserLastSettings,string> GetKeys(POCO.UserLastSettings entityPOCO) => new UserLastSettingsKeys<string>() { Id = entityPOCO.Id,  };

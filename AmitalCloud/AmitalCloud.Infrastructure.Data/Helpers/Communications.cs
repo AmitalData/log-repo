@@ -5,7 +5,7 @@ using AmitalCloud.Infrastructure.Data.DBHelpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Services;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -22,6 +22,8 @@ using System.Text;
 using System.Transactions;
 using System.Xml;
 using System.Xml.Serialization;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using AmitalCloud.Infrastructure.Model.Enums;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {

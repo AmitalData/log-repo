@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TabModificationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TabModification,TabModificationKeys<string>,TabModificationPM,TabModificationList,string>
+   public partial class TabModificationQueryService: BaseEntityQueryService<POCO.TabModification,TabModificationKeys<string>,TabModificationPM,TabModificationList,string>
    {
-        public TabModificationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TabModificationQueryService(int tenant) : base(new Repository<POCO.TabModification>(tenant),new TabModificationDataMapping()) {}
         public TabModificationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TabModification>(context),new TabModificationDataMapping()) {}
 		public  TabModificationPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TabModificationKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TabModification,string> GetKeys(POCO.TabModification entityPOCO) => new TabModificationKeys<string>() { Id = entityPOCO.Id,  };

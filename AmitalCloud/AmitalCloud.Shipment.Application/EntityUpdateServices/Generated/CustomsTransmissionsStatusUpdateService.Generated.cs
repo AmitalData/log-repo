@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class CustomsTransmissionsStatusUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.CustomsTransmissionsStatus,CustomsTransmissionsStatusPM,IEntityPM,CustomsTransmissionsStatusList,string>
+   public partial class CustomsTransmissionsStatusUpdateService:BaseEntityUpdateService<POCO.CustomsTransmissionsStatus,CustomsTransmissionsStatusPM,IEntityPM,CustomsTransmissionsStatusList,string>
    {
    			
-        public CustomsTransmissionsStatusUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public CustomsTransmissionsStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomsTransmissionsStatusDataMapping();
-            Repository = new Repository<POCO.CustomsTransmissionsStatus>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.CustomsTransmissionsStatus>(mainContext);
         }
-        public CustomsTransmissionsStatusUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public CustomsTransmissionsStatusUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public CustomsTransmissionsStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomsTransmissionsStatusDataMapping();
+            Repository = new Repository<POCO.CustomsTransmissionsStatus>(tenant);
+		}
+        public CustomsTransmissionsStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomsTransmissionsStatus,string> GetKeys(CustomsTransmissionsStatusPM entityPM) => new CustomsTransmissionsStatusKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(CustomsTransmissionsStatusPM entityPM)
 		{

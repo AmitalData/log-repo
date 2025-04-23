@@ -56,35 +56,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
         private void BuildDataProvider()
         {
             dataProvider = new ExportDeclarationDataProvider();
-			SetReportHeaderFields();
 
-			SetExportDeclaration(tenant, reportQueryOperations);
+
+            SetExportDeclaration(tenant, reportQueryOperations);
 
         }
-		private void SetReportHeaderFields()
-		{
-			QueryOperationsFilterValueGetter valueGetter = new QueryOperationsFilterValueGetter(this.reportQueryOperations);
-	
-			dataProvider.CreateDateFrom = valueGetter.GetFilterValue<DateTime?>("CreateDate");
-			dataProvider.CreateDateTo = valueGetter.GetFilterValue2<DateTime?>("CreateDate");
-			dataProvider.TransportModeId = valueGetter.GetFilterValue<string>("TransportModeId");
-			dataProvider.DeclarationStatusTypeCode = valueGetter.GetFilterValue<string>("DeclarationStatusTypeCode");
-			dataProvider.DeclarationStatusTypeName = valueGetter.GetFilterValue2<string>("DeclarationStatusTypeCode");
-			dataProvider.DeclarationTypeCode = valueGetter.GetFilterValue<string>("DeclarationTypeCode");
-			dataProvider.DeclarationTypeName = valueGetter.GetFilterValue2<string>("DeclarationTypeCode");
-			dataProvider.ReferentUserId = valueGetter.GetFilterValue<string>("ReferentUserId");
-			dataProvider.ReferentUserName = valueGetter.GetFilterValue2<string>("ReferentUserId");
-			dataProvider.DestinationCountryCode = valueGetter.GetFilterValue<string>("DestinationCountryCode");
-			dataProvider.DestinationCountryName = valueGetter.GetFilterValue2<string>("DestinationCountryCode");
-			dataProvider.Customer = valueGetter.GetFilterValue<string>("Customer");
-			dataProvider.CustomerName = valueGetter.GetFilterValue2<string>("Customer");
-			dataProvider.IsShowInvoices = Convert.ToBoolean(valueGetter.GetFilterValue<string>("ShowInvoices"));
-			dataProvider.IsShowConsignments = Convert.ToBoolean(valueGetter.GetFilterValue<string>("ShowConsignments"));
-
-		}
+        
 
 
-		public void SetExportDeclaration(int tenant, QueryOperations queryOperations)
+        public void SetExportDeclaration(int tenant, QueryOperations queryOperations)
         {
             ICustomContext context = CustomContext.GetContext(tenant);
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
@@ -142,7 +122,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     ProcedureCurrentName = a.GovernmentProcedureCurrent != null ? a.GovernmentProcedureCurrent.LocalName : null,
                                     ExporterImporterCode = a.ImporterCode,
                                     ExporterImporterName = importer != null ? importer.FullName : null,
-									RecipientName = der != null && !string.IsNullOrEmpty(der.RecipientName) ? der.RecipientName : null,
+                                    RecipientName = der != null && !string.IsNullOrEmpty(der.RecipientName) ? der.RecipientName : null,
                                     DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.LocalName : null,
                                     a.DestinationCountryCode,
                                     a.DeclarationStatusTypeCode,
@@ -163,8 +143,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     InvoiceCurrencyTypeName = si != null  && si.CurrencyType != null ? si.CurrencyType.LocalName: si.InvoiceCurrencyTypeCode,
                                     InvoiceCounterKey = si != null ? si.InvoiceCounterKey : 0,
 
-									//supplierInvoiceItem
-									sItem.ItemCode,
+                                    //supplierInvoiceItem
+                                    sItem.ItemCode,
                                     sItem.ClassificationCode,
                                     itemPackageQuantity = sItem.PackageQuantity,
                                     sItem.InvoiceQuantityType,

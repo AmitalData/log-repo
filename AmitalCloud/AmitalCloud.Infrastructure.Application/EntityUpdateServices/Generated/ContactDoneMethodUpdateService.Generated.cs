@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ContactDoneMethodUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ContactDoneMethod,ContactDoneMethodPM,IEntityPM,ContactDoneMethodList,string>
+   public partial class ContactDoneMethodUpdateService:BaseEntityUpdateService<POCO.ContactDoneMethod,ContactDoneMethodPM,IEntityPM,ContactDoneMethodList,string>
    {
    			
-        public ContactDoneMethodUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ContactDoneMethodUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ContactDoneMethodDataMapping();
-            Repository = new Repository<POCO.ContactDoneMethod>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ContactDoneMethod>(mainContext);
         }
-        public ContactDoneMethodUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ContactDoneMethodUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ContactDoneMethodUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ContactDoneMethodDataMapping();
+            Repository = new Repository<POCO.ContactDoneMethod>(tenant);
+		}
+        public ContactDoneMethodUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ContactDoneMethod,string> GetKeys(ContactDoneMethodPM entityPM) => new ContactDoneMethodKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(ContactDoneMethodPM entityPM)
 		{

@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -42,6 +42,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isVatNumberMandatoryInAR = entity.IsVatNumberMandatoryInAR;
 		_isVatNumberMandatoryInAP = entity.IsVatNumberMandatoryInAP;
 		_isARInvoiceChronologicalDates = entity.IsARInvoiceChronologicalDates;
+        _vATableTempCard = null;
+        _vATExemptTempCard = null;
 		_allowClosureWithoutPayables = entity.AllowClosureWithoutPayables;
 		_isARInvoicesTransferEnabled = entity.IsARInvoicesTransferEnabled;
 		_isAPInvoicesTransferEnabled = entity.IsAPInvoicesTransferEnabled;
@@ -51,6 +53,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isSingleTaxPerInvoice = entity.IsSingleTaxPerInvoice;
 		_isARPaymentsTransferEnabled = entity.IsARPaymentsTransferEnabled;
 		_aRPaymentTransferStartDate = entity.ARPaymentTransferStartDate;
+        _vatNumber = null;
+        _paymentTermId = null;
 		_transferToDropboxActivated = entity.TransferToDropboxActivated;
 		_enableMultiPercentageVATTypes = entity.EnableMultiPercentageVATTypes;
 		_notifyPastDateOnInvoiceEdit = entity.NotifyPastDateOnInvoiceEdit;
@@ -78,7 +82,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_enableAPPaymentExternalPayment = entity.EnableAPPaymentExternalPayment;
 		_transferFTPDetailId = entity.TransferFTPDetailId;
 		_transferftpdetail = entity.TransferFTPDetail !=null ? new FTPDetailPM(entity.TransferFTPDetail) : null;
-			_enableEnteringTotalVAT = entity.EnableEnteringTotalVAT;
+	        _transferFTPDetailHost = null;
+		_enableEnteringTotalVAT = entity.EnableEnteringTotalVAT;
 		_blockSendInvoiceOriginalCopy = entity.BlockSendInvoiceOriginalCopy;
 		_aPPaymentTransferStartDate = entity.APPaymentTransferStartDate;
    }
@@ -293,6 +298,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _vATableTempCard ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VATableTempCard  
+	   {
+	     get { return _vATableTempCard; }
+		 set
+		 {
+		   if(_vATableTempCard != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VATableTempCard",OldValue=_vATableTempCard,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _vATableTempCard=value;
+		   }
+		 }
+	   }
+	  private string _vATExemptTempCard ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VATExemptTempCard  
+	   {
+	     get { return _vATExemptTempCard; }
+		 set
+		 {
+		   if(_vATExemptTempCard != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VATExemptTempCard",OldValue=_vATExemptTempCard,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _vATExemptTempCard=value;
+		   }
+		 }
+	   }
 	  private bool _allowClosureWithoutPayables ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -434,6 +471,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ARPaymentTransferStartDate",OldValue=_aRPaymentTransferStartDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _aRPaymentTransferStartDate=value;
+		   }
+		 }
+	   }
+	  private string _vatNumber ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VatNumber  
+	   {
+	     get { return _vatNumber; }
+		 set
+		 {
+		   if(_vatNumber != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatNumber",OldValue=_vatNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _vatNumber=value;
+		   }
+		 }
+	   }
+	  private string _paymentTermId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentTermId  
+	   {
+	     get { return _paymentTermId; }
+		 set
+		 {
+		   if(_paymentTermId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentTermId",OldValue=_paymentTermId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _paymentTermId=value;
 		   }
 		 }
 	   }
@@ -586,6 +655,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAPPaymentsTransferEnabled",OldValue=_isAPPaymentsTransferEnabled,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isAPPaymentsTransferEnabled=value;
+		   }
+		 }
+	   }
+	  private DateTime _accountingActivationDate ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime AccountingActivationDate  
+	   {
+	     get { return _accountingActivationDate; }
+		 set
+		 {
+		   if(_accountingActivationDate != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingActivationDate",OldValue=_accountingActivationDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   _accountingActivationDate=value;
+		   }
+		 }
+	   }
+	  private bool _accountingActivated ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AccountingActivated  
+	   {
+	     get { return _accountingActivated; }
+		 set
+		 {
+		   if(_accountingActivated != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingActivated",OldValue=_accountingActivated,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _accountingActivated=value;
 		   }
 		 }
 	   }
@@ -853,6 +954,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _transferftpdetail; } 
 		set { _transferftpdetail = value; }
 		}
+	  private string _transferFTPDetailHost ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransferFTPDetailHost  
+	   {
+	     get { return _transferFTPDetailHost; }
+		 set
+		 {
+		   if(_transferFTPDetailHost != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransferFTPDetailHost",OldValue=_transferFTPDetailHost,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _transferFTPDetailHost=value;
+		   }
+		 }
+	   }
 	  private bool _enableEnteringTotalVAT ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

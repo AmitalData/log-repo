@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityLists ;
 using AmitalCloud.Invoice.Domain.EntityKeys ;
-using AmitalCloud.Invoice.Data.Context ;
-using AmitalCloud.Invoice.Domain.Interfaces ;
 namespace AmitalCloud.Invoice.Application.EntityListQueryServices
 { 
     public partial class ARInvoicesSignedStatusListQueryService  : BaseEntityListQueryService<ARInvoicesSignedStatusList,POCO.ARInvoicesSignedStatus,  ARInvoicesSignedStatusKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ARInvoicesSignedStatus> contextEntity => (context as IInvoiceContext).ARInvoicesSignedStatuses;
-		public ARInvoicesSignedStatusListQueryService(int tenant) : base(InvoiceContext.GetContext(tenant)) { }
+		public ARInvoicesSignedStatusListQueryService(int tenant) : base(tenant) { }
         public ARInvoicesSignedStatusList GetSingle(string code)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

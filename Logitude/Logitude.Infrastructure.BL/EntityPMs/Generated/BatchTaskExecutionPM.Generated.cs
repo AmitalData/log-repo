@@ -181,7 +181,31 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private string statusCode ;
+
+        private bool notDisplayInMenu;
+
+
+        [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool NotDisplayInMenu
+        {
+
+            get
+            {
+                return notDisplayInMenu;
+            }
+            set
+            {
+                if (notDisplayInMenu != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "NotDisplayInMenu", OldValue = notDisplayInMenu, NewValue = value, PropertyType = "string" };
+                    NotifyPropertyChanged(values);
+                    notDisplayInMenu = value;
+                }
+
+            }
+        }
+        private string statusCode ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]

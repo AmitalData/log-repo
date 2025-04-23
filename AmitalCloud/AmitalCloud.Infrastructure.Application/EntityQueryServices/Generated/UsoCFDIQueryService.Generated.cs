@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class UsoCFDIQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.UsoCFDI,UsoCFDIKeys<string>,UsoCFDIPM,UsoCFDIList,string>
+   public partial class UsoCFDIQueryService: BaseEntityQueryService<POCO.UsoCFDI,UsoCFDIKeys<string>,UsoCFDIPM,UsoCFDIList,string>
    {
-        public UsoCFDIQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public UsoCFDIQueryService(int tenant) : base(new Repository<POCO.UsoCFDI>(tenant),new UsoCFDIDataMapping()) {}
         public UsoCFDIQueryService(IAmitalCloudContext context) : base(new Repository<POCO.UsoCFDI>(context),new UsoCFDIDataMapping()) {}
 		public  UsoCFDIPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new UsoCFDIKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.UsoCFDI,string> GetKeys(POCO.UsoCFDI entityPOCO) => new UsoCFDIKeys<string>() { Code = entityPOCO.Code,  };

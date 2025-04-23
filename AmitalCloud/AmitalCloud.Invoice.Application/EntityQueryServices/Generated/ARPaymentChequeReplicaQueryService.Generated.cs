@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ARPaymentChequeReplicaQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ARPaymentChequeReplica,ARPaymentChequeReplicaKeys<string>,ARPaymentChequeReplicaPM,ARPaymentChequeReplicaList,string>
+   public partial class ARPaymentChequeReplicaQueryService: BaseEntityQueryService<POCO.ARPaymentChequeReplica,ARPaymentChequeReplicaKeys<string>,ARPaymentChequeReplicaPM,ARPaymentChequeReplicaList,string>
    {
-        public ARPaymentChequeReplicaQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ARPaymentChequeReplicaQueryService(IInvoiceContext context) : base(new Repository<POCO.ARPaymentChequeReplica>(context),new ARPaymentChequeReplicaDataMapping()) {}
+        public ARPaymentChequeReplicaQueryService(int tenant) : base(new Repository<POCO.ARPaymentChequeReplica>(tenant),new ARPaymentChequeReplicaDataMapping()) {}
+        public ARPaymentChequeReplicaQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ARPaymentChequeReplica>(context),new ARPaymentChequeReplicaDataMapping()) {}
 		public  ARPaymentChequeReplicaPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ARPaymentChequeReplicaKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ARPaymentChequeReplica,string> GetKeys(POCO.ARPaymentChequeReplica entityPOCO) => new ARPaymentChequeReplicaKeys<string>() { Id = entityPOCO.Id,  };
    }

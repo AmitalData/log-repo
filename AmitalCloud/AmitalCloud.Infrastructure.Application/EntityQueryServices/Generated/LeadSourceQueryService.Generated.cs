@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class LeadSourceQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.LeadSource,LeadSourceKeys<string>,LeadSourcePM,LeadSourceList,string>
+   public partial class LeadSourceQueryService: BaseEntityQueryService<POCO.LeadSource,LeadSourceKeys<string>,LeadSourcePM,LeadSourceList,string>
    {
-        public LeadSourceQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public LeadSourceQueryService(int tenant) : base(new Repository<POCO.LeadSource>(tenant),new LeadSourceDataMapping()) {}
         public LeadSourceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.LeadSource>(context),new LeadSourceDataMapping()) {}
 		public  LeadSourcePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new LeadSourceKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.LeadSource,string> GetKeys(POCO.LeadSource entityPOCO) => new LeadSourceKeys<string>() { Id = entityPOCO.Id,  };

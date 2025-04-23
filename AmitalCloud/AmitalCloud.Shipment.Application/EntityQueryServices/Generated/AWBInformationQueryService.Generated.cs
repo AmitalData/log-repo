@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class AWBInformationQueryService: BaseEntityQueryService<IShipmentContext,POCO.AWBInformation,AWBInformationKeys<string>,AWBInformationPM,AWBInformationList,string>
+   public partial class AWBInformationQueryService: BaseEntityQueryService<POCO.AWBInformation,AWBInformationKeys<string>,AWBInformationPM,AWBInformationList,string>
    {
-        public AWBInformationQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public AWBInformationQueryService(IShipmentContext context) : base(new Repository<POCO.AWBInformation>(context),new AWBInformationDataMapping()) {}
+        public AWBInformationQueryService(int tenant) : base(new Repository<POCO.AWBInformation>(tenant),new AWBInformationDataMapping()) {}
+        public AWBInformationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AWBInformation>(context),new AWBInformationDataMapping()) {}
 		public  AWBInformationPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new AWBInformationKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AWBInformation,string> GetKeys(POCO.AWBInformation entityPOCO) => new AWBInformationKeys<string>() { Code = entityPOCO.Code,  };
    }

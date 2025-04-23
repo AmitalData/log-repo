@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ChargesExternalAccountsByProductQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ChargesExternalAccountsByProduct,ChargesExternalAccountsByProductKeys<string>,ChargesExternalAccountsByProductPM,ChargesExternalAccountsByProductList,string>
+   public partial class ChargesExternalAccountsByProductQueryService: BaseEntityQueryService<POCO.ChargesExternalAccountsByProduct,ChargesExternalAccountsByProductKeys<string>,ChargesExternalAccountsByProductPM,ChargesExternalAccountsByProductList,string>
    {
-        public ChargesExternalAccountsByProductQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ChargesExternalAccountsByProductQueryService(int tenant) : base(new Repository<POCO.ChargesExternalAccountsByProduct>(tenant),new ChargesExternalAccountsByProductDataMapping()) {}
         public ChargesExternalAccountsByProductQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ChargesExternalAccountsByProduct>(context),new ChargesExternalAccountsByProductDataMapping()) {}
 		public  ChargesExternalAccountsByProductPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ChargesExternalAccountsByProductKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ChargesExternalAccountsByProduct,string> GetKeys(POCO.ChargesExternalAccountsByProduct entityPOCO) => new ChargesExternalAccountsByProductKeys<string>() { Id = entityPOCO.Id,  };

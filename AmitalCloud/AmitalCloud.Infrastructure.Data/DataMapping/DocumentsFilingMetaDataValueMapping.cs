@@ -1,5 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Model.EntityClasses;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 
 namespace AmitalCloud.Infrastructure.Data.DataMapping
 {

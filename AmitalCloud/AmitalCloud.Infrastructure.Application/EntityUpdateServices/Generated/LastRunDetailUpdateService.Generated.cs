@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class LastRunDetailUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.LastRunDetail,LastRunDetailPM,IEntityPM,LastRunDetailList,string>
+   public partial class LastRunDetailUpdateService:BaseEntityUpdateService<POCO.LastRunDetail,LastRunDetailPM,IEntityPM,LastRunDetailList,string>
    {
    			
-        public LastRunDetailUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public LastRunDetailUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new LastRunDetailDataMapping();
-            Repository = new Repository<POCO.LastRunDetail>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.LastRunDetail>(mainContext);
         }
-        public LastRunDetailUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public LastRunDetailUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public LastRunDetailUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new LastRunDetailDataMapping();
+            Repository = new Repository<POCO.LastRunDetail>(tenant);
+		}
+        public LastRunDetailUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.LastRunDetail,string> GetKeys(LastRunDetailPM entityPM) => new LastRunDetailKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(LastRunDetailPM entityPM)
 		{

@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Shipment.Domain.EntityKeys
 {
-   public class INTTRADocumentTypeKeys<T> : BaseEntityKeyFields<EntityPOCOs.INTTRADocumentType,T> 
+   public class INTTRADocumentTypeKeys<T> : BaseEntityKeyFields<ENTITIES.INTTRADocumentType,T> 
    {
 		public INTTRADocumentTypeKeys() : base() {}
         public INTTRADocumentTypeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Shipment.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "INTTRADocumentTypesPM";
-	  public override Expression<Func<EntityPOCOs.INTTRADocumentType, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.INTTRADocumentType, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class HybridPartnerQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.HybridPartner,HybridPartnerKeys<string>,HybridPartnerPM,HybridPartnerList,string>
+   public partial class HybridPartnerQueryService: BaseEntityQueryService<POCO.HybridPartner,HybridPartnerKeys<string>,HybridPartnerPM,HybridPartnerList,string>
    {
-        public HybridPartnerQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public HybridPartnerQueryService(int tenant) : base(new Repository<POCO.HybridPartner>(tenant),new HybridPartnerDataMapping()) {}
         public HybridPartnerQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HybridPartner>(context),new HybridPartnerDataMapping()) {}
 		public  HybridPartnerPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new HybridPartnerKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HybridPartner,string> GetKeys(POCO.HybridPartner entityPOCO) => new HybridPartnerKeys<string>() { Id = entityPOCO.Id,  };

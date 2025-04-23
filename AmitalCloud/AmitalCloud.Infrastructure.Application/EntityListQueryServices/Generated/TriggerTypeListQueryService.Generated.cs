@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class TriggerTypeListQueryService  : BaseEntityListQueryService<TriggerTypeList,POCO.TriggerType,  TriggerTypeKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.TriggerType> contextEntity => (context as IAmitalCloudContext).TriggerTypes;
-		public TriggerTypeListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public TriggerTypeListQueryService(int tenant) : base(tenant) { }
         public TriggerTypeList GetSingle(string code)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

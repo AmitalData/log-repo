@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace AmitalCloud.Infrastructure.Domain.Interfaces
 {
     public interface IRepository<TEntity>
-        //where TContext : class , IContext
         where TEntity : class
     {
         void Insert(TEntity entity);
@@ -20,7 +19,6 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 
         List<TEntity> GetMulti<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys);
         List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate);
-        List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, string include);
         List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select);
         List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, string include);
 
@@ -32,11 +30,10 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
         List<TEntity> GetMulti<TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending);
 
 
-        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select);
-        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include);
+        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select);
+        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select, string include);
 
         List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate);
-        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, string include);
         List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, int skip, int take);
         List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, string include, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending);
 

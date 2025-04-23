@@ -1,3 +1,4 @@
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.Storage;

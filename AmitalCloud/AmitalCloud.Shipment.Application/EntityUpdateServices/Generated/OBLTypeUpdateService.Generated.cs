@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class OBLTypeUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.OBLType,OBLTypePM,IEntityPM,OBLTypeList,string>
+   public partial class OBLTypeUpdateService:BaseEntityUpdateService<POCO.OBLType,OBLTypePM,IEntityPM,OBLTypeList,string>
    {
    			
-        public OBLTypeUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public OBLTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new OBLTypeDataMapping();
-            Repository = new Repository<POCO.OBLType>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.OBLType>(mainContext);
         }
-        public OBLTypeUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public OBLTypeUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public OBLTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new OBLTypeDataMapping();
+            Repository = new Repository<POCO.OBLType>(tenant);
+		}
+        public OBLTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.OBLType,string> GetKeys(OBLTypePM entityPM) => new OBLTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(OBLTypePM entityPM)
 		{

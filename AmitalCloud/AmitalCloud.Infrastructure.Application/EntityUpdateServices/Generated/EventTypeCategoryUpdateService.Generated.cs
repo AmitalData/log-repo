@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class EventTypeCategoryUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.EventTypeCategory,EventTypeCategoryPM,IEntityPM,EventTypeCategoryList,string>
+   public partial class EventTypeCategoryUpdateService:BaseEntityUpdateService<POCO.EventTypeCategory,EventTypeCategoryPM,IEntityPM,EventTypeCategoryList,string>
    {
    			
-        public EventTypeCategoryUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public EventTypeCategoryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new EventTypeCategoryDataMapping();
-            Repository = new Repository<POCO.EventTypeCategory>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.EventTypeCategory>(mainContext);
         }
-        public EventTypeCategoryUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public EventTypeCategoryUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public EventTypeCategoryUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new EventTypeCategoryDataMapping();
+            Repository = new Repository<POCO.EventTypeCategory>(tenant);
+		}
+        public EventTypeCategoryUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.EventTypeCategory,string> GetKeys(EventTypeCategoryPM entityPM) => new EventTypeCategoryKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(EventTypeCategoryPM entityPM)
 		{

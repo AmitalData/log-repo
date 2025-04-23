@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class HybridTenantThresholdQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.HybridTenantThreshold,HybridTenantThresholdKeys<int>,HybridTenantThresholdPM,HybridTenantThresholdList,int>
+   public partial class HybridTenantThresholdQueryService: BaseEntityQueryService<POCO.HybridTenantThreshold,HybridTenantThresholdKeys<int>,HybridTenantThresholdPM,HybridTenantThresholdList,int>
    {
-        public HybridTenantThresholdQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public HybridTenantThresholdQueryService(int tenant) : base(new Repository<POCO.HybridTenantThreshold>(tenant),new HybridTenantThresholdDataMapping()) {}
         public HybridTenantThresholdQueryService(IAmitalCloudContext context) : base(new Repository<POCO.HybridTenantThreshold>(context),new HybridTenantThresholdDataMapping()) {}
 		public  HybridTenantThresholdPM GetSingle(int tenant, int typecode,bool getComposition, bool getFromCache) => base.GetSingle(new HybridTenantThresholdKeys<int>(){ Tenant = tenant, TypeCode = typecode }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.HybridTenantThreshold,int> GetKeys(POCO.HybridTenantThreshold entityPOCO) => new HybridTenantThresholdKeys<int>() { Tenant = entityPOCO.Tenant, TypeCode = entityPOCO.TypeCode,  };

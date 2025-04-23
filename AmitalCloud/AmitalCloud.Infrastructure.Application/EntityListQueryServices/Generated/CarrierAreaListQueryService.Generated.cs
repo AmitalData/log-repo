@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class CarrierAreaListQueryService  : BaseEntityListQueryService<CarrierAreaList,POCO.CarrierArea,  CarrierAreaKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.CarrierArea> contextEntity => (context as IAmitalCloudContext).CarrierAreas;
-		public CarrierAreaListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public CarrierAreaListQueryService(int tenant) : base(tenant) { }
         public CarrierAreaList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

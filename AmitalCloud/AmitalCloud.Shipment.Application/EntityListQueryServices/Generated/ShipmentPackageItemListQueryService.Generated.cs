@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityLists ;
 using AmitalCloud.Shipment.Domain.EntityKeys ;
-using AmitalCloud.Shipment.Data.Context ;
-using AmitalCloud.Shipment.Domain.Interfaces ;
 namespace AmitalCloud.Shipment.Application.EntityListQueryServices
 { 
     public partial class ShipmentPackageItemListQueryService  : BaseEntityListQueryService<ShipmentPackageItemList,POCO.ShipmentPackageItem,  ShipmentPackageItemKeys<int>,int>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ShipmentPackageItem> contextEntity => (context as IShipmentContext).ShipmentPackageItems;
-		public ShipmentPackageItemListQueryService(int tenant) : base(ShipmentContext.GetContext(tenant)) { }
+		public ShipmentPackageItemListQueryService(int tenant) : base(tenant) { }
         public ShipmentPackageItemList GetSingle(string packageid, int linenumber)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

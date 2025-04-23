@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerFieldsUpdateSettingUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerFieldsUpdateSetting,CustomerFieldsUpdateSettingPM,IEntityPM,CustomerFieldsUpdateSettingList,string>
+   public partial class CustomerFieldsUpdateSettingUpdateService:BaseEntityUpdateService<POCO.CustomerFieldsUpdateSetting,CustomerFieldsUpdateSettingPM,IEntityPM,CustomerFieldsUpdateSettingList,string>
    {
    			
-        public CustomerFieldsUpdateSettingUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerFieldsUpdateSettingUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerFieldsUpdateSettingDataMapping();
-            Repository = new Repository<POCO.CustomerFieldsUpdateSetting>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerFieldsUpdateSetting>(mainContext);
         }
-        public CustomerFieldsUpdateSettingUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerFieldsUpdateSettingUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerFieldsUpdateSettingUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerFieldsUpdateSettingDataMapping();
+            Repository = new Repository<POCO.CustomerFieldsUpdateSetting>(tenant);
+		}
+        public CustomerFieldsUpdateSettingUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerFieldsUpdateSetting,string> GetKeys(CustomerFieldsUpdateSettingPM entityPM) => new CustomerFieldsUpdateSettingKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CustomerFieldsUpdateSettingPM entityPM)
 		{

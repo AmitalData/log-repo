@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class WarehouseTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.WarehouseType,WarehouseTypeKeys<string>,WarehouseTypePM,WarehouseTypeList,string>
+   public partial class WarehouseTypeQueryService: BaseEntityQueryService<POCO.WarehouseType,WarehouseTypeKeys<string>,WarehouseTypePM,WarehouseTypeList,string>
    {
-        public WarehouseTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public WarehouseTypeQueryService(int tenant) : base(new Repository<POCO.WarehouseType>(tenant),new WarehouseTypeDataMapping()) {}
         public WarehouseTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.WarehouseType>(context),new WarehouseTypeDataMapping()) {}
 		public  WarehouseTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new WarehouseTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.WarehouseType,string> GetKeys(POCO.WarehouseType entityPOCO) => new WarehouseTypeKeys<string>() { Code = entityPOCO.Code,  };

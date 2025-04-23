@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ARPaymentBankTranferQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ARPaymentBankTranfer,ARPaymentBankTranferKeys<string>,ARPaymentBankTranferPM,ARPaymentBankTranferList,string>
+   public partial class ARPaymentBankTranferQueryService: BaseEntityQueryService<POCO.ARPaymentBankTranfer,ARPaymentBankTranferKeys<string>,ARPaymentBankTranferPM,ARPaymentBankTranferList,string>
    {
-        public ARPaymentBankTranferQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ARPaymentBankTranferQueryService(IInvoiceContext context) : base(new Repository<POCO.ARPaymentBankTranfer>(context),new ARPaymentBankTranferDataMapping()) {}
+        public ARPaymentBankTranferQueryService(int tenant) : base(new Repository<POCO.ARPaymentBankTranfer>(tenant),new ARPaymentBankTranferDataMapping()) {}
+        public ARPaymentBankTranferQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ARPaymentBankTranfer>(context),new ARPaymentBankTranferDataMapping()) {}
 		public  ARPaymentBankTranferPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ARPaymentBankTranferKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ARPaymentBankTranfer,string> GetKeys(POCO.ARPaymentBankTranfer entityPOCO) => new ARPaymentBankTranferKeys<string>() { Id = entityPOCO.Id,  };
    }

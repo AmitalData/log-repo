@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CardQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Card,CardKeys<string>,CardPM,CardList,string>
+   public partial class CardQueryService: BaseEntityQueryService<POCO.Card,CardKeys<string>,CardPM,CardList,string>
    {
-        public CardQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CardQueryService(int tenant) : base(new Repository<POCO.Card>(tenant),new CardDataMapping()) {}
         public CardQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Card>(context),new CardDataMapping()) {}
 		public  CardPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CardKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Card,string> GetKeys(POCO.Card entityPOCO) => new CardKeys<string>() { Id = entityPOCO.Id,  };

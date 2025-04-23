@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -43,7 +43,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_queryGroupCode = entity.QueryGroupCode;
 		_querygroup = entity.QueryGroup !=null ? new QueryGroupPM(entity.QueryGroup) : null;
 			_nameTextCodeId = entity.NameTextCodeId;
-		_defaultSortDirection = entity.DefaultSortDirection;
+		_nametextcode = entity.NameTextCode !=null ? new TextCodePM(entity.NameTextCode) : null;
+			_defaultSortDirection = entity.DefaultSortDirection;
 		_defaultSortColumn = entity.DefaultSortColumn;
 		_spotlightDataTemplate = entity.SpotlightDataTemplate;
 		_internal = entity.Internal;
@@ -66,6 +67,11 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_featureUniqeCode = entity.FeatureUniqeCode;
 		_isViewOnly = entity.IsViewOnly;
 		_isDefault = entity.IsDefault;
+        _objectTableName = null;
+        _objectTableIsNewWizard = default;
+        _objectTableNewWizardControlName = null;
+        _queryGroupIndexOrder = default;
+        _newViewName = null;
    }
    #endregion Constructors
    #region Properties
@@ -302,6 +308,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private TextCodePM _nametextcode;
+		[Include]
+        [DataMember]
+        public virtual TextCodePM NameTextCode 
+		{ 
+		get { return _nametextcode; } 
+		set { _nametextcode = value; }
+		}
 	  private string _defaultSortDirection ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -659,6 +673,86 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDefault",OldValue=_isDefault,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isDefault=value;
+		   }
+		 }
+	   }
+	  private string _objectTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableName  
+	   {
+	     get { return _objectTableName; }
+		 set
+		 {
+		   if(_objectTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableName=value;
+		   }
+		 }
+	   }
+	  private bool _objectTableIsNewWizard ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ObjectTableIsNewWizard  
+	   {
+	     get { return _objectTableIsNewWizard; }
+		 set
+		 {
+		   if(_objectTableIsNewWizard != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableIsNewWizard",OldValue=_objectTableIsNewWizard,NewValue=value,PropertyType= "bool" };
+		    NotifyPropertyChanged(values);
+		   _objectTableIsNewWizard=value;
+		   }
+		 }
+	   }
+	  private string _objectTableNewWizardControlName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableNewWizardControlName  
+	   {
+	     get { return _objectTableNewWizardControlName; }
+		 set
+		 {
+		   if(_objectTableNewWizardControlName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableNewWizardControlName",OldValue=_objectTableNewWizardControlName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableNewWizardControlName=value;
+		   }
+		 }
+	   }
+	  private int _queryGroupIndexOrder ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int QueryGroupIndexOrder  
+	   {
+	     get { return _queryGroupIndexOrder; }
+		 set
+		 {
+		   if(_queryGroupIndexOrder != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QueryGroupIndexOrder",OldValue=_queryGroupIndexOrder,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _queryGroupIndexOrder=value;
+		   }
+		 }
+	   }
+	  private string _newViewName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NewViewName  
+	   {
+	     get { return _newViewName; }
+		 set
+		 {
+		   if(_newViewName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewViewName",OldValue=_newViewName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _newViewName=value;
 		   }
 		 }
 	   }

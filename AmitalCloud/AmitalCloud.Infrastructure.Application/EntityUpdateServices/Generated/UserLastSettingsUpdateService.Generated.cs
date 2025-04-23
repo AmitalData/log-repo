@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class UserLastSettingsUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.UserLastSettings,UserLastSettingsPM,IEntityPM,UserLastSettingsList,string>
+   public partial class UserLastSettingsUpdateService:BaseEntityUpdateService<POCO.UserLastSettings,UserLastSettingsPM,IEntityPM,UserLastSettingsList,string>
    {
    			
-        public UserLastSettingsUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public UserLastSettingsUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new UserLastSettingsDataMapping();
-            Repository = new Repository<POCO.UserLastSettings>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.UserLastSettings>(mainContext);
         }
-        public UserLastSettingsUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public UserLastSettingsUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public UserLastSettingsUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new UserLastSettingsDataMapping();
+            Repository = new Repository<POCO.UserLastSettings>(tenant);
+		}
+        public UserLastSettingsUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.UserLastSettings,string> GetKeys(UserLastSettingsPM entityPM) => new UserLastSettingsKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(UserLastSettingsPM entityPM)
 		{

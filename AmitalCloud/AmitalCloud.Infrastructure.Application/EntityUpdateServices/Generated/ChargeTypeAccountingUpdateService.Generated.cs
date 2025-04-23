@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ChargeTypeAccountingUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ChargeTypeAccounting,ChargeTypeAccountingPM,ChargesTypePM,ChargeTypeAccountingList,string>
+   public partial class ChargeTypeAccountingUpdateService:BaseEntityUpdateService<POCO.ChargeTypeAccounting,ChargeTypeAccountingPM,ChargesTypePM,ChargeTypeAccountingList,string>
    {
    			
-        public ChargeTypeAccountingUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ChargeTypeAccountingUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ChargeTypeAccountingDataMapping();
-            Repository = new Repository<POCO.ChargeTypeAccounting>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ChargeTypeAccounting>(mainContext);
         }
-        public ChargeTypeAccountingUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ChargeTypeAccountingUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ChargeTypeAccountingUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ChargeTypeAccountingDataMapping();
+            Repository = new Repository<POCO.ChargeTypeAccounting>(tenant);
+		}
+        public ChargeTypeAccountingUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ChargeTypeAccounting,string> GetKeys(ChargeTypeAccountingPM entityPM) => new ChargeTypeAccountingKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ChargeTypeAccountingPM entityPM)
 		{

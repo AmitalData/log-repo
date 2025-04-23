@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class RegistryDateTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.RegistryDateType,RegistryDateTypePM,IEntityPM,RegistryDateTypeList,string>
+   public partial class RegistryDateTypeUpdateService:BaseEntityUpdateService<POCO.RegistryDateType,RegistryDateTypePM,IEntityPM,RegistryDateTypeList,string>
    {
    			
-        public RegistryDateTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public RegistryDateTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new RegistryDateTypeDataMapping();
-            Repository = new Repository<POCO.RegistryDateType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.RegistryDateType>(mainContext);
         }
-        public RegistryDateTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public RegistryDateTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public RegistryDateTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new RegistryDateTypeDataMapping();
+            Repository = new Repository<POCO.RegistryDateType>(tenant);
+		}
+        public RegistryDateTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.RegistryDateType,string> GetKeys(RegistryDateTypePM entityPM) => new RegistryDateTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(RegistryDateTypePM entityPM)
 		{

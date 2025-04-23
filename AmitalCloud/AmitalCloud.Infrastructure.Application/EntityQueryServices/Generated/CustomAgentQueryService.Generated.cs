@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomAgentQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomAgent,CustomAgentKeys<string>,CustomAgentPM,CustomAgentList,string>
+   public partial class CustomAgentQueryService: BaseEntityQueryService<POCO.CustomAgent,CustomAgentKeys<string>,CustomAgentPM,CustomAgentList,string>
    {
-        public CustomAgentQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomAgentQueryService(int tenant) : base(new Repository<POCO.CustomAgent>(tenant),new CustomAgentDataMapping()) {}
         public CustomAgentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomAgent>(context),new CustomAgentDataMapping()) {}
 		public  CustomAgentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomAgentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomAgent,string> GetKeys(POCO.CustomAgent entityPOCO) => new CustomAgentKeys<string>() { Id = entityPOCO.Id,  };

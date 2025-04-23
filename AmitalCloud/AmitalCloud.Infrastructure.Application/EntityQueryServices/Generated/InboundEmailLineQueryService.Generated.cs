@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class InboundEmailLineQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.InboundEmailLine,InboundEmailLineKeys<string>,InboundEmailLinePM,InboundEmailLineList,string>
+   public partial class InboundEmailLineQueryService: BaseEntityQueryService<POCO.InboundEmailLine,InboundEmailLineKeys<string>,InboundEmailLinePM,InboundEmailLineList,string>
    {
-        public InboundEmailLineQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public InboundEmailLineQueryService(int tenant) : base(new Repository<POCO.InboundEmailLine>(tenant),new InboundEmailLineDataMapping()) {}
         public InboundEmailLineQueryService(IAmitalCloudContext context) : base(new Repository<POCO.InboundEmailLine>(context),new InboundEmailLineDataMapping()) {}
 		public  InboundEmailLinePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new InboundEmailLineKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.InboundEmailLine,string> GetKeys(POCO.InboundEmailLine entityPOCO) => new InboundEmailLineKeys<string>() { Id = entityPOCO.Id,  };

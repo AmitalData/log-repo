@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class PortGroupKeys<T> : BaseEntityKeyFields<EntityPOCOs.PortGroup,T> 
+   public class PortGroupKeys<T> : BaseEntityKeyFields<ENTITIES.PortGroup,T> 
    {
 		public PortGroupKeys() : base() {}
         public PortGroupKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "PortGroupsPM";
-	  public override Expression<Func<EntityPOCOs.PortGroup, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.PortGroup, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

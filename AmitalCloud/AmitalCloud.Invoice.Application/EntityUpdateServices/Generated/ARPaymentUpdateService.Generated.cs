@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data;
 using AmitalCloud.Invoice.Domain.EntityLists;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
-using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Data.Context;
 
 namespace AmitalCloud.Invoice.Application.EntityUpdateServices
 { 
-   public partial class ARPaymentUpdateService:BaseEntityUpdateService<InvoiceContext,POCO.ARPayment,ARPaymentPM,IEntityPM,ARPaymentList,string>
+   public partial class ARPaymentUpdateService:BaseEntityUpdateService<POCO.ARPayment,ARPaymentPM,IEntityPM,ARPaymentList,string>
    {
    			
-        public ARPaymentUpdateService(IInvoiceContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((InvoiceContext)mainContext,additionalContexts, tenant)
+        public ARPaymentUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ARPaymentDataMapping();
-            Repository = new Repository<POCO.ARPayment>((InvoiceContext)mainContext);
+            Repository = new Repository<POCO.ARPayment>(mainContext);
         }
-        public ARPaymentUpdateService(int tenant) : this(InvoiceContext.GetContext(tenant), null, tenant) {}
-        public ARPaymentUpdateService(IInvoiceContext context) :  this(context, null, 0) {}
+        public ARPaymentUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ARPaymentDataMapping();
+            Repository = new Repository<POCO.ARPayment>(tenant);
+		}
+        public ARPaymentUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ARPayment,string> GetKeys(ARPaymentPM entityPM) => new ARPaymentKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ARPaymentPM entityPM)
 		{

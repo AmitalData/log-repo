@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerProductLocationActualDataUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerProductLocationActualData,CustomerProductLocationActualDataPM,IEntityPM,CustomerProductLocationActualDataList,string>
+   public partial class CustomerProductLocationActualDataUpdateService:BaseEntityUpdateService<POCO.CustomerProductLocationActualData,CustomerProductLocationActualDataPM,IEntityPM,CustomerProductLocationActualDataList,string>
    {
    			
-        public CustomerProductLocationActualDataUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerProductLocationActualDataUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerProductLocationActualDataDataMapping();
-            Repository = new Repository<POCO.CustomerProductLocationActualData>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerProductLocationActualData>(mainContext);
         }
-        public CustomerProductLocationActualDataUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerProductLocationActualDataUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerProductLocationActualDataUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerProductLocationActualDataDataMapping();
+            Repository = new Repository<POCO.CustomerProductLocationActualData>(tenant);
+		}
+        public CustomerProductLocationActualDataUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerProductLocationActualData,string> GetKeys(CustomerProductLocationActualDataPM entityPM) => new CustomerProductLocationActualDataKeys<string>() { CustomerId = entityPM.CustomerId, ProductTypeCode = entityPM.ProductTypeCode, Month = entityPM.Month, Year = entityPM.Year, CountryId = entityPM.CountryId };
 protected override void FillDefaultValuesOnCreate(CustomerProductLocationActualDataPM entityPM)
 		{

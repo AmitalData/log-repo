@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class QuoteGroupSectionUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.QuoteGroupSection,QuoteGroupSectionPM,IEntityPM,QuoteGroupSectionList,string>
+   public partial class QuoteGroupSectionUpdateService:BaseEntityUpdateService<POCO.QuoteGroupSection,QuoteGroupSectionPM,IEntityPM,QuoteGroupSectionList,string>
    {
    			
-        public QuoteGroupSectionUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public QuoteGroupSectionUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new QuoteGroupSectionDataMapping();
-            Repository = new Repository<POCO.QuoteGroupSection>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.QuoteGroupSection>(mainContext);
         }
-        public QuoteGroupSectionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public QuoteGroupSectionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public QuoteGroupSectionUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new QuoteGroupSectionDataMapping();
+            Repository = new Repository<POCO.QuoteGroupSection>(tenant);
+		}
+        public QuoteGroupSectionUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.QuoteGroupSection,string> GetKeys(QuoteGroupSectionPM entityPM) => new QuoteGroupSectionKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(QuoteGroupSectionPM entityPM)
 		{

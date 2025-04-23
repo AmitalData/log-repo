@@ -244,5 +244,7 @@ namespace Logitude.FullAccounting.Test.Models
         
         public string PartnerId { get; set; }
 
+        public DateTime? ReferenceDate { get; set; }
+
     }
 }

@@ -1,32 +1,31 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using System;
-using System.Collections.Generic;
+﻿ using AmitalCloud.Infrastructure.Domain.EntityPMs;
+ using AmitalCloud.Infrastructure.Model.EntityClasses;
+ using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.DataContracts
 {
     public class JSGlobalSettings
     {
-        public JSGlobalSettings(Setting mySetting) 
+        public JSGlobalSettings(SettingPM mySetting = null) 
         {
-            Id = mySetting.Id;
-            AmitalURL = mySetting.LogitudeURL;
-            LogoCode = mySetting.LogoCode;
-            WorkEnvironment = mySetting.WorkEnvironment;
-            SameUserLoginEnabled = (bool)mySetting.SameUserLoginEnabled;
-            LayoutDirection = mySetting.LayoutDirection;
-            ReportsRunUsingWR = (bool)mySetting.ReportsRunUsingWR;
-            DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
-            DeploymentStage = mySetting.DeploymentStage;
-            ReleaseNotesURL = mySetting.ReleaseNotesURL;
-			AmitalDemoTenants = mySetting.LogitudeDemoTenants;
-            TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
-            ReleaseDateString = mySetting.ReleaseDateString;
-            DNSZone = mySetting.DNSZone;
-
+             if (mySetting != null)
+             {
+                Id = mySetting.Id;
+                AmitalURL = mySetting.LogitudeURL;
+                LogoCode = mySetting.LogoCode;
+                WorkEnvironment = mySetting.WorkEnvironment;
+                SameUserLoginEnabled = (bool)mySetting.SameUserLoginEnabled;
+                LayoutDirection = mySetting.LayoutDirection;
+                ReportsRunUsingWR = (bool)mySetting.ReportsRunUsingWR;
+                DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
+                DeploymentStage = mySetting.DeploymentStage;
+                ReleaseNotesURL = mySetting.ReleaseNotesURL;
+                 AmitalDemoTenants = mySetting.LogitudeDemoTenants;
+                 TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
+                ReleaseDateString = mySetting.ReleaseDateString;
+                DNSZone = mySetting.DNSZone;
+            }
         }
 
         [Key]
@@ -36,8 +35,8 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
         public string WorkEnvironment { get; set; } //customs,main....
         public bool SameUserLoginEnabled { get; set; }
         public string LayoutDirection { get; set; }
-        public string ProductInfo { get;  set; }
-        public string ProductMessage { get;  set; }
+        public string ProductInfo { get; set; }
+        public string ProductMessage { get; set; }
         public bool ReportsRunUsingWR { get; set; }
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }

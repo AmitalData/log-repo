@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "17805df970fd2de6f2df48f76458b20e";
+		public const string HashString = "151e58a6f2b95d27d12f2ea00755141a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -67,7 +67,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "2c48",
+			      				    Code =  "6063",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2841,9 +2841,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
             TextCode GeneralTextCode_GeneralMCOthersDocumentsMetadataTypes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.DocumentsMetadataTypes", DefaultText = "Documents Metadata Types", LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
             TextCode GeneralTextCode_GeneralMCOthersExternalLink = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.ExternalLink", DefaultText = "External Links", LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_AccountingGeneralOCreateANewTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.CreateANewTaxReport", DefaultText = "Tax Report",LocalDefaultText = @"דוח מעמ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GeneralTextCode_AccountingGeneralOCancelTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.CancelTaxReport", DefaultText = "Cancel Tax Report",LocalDefaultText = @"ביטול דוח מעמ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-        }
+	    
+}
    }
     
 }

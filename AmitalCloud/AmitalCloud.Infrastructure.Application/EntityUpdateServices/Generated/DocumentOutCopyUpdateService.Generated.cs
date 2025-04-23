@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DocumentOutCopyUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DocumentOutCopy,DocumentOutCopyPM,IEntityPM,DocumentOutCopyList,string>
+   public partial class DocumentOutCopyUpdateService:BaseEntityUpdateService<POCO.DocumentOutCopy,DocumentOutCopyPM,IEntityPM,DocumentOutCopyList,string>
    {
    			
-        public DocumentOutCopyUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DocumentOutCopyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DocumentOutCopyDataMapping();
-            Repository = new Repository<POCO.DocumentOutCopy>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DocumentOutCopy>(mainContext);
         }
-        public DocumentOutCopyUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DocumentOutCopyUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DocumentOutCopyUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DocumentOutCopyDataMapping();
+            Repository = new Repository<POCO.DocumentOutCopy>(tenant);
+		}
+        public DocumentOutCopyUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DocumentOutCopy,string> GetKeys(DocumentOutCopyPM entityPM) => new DocumentOutCopyKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DocumentOutCopyPM entityPM)
 		{
