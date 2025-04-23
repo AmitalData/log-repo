@@ -59,6 +59,7 @@ BEGIN
     ExternalTransactionsTotal DECIMAL(30, 2),
    TotalForeign DECIMAL(30, 2),
    	BalanceInLocalCurrency DECIMAL(30, 2),
+   	BalanceInForeignCurrency DECIMAL(30, 2),
 
 );
 
@@ -194,12 +195,9 @@ INSERT INTO #TemporaryTable
     WHEN T.CreateDate < @InputDate THEN (T.ForeignAmountDebit - T.ForeignAmountCredit) 
     ELSE 0 
      END) AS TotalForeign,
-	SUM(t.OpenAmount*t.ExchangeRate) AS BalanceInLocalCurrency
-
-   
- 
-   
-FROM 
+	SUM(t.OpenAmount*t.ExchangeRate) AS BalanceInLocalCurrency,
+	SUM(t.OpenAmount) AS BalanceInForeignCurrency
+   FROM 
     GLACCOUNTS GL
 LEFT JOIN 
     (SELECT * FROM LedgerTransactions WHERE tenant = @Tenant AND IsReconciled = 0 AND IsExternalReconcile=0) T ON GL.Id = T.ACCOUNTID
