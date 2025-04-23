@@ -351,23 +351,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void AfterUpdating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
             LogMessagingUtil.Instance.AppendLine("DeclarationCourierStatusPM.DocumentStatusCode: " + entityPM.DocumentStatusCode);
-
-            if (!AutoMsgScope.FirstTime(entityPM.DeclarationId))
-            {
-                LogMessagingUtil.Instance.AppendLine(
-                    $"[AfterUpdating] SKIP ‑ already processed in this flow  DeclId={entityPM.DeclarationId}");
-                return;
-            }
-            if (!(entityPM.EdgeManifest || entityPM.EdgeDeclaration || entityPM.EdgePayment))
-            {
-                LogMessagingUtil.Instance.AppendLine(
-                    $"[AfterUpdating] SKIP ‑ no edge transition  DeclId={entityPM.DeclarationId}");
-
-                return;
-            }
-
-            var svc = new AutomatedCustomsMessagingService(entityPM.Tenant);
-            svc.CheckAndSendMessageis(entityPM);
+            HandleAutomatedMessaging(entityPM);
         }
 
         public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
@@ -689,8 +673,33 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 poco.CourierDeclarationStatusCode != "R" ||
                 poco.DocumentStatusCode != "V");
 
-            pm.EdgePayment = false;
+            pm.EdgePayment = poco.CourierDeclarationStatusCode != "V" && pm.CourierDeclarationStatusCode == "V";
 
+        }
+        private void HandleAutomatedMessaging(DeclarationCourierStatusPM pm)
+        {
+            bool run = false;
+
+            if (pm.EdgeManifest && AutoMsgScope.FirstTime($"{pm.DeclarationId}:M")) run = true;
+            if (pm.EdgeDeclaration && AutoMsgScope.FirstTime($"{pm.DeclarationId}:D")) run = true;
+            if (pm.EdgePayment && AutoMsgScope.FirstTime($"{pm.DeclarationId}:P")) run = true;
+
+            if (!run) return;
+
+            LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] CALL AutomatedCustomsMessagingService  DeclId={pm.DeclarationId}");
+
+            try
+            {
+                var svc = new AutomatedCustomsMessagingService(pm.Tenant);
+                svc.CheckAndSendMessageis(pm);
+
+                LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] DONE  AutomatedCustomsMessagingService  DeclId={pm.DeclarationId}");
+            }
+            catch (Exception ex)
+            {
+                LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] ERROR  DeclId={pm.DeclarationId}  {ex}");
+                throw;
+            }
         }
 
 
