@@ -492,11 +492,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         private void HandleAutomatedMessaging(DeclarationCourierStatusPM pm)
         {
-            bool run = false;
-
-            if (pm.EdgeManifest && AutoMsgScope.FirstTime($"{pm.DeclarationId}:M")) run = true;
-            if (pm.EdgeDeclaration && AutoMsgScope.FirstTime($"{pm.DeclarationId}:D")) run = true;
-            if (pm.EdgePayment && AutoMsgScope.FirstTime($"{pm.DeclarationId}:P")) run = true;
+            bool run =
+                (pm.EdgeManifest && AutoMsgScope.FirstTime($"{pm.DeclarationId}:M")) ||
+                (pm.EdgeDeclaration && AutoMsgScope.FirstTime($"{pm.DeclarationId}:D")) ||
+                (pm.EdgePayment && AutoMsgScope.FirstTime($"{pm.DeclarationId}:P"));
 
             if (!run) return;
 
@@ -511,7 +510,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (Exception ex)
             {
-                LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] ERROR  DeclId={pm.DeclarationId}  {ex}");
+                LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] ERROR DeclId={pm.DeclarationId} - {ex.Message} - {ex.StackTrace}");
                 throw;
             }
         }
