@@ -1,5 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityListQueryServices;
-using AmitalCloud.Infrastructure.Data.Security;
+using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;

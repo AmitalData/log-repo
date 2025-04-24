@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DocumentsDataProviderUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DocumentsDataProvider,DocumentsDataProviderPM,IEntityPM,DocumentsDataProviderList,string>
+   public partial class DocumentsDataProviderUpdateService:BaseEntityUpdateService<POCO.DocumentsDataProvider,DocumentsDataProviderPM,IEntityPM,DocumentsDataProviderList,string>
    {
    			
-        public DocumentsDataProviderUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DocumentsDataProviderUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DocumentsDataProviderDataMapping();
-            Repository = new Repository<POCO.DocumentsDataProvider>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DocumentsDataProvider>(mainContext);
         }
-        public DocumentsDataProviderUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DocumentsDataProviderUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DocumentsDataProviderUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DocumentsDataProviderDataMapping();
+            Repository = new Repository<POCO.DocumentsDataProvider>(tenant);
+		}
+        public DocumentsDataProviderUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DocumentsDataProvider,string> GetKeys(DocumentsDataProviderPM entityPM) => new DocumentsDataProviderKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(DocumentsDataProviderPM entityPM)
 		{

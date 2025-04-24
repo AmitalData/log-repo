@@ -1,7 +1,8 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.DBHelpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Devart.Data.Oracle;
@@ -12,6 +13,8 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Transactions;
+using AmitalCloud.Infrastructure.Model.Enums;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -24,7 +27,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             List<CounterDefinition> tableCounters = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                tableCounters = new Repository<CounterDefinition>(AmitalCloudContext.GetContext(tenant)).GetMulti(c => c.Tenant == tenant && c.Counter.Code == counterCode).ToList();
+                tableCounters = new Repository<CounterDefinition>(tenant).GetMulti(c => c.Tenant == tenant && c.Counter.Code == counterCode).ToList();
                 bool isCustomizedCounter = tableCounters.Where(c => c.IsCustomized).Any();
                 if (isCustomizedCounter && FeatureToggleHelper.HasFeatureToggle("ICC", tenant) && additionalParameters != null && additionalParameters.ContainsKey("[CustomizeCounterParameter2]") && !string.IsNullOrEmpty(additionalParameters["[CustomizeCounterParameter2]"]))
                 {
@@ -289,7 +292,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
         {
-            CounterDefinition counterDef = new Repository<CounterDefinition>(AmitalCloudContext.GetContext(tenant))
+            CounterDefinition counterDef = new Repository<CounterDefinition>(tenant)
                 .GetMulti(c => c.Tenant == tenant && c.Counter.Code == counterCode && c.Parameter1 == parameter1 && c.Parameter2 == parameter2).FirstOrDefault();
             string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
             string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";

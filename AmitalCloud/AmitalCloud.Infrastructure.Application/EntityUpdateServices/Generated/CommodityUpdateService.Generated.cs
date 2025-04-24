@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CommodityUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Commodity,CommodityPM,IEntityPM,CommodityList,string>
+   public partial class CommodityUpdateService:BaseEntityUpdateService<POCO.Commodity,CommodityPM,IEntityPM,CommodityList,string>
    {
    			
-        public CommodityUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CommodityUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CommodityDataMapping();
-            Repository = new Repository<POCO.Commodity>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Commodity>(mainContext);
         }
-        public CommodityUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CommodityUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CommodityUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CommodityDataMapping();
+            Repository = new Repository<POCO.Commodity>(tenant);
+		}
+        public CommodityUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Commodity,string> GetKeys(CommodityPM entityPM) => new CommodityKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CommodityPM entityPM)
 		{

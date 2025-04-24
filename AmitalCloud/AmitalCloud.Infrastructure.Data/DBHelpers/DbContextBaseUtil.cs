@@ -1,4 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Domain.Enums;
+﻿using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.Enums;
 using Devart.Data.Oracle;
 using System;
 using System.Linq;

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class PrepaidCollectUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.PrepaidCollect,PrepaidCollectPM,IEntityPM,PrepaidCollectList,string>
+   public partial class PrepaidCollectUpdateService:BaseEntityUpdateService<POCO.PrepaidCollect,PrepaidCollectPM,IEntityPM,PrepaidCollectList,string>
    {
    			
-        public PrepaidCollectUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public PrepaidCollectUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new PrepaidCollectDataMapping();
-            Repository = new Repository<POCO.PrepaidCollect>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.PrepaidCollect>(mainContext);
         }
-        public PrepaidCollectUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public PrepaidCollectUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public PrepaidCollectUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new PrepaidCollectDataMapping();
+            Repository = new Repository<POCO.PrepaidCollect>(tenant);
+		}
+        public PrepaidCollectUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.PrepaidCollect,string> GetKeys(PrepaidCollectPM entityPM) => new PrepaidCollectKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(PrepaidCollectPM entityPM)
 		{

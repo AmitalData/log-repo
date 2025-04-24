@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class VendorUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Vendor,VendorPM,IEntityPM,VendorList,string>
+   public partial class VendorUpdateService:BaseEntityUpdateService<POCO.Vendor,VendorPM,IEntityPM,VendorList,string>
    {
    			
-        public VendorUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public VendorUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new VendorDataMapping();
-            Repository = new Repository<POCO.Vendor>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Vendor>(mainContext);
         }
-        public VendorUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public VendorUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public VendorUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new VendorDataMapping();
+            Repository = new Repository<POCO.Vendor>(tenant);
+		}
+        public VendorUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Vendor,string> GetKeys(VendorPM entityPM) => new VendorKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(VendorPM entityPM)
 		{

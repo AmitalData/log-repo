@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CountryUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Country,CountryPM,IEntityPM,CountryList,string>
+   public partial class CountryUpdateService:BaseEntityUpdateService<POCO.Country,CountryPM,IEntityPM,CountryList,string>
    {
    			
-        public CountryUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CountryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CountryDataMapping();
-            Repository = new Repository<POCO.Country>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Country>(mainContext);
         }
-        public CountryUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CountryUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CountryUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CountryDataMapping();
+            Repository = new Repository<POCO.Country>(tenant);
+		}
+        public CountryUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Country,string> GetKeys(CountryPM entityPM) => new CountryKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CountryPM entityPM)
 		{

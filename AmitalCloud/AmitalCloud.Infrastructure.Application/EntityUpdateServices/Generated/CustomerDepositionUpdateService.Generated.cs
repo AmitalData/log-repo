@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerDepositionUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerDeposition,CustomerDepositionPM,IEntityPM,CustomerDepositionList,string>
+   public partial class CustomerDepositionUpdateService:BaseEntityUpdateService<POCO.CustomerDeposition,CustomerDepositionPM,IEntityPM,CustomerDepositionList,string>
    {
    			
-        public CustomerDepositionUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerDepositionUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerDepositionDataMapping();
-            Repository = new Repository<POCO.CustomerDeposition>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerDeposition>(mainContext);
         }
-        public CustomerDepositionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerDepositionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerDepositionUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerDepositionDataMapping();
+            Repository = new Repository<POCO.CustomerDeposition>(tenant);
+		}
+        public CustomerDepositionUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerDeposition,string> GetKeys(CustomerDepositionPM entityPM) => new CustomerDepositionKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(CustomerDepositionPM entityPM)
 		{

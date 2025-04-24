@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class INTTRASettingModeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.INTTRASettingMode,INTTRASettingModePM,IEntityPM,INTTRASettingModeList,string>
+   public partial class INTTRASettingModeUpdateService:BaseEntityUpdateService<POCO.INTTRASettingMode,INTTRASettingModePM,IEntityPM,INTTRASettingModeList,string>
    {
    			
-        public INTTRASettingModeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public INTTRASettingModeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new INTTRASettingModeDataMapping();
-            Repository = new Repository<POCO.INTTRASettingMode>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.INTTRASettingMode>(mainContext);
         }
-        public INTTRASettingModeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public INTTRASettingModeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public INTTRASettingModeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new INTTRASettingModeDataMapping();
+            Repository = new Repository<POCO.INTTRASettingMode>(tenant);
+		}
+        public INTTRASettingModeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.INTTRASettingMode,string> GetKeys(INTTRASettingModePM entityPM) => new INTTRASettingModeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(INTTRASettingModePM entityPM)
 		{

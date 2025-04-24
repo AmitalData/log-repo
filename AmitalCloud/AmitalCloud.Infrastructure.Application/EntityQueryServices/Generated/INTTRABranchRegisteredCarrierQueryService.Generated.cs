@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class INTTRABranchRegisteredCarrierQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.INTTRABranchRegisteredCarrier,INTTRABranchRegisteredCarrierKeys<string>,INTTRABranchRegisteredCarrierPM,INTTRABranchRegisteredCarrierList,string>
+   public partial class INTTRABranchRegisteredCarrierQueryService: BaseEntityQueryService<POCO.INTTRABranchRegisteredCarrier,INTTRABranchRegisteredCarrierKeys<string>,INTTRABranchRegisteredCarrierPM,INTTRABranchRegisteredCarrierList,string>
    {
-        public INTTRABranchRegisteredCarrierQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public INTTRABranchRegisteredCarrierQueryService(int tenant) : base(new Repository<POCO.INTTRABranchRegisteredCarrier>(tenant),new INTTRABranchRegisteredCarrierDataMapping()) {}
         public INTTRABranchRegisteredCarrierQueryService(IAmitalCloudContext context) : base(new Repository<POCO.INTTRABranchRegisteredCarrier>(context),new INTTRABranchRegisteredCarrierDataMapping()) {}
 		public  INTTRABranchRegisteredCarrierPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new INTTRABranchRegisteredCarrierKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.INTTRABranchRegisteredCarrier,string> GetKeys(POCO.INTTRABranchRegisteredCarrier entityPOCO) => new INTTRABranchRegisteredCarrierKeys<string>() { Id = entityPOCO.Id,  };

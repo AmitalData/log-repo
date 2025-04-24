@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ContainersExternalDataUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ContainersExternalData,ContainersExternalDataPM,IEntityPM,ContainersExternalDataList,string>
+   public partial class ContainersExternalDataUpdateService:BaseEntityUpdateService<POCO.ContainersExternalData,ContainersExternalDataPM,IEntityPM,ContainersExternalDataList,string>
    {
    			
-        public ContainersExternalDataUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ContainersExternalDataUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ContainersExternalDataDataMapping();
-            Repository = new Repository<POCO.ContainersExternalData>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ContainersExternalData>(mainContext);
         }
-        public ContainersExternalDataUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ContainersExternalDataUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ContainersExternalDataUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ContainersExternalDataDataMapping();
+            Repository = new Repository<POCO.ContainersExternalData>(tenant);
+		}
+        public ContainersExternalDataUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ContainersExternalData,string> GetKeys(ContainersExternalDataPM entityPM) => new ContainersExternalDataKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ContainersExternalDataPM entityPM)
 		{

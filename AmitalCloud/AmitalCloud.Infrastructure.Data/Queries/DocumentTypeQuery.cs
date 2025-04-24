@@ -1,9 +1,8 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Helpers;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -21,8 +20,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         public DocumentTypeQuery(int tenant)
         {
-            IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
-            repository = new Repository<DocumentType>(context);
+            repository = new Repository<DocumentType>(tenant);
             isFullAccounting = IsFullAccountingActivated(tenant);
         }
 
@@ -99,7 +97,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         }
         private bool IsFullAccountingActivated(int tenant)
         {
-            var tenantRepository = new Repository<Tenant>(AmitalCloudContext.GetContext(tenant));
+            var tenantRepository = new Repository<Tenant>(tenant);
             Tenant tenantPOCO = tenantRepository.GetMulti(a => a.Id == tenant).FirstOrDefault();
             if (tenantPOCO == null) return false;
             bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
@@ -256,7 +254,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             documentTypes = FilterDocumentTypePMByTransportModeIdAndShipmentLevelCode(transportModeId, shipmentLevelCode, documentTypes);
             return documentTypes.ToList();
         }
-        public List<DocumentTypePM> GetDocumentTypePMsByObjectTableAndTenant(string objectTableid, int tenant)=> isFullAccounting
+        public List<DocumentTypePM> GetDocumentTypePMsByObjectTableAndTenant(string objectTableid, int tenant) => isFullAccounting
                 ? GetPMList(a => !a.InActive & a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut))
                 : GetPMList(a => a.Tenant == tenant && a.ObjectTableId == objectTableid && (a.IsDocIn || a.IsDocOut));
 

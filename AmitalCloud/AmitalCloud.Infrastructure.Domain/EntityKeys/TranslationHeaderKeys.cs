@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class TranslationHeaderKeys<T> : BaseEntityKeyFields<EntityPOCOs.TranslationHeader,T> 
+   public class TranslationHeaderKeys<T> : BaseEntityKeyFields<ENTITIES.TranslationHeader,T> 
    {
 		public TranslationHeaderKeys() : base() {}
         public TranslationHeaderKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "TranslationHeadersPM";
-	  public override Expression<Func<EntityPOCOs.TranslationHeader, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.TranslationHeader, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

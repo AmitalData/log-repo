@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class UserLoginLogUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.UserLoginLog,UserLoginLogPM,IEntityPM,UserLoginLogList,string>
+   public partial class UserLoginLogUpdateService:BaseEntityUpdateService<POCO.UserLoginLog,UserLoginLogPM,IEntityPM,UserLoginLogList,string>
    {
    			
-        public UserLoginLogUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public UserLoginLogUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new UserLoginLogDataMapping();
-            Repository = new Repository<POCO.UserLoginLog>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.UserLoginLog>(mainContext);
         }
-        public UserLoginLogUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public UserLoginLogUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public UserLoginLogUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new UserLoginLogDataMapping();
+            Repository = new Repository<POCO.UserLoginLog>(tenant);
+		}
+        public UserLoginLogUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.UserLoginLog,string> GetKeys(UserLoginLogPM entityPM) => new UserLoginLogKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(UserLoginLogPM entityPM)
 		{

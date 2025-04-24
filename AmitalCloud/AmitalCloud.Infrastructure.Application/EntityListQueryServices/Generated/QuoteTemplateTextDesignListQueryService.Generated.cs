@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class QuoteTemplateTextDesignListQueryService  : BaseEntityListQueryService<QuoteTemplateTextDesignList,POCO.QuoteTemplateTextDesign,  QuoteTemplateTextDesignKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.QuoteTemplateTextDesign> contextEntity => (context as IAmitalCloudContext).QuoteTemplateTextDesigns;
-		public QuoteTemplateTextDesignListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public QuoteTemplateTextDesignListQueryService(int tenant) : base(tenant) { }
         public QuoteTemplateTextDesignList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

@@ -175,8 +175,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmitalCloudSettings.cs" />
-    <Compile Include="ApplicationAppInfo.cs" />
     <Compile Include="Azure\BlobExtensions.cs" />
     <Compile Include="Azure\CommunicationLogsAzure.cs" />
     <Compile Include="Azure\CommunicationLogsAzureContext.cs" />
@@ -187,38 +185,23 @@
     <Compile Include="BaseClasses\DbContextBase.cs" />
     <Compile Include="Context\AmitalCloudContext.AutoCreated.cs" />
     <Compile Include="Context\AmitalCloudContext.cs" />
+    <Compile Include="Context\AmitalCloudContext.Invoice.cs" />
+    <Compile Include="Context\AmitalCloudContext.Shipment.cs" />
+    <Compile Include="Context\GlobalContext.cs" />
+    <None Include="Context\GlobalContext.Views.cs" />
     <Compile Include="Context\SystemLogContext.cs" />
-    <Compile Include="DataMapping\AdvancedQueryFilterMapping.cs" />
-    <Compile Include="DataMapping\CounterDefinitionMapping.cs" />
-    <Compile Include="DataMapping\CounterMapping.cs" />
+    <None Include="Context\SystemLogContext.Views.cs" />
     <Compile Include="DataMapping\CustomChildObjectMapping.cs" />
-    <Compile Include="DataMapping\CustomFieldsMainObjectMapping.cs" />
-    <Compile Include="DataMapping\CustomPickListMapping.cs" />
-    <Compile Include="DataMapping\CustomTableMapping.cs" />
-    <Compile Include="DataMapping\DataCustomObjectMapping.cs" />
     <Compile Include="DataMapping\DocumentsFilingMetaDataValueMapping.cs" />
-    <Compile Include="DataMapping\EntityStatusMapping.cs" />
-    <Compile Include="DataMapping\MenuButtonGroupMapping.cs" />
-    <Compile Include="DataMapping\MenusTableMapping.cs" />
-    <Compile Include="DataMapping\MultiEntityUpdateLogMapping.cs" />
-    <Compile Include="DataMapping\ObjectFieldMapping.cs" />
-    <Compile Include="DataMapping\ObjectFieldValidationMapping.cs" />
-    <Compile Include="DataMapping\ObjectTableHelperControlMapping.cs" />
-    <Compile Include="DataMapping\ObjectTableMapping.cs" />
-    <Compile Include="DataMapping\ObjectTableRuleFieldMapping.cs" />
-    <Compile Include="DataMapping\ObjectTableRuleMapping.cs" />
-    <Compile Include="DataMapping\ObjectTableTabMapping.cs" />
-    <Compile Include="DataMapping\QueryColumnMapping.cs" />
-    <Compile Include="DataMapping\QueryMapping.cs" />
-    <Compile Include="DataMapping\ReferenceCustomObjectMapping.cs" />
-    <Compile Include="DataMapping\RuleConditionFieldMapping.cs" />
-    <Compile Include="DataMapping\RuleUpdateHistoryMapping.cs" />
-    <Compile Include="DataMapping\ScreenFieldMapping.cs" />
-    <Compile Include="DataMapping\ScreenMapping.cs" />
-    <Compile Include="DataMapping\ScreenSectionMapping.cs" />
-    <Compile Include="DataMapping\SharedUserQueryMapping.cs" />
+    <Compile Include="DBHelpers\AmitalCloudDebuggerUtil.cs" />
     <Compile Include="DBHelpers\AmitalCloudExceptionExt.cs" />
+    <Compile Include="Helpers\ApplicationAppInfo.cs" />
+    <Compile Include="DBHelpers\DatabaseInitializer.cs" />
+    <Compile Include="DBHelpers\DbContextBaseUtil.cs" />
     <Compile Include="DBHelpers\ExtensionObjectContext.cs" />
+    <Compile Include="Helpers\FixedSizedQueue.cs" />
+    <Compile Include="DBHelpers\GlobalDbHelper.cs" />
+    <Compile Include="DBHelpers\MigrationConfiguration.cs" />
     <Compile Include="EntityDataMappings\AccountDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingPartnerDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingSettingDataMapping.cs" />
@@ -1039,6 +1022,7 @@
     <Compile Include="EntityDataMappings\WebhookKeysDataMapping.cs" />
     <Compile Include="EntityDataMappings\WeightUnitDataMapping.cs" />
     <Compile Include="EntityDataMappings\WorkerRoleNameDataMapping.cs" />
+    <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\ChangesLoggerService.cs" />
     <Compile Include="Helpers\LockHelper.cs" />
     <Compile Include="Helpers\MultiProcessLockTableUtil.cs" />
@@ -1084,24 +1068,19 @@
     <Compile Include="Validators\InfrastructureValidationClass.cs" />
     <Compile Include="Validators\ValidationClass.cs" />
     <Compile Include="Validators\ValidationClass.Shared.cs" />
-    <None Include="Context\SystemLogContext.Views.cs" />
     <Compile Include="DBHelpers\DbContextBaseSqlServerExt.cs" />
-    <Compile Include="DBHelpers\DbContextBaseUtil.cs" />
     <Compile Include="DBHelpers\DbContextLogger.cs" />
     <Compile Include="DBHelpers\DbModelBuilderExt.cs" />
     <Compile Include="DBHelpers\ExceptionFormatDbEntityUtil.cs" />
     <Compile Include="DBHelpers\ExecuteStoredProcedures.cs" />
-    <Compile Include="DBHelpers\FixedSizedQueue.cs" />
     <Compile Include="DBHelpers\StoredProcedureParam.cs" />
     <Compile Include="Helpers\AesFunction.cs" />
-    <Compile Include="Helpers\AmitalCloudDebuggerUtil.cs" />
     <Compile Include="Helpers\AmitalCloudDomainScope.cs" />
     <Compile Include="Helpers\AmitalCloudEntryPoint.cs" />
     <Compile Include="Helpers\AuthenticationUtil.cs" />
     <Compile Include="Helpers\AzureLog.cs" />
     <Compile Include="Helpers\ByteCompressor.cs" />
     <Compile Include="Helpers\CacheLogger.cs" />
-    <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\CacheMessageSender.cs" />
     <Compile Include="Helpers\CacheWrapper.cs" />
     <Compile Include="Helpers\Communications.cs" />
@@ -1110,7 +1089,6 @@
     <Compile Include="Helpers\CustomFieldsResolver\CustomFieldGetter.cs" />
     <Compile Include="Helpers\CustomFieldsResolver\CustomFieldMultiSetter.cs" />
     <Compile Include="Helpers\CustomFieldsResolver\CustomFieldSingleSetter.cs" />
-    <Compile Include="Helpers\DatabaseInitializer.cs" />
     <Compile Include="Helpers\DictionaryJsonConverter.cs" />
     <Compile Include="Helpers\EmailTypeClass.cs" />
     <Compile Include="Helpers\ExceptionHandler.cs" />
@@ -1118,7 +1096,6 @@
     <Compile Include="Helpers\FieldValueResolver.cs" />
     <Compile Include="Helpers\GenericFilter.cs" />
     <Compile Include="Helpers\GenericSort.cs" />
-    <Compile Include="Helpers\GlobalDbHelper.cs" />
     <Compile Include="Helpers\InjectionContainer.cs" />
     <Compile Include="Helpers\LoggedContactResolver.cs" />
     <Compile Include="Helpers\LogMessagingUtil.cs" />
@@ -1178,7 +1155,6 @@
     <Compile Include="Repositories\Manual\UserLoginLogRepository.cs" />
     <Compile Include="Repositories\Manual\UserPermittedBranchRepository.cs" />
     <Compile Include="Repositories\Manual\UserPermittedProductRepository.cs" />
-    <Compile Include="Security\AmitalCloudSecurityUtility.cs" />
     <Compile Include="Security\AutenticationException.cs" />
     <Compile Include="Security\ContactInfo.cs" />
     <Compile Include="Security\ContactInformation.cs" />
@@ -1190,11 +1166,9 @@
     <Compile Include="Services\CustomFields\ChildEntitiesCustomFieldArgs.cs" />
     <Compile Include="Services\CustomFields\ChildEntitiesCustomFieldService.cs" />
     <Compile Include="Services\CustomFields\EntityCustomFieldService.cs" />
-    <Compile Include="Migrations\MigrationConfiguration.cs" />
     <Compile Include="Counters\CodeCounter.cs" />
     <Compile Include="Counters\IdCounter.cs" />
     <Compile Include="Counters\TenantCounter.cs" />
-    <Compile Include="Context\GlobalContext.cs" />
     <Compile Include="Queries\ObjectFieldValidationQuery.cs" />
     <Compile Include="Service References\BlobServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -1220,7 +1194,6 @@
     <Compile Include="Services\QueueService\StateMachineProcess.cs" />
     <Compile Include="Services\QueueService\WorkerNameService.cs" />
     <Compile Include="Services\UnifreightFillingService.cs" />
-    <None Include="Context\GlobalContext.Views.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1244,6 +1217,7 @@
   <ItemGroup>
     <Folder Include="EntityDataMappings\Manual\" />
     <Folder Include="Mapping\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -1274,6 +1248,10 @@
     <ProjectReference Include="..\AmitalCloud.Infrastructure.Domain\AmitalCloud.Infrastructure.Domain.csproj">
       <Project>{1cb82e4e-88ff-4772-bfd6-5ec33b23f1cf}</Project>
       <Name>AmitalCloud.Infrastructure.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Model\AmitalCloud.Infrastructure.Model.csproj">
+      <Project>{B03864C5-0C52-465B-9206-3FFF150413B9}</Project>
+      <Name>AmitalCloud.Infrastructure.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

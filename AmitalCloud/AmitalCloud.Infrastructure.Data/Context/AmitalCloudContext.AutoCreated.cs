@@ -6,17 +6,14 @@
 // </auto-generated>
 //-----
 using AmitalCloud.Infrastructure.Data.BaseClasses;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Helpers;
-using AmitalCloud.Infrastructure.Domain.EntityMapping;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using System;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
+using AmitalCloud.Infrastructure.Model.Enums;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using AmitalCloud.Infrastructure.Domain.Enums;
-
 namespace AmitalCloud.Infrastructure.Data.Context
 {
    public partial class AmitalCloudContext: DbContextBase, IAmitalCloudContext

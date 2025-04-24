@@ -3,7 +3,7 @@ using AmitalCloud.Infrastructure.Data.DBHelpers;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Migrations;
 using AmitalCloud.Infrastructure.Domain.EntityMapping;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Devart.Data.Oracle.Entity.Configuration;

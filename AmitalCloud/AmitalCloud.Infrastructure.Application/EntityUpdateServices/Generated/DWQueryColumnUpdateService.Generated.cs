@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DWQueryColumnUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DWQueryColumn,DWQueryColumnPM,IEntityPM,DWQueryColumnList,string>
+   public partial class DWQueryColumnUpdateService:BaseEntityUpdateService<POCO.DWQueryColumn,DWQueryColumnPM,IEntityPM,DWQueryColumnList,string>
    {
    			
-        public DWQueryColumnUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DWQueryColumnUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DWQueryColumnDataMapping();
-            Repository = new Repository<POCO.DWQueryColumn>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DWQueryColumn>(mainContext);
         }
-        public DWQueryColumnUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DWQueryColumnUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DWQueryColumnUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DWQueryColumnDataMapping();
+            Repository = new Repository<POCO.DWQueryColumn>(tenant);
+		}
+        public DWQueryColumnUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DWQueryColumn,string> GetKeys(DWQueryColumnPM entityPM) => new DWQueryColumnKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DWQueryColumnPM entityPM)
 		{

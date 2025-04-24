@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DBIdCounterQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DBIdCounter,DBIdCounterKeys<int>,DBIdCounterPM,DBIdCounterList,int>
+   public partial class DBIdCounterQueryService: BaseEntityQueryService<POCO.DBIdCounter,DBIdCounterKeys<int>,DBIdCounterPM,DBIdCounterList,int>
    {
-        public DBIdCounterQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DBIdCounterQueryService(int tenant) : base(new Repository<POCO.DBIdCounter>(tenant),new DBIdCounterDataMapping()) {}
         public DBIdCounterQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DBIdCounter>(context),new DBIdCounterDataMapping()) {}
 		public  DBIdCounterPM GetSingle(int id,bool getComposition, bool getFromCache) => base.GetSingle(new DBIdCounterKeys<int>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DBIdCounter,int> GetKeys(POCO.DBIdCounter entityPOCO) => new DBIdCounterKeys<int>() { Id = entityPOCO.Id,  };

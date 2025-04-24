@@ -1,7 +1,7 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
@@ -19,7 +19,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             {
                 return result;
             }
-            IRepository<BlobFile> repo = new Repository<BlobFile>(AmitalCloudContext.GetContext(fileInfo.Tenant));
+            IRepository<BlobFile> repo = new Repository<BlobFile>(fileInfo.Tenant);
             BlobFile file = GetBlobFile(fileInfo, repo);
             if (file != null && file.Blob != null)
             {
@@ -130,7 +130,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             {
                 return (result != null);
             }
-            IRepository<BlobFile> repo = new Repository<BlobFile>(AmitalCloudContext.GetContext(fileInfo.Tenant));
+            IRepository<BlobFile> repo = new Repository<BlobFile>(fileInfo.Tenant);
             BlobFile file = GetBlobFile(fileInfo, repo);
 
             return (file != null);

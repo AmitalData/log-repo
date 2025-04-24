@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

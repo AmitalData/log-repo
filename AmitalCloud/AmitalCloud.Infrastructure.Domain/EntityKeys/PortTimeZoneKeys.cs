@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class PortTimeZoneKeys<T> : BaseEntityKeyFields<EntityPOCOs.PortTimeZone,T> 
+   public class PortTimeZoneKeys<T> : BaseEntityKeyFields<ENTITIES.PortTimeZone,T> 
    {
 		public PortTimeZoneKeys() : base() {}
         public PortTimeZoneKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "PortTimeZonesPM";
-	  public override Expression<Func<EntityPOCOs.PortTimeZone, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.PortTimeZone, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

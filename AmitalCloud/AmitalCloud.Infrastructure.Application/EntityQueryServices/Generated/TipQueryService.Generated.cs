@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TipQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Tip,TipKeys<string>,TipPM,TipList,string>
+   public partial class TipQueryService: BaseEntityQueryService<POCO.Tip,TipKeys<string>,TipPM,TipList,string>
    {
-        public TipQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TipQueryService(int tenant) : base(new Repository<POCO.Tip>(tenant),new TipDataMapping()) {}
         public TipQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Tip>(context),new TipDataMapping()) {}
 		public  TipPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new TipKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Tip,string> GetKeys(POCO.Tip entityPOCO) => new TipKeys<string>() { Code = entityPOCO.Code,  };

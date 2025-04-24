@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -26,7 +26,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    public partial class APPaymentTransferStatusPM : BaseEntityPM   {
    #region Constructors
    public APPaymentTransferStatusPM() : base() {} 
-   public APPaymentTransferStatusPM(APPaymentTransferStatus entity) : base()
+   public APPaymentTransferStatusPM(POCO.APPaymentTransferStatus entity) : base()
    {
 		_code = entity.Code;
 		_name = entity.Name;

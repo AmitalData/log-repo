@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class ObjectFieldValidationListQueryService  : BaseEntityListQueryService<ObjectFieldValidationList,POCO.ObjectFieldValidation,  ObjectFieldValidationKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ObjectFieldValidation> contextEntity => (context as IAmitalCloudContext).ObjectFieldValidations;
-		public ObjectFieldValidationListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public ObjectFieldValidationListQueryService(int tenant) : base(tenant) { }
         public ObjectFieldValidationList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

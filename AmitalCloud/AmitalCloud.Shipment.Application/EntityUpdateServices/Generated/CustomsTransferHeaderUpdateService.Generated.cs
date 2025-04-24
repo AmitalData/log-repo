@@ -9,32 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class CustomsTransferHeaderUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.CustomsTransferHeader,CustomsTransferHeaderPM,IEntityPM,CustomsTransferHeaderList,string>
+   public partial class CustomsTransferHeaderUpdateService:BaseEntityUpdateService<POCO.CustomsTransferHeader,CustomsTransferHeaderPM,IEntityPM,CustomsTransferHeaderList,string>
    {
    			
-        public CustomsTransferHeaderUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public CustomsTransferHeaderUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomsTransferHeaderDataMapping();
-            Repository = new Repository<POCO.CustomsTransferHeader>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.CustomsTransferHeader>(mainContext);
         }
-        public CustomsTransferHeaderUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public CustomsTransferHeaderUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public CustomsTransferHeaderUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomsTransferHeaderDataMapping();
+            Repository = new Repository<POCO.CustomsTransferHeader>(tenant);
+		}
+        public CustomsTransferHeaderUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomsTransferHeader,string> GetKeys(CustomsTransferHeaderPM entityPM) => new CustomsTransferHeaderKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(CustomsTransferHeaderPM entityPM)
 		{

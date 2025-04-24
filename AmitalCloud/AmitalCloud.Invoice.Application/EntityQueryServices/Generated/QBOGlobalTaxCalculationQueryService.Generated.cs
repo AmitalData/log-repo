@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class QBOGlobalTaxCalculationQueryService: BaseEntityQueryService<IInvoiceContext,POCO.QBOGlobalTaxCalculation,QBOGlobalTaxCalculationKeys<string>,QBOGlobalTaxCalculationPM,QBOGlobalTaxCalculationList,string>
+   public partial class QBOGlobalTaxCalculationQueryService: BaseEntityQueryService<POCO.QBOGlobalTaxCalculation,QBOGlobalTaxCalculationKeys<string>,QBOGlobalTaxCalculationPM,QBOGlobalTaxCalculationList,string>
    {
-        public QBOGlobalTaxCalculationQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public QBOGlobalTaxCalculationQueryService(IInvoiceContext context) : base(new Repository<POCO.QBOGlobalTaxCalculation>(context),new QBOGlobalTaxCalculationDataMapping()) {}
+        public QBOGlobalTaxCalculationQueryService(int tenant) : base(new Repository<POCO.QBOGlobalTaxCalculation>(tenant),new QBOGlobalTaxCalculationDataMapping()) {}
+        public QBOGlobalTaxCalculationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QBOGlobalTaxCalculation>(context),new QBOGlobalTaxCalculationDataMapping()) {}
 		public  QBOGlobalTaxCalculationPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new QBOGlobalTaxCalculationKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QBOGlobalTaxCalculation,string> GetKeys(POCO.QBOGlobalTaxCalculation entityPOCO) => new QBOGlobalTaxCalculationKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class InboundEmailUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.InboundEmail,InboundEmailPM,IEntityPM,InboundEmailList,string>
+   public partial class InboundEmailUpdateService:BaseEntityUpdateService<POCO.InboundEmail,InboundEmailPM,IEntityPM,InboundEmailList,string>
    {
    			
-        public InboundEmailUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public InboundEmailUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new InboundEmailDataMapping();
-            Repository = new Repository<POCO.InboundEmail>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.InboundEmail>(mainContext);
         }
-        public InboundEmailUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public InboundEmailUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public InboundEmailUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new InboundEmailDataMapping();
+            Repository = new Repository<POCO.InboundEmail>(tenant);
+		}
+        public InboundEmailUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.InboundEmail,string> GetKeys(InboundEmailPM entityPM) => new InboundEmailKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(InboundEmailPM entityPM)
 		{

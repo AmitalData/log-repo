@@ -8,7 +8,7 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Domain.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
 using AmitalCloud.Infrastructure.Data.Context ;

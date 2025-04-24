@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ObjectTableTabUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ObjectTableTab,ObjectTableTabPM,IEntityPM,ObjectTableTabList,string>
+   public partial class ObjectTableTabUpdateService:BaseEntityUpdateService<POCO.ObjectTableTab,ObjectTableTabPM,IEntityPM,ObjectTableTabList,string>
    {
    			
-        public ObjectTableTabUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ObjectTableTabUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ObjectTableTabDataMapping();
-            Repository = new Repository<POCO.ObjectTableTab>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ObjectTableTab>(mainContext);
         }
-        public ObjectTableTabUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ObjectTableTabUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ObjectTableTabUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ObjectTableTabDataMapping();
+            Repository = new Repository<POCO.ObjectTableTab>(tenant);
+		}
+        public ObjectTableTabUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ObjectTableTab,string> GetKeys(ObjectTableTabPM entityPM) => new ObjectTableTabKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ObjectTableTabPM entityPM)
 		{

@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CargoTenantMilestoneDefinitionUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CargoTenantMilestoneDefinition,CargoTenantMilestoneDefinitionPM,IEntityPM,CargoTenantMilestoneDefinitionList,string>
+   public partial class CargoTenantMilestoneDefinitionUpdateService:BaseEntityUpdateService<POCO.CargoTenantMilestoneDefinition,CargoTenantMilestoneDefinitionPM,IEntityPM,CargoTenantMilestoneDefinitionList,string>
    {
    			
-        public CargoTenantMilestoneDefinitionUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CargoTenantMilestoneDefinitionUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CargoTenantMilestoneDefinitionDataMapping();
-            Repository = new Repository<POCO.CargoTenantMilestoneDefinition>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CargoTenantMilestoneDefinition>(mainContext);
         }
-        public CargoTenantMilestoneDefinitionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CargoTenantMilestoneDefinitionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CargoTenantMilestoneDefinitionUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CargoTenantMilestoneDefinitionDataMapping();
+            Repository = new Repository<POCO.CargoTenantMilestoneDefinition>(tenant);
+		}
+        public CargoTenantMilestoneDefinitionUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CargoTenantMilestoneDefinition,string> GetKeys(CargoTenantMilestoneDefinitionPM entityPM) => new CargoTenantMilestoneDefinitionKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(CargoTenantMilestoneDefinitionPM entityPM)
 		{

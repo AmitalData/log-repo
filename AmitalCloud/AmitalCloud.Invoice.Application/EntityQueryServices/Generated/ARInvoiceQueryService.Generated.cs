@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ARInvoiceQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ARInvoice,ARInvoiceKeys<string>,ARInvoicePM,ARInvoiceList,string>
+   public partial class ARInvoiceQueryService: BaseEntityQueryService<POCO.ARInvoice,ARInvoiceKeys<string>,ARInvoicePM,ARInvoiceList,string>
    {
-        public ARInvoiceQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ARInvoiceQueryService(IInvoiceContext context) : base(new Repository<POCO.ARInvoice>(context),new ARInvoiceDataMapping()) {}
+        public ARInvoiceQueryService(int tenant) : base(new Repository<POCO.ARInvoice>(tenant),new ARInvoiceDataMapping()) {}
+        public ARInvoiceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ARInvoice>(context),new ARInvoiceDataMapping()) {}
 		public  ARInvoicePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ARInvoiceKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ARInvoice,string> GetKeys(POCO.ARInvoice entityPOCO) => new ARInvoiceKeys<string>() { Id = entityPOCO.Id,  };
    }

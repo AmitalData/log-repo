@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DigitalProfileQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalProfile,DigitalProfileKeys<string>,DigitalProfilePM,DigitalProfileList,string>
+   public partial class DigitalProfileQueryService: BaseEntityQueryService<POCO.DigitalProfile,DigitalProfileKeys<string>,DigitalProfilePM,DigitalProfileList,string>
    {
-        public DigitalProfileQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DigitalProfileQueryService(int tenant) : base(new Repository<POCO.DigitalProfile>(tenant),new DigitalProfileDataMapping()) {}
         public DigitalProfileQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalProfile>(context),new DigitalProfileDataMapping()) {}
 		public  DigitalProfilePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalProfileKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalProfile,string> GetKeys(POCO.DigitalProfile entityPOCO) => new DigitalProfileKeys<string>() { Id = entityPOCO.Id,  };

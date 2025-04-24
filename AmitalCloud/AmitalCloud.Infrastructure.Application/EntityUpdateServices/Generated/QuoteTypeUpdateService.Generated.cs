@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class QuoteTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.QuoteType,QuoteTypePM,IEntityPM,QuoteTypeList,string>
+   public partial class QuoteTypeUpdateService:BaseEntityUpdateService<POCO.QuoteType,QuoteTypePM,IEntityPM,QuoteTypeList,string>
    {
    			
-        public QuoteTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public QuoteTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new QuoteTypeDataMapping();
-            Repository = new Repository<POCO.QuoteType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.QuoteType>(mainContext);
         }
-        public QuoteTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public QuoteTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public QuoteTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new QuoteTypeDataMapping();
+            Repository = new Repository<POCO.QuoteType>(tenant);
+		}
+        public QuoteTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.QuoteType,string> GetKeys(QuoteTypePM entityPM) => new QuoteTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(QuoteTypePM entityPM)
 		{

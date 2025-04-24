@@ -1,6 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Domain.BaseClasses;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Invoice.Domain.EntityPMs
 {

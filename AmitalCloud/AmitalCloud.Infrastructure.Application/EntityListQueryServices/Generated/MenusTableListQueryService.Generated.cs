@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class MenusTableListQueryService  : BaseEntityListQueryService<MenusTableList,POCO.MenusTable,  MenusTableKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.MenusTable> contextEntity => (context as IAmitalCloudContext).MenusTables;
-		public MenusTableListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public MenusTableListQueryService(int tenant) : base(tenant) { }
         public MenusTableList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

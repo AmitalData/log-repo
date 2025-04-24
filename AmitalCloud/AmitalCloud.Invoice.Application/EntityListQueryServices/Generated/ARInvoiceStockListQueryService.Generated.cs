@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityLists ;
 using AmitalCloud.Invoice.Domain.EntityKeys ;
-using AmitalCloud.Invoice.Data.Context ;
-using AmitalCloud.Invoice.Domain.Interfaces ;
 namespace AmitalCloud.Invoice.Application.EntityListQueryServices
 { 
     public partial class ARInvoiceStockListQueryService  : BaseEntityListQueryService<ARInvoiceStockList,POCO.ARInvoiceStock,  ARInvoiceStockKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ARInvoiceStock> contextEntity => (context as IInvoiceContext).ARInvoiceStocks;
-		public ARInvoiceStockListQueryService(int tenant) : base(InvoiceContext.GetContext(tenant)) { }
+		public ARInvoiceStockListQueryService(int tenant) : base(tenant) { }
         public ARInvoiceStockList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

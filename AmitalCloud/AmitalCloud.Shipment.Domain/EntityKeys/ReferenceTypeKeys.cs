@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Shipment.Domain.EntityKeys
 {
-   public class ReferenceTypeKeys<T> : BaseEntityKeyFields<EntityPOCOs.ReferenceType,T> 
+   public class ReferenceTypeKeys<T> : BaseEntityKeyFields<ENTITIES.ReferenceType,T> 
    {
 		public ReferenceTypeKeys() : base() {}
         public ReferenceTypeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Shipment.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "ReferenceTypesPM";
-	  public override Expression<Func<EntityPOCOs.ReferenceType, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.ReferenceType, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

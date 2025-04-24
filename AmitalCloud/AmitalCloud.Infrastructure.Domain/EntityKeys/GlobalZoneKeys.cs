@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class GlobalZoneKeys<T> : BaseEntityKeyFields<EntityPOCOs.GlobalZone,T> 
+   public class GlobalZoneKeys<T> : BaseEntityKeyFields<ENTITIES.GlobalZone,T> 
    {
 		public GlobalZoneKeys() : base() {}
         public GlobalZoneKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "GlobalZonesPM";
-	  public override Expression<Func<EntityPOCOs.GlobalZone, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.GlobalZone, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

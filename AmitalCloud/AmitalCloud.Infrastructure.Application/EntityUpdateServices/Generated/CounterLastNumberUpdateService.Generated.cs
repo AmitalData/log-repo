@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CounterLastNumberUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CounterLastNumber,CounterLastNumberPM,IEntityPM,CounterLastNumberList,int>
+   public partial class CounterLastNumberUpdateService:BaseEntityUpdateService<POCO.CounterLastNumber,CounterLastNumberPM,IEntityPM,CounterLastNumberList,int>
    {
    			
-        public CounterLastNumberUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CounterLastNumberUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CounterLastNumberDataMapping();
-            Repository = new Repository<POCO.CounterLastNumber>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CounterLastNumber>(mainContext);
         }
-        public CounterLastNumberUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CounterLastNumberUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CounterLastNumberUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CounterLastNumberDataMapping();
+            Repository = new Repository<POCO.CounterLastNumber>(tenant);
+		}
+        public CounterLastNumberUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CounterLastNumber,int> GetKeys(CounterLastNumberPM entityPM) => new CounterLastNumberKeys<int>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CounterLastNumberPM entityPM)
 		{

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomsInterfaceQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomsInterface,CustomsInterfaceKeys<string>,CustomsInterfacePM,CustomsInterfaceList,string>
+   public partial class CustomsInterfaceQueryService: BaseEntityQueryService<POCO.CustomsInterface,CustomsInterfaceKeys<string>,CustomsInterfacePM,CustomsInterfaceList,string>
    {
-        public CustomsInterfaceQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomsInterfaceQueryService(int tenant) : base(new Repository<POCO.CustomsInterface>(tenant),new CustomsInterfaceDataMapping()) {}
         public CustomsInterfaceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomsInterface>(context),new CustomsInterfaceDataMapping()) {}
 		public  CustomsInterfacePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new CustomsInterfaceKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomsInterface,string> GetKeys(POCO.CustomsInterface entityPOCO) => new CustomsInterfaceKeys<string>() { Code = entityPOCO.Code,  };

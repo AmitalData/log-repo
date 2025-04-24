@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class TextCodeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.TextCode,TextCodePM,IEntityPM,TextCodeList,string>
+   public partial class TextCodeUpdateService:BaseEntityUpdateService<POCO.TextCode,TextCodePM,IEntityPM,TextCodeList,string>
    {
    			
-        public TextCodeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public TextCodeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new TextCodeDataMapping();
-            Repository = new Repository<POCO.TextCode>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.TextCode>(mainContext);
         }
-        public TextCodeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public TextCodeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public TextCodeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new TextCodeDataMapping();
+            Repository = new Repository<POCO.TextCode>(tenant);
+		}
+        public TextCodeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.TextCode,string> GetKeys(TextCodePM entityPM) => new TextCodeKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(TextCodePM entityPM)
 		{

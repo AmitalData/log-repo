@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class UnassignedEntityUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.UnassignedEntity,UnassignedEntityPM,IEntityPM,UnassignedEntityList,string>
+   public partial class UnassignedEntityUpdateService:BaseEntityUpdateService<POCO.UnassignedEntity,UnassignedEntityPM,IEntityPM,UnassignedEntityList,string>
    {
    			
-        public UnassignedEntityUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public UnassignedEntityUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new UnassignedEntityDataMapping();
-            Repository = new Repository<POCO.UnassignedEntity>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.UnassignedEntity>(mainContext);
         }
-        public UnassignedEntityUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public UnassignedEntityUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public UnassignedEntityUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new UnassignedEntityDataMapping();
+            Repository = new Repository<POCO.UnassignedEntity>(tenant);
+		}
+        public UnassignedEntityUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.UnassignedEntity,string> GetKeys(UnassignedEntityPM entityPM) => new UnassignedEntityKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(UnassignedEntityPM entityPM)
 		{

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ContactLastLoginQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ContactLastLogin,ContactLastLoginKeys<string>,ContactLastLoginPM,ContactLastLoginList,string>
+   public partial class ContactLastLoginQueryService: BaseEntityQueryService<POCO.ContactLastLogin,ContactLastLoginKeys<string>,ContactLastLoginPM,ContactLastLoginList,string>
    {
-        public ContactLastLoginQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ContactLastLoginQueryService(int tenant) : base(new Repository<POCO.ContactLastLogin>(tenant),new ContactLastLoginDataMapping()) {}
         public ContactLastLoginQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContactLastLogin>(context),new ContactLastLoginDataMapping()) {}
 		public  ContactLastLoginPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ContactLastLoginKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContactLastLogin,string> GetKeys(POCO.ContactLastLogin entityPOCO) => new ContactLastLoginKeys<string>() { Id = entityPOCO.Id,  };

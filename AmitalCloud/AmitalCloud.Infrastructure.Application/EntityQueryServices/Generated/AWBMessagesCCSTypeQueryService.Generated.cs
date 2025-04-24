@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AWBMessagesCCSTypeQueryService: BaseEntityQueryService<IGlobalContext,POCO.AWBMessagesCCSType,AWBMessagesCCSTypeKeys<string>,AWBMessagesCCSTypePM,AWBMessagesCCSTypeList,string>
+   public partial class AWBMessagesCCSTypeQueryService: BaseEntityQueryService<POCO.AWBMessagesCCSType,AWBMessagesCCSTypeKeys<string>,AWBMessagesCCSTypePM,AWBMessagesCCSTypeList,string>
    {
-        public AWBMessagesCCSTypeQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public AWBMessagesCCSTypeQueryService(int tenant) : base(new Repository<POCO.AWBMessagesCCSType>(tenant),new AWBMessagesCCSTypeDataMapping()) {}
         public AWBMessagesCCSTypeQueryService(IGlobalContext context) : base(new Repository<POCO.AWBMessagesCCSType>(context),new AWBMessagesCCSTypeDataMapping()) {}
 		public  AWBMessagesCCSTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new AWBMessagesCCSTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AWBMessagesCCSType,string> GetKeys(POCO.AWBMessagesCCSType entityPOCO) => new AWBMessagesCCSTypeKeys<string>() { Code = entityPOCO.Code,  };

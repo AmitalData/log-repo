@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class AccountingTransferTypeQueryService: BaseEntityQueryService<IInvoiceContext,POCO.AccountingTransferType,AccountingTransferTypeKeys<string>,AccountingTransferTypePM,AccountingTransferTypeList,string>
+   public partial class AccountingTransferTypeQueryService: BaseEntityQueryService<POCO.AccountingTransferType,AccountingTransferTypeKeys<string>,AccountingTransferTypePM,AccountingTransferTypeList,string>
    {
-        public AccountingTransferTypeQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public AccountingTransferTypeQueryService(IInvoiceContext context) : base(new Repository<POCO.AccountingTransferType>(context),new AccountingTransferTypeDataMapping()) {}
+        public AccountingTransferTypeQueryService(int tenant) : base(new Repository<POCO.AccountingTransferType>(tenant),new AccountingTransferTypeDataMapping()) {}
+        public AccountingTransferTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AccountingTransferType>(context),new AccountingTransferTypeDataMapping()) {}
 		public  AccountingTransferTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new AccountingTransferTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AccountingTransferType,string> GetKeys(POCO.AccountingTransferType entityPOCO) => new AccountingTransferTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

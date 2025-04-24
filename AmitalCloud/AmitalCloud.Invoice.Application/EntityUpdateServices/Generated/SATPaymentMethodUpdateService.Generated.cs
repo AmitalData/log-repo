@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data;
 using AmitalCloud.Invoice.Domain.EntityLists;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
-using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Data.Context;
 
 namespace AmitalCloud.Invoice.Application.EntityUpdateServices
 { 
-   public partial class SATPaymentMethodUpdateService:BaseEntityUpdateService<InvoiceContext,POCO.SATPaymentMethod,SATPaymentMethodPM,IEntityPM,SATPaymentMethodList,string>
+   public partial class SATPaymentMethodUpdateService:BaseEntityUpdateService<POCO.SATPaymentMethod,SATPaymentMethodPM,IEntityPM,SATPaymentMethodList,string>
    {
    			
-        public SATPaymentMethodUpdateService(IInvoiceContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((InvoiceContext)mainContext,additionalContexts, tenant)
+        public SATPaymentMethodUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new SATPaymentMethodDataMapping();
-            Repository = new Repository<POCO.SATPaymentMethod>((InvoiceContext)mainContext);
+            Repository = new Repository<POCO.SATPaymentMethod>(mainContext);
         }
-        public SATPaymentMethodUpdateService(int tenant) : this(InvoiceContext.GetContext(tenant), null, tenant) {}
-        public SATPaymentMethodUpdateService(IInvoiceContext context) :  this(context, null, 0) {}
+        public SATPaymentMethodUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new SATPaymentMethodDataMapping();
+            Repository = new Repository<POCO.SATPaymentMethod>(tenant);
+		}
+        public SATPaymentMethodUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.SATPaymentMethod,string> GetKeys(SATPaymentMethodPM entityPM) => new SATPaymentMethodKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(SATPaymentMethodPM entityPM)
 		{

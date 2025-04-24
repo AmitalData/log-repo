@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -26,7 +26,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    public partial class ARInvoiceLinePM : BaseEntityPM   {
    #region Constructors
    public ARInvoiceLinePM() : base() {} 
-   public ARInvoiceLinePM(ARInvoiceLine entity) : base()
+   public ARInvoiceLinePM(POCO.ARInvoiceLine entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

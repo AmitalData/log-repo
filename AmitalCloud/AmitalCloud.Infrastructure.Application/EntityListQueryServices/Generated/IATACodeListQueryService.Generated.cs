@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class IATACodeListQueryService  : BaseEntityListQueryService<IATACodeList,POCO.IATACode,  IATACodeKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.IATACode> contextEntity => (context as IAmitalCloudContext).IATACodes;
-		public IATACodeListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public IATACodeListQueryService(int tenant) : base(tenant) { }
         public IATACodeList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

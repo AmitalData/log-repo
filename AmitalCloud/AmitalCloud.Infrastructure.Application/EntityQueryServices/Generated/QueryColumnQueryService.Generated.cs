@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class QueryColumnQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QueryColumn,QueryColumnKeys<string>,QueryColumnPM,QueryColumnList,string>
+   public partial class QueryColumnQueryService: BaseEntityQueryService<POCO.QueryColumn,QueryColumnKeys<string>,QueryColumnPM,QueryColumnList,string>
    {
-        public QueryColumnQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public QueryColumnQueryService(int tenant) : base(new Repository<POCO.QueryColumn>(tenant),new QueryColumnDataMapping()) {}
         public QueryColumnQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QueryColumn>(context),new QueryColumnDataMapping()) {}
 		public  QueryColumnPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new QueryColumnKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QueryColumn,string> GetKeys(POCO.QueryColumn entityPOCO) => new QueryColumnKeys<string>() { Id = entityPOCO.Id,  };

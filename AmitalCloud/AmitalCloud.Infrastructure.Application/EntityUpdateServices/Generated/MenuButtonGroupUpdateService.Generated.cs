@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class MenuButtonGroupUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.MenuButtonGroup,MenuButtonGroupPM,IEntityPM,MenuButtonGroupList,string>
+   public partial class MenuButtonGroupUpdateService:BaseEntityUpdateService<POCO.MenuButtonGroup,MenuButtonGroupPM,IEntityPM,MenuButtonGroupList,string>
    {
    			
-        public MenuButtonGroupUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public MenuButtonGroupUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new MenuButtonGroupDataMapping();
-            Repository = new Repository<POCO.MenuButtonGroup>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.MenuButtonGroup>(mainContext);
         }
-        public MenuButtonGroupUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public MenuButtonGroupUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public MenuButtonGroupUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new MenuButtonGroupDataMapping();
+            Repository = new Repository<POCO.MenuButtonGroup>(tenant);
+		}
+        public MenuButtonGroupUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.MenuButtonGroup,string> GetKeys(MenuButtonGroupPM entityPM) => new MenuButtonGroupKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(MenuButtonGroupPM entityPM)
 		{

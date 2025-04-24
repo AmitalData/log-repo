@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DocumentOutCopyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentOutCopy,DocumentOutCopyKeys<string>,DocumentOutCopyPM,DocumentOutCopyList,string>
+   public partial class DocumentOutCopyQueryService: BaseEntityQueryService<POCO.DocumentOutCopy,DocumentOutCopyKeys<string>,DocumentOutCopyPM,DocumentOutCopyList,string>
    {
-        public DocumentOutCopyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DocumentOutCopyQueryService(int tenant) : base(new Repository<POCO.DocumentOutCopy>(tenant),new DocumentOutCopyDataMapping()) {}
         public DocumentOutCopyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentOutCopy>(context),new DocumentOutCopyDataMapping()) {}
 		public  DocumentOutCopyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentOutCopyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentOutCopy,string> GetKeys(POCO.DocumentOutCopy entityPOCO) => new DocumentOutCopyKeys<string>() { Id = entityPOCO.Id,  };

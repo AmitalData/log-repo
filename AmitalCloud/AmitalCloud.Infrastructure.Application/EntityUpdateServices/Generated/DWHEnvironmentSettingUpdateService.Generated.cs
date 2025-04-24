@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DWHEnvironmentSettingUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DWHEnvironmentSetting,DWHEnvironmentSettingPM,IEntityPM,DWHEnvironmentSettingList,int>
+   public partial class DWHEnvironmentSettingUpdateService:BaseEntityUpdateService<POCO.DWHEnvironmentSetting,DWHEnvironmentSettingPM,IEntityPM,DWHEnvironmentSettingList,int>
    {
    			
-        public DWHEnvironmentSettingUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DWHEnvironmentSettingUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DWHEnvironmentSettingDataMapping();
-            Repository = new Repository<POCO.DWHEnvironmentSetting>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DWHEnvironmentSetting>(mainContext);
         }
-        public DWHEnvironmentSettingUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DWHEnvironmentSettingUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DWHEnvironmentSettingUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DWHEnvironmentSettingDataMapping();
+            Repository = new Repository<POCO.DWHEnvironmentSetting>(tenant);
+		}
+        public DWHEnvironmentSettingUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DWHEnvironmentSetting,int> GetKeys(DWHEnvironmentSettingPM entityPM) => new DWHEnvironmentSettingKeys<int>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DWHEnvironmentSettingPM entityPM)
 		{

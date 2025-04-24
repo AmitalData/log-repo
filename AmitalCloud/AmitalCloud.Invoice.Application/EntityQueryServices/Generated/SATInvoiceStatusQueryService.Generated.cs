@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class SATInvoiceStatusQueryService: BaseEntityQueryService<IInvoiceContext,POCO.SATInvoiceStatus,SATInvoiceStatusKeys<string>,SATInvoiceStatusPM,SATInvoiceStatusList,string>
+   public partial class SATInvoiceStatusQueryService: BaseEntityQueryService<POCO.SATInvoiceStatus,SATInvoiceStatusKeys<string>,SATInvoiceStatusPM,SATInvoiceStatusList,string>
    {
-        public SATInvoiceStatusQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public SATInvoiceStatusQueryService(IInvoiceContext context) : base(new Repository<POCO.SATInvoiceStatus>(context),new SATInvoiceStatusDataMapping()) {}
+        public SATInvoiceStatusQueryService(int tenant) : base(new Repository<POCO.SATInvoiceStatus>(tenant),new SATInvoiceStatusDataMapping()) {}
+        public SATInvoiceStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SATInvoiceStatus>(context),new SATInvoiceStatusDataMapping()) {}
 		public  SATInvoiceStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new SATInvoiceStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SATInvoiceStatus,string> GetKeys(POCO.SATInvoiceStatus entityPOCO) => new SATInvoiceStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

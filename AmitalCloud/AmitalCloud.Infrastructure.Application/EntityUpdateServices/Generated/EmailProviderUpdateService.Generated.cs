@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class EmailProviderUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.EmailProvider,EmailProviderPM,IEntityPM,EmailProviderList,string>
+   public partial class EmailProviderUpdateService:BaseEntityUpdateService<POCO.EmailProvider,EmailProviderPM,IEntityPM,EmailProviderList,string>
    {
    			
-        public EmailProviderUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public EmailProviderUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new EmailProviderDataMapping();
-            Repository = new Repository<POCO.EmailProvider>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.EmailProvider>(mainContext);
         }
-        public EmailProviderUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public EmailProviderUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public EmailProviderUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new EmailProviderDataMapping();
+            Repository = new Repository<POCO.EmailProvider>(tenant);
+		}
+        public EmailProviderUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.EmailProvider,string> GetKeys(EmailProviderPM entityPM) => new EmailProviderKeys<string>() { ProviderNumber = entityPM.ProviderNumber };
 protected override void FillDefaultValuesOnCreate(EmailProviderPM entityPM)
 		{

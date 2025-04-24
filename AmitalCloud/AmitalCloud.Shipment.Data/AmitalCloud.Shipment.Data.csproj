@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Domain.dll</HintPath>
     </Reference>
+    <Reference Include="AmitalCloud.Infrastructure.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Model.dll</HintPath>
+    </Reference>
     <Reference Include="AmitalCloud.Invoice.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Bin\AmitalCloud.Invoice.Domain.dll</HintPath>
@@ -119,8 +123,6 @@
       <Link>DependencyValidation1.layerdiagram</Link>
       <Visible>False</Visible>
     </AdditionalFiles>
-    <Compile Include="Context\ShipmentContext.cs" />
-    <Compile Include="Context\ShipmentContext_Invoice.cs" />
     <Compile Include="EntityDataMappings\AccountingInformationIdentifierDataMapping.cs" />
     <Compile Include="EntityDataMappings\AWBAdditionalHandlingInfoDataMapping.cs" />
     <Compile Include="EntityDataMappings\AWBChargesCodeDataMapping.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="EntityDataMappings\Generated\INTTRABookingTransStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\INTTRADocumentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ManifestStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MasterDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MessagingStockDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MessagingStockUsageHistoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OBLTypeDataMapping.Generated.cs" />
@@ -209,6 +212,7 @@
     <Compile Include="EntityDataMappings\INTTRABookingTransStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\INTTRADocumentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ManifestStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MasterDataMapping.cs" />
     <Compile Include="EntityDataMappings\MessagingStockDataMapping.cs" />
     <Compile Include="EntityDataMappings\MessagingStockUsageHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\OBLTypeDataMapping.cs" />

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DocumentTypeCopyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DocumentTypeCopy,DocumentTypeCopyKeys<string>,DocumentTypeCopyPM,DocumentTypeCopyList,string>
+   public partial class DocumentTypeCopyQueryService: BaseEntityQueryService<POCO.DocumentTypeCopy,DocumentTypeCopyKeys<string>,DocumentTypeCopyPM,DocumentTypeCopyList,string>
    {
-        public DocumentTypeCopyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DocumentTypeCopyQueryService(int tenant) : base(new Repository<POCO.DocumentTypeCopy>(tenant),new DocumentTypeCopyDataMapping()) {}
         public DocumentTypeCopyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DocumentTypeCopy>(context),new DocumentTypeCopyDataMapping()) {}
 		public  DocumentTypeCopyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DocumentTypeCopyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DocumentTypeCopy,string> GetKeys(POCO.DocumentTypeCopy entityPOCO) => new DocumentTypeCopyKeys<string>() { Id = entityPOCO.Id,  };

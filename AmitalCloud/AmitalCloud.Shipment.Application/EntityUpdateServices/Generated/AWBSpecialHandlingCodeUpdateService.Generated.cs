@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class AWBSpecialHandlingCodeUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.AWBSpecialHandlingCode,AWBSpecialHandlingCodePM,IEntityPM,AWBSpecialHandlingCodeList,string>
+   public partial class AWBSpecialHandlingCodeUpdateService:BaseEntityUpdateService<POCO.AWBSpecialHandlingCode,AWBSpecialHandlingCodePM,IEntityPM,AWBSpecialHandlingCodeList,string>
    {
    			
-        public AWBSpecialHandlingCodeUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public AWBSpecialHandlingCodeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AWBSpecialHandlingCodeDataMapping();
-            Repository = new Repository<POCO.AWBSpecialHandlingCode>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.AWBSpecialHandlingCode>(mainContext);
         }
-        public AWBSpecialHandlingCodeUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public AWBSpecialHandlingCodeUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public AWBSpecialHandlingCodeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AWBSpecialHandlingCodeDataMapping();
+            Repository = new Repository<POCO.AWBSpecialHandlingCode>(tenant);
+		}
+        public AWBSpecialHandlingCodeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AWBSpecialHandlingCode,string> GetKeys(AWBSpecialHandlingCodePM entityPM) => new AWBSpecialHandlingCodeKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(AWBSpecialHandlingCodePM entityPM)
 		{

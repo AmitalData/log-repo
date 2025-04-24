@@ -6,7 +6,7 @@
 // </auto-generated> ShipmentClassesGenerator.tt
 //---
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
-using AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Shipment.Domain.EntityPMs
 {

@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class BluesnapContractTypeKeys<T> : BaseEntityKeyFields<EntityPOCOs.BluesnapContractType,T> 
+   public class BluesnapContractTypeKeys<T> : BaseEntityKeyFields<ENTITIES.BluesnapContractType,T> 
    {
 		public BluesnapContractTypeKeys() : base() {}
         public BluesnapContractTypeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "BluesnapContractTypesPM";
-	  public override Expression<Func<EntityPOCOs.BluesnapContractType, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.BluesnapContractType, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ColorIndexUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ColorIndex,ColorIndexPM,IEntityPM,ColorIndexList,int>
+   public partial class ColorIndexUpdateService:BaseEntityUpdateService<POCO.ColorIndex,ColorIndexPM,IEntityPM,ColorIndexList,int>
    {
    			
-        public ColorIndexUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ColorIndexUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ColorIndexDataMapping();
-            Repository = new Repository<POCO.ColorIndex>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ColorIndex>(mainContext);
         }
-        public ColorIndexUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ColorIndexUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ColorIndexUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ColorIndexDataMapping();
+            Repository = new Repository<POCO.ColorIndex>(tenant);
+		}
+        public ColorIndexUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ColorIndex,int> GetKeys(ColorIndexPM entityPM) => new ColorIndexKeys<int>() { IndexNumber = entityPM.IndexNumber };
 protected override void FillDefaultValuesOnCreate(ColorIndexPM entityPM)
 		{

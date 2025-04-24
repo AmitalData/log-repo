@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class FeatureChangeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.FeatureChange,FeatureChangeKeys<string>,FeatureChangePM,FeatureChangeList,string>
+   public partial class FeatureChangeQueryService: BaseEntityQueryService<POCO.FeatureChange,FeatureChangeKeys<string>,FeatureChangePM,FeatureChangeList,string>
    {
-        public FeatureChangeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public FeatureChangeQueryService(int tenant) : base(new Repository<POCO.FeatureChange>(tenant),new FeatureChangeDataMapping()) {}
         public FeatureChangeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FeatureChange>(context),new FeatureChangeDataMapping()) {}
 		public  FeatureChangePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new FeatureChangeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FeatureChange,string> GetKeys(POCO.FeatureChange entityPOCO) => new FeatureChangeKeys<string>() { Id = entityPOCO.Id,  };

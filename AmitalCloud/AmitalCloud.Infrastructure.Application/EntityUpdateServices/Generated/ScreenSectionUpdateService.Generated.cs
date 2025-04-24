@@ -9,31 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ScreenSectionUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ScreenSection,ScreenSectionPM,IEntityPM,ScreenSectionList,string>
+   public partial class ScreenSectionUpdateService:BaseEntityUpdateService<POCO.ScreenSection,ScreenSectionPM,IEntityPM,ScreenSectionList,string>
    {
    			
-        public ScreenSectionUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ScreenSectionUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ScreenSectionDataMapping();
-            Repository = new Repository<POCO.ScreenSection>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ScreenSection>(mainContext);
         }
-        public ScreenSectionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ScreenSectionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ScreenSectionUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ScreenSectionDataMapping();
+            Repository = new Repository<POCO.ScreenSection>(tenant);
+		}
+        public ScreenSectionUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ScreenSection,string> GetKeys(ScreenSectionPM entityPM) => new ScreenSectionKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ScreenSectionPM entityPM)
 		{

@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class VatUniqueTypeListQueryService  : BaseEntityListQueryService<VatUniqueTypeList,POCO.VatUniqueType,  VatUniqueTypeKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.VatUniqueType> contextEntity => (context as IAmitalCloudContext).VatUniqueType;
-		public VatUniqueTypeListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public VatUniqueTypeListQueryService(int tenant) : base(tenant) { }
         public VatUniqueTypeList GetSingle(string code)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

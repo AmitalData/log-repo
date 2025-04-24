@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class SATInterfaceSettingQueryService: BaseEntityQueryService<IInvoiceContext,POCO.SATInterfaceSetting,SATInterfaceSettingKeys<int>,SATInterfaceSettingPM,SATInterfaceSettingList,int>
+   public partial class SATInterfaceSettingQueryService: BaseEntityQueryService<POCO.SATInterfaceSetting,SATInterfaceSettingKeys<int>,SATInterfaceSettingPM,SATInterfaceSettingList,int>
    {
-        public SATInterfaceSettingQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public SATInterfaceSettingQueryService(IInvoiceContext context) : base(new Repository<POCO.SATInterfaceSetting>(context),new SATInterfaceSettingDataMapping()) {}
+        public SATInterfaceSettingQueryService(int tenant) : base(new Repository<POCO.SATInterfaceSetting>(tenant),new SATInterfaceSettingDataMapping()) {}
+        public SATInterfaceSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SATInterfaceSetting>(context),new SATInterfaceSettingDataMapping()) {}
 		public  SATInterfaceSettingPM GetSingle(int tenant,bool getComposition, bool getFromCache) => base.GetSingle(new SATInterfaceSettingKeys<int>(){ Tenant = tenant }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SATInterfaceSetting,int> GetKeys(POCO.SATInterfaceSetting entityPOCO) => new SATInterfaceSettingKeys<int>() { Tenant = entityPOCO.Tenant,  };
    }

@@ -1,10 +1,7 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using System;
-using System.Collections.Generic;
+﻿ using AmitalCloud.Infrastructure.Domain.EntityPMs;
+ using AmitalCloud.Infrastructure.Model.EntityClasses;
+ using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmitalCloud.Infrastructure.Domain.DataContracts
 {
@@ -12,8 +9,8 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
     {
         public JSGlobalSettings(SettingPM mySetting = null) 
         {
-            if (mySetting != null)
-            {
+             if (mySetting != null)
+             {
                 Id = mySetting.Id;
                 AmitalURL = mySetting.LogitudeURL;
                 LogoCode = mySetting.LogoCode;
@@ -24,8 +21,8 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
                 DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
                 DeploymentStage = mySetting.DeploymentStage;
                 ReleaseNotesURL = mySetting.ReleaseNotesURL;
-                AmitalDemoTenants = mySetting.LogitudeDemoTenants;
-                TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
+                 AmitalDemoTenants = mySetting.LogitudeDemoTenants;
+                 TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
                 ReleaseDateString = mySetting.ReleaseDateString;
                 DNSZone = mySetting.DNSZone;
             }
@@ -38,8 +35,8 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
         public string WorkEnvironment { get; set; } //customs,main....
         public bool SameUserLoginEnabled { get; set; }
         public string LayoutDirection { get; set; }
-        public string ProductInfo { get;  set; }
-        public string ProductMessage { get;  set; }
+        public string ProductInfo { get; set; }
+        public string ProductMessage { get; set; }
         public bool ReportsRunUsingWR { get; set; }
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }

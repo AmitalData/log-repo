@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class EntityChangeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.EntityChange,EntityChangeKeys<string>,EntityChangePM,EntityChangeList,string>
+   public partial class EntityChangeQueryService: BaseEntityQueryService<POCO.EntityChange,EntityChangeKeys<string>,EntityChangePM,EntityChangeList,string>
    {
-        public EntityChangeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public EntityChangeQueryService(int tenant) : base(new Repository<POCO.EntityChange>(tenant),new EntityChangeDataMapping()) {}
         public EntityChangeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.EntityChange>(context),new EntityChangeDataMapping()) {}
 		public  EntityChangePM GetSingle(string id, string followupautomationfailedxml, string setslaautomationfailedxml,bool getComposition, bool getFromCache) => base.GetSingle(new EntityChangeKeys<string>(){ Id = id, FollowUpAutomationFailedXml = followupautomationfailedxml, SetSLAAutomationFailedXml = setslaautomationfailedxml }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.EntityChange,string> GetKeys(POCO.EntityChange entityPOCO) => new EntityChangeKeys<string>() { Id = entityPOCO.Id, FollowUpAutomationFailedXml = entityPOCO.FollowUpAutomationFailedXml, SetSLAAutomationFailedXml = entityPOCO.SetSLAAutomationFailedXml,  };

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ResponsibilityUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Responsibility,ResponsibilityPM,IEntityPM,ResponsibilityList,string>
+   public partial class ResponsibilityUpdateService:BaseEntityUpdateService<POCO.Responsibility,ResponsibilityPM,IEntityPM,ResponsibilityList,string>
    {
    			
-        public ResponsibilityUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ResponsibilityUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ResponsibilityDataMapping();
-            Repository = new Repository<POCO.Responsibility>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Responsibility>(mainContext);
         }
-        public ResponsibilityUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ResponsibilityUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ResponsibilityUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ResponsibilityDataMapping();
+            Repository = new Repository<POCO.Responsibility>(tenant);
+		}
+        public ResponsibilityUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Responsibility,string> GetKeys(ResponsibilityPM entityPM) => new ResponsibilityKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(ResponsibilityPM entityPM)
 		{

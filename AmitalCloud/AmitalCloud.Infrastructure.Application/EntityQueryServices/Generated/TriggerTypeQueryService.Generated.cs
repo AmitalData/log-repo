@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TriggerTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TriggerType,TriggerTypeKeys<string>,TriggerTypePM,TriggerTypeList,string>
+   public partial class TriggerTypeQueryService: BaseEntityQueryService<POCO.TriggerType,TriggerTypeKeys<string>,TriggerTypePM,TriggerTypeList,string>
    {
-        public TriggerTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TriggerTypeQueryService(int tenant) : base(new Repository<POCO.TriggerType>(tenant),new TriggerTypeDataMapping()) {}
         public TriggerTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TriggerType>(context),new TriggerTypeDataMapping()) {}
 		public  TriggerTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new TriggerTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TriggerType,string> GetKeys(POCO.TriggerType entityPOCO) => new TriggerTypeKeys<string>() { Code = entityPOCO.Code,  };

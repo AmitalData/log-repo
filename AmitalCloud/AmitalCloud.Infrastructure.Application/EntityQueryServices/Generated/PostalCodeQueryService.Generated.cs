@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class PostalCodeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PostalCode,PostalCodeKeys<string>,PostalCodePM,PostalCodeList,string>
+   public partial class PostalCodeQueryService: BaseEntityQueryService<POCO.PostalCode,PostalCodeKeys<string>,PostalCodePM,PostalCodeList,string>
    {
-        public PostalCodeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public PostalCodeQueryService(int tenant) : base(new Repository<POCO.PostalCode>(tenant),new PostalCodeDataMapping()) {}
         public PostalCodeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PostalCode>(context),new PostalCodeDataMapping()) {}
 		public  PostalCodePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new PostalCodeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PostalCode,string> GetKeys(POCO.PostalCode entityPOCO) => new PostalCodeKeys<string>() { Code = entityPOCO.Code,  };

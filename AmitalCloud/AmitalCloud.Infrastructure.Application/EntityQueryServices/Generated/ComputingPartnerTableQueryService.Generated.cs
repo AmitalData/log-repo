@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ComputingPartnerTableQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ComputingPartnerTable,ComputingPartnerTableKeys<string>,ComputingPartnerTablePM,ComputingPartnerTableList,string>
+   public partial class ComputingPartnerTableQueryService: BaseEntityQueryService<POCO.ComputingPartnerTable,ComputingPartnerTableKeys<string>,ComputingPartnerTablePM,ComputingPartnerTableList,string>
    {
-        public ComputingPartnerTableQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ComputingPartnerTableQueryService(int tenant) : base(new Repository<POCO.ComputingPartnerTable>(tenant),new ComputingPartnerTableDataMapping()) {}
         public ComputingPartnerTableQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ComputingPartnerTable>(context),new ComputingPartnerTableDataMapping()) {}
 		public  ComputingPartnerTablePM GetSingle(int tenant, string objecttableid, string computingpartnerid,bool getComposition, bool getFromCache) => base.GetSingle(new ComputingPartnerTableKeys<string>(){ Tenant = tenant, ObjectTableId = objecttableid, ComputingPartnerId = computingpartnerid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ComputingPartnerTable,string> GetKeys(POCO.ComputingPartnerTable entityPOCO) => new ComputingPartnerTableKeys<string>() { Tenant = entityPOCO.Tenant, ObjectTableId = entityPOCO.ObjectTableId, ComputingPartnerId = entityPOCO.ComputingPartnerId,  };

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class QuoteTemplateTableDesignQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QuoteTemplateTableDesign,QuoteTemplateTableDesignKeys<string>,QuoteTemplateTableDesignPM,QuoteTemplateTableDesignList,string>
+   public partial class QuoteTemplateTableDesignQueryService: BaseEntityQueryService<POCO.QuoteTemplateTableDesign,QuoteTemplateTableDesignKeys<string>,QuoteTemplateTableDesignPM,QuoteTemplateTableDesignList,string>
    {
-        public QuoteTemplateTableDesignQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public QuoteTemplateTableDesignQueryService(int tenant) : base(new Repository<POCO.QuoteTemplateTableDesign>(tenant),new QuoteTemplateTableDesignDataMapping()) {}
         public QuoteTemplateTableDesignQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QuoteTemplateTableDesign>(context),new QuoteTemplateTableDesignDataMapping()) {}
 		public  QuoteTemplateTableDesignPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new QuoteTemplateTableDesignKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QuoteTemplateTableDesign,string> GetKeys(POCO.QuoteTemplateTableDesign entityPOCO) => new QuoteTemplateTableDesignKeys<string>() { Id = entityPOCO.Id,  };

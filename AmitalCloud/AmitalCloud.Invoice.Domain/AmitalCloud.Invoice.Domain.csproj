@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Domain.dll</HintPath>
     </Reference>
+    <Reference Include="AmitalCloud.Infrastructure.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Model.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -164,50 +168,6 @@
     <Compile Include="EntityLists\Generated\SATInvoiceStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SATPaymentMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SATTransferStatusList.Generated.cs" />
-    <Compile Include="EntityMapping\AccountingPaymentMethodMap.cs" />
-    <Compile Include="EntityMapping\AccountingSystemsSettingMap.cs" />
-    <Compile Include="EntityMapping\AccountingSystemsSyncStatusMap.cs" />
-    <Compile Include="EntityMapping\AccountingTransferHeaderMap.cs" />
-    <Compile Include="EntityMapping\AccountingTransferLineMap.cs" />
-    <Compile Include="EntityMapping\AccountingTransferTypeMap.cs" />
-    <Compile Include="EntityMapping\APInvoiceLineMap.cs" />
-    <Compile Include="EntityMapping\APInvoiceMap.cs" />
-    <Compile Include="EntityMapping\APInvoicePaymentMap.cs" />
-    <Compile Include="EntityMapping\APInvoiceStatusMap.cs" />
-    <Compile Include="EntityMapping\APInvoiceTotalVATMap.cs" />
-    <Compile Include="EntityMapping\APInvoiceTransferStatusMap.cs" />
-    <Compile Include="EntityMapping\APInvoiceTypeMap.cs" />
-    <Compile Include="EntityMapping\APPaymentMap.cs" />
-    <Compile Include="EntityMapping\APPaymentStatusMap.cs" />
-    <Compile Include="EntityMapping\APPaymentTransferStatusMap.cs" />
-    <Compile Include="EntityMapping\ARInvoiceLineMap.cs" />
-    <Compile Include="EntityMapping\ARInvoiceMap.cs" />
-    <Compile Include="EntityMapping\ARInvoicePaymentMap.cs" />
-    <Compile Include="EntityMapping\ARInvoicesSignedStatusMap.cs" />
-    <Compile Include="EntityMapping\ARInvoiceStatusMap.cs" />
-    <Compile Include="EntityMapping\ARInvoiceStockLineMap.cs" />
-    <Compile Include="EntityMapping\ARInvoiceStockMap.cs" />
-    <Compile Include="EntityMapping\ARInvoiceStocksStatusMap.cs" />
-    <Compile Include="EntityMapping\ARInvoiceTotalVatMap.cs" />
-    <Compile Include="EntityMapping\ARInvoiceTransferStatusMap.cs" />
-    <Compile Include="EntityMapping\ARInvoiceTypeMap.cs" />
-    <Compile Include="EntityMapping\ARPaymentBankTranferMap.cs" />
-    <Compile Include="EntityMapping\ARPaymentChequeReplicaMap.cs" />
-    <Compile Include="EntityMapping\ARPaymentMap.cs" />
-    <Compile Include="EntityMapping\ARPaymentStatusMap.cs" />
-    <Compile Include="EntityMapping\ARPaymentTransferStatusMap.cs" />
-    <Compile Include="EntityMapping\BankAccountLiteMap.cs" />
-    <Compile Include="EntityMapping\ConfirmationNumberDefaultMap.cs" />
-    <Compile Include="EntityMapping\ConfirmationNumberStatusMap.cs" />
-    <Compile Include="EntityMapping\CreditCardTypeMap.cs" />
-    <Compile Include="EntityMapping\ExternalSystemsTablesCodeMap.cs" />
-    <Compile Include="EntityMapping\Manual\APInvoiceEntityMap.cs" />
-    <Compile Include="EntityMapping\QBOGlobalTaxCalculationMap.cs" />
-    <Compile Include="EntityMapping\SATInterfaceMap.cs" />
-    <Compile Include="EntityMapping\SATInterfaceSettingMap.cs" />
-    <Compile Include="EntityMapping\SATInvoiceStatusMap.cs" />
-    <Compile Include="EntityMapping\SATPaymentMethodMap.cs" />
-    <Compile Include="EntityMapping\SATTransferStatusMap.cs" />
     <Compile Include="EntityPMs\Manual\APInvoiceEntityPM.cs" />
     <Compile Include="EntityPMs\Manual\APInvoiceMultipleShipmentPM.cs" />
     <Compile Include="EntityPMs\Manual\APInvoiceMultipleShortPM.cs" />
@@ -272,55 +232,6 @@
     <Compile Include="EntityPMs\Generated\SATTransferStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Manual\LedgerTransactionPM.cs" />
     <Compile Include="EntityPMs\Manual\QuickbooksSyncRequestTicketPM.cs" />
-    <Compile Include="EntityPOCOs\AccountingPaymentMethod.cs" />
-    <Compile Include="EntityPOCOs\AccountingSystemsSetting.cs" />
-    <Compile Include="EntityPOCOs\AccountingSystemsSyncStatus.cs" />
-    <Compile Include="EntityPOCOs\AccountingTransferHeader.cs" />
-    <Compile Include="EntityPOCOs\AccountingTransferLine.cs" />
-    <Compile Include="EntityPOCOs\AccountingTransferType.cs" />
-    <Compile Include="EntityPOCOs\APInvoice.cs" />
-    <Compile Include="EntityPOCOs\APInvoiceLine.cs" />
-    <Compile Include="EntityPOCOs\APInvoicePayment.cs" />
-    <Compile Include="EntityPOCOs\APInvoiceStatus.cs" />
-    <Compile Include="EntityPOCOs\APInvoiceTotalVAT.cs" />
-    <Compile Include="EntityPOCOs\APInvoiceTransferStatus.cs" />
-    <Compile Include="EntityPOCOs\APInvoiceType.cs" />
-    <Compile Include="EntityPOCOs\APPayment.cs" />
-    <Compile Include="EntityPOCOs\APPaymentStatus.cs" />
-    <Compile Include="EntityPOCOs\APPaymentTransferStatus.cs" />
-    <Compile Include="EntityPOCOs\ARInvoice.cs" />
-    <Compile Include="EntityPOCOs\ARInvoiceLine.cs" />
-    <Compile Include="EntityPOCOs\ARInvoicePayment.cs" />
-    <Compile Include="EntityPOCOs\ARInvoicesSignedStatus.cs" />
-    <Compile Include="EntityPOCOs\ARInvoiceStatus.cs" />
-    <Compile Include="EntityPOCOs\ARInvoiceStock.cs" />
-    <Compile Include="EntityPOCOs\ARInvoiceStockLine.cs" />
-    <Compile Include="EntityPOCOs\ARInvoiceStocksStatus.cs" />
-    <Compile Include="EntityPOCOs\ARInvoiceTotalVat.cs" />
-    <Compile Include="EntityPOCOs\ARInvoiceTransferStatus.cs" />
-    <Compile Include="EntityPOCOs\ARInvoiceType.cs" />
-    <Compile Include="EntityPOCOs\ARPayment.cs" />
-    <Compile Include="EntityPOCOs\ARPaymentBankTranfer.cs" />
-    <Compile Include="EntityPOCOs\ARPaymentChequeReplica.cs" />
-    <Compile Include="EntityPOCOs\ARPaymentStatus.cs" />
-    <Compile Include="EntityPOCOs\ARPaymentTransferStatus.cs" />
-    <Compile Include="EntityPOCOs\BankAccountLite.cs" />
-    <Compile Include="EntityPOCOs\ConfirmationNumberDefault.cs" />
-    <Compile Include="EntityPOCOs\ConfirmationNumberStatus.cs" />
-    <Compile Include="EntityPOCOs\CreditCardType.cs" />
-    <Compile Include="EntityPOCOs\ExternalSystemsTablesCode.cs" />
-    <Compile Include="EntityPOCOs\Manual\APInvoiceEntity.cs" />
-    <Compile Include="EntityPOCOs\Manual\ARInvoiceLineAction.cs" />
-    <Compile Include="EntityPOCOs\Manual\ARPaymentChequeStatus.cs" />
-    <Compile Include="EntityPOCOs\Manual\BankAccount.cs" />
-    <Compile Include="EntityPOCOs\Manual\BankCode.cs" />
-    <Compile Include="EntityPOCOs\QBOGlobalTaxCalculation.cs" />
-    <Compile Include="EntityPOCOs\SATInterface.cs" />
-    <Compile Include="EntityPOCOs\SATInterfaceSetting.cs" />
-    <Compile Include="EntityPOCOs\SATInvoiceStatus.cs" />
-    <Compile Include="EntityPOCOs\SATPaymentMethod.cs" />
-    <Compile Include="EntityPOCOs\SATTransferStatus.cs" />
-    <Compile Include="Interfaces\IInvoiceContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IInvoiceClassLevelValidator.cs" />
     <Compile Include="Interfaces\IInvoiceValidationClass.cs" />

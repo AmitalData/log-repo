@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentReceivableQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentReceivable,ShipmentReceivableKeys<string>,ShipmentReceivablePM,ShipmentReceivableList,string>
+   public partial class ShipmentReceivableQueryService: BaseEntityQueryService<POCO.ShipmentReceivable,ShipmentReceivableKeys<string>,ShipmentReceivablePM,ShipmentReceivableList,string>
    {
-        public ShipmentReceivableQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentReceivableQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentReceivable>(context),new ShipmentReceivableDataMapping()) {}
+        public ShipmentReceivableQueryService(int tenant) : base(new Repository<POCO.ShipmentReceivable>(tenant),new ShipmentReceivableDataMapping()) {}
+        public ShipmentReceivableQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentReceivable>(context),new ShipmentReceivableDataMapping()) {}
 		public  ShipmentReceivablePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentReceivableKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentReceivable,string> GetKeys(POCO.ShipmentReceivable entityPOCO) => new ShipmentReceivableKeys<string>() { Id = entityPOCO.Id,  };
    }

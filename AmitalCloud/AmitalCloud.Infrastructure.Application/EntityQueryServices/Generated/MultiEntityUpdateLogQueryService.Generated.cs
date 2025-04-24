@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class MultiEntityUpdateLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.MultiEntityUpdateLog,MultiEntityUpdateLogKeys<string>,MultiEntityUpdateLogPM,MultiEntityUpdateLogList,string>
+   public partial class MultiEntityUpdateLogQueryService: BaseEntityQueryService<POCO.MultiEntityUpdateLog,MultiEntityUpdateLogKeys<string>,MultiEntityUpdateLogPM,MultiEntityUpdateLogList,string>
    {
-        public MultiEntityUpdateLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public MultiEntityUpdateLogQueryService(int tenant) : base(new Repository<POCO.MultiEntityUpdateLog>(tenant),new MultiEntityUpdateLogDataMapping()) {}
         public MultiEntityUpdateLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.MultiEntityUpdateLog>(context),new MultiEntityUpdateLogDataMapping()) {}
 		public  MultiEntityUpdateLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new MultiEntityUpdateLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.MultiEntityUpdateLog,string> GetKeys(POCO.MultiEntityUpdateLog entityPOCO) => new MultiEntityUpdateLogKeys<string>() { Id = entityPOCO.Id,  };

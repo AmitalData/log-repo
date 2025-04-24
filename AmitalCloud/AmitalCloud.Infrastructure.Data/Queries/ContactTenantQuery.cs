@@ -1,7 +1,6 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Repositories;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Linq;
 
@@ -13,7 +12,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         public ContactTenantQuery(int tenant)
         {
-            repository = new Repository<ContactTenant>(AmitalCloudContext.GetContext(tenant));
+            repository = new Repository<ContactTenant>(tenant);
         }
         public ContactTenantQuery(IRepository<ContactTenant> contactTenantRepository)
         {

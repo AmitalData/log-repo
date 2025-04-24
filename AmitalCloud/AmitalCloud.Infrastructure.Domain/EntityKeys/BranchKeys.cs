@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class BranchKeys<T> : BaseEntityKeyFields<EntityPOCOs.Branch,T> 
+   public class BranchKeys<T> : BaseEntityKeyFields<ENTITIES.Branch,T> 
    {
 		public BranchKeys() : base() {}
         public BranchKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "BranchesPM";
-	  public override Expression<Func<EntityPOCOs.Branch, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.Branch, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

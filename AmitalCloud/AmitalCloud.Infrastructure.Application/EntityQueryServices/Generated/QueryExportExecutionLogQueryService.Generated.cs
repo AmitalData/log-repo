@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class QueryExportExecutionLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QueryExportExecutionLog,QueryExportExecutionLogKeys<string>,QueryExportExecutionLogPM,QueryExportExecutionLogList,string>
+   public partial class QueryExportExecutionLogQueryService: BaseEntityQueryService<POCO.QueryExportExecutionLog,QueryExportExecutionLogKeys<string>,QueryExportExecutionLogPM,QueryExportExecutionLogList,string>
    {
-        public QueryExportExecutionLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public QueryExportExecutionLogQueryService(int tenant) : base(new Repository<POCO.QueryExportExecutionLog>(tenant),new QueryExportExecutionLogDataMapping()) {}
         public QueryExportExecutionLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QueryExportExecutionLog>(context),new QueryExportExecutionLogDataMapping()) {}
 		public  QueryExportExecutionLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new QueryExportExecutionLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QueryExportExecutionLog,string> GetKeys(POCO.QueryExportExecutionLog entityPOCO) => new QueryExportExecutionLogKeys<string>() { Id = entityPOCO.Id,  };

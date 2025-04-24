@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentLevelQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentLevel,ShipmentLevelKeys<string>,ShipmentLevelPM,ShipmentLevelList,string>
+   public partial class ShipmentLevelQueryService: BaseEntityQueryService<POCO.ShipmentLevel,ShipmentLevelKeys<string>,ShipmentLevelPM,ShipmentLevelList,string>
    {
-        public ShipmentLevelQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentLevelQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentLevel>(context),new ShipmentLevelDataMapping()) {}
+        public ShipmentLevelQueryService(int tenant) : base(new Repository<POCO.ShipmentLevel>(tenant),new ShipmentLevelDataMapping()) {}
+        public ShipmentLevelQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentLevel>(context),new ShipmentLevelDataMapping()) {}
 		public  ShipmentLevelPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentLevelKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentLevel,string> GetKeys(POCO.ShipmentLevel entityPOCO) => new ShipmentLevelKeys<string>() { Code = entityPOCO.Code,  };
    }

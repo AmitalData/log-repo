@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class StateUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.State,StatePM,IEntityPM,StateList,string>
+   public partial class StateUpdateService:BaseEntityUpdateService<POCO.State,StatePM,IEntityPM,StateList,string>
    {
    			
-        public StateUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public StateUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new StateDataMapping();
-            Repository = new Repository<POCO.State>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.State>(mainContext);
         }
-        public StateUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public StateUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public StateUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new StateDataMapping();
+            Repository = new Repository<POCO.State>(tenant);
+		}
+        public StateUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.State,string> GetKeys(StatePM entityPM) => new StateKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(StatePM entityPM)
 		{

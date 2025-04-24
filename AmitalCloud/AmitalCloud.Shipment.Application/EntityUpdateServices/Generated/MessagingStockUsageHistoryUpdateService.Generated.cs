@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class MessagingStockUsageHistoryUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.MessagingStockUsageHistory,MessagingStockUsageHistoryPM,MessagingStockPM,MessagingStockUsageHistoryList,string>
+   public partial class MessagingStockUsageHistoryUpdateService:BaseEntityUpdateService<POCO.MessagingStockUsageHistory,MessagingStockUsageHistoryPM,MessagingStockPM,MessagingStockUsageHistoryList,string>
    {
    			
-        public MessagingStockUsageHistoryUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public MessagingStockUsageHistoryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new MessagingStockUsageHistoryDataMapping();
-            Repository = new Repository<POCO.MessagingStockUsageHistory>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.MessagingStockUsageHistory>(mainContext);
         }
-        public MessagingStockUsageHistoryUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public MessagingStockUsageHistoryUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public MessagingStockUsageHistoryUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new MessagingStockUsageHistoryDataMapping();
+            Repository = new Repository<POCO.MessagingStockUsageHistory>(tenant);
+		}
+        public MessagingStockUsageHistoryUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.MessagingStockUsageHistory,string> GetKeys(MessagingStockUsageHistoryPM entityPM) => new MessagingStockUsageHistoryKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(MessagingStockUsageHistoryPM entityPM)
 		{

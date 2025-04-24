@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerProductUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerProduct,CustomerProductPM,CustomerPM,CustomerProductList,string>
+   public partial class CustomerProductUpdateService:BaseEntityUpdateService<POCO.CustomerProduct,CustomerProductPM,CustomerPM,CustomerProductList,string>
    {
    			
-        public CustomerProductUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerProductUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerProductDataMapping();
-            Repository = new Repository<POCO.CustomerProduct>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerProduct>(mainContext);
         }
-        public CustomerProductUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerProductUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerProductUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerProductDataMapping();
+            Repository = new Repository<POCO.CustomerProduct>(tenant);
+		}
+        public CustomerProductUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerProduct,string> GetKeys(CustomerProductPM entityPM) => new CustomerProductKeys<string>() { CustomerId = entityPM.CustomerId, ProductTypeCode = entityPM.ProductTypeCode };
 protected override void FillDefaultValuesOnCreate(CustomerProductPM entityPM)
 		{

@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class BIReportsExecutionLogKeys<T> : BaseEntityKeyFields<EntityPOCOs.BIReportsExecutionLog,T> 
+   public class BIReportsExecutionLogKeys<T> : BaseEntityKeyFields<ENTITIES.BIReportsExecutionLog,T> 
    {
 		public BIReportsExecutionLogKeys() : base() {}
         public BIReportsExecutionLogKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "BIReportsExecutionLogsPM";
-	  public override Expression<Func<EntityPOCOs.BIReportsExecutionLog, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.BIReportsExecutionLog, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

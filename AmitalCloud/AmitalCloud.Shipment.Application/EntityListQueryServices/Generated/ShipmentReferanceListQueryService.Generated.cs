@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityLists ;
 using AmitalCloud.Shipment.Domain.EntityKeys ;
-using AmitalCloud.Shipment.Data.Context ;
-using AmitalCloud.Shipment.Domain.Interfaces ;
 namespace AmitalCloud.Shipment.Application.EntityListQueryServices
 { 
     public partial class ShipmentReferanceListQueryService  : BaseEntityListQueryService<ShipmentReferanceList,POCO.ShipmentReferance,  ShipmentReferanceKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ShipmentReferance> contextEntity => (context as IShipmentContext).ShipmentReferances;
-		public ShipmentReferanceListQueryService(int tenant) : base(ShipmentContext.GetContext(tenant)) { }
+		public ShipmentReferanceListQueryService(int tenant) : base(tenant) { }
         public ShipmentReferanceList GetSingle(string shipmentid)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

@@ -48,10 +48,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Application.dll</HintPath>
     </Reference>
-    <Reference Include="AmitalCloud.Infrastructure.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.BL.dll</HintPath>
-    </Reference>
     <Reference Include="AmitalCloud.Infrastructure.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Web.dll</HintPath>
@@ -153,7 +149,6 @@
     <Compile Include="Controllers\Generated\Listcontrollers\AWBInformationViewsController.Generated.cs" />
     <Compile Include="Controllers\Generated\Listcontrollers\AWBSpecialHandlingCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\Generated\Listcontrollers\OtherParticipantIdViewsController.Generated.cs" />
-    <Compile Include="Controllers\Generated\PMControllers\AWBSpecialHandlingCodeController.Generated.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -173,6 +168,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\" />
+    <Folder Include="Controllers\Generated\PMControllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +182,10 @@
     <ProjectReference Include="..\AmitalCloud.Infrastructure.Domain\AmitalCloud.Infrastructure.Domain.csproj">
       <Project>{1CB82E4E-88FF-4772-BFD6-5EC33B23F1CF}</Project>
       <Name>AmitalCloud.Infrastructure.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Model\AmitalCloud.Infrastructure.Model.csproj">
+      <Project>{B03864C5-0C52-465B-9206-3FFF150413B9}</Project>
+      <Name>AmitalCloud.Infrastructure.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\AmitalCloud.Shipment.Application\AmitalCloud.Shipment.Application.csproj">
       <Project>{664d7d80-1761-4f4b-8403-99ab9573876c}</Project>

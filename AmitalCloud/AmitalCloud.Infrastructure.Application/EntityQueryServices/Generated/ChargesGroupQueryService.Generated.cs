@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ChargesGroupQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ChargesGroup,ChargesGroupKeys<string>,ChargesGroupPM,ChargesGroupList,string>
+   public partial class ChargesGroupQueryService: BaseEntityQueryService<POCO.ChargesGroup,ChargesGroupKeys<string>,ChargesGroupPM,ChargesGroupList,string>
    {
-        public ChargesGroupQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ChargesGroupQueryService(int tenant) : base(new Repository<POCO.ChargesGroup>(tenant),new ChargesGroupDataMapping()) {}
         public ChargesGroupQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ChargesGroup>(context),new ChargesGroupDataMapping()) {}
 		public  ChargesGroupPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ChargesGroupKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ChargesGroup,string> GetKeys(POCO.ChargesGroup entityPOCO) => new ChargesGroupKeys<string>() { Id = entityPOCO.Id,  };

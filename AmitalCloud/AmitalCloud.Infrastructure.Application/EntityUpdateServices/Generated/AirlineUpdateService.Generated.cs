@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class AirlineUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Airline,AirlinePM,IEntityPM,AirlineList,string>
+   public partial class AirlineUpdateService:BaseEntityUpdateService<POCO.Airline,AirlinePM,IEntityPM,AirlineList,string>
    {
    			
-        public AirlineUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public AirlineUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AirlineDataMapping();
-            Repository = new Repository<POCO.Airline>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Airline>(mainContext);
         }
-        public AirlineUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public AirlineUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public AirlineUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AirlineDataMapping();
+            Repository = new Repository<POCO.Airline>(tenant);
+		}
+        public AirlineUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Airline,string> GetKeys(AirlinePM entityPM) => new AirlineKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(AirlinePM entityPM)
 		{

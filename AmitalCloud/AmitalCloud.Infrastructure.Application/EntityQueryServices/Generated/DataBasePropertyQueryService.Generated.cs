@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DataBasePropertyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DataBaseProperty,DataBasePropertyKeys<int>,DataBasePropertyPM,DataBasePropertyList,int>
+   public partial class DataBasePropertyQueryService: BaseEntityQueryService<POCO.DataBaseProperty,DataBasePropertyKeys<int>,DataBasePropertyPM,DataBasePropertyList,int>
    {
-        public DataBasePropertyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DataBasePropertyQueryService(int tenant) : base(new Repository<POCO.DataBaseProperty>(tenant),new DataBasePropertyDataMapping()) {}
         public DataBasePropertyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DataBaseProperty>(context),new DataBasePropertyDataMapping()) {}
 		public  DataBasePropertyPM GetSingle(int databasenumber,bool getComposition, bool getFromCache) => base.GetSingle(new DataBasePropertyKeys<int>(){ DataBaseNumber = databasenumber }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DataBaseProperty,int> GetKeys(POCO.DataBaseProperty entityPOCO) => new DataBasePropertyKeys<int>() { DataBaseNumber = entityPOCO.DataBaseNumber,  };

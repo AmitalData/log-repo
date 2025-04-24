@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //-----
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.EntityClasses;
 using System.Data.Entity;
 
 namespace AmitalCloud.Infrastructure.Domain.Interfaces

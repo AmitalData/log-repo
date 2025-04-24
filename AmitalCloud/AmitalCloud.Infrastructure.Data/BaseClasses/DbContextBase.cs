@@ -1,8 +1,7 @@
-﻿using AmitalCloud.Infrastructure.Data.DBHelpers;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Enums;
+﻿using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using Devart.Data.Oracle;
+using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Model.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +16,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using IsolationLevel = System.Transactions.IsolationLevel;
+using AmitalCloud.Infrastructure.Data.DBHelpers;
 namespace AmitalCloud.Infrastructure.Data.BaseClasses
 {
     public abstract class DbContextBase : DbContext
@@ -201,15 +201,15 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
             {
                 return;
             }
-            if (DBHelpers.DbContextBaseUtil.ToLog == null)
+            if (DbContextBaseUtil.ToLog == null)
             {
-                DBHelpers.DbContextBaseUtil.ToLog = false;
+                DbContextBaseUtil.ToLog = false;
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"DbContextBase:ToLog:(Default:False due Memory Leak if not Disposed)Any time any place u can set: 
                         DBHelpers.DbContextBaseUtil.ToLog =true;");
                 AmitalCloudDebuggerUtil.Break();
             }
-            DBHelpers.DbContextBaseUtil.ToLog = DBHelpers.DbContextBaseUtil.ToLog;
-            if (DBHelpers.DbContextBaseUtil.ToLog.GetValueOrDefault())
+            DbContextBaseUtil.ToLog = DbContextBaseUtil.ToLog;
+            if (DbContextBaseUtil.ToLog.GetValueOrDefault())
             {
                 TransactionFactory.RegisterTransactionCompleted();
                 this.Database.Log += EnqueueLog;
@@ -299,53 +299,6 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
             }
         }
         static string _UserSlashPass = null;
-        public void ExecuteInSys(string mainConnectionString, List<string> unifreightTables, Func<string> GetConnetionStringFunc)
-        {
-            var UserSlashPass = _UserSlashPass ?? GetConnetionStringFunc();
-            var UserSlashPassList = new List<string>(UserSlashPass.Split(new char[] { '/' }));
-            var main_ocsb = new OracleConnectionStringBuilder(mainConnectionString);
-            var sys = new OracleConnectionStringBuilder()
-            {
-                Direct = main_ocsb.Direct,
-                Server = main_ocsb.Server,
-                Port = main_ocsb.Port,
-                Sid = main_ocsb.Sid,
-                UserId = UserSlashPassList[0],
-                Password = UserSlashPassList[1],
-            };
-            var lines = unifreightTables
-                .Select(tbl => string.Format("GRANT select ,insert ,update ,delete on  {0}  TO {1} ", tbl, main_ocsb.UserId))
-                .ToList();
-            var mySysConnection = new OracleConnection(sys.ConnectionString);
-            mySysConnection.Open();
-            try
-            {
-                foreach (var line in lines)
-                {
-                    try
-                    {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(line + " ;");
-                        OracleCommand myCommand = mySysConnection.CreateCommand(line);//"INSERT INTO Test.Dept(DeptNo, DName) Values(50, 'DEVELOPMENT')");
-                        myCommand.ExecuteNonQuery();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(line);
-                        if (line.Contains(".GAQ"))
-                        {
-                        }
-                        else
-                        {
-                            throw new Exception(line, e);
-                        }
-                    }
-                }
-            }
-            finally
-            {
-                mySysConnection.Close();
-            }
-        }
         public List<string> GetTableNames(string pocoNamespace)
         {
             List<string> tableNameList = new List<string>();
@@ -385,18 +338,6 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
         const bool FeatureRemoveCaseInsensitive = true;
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            if (AmitalCloudSettings.DatabaseManagementSystem != "oracle")
-            {
-                return;
-            }
-            var connStr = this.Database.Connection.ConnectionString;
-            var oraCSB = new OracleConnectionStringBuilder(connStr);
-            var ConnSchemaUserId = oraCSB.UserId;
-            if (DBHelpers.DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
-            {
-                modelBuilder.SetDefaultSchema(AmitalCloudDBSchema, ConnSchemaUserId);
-            }
-            base.OnModelCreating(modelBuilder);
         }
         public Nullable<returnType> ExecuteReaderSingleResult<returnType>(string sqlReturn1Row, Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader)
         where returnType : struct
@@ -439,53 +380,6 @@ namespace AmitalCloud.Infrastructure.Data.BaseClasses
                     return ReturnValue;
                 }
             }
-
-        }
-        public int ExecuteNonQuery(string sqlReturn1Row)
-        {
-
-
-
-
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sqlReturn1Row);
-
-
-
-            using (var connection =
-              new OracleConnection(
-                  /*"User Id=Scott;Password=tiger;Data Source=Ora;"*/
-                  this.Database.Connection.ConnectionString)
-            )
-            {
-                using (var command = new OracleCommand(sqlReturn1Row, connection))
-                {
-                    ///AddParams(command, MyParams);
-                    command.CommandType = CommandType.Text;
-                    int rowsAffected = command.ExecuteNonQuery();
-                    // todo get affected ????????????
-                    //For UPDATE, INSERT, and DELETE statements, the return value is the number of rows affected by the command. For all other types of statements, the return value is -1. If a rollback occurs, the return value is also -1.
-
-                    return rowsAffected;
-
-
-                }
-            }
-
-            //using (var command = this.Database.Connection.CreateCommand())
-            //{
-
-
-            //    if (this.Database.Connection.State != System.Data.ConnectionState.Open)
-            //    {
-            //        this.Database.Connection.Open();
-            //    }
-            //    command.CommandText = sqlReturn1Row;
-
-
-            //    int affect = command.ExecuteNonQuery();
-            //    return affect;
-
-            //}
 
         }
     }

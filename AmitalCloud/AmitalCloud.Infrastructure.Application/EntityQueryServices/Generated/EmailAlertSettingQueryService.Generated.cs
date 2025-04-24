@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class EmailAlertSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.EmailAlertSetting,EmailAlertSettingKeys<string>,EmailAlertSettingPM,EmailAlertSettingList,string>
+   public partial class EmailAlertSettingQueryService: BaseEntityQueryService<POCO.EmailAlertSetting,EmailAlertSettingKeys<string>,EmailAlertSettingPM,EmailAlertSettingList,string>
    {
-        public EmailAlertSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public EmailAlertSettingQueryService(int tenant) : base(new Repository<POCO.EmailAlertSetting>(tenant),new EmailAlertSettingDataMapping()) {}
         public EmailAlertSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.EmailAlertSetting>(context),new EmailAlertSettingDataMapping()) {}
 		public  EmailAlertSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new EmailAlertSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.EmailAlertSetting,string> GetKeys(POCO.EmailAlertSetting entityPOCO) => new EmailAlertSettingKeys<string>() { Id = entityPOCO.Id,  };

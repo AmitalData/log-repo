@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class ToggleKeys<T> : BaseEntityKeyFields<EntityPOCOs.Toggle,T> 
+   public class ToggleKeys<T> : BaseEntityKeyFields<ENTITIES.Toggle,T> 
    {
 		public ToggleKeys() : base() {}
         public ToggleKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "TogglesPM";
-	  public override Expression<Func<EntityPOCOs.Toggle, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.Toggle, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

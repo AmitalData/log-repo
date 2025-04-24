@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ChangePasswordLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ChangePasswordLog,ChangePasswordLogKeys<string>,ChangePasswordLogPM,ChangePasswordLogList,string>
+   public partial class ChangePasswordLogQueryService: BaseEntityQueryService<POCO.ChangePasswordLog,ChangePasswordLogKeys<string>,ChangePasswordLogPM,ChangePasswordLogList,string>
    {
-        public ChangePasswordLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ChangePasswordLogQueryService(int tenant) : base(new Repository<POCO.ChangePasswordLog>(tenant),new ChangePasswordLogDataMapping()) {}
         public ChangePasswordLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ChangePasswordLog>(context),new ChangePasswordLogDataMapping()) {}
 		public  ChangePasswordLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ChangePasswordLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ChangePasswordLog,string> GetKeys(POCO.ChangePasswordLog entityPOCO) => new ChangePasswordLogKeys<string>() { Id = entityPOCO.Id,  };

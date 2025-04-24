@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data;
 using AmitalCloud.Invoice.Domain.EntityLists;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
-using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Data.Context;
 
 namespace AmitalCloud.Invoice.Application.EntityUpdateServices
 { 
-   public partial class AccountingSystemsSyncStatusUpdateService:BaseEntityUpdateService<InvoiceContext,POCO.AccountingSystemsSyncStatus,AccountingSystemsSyncStatusPM,IEntityPM,AccountingSystemsSyncStatusList,string>
+   public partial class AccountingSystemsSyncStatusUpdateService:BaseEntityUpdateService<POCO.AccountingSystemsSyncStatus,AccountingSystemsSyncStatusPM,IEntityPM,AccountingSystemsSyncStatusList,string>
    {
    			
-        public AccountingSystemsSyncStatusUpdateService(IInvoiceContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((InvoiceContext)mainContext,additionalContexts, tenant)
+        public AccountingSystemsSyncStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AccountingSystemsSyncStatusDataMapping();
-            Repository = new Repository<POCO.AccountingSystemsSyncStatus>((InvoiceContext)mainContext);
+            Repository = new Repository<POCO.AccountingSystemsSyncStatus>(mainContext);
         }
-        public AccountingSystemsSyncStatusUpdateService(int tenant) : this(InvoiceContext.GetContext(tenant), null, tenant) {}
-        public AccountingSystemsSyncStatusUpdateService(IInvoiceContext context) :  this(context, null, 0) {}
+        public AccountingSystemsSyncStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AccountingSystemsSyncStatusDataMapping();
+            Repository = new Repository<POCO.AccountingSystemsSyncStatus>(tenant);
+		}
+        public AccountingSystemsSyncStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AccountingSystemsSyncStatus,string> GetKeys(AccountingSystemsSyncStatusPM entityPM) => new AccountingSystemsSyncStatusKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(AccountingSystemsSyncStatusPM entityPM)
 		{

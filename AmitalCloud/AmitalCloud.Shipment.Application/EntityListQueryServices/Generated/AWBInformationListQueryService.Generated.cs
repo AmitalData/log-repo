@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityLists ;
 using AmitalCloud.Shipment.Domain.EntityKeys ;
-using AmitalCloud.Shipment.Data.Context ;
-using AmitalCloud.Shipment.Domain.Interfaces ;
 namespace AmitalCloud.Shipment.Application.EntityListQueryServices
 { 
     public partial class AWBInformationListQueryService  : BaseEntityListQueryService<AWBInformationList,POCO.AWBInformation,  AWBInformationKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.AWBInformation> contextEntity => (context as IShipmentContext).AWBInformations;
-		public AWBInformationListQueryService(int tenant) : base(ShipmentContext.GetContext(tenant)) { }
+		public AWBInformationListQueryService(int tenant) : base(tenant) { }
         public AWBInformationList GetSingle(string code)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

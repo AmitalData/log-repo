@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ScreenUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Screen,ScreenPM,IEntityPM,ScreenList,string>
+   public partial class ScreenUpdateService:BaseEntityUpdateService<POCO.Screen,ScreenPM,IEntityPM,ScreenList,string>
    {
    			
-        public ScreenUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ScreenUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ScreenDataMapping();
-            Repository = new Repository<POCO.Screen>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Screen>(mainContext);
         }
-        public ScreenUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ScreenUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ScreenUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ScreenDataMapping();
+            Repository = new Repository<POCO.Screen>(tenant);
+		}
+        public ScreenUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Screen,string> GetKeys(ScreenPM entityPM) => new ScreenKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ScreenPM entityPM)
 		{

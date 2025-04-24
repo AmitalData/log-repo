@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class DWHBuildStatusKeys<T> : BaseEntityKeyFields<EntityPOCOs.DWHBuildStatus,T> 
+   public class DWHBuildStatusKeys<T> : BaseEntityKeyFields<ENTITIES.DWHBuildStatus,T> 
    {
 		public DWHBuildStatusKeys() : base() {}
         public DWHBuildStatusKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "DWHBuildStatusPM";
-	  public override Expression<Func<EntityPOCOs.DWHBuildStatus, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.DWHBuildStatus, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

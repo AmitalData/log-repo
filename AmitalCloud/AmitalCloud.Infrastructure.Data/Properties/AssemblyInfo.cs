@@ -36,4 +36,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: InternalsVisibleTo("AmitalCloud.Infrastructure.Application")]
 [assembly: InternalsVisibleTo("AmitalCloud.Infrastructure.APITools")]
+[assembly: InternalsVisibleTo("AmitalCloud.Invoice.Application")]
+[assembly: InternalsVisibleTo("AmitalCloud.Shipment.Application")]
+
 

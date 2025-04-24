@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class SpecialServiceUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.SpecialService,SpecialServicePM,IEntityPM,SpecialServiceList,string>
+   public partial class SpecialServiceUpdateService:BaseEntityUpdateService<POCO.SpecialService,SpecialServicePM,IEntityPM,SpecialServiceList,string>
    {
    			
-        public SpecialServiceUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public SpecialServiceUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new SpecialServiceDataMapping();
-            Repository = new Repository<POCO.SpecialService>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.SpecialService>(mainContext);
         }
-        public SpecialServiceUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public SpecialServiceUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public SpecialServiceUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new SpecialServiceDataMapping();
+            Repository = new Repository<POCO.SpecialService>(tenant);
+		}
+        public SpecialServiceUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.SpecialService,string> GetKeys(SpecialServicePM entityPM) => new SpecialServiceKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(SpecialServicePM entityPM)
 		{

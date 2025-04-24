@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class SystemDataUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.SystemData,SystemDataPM,IEntityPM,SystemDataList,string>
+   public partial class SystemDataUpdateService:BaseEntityUpdateService<POCO.SystemData,SystemDataPM,IEntityPM,SystemDataList,string>
    {
    			
-        public SystemDataUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public SystemDataUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new SystemDataDataMapping();
-            Repository = new Repository<POCO.SystemData>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.SystemData>(mainContext);
         }
-        public SystemDataUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public SystemDataUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public SystemDataUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new SystemDataDataMapping();
+            Repository = new Repository<POCO.SystemData>(tenant);
+		}
+        public SystemDataUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.SystemData,string> GetKeys(SystemDataPM entityPM) => new SystemDataKeys<string>() { UserId = entityPM.UserId };
 protected override void FillDefaultValuesOnCreate(SystemDataPM entityPM)
 		{

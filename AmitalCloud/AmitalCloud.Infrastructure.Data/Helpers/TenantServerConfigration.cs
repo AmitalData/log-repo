@@ -1,6 +1,7 @@
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using System;
 using System.Linq;
 
@@ -74,7 +75,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
             if (CacheManager.CacheWrapper.Get(entityName) == null)
             {
-                entity = new Repository<Tenant>(AmitalCloudContext.GetContext(tenant)).GetMulti(a => a.Id == tenant).FirstOrDefault();  //  .GetSingleTenant(tenant);
+                entity = new Repository<Tenant>(tenant).GetMulti(a => a.Id == tenant).FirstOrDefault();  //  .GetSingleTenant(tenant);
                 if (entity != null)
                 {
                     CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);

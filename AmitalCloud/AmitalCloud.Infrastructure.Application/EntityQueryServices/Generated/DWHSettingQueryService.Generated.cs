@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DWHSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DWHSetting,DWHSettingKeys<int>,DWHSettingPM,DWHSettingList,int>
+   public partial class DWHSettingQueryService: BaseEntityQueryService<POCO.DWHSetting,DWHSettingKeys<int>,DWHSettingPM,DWHSettingList,int>
    {
-        public DWHSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DWHSettingQueryService(int tenant) : base(new Repository<POCO.DWHSetting>(tenant),new DWHSettingDataMapping()) {}
         public DWHSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DWHSetting>(context),new DWHSettingDataMapping()) {}
 		public  DWHSettingPM GetSingle(int tenant,bool getComposition, bool getFromCache) => base.GetSingle(new DWHSettingKeys<int>(){ Tenant = tenant }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DWHSetting,int> GetKeys(POCO.DWHSetting entityPOCO) => new DWHSettingKeys<int>() { Tenant = entityPOCO.Tenant,  };

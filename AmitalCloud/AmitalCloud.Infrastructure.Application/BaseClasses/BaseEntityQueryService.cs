@@ -1,20 +1,18 @@
 ﻿using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model.BaseClasses;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Web.Http.Results;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {
-    public abstract class BaseEntityQueryService<TContext, TEntityPOCO, TEntityKeys, TEntityPM, TEntityList, TkeyType> : IBaseEntityQueryService<TEntityPM, TEntityPOCO> where TEntityPOCO : BaseEntity, new()
+    public abstract class BaseEntityQueryService<TEntityPOCO, TEntityKeys, TEntityPM, TEntityList, TkeyType> : IBaseEntityQueryService<TEntityPM, TEntityPOCO> where TEntityPOCO : BaseEntity, new()
     where TEntityPM : IEntityPM, new()
     where TEntityKeys : IEntityKeyFields<TEntityPOCO, TkeyType>, new()
     where TEntityList : class, new()
-    where TContext : class, IContext
     {
         protected int Tenant;
         protected TEntityPOCO EntityPOCO { get; set; }
@@ -172,11 +170,13 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         public TEntityPOCO GetFirst() => Repository.GetFirst();
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate)
         => Repository.GetMulti<TEntityPM>(predicate);        
-        public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TEntityPM> select)
+         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TEntityPM> select)
         => Repository.GetMulti(predicate,select);
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TEntityPM> select, string include)
         => Repository.GetMulti(predicate, select,include);
-
+         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, string include)
+        => Repository.GetMulti<TEntityPM>(predicate, include);
+ 
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TResult> select)
             => Repository.GetMulti(predicate, select);
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TResult> select, string include)

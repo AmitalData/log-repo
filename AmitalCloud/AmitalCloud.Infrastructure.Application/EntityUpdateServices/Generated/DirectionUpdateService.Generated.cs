@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DirectionUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Direction,DirectionPM,IEntityPM,DirectionList,string>
+   public partial class DirectionUpdateService:BaseEntityUpdateService<POCO.Direction,DirectionPM,IEntityPM,DirectionList,string>
    {
    			
-        public DirectionUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DirectionUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DirectionDataMapping();
-            Repository = new Repository<POCO.Direction>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Direction>(mainContext);
         }
-        public DirectionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DirectionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DirectionUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DirectionDataMapping();
+            Repository = new Repository<POCO.Direction>(tenant);
+		}
+        public DirectionUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Direction,string> GetKeys(DirectionPM entityPM) => new DirectionKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DirectionPM entityPM)
 		{

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class MeasurementQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Measurement,MeasurementKeys<string>,MeasurementPM,MeasurementList,string>
+   public partial class MeasurementQueryService: BaseEntityQueryService<POCO.Measurement,MeasurementKeys<string>,MeasurementPM,MeasurementList,string>
    {
-        public MeasurementQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public MeasurementQueryService(int tenant) : base(new Repository<POCO.Measurement>(tenant),new MeasurementDataMapping()) {}
         public MeasurementQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Measurement>(context),new MeasurementDataMapping()) {}
 		public  MeasurementPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new MeasurementKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Measurement,string> GetKeys(POCO.Measurement entityPOCO) => new MeasurementKeys<string>() { Id = entityPOCO.Id,  };

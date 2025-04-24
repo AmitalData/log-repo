@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DocumentsFilingUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DocumentsFiling,DocumentsFilingPM,IEntityPM,DocumentsFilingList,string>
+   public partial class DocumentsFilingUpdateService:BaseEntityUpdateService<POCO.DocumentsFiling,DocumentsFilingPM,IEntityPM,DocumentsFilingList,string>
    {
    			
-        public DocumentsFilingUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DocumentsFilingUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DocumentsFilingDataMapping();
-            Repository = new Repository<POCO.DocumentsFiling>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DocumentsFiling>(mainContext);
         }
-        public DocumentsFilingUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DocumentsFilingUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DocumentsFilingUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DocumentsFilingDataMapping();
+            Repository = new Repository<POCO.DocumentsFiling>(tenant);
+		}
+        public DocumentsFilingUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DocumentsFiling,string> GetKeys(DocumentsFilingPM entityPM) => new DocumentsFilingKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DocumentsFilingPM entityPM)
 		{

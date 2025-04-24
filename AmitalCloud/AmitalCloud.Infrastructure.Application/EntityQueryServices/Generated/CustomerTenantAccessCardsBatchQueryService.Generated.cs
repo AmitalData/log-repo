@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerTenantAccessCardsBatchQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerTenantAccessCardsBatch,CustomerTenantAccessCardsBatchKeys<string>,CustomerTenantAccessCardsBatchPM,CustomerTenantAccessCardsBatchList,string>
+   public partial class CustomerTenantAccessCardsBatchQueryService: BaseEntityQueryService<POCO.CustomerTenantAccessCardsBatch,CustomerTenantAccessCardsBatchKeys<string>,CustomerTenantAccessCardsBatchPM,CustomerTenantAccessCardsBatchList,string>
    {
-        public CustomerTenantAccessCardsBatchQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerTenantAccessCardsBatchQueryService(int tenant) : base(new Repository<POCO.CustomerTenantAccessCardsBatch>(tenant),new CustomerTenantAccessCardsBatchDataMapping()) {}
         public CustomerTenantAccessCardsBatchQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerTenantAccessCardsBatch>(context),new CustomerTenantAccessCardsBatchDataMapping()) {}
 		public  CustomerTenantAccessCardsBatchPM GetSingle(string customerid, string customertenantaccessid, string batchnumber,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerTenantAccessCardsBatchKeys<string>(){ CustomerId = customerid, CustomerTenantAccessId = customertenantaccessid, BatchNumber = batchnumber }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerTenantAccessCardsBatch,string> GetKeys(POCO.CustomerTenantAccessCardsBatch entityPOCO) => new CustomerTenantAccessCardsBatchKeys<string>() { CustomerId = entityPOCO.CustomerId, CustomerTenantAccessId = entityPOCO.CustomerTenantAccessId, BatchNumber = entityPOCO.BatchNumber,  };

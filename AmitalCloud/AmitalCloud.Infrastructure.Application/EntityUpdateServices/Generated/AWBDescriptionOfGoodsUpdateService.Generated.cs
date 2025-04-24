@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class AWBDescriptionOfGoodsUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.AWBDescriptionOfGoods,AWBDescriptionOfGoodsPM,IEntityPM,AWBDescriptionOfGoodsList,string>
+   public partial class AWBDescriptionOfGoodsUpdateService:BaseEntityUpdateService<POCO.AWBDescriptionOfGoods,AWBDescriptionOfGoodsPM,IEntityPM,AWBDescriptionOfGoodsList,string>
    {
    			
-        public AWBDescriptionOfGoodsUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public AWBDescriptionOfGoodsUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AWBDescriptionOfGoodsDataMapping();
-            Repository = new Repository<POCO.AWBDescriptionOfGoods>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.AWBDescriptionOfGoods>(mainContext);
         }
-        public AWBDescriptionOfGoodsUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public AWBDescriptionOfGoodsUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public AWBDescriptionOfGoodsUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AWBDescriptionOfGoodsDataMapping();
+            Repository = new Repository<POCO.AWBDescriptionOfGoods>(tenant);
+		}
+        public AWBDescriptionOfGoodsUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AWBDescriptionOfGoods,string> GetKeys(AWBDescriptionOfGoodsPM entityPM) => new AWBDescriptionOfGoodsKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(AWBDescriptionOfGoodsPM entityPM)
 		{

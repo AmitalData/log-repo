@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Model.EntityClasses ;
 
 namespace AmitalCloud.Infrastructure.Data.Validators
 {

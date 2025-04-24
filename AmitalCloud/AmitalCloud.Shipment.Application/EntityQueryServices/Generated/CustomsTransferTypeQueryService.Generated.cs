@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class CustomsTransferTypeQueryService: BaseEntityQueryService<IShipmentContext,POCO.CustomsTransferType,CustomsTransferTypeKeys<string>,CustomsTransferTypePM,CustomsTransferTypeList,string>
+   public partial class CustomsTransferTypeQueryService: BaseEntityQueryService<POCO.CustomsTransferType,CustomsTransferTypeKeys<string>,CustomsTransferTypePM,CustomsTransferTypeList,string>
    {
-        public CustomsTransferTypeQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public CustomsTransferTypeQueryService(IShipmentContext context) : base(new Repository<POCO.CustomsTransferType>(context),new CustomsTransferTypeDataMapping()) {}
+        public CustomsTransferTypeQueryService(int tenant) : base(new Repository<POCO.CustomsTransferType>(tenant),new CustomsTransferTypeDataMapping()) {}
+        public CustomsTransferTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomsTransferType>(context),new CustomsTransferTypeDataMapping()) {}
 		public  CustomsTransferTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new CustomsTransferTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomsTransferType,string> GetKeys(POCO.CustomsTransferType entityPOCO) => new CustomsTransferTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

@@ -9,34 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ReportExecutionLogUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ReportExecutionLog,ReportExecutionLogPM,IEntityPM,ReportExecutionLogList,string>
+   public partial class ReportExecutionLogUpdateService:BaseEntityUpdateService<POCO.ReportExecutionLog,ReportExecutionLogPM,IEntityPM,ReportExecutionLogList,string>
    {
    			
-        public ReportExecutionLogUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ReportExecutionLogUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ReportExecutionLogDataMapping();
-            Repository = new Repository<POCO.ReportExecutionLog>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ReportExecutionLog>(mainContext);
         }
-        public ReportExecutionLogUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ReportExecutionLogUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ReportExecutionLogUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ReportExecutionLogDataMapping();
+            Repository = new Repository<POCO.ReportExecutionLog>(tenant);
+		}
+        public ReportExecutionLogUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ReportExecutionLog,string> GetKeys(ReportExecutionLogPM entityPM) => new ReportExecutionLogKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ReportExecutionLogPM entityPM)
 		{

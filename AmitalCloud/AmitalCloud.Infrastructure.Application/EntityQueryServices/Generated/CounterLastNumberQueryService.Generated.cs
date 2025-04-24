@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CounterLastNumberQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CounterLastNumber,CounterLastNumberKeys<int>,CounterLastNumberPM,CounterLastNumberList,int>
+   public partial class CounterLastNumberQueryService: BaseEntityQueryService<POCO.CounterLastNumber,CounterLastNumberKeys<int>,CounterLastNumberPM,CounterLastNumberList,int>
    {
-        public CounterLastNumberQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CounterLastNumberQueryService(int tenant) : base(new Repository<POCO.CounterLastNumber>(tenant),new CounterLastNumberDataMapping()) {}
         public CounterLastNumberQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CounterLastNumber>(context),new CounterLastNumberDataMapping()) {}
 		public  CounterLastNumberPM GetSingle(int id,bool getComposition, bool getFromCache) => base.GetSingle(new CounterLastNumberKeys<int>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CounterLastNumber,int> GetKeys(POCO.CounterLastNumber entityPOCO) => new CounterLastNumberKeys<int>() { Id = entityPOCO.Id,  };

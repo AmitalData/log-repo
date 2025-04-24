@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class RatesTableQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.RatesTable,RatesTableKeys<string>,RatesTablePM,RatesTableList,string>
+   public partial class RatesTableQueryService: BaseEntityQueryService<POCO.RatesTable,RatesTableKeys<string>,RatesTablePM,RatesTableList,string>
    {
-        public RatesTableQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public RatesTableQueryService(int tenant) : base(new Repository<POCO.RatesTable>(tenant),new RatesTableDataMapping()) {}
         public RatesTableQueryService(IAmitalCloudContext context) : base(new Repository<POCO.RatesTable>(context),new RatesTableDataMapping()) {}
 		public  RatesTablePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new RatesTableKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.RatesTable,string> GetKeys(POCO.RatesTable entityPOCO) => new RatesTableKeys<string>() { Id = entityPOCO.Id,  };

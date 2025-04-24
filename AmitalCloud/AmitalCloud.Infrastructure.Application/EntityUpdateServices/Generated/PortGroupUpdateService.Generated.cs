@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class PortGroupUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.PortGroup,PortGroupPM,IEntityPM,PortGroupList,string>
+   public partial class PortGroupUpdateService:BaseEntityUpdateService<POCO.PortGroup,PortGroupPM,IEntityPM,PortGroupList,string>
    {
    			
-        public PortGroupUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public PortGroupUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new PortGroupDataMapping();
-            Repository = new Repository<POCO.PortGroup>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.PortGroup>(mainContext);
         }
-        public PortGroupUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public PortGroupUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public PortGroupUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new PortGroupDataMapping();
+            Repository = new Repository<POCO.PortGroup>(tenant);
+		}
+        public PortGroupUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.PortGroup,string> GetKeys(PortGroupPM entityPM) => new PortGroupKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(PortGroupPM entityPM)
 		{

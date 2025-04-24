@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CarrierAreasPortUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CarrierAreasPort,CarrierAreasPortPM,CarrierAreaPM,CarrierAreasPortList,string>
+   public partial class CarrierAreasPortUpdateService:BaseEntityUpdateService<POCO.CarrierAreasPort,CarrierAreasPortPM,CarrierAreaPM,CarrierAreasPortList,string>
    {
    			
-        public CarrierAreasPortUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CarrierAreasPortUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CarrierAreasPortDataMapping();
-            Repository = new Repository<POCO.CarrierAreasPort>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CarrierAreasPort>(mainContext);
         }
-        public CarrierAreasPortUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CarrierAreasPortUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CarrierAreasPortUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CarrierAreasPortDataMapping();
+            Repository = new Repository<POCO.CarrierAreasPort>(tenant);
+		}
+        public CarrierAreasPortUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CarrierAreasPort,string> GetKeys(CarrierAreasPortPM entityPM) => new CarrierAreasPortKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CarrierAreasPortPM entityPM)
 		{

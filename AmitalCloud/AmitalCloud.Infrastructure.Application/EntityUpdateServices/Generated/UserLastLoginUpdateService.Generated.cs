@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class UserLastLoginUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.UserLastLogin,UserLastLoginPM,IEntityPM,UserLastLoginList,string>
+   public partial class UserLastLoginUpdateService:BaseEntityUpdateService<POCO.UserLastLogin,UserLastLoginPM,IEntityPM,UserLastLoginList,string>
    {
    			
-        public UserLastLoginUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public UserLastLoginUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new UserLastLoginDataMapping();
-            Repository = new Repository<POCO.UserLastLogin>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.UserLastLogin>(mainContext);
         }
-        public UserLastLoginUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public UserLastLoginUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public UserLastLoginUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new UserLastLoginDataMapping();
+            Repository = new Repository<POCO.UserLastLogin>(tenant);
+		}
+        public UserLastLoginUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.UserLastLogin,string> GetKeys(UserLastLoginPM entityPM) => new UserLastLoginKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(UserLastLoginPM entityPM)
 		{

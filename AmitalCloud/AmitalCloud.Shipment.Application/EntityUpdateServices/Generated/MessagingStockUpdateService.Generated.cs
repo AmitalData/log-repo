@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class MessagingStockUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.MessagingStock,MessagingStockPM,IEntityPM,MessagingStockList,string>
+   public partial class MessagingStockUpdateService:BaseEntityUpdateService<POCO.MessagingStock,MessagingStockPM,IEntityPM,MessagingStockList,string>
    {
    			
-        public MessagingStockUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public MessagingStockUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new MessagingStockDataMapping();
-            Repository = new Repository<POCO.MessagingStock>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.MessagingStock>(mainContext);
         }
-        public MessagingStockUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public MessagingStockUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public MessagingStockUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new MessagingStockDataMapping();
+            Repository = new Repository<POCO.MessagingStock>(tenant);
+		}
+        public MessagingStockUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.MessagingStock,string> GetKeys(MessagingStockPM entityPM) => new MessagingStockKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(MessagingStockPM entityPM)
 		{

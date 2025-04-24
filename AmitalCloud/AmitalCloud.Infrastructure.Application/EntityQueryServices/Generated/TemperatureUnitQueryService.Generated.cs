@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TemperatureUnitQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TemperatureUnit,TemperatureUnitKeys<string>,TemperatureUnitPM,TemperatureUnitList,string>
+   public partial class TemperatureUnitQueryService: BaseEntityQueryService<POCO.TemperatureUnit,TemperatureUnitKeys<string>,TemperatureUnitPM,TemperatureUnitList,string>
    {
-        public TemperatureUnitQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TemperatureUnitQueryService(int tenant) : base(new Repository<POCO.TemperatureUnit>(tenant),new TemperatureUnitDataMapping()) {}
         public TemperatureUnitQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TemperatureUnit>(context),new TemperatureUnitDataMapping()) {}
 		public  TemperatureUnitPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new TemperatureUnitKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TemperatureUnit,string> GetKeys(POCO.TemperatureUnit entityPOCO) => new TemperatureUnitKeys<string>() { Code = entityPOCO.Code,  };

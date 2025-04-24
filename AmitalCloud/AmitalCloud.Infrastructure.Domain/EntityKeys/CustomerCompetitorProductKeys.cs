@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class CustomerCompetitorProductKeys<T> : BaseEntityKeyFields<EntityPOCOs.CustomerCompetitorProduct,T> 
+   public class CustomerCompetitorProductKeys<T> : BaseEntityKeyFields<ENTITIES.CustomerCompetitorProduct,T> 
    {
 		public CustomerCompetitorProductKeys() : base() {}
         public CustomerCompetitorProductKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -30,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(ProductTypeCode.ToString()+'_'+CustomerId.ToString()+'_'+CompetitorId.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CustomerCompetitorProductsPM";
-	  public override Expression<Func<EntityPOCOs.CustomerCompetitorProduct, bool>> Predicate => a => a.ProductTypeCode == ProductTypeCode && a.CustomerId == CustomerId && a.CompetitorId == CompetitorId;
+	  public override Expression<Func<ENTITIES.CustomerCompetitorProduct, bool>> Predicate => a => a.ProductTypeCode == ProductTypeCode && a.CustomerId == CustomerId && a.CompetitorId == CompetitorId;
    }
 }
 	 

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DocumentFilingBackupBatchUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DocumentFilingBackupBatch,DocumentFilingBackupBatchPM,IEntityPM,DocumentFilingBackupBatchList,string>
+   public partial class DocumentFilingBackupBatchUpdateService:BaseEntityUpdateService<POCO.DocumentFilingBackupBatch,DocumentFilingBackupBatchPM,IEntityPM,DocumentFilingBackupBatchList,string>
    {
    			
-        public DocumentFilingBackupBatchUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DocumentFilingBackupBatchUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DocumentFilingBackupBatchDataMapping();
-            Repository = new Repository<POCO.DocumentFilingBackupBatch>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DocumentFilingBackupBatch>(mainContext);
         }
-        public DocumentFilingBackupBatchUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DocumentFilingBackupBatchUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DocumentFilingBackupBatchUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DocumentFilingBackupBatchDataMapping();
+            Repository = new Repository<POCO.DocumentFilingBackupBatch>(tenant);
+		}
+        public DocumentFilingBackupBatchUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DocumentFilingBackupBatch,string> GetKeys(DocumentFilingBackupBatchPM entityPM) => new DocumentFilingBackupBatchKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DocumentFilingBackupBatchPM entityPM)
 		{

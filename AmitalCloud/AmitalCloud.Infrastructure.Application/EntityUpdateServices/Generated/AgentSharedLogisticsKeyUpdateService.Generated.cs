@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class AgentSharedLogisticsKeyUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.AgentSharedLogisticsKey,AgentSharedLogisticsKeyPM,IEntityPM,AgentSharedLogisticsKeyList,string>
+   public partial class AgentSharedLogisticsKeyUpdateService:BaseEntityUpdateService<POCO.AgentSharedLogisticsKey,AgentSharedLogisticsKeyPM,IEntityPM,AgentSharedLogisticsKeyList,string>
    {
    			
-        public AgentSharedLogisticsKeyUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public AgentSharedLogisticsKeyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AgentSharedLogisticsKeyDataMapping();
-            Repository = new Repository<POCO.AgentSharedLogisticsKey>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.AgentSharedLogisticsKey>(mainContext);
         }
-        public AgentSharedLogisticsKeyUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public AgentSharedLogisticsKeyUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public AgentSharedLogisticsKeyUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AgentSharedLogisticsKeyDataMapping();
+            Repository = new Repository<POCO.AgentSharedLogisticsKey>(tenant);
+		}
+        public AgentSharedLogisticsKeyUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AgentSharedLogisticsKey,string> GetKeys(AgentSharedLogisticsKeyPM entityPM) => new AgentSharedLogisticsKeyKeys<string>() { SharedKey = entityPM.SharedKey };
 protected override void FillDefaultValuesOnCreate(AgentSharedLogisticsKeyPM entityPM)
 		{

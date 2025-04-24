@@ -32,6 +32,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return interestReportRepository.GetSumOfExReportsOrInterestOpenBalance(tenant, glaccountId);
         }
 
+   
 
 
         public override void GetComposition(EntityKeyFields entityKeys, InterestReportPM entityPM)
@@ -91,7 +92,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     select a.InterestCreditLimit).FirstOrDefault();
         }
 
-        internal List<InterestReportPM> GetNotInvoicedInterestReportsByCategory(List<InterestReportPM> interestReports, InterestReportArguments interestReportArguments)
+        internal IQueryable<InterestReportPM> GetNotInvoicedInterestReportsByCategory(IQueryable<InterestReportPM> interestReports, InterestReportArguments interestReportArguments)
         {
             switch (interestReportArguments.CategoryIndex)
             {
@@ -100,35 +101,36 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         return (from a in interestReports
                                 join glAccount in context.GLAccounts on a.GLAccountId equals glAccount.Id
                                 where glAccount.Category1Id == interestReportArguments.CategoryValue
-                                select a).ToList();
+                                select a);
                     }
                 case "Category2Id":
                     {
                         return (from a in interestReports
                                 join glAccount in context.GLAccounts on a.GLAccountId equals glAccount.Id
                                 where glAccount.Category2Id == interestReportArguments.CategoryValue
-                                select a).ToList();
+                                select a);
                     }
                 case "Category3Id":
                     {
                         return (from a in interestReports
                                 join glAccount in context.GLAccounts on a.GLAccountId equals glAccount.Id
                                 where glAccount.Category3Id == interestReportArguments.CategoryValue
-                                select a).ToList();
+                                select a);
                     }
                 case "Category4Id":
+                 
                     {
                         return (from a in interestReports
                                 join glAccount in context.GLAccounts on a.GLAccountId equals glAccount.Id
                                 where glAccount.Category4Id == interestReportArguments.CategoryValue
-                                select a).ToList();
+                                select a);
                     }
                 case "Category5Id":
                     {
                         return (from a in interestReports
                                 join glAccount in context.GLAccounts on a.GLAccountId equals glAccount.Id
                                 where glAccount.Category5Id == interestReportArguments.CategoryValue
-                                select a).ToList();
+                                select a);
                     }
 
                 default: return interestReports;
@@ -143,9 +145,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return result;
         }
-        public List<InterestReportPM> GetNotInvoicedInterestReportsByDates(DateTime fromDate, DateTime toDate, int tenant, List<string> ExcludedIds)
+        public IQueryable<InterestReportPM> GetNotInvoicedInterestReportsByDates(DateTime fromDate, DateTime toDate, int tenant, List<string> ExcludedIds)
         {
-            
+    
+
             return (from a in repository.GetAll(tenant)
                     where
                      a.Tenant == tenant&& !ExcludedIds.Contains(a.Id) && a.InterestCalculationDate >= fromDate && a.InterestCalculationDate <= toDate && (a.InterestReportStatusCode == "1" || a.InterestReportStatusCode == "8" || a.InterestReportStatusCode == "9")
@@ -191,7 +194,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         ARInvoiceNumber = a.ARInvoice == null ? null : a.ARInvoice.InvoiceNumber,
                         GLAccountLocalName = a.GLAccount == null ? null : a.GLAccount.LocalName
 
-                    }).ToList();
+                    });
 
 
         }

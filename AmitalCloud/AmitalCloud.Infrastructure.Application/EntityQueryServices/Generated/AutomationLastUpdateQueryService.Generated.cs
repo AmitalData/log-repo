@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AutomationLastUpdateQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AutomationLastUpdate,AutomationLastUpdateKeys<string>,AutomationLastUpdatePM,AutomationLastUpdateList,string>
+   public partial class AutomationLastUpdateQueryService: BaseEntityQueryService<POCO.AutomationLastUpdate,AutomationLastUpdateKeys<string>,AutomationLastUpdatePM,AutomationLastUpdateList,string>
    {
-        public AutomationLastUpdateQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AutomationLastUpdateQueryService(int tenant) : base(new Repository<POCO.AutomationLastUpdate>(tenant),new AutomationLastUpdateDataMapping()) {}
         public AutomationLastUpdateQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AutomationLastUpdate>(context),new AutomationLastUpdateDataMapping()) {}
 		public  AutomationLastUpdatePM GetSingle(int tenant, string objecttableid,bool getComposition, bool getFromCache) => base.GetSingle(new AutomationLastUpdateKeys<string>(){ Tenant = tenant, ObjectTableId = objecttableid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AutomationLastUpdate,string> GetKeys(POCO.AutomationLastUpdate entityPOCO) => new AutomationLastUpdateKeys<string>() { Tenant = entityPOCO.Tenant, ObjectTableId = entityPOCO.ObjectTableId,  };

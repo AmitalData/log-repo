@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class PerformanceLogQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PerformanceLog,PerformanceLogKeys<string>,PerformanceLogPM,PerformanceLogList,string>
+   public partial class PerformanceLogQueryService: BaseEntityQueryService<POCO.PerformanceLog,PerformanceLogKeys<string>,PerformanceLogPM,PerformanceLogList,string>
    {
-        public PerformanceLogQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public PerformanceLogQueryService(int tenant) : base(new Repository<POCO.PerformanceLog>(tenant),new PerformanceLogDataMapping()) {}
         public PerformanceLogQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PerformanceLog>(context),new PerformanceLogDataMapping()) {}
 		public  PerformanceLogPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new PerformanceLogKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PerformanceLog,string> GetKeys(POCO.PerformanceLog entityPOCO) => new PerformanceLogKeys<string>() { Id = entityPOCO.Id,  };

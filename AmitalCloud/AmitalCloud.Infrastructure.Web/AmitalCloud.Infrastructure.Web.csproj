@@ -209,6 +209,10 @@
       <Project>{1cb82e4e-88ff-4772-bfd6-5ec33b23f1cf}</Project>
       <Name>AmitalCloud.Infrastructure.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Model\AmitalCloud.Infrastructure.Model.csproj">
+      <Project>{B03864C5-0C52-465B-9206-3FFF150413B9}</Project>
+      <Name>AmitalCloud.Infrastructure.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
