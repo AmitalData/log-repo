@@ -482,6 +482,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.BillToAddressId = null;
                 this.InvoiceCurrencyId = SessionLocator.AccountingCurrencyId;
                 this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                this.glaccount = null;
             }
 
             else {
@@ -498,6 +499,9 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                                 this.myGLAccountPMService.get(this.cardList.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                                     if (!myResponse.HasError) {
                                         this.glaccount = myResponse.Result;
+                                        if (AppTool.IsNullOrEmpty(this.cardList.InvoiceCurrencyId)) {
+                                            this.SetCurrencyRateData()
+                                        }
                                     }
                                 });
                             }
@@ -505,7 +509,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                             if (!AppTool.IsNullOrEmpty(this.cardList.InvoiceCurrencyId)) {
                                 this.InvoiceCurrencyId = this.cardList.InvoiceCurrencyId;
                             }
-
+                           
                             if (!AppTool.IsNullOrEmpty(this.cardList.PaymentTermId)) {
                                 this.PaymentTermId = this.cardList.PaymentTermId;
                             }
@@ -956,11 +960,13 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 myRate = 1;
             }
 
+
             else {
                 const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.InvoiceCurrencyId);
                 if (lastRate) {
-                    const customRate = this.glaccount?.ExchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                    const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId  : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.InvoiceCurrencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
+                    const customRate = exchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
 
                     myRate = customRate ?? lastRate.Rate;
@@ -982,7 +988,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
             else {
                 const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
-                const exchangeRateId = this.glaccount?.ExchangeRateId;
+                const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
                 if (lastRate) {
                     const customRate = exchangeRateId 
                         ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 

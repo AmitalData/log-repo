@@ -422,7 +422,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             else {
                 const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.InvoiceCurrencyId);
                 if (lastRate) {
-                    const exchangeRateId =this.glaccount?.ExchangeRateId
+                    const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.InvoiceCurrencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
+                   
                     const customRate =  exchangeRateId
                         ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
@@ -447,8 +448,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             else {
                 const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
                 if (lastRate) {
-                    const exchangeRateId = this.glaccount?.ExchangeRateId
-                    const customRate = exchangeRateId 
+                    const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
+                   const customRate = exchangeRateId 
                         ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
                         myResult = customRate ?? lastRate.Rate;

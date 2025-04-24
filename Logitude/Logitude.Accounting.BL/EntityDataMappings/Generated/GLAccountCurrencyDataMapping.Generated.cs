@@ -41,7 +41,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CurrencyName, 
 	         MainGLAccountId, 
 	         GLAccountNumber, 
-	         GLAccountName,
+	         GLAccountName, 
+	         ExchangeRateId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
