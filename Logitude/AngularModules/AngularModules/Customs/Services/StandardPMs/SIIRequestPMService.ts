@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {SIIRequestPM} from '../../EntityPMs/SIIRequestPM';
 
+import {SupplierInvoiceItemsReqListPM} from '../../EntityPMs/SupplierInvoiceItemsReqListPM';
 
 @Injectable()
 
@@ -182,12 +183,22 @@ export class SIIRequestPMService {
                  
             }
 			
+               this.MapSupplierInvoiceItemsReqLists(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.SupplierInvoiceItemsReqLists = [];
+            for (var item in entityPM.SupplierInvoiceItemsReqLists) {
+            var mySupplierInvoiceItemsReqListPM = entityPM.SupplierInvoiceItemsReqLists[item];
+            var newSupplierInvoiceItemsReqListPM: SupplierInvoiceItemsReqListPM = this.clone(mySupplierInvoiceItemsReqListPM);
+						
+							 
+            entityPM.OldEntityPM.SupplierInvoiceItemsReqLists.push(newSupplierInvoiceItemsReqListPM);
+            }
+			   
 		}
         else {
 
@@ -199,6 +210,98 @@ export class SIIRequestPMService {
         return entityPM;
     }
 
+    MapSupplierInvoiceItemsReqLists(entityPM: SIIRequestPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldSupplierInvoiceItemsReqLists: SupplierInvoiceItemsReqListPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldSupplierInvoiceItemsReqLists = entityPM.OldEntityPM.SupplierInvoiceItemsReqLists;
+        }
+
+        entityPM.SupplierInvoiceItemsReqLists = new Array<SupplierInvoiceItemsReqListPM>();
+        for (var item in jsonPM.SupplierInvoiceItemsReqLists) {
+            var jItem = jsonPM.SupplierInvoiceItemsReqLists[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newSupplierInvoiceItemsReqListPM: SupplierInvoiceItemsReqListPM;
+	  
+            if (mapParent) {
+                newSupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM(entityPM);
+            }
+            else
+            {
+                newSupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM(null);
+            }
+ 			newSupplierInvoiceItemsReqListPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+				                  var pmProperty = pmKeysArray[pmKey];
+                newSupplierInvoiceItemsReqListPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newSupplierInvoiceItemsReqListPM.UniqueKey = Guid.newGuid();
+                newSupplierInvoiceItemsReqListPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newSupplierInvoiceItemsReqListPM.OldEntityPM = this.clone(newSupplierInvoiceItemsReqListPM);
+
+				
+            }
+            else {
+                if (newSupplierInvoiceItemsReqListPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newSupplierInvoiceItemsReqListPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newSupplierInvoiceItemsReqListPM.ChangeSetOp = "Insert";
+                }
+ 
+                newSupplierInvoiceItemsReqListPM.OldEntityPM = null;
+                newSupplierInvoiceItemsReqListPM.EntityParentPM = null;
+            }
+			 newSupplierInvoiceItemsReqListPM.DisableMarkAsDirty = false;
+			 newSupplierInvoiceItemsReqListPM.IsDirty = false;
+            entityPM.SupplierInvoiceItemsReqLists.push(newSupplierInvoiceItemsReqListPM);
+        }
+        if (oldSupplierInvoiceItemsReqLists) {
+            
+            for (var itemKey in oldSupplierInvoiceItemsReqLists) {
+                if (entityPM.SupplierInvoiceItemsReqLists.filter(p=> p.UniqueKey === oldSupplierInvoiceItemsReqLists[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldSupplierInvoiceItemsReqLists[itemKey]) {
+                        //oldSupplierInvoiceItemsReqLists[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.SupplierInvoiceItemsReqLists.push(oldSupplierInvoiceItemsReqLists[itemKey]);
+						var oldItemJson = oldSupplierInvoiceItemsReqLists[itemKey];
+                        var deletedPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.SupplierInvoiceItemsReqLists.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;
