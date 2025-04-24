@@ -1,88 +1,48 @@
-﻿using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Data.Queries;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Data.Queries;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net;
-using System.Transactions;
-using System.Web;
 using System.Web.Http;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Web.Helpers;
-using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Domain.Helpers;
+using AmitalCloud.Infrastructure.Application.EntityQueryServices;
+using System.Linq;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
+    [RoutePrefix("api/UserLastLogins")]
     public class UserLastLoginsController : ApiController
     {
+        [HttpGet]
+        [Route("GetUserLastLogin")]
         public HttpResponseMessage GetUserLastLogin(string userId, int tenant)
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                return Request.CreateResponse(HttpStatusCode.OK, new UserLastLoginQuery(tenant).GetSinglePM(userId, tenant));
+                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                return Request.CreateResponse(HttpStatusCode.OK, new UserLastLoginQueryService(tenant).GetMulti(a => a.Tenant == tenant && a.Id == userId).FirstOrDefault());
             }
-
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, AmitalCloudApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
         }
 
-        public HttpResponseMessage Put(UserLastLoginPM entityPM)
+        [HttpPut]
+        [Route("")]
+        public HttpResponseMessage Put(UserLastLogin entity)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                        AmitalCloudSecurityUtility.AuthenticationOnEntityTenant("UserLastLogin", entityPM.Tenant, tenant);
-                        UserLastLoginRepository repository = new UserLastLoginRepository(AmitalCloudContext.GetContext(entityPM.Tenant));
-                        // todo:
-                        //bool isDSVMobileCall = false;
-                        //using (TransactionScope globalScope = TransactionFactory.GetNewTransaction())
-                        //{
-                        //    string Url = HttpContext.Current.Request.UrlReferrer.ToString();
-                        //    GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
-                        //    GlobalTenant globalTenant = globalTenantRepository.GetGlobalTenantsByTenant(entityPM.Tenant);
-                        //    isDSVMobileCall = !string.IsNullOrEmpty(globalTenant.PrivateLabelId) && HttpContext.Current.Request.Browser.IsMobileDevice && Url.Contains("Menu=DAPP");
-                        //}
-                        //if (!isDSVMobileCall)
-                        //{
-                        UserLastLogin entity = repository.GetSingleUserLastLogin(entityPM.Id, entityPM.Tenant, false);
-                        entity.ComputerId = entityPM.ComputerId;
-                        entity.WorkEnvironment = GetWorkEnvironment();
-                        repository.Update(entity);
-                        repository.SubmitChanges();
-                        //}
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, AmitalCloudApiExceptionBuilder.BuildException(ex));
-                }
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant(entity.Tenant);
+                entity = new UserLastLoginQuery(tenant).UpdateUserLastLogins(entity, AmitalCloudSettingConfigration.GetWorkEnvironment());
+                return Request.CreateResponse(HttpStatusCode.OK, entity);
             }
-            else
+            catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, AmitalCloudApiExceptionBuilder.BuildModelException(ModelState));
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
-        }
-        private string GetWorkEnvironment()
-        {
-            if (string.IsNullOrEmpty(AmitalCloudSettings.WorkEnvironment)) return "Amital";
-            return SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox) ? HttpContext.Current.Request.Url.Host.ToLower().Contains(".logbox.") ? "logbox" : "privatelabel" : AmitalCloudSettings.WorkEnvironment;
-
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿//using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Enums;
+﻿using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,8 +12,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity>, IAsyncRepository<TEntity>, IDisposable
         where TEntity : class
-        //   where TContext : class, IContext
-
     {
         private readonly IContext _dbContext;
         private readonly System.Data.Entity.IDbSet<TEntity> _dbSet;
@@ -170,10 +167,44 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         // FYI temp solution to pass Func<TEntity, TResult> without Expression to prevent an error when doing select with a cstr on query, that causes to execute the select after the data is fetched from db
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select, string include) => ApplyInclude(predicate, include).Select(select).ToList();
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select) => _dbSet.Where(predicate).Select(select).ToList();
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
 
-        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList().AsEnumerable().Select(a=>NewObject<TResult>(a)).ToList();
+        public List<TResult> GetMultiFromCache<TResult>(string cacheKey, Expression<Func<TEntity, bool>> predicate, string include = null, Func<TEntity, TResult> select = null)
+        {
+            List<TResult> entityPMs;
 
+            cacheKey = $"TResultGetMulti_({cacheKey};{include ?? string.Empty})";
+            var cacheObj = Helpers.CacheManager.CacheWrapper.Get(cacheKey);
+            if (cacheObj != null)
+            {
+                entityPMs = (List<TResult>)cacheObj;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(include))
+                {
+                    if (select == null)
+                    {
+                        throw new Exception("you can not include tables without selecting columns");
+                    }
+                    entityPMs = this.GetMulti<TResult>(predicate, select, include);
+                }
+                else
+                {
+                    entityPMs = this.GetMulti<TResult>(predicate);
+                }
 
+                if (entityPMs != null)
+                {
+                    Helpers.CacheManager.CacheWrapper.Insert(cacheKey, entityPMs);
+                }
+                else
+                {
+                    Helpers.CacheManager.CacheWrapper.Insert(cacheKey, new Helpers.NullCache());
+                }
+            }
+            return entityPMs;
+        }
 
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select) => _dbSet.Where(predicate).Select(select).ToList();
         public List<TEntity> GetMulti(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> select, string include) => ApplyInclude(predicate, include).Select(select).ToList();

@@ -1,10 +1,9 @@
 using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-
+using System.Data.Entity;
 using System.Linq;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
@@ -50,20 +49,24 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public Translation GetLastTranslationsByTenant(int tenant)
         {
             string cacheKey = $"LastTranslationsByTenant_{tenant}";
-            Translation lastTranslation = (Translation)CacheManager.CacheWrapper.Get(cacheKey);
+            Translation lastTranslation = (Translation)Helpers.CacheManager.CacheWrapper.Get(cacheKey);
             if (lastTranslation == null)
             {
-                lastTranslation = GetQueryable().Where(a => a.Tenant == tenant && a.UpdateDateGMT != null).OrderByDescending(a => a.UpdateDateGMT).FirstOrDefault();
+                lastTranslation = GetQueryable()
+                    .AsNoTracking()
+                    .Where(a => a.Tenant == tenant && a.UpdateDateGMT != null)
+                    .OrderByDescending(a => a.UpdateDateGMT)
+                    .FirstOrDefault();
 
-                if (CacheManager.CacheWrapper.Get(cacheKey) == null)
+                if (Helpers.CacheManager.CacheWrapper.Get(cacheKey) == null)
                 {
                     if (lastTranslation != null)
                     {
-                        CacheManager.CacheWrapper.Insert(cacheKey, lastTranslation, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        Helpers.CacheManager.CacheWrapper.Insert(cacheKey, lastTranslation, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     }
                     else
                     {
-                        CacheManager.CacheWrapper.Insert(cacheKey, new Translation() { UpdateDateGMT = new DateTime(2015, 1, 1) }, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        Helpers.CacheManager.CacheWrapper.Insert(cacheKey, new Translation() { UpdateDateGMT = new DateTime(2015, 1, 1) }, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                     }
                 }
             }
@@ -72,9 +75,9 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         private static void InvalidateLastTranslationCache(Translation entity)
         {
             string entityName = "LastTranslationsByTenant" + entity.Tenant;
-            if (CacheManager.CacheWrapper.Get(entityName) != null)
+            if (Helpers.CacheManager.CacheWrapper.Get(entityName) != null)
             {
-                CacheManager.CacheWrapper.Invalidate(entityName);
+                Helpers.CacheManager.CacheWrapper.Invalidate(entityName);
             }
         }
         public IAmitalCloudContext context

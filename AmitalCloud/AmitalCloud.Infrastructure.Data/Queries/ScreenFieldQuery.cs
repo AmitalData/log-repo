@@ -10,24 +10,24 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class ScreenFieldQuery
     {
         private readonly Repository<ScreenField> repository;
+        private readonly int tenant;
         public ScreenFieldQuery(int tenant)
         {
+            this.tenant = tenant;
             repository = new Repository<ScreenField>(AmitalCloudContext.GetContext(tenant));
         }
-        public List<ScreenFieldPM> GetScreenFieldPMsByTenant(int tenant)
+        public List<ScreenFieldPM> GetScreenFieldPMsByTenant()
         {
-            List<ScreenFieldPM> screenFieldPMs = repository.GetMulti(a => a.Tenant == tenant || a.Tenant == 0, a => new ScreenFieldPM(a)
+            List<ScreenFieldPM> screenFieldPMs = repository.GetMultiFromCache($"GetScreenFieldPMsByTenant{tenant}", a => a.Tenant == tenant || a.Tenant == 0, "ObjectField,ObjectField.ObjectTable", a => new ScreenFieldPM(a)
             {
                 ObjectFieldName = a.ObjectField != null ? a.ObjectField.FieldName : null,
-                ObjectFieldObjectTableName = a.ObjectField != null ? a.ObjectField.ObjectTable != null ? a.ObjectField.ObjectTable.Name : "" : "",
-            }, "ObjectField,ObjectField.ObjectTable");
+                ObjectFieldObjectTableName = a.ObjectField != null && a.ObjectField.ObjectTable != null ? a.ObjectField.ObjectTable.Name : string.Empty,
+            });
 
             List<ScreenFieldPM> selectedScreenFields = new List<ScreenFieldPM>();
             foreach (ScreenFieldPM field in screenFieldPMs)
             {
-                ScreenFieldPM existedField = (from a in selectedScreenFields
-                                              where a.ScreenId == field.ScreenId && a.ObjectFieldCode == field.ObjectFieldCode
-                                              select a).FirstOrDefault();
+                ScreenFieldPM existedField = selectedScreenFields.Where(a => a.ScreenId == field.ScreenId && a.ObjectFieldCode == field.ObjectFieldCode).FirstOrDefault();
 
                 if (existedField == null)
                 {

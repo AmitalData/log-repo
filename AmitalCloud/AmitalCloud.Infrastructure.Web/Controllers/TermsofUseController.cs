@@ -11,19 +11,20 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     [RoutePrefix("api/TermsofUse")]
     public class TermsofUseController : ApiController
     {
+        [HttpGet]
         [Route("")]
         public HttpResponseMessage GetCheckIfGoToTermUseComponent(int tenant, string userId)
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
 
                 if (string.IsNullOrEmpty(userId))
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "missing user id");
                 }
 
-                var result = new TermsofUseQuery(tenant).CheckIfGoToTermUseComponent(tenant, userId);
+                var result = new TermsofUseQuery(tenant).CheckIfGoToTermUseComponent(userId);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

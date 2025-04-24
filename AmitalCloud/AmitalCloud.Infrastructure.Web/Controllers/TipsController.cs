@@ -15,7 +15,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 var tips = new TipQuery(tenant).GetTips();
                 return Request.CreateResponse(HttpStatusCode.OK, tips);
             }

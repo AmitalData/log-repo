@@ -12,15 +12,17 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class SystemMetadataLastUpdateQuery
     {
-        private readonly Repository<SystemMetadataLastUpdate> repository;
+        private readonly int tenant;
         private int SystemMetadataLastUpdateDefaultId = 1;
+        private readonly Repository<SystemMetadataLastUpdate> repository;
 
         public SystemMetadataLastUpdateQuery(int tenant)
         {
+            this.tenant = tenant;
             repository = new Repository<SystemMetadataLastUpdate>(GlobalContext.GetContext(tenant));
         }
 
-        public MetaDataLastUpdateDates GetSystemMetadataLastUpdatesCacheHandle(int tenant)
+        public MetaDataLastUpdateDates GetSystemMetadataLastUpdatesCacheHandle()
         {
             string entityName = "SystemMetadataLastUpdates_" + tenant;
             MetaDataLastUpdateDates metadatalastUpdates;
@@ -31,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             }
             else
             {
-                metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
+                metadatalastUpdates = GetSystemMetadataLastUpdateFromDB();
 
                 if (CacheManager.CacheWrapper != null && CacheManager.CacheWrapper.Get(entityName) == null && metadatalastUpdates != null)
                 {
@@ -41,7 +43,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             return metadatalastUpdates;
         }
 
-        private MetaDataLastUpdateDates GetSystemMetadataLastUpdateFromDB(int tenant)
+        private MetaDataLastUpdateDates GetSystemMetadataLastUpdateFromDB()
         {
             MetaDataLastUpdateDates metadata = new MetaDataLastUpdateDates()
             {
@@ -62,11 +64,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
             ObjectFieldRepository objectFieldsRepository = new ObjectFieldRepository(amitalCloudContext);
             ObjectFieldModification mod = objectFieldsRepository.GetLastObjectFieldModificationByTenant(tenant);
-            metadata.ObjectFieldsTenantUpdateDateGMT = (mod != null ? mod.UpdateDateGMT.Value : new DateTime(2015, 1, 1));
+            metadata.ObjectFieldsTenantUpdateDateGMT = (mod != null ? mod.UpdateDateGMT.Value : DateTime.UtcNow);
 
             TranslationRepository translationRepository = new TranslationRepository(amitalCloudContext);
             Translation translation = translationRepository.GetLastTranslationsByTenant(tenant);
-            metadata.TranslationsTenantUpdateDateGMT = (translation != null ? translation.UpdateDateGMT.Value : new DateTime(2015, 1, 1));
+            metadata.TranslationsTenantUpdateDateGMT = (translation != null ? translation.UpdateDateGMT.Value : DateTime.UtcNow);
             return metadata;
         }
     }

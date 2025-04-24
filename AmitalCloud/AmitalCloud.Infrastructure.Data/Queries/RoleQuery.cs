@@ -49,11 +49,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                     RolePM role = (from a in roles
                                    where a.Id == contacttenantrole.RoleId
                                    select a).FirstOrDefault();
-                    //role.Exists = true;
-                    //role.UserId = contacttenant.ContactId;
                 }
             }
-            return roles; //.Where(d => d.Exists == true).ToList();
+            return roles;
         }
         private List<RolePM> GetCustomRolesByIds(List<string> myRolesIds)
         {

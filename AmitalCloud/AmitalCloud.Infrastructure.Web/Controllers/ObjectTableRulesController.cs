@@ -14,8 +14,8 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                var result = new ObjectTableRuleQuery(tenant).GetObjectTableRulePMsByTenant(tenant);
+                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                var result = new ObjectTableRuleQuery(tenant).GetObjectTableRulePMsByTenant();
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

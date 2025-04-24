@@ -153,6 +153,7 @@
     <Compile Include="Controllers\TermsofUseController.cs" />
     <Compile Include="Controllers\ErrorLogsController.cs" />
     <Compile Include="Controllers\ObjectTableLastUpdateController.cs" />
+    <Compile Include="Controllers\RatesTablesCustomController.cs" />
     <Compile Include="Controllers\TipsController.cs" />
     <Compile Include="Controllers\TipsVisibilityController.cs" />
     <Compile Include="Controllers\UserExtendedController.cs" />

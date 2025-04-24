@@ -14,8 +14,8 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                var metadatalastUpdates = new SystemMetadataLastUpdateQuery(tenant).GetSystemMetadataLastUpdatesCacheHandle(tenant);
+                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                var metadatalastUpdates = new SystemMetadataLastUpdateQuery(tenant).GetSystemMetadataLastUpdatesCacheHandle();
                 return Request.CreateResponse(HttpStatusCode.OK, metadatalastUpdates);
             }
             catch (Exception ex)

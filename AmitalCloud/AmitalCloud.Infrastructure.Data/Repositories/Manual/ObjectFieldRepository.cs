@@ -1,11 +1,9 @@
 using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-
+using System.Data.Entity;
 using System.Linq;
 using System.Transactions;
 
@@ -47,10 +45,10 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             if (tenant != 0)
             {
 
-                if (CacheManager.CacheWrapper.Get(tenantListName) == null)
+                if (Helpers.CacheManager.CacheWrapper.Get(tenantListName) == null)
                 {
 
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    using (TransactionScope scope = Helpers.TransactionFactory.GetNewTransaction())
                     {
                         IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                         currentTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
@@ -62,11 +60,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
 
 
-                    CacheManager.CacheWrapper.Insert(tenantListName, currentTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                    Helpers.CacheManager.CacheWrapper.Insert(tenantListName, currentTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
                 }
                 else
                 {
-                    currentTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(tenantListName);
+                    currentTenantObjectFields = (List<ObjectField>)Helpers.CacheManager.CacheWrapper.Get(tenantListName);
                 }
 
 
@@ -77,10 +75,10 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             #region Tenant Zero Fields
 
 
-            if (CacheManager.CacheWrapper.Get(zerolistName) == null)
+            if (Helpers.CacheManager.CacheWrapper.Get(zerolistName) == null)
             {
 
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                using (TransactionScope scope = Helpers.TransactionFactory.GetNewTransaction())
                 {
                     IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
@@ -92,11 +90,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
 
 
-                CacheManager.CacheWrapper.Insert(zerolistName, zeroTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                Helpers.CacheManager.CacheWrapper.Insert(zerolistName, zeroTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
             }
             else
             {
-                zeroTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(zerolistName);
+                zeroTenantObjectFields = (List<ObjectField>)Helpers.CacheManager.CacheWrapper.Get(zerolistName);
             }
 
 
@@ -116,10 +114,10 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             if (tenant != 0)
             {
 
-                if (CacheManager.CacheWrapper.Get(tenantListName) == null)
+                if (Helpers.CacheManager.CacheWrapper.Get(tenantListName) == null)
                 {
 
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    using (TransactionScope scope = Helpers.TransactionFactory.GetNewTransaction())
                     {
                         IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                         var TableId = (from a in context.ObjectTables
@@ -134,11 +132,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
 
 
-                    CacheManager.CacheWrapper.Insert(tenantListName, currentTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                    Helpers.CacheManager.CacheWrapper.Insert(tenantListName, currentTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
                 }
                 else
                 {
-                    currentTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(tenantListName);
+                    currentTenantObjectFields = (List<ObjectField>)Helpers.CacheManager.CacheWrapper.Get(tenantListName);
                 }
 
 
@@ -149,10 +147,10 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             #region Tenant Zero Fields
 
 
-            if (CacheManager.CacheWrapper.Get(zerolistName) == null)
+            if (Helpers.CacheManager.CacheWrapper.Get(zerolistName) == null)
             {
 
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                using (TransactionScope scope = Helpers.TransactionFactory.GetNewTransaction())
                 {
                     IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                     var TableId = (from a in context.ObjectTables
@@ -167,11 +165,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
 
 
-                CacheManager.CacheWrapper.Insert(zerolistName, zeroTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                Helpers.CacheManager.CacheWrapper.Insert(zerolistName, zeroTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
             }
             else
             {
-                zeroTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(zerolistName);
+                zeroTenantObjectFields = (List<ObjectField>)Helpers.CacheManager.CacheWrapper.Get(zerolistName);
             }
 
 
@@ -208,10 +206,10 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             if (tenant != 0)
             {
 
-                if (CacheManager.CacheWrapper.Get(tenantListName) == null)
+                if (Helpers.CacheManager.CacheWrapper.Get(tenantListName) == null)
                 {
 
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    using (TransactionScope scope = Helpers.TransactionFactory.GetNewTransaction())
                     {
 
                         currentTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
@@ -221,11 +219,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
                         scope.Complete();
                     }
 
-                    CacheManager.CacheWrapper.Insert(tenantListName, currentTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                    Helpers.CacheManager.CacheWrapper.Insert(tenantListName, currentTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
                 }
                 else
                 {
-                    currentTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(tenantListName);
+                    currentTenantObjectFields = (List<ObjectField>)Helpers.CacheManager.CacheWrapper.Get(tenantListName);
                 }
 
 
@@ -236,10 +234,10 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             #region Tenant Zero Fields
 
 
-            if (CacheManager.CacheWrapper.Get(zerolistName) == null)
+            if (Helpers.CacheManager.CacheWrapper.Get(zerolistName) == null)
             {
 
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                using (TransactionScope scope = Helpers.TransactionFactory.GetNewTransaction())
                 {
                     zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
                                               where (a.Tenant == 0) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.CanAutomateSetValue == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
@@ -251,11 +249,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
 
 
-                CacheManager.CacheWrapper.Insert(zerolistName, zeroTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                Helpers.CacheManager.CacheWrapper.Insert(zerolistName, zeroTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
             }
             else
             {
-                zeroTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(zerolistName);
+                zeroTenantObjectFields = (List<ObjectField>)Helpers.CacheManager.CacheWrapper.Get(zerolistName);
             }
 
 
@@ -282,17 +280,17 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             string objectFieldsListName = objectTableName.ToLower() + "customobjectfields" + tenant;
             List<ObjectField> objectfields = new List<ObjectField>();
-            if (CacheManager.CacheWrapper.Get(objectFieldsListName) == null)
+            if (Helpers.CacheManager.CacheWrapper.Get(objectFieldsListName) == null)
             {
                 IAmitalCloudContext context = AmitalCloudContext.GetContext(tenant);
                 objectfields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
                                 where a.Tenant == tenant && a.ObjectTable.Name == objectTableName && a.IsCustom == true && a.InActive == false
                                 select a).ToList();
-                CacheManager.CacheWrapper.Insert(objectFieldsListName, objectfields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                Helpers.CacheManager.CacheWrapper.Insert(objectFieldsListName, objectfields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
             }
             else
             {
-                objectfields = (List<ObjectField>)CacheManager.CacheWrapper.Get(objectFieldsListName);
+                objectfields = (List<ObjectField>)Helpers.CacheManager.CacheWrapper.Get(objectFieldsListName);
             }
             return objectfields;
         }
@@ -325,7 +323,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public ObjectField GetSingleObjectFieldByObjectFieldCode(string objectFieldCode)
         {
             string key = $"GetSingleObjectFieldByObjectFieldCode({objectFieldCode})";
-            return CacheManager.GetOrInsertNewObject<ObjectField>(key, () =>
+            return Helpers.CacheManager.GetOrInsertNewObject<ObjectField>(key, () =>
             {
                 return GetSingleObjectFieldByObjectFieldCodeReal(objectFieldCode);
             });
@@ -345,8 +343,15 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public ObjectFieldModification GetLastObjectFieldModificationByTenant(int tenant)
         {
             Repository<ObjectFieldModification> objectFieldModificationRepo = new Repository<ObjectFieldModification>(context);
-            return objectFieldModificationRepo.GetQueryable().Where(a => a.Tenant == tenant && a.UpdateDateGMT != null)
-                .OrderByDescending(a => a.UpdateDateGMT).FirstOrDefault();
+
+            var latestUpdate = objectFieldModificationRepo
+                .GetQueryable()
+                .AsNoTracking()
+                .Where(a => a.Tenant == tenant && a.UpdateDateGMT != null)
+                .OrderByDescending(a => a.UpdateDateGMT)
+                .FirstOrDefault();
+
+            return latestUpdate;
         }
         public List<ObjectFieldModification> GetAllObjectFieldModificationByTenant(int tenant)
         {
@@ -435,7 +440,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             ObjectField field;
             string fieldCacheKey = "ObjectField" + name + tenant;
 
-            if (CacheManager.CacheWrapper.Get(fieldCacheKey) == null)
+            if (Helpers.CacheManager.CacheWrapper.Get(fieldCacheKey) == null)
             {
                 field = GetObjectFieldFromDatabase(name, objectTableId, tenant);
 
@@ -459,11 +464,11 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         private void InsertObjectFieldIntoCache(ObjectField field, string fieldCacheKey)
         {
-            CacheManager.CacheWrapper.Insert(fieldCacheKey, field, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+            Helpers.CacheManager.CacheWrapper.Insert(fieldCacheKey, field, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
         }
         private ObjectField GetObjectFieldFromCache(string fieldCacheKey)
         {
-            return (ObjectField)CacheManager.CacheWrapper.Get(fieldCacheKey);
+            return (ObjectField)Helpers.CacheManager.CacheWrapper.Get(fieldCacheKey);
         }
         public bool IsExistsCustomObjectFieldByCode(string code, string objectTableId, int tenant)
         {

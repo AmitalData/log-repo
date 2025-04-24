@@ -13,65 +13,35 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class ObjectTableRuleQuery
     {
-        private readonly Repository<ObjectTableRule> repository;
+        private readonly int tenant;
         private readonly IAmitalCloudContext context;
+        private readonly Repository<ObjectTableRule> repository;
 
         public ObjectTableRuleQuery(int tenant)
         {
+            this.tenant = tenant;
             context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<ObjectTableRule>(context);
         }
 
-        public List<ObjectTableRulePM> GetObjectTableRulePMsByTenant(int tenant)
+        public List<ObjectTableRulePM> GetObjectTableRulePMsByTenant()
         {
             string pmslistName = "objecttablerulepmstenant" + tenant;
             List<ObjectTableRulePM> allRules = new List<ObjectTableRulePM>();
 
             if (CacheManager.CacheWrapper.Get(pmslistName) == null)
             {
-                List<ObjectTableRulePM> loggedTenantobjectTableRulePMs = new List<ObjectTableRulePM>();
-                List<ObjectTableRulePM> zeroTenantobjectTableRulePMs = new List<ObjectTableRulePM>();
                 Repository<RuleConditionField> ruleConditionFieldRepository = new Repository<RuleConditionField>(context);
 
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    loggedTenantobjectTableRulePMs = repository.GetMulti(a => a.Tenant == tenant, a => new ObjectTableRulePM(a)
-                    {
-                        RuleTypeName = a.RuleType.Name,
-                    }, "RuleType");
-
-                    foreach (ObjectTableRulePM rule in loggedTenantobjectTableRulePMs)
-                    {
-                        rule.RuleConditionFields = ruleConditionFieldRepository.GetMulti(a => (a.Tenant == rule.Tenant) && a.ObjectTableRuleId == rule.Id, a => new RuleConditionFieldPM(a) {
-                            ObjectFieldName = a.ObjectField.FieldName,
-                        }, "ObjectField");
-                    }
-
-                    scope.Complete();
-                }
+                List<ObjectTableRulePM> loggedTenantobjectTableRulePMs = GetObjectTableRules(tenant, ruleConditionFieldRepository);
 
                 if (tenant != 0)
                 {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        zeroTenantobjectTableRulePMs = repository.GetMulti(a => a.Tenant == 0, a => new ObjectTableRulePM(a)
-                        {
-                            RuleTypeName = a.RuleType.Name,
-                        }, "RuleType");
-
-                        foreach (ObjectTableRulePM rule in zeroTenantobjectTableRulePMs)
-                        {
-                            rule.RuleConditionFields = ruleConditionFieldRepository.GetMulti(a => (a.Tenant == rule.Tenant) && a.ObjectTableRuleId == rule.Id, a => new RuleConditionFieldPM(a)
-                            {
-                                ObjectFieldName = a.ObjectField.FieldName,
-                            }, "ObjectField");
-                        }
-                        scope.Complete();
-                    }
+                    List<ObjectTableRulePM> zeroTenantobjectTableRulePMs = GetObjectTableRules(0, ruleConditionFieldRepository);
 
                     foreach (ObjectTableRulePM rule in loggedTenantobjectTableRulePMs)
                     {
-                        rule.IsCreatedFromSystemRule = zeroTenantobjectTableRulePMs.Any(r => r.RuleCode == rule.RuleCode && r.Tenant == 0);
+                        rule.IsCreatedFromSystemRule = zeroTenantobjectTableRulePMs.Any(r => r.RuleCode == rule.RuleCode);
                         allRules.Add(rule);
                     }
 
@@ -97,5 +67,23 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
             return allRules;
         }
+
+        private List<ObjectTableRulePM> GetObjectTableRules(int tenant, IRepository<RuleConditionField> ruleConditionFieldRepository)
+        {
+            List<ObjectTableRulePM> objectTableRulePMs = repository.GetMultiFromCache($"GetObjectTableRules{tenant}", a => a.Tenant == tenant, "RuleType", a => new ObjectTableRulePM(a)
+            {
+                RuleTypeName = a.RuleType.Name,
+            });
+
+            foreach (ObjectTableRulePM rule in objectTableRulePMs)
+            {
+                rule.RuleConditionFields = ruleConditionFieldRepository.GetMultiFromCache($"GetObjectTableRulesRuleConditionFields{tenant}-{rule.Id}", a => (a.Tenant == rule.Tenant) && a.ObjectTableRuleId == rule.Id, "ObjectField", a => new RuleConditionFieldPM(a)
+                {
+                    ObjectFieldName = a.ObjectField.FieldName,
+                });
+            }
+            return objectTableRulePMs;
+        }
+
     }
 }

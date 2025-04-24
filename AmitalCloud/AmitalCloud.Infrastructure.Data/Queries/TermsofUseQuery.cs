@@ -12,16 +12,18 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class TermsofUseQuery
     {
-        private readonly Repository<TermsofUse> repository;
+        private readonly int tenant;
         private readonly IAmitalCloudContext context;
+        private readonly Repository<TermsofUse> repository;
 
         public TermsofUseQuery(int tenant)
         {
+            this.tenant = tenant;
             context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<TermsofUse>(AmitalCloudContext.GetContext(tenant));
         }
 
-        public TermsofUseArgs CheckIfGoToTermUseComponent(int tenant, string userId)
+        public TermsofUseArgs CheckIfGoToTermUseComponent(string userId)
         {
             TermsofUse termofuse = null;
             TermsofUseArgs result = new TermsofUseArgs();

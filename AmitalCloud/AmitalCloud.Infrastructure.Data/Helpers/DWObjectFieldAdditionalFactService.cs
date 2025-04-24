@@ -7,8 +7,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class DWObjectFieldAdditionalFactService
     {
-        public List<DWObjectFieldPM> DWObjectFieldPMs = new List<DWObjectFieldPM>();
-        public bool IsHaveAddAdditionalFactFields = false;
+        public List<DWObjectFieldPM> DWObjectFieldPMs { get; set; } = new List<DWObjectFieldPM>();
+        private bool IsHaveAddAdditionalFactFields = false;
         public DWObjectTablePM DwObjectTable = null;
         private readonly DWObjectFieldQuery dWObjectFieldQuery = null;
         private readonly string factTableCode = string.Empty;
@@ -21,7 +21,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             this.factTableCode = dWObjectFieldAdditionalFactArgs.FactTableCode;
             this.tenant = dWObjectFieldAdditionalFactArgs.Tenant;
             this.groupedByCategory = dWObjectFieldAdditionalFactArgs.GroupedByCategory;
-            dWObjectFieldQuery = new DWObjectFieldQuery(tenant);
+            dWObjectFieldQuery = new DWObjectFieldQuery(0);
             IsHaveAddAdditionalFactFields = DwObjectTable != null && !string.IsNullOrEmpty(DwObjectTable.AdditionalFactCode);
             if (!dWObjectFieldAdditionalFactArgs.DontLoadDwObjectField) LoadDWObjectFieldsWithAdditionalFactFields();
         }
@@ -30,11 +30,11 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             string factCode = !string.IsNullOrEmpty(DwObjectTable.ParentFactCode) ? DwObjectTable.ParentFactCode : factTableCode;
 
-            var factDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, factCode, DwObjectTable.RecordType) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, factTableCode).Where(d => d.DisplayInQueryBuilder == true && (string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.IndexOf(DwObjectTable.RecordType) > -1))).ToList();
+            var factDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(factCode, DwObjectTable.RecordType) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(factTableCode).Where(d => d.DisplayInQueryBuilder == true && (string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.IndexOf(DwObjectTable.RecordType) > -1))).ToList();
             DWObjectFieldPMs = new List<DWObjectFieldPM>();
             if (IsHaveAddAdditionalFactFields)
             {
-                var additionalFactDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DwObjectTable.AdditionalFactCode, DwObjectTable.RecordType) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(0, DwObjectTable.AdditionalFactCode).Where(d => string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.IndexOf(DwObjectTable.RecordType) > -1)).ToList();
+                var additionalFactDWObjectFieldPMs = groupedByCategory ? dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(DwObjectTable.AdditionalFactCode, DwObjectTable.RecordType) : dWObjectFieldQuery.GetDWObjectFieldByDWObjectTableCode(DwObjectTable.AdditionalFactCode).Where(d => string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.IndexOf(DwObjectTable.RecordType) > -1)).ToList();
                 foreach (DWObjectFieldPM additionalFactField in additionalFactDWObjectFieldPMs.Where(d => (d.IsMeasurement == false || IsShipmentProfitField(d)) && (d.DisplayInQueryBuilder || (d.IsCustom && !DwObjectTable.HasCustomFields))))
                 {
                     if (IsShipmentProfitField(additionalFactField))
@@ -55,9 +55,13 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             DWObjectFieldPMs = DWObjectFieldPMs.Concat(factDWObjectFieldPMs).ToList();
         }
 
+        private static readonly HashSet<string> ProfitCodes = new HashSet<string> {
+            "[Profit]", "[Profit ( Local )]", "[Accounted Profit]", "[Accounted Profit(Local)]"
+        };
+
         private bool IsShipmentProfitField(DWObjectFieldPM Field)
         {
-            return (Field.Code == "[Profit]" || Field.Code == "[Profit ( Local )]" || Field.Code == "[Accounted Profit]" || Field.Code == "[Accounted Profit(Local)]") && factTableCode == "Fact_ARInvoices" && Field.DWObjectTableCode == "Fact_Shipments";
+            return ProfitCodes.Contains(Field.Code) && factTableCode == "Fact_ARInvoices" && Field.DWObjectTableCode == "Fact_Shipments";
         }
 
         private bool ContainTableRecordType(DWObjectFieldPM additionalFactField)

@@ -18,7 +18,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                AccountingSystemPM result = !string.IsNullOrEmpty(AccountingSystemCode) && AccountingSystemCode != "null" ? new AccountingSystemQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetSingle(AccountingSystemCode, true, true) : null;
+                AccountingSystemPM result = !string.IsNullOrEmpty(AccountingSystemCode) && AccountingSystemCode != "null" ? new AccountingSystemQueryService(AmitalCloudSecurityUtility.AuthenticateTenant()).GetSingle(AccountingSystemCode, true, true) : null;
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
@@ -30,7 +30,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new TenantAddOnQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetSingle("INTTR", true, true));
+                return Request.CreateResponse(HttpStatusCode.OK, new TenantAddOnQueryService(AmitalCloudSecurityUtility.AuthenticateTenant()).GetSingle("INTTR", true, true));
             }
             catch (Exception ex)
             {
@@ -41,7 +41,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 SettingQueryService settingQueryService = new SettingQueryService(tenant);
 
                 SettingPM mySetting = settingQueryService.GetSingle(SettingQuery.GetDefaultSettingId(), false, true);
@@ -63,7 +63,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new TenantManagmentPrivateLabelsQueryService(AmitalCloudSecurityUtility.AuthenticationOnTenant()).GetSingle(Id, true, true));
+                return Request.CreateResponse(HttpStatusCode.OK, new TenantManagmentPrivateLabelsQueryService(AmitalCloudSecurityUtility.AuthenticateTenant()).GetSingle(Id, true, true));
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 return Request.CreateResponse(HttpStatusCode.OK, new TenantSettingQueryService(tenant).GetMulti(a => a.Tenant == tenant));
             }
             catch (Exception ex)
@@ -86,7 +86,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 TenantManagementPM entityPM = new TenantManagementQueryService(tenant).GetSingle(tenant, true, true);
                 bool isLogboxSystem = CheckIsLogboxSystem();
                 if (entityPM == null)

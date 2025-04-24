@@ -8,41 +8,50 @@ using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using System.Collections.Concurrent;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class DWObjectFieldQuery
     {
-        readonly Repository<DWObjectField> repository;
+        readonly int tenant;
         readonly IAmitalCloudContext context;
+        readonly Repository<DWObjectField> repository;
+        private const string DIM_CustomPickLists = "DIM_CustomPickLists";
+        private const string Fact = "Fact";
 
         public DWObjectFieldQuery(int tenant)
         {
+            this.tenant = tenant;
             context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<DWObjectField>(context);
         }
 
-        public List<DWObjectFieldPM> GetDWObjectFieldWithChildrenFieldsPMsByTenant(int tenant)
+        public List<DWObjectFieldPM> GetDWObjectFieldWithChildrenFieldsPMsByTenant()
         {
-            List<DWObjectFieldPM> FinalList = new List<DWObjectFieldPM>();
-            List<string> dwObjectTablesCodes = new Repository<DWObjectTable>(context).GetMulti(a => a.Tenant == tenant, a => new DWObjectTablePM(a)).Where(dwTable => dwTable.TypeCode == "Fact" && string.IsNullOrEmpty(dwTable.ParentFactCode)).Select(dwTable => dwTable.Code).ToList();
+            List<string> dwObjectTablesCodes = new Repository<DWObjectTable>(context).GetMulti(a => a.Tenant == tenant, a => new DWObjectTablePM(a)).Where(dwTable => dwTable.TypeCode == Fact && string.IsNullOrEmpty(dwTable.ParentFactCode)).Select(dwTable => dwTable.Code).ToList();
 
-            Parallel.ForEach(dwObjectTablesCodes, (dwTableCode) =>
+            ConcurrentBag<DWObjectFieldPM> bag = new ConcurrentBag<DWObjectFieldPM>();
+
+            Parallel.ForEach(dwObjectTablesCodes, dwTableCode =>
             {
-                FinalList.AddRange(GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(tenant, dwTableCode));
+                foreach (var field in GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(dwTableCode))
+                {
+                    bag.Add(field);
+                }
             });
 
-            return FinalList;
+            return bag.ToList();
         }
 
-        public List<DWObjectFieldPM> GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(int tenant, string dwotCode)
+        public List<DWObjectFieldPM> GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(string dwotCode)
         {
             var TempList = new DWObjectFieldAdditionalFactService(new DWObjectFieldAdditionalFactArgs() { FactTableCode = dwotCode, Tenant = tenant }).DWObjectFieldPMs;
             var FinalList = TempList.Where(a => a.DimensionTableCode == null).ToList();
             var Parents = TempList.Where(a => a.DimensionTableCode != null).ToList();
             List<string> dimensionTable = Parents.GroupBy(d => d.DimensionTableCode).Select(d => d.First().DimensionTableCode).ToList();
-            dimensionTable.Add("DIM_CustomPickLists");
-            IEnumerable<IGrouping<string, DWObjectFieldPM>> DWObjectFieldPMDimensionGroups = GetDWObjectFieldPMDimensionListsGroups(tenant, dimensionTable);
+            dimensionTable.Add(DIM_CustomPickLists);
+            IEnumerable<IGrouping<string, DWObjectFieldPM>> DWObjectFieldPMDimensionGroups = GetDWObjectFieldPMDimensionListsGroups(dimensionTable);
 
             foreach (var parent in Parents)
             {
@@ -62,10 +71,10 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             }
 
 
-            return SetDWFullNameTextCode(tenant, FinalList);
+            return SetDWFullNameTextCode(FinalList);
         }
 
-        public IQueryable<DWObjectFieldPM> GetDWObjectFieldByDWObjectTableCode(int tenant, string dwotCode)
+        public IQueryable<DWObjectFieldPM> GetDWObjectFieldByDWObjectTableCode(string dwotCode)
         {
             var TempList = repository.GetQueryable().Where(a => a.Tenant == tenant && a.DWObjectTableCode == dwotCode && a.CannotFilter == false).Select(a => new DWObjectFieldPM(a));
             return TempList;
@@ -108,13 +117,13 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             };
         }
 
-        private IEnumerable<IGrouping<string, DWObjectFieldPM>> GetDWObjectFieldPMDimensionListsGroups(int tenant, List<string> dimensionTableLists)
+        private IEnumerable<IGrouping<string, DWObjectFieldPM>> GetDWObjectFieldPMDimensionListsGroups(List<string> dimensionTableLists)
         {
             IEnumerable<IGrouping<string, DWObjectFieldPM>> list = repository.GetMulti(a => a.Tenant == tenant && dimensionTableLists.Contains(a.DWObjectTableCode) && a.DisplayInQueryBuilder == true, a => new DWObjectFieldPM(a)).ToList().GroupBy(d => d.DWObjectTableCode);
             return list;
         }
 
-        public List<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(int tenant, string dwotCode, string recordType)
+        public List<DWObjectFieldPM> GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(string dwotCode, string recordType)
         {
             Repository<DWObjectFieldCategories> DWObjectFieldCategoriesRepo = new Repository<DWObjectFieldCategories>(context);
             Repository<DWCategories> DWCategoriesRepo = new Repository<DWCategories>(context);
@@ -129,12 +138,12 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                                                  CategoryIndex = b.Index,
                                              }).ToList();
 
-            results = SetDWFullNameTextCode(tenant, results);
+            results = SetDWFullNameTextCode(results);
 
             return results;
         }
 
-        private List<DWObjectFieldPM> SetDWFullNameTextCode(int tenant, List<DWObjectFieldPM> dWObjectFieldPMs)
+        private List<DWObjectFieldPM> SetDWFullNameTextCode(List<DWObjectFieldPM> dWObjectFieldPMs)
         {
             List<DWObjectFieldPM> results = dWObjectFieldPMs;
 

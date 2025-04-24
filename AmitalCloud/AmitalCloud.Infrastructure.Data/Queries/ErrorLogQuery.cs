@@ -12,6 +12,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
     public class ErrorLogQuery
     {
         private readonly Repository<ErrorLog> repository;
+        private readonly int tenant;
 
         public ErrorLogQuery(int tenant)
         {
@@ -20,11 +21,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         public ErrorLog AddErrorLog(ErrorLog errorLog)
         {
-            int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                ErrorLog errorLogs = new ErrorLog();
-
                 ISystemLogContext systemLogContext = SystemLogContext.GetContext(tenant);
 
                 if (errorLog.Id == null)
@@ -67,6 +65,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                             }
                             catch (Exception)
                             {
+                                NetCommonHelper.Logger.DevLog.Instance.WriteWarning($"Failed to insert an error log: {ex.Message}");
                             }
                         }
                     }

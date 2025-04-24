@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 List<ObjectTableLastUpdatePM> list = new ObjectTableLastUpdateQueryService(tenant).GetMulti(a => a.LastUpdateDate > sinceDate && (a.Tenant == tenant || a.Tenant == 0) && a.ObjectTable.CacheOnClient && !a.ObjectTable.IsClosed, a => new ObjectTableLastUpdatePM(a)
                 {
                     ObjectTableName = a.ObjectTable.Name,

@@ -14,12 +14,13 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     [RoutePrefix("api/LogitudeApplication")]
     public class LogitudeApplicationController : ApiController
     {
+        [HttpGet]
         [Route("")]
         public HttpResponseMessage GetCheckIsupgradingSystem()
         {
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 bool isBlocking = GetIsBlockingFromDB(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, isBlocking);
             }

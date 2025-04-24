@@ -16,8 +16,8 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             string logKey = PerformanceLogger.LogCurrentTime();
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                var dWObjectFieldPM = new DWObjectFieldQuery(tenant).GetDWObjectFieldWithChildrenFieldsPMsByTenant(tenant);
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                var dWObjectFieldPM = new DWObjectFieldQuery(tenant).GetDWObjectFieldWithChildrenFieldsPMsByTenant();
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, dWObjectFieldPM);

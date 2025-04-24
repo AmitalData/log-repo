@@ -5,16 +5,12 @@ using System.Net.Http;
 using System.Net;
 using System.Web;
 using System.Web.Http;
-using System.Transactions;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Data.Queries;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Application.EntityListQueryServices;
 
@@ -26,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 string loggedUserEmail = AuthenticationTokenRepository.GetSingleTokenFromCache(token).Email;
 
@@ -66,40 +62,40 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, AmitalCloudApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
         }
+
         public HttpResponseMessage GetFeatureToggles()
         {
             try
             {
-                    int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
-                    List<FeatureToggleList> myResult = new FeatureToggleListQueryService(tenant).GetList(tenant).Where(a=>a.Inactive==false).ToList();
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                List<FeatureToggleList> myResult = new FeatureToggleListQueryService(tenant).GetList(tenant).Where(a => a.Inactive == false).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, AmitalCloudApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
         }
+
         public HttpResponseMessage GetLastFilters()
         {
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 string loggedUserEmail = AuthenticationTokenRepository.GetSingleTokenFromCache(token).Email;
-                    //ICRMContext crmContext = CRMContext.GetContext(tenant);
-                    //CRMFilterSettingListQueryService listService = new CRMFilterSettingListQueryService(crmContext);
-                    //List<CRMFilterSettingList> myResult = listService.GetList(tenant);
-                    return Request.CreateResponse(HttpStatusCode.OK, new List<string>());
+                //ICRMContext crmContext = CRMContext.GetContext(tenant);
+                //CRMFilterSettingListQueryService listService = new CRMFilterSettingListQueryService(crmContext);
+                //List<CRMFilterSettingList> myResult = listService.GetList(tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, new List<string>());
             }
-
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, AmitalCloudApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
         }
-
     }
 }

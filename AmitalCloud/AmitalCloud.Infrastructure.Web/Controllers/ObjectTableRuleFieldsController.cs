@@ -15,7 +15,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 var queryService = new ObjectTableRuleFieldQueryService(tenant);
                 var result = queryService.GetMulti(a => a.Tenant == tenant || a.Tenant == 0, a => new ObjectTableRuleFieldPM(a)
                 {

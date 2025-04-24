@@ -5,23 +5,18 @@ using System.Web.Http;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using AmitalCloud.Infrastructure.Data.Queries;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
-    [RoutePrefix("api/ErrorLogs")]
-    public class ErrorLogsController : ApiController
+    public class RatesTablesCustomController : ApiController
     {
-        [HttpPost]
-        [Route("")]
-        public HttpResponseMessage Post(ErrorLog entity)
+        public HttpResponseMessage GetLastUpdateByCurrencyCode(string foreignCurrency, string tenantCurrencyId)
         {
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant(entity.Tenant);
-                entity = new ErrorLogQuery(tenant).AddErrorLog(entity);
-                return Request.CreateResponse(HttpStatusCode.OK, entity);
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                var ratesTable = new RatesTableQuery(tenant).GetLastUpdateByCurrencyCode(foreignCurrency, tenantCurrencyId);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
             {

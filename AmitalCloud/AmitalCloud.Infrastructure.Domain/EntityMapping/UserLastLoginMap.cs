@@ -34,7 +34,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityMapping
 
             this.Property(t => t.IP).HasColumnName("IP").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.Computerusername).HasColumnName("Computerusername").IsRequired().HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.Computerusername).HasColumnName("Computerusername").HasMaxLength(60).IsUnicode(true);
         }
     }
 }

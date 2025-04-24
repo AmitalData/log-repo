@@ -10,10 +10,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     [RoutePrefix("api/EntityResource")]
     public class EntityResourceController : ApiController
     {
+        [HttpGet]
         [Route("")]
         public HttpResponseMessage GetEntityResourceByTableName(string objectTableName, int tenant)
         {
-            tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+            tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             ObjectTable objectTable = new ObjectTableRepository(tenant).GetObjectTableByName(objectTableName, tenant, false);
             return Request.CreateResponse(HttpStatusCode.OK, objectTable?.EntityResource);
         }

@@ -1061,6 +1061,7 @@
     <Compile Include="Queries\SystemMetadataLastUpdateQuery.cs" />
     <Compile Include="Queries\ErrorLogQuery.cs" />
     <Compile Include="Queries\TermsofUseQuery.cs" />
+    <Compile Include="Queries\RatesTableQuery.cs" />
     <Compile Include="Queries\TipsVisibilityQuery.cs" />
     <Compile Include="Queries\TipQuery.cs" />
     <Compile Include="Queries\TranslationQuery.cs" />
