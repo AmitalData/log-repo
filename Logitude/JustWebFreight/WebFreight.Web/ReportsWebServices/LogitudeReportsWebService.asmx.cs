@@ -11356,15 +11356,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                         else 
                         {
-                            duplicated.LocalOpenBalance += record.LocalOpenBalance;
-                            duplicated.LocalDebit += record.LocalDebit; 
-                            duplicated.LocalCredit += record.LocalCredit;
-                            duplicated.LocalCloseBalance += record.LocalCloseBalance;   
-
-                            duplicated.ForeignOpenBalance += record.ForeignOpenBalance;
-                            duplicated.ForeignDebit += record.ForeignDebit; 
-                            duplicated.ForeignCredit += record.ForeignCredit;
-                            duplicated.ForeignCloseBalance += record.ForeignCloseBalance;   
+                            UpdateBalances(duplicated, record);
                         }
 
 
@@ -11468,15 +11460,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                         else
                         {
-                            duplicated.LocalOpenBalance += record.LocalOpenBalance;
-                            duplicated.LocalDebit += record.LocalDebit;
-                            duplicated.LocalCredit += record.LocalCredit;
-                            duplicated.LocalCloseBalance += record.LocalCloseBalance;
-
-                            duplicated.ForeignOpenBalance += record.ForeignOpenBalance;
-                            duplicated.ForeignDebit += record.ForeignDebit;
-                            duplicated.ForeignCredit += record.ForeignCredit;
-                            duplicated.ForeignCloseBalance += record.ForeignCloseBalance;
+                            UpdateBalances(duplicated, record);
                         }
 
 
@@ -11576,15 +11560,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                         else
                         {
-                            duplicated.LocalOpenBalance += record.LocalOpenBalance;
-                            duplicated.LocalDebit += record.LocalDebit;
-                            duplicated.LocalCredit += record.LocalCredit;
-                            duplicated.LocalCloseBalance += record.LocalCloseBalance;
-
-                            duplicated.ForeignOpenBalance += record.ForeignOpenBalance;
-                            duplicated.ForeignDebit += record.ForeignDebit;
-                            duplicated.ForeignCredit += record.ForeignCredit;
-                            duplicated.ForeignCloseBalance += record.ForeignCloseBalance;
+                            UpdateBalances(duplicated, record);
                         }
 
                     }
@@ -11686,15 +11662,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                         else
                         {
-                            duplicated.LocalOpenBalance += record.LocalOpenBalance;
-                            duplicated.LocalDebit += record.LocalDebit;
-                            duplicated.LocalCredit += record.LocalCredit;
-                            duplicated.LocalCloseBalance += record.LocalCloseBalance;
-
-                            duplicated.ForeignOpenBalance += record.ForeignOpenBalance;
-                            duplicated.ForeignDebit += record.ForeignDebit;
-                            duplicated.ForeignCredit += record.ForeignCredit;
-                            duplicated.ForeignCloseBalance += record.ForeignCloseBalance;
+                            UpdateBalances(duplicated, record);
                         }
 
                     }
@@ -11786,15 +11754,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                         else
                         {
-                            duplicated.LocalOpenBalance += record.LocalOpenBalance;
-                            duplicated.LocalDebit += record.LocalDebit;
-                            duplicated.LocalCredit += record.LocalCredit;
-                            duplicated.LocalCloseBalance += record.LocalCloseBalance;
-
-                            duplicated.ForeignOpenBalance += record.ForeignOpenBalance;
-                            duplicated.ForeignDebit += record.ForeignDebit;
-                            duplicated.ForeignCredit += record.ForeignCredit;
-                            duplicated.ForeignCloseBalance += record.ForeignCloseBalance;
+                            UpdateBalances(duplicated, record);
                         }
 
 
@@ -12048,6 +12008,22 @@ namespace WebFreight.Web.ReportsWebServices
 
             return totalData;
         }
+
+
+
+        private void UpdateBalances(ResultList duplicated, ResultList record)
+        {
+            duplicated.LocalOpenBalance += record.LocalOpenBalance;
+            duplicated.LocalDebit += record.LocalDebit;
+            duplicated.LocalCredit += record.LocalCredit;
+            duplicated.LocalCloseBalance += record.LocalCloseBalance;
+
+            duplicated.ForeignOpenBalance += record.ForeignOpenBalance;
+            duplicated.ForeignDebit += record.ForeignDebit;
+            duplicated.ForeignCredit += record.ForeignCredit;
+            duplicated.ForeignCloseBalance += record.ForeignCloseBalance;
+        }
+
 
         private void FilterChartOfAccountsAndTypes(RevenueExpenseDataProvider totalData, List<TrailReportM> trailReportMs)
         {
