@@ -6126,7 +6126,6 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     DisplayInRequiredFields="false"
-     DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
