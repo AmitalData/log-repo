@@ -38,6 +38,8 @@ import { JournalExtendedPMService } from 'Accounting/Services/ExtendedPMs/Journa
 import { JournalPM } from 'Accounting/EntityPMs/JournalPM';
 import { BankAccountListService } from 'Accounting/Services/StandardLists/BankAccountListService';
 import { TruckerCustomFilter } from 'Common/CustomFilters/TruckerCustomFilter';
+import { GLAccountPMService } from 'Accounting/Services/StandardPMs/GLAccountPMService';
+import { GLAccountPM } from 'Accounting/EntityPMs/GLAccountPM';
 
 @Component({
     templateUrl: './APPaymentDetailsTabComponent.html',
@@ -302,7 +304,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     CardListService: CardListService;
-    _GLAccountListService: GLAccountListService = new GLAccountListService();
+    glAccountPMService: GLAccountPMService = new GLAccountPMService();
     PartnersDomainService: PartnersDomainService;
     GLAccountWithholdingService: GLAccountWithholdingTaxExtendedPMService;
     BankAccountPMService: BankAccountPMService;
@@ -572,8 +574,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 
                 const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.PaymentCurrencyId);
                 if (lastRate) {
-                    const customRate = (this.glaccount && this.glaccount.ExchangeRateId)
-                    ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount?.ExchangeRateId)?.Rate 
+                    const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.PaymentCurrencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
+
+                    const customRate = (this.glaccount && exchangeRateId)
+                    ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                     : null;
                     myRate = customRate !== null && customRate !== undefined ? customRate : lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
@@ -607,7 +611,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 if (this.LastRatesList) {
                     const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
                     if (lastRate) {
-                        const exchangeRateId = this.glaccount?.ExchangeRateId;
+                        const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
                         const customRate = exchangeRateId
                         ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
@@ -633,7 +637,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 if (this.LastRatesList) {
                     const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
                     if (lastRate) {
-                        const exchangeRateId = this.glaccount?.ExchangeRateId;
+                        const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
                         const customRate = exchangeRateId 
                         ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
@@ -956,6 +960,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.EntityPM.VendorSwift = null;
             this.EntityPM.VendorBankName = null;
             this.EntityPM.VendorCountry = null
+            this.glaccount = null;
         }
         else {
             this.GLAccountId = list.GLAccountId;
@@ -1014,9 +1019,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
     }
 
-    vendorGLAccount: GLAccountList;
+    vendorGLAccount: GLAccountPM;
     deductionFileNumber: string;
-    glaccount: GLAccountList;
+    glaccount: GLAccountPM;
     GetConnectedGLAccount() {
         let etext: string;
         etext = TextCodeTranslator.Translate("Accounting.General.O.VendorWithCustomerGLAccount");
@@ -1024,13 +1029,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.GLAccountId)
         {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this._GLAccountListService.getSingle(this.GLAccountId).subscribe((myResult: any) => {
-                console.log("[_GLAccountListService.getSingle]", myResult);
+            this.glAccountPMService.get(this.GLAccountId).subscribe((myResult: any) => {
+                console.log("[glAccountPMService.getSingle]", myResult);
                 this.CurrentSession.StopBusyIndicator();
 
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
-                    var gla: GLAccountList = myResponse.Result;
+                    var gla: GLAccountPM = myResponse.Result;
                     this.vendorGLAccount = gla;
                     this.deductionFileNumber = gla ? gla.DeductionFileNumber : null;
                     this.EntityPM.ExcludeFromDeductionReport = gla.ExcludeFromDeductionReport;

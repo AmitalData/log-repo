@@ -72,6 +72,11 @@ export class GLAccountCurrencyPM {
     public set GLAccountName(newValue: string) { if (this.gLAccountName != newValue) { this.gLAccountName = newValue; this.MarkAsDirty("GLAccountName"); } }
        
 	 
+    private exchangeRateId: string;
+    public get ExchangeRateId() { return this.exchangeRateId; }
+    public set ExchangeRateId(newValue: string) { if (this.exchangeRateId != newValue) { this.exchangeRateId = newValue; this.MarkAsDirty("ExchangeRateId"); } }
+       
+	 
 
     public OldEntityPM: GLAccountCurrencyPM;
 	

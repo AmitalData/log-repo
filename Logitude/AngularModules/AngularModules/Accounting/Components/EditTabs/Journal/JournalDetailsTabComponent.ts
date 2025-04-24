@@ -1116,6 +1116,8 @@ class JournalLineModel extends BaseComponent {
                     this.CreditAccount=entity;
                     this.CreditAccountName=this.CreditAccount.LocalName;
                     this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
+                    this.GetExchangeRate(this.CurrencyId);
+
                 }
             });
         }
@@ -1132,6 +1134,7 @@ class JournalLineModel extends BaseComponent {
                     this.DebitAccountName=this.DebitAccount.LocalName;
                     this.JournalLinePM.DebitAccountCountryCode = this.DebitAccount.CardCountryCode;
                     this.JournalLinePM.DebitAccountCOACode = this.DebitAccount.ChartOfAccountsTypeCode;
+                    this.GetExchangeRate(this.CurrencyId);
                 }
             });
         }
@@ -1199,7 +1202,9 @@ class JournalLineModel extends BaseComponent {
                                 (this.ActionCode === ActionCode.DebitAndCredit.toString() && !this.CreditAccount) 
                                     ? this.DebitAccount 
                                     : this.CreditAccount;
-                            const customRate = myResponse.Result?.CurrencyRates?.find(rate => rate?.AdditionalCurrencyRateId === glaccount?.ExchangeRateId)?.Rate ?? null;
+                            const exchangeRateId = !glaccount?.IsMultiCurrency ? glaccount?.ExchangeRateId : glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === value)?.ExchangeRateId ?? glaccount?.ExchangeRateId;
+
+                            const customRate = myResponse.Result?.CurrencyRates?.find(rate => rate?.AdditionalCurrencyRateId === exchangeRateId)?.Rate ?? null;
                             var rate = customRate?? myResponse?.Result?.Rate;
                      
                             if (this.IsAccDayChanged && (this.currencyRate !== rate)) {

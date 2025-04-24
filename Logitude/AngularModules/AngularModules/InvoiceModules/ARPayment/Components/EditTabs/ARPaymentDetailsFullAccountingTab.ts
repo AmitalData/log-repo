@@ -1157,6 +1157,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.EntityPM.BillToName = null;
                 this.EntityPM.BillToPartnerTypeId = null;
                 this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+                this.glaccount = null;
             }
 
             else {
@@ -1191,6 +1192,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                              
                                             if (this.glaccount != null && !this.glaccount.IsMultiCurrency) {
                                                 this.PaymentCurrencyId = this.glaccount.CurrencyId;
+                                            }
+                                            else {
+                                                this.SetCurrencyRateData();
                                             }
                                         }
                                     });
@@ -1294,6 +1298,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if(!this.EntityPM.BankTransferPaymentArguments || (this.EntityPM.BankTransferPaymentArguments && !this.EntityPM.BankTransferPaymentArguments.CurrencyId))
                 this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
             this.EntityPM.BillToPartnerTypeId = null;
+            
         }
 
         else {
@@ -1318,8 +1323,14 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                             if (this.glaccount != null && !this.glaccount.IsMultiCurrency && (this.EntityPM.BankTransferPaymentArguments && !this.EntityPM.BankTransferPaymentArguments.CurrencyId)) {
                                 this.PaymentCurrencyId = this.glaccount.CurrencyId;
                             }
+                            else{
+                                this.SetCurrencyRateData();
+                            }
                         }
                     });
+                }
+                else{
+                    this.glaccount = null;
                 }
             }
             
@@ -1538,8 +1549,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             else {
                 const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.PaymentCurrencyId);
                 if (lastRate) {
-                    const customRate = this.glaccount?.ExchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                    const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.PaymentCurrencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
+
+                    const customRate =exchangeRateId
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
 
                     myRate = customRate ?? lastRate.Rate;
@@ -1570,8 +1583,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 if (this.LastRatesList) {
                     const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
                     if (lastRate) {
-                        const customRate = this.glaccount?.ExchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === this.glaccount.ExchangeRateId)?.Rate 
+                        const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
+                        const customRate = exchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
                         result = customRate ?? lastRate.Rate;
 

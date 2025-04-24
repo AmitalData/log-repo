@@ -39,6 +39,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string GLAccountNumber  { get; set; }
        [DataMember]
        public string GLAccountName  { get; set; }
+       [DataMember]
+       public string ExchangeRateId  { get; set; }
    }
 
 }
