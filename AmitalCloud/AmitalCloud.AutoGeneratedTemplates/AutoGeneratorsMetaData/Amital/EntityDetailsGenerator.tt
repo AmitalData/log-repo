@@ -36,14 +36,14 @@ public void GenerateAllCloseTableDetailsEnumsClasss(string sourceFolder,string d
  string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
  string sourceFilePath = Path.Combine(templateDirectory, sourceFolder);
 
-foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
-{
-
-    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-	string filename = fileNameWithoutExtension+"Details.Generated.cs";
-	GenerateDetailsClass(file,destinationFolder+"/DetailsClassesGenerated/"+filename);
-	 
-}
+//foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+//{
+//
+//    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+//	string filename = fileNameWithoutExtension+"Details.Generated.cs";
+//	GenerateDetailsClass(file,destinationFolder+"/DetailsClassesGenerated/"+filename);
+//	 
+//}
 
 foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 {
