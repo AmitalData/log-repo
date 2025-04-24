@@ -56,7 +56,14 @@ namespace Logitude.Customs.BL.BL
             var declarationPendingRepo = new DeclarationPendingRepository(declarationCourierStatusPM.Tenant);
             var declarationRepo = new DeclarationRepository(declarationCourierStatusPM.Tenant);
 
-            Declaration declaration = null;
+            var declaration = declarationRepo.GetSingle(
+                                declarationCourierStatusPM.DeclarationId,
+                                declarationCourierStatusPM.Tenant);
+
+            if(declaration == null || declaration.IsAmendment == true)
+            {
+                return;
+            }
 
             if (_featureSendManifest && declarationCourierStatusPM.CourierManifestStatusCode == "R")
             {
@@ -69,11 +76,6 @@ namespace Logitude.Customs.BL.BL
                 && declarationCourierStatusPM.CourierDeclarationStatusCode == "R"
                 && declarationCourierStatusPM.DocumentStatusCode == "V")
             {
-
-                declaration = declarationRepo.GetSingle(
-                    declarationCourierStatusPM.DeclarationId,
-                    declarationCourierStatusPM.Tenant);
-
 
                 bool hasActivePending = false;
                 if (declaration != null)
