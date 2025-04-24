@@ -28,6 +28,8 @@ import { HttpResponse } from '@angular/common/http';
 import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
 import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
+import { MenuTypes } from 'Report/Components/ProcessMenuComponent';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 declare var window: any;
 
@@ -774,13 +776,19 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
                             var mm: ServiceResponse = myResult;
                             var entity = mm.Result;
                             this.btePM = entity;
+                            this.CurrentSession.StopBusyIndicator();
 
-
-                            this.timer = setInterval(() => {
-                                this.GetBTE();
-                            }, this.timerInterval);
-
-                        });
+                            var messageWindow = new MessageWindow();
+                            messageWindow.ShowSuccessIcon = true;
+                            messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
+                            SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                            SessionLocator.HomeComponent.CurrentProcessId = mm.Result.reportKey;
+                            SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution.toString();
+  
+                            SessionLocator.HomeComponent.isPinned = true;
+  
+   
+                            });
                     }
                 });
             }

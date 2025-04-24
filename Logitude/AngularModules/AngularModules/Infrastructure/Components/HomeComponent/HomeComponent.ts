@@ -65,7 +65,7 @@ export class HomeComponent implements OnDestroy{
     currentProcessId : string = "";
     public isPinned: boolean = false;
     countCompletedProcesses : number = 0;
-    selectedTab: number = 0;
+    selectedTab: string = '0';
 
 
     constructor(private processMenuService: ProcessMenuService) {
@@ -822,7 +822,7 @@ export class HomeComponent implements OnDestroy{
         }
     }
     get SelectedTab() { return this.selectedTab; }
-    set SelectedTab(newValue: number) {
+    set SelectedTab(newValue: string) {
         
         if (this.selectedTab != newValue) {
             this.selectedTab = newValue;

@@ -16,6 +16,7 @@ import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { AppTool } from "Infrastructure/Tools";
 import { ProcessMenuService } from "Common/Services/ProcessMenuService";
+import { Console } from "console";
 
 
 @Component({
@@ -37,7 +38,7 @@ export class ProcessMenuComponent implements OnDestroy {
     showExceptionMessage = false
     isProcessMenuVisible: boolean = false;
     public selectedTab: string = '0'; 
-    public currentSelectedTab: number = 0; 
+    public currentSelectedTab: string = '0'; 
 
     currentProcessId: string = "";
     public isPinned: boolean = false;
@@ -61,6 +62,7 @@ export class ProcessMenuComponent implements OnDestroy {
 
     }
     GroupMenuItemsByType() {
+
         this.processMenuService.relatedProcessSubject.subscribe(menuItemList => {
             this.groupedMenuItems = menuItemList.reduce((groups: { [key: string]: MenuItemClass[] }, menuItem: MenuItemClass) => { 
                 const type = menuItem.ItemType; 
@@ -70,14 +72,12 @@ export class ProcessMenuComponent implements OnDestroy {
                 groups[type].push(menuItem); 
                 return groups;
             }, {});
-            this.selectedTab =  (!AppTool.IsNullOrEmpty(this.selectedTab) && AppTool.IsNullOrEmpty(this.CurrentSelectedTab)) ? this.selectedTab: !AppTool.IsNullOrEmpty(this.CurrentSelectedTab) && Object.keys(this.groupedMenuItems)[this.CurrentSelectedTab] ? Object.keys(this.groupedMenuItems)[this.CurrentSelectedTab] : "0";
 
         });
 
     }
     selectTab(tab: string) {
-        this.currentSelectedTab = null;
-        this.selectedTab = tab;
+        this.currentSelectedTab = tab;
     }
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -95,7 +95,7 @@ export class ProcessMenuComponent implements OnDestroy {
         }
     }
     get CurrentSelectedTab() { return this.currentSelectedTab; }
-    set CurrentSelectedTab(newValue: number) {
+    set CurrentSelectedTab(newValue: string) {
 
         if (this.currentSelectedTab != newValue) {
             this.currentSelectedTab = newValue;

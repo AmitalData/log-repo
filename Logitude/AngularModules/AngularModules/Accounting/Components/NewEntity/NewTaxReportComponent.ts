@@ -155,7 +155,7 @@ export class NewTaxReportComponent extends BaseComponent {
                           messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
                           SessionLocator.HomeComponent.IsProcessMenuVisible = true;
                           SessionLocator.HomeComponent.CurrentProcessId = myResult.ReportKey;
-                          SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution;
+                          SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution.toString();
                           SessionLocator.HomeComponent.isPinned = true;
                       }
 
