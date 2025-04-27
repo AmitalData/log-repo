@@ -217,10 +217,21 @@ namespace <#= pmnamespacestring #>
 								continue;
 							}
 						}
+                        if( field.IsMulti.GetType() == typeof(string) && field.IsMulti == "true")  
+						{ 
+							
 					string multitablename = field.MultiTableName.ToString().Trim('"');
 #>
 		<#= privatepropname #> = entity.<#= field.FieldName.Trim('"') #> != null ? entity.<#= field.FieldName.Trim('"') #>.Select(a=>new <#= multitablename #>PM(a)).ToList() : null;
+<#+							
+						}
+                        else 
+                        {
+#>
+		<#= privatepropname #> = null;
 <#+
+                        }
+
 						continue;
 					}
 				   else

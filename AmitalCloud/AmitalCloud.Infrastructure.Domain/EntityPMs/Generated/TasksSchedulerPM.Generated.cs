@@ -69,7 +69,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_format = entity.Format;
 		_advancedFormat = entity.AdvancedFormat;
 		_executedByServerName = entity.ExecutedByServerName;
-			documentTypeTemplateIds = null;// entity.DocumentTypeTemplateIds != null ? entity.DocumentTypeTemplateIds.Select(a=>new AmazedSaint.Elastic.Lib.ElasticObjectPM(a)).ToList() : null;
+		documentTypeTemplateIds = null;
    }
    #endregion Constructors
    #region Properties

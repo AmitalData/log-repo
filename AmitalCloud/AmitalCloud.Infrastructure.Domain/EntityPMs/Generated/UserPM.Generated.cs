@@ -52,8 +52,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_personalId = entity.PersonalId;
 		_notes = entity.Notes;
 		_searchFields = entity.SearchFields;
-		rolePMLists = null;//entity.RolePMLists != null ? entity.RolePMLists.Select(a=>new RolePM(a)).ToList() : null;
-			_isTwoFactorAuthenticationEnabled = entity.IsTwoFactorAuthenticationEnabled;
+		rolePMLists = null;
+		_isTwoFactorAuthenticationEnabled = entity.IsTwoFactorAuthenticationEnabled;
 		_showLogBoxToolTip = entity.ShowLogBoxToolTip;
 		_showInboxToolTip = entity.ShowInboxToolTip;
 		_setAngularAsDefault = entity.SetAngularAsDefault;
