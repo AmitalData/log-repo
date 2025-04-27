@@ -345,6 +345,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
             long count = 1;
+            decimal totalCredit = 0;
+			decimal totalDebit = 0;
+
             foreach (JournalSrcLineDTO_ISL jLine in _JournalSrcLinesDTO)
             {
                 if (jLine.ActionCode != "2")
@@ -380,7 +383,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.CreditGLAccountId = creditPM.Id;
                     }
-                }
+					totalCredit+= Math.Round(jLine.LocalAmount, 2);
+
+				}
                 if (jLine.ActionCode != "1")
                 {
                     if (String.IsNullOrEmpty(jLine.DebitGLAccount))
@@ -414,57 +419,65 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.DebitGLAccountId = debitPM.Id;
                     }
-                }
-                //if (String.IsNullOrWhiteSpace(jLine.LocalName) && String.IsNullOrWhiteSpace(jLine.EnglishName))
-                //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-                //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.LocalName", 0, useLocal);
-                //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44}");
-                //}
-                //if (String.IsNullOrEmpty(jLine.ChartCode))
-                //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-                //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.ChartCode", 0, useLocal);
-                //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
-                //}
-                //if (!jLine.IsMulti && String.IsNullOrEmpty(jLine.CurrencyCode))
-                //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-                //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CurrencyCode", 0, useLocal);
-                //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
-                //}
-                //if (!jLine.IsMulti && jLine.CurrencyCode == "##")
-                //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-                //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CurrencyCode", 0, useLocal);
-                //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
-                //}
-                //if (jLine.IsMulti && !String.IsNullOrEmpty(jLine.CurrencyCode) && jLine.CurrencyCode != "##")
-                //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.AccountIsaMulti", 0, useLocal);
-                //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_44} ");
-                //}
-                //if (jLine.RecoMethod == "1" && (jLine.IsMulti || jLine.CurrencyCode == "NIS"))
-                //{
-                //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-                //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.Wrong", 0, useLocal);
-                //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.ReconciliationMethod", 0, useLocal);
-                //    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
-                //}
+					totalDebit += Math.Round(jLine.LocalAmount, 2);
 
-                count++;
+				}
+				//if (String.IsNullOrWhiteSpace(jLine.LocalName) && String.IsNullOrWhiteSpace(jLine.EnglishName))
+				//{
+				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
+				//    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.LocalName", 0, useLocal);
+				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44}");
+				//}
+				//if (String.IsNullOrEmpty(jLine.ChartCode))
+				//{
+				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
+				//    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.ChartCode", 0, useLocal);
+				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
+				//}
+				//if (!jLine.IsMulti && String.IsNullOrEmpty(jLine.CurrencyCode))
+				//{
+				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
+				//    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CurrencyCode", 0, useLocal);
+				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
+				//}
+				//if (!jLine.IsMulti && jLine.CurrencyCode == "##")
+				//{
+				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
+				//    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CurrencyCode", 0, useLocal);
+				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
+				//}
+				//if (jLine.IsMulti && !String.IsNullOrEmpty(jLine.CurrencyCode) && jLine.CurrencyCode != "##")
+				//{
+				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.AccountIsaMulti", 0, useLocal);
+				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_44} ");
+				//}
+				//if (jLine.RecoMethod == "1" && (jLine.IsMulti || jLine.CurrencyCode == "NIS"))
+				//{
+				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
+				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.Wrong", 0, useLocal);
+				//    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.ReconciliationMethod", 0, useLocal);
+				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
+				//}
+
+				count++;
             }
+            if(totalDebit != totalCredit) 
+            {
+				text = TranslateTextsClassTranslate("JournalsCSV.O.TotalCreditDebitNotEqual", 0, useLocal);
+				if (String.IsNullOrEmpty(text)) text = "Total debit lines (after rounding) is different from total credit lines (after rounding). Please make sure that the rounded amounts are correct in the file and try again.";
+				this.AddErrorRow(text);
+			}
 
-        }
+		}
 
 
 
-    }
+	}
 
 
     public class CSVJournalFlatFileLoadResult_ISL
