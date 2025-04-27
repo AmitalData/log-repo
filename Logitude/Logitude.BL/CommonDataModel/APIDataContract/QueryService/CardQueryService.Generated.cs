@@ -23,8 +23,9 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
+using Microsoft.Data.OData.Query.SemanticAst;
 
- namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
+namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 { 
    public partial class CardQueryService
    {
@@ -116,7 +117,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CardPM CardDataMappingAndValidatin(Card MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public CardPM CardDataMappingAndValidatin(Card MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false, List<string> partnerTypes = null)
         {
 		    try
             {
@@ -128,8 +129,13 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
+						if (partnerTypes != null && partnerTypes.Any())
+							temp = query.GetSinglePMByCodePartnerTypes(MyEntity.Code, Tenant, partnerTypes);
+						else
+							temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
 					} 
+
+
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
                         if(string.IsNullOrEmpty(ComputingPartnerName))
