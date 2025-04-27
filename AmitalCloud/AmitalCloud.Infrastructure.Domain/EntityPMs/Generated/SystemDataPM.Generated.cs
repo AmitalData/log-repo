@@ -236,6 +236,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _supportemail ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Supportemail  
+	   {
+	     get { return _supportemail; }
+		 set
+		 {
+		   if(_supportemail != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Supportemail",OldValue=_supportemail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _supportemail=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

@@ -29,8 +29,11 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
 	    public int Row { get; set; }
         [Column("ScreenId")]
 	    public string ScreenId { get; set; }
+        [ForeignKey("ObjectField")]
         [Column("ObjectFieldId")]
 	    public string ObjectFieldId { get; set; }
+	      
+        public virtual ObjectField ObjectField { get; set; }
         [Column("ObjectFieldCode")]
 	    public string ObjectFieldCode { get; set; }
         [Column("ScreenCode")]

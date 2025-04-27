@@ -44,9 +44,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_featureUniqeCode = entity.FeatureUniqeCode;
 		_nameTextCodeCode = entity.NameTextCodeCode;
 		objectTableHelperControls = entity.ObjectTableHelperControls != null ? entity.ObjectTableHelperControls.Select(a=>new ObjectTableHelperControlPM(a)).ToList() : null;
-        _packageCode = null;
-        _roleId = null;
-        _exists = false;
    }
    #endregion Constructors
    #region Properties

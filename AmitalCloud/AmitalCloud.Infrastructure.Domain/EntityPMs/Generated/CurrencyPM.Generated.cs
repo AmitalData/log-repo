@@ -123,6 +123,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _computedLocalName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComputedLocalName  
+	   {
+	     get { return _computedLocalName; }
+		 set
+		 {
+		   if(_computedLocalName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _computedLocalName=value;
+		   }
+		 }
+	   }
 	  private bool _addedManually ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -15,9 +15,9 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class SharedLogisticsInvitationStatusListQueryService  : BaseEntityListQueryService<SharedLogisticsInvitationStatusList,POCO.SharedLogisticsInvitationStatus,  SharedLogisticsInvitationStatusKeys<string>,string>
     {
- 		public SharedLogisticsInvitationStatusListQueryService(int tenant) : base(tenant) { }
+		public SharedLogisticsInvitationStatusListQueryService(int tenant) : base(tenant) { }
         public SharedLogisticsInvitationStatusList GetSingle(string code)
- 		{
+		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;
 				paramList.Append(new KeyValuePair<string, string>("code", code.ToString()));
 		 			return GetSingle(paramList) ; 

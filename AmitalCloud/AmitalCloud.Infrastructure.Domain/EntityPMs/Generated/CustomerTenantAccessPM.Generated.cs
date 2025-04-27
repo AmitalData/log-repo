@@ -234,6 +234,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _statuscode; } 
 		set { _statuscode = value; }
 		}
+	  private string _statusName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusName  
+	   {
+	     get { return _statusName; }
+		 set
+		 {
+		   if(_statusName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _statusName=value;
+		   }
+		 }
+	   }
 	  private string _updatedByUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -295,6 +311,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastShipmentDate",OldValue=_lastShipmentDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _lastShipmentDate=value;
+		   }
+		 }
+	   }
+	  private string _updatedByUserName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserName  
+	   {
+	     get { return _updatedByUserName; }
+		 set
+		 {
+		   if(_updatedByUserName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _updatedByUserName=value;
 		   }
 		 }
 	   }
@@ -360,6 +392,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPrivateLabelCustomer",OldValue=_isPrivateLabelCustomer,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isPrivateLabelCustomer=value;
+		   }
+		 }
+	   }
+	  private string _customCompanyName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomCompanyName  
+	   {
+	     get { return _customCompanyName; }
+		 set
+		 {
+		   if(_customCompanyName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomCompanyName",OldValue=_customCompanyName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _customCompanyName=value;
 		   }
 		 }
 	   }

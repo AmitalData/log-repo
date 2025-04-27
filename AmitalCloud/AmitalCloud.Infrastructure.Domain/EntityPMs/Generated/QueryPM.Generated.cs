@@ -67,11 +67,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_featureUniqeCode = entity.FeatureUniqeCode;
 		_isViewOnly = entity.IsViewOnly;
 		_isDefault = entity.IsDefault;
-        _objectTableName = null;
-        _objectTableIsNewWizard = default;
-        _objectTableNewWizardControlName = null;
-        _queryGroupIndexOrder = default;
-        _newViewName = null;
    }
    #endregion Constructors
    #region Properties
@@ -702,7 +697,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		 {
 		   if(_objectTableIsNewWizard != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableIsNewWizard",OldValue=_objectTableIsNewWizard,NewValue=value,PropertyType= "bool" };
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableIsNewWizard",OldValue=_objectTableIsNewWizard,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _objectTableIsNewWizard=value;
 		   }

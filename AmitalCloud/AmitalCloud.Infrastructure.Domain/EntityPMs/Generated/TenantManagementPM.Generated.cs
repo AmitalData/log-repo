@@ -132,9 +132,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_awbmessagesccstype = entity.AWBMessagesCCSType !=null ? new AWBMessagesCCSTypePM(entity.AWBMessagesCCSType) : null;
 			_tenantTypeCode = entity.TenantTypeCode;
 		_tenanttype = entity.TenantType !=null ? new TenantTypePM(entity.TenantType) : null;
-		//	packagesCodes_PK = entity.PackagesCodes_PK != null ? entity.PackagesCodes_PK.Select(a=>new stringPM(a)).ToList() : null;
-		//packagesCodes_BS = entity.PackagesCodes_BS != null ? entity.PackagesCodes_BS.Select(a=>new stringPM(a)).ToList() : null;
-		_hideSharedlogistics = entity.HideSharedlogistics;
+			packagesCodes_PK = null;//entity.PackagesCodes_PK != null ? entity.PackagesCodes_PK.Select(a=>new stringPM(a)).ToList() : null;
+			packagesCodes_BS = null;//entity.PackagesCodes_BS != null ? entity.PackagesCodes_BS.Select(a=>new stringPM(a)).ToList() : null;
+			_hideSharedlogistics = entity.HideSharedlogistics;
 		_contactEmail = entity.ContactEmail;
 		_customerURL = entity.CustomerURL;
 		_silverlightEndDate = entity.SilverlightEndDate;
@@ -344,6 +344,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryName",OldValue=_countryName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _countryName=value;
+		   }
+		 }
+	   }
+	  private string _timeZone ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TimeZone  
+	   {
+	     get { return _timeZone; }
+		 set
+		 {
+		   if(_timeZone != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TimeZone",OldValue=_timeZone,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _timeZone=value;
+		   }
+		 }
+	   }
+	  private bool _isActive ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsActive  
+	   {
+	     get { return _isActive; }
+		 set
+		 {
+		   if(_isActive != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsActive",OldValue=_isActive,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isActive=value;
+		   }
+		 }
+	   }
+	  private string _globalDBId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GlobalDBId  
+	   {
+	     get { return _globalDBId; }
+		 set
+		 {
+		   if(_globalDBId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GlobalDBId",OldValue=_globalDBId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _globalDBId=value;
 		   }
 		 }
 	   }
@@ -2214,6 +2262,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _privateLabelId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PrivateLabelId  
+	   {
+	     get { return _privateLabelId; }
+		 set
+		 {
+		   if(_privateLabelId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrivateLabelId",OldValue=_privateLabelId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _privateLabelId=value;
+		   }
+		 }
+	   }
 	  private bool _isParentTenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2310,6 +2374,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private bool _autoArchiveOnInvoice ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AutoArchiveOnInvoice  
+	   {
+	     get { return _autoArchiveOnInvoice; }
+		 set
+		 {
+		   if(_autoArchiveOnInvoice != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutoArchiveOnInvoice",OldValue=_autoArchiveOnInvoice,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _autoArchiveOnInvoice=value;
+		   }
+		 }
+	   }
 	  private string _bluesnapInttraStockContractId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2347,6 +2427,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BluesnapInttraStockContractQTY",OldValue=_bluesnapInttraStockContractQTY,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _bluesnapInttraStockContractQTY=value;
+		   }
+		 }
+	   }
+	  private bool _isTestTenant ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsTestTenant  
+	   {
+	     get { return _isTestTenant; }
+		 set
+		 {
+		   if(_isTestTenant != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsTestTenant",OldValue=_isTestTenant,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isTestTenant=value;
 		   }
 		 }
 	   }
@@ -2750,6 +2846,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private bool _isHybrid ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsHybrid  
+	   {
+	     get { return _isHybrid; }
+		 set
+		 {
+		   if(_isHybrid != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHybrid",OldValue=_isHybrid,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isHybrid=value;
+		   }
+		 }
+	   }
 	  private string _whatsAppMessagingPhoneNumber ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2830,6 +2942,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _privateLabelName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PrivateLabelName  
+	   {
+	     get { return _privateLabelName; }
+		 set
+		 {
+		   if(_privateLabelName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrivateLabelName",OldValue=_privateLabelName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _privateLabelName=value;
+		   }
+		 }
+	   }
 	  private bool _activatePrivateSite ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -2859,6 +2987,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnableExportToExcel",OldValue=_enableExportToExcel,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _enableExportToExcel=value;
+		   }
+		 }
+	   }
+	  private bool _autoArchiveOnPODExport ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AutoArchiveOnPODExport  
+	   {
+	     get { return _autoArchiveOnPODExport; }
+		 set
+		 {
+		   if(_autoArchiveOnPODExport != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutoArchiveOnPODExport",OldValue=_autoArchiveOnPODExport,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _autoArchiveOnPODExport=value;
 		   }
 		 }
 	   }
@@ -3134,6 +3278,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _ecommerceSupportEmail ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EcommerceSupportEmail  
+	   {
+	     get { return _ecommerceSupportEmail; }
+		 set
+		 {
+		   if(_ecommerceSupportEmail != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EcommerceSupportEmail",OldValue=_ecommerceSupportEmail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _ecommerceSupportEmail=value;
+		   }
+		 }
+	   }
 	  private string _amitalApiToken ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -3163,6 +3323,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HeaderColor",OldValue=_headerColor,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _headerColor=value;
+		   }
+		 }
+	   }
+	  private bool _ecommerceTenant ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool EcommerceTenant  
+	   {
+	     get { return _ecommerceTenant; }
+		 set
+		 {
+		   if(_ecommerceTenant != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EcommerceTenant",OldValue=_ecommerceTenant,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _ecommerceTenant=value;
 		   }
 		 }
 	   }

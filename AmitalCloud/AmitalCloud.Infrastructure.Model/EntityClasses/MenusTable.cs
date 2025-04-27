@@ -46,8 +46,11 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
 	    public string ObjectTableId { get; set; }
 	      
         public virtual ObjectTable ObjectTable { get; set; }
+        [ForeignKey("Feature")]
         [Column("FeatureId")]
 	    public string FeatureId { get; set; }
+	      
+        public virtual Feature Feature { get; set; }
         [Column("Code")]
 	    public string Code { get; set; }
         [Column("HtmlView")]

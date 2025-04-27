@@ -25,8 +25,8 @@ using AmitalCloud.Infrastructure.Domain.EntityLists;
 
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-    public partial class SharedLogisticsInvitationStatusQueryService: BaseEntityQueryService<POCO.SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatusKeys<string>,SharedLogisticsInvitationStatusPM,SharedLogisticsInvitationStatusList,string>
-    {
+   public partial class SharedLogisticsInvitationStatusQueryService: BaseEntityQueryService<POCO.SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatusKeys<string>,SharedLogisticsInvitationStatusPM,SharedLogisticsInvitationStatusList,string>
+   {
         public SharedLogisticsInvitationStatusQueryService(int tenant) : base(new Repository<POCO.SharedLogisticsInvitationStatus>(tenant),new SharedLogisticsInvitationStatusDataMapping()) {}
         public SharedLogisticsInvitationStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SharedLogisticsInvitationStatus>(context),new SharedLogisticsInvitationStatusDataMapping()) {}
 		public  SharedLogisticsInvitationStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new SharedLogisticsInvitationStatusKeys<string>(){ Code = code }, getComposition, getFromCache);

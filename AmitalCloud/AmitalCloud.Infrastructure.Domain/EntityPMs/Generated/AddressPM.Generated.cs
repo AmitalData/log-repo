@@ -126,6 +126,182 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _vatNumber ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VatNumber  
+	   {
+	     get { return _vatNumber; }
+		 set
+		 {
+		   if(_vatNumber != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatNumber",OldValue=_vatNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _vatNumber=value;
+		   }
+		 }
+	   }
+	  private string _salesmanUserId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SalesmanUserId  
+	   {
+	     get { return _salesmanUserId; }
+		 set
+		 {
+		   if(_salesmanUserId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SalesmanUserId",OldValue=_salesmanUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _salesmanUserId=value;
+		   }
+		 }
+	   }
+	  private string _signature ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Signature  
+	   {
+	     get { return _signature; }
+		 set
+		 {
+		   if(_signature != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Signature",OldValue=_signature,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _signature=value;
+		   }
+		 }
+	   }
+	  private string _cardCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CardCode  
+	   {
+	     get { return _cardCode; }
+		 set
+		 {
+		   if(_cardCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardCode",OldValue=_cardCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cardCode=value;
+		   }
+		 }
+	   }
+	  private string _contactEmail ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactEmail  
+	   {
+	     get { return _contactEmail; }
+		 set
+		 {
+		   if(_contactEmail != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactEmail",OldValue=_contactEmail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _contactEmail=value;
+		   }
+		 }
+	   }
+	  private string _contactName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactName  
+	   {
+	     get { return _contactName; }
+		 set
+		 {
+		   if(_contactName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactName",OldValue=_contactName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _contactName=value;
+		   }
+		 }
+	   }
+	  private string _contactPosition ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactPosition  
+	   {
+	     get { return _contactPosition; }
+		 set
+		 {
+		   if(_contactPosition != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactPosition",OldValue=_contactPosition,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _contactPosition=value;
+		   }
+		 }
+	   }
+	  private string _contactBusinessPhone ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactBusinessPhone  
+	   {
+	     get { return _contactBusinessPhone; }
+		 set
+		 {
+		   if(_contactBusinessPhone != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactBusinessPhone",OldValue=_contactBusinessPhone,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _contactBusinessPhone=value;
+		   }
+		 }
+	   }
+	  private string _contactMobile ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactMobile  
+	   {
+	     get { return _contactMobile; }
+		 set
+		 {
+		   if(_contactMobile != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactMobile",OldValue=_contactMobile,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _contactMobile=value;
+		   }
+		 }
+	   }
+	  private string _contactFax ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactFax  
+	   {
+	     get { return _contactFax; }
+		 set
+		 {
+		   if(_contactFax != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactFax",OldValue=_contactFax,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _contactFax=value;
+		   }
+		 }
+	   }
+	  private string _cardEnglishName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CardEnglishName  
+	   {
+	     get { return _cardEnglishName; }
+		 set
+		 {
+		   if(_cardEnglishName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardEnglishName",OldValue=_cardEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cardEnglishName=value;
+		   }
+		 }
+	   }
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

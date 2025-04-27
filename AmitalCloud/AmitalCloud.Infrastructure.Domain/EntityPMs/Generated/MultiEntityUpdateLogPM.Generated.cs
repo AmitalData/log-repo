@@ -220,6 +220,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _multiEntityUpdateData ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MultiEntityUpdateData  
+	   {
+	     get { return _multiEntityUpdateData; }
+		 set
+		 {
+		   if(_multiEntityUpdateData != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MultiEntityUpdateData",OldValue=_multiEntityUpdateData,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _multiEntityUpdateData=value;
+		   }
+		 }
+	   }
 	  private int _updatedEntitiesNumber ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

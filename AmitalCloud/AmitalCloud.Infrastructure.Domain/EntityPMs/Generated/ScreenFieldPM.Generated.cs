@@ -37,8 +37,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_objectFieldCode = entity.ObjectFieldCode;
 		_screenCode = entity.ScreenCode;
 		_sectionNumber = entity.SectionNumber;
-        _objectFieldName = null;
-        _objectFieldObjectTableName = null;
    }
    #endregion Constructors
    #region Properties

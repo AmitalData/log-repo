@@ -152,6 +152,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _customerCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerCode  
+	   {
+	     get { return _customerCode; }
+		 set
+		 {
+		   if(_customerCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerCode",OldValue=_customerCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _customerCode=value;
+		   }
+		 }
+	   }
+	  private string _customerName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerName  
+	   {
+	     get { return _customerName; }
+		 set
+		 {
+		   if(_customerName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerName",OldValue=_customerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _customerName=value;
+		   }
+		 }
+	   }
 	  private DateTime? _lastShipmentDateInQueue ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -165,6 +197,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastShipmentDateInQueue",OldValue=_lastShipmentDateInQueue,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _lastShipmentDateInQueue=value;
+		   }
+		 }
+	   }
+	  private DateTime _hybridStartDate ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime HybridStartDate  
+	   {
+	     get { return _hybridStartDate; }
+		 set
+		 {
+		   if(_hybridStartDate != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HybridStartDate",OldValue=_hybridStartDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   _hybridStartDate=value;
 		   }
 		 }
 	   }
@@ -224,6 +272,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _statustype; } 
 		set { _statustype = value; }
 		}
+	  private string _statusTypeName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusTypeName  
+	   {
+	     get { return _statusTypeName; }
+		 set
+		 {
+		   if(_statusTypeName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusTypeName",OldValue=_statusTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _statusTypeName=value;
+		   }
+		 }
+	   }
 	  private bool _isExportActivated ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

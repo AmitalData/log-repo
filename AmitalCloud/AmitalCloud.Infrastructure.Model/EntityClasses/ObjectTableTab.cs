@@ -30,14 +30,20 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
         public virtual ObjectTable ObjectTable { get; set; }
         [Column("ControlPath")]
 	    public string ControlPath { get; set; }
+        [ForeignKey("TabNameTextCode")]
         [Column("TabNameTextCodeId")]
 	    public string TabNameTextCodeId { get; set; }
+	      
+        public virtual TextCode TabNameTextCode { get; set; }
         [Column("IndexOrder")]
 	    public int IndexOrder { get; set; }
         [Column("Code")]
 	    public string Code { get; set; }
+        [ForeignKey("Feature")]
         [Column("FeatureId")]
 	    public string FeatureId { get; set; }
+	      
+        public virtual Feature Feature { get; set; }
         [Column("HtmlComponentName")]
 	    public string HtmlComponentName { get; set; }
         [Column("HtmlComponentUrl")]
@@ -54,8 +60,8 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
 	    public string OriginalTabCode { get; set; }
         [Column("HideTabNameInScreen")]
 	    public bool HideTabNameInScreen { get; set; }
-        [Column("Islocked")]
-	    public bool Islocked { get; set; }
+        [Column("IsLocked")]
+	    public bool IsLocked { get; set; }
     }
 }
 	 

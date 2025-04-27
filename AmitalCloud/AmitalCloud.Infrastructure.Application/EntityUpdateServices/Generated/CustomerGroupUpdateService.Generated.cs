@@ -44,10 +44,6 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 			entityPM.Id = IdCounter.GetNumber("CustomerGroup", entityPM.Tenant); 
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 			entityPM.CreatedByUserId = GetLoggedUserid(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
- 
-			entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
 		}
 		protected override void FillDefaultValuesOnUpdate(CustomerGroupPM entityPM)
         {       

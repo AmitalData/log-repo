@@ -40,7 +40,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         QuotationDefaultTemplateId, 
 	         DefaultTemplate, 
 	         RoutingRQuoteDefaultTemplateId, 
-	         RoutingRQuoteDefaultTemplate,	      }
+	         RoutingRQuoteDefaultTemplateName,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ProductTypePM entityPM, POCO.ProductType entityPOCO)

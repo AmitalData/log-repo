@@ -15,7 +15,6 @@ using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Web.DataContracts;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using AmitalCloud.Infrastructure.Web.Helpers.MixPanel;
-using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +24,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Security;
 using AmitalCloud.Infrastructure.Model.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace AmitalCloud.Infrastructure.Application.Helpers
 {
@@ -433,7 +433,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 user.Technology = "AG";
 
                 #region KeepUserLoggedIn
-                TenantLoginPolicyQueryService securityPolicyQueryService = new TenantLoginPolicyQueryService(amitalCloudContext);
+                TenantLoginPolicyQueryService securityPolicyQueryService = new TenantLoginPolicyQueryService(tenant);
                 TenantLoginPolicyPM securityPolicy = securityPolicyQueryService.GetMulti(d => d.Tenant == tenant).FirstOrDefault();
 
                 if (securityPolicy != null)
@@ -1414,7 +1414,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
         private bool IsUserAdmin(string email, int tenant)
         {
-            UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
+            UserQueryService userQueryService = new UserQueryService(tenant);
             List<UserPM> entities = userQueryService.GetMulti(record => record.Contact.Email == email && (record.Tenant == tenant || record.Tenant == 0));
             UserPM loggedUser = entities.Where(a => a.Tenant == tenant).FirstOrDefault() ?? entities.Where(a => a.Tenant == 0).FirstOrDefault();
             return loggedUser?.UserRoles != null && loggedUser.UserRoles.Contains("Administrator");

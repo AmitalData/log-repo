@@ -43,8 +43,6 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 		{
 			entityPM.Id = IdCounter.GetNumber("DigitalTextCode", entityPM.Tenant); 
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
 		}
 		protected override void FillDefaultValuesOnUpdate(DigitalTextCodePM entityPM)
         {       

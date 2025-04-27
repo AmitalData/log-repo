@@ -51,7 +51,8 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             if (tenantPM != null && !string.IsNullOrEmpty(tenantPM.Language) && tenantPM.Language.ToLower() != "en" && tenantPM.Language != "english")
             {
                 TranslationQuery service = new TranslationQuery(tenant);
-                AllTranslations = service.GetTenantLanguageTranslations(tenant, tenantPM.Language);
+				var url = AmitalCloudSecurityUtility.getLoggedDomain();
+				AllTranslations = service.GetTenantLanguageTranslations(tenant, tenantPM.Language, url);
             }
             return AllTranslations;
         }
@@ -62,7 +63,8 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             translationTenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
             TranslationQuery service = new TranslationQuery(translationTenant);
-            List<Translation> AllTranslations = service.GetTenantTranslations(translationTenant);
+			var url = AmitalCloudSecurityUtility.getLoggedDomain();
+			List<Translation> AllTranslations = service.GetTenantTranslations(translationTenant, url);
             return AllTranslations;
         }
         [OperationContract]

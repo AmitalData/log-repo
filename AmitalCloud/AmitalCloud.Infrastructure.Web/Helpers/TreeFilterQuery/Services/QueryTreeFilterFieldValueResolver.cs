@@ -1,6 +1,6 @@
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Reflection;

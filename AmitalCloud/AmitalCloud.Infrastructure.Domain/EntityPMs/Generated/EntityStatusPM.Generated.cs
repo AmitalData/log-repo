@@ -34,7 +34,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_code = entity.Code;
 		_inActive = entity.InActive;
 		_name = entity.Name;
-        _objectTableName = null;
 		_statusWeight = entity.StatusWeight;
 		_searchFields = entity.SearchFields;
 		_displayName = entity.DisplayName;

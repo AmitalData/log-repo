@@ -44,13 +44,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 			_objectFieldCode = entity.ObjectFieldCode;
 		_queryCode = entity.QueryCode;
 		_customPredefined = entity.CustomPredefined;
-        _displayInList = default;
-        _isCustomFilter = default;
-        _objectFieldName = null;
-        _dataTypeCode = null;
-        _objectFieldOperator = null;
-        _queryObjectTableName = null;
-        _queryUserId = null;
    }
    #endregion Constructors
    #region Properties

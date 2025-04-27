@@ -31,15 +31,13 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_objectTableId = entity.ObjectTableId;
-		_objecttable = entity.ObjectTable !=null ? new ObjectTablePM(entity.ObjectTable) : null;
 		_controlPath = entity.ControlPath;
 		_tabNameTextCodeId = entity.TabNameTextCodeId;
 		_tabnametextcode = entity.TabNameTextCode !=null ? new TextCodePM(entity.TabNameTextCode) : null;
 			_indexOrder = entity.IndexOrder;
 		_code = entity.Code;
 		_featureId = entity.FeatureId;
-		_feature = entity.Feature !=null ? new FeaturePM(entity.Feature) : null;
-			_htmlComponentName = entity.HtmlComponentName;
+		_htmlComponentName = entity.HtmlComponentName;
 		_htmlComponentUrl = entity.HtmlComponentUrl;
 		_tabNameTextCodeCode = entity.TabNameTextCodeCode;
 		_featureUniqeCode = entity.FeatureUniqeCode;
@@ -48,10 +46,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_originalTabCode = entity.OriginalTabCode;
 		_hideTabNameInScreen = entity.HideTabNameInScreen;
 		_isLocked = entity.IsLocked;
-        _tabNameTextCodeDefaultText = null;
-        _name = null;
-        _objectTableName = null;
-        _screenName = null;
    }
    #endregion Constructors
    #region Properties
@@ -104,15 +98,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-      private ObjectTablePM _objecttable;
-        [Include]
-        [DataMember]
-        public virtual ObjectTablePM ObjectTable
-        {
-            get { return _objecttable; }
-            set { _objecttable = value; }
-        }
-
 	  private string _controlPath ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -201,14 +186,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private FeaturePM _feature;
-		[Include]
-        [DataMember]
-        public virtual FeaturePM Feature 
-		{ 
-		get { return _feature; } 
-		set { _feature = value; }
-		}
 	  private string _htmlComponentName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

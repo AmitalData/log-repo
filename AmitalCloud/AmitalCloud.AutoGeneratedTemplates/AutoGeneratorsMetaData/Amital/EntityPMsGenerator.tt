@@ -42,7 +42,7 @@ public void GeneratePM(string xmlFilePath, string outputFilePath)
 
 	if (entity.IsMetadataOnlyTable.GetType() == typeof(string) && entity.IsMetadataOnlyTable == "true")
 	{
-		//return;
+		return;
 	}
 
 	WritePMMethod(entity);
@@ -181,7 +181,7 @@ namespace <#= pmnamespacestring #>
    {
 <#+
  	foreach(var field in entity["field"])  
-	 { 
+	 {        
 		if( field.IsPrimaryKey.GetType() == typeof(string))
 		{
 			if(field.IsPrimaryKey.ToString() == "false")
@@ -225,9 +225,6 @@ namespace <#= pmnamespacestring #>
 					}
 				   else
 					{
-#>
-        _<#= privatepropname #> = null;
-<#+
 
 						continue;
 #>
@@ -276,7 +273,7 @@ if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyNam
    #region Properties
    <#+
  	foreach(var field in entity["field"])  //get all classes
-	 { 
+	 {    
 		if( field.IsPrimaryKey.GetType() == typeof(string))
 		{
 			if(field.IsPrimaryKey.ToString() == "false")
@@ -308,6 +305,10 @@ if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyNam
 					{
 						if(field.HasDataBaseField == "false")
 						{
+                        if(field.NoMetaDataField.GetType() == typeof(string) && field.NoMetaDataField.ToString() == "true")
+                        {
+                             continue;
+                        }
 					    WritePMProperty(field);
 						continue;	
 						}

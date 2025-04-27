@@ -50,7 +50,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         LastMappingDateTime, 
 	         UpdateDateTime, 
 	         StatusTypeCode, 
-	         StatusType, 
+	         StatusTypeName, 
 	         BuildBatch, 
 	         IsExportActivated, 
 	         IsCustomsActivated,	      }

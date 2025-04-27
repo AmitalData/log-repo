@@ -126,7 +126,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             iQueryable = filter.GetFilteredQuery<TEntity>(nonListQueryOperation, iQueryable);
             skippedPorts = queryOperations.PageIndex;
             IQueryable<TEntityList> query = filter.GetFilteredQuery<TEntityList>(listQueryOperation, GetIqueryableList(iQueryable));
-            treeFilterQueryArgs.Tenant = context.Tenant;
+            treeFilterQueryArgs.Tenant = _context.Tenant;
             return InjectionUtil.Instance.ApplyTreeFilter<TEntityList>(query, treeFilterQueryArgs);
         }
         public int GetListCount(QueryOperations queryOperations) => GetListCount(queryOperations, 0, new TreeFilterQueryArgs());

@@ -116,6 +116,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _foreigncurrency; } 
 		set { _foreigncurrency = value; }
 		}
+	  private string _foreignCurrencyCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForeignCurrencyCode  
+	   {
+	     get { return _foreignCurrencyCode; }
+		 set
+		 {
+		   if(_foreignCurrencyCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForeignCurrencyCode",OldValue=_foreignCurrencyCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _foreignCurrencyCode=value;
+		   }
+		 }
+	   }
 	  private string _baseCurrencyId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -185,6 +201,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserId",OldValue=_updatedByUserId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _updatedByUserId=value;
+		   }
+		 }
+	   }
+	  private string _updatedByUserName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserName  
+	   {
+	     get { return _updatedByUserName; }
+		 set
+		 {
+		   if(_updatedByUserName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _updatedByUserName=value;
 		   }
 		 }
 	   }

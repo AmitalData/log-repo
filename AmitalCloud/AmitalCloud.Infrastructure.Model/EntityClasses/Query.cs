@@ -54,8 +54,11 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
 	    public string QueryGroupCode { get; set; }
 	      
         public virtual QueryGroup QueryGroup { get; set; }
+        [ForeignKey("NameTextCode")]
         [Column("NameTextCodeId")]
 	    public string NameTextCodeId { get; set; }
+	      
+        public virtual TextCode NameTextCode { get; set; }
         [Column("DefaultSortDirection")]
 	    public string DefaultSortDirection { get; set; }
         [Column("DefaultSortColumn")]

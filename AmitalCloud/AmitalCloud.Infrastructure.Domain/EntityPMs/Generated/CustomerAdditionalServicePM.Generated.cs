@@ -119,6 +119,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _additionalServiceName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AdditionalServiceName  
+	   {
+	     get { return _additionalServiceName; }
+		 set
+		 {
+		   if(_additionalServiceName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AdditionalServiceName",OldValue=_additionalServiceName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _additionalServiceName=value;
+		   }
+		 }
+	   }
+	  private string _additionalServiceCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AdditionalServiceCode  
+	   {
+	     get { return _additionalServiceCode; }
+		 set
+		 {
+		   if(_additionalServiceCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AdditionalServiceCode",OldValue=_additionalServiceCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _additionalServiceCode=value;
+		   }
+		 }
+	   }
 	  private bool _notesRightToLeft ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
