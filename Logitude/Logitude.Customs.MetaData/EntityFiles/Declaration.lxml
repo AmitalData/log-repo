@@ -24398,7 +24398,7 @@
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;SIIRequest&quot;"
-    TabLocalName="&quot;בקשות מכון תקנים&quot;"
+    TabLocalName="&quot;מכון תקנים&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
     Code="&quot;SIIR&quot;"
     ControlPath="&quot;Logitude.Customs.Views.Tabs.SIIRequestTabComponent&quot;"
