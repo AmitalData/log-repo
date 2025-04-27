@@ -307,6 +307,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _computedLocalName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComputedLocalName  
+	   {
+	     get { return _computedLocalName; }
+		 set
+		 {
+		   if(_computedLocalName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _computedLocalName=value;
+		   }
+		 }
+	   }
 	  private bool _isOcean ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -544,6 +560,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CombinedCode",OldValue=_combinedCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _combinedCode=value;
+		   }
+		 }
+	   }
+	  private string _partnerCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartnerCode  
+	   {
+	     get { return _partnerCode; }
+		 set
+		 {
+		   if(_partnerCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _partnerCode=value;
 		   }
 		 }
 	   }

@@ -143,6 +143,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _cardName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CardName  
+	   {
+	     get { return _cardName; }
+		 set
+		 {
+		   if(_cardName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardName",OldValue=_cardName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cardName=value;
+		   }
+		 }
+	   }
+	  private string _currencyName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyName  
+	   {
+	     get { return _currencyName; }
+		 set
+		 {
+		   if(_currencyName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyName",OldValue=_currencyName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _currencyName=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

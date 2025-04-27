@@ -45,8 +45,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_htmlView = entity.HtmlView;
 		_featureUniqeCode = entity.FeatureUniqeCode;
 		_querySection = entity.QuerySection;
-        _objectTableName = null;
-        _featureCode = null;
    }
    #endregion Constructors
    #region Properties

@@ -83,6 +83,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _customerCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerCode  
+	   {
+	     get { return _customerCode; }
+		 set
+		 {
+		   if(_customerCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerCode",OldValue=_customerCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _customerCode=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

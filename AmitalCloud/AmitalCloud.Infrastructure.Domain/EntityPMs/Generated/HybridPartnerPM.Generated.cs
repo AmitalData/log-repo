@@ -142,6 +142,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private int _tenant ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public override int Tenant  
+	   {
+	     get { return _tenant; }
+		 set
+		 {
+		   if(_tenant != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=_tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _tenant=value;
+		   }
+		 }
+	   }
 	  private string _name ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

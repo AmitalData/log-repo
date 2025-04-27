@@ -25,8 +25,11 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
 	    public int Tenant { get; set; }
         [Column("SystemLevel")]
 	    public bool SystemLevel { get; set; }
+        [ForeignKey("ObjectField")]
         [Column("ObjectFieldId")]
 	    public string ObjectFieldId { get; set; }
+	      
+        public virtual ObjectField ObjectField { get; set; }
         [ForeignKey("ObjectTableRule")]
         [Column("ObjectTableRuleId")]
 	    public string ObjectTableRuleId { get; set; }

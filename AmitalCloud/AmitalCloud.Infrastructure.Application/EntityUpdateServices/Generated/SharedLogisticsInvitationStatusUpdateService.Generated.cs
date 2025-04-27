@@ -20,8 +20,8 @@ using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-    public partial class SharedLogisticsInvitationStatusUpdateService:BaseEntityUpdateService<POCO.SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatusPM,IEntityPM,SharedLogisticsInvitationStatusList,string>
-    {
+   public partial class SharedLogisticsInvitationStatusUpdateService:BaseEntityUpdateService<POCO.SharedLogisticsInvitationStatus,SharedLogisticsInvitationStatusPM,IEntityPM,SharedLogisticsInvitationStatusList,string>
+   {
    			
         public SharedLogisticsInvitationStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
@@ -34,9 +34,9 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
             Mapping = new SharedLogisticsInvitationStatusDataMapping();
             Repository = new Repository<POCO.SharedLogisticsInvitationStatus>(tenant);
 		}
-         public SharedLogisticsInvitationStatusUpdateService(IContext context) :  this(context, null, 0) {}
-		protected override IEntityKeyFields<POCO.SharedLogisticsInvitationStatus,int> GetKeys(SharedLogisticsInvitationStatusPM entityPM) => new SharedLogisticsInvitationStatusKeys<string>() { Code = entityPM.Code };
- protected override void FillDefaultValuesOnCreate(SharedLogisticsInvitationStatusPM entityPM)
+        public SharedLogisticsInvitationStatusUpdateService(IContext context) :  this(context, null, 0) {}
+		protected override IEntityKeyFields<POCO.SharedLogisticsInvitationStatus,string> GetKeys(SharedLogisticsInvitationStatusPM entityPM) => new SharedLogisticsInvitationStatusKeys<string>() { Code = entityPM.Code };
+protected override void FillDefaultValuesOnCreate(SharedLogisticsInvitationStatusPM entityPM)
 		{
 		}
 		protected override void FillDefaultValuesOnUpdate(SharedLogisticsInvitationStatusPM entityPM)

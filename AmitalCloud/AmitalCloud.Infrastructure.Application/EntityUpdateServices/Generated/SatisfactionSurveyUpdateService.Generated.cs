@@ -41,8 +41,6 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 		protected override void FillDefaultValuesOnCreate(SatisfactionSurveyPM entityPM)
 		{
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
 		}
 		protected override void FillDefaultValuesOnUpdate(SatisfactionSurveyPM entityPM)
         {       

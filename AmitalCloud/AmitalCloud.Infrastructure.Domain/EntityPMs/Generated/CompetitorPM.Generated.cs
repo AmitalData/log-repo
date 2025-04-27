@@ -212,6 +212,134 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _address1 ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Address1  
+	   {
+	     get { return _address1; }
+		 set
+		 {
+		   if(_address1 != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Address1",OldValue=_address1,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _address1=value;
+		   }
+		 }
+	   }
+	  private string _address2 ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Address2  
+	   {
+	     get { return _address2; }
+		 set
+		 {
+		   if(_address2 != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Address2",OldValue=_address2,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _address2=value;
+		   }
+		 }
+	   }
+	  private string _zipCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ZipCode  
+	   {
+	     get { return _zipCode; }
+		 set
+		 {
+		   if(_zipCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ZipCode",OldValue=_zipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _zipCode=value;
+		   }
+		 }
+	   }
+	  private string _city ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string City  
+	   {
+	     get { return _city; }
+		 set
+		 {
+		   if(_city != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="City",OldValue=_city,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _city=value;
+		   }
+		 }
+	   }
+	  private string _countryId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CountryId  
+	   {
+	     get { return _countryId; }
+		 set
+		 {
+		   if(_countryId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryId",OldValue=_countryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _countryId=value;
+		   }
+		 }
+	   }
+	  private string _stateId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StateId  
+	   {
+	     get { return _stateId; }
+		 set
+		 {
+		   if(_stateId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StateId",OldValue=_stateId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _stateId=value;
+		   }
+		 }
+	   }
+	  private string _phoneNumber ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PhoneNumber  
+	   {
+	     get { return _phoneNumber; }
+		 set
+		 {
+		   if(_phoneNumber != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PhoneNumber",OldValue=_phoneNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _phoneNumber=value;
+		   }
+		 }
+	   }
+	  private string _faxNumber ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FaxNumber  
+	   {
+	     get { return _faxNumber; }
+		 set
+		 {
+		   if(_faxNumber != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FaxNumber",OldValue=_faxNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _faxNumber=value;
+		   }
+		 }
+	   }
 	  private bool _inActive ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

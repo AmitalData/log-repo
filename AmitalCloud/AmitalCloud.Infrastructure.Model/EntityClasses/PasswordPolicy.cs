@@ -22,10 +22,8 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
         [Key]
         [Column("Code")]
 	    public string Code { get; set; }
-   
         [Column("PasswordStrength")]
 	    public string PasswordStrength { get; set; }
-   
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
     }

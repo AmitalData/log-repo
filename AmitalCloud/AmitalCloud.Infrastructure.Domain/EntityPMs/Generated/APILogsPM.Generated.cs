@@ -423,6 +423,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _statusName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusName  
+	   {
+	     get { return _statusName; }
+		 set
+		 {
+		   if(_statusName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _statusName=value;
+		   }
+		 }
+	   }
+	  private string _objectTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableName  
+	   {
+	     get { return _objectTableName; }
+		 set
+		 {
+		   if(_objectTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableName=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

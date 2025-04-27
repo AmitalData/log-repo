@@ -118,6 +118,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _additionalservice; } 
 		set { _additionalservice = value; }
 		}
+	  private string _additionalServiceName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AdditionalServiceName  
+	   {
+	     get { return _additionalServiceName; }
+		 set
+		 {
+		   if(_additionalServiceName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AdditionalServiceName",OldValue=_additionalServiceName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _additionalServiceName=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

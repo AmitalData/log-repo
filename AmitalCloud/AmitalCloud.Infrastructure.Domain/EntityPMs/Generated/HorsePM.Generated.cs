@@ -215,6 +215,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _genderName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GenderName  
+	   {
+	     get { return _genderName; }
+		 set
+		 {
+		   if(_genderName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GenderName",OldValue=_genderName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _genderName=value;
+		   }
+		 }
+	   }
 	  private string _breed ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

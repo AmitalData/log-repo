@@ -203,6 +203,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _profileCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProfileCode  
+	   {
+	     get { return _profileCode; }
+		 set
+		 {
+		   if(_profileCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProfileCode",OldValue=_profileCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _profileCode=value;
+		   }
+		 }
+	   }
 	  private bool _isList ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

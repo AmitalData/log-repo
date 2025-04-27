@@ -38,9 +38,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_ruleNotificationTypeCode = entity.RuleNotificationTypeCode;
 		_rulenotificationtype = entity.RuleNotificationType !=null ? new RuleNotificationTypePM(entity.RuleNotificationType) : null;
 			_objectFieldCode = entity.ObjectFieldCode;
-        _objectFieldName = null;
-        _objectTableRuleCode = null;
-        _objectTableRuleTypeCode = null;
    }
    #endregion Constructors
    #region Properties

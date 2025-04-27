@@ -732,6 +732,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _documenttype; } 
 		set { _documenttype = value; }
 		}
+	  private string _documentTypeName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DocumentTypeName  
+	   {
+	     get { return _documentTypeName; }
+		 set
+		 {
+		   if(_documentTypeName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentTypeName",OldValue=_documentTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _documentTypeName=value;
+		   }
+		 }
+	   }
 	  private string _directionCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -764,6 +780,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _objectTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableName  
+	   {
+	     get { return _objectTableName; }
+		 set
+		 {
+		   if(_objectTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableName=value;
+		   }
+		 }
+	   }
 	  private string _createdByUserId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -777,6 +809,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserId",OldValue=_createdByUserId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _createdByUserId=value;
+		   }
+		 }
+	   }
+	  private string _createdByUserName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserName  
+	   {
+	     get { return _createdByUserName; }
+		 set
+		 {
+		   if(_createdByUserName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _createdByUserName=value;
 		   }
 		 }
 	   }
@@ -804,6 +852,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _owner; } 
 		set { _owner = value; }
 		}
+	  private string _ownerName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OwnerName  
+	   {
+	     get { return _ownerName; }
+		 set
+		 {
+		   if(_ownerName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OwnerName",OldValue=_ownerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _ownerName=value;
+		   }
+		 }
+	   }
 	  private string _description ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -833,6 +897,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
+		   }
+		 }
+	   }
+	  private string _fileName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FileName  
+	   {
+	     get { return _fileName; }
+		 set
+		 {
+		   if(_fileName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileName",OldValue=_fileName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fileName=value;
 		   }
 		 }
 	   }
@@ -1058,6 +1138,70 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRequested",OldValue=_isRequested,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isRequested=value;
+		   }
+		 }
+	   }
+	  private string _ocrStatusCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OcrStatusCode  
+	   {
+	     get { return _ocrStatusCode; }
+		 set
+		 {
+		   if(_ocrStatusCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrStatusCode",OldValue=_ocrStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _ocrStatusCode=value;
+		   }
+		 }
+	   }
+	  private decimal _ocrScore ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal OcrScore  
+	   {
+	     get { return _ocrScore; }
+		 set
+		 {
+		   if(_ocrScore != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrScore",OldValue=_ocrScore,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   _ocrScore=value;
+		   }
+		 }
+	   }
+	  private string _ocrReference ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OcrReference  
+	   {
+	     get { return _ocrReference; }
+		 set
+		 {
+		   if(_ocrReference != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrReference",OldValue=_ocrReference,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _ocrReference=value;
+		   }
+		 }
+	   }
+	  private bool _ocrNotConnect ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool OcrNotConnect  
+	   {
+	     get { return _ocrNotConnect; }
+		 set
+		 {
+		   if(_ocrNotConnect != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OcrNotConnect",OldValue=_ocrNotConnect,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _ocrNotConnect=value;
 		   }
 		 }
 	   }

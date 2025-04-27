@@ -6,6 +6,7 @@ using System.Web.Http;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
+using AmitalCloud.Infrastructure.Application.Helpers;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {

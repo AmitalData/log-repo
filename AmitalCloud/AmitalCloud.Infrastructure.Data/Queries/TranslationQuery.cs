@@ -5,8 +5,8 @@ using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -21,29 +21,29 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             repository = new Repository<Translation>(context);
         }
 
-        public List<Translation> GetTenantTranslations(int tenant)
+        public List<Translation> GetTenantTranslations(int tenant, string url)
         {
             List<Translation> AllTranslations = new Repository<Translation>(AmitalCloudContext.GetContext(tenant)).GetMulti(a => a.Tenant == tenant);
             
             Repository<Tenant> tenantRepo = new Repository<Tenant>(context);
             Tenant tenantPoco = tenantRepo.GetMulti(a => a.Id == tenant).FirstOrDefault();
 
-            ModifyTranslationByPrivateLabel(tenant, AllTranslations, tenantPoco?.Language);
+            ModifyTranslationByPrivateLabel(tenant, AllTranslations, tenantPoco?.Language, url);
             return AllTranslations;
         }
 
-        public List<Translation> GetTenantLanguageTranslations(int tenant, string language)
+        public List<Translation> GetTenantLanguageTranslations(int tenant, string language,string url)
         {
             List<Translation> AllTranslations = repository.GetMulti(a => a.Tenant == 0 && a.TranslationHeaderCode == language);
 
-            ModifyTranslationByPrivateLabel(tenant, AllTranslations, language);
+            ModifyTranslationByPrivateLabel(tenant, AllTranslations, language, url);
             return AllTranslations;
         }
 
-        private void ModifyTranslationByPrivateLabel(int tenant, List<Translation> AllTranslations, string language)
+        private void ModifyTranslationByPrivateLabel(int tenant, List<Translation> AllTranslations, string language,string url)
         {
             TenantManagmentPrivateLabelsPM privatelabel = null;
-            var url = AmitalCloudSecurityUtility.getLoggedDomain();
+          
             if (!url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
             {
                 TenantManagmentPrivateLabelsQuery query = new TenantManagmentPrivateLabelsQuery(tenant);

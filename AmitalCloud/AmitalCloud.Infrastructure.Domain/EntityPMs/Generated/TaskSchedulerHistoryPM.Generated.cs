@@ -230,6 +230,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private int _duration ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Duration  
+	   {
+	     get { return _duration; }
+		 set
+		 {
+		   if(_duration != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Duration",OldValue=_duration,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _duration=value;
+		   }
+		 }
+	   }
 	  private string _logDocumentId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

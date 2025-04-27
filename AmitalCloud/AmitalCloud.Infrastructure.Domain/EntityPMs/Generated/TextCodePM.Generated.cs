@@ -42,8 +42,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_defaultText = entity.DefaultText;
 		_defaultTextPlural = entity.DefaultTextPlural;
 		_localDefaultText = entity.LocalDefaultText;
-        _objectTableName = null;
-        _spellCheckedByUserName = null;
    }
    #endregion Constructors
    #region Properties

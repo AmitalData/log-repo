@@ -42,10 +42,6 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 		{
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 			entityPM.CreatedByUserId = GetLoggedUserid(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
- 
-			entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
 		}
 		protected override void FillDefaultValuesOnUpdate(BusinessProcessQueuePM entityPM)
         {       

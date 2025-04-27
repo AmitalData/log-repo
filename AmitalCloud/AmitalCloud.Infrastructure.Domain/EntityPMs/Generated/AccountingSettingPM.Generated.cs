@@ -42,8 +42,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isVatNumberMandatoryInAR = entity.IsVatNumberMandatoryInAR;
 		_isVatNumberMandatoryInAP = entity.IsVatNumberMandatoryInAP;
 		_isARInvoiceChronologicalDates = entity.IsARInvoiceChronologicalDates;
-        _vATableTempCard = null;
-        _vATExemptTempCard = null;
 		_allowClosureWithoutPayables = entity.AllowClosureWithoutPayables;
 		_isARInvoicesTransferEnabled = entity.IsARInvoicesTransferEnabled;
 		_isAPInvoicesTransferEnabled = entity.IsAPInvoicesTransferEnabled;
@@ -53,8 +51,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isSingleTaxPerInvoice = entity.IsSingleTaxPerInvoice;
 		_isARPaymentsTransferEnabled = entity.IsARPaymentsTransferEnabled;
 		_aRPaymentTransferStartDate = entity.ARPaymentTransferStartDate;
-        _vatNumber = null;
-        _paymentTermId = null;
 		_transferToDropboxActivated = entity.TransferToDropboxActivated;
 		_enableMultiPercentageVATTypes = entity.EnableMultiPercentageVATTypes;
 		_notifyPastDateOnInvoiceEdit = entity.NotifyPastDateOnInvoiceEdit;
@@ -82,8 +78,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_enableAPPaymentExternalPayment = entity.EnableAPPaymentExternalPayment;
 		_transferFTPDetailId = entity.TransferFTPDetailId;
 		_transferftpdetail = entity.TransferFTPDetail !=null ? new FTPDetailPM(entity.TransferFTPDetail) : null;
-	        _transferFTPDetailHost = null;
-		_enableEnteringTotalVAT = entity.EnableEnteringTotalVAT;
+			_enableEnteringTotalVAT = entity.EnableEnteringTotalVAT;
 		_blockSendInvoiceOriginalCopy = entity.BlockSendInvoiceOriginalCopy;
 		_aPPaymentTransferStartDate = entity.APPaymentTransferStartDate;
    }
@@ -655,38 +650,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAPPaymentsTransferEnabled",OldValue=_isAPPaymentsTransferEnabled,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isAPPaymentsTransferEnabled=value;
-		   }
-		 }
-	   }
-	  private DateTime _accountingActivationDate ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime AccountingActivationDate  
-	   {
-	     get { return _accountingActivationDate; }
-		 set
-		 {
-		   if(_accountingActivationDate != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingActivationDate",OldValue=_accountingActivationDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   _accountingActivationDate=value;
-		   }
-		 }
-	   }
-	  private bool _accountingActivated ;
-	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool AccountingActivated  
-	   {
-	     get { return _accountingActivated; }
-		 set
-		 {
-		   if(_accountingActivated != value)
-		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingActivated",OldValue=_accountingActivated,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   _accountingActivated=value;
 		   }
 		 }
 	   }

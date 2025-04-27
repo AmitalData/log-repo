@@ -317,6 +317,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private bool _isRequiered ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRequiered  
+	   {
+	     get { return _isRequiered; }
+		 set
+		 {
+		   if(_isRequiered != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRequiered",OldValue=_isRequiered,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isRequiered=value;
+		   }
+		 }
+	   }
 	  private bool _hideTree ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -365,6 +381,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _customPickListCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomPickListCode  
+	   {
+	     get { return _customPickListCode; }
+		 set
+		 {
+		   if(_customPickListCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomPickListCode",OldValue=_customPickListCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _customPickListCode=value;
+		   }
+		 }
+	   }
 	  private string _lOVAdditionalColumns ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -410,6 +442,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginalObjectFieldCode",OldValue=_originalObjectFieldCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _originalObjectFieldCode=value;
+		   }
+		 }
+	   }
+	  private string _fullNameTextCodeCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FullNameTextCodeCode  
+	   {
+	     get { return _fullNameTextCodeCode; }
+		 set
+		 {
+		   if(_fullNameTextCodeCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeCode",OldValue=_fullNameTextCodeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fullNameTextCodeCode=value;
 		   }
 		 }
 	   }
@@ -490,6 +538,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecordType",OldValue=_recordType,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _recordType=value;
+		   }
+		 }
+	   }
+	  private string _factTableCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FactTableCode  
+	   {
+	     get { return _factTableCode; }
+		 set
+		 {
+		   if(_factTableCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FactTableCode",OldValue=_factTableCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _factTableCode=value;
 		   }
 		 }
 	   }

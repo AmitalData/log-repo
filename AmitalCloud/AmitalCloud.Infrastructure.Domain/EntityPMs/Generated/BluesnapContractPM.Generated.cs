@@ -160,6 +160,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _bluesnapcontracttype; } 
 		set { _bluesnapcontracttype = value; }
 		}
+	  private string _bluesnapContractTypeName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BluesnapContractTypeName  
+	   {
+	     get { return _bluesnapContractTypeName; }
+		 set
+		 {
+		   if(_bluesnapContractTypeName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BluesnapContractTypeName",OldValue=_bluesnapContractTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _bluesnapContractTypeName=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

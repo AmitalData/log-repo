@@ -174,8 +174,8 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         => Repository.GetMulti(predicate,select);
         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TEntityPM> select, string include)
         => Repository.GetMulti(predicate, select,include);
-         public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, string include)
-        => Repository.GetMulti<TEntityPM>(predicate, include);
+        // public List<TEntityPM> GetMulti(Expression<Func<TEntityPOCO, bool>> predicate, string include)
+        //=> Repository.GetMulti<TEntityPM>(predicate, include);
  
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Func<TEntityPOCO, TResult> select)
             => Repository.GetMulti(predicate, select);

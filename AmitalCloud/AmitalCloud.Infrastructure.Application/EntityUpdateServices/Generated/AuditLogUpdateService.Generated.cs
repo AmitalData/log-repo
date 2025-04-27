@@ -42,10 +42,6 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 		protected override void FillDefaultValuesOnCreate(AuditLogPM entityPM)
 		{
 			entityPM.Id = IdCounter.GetNumber("AuditLog", entityPM.Tenant); 
- 
-			//entityPM.UpdateDate =  entityPM.CreateDate;
- 
-			////entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
 		}
 		protected override void FillDefaultValuesOnUpdate(AuditLogPM entityPM)
         {       

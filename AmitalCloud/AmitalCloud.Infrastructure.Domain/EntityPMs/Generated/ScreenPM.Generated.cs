@@ -44,8 +44,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_searchFields = entity.SearchFields;
 		_relatedScreenCode = entity.RelatedScreenCode;
 		_isHeaderScreen = entity.IsHeaderScreen;
-        _objectTableName = null;
-        _userTenant = default;
    }
    #endregion Constructors
    #region Properties

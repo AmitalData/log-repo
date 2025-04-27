@@ -23,10 +23,16 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
 	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [ForeignKey("Query")]
         [Column("QueryId")]
 	    public string QueryId { get; set; }
+	      
+        public virtual Query Query { get; set; }
+        [ForeignKey("ObjectField")]
         [Column("ObjectFieldId")]
 	    public string ObjectFieldId { get; set; }
+	      
+        public virtual ObjectField ObjectField { get; set; }
         [Column("IsPredefined")]
 	    public bool IsPredefined { get; set; }
         [Column("PredefinedValue")]

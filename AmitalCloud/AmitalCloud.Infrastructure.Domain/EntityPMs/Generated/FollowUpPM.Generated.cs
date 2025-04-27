@@ -280,6 +280,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _doneNote ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DoneNote  
+	   {
+	     get { return _doneNote; }
+		 set
+		 {
+		   if(_doneNote != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DoneNote",OldValue=_doneNote,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _doneNote=value;
+		   }
+		 }
+	   }
+	  private DateTime? _doneDateTime ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? DoneDateTime  
+	   {
+	     get { return _doneDateTime; }
+		 set
+		 {
+		   if(_doneDateTime != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DoneDateTime",OldValue=_doneDateTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   _doneDateTime=value;
+		   }
+		 }
+	   }
+	  private bool _done ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Done  
+	   {
+	     get { return _done; }
+		 set
+		 {
+		   if(_done != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Done",OldValue=_done,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _done=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

@@ -272,15 +272,11 @@ namespace <#= servicenamespacestring #>
 							{
 						#>
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-<#+ }	if (field.FieldName.Trim('"') == "UpdateDate")	{ #> 
-			entityPM.UpdateDate =  entityPM.CreateDate;
 <#+ }	if (field.FieldName.Trim('"') == "Id")		{#>
 			entityPM.Id = IdCounter.GetNumber("<#=tableName #>", entityPM.Tenant); 
 <#+ }	if ((field.FieldName.Trim('"') == "CreatedByUserId"  || field.FieldName.Trim('"') == "UpdatedByUserId") && IsContactCreated == false )
 {IsContactCreated = true;}if (field.FieldName.Trim('"') == "CreatedByUserId"){#>
 			entityPM.CreatedByUserId = GetLoggedUserid(entityPM.Tenant);
-<#+ }if (field.FieldName.Trim('"') == "UpdatedByUserId"){ #> 
-			entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
 <#+ }}}}} #>
 		}
 		protected override void FillDefaultValuesOnUpdate(<#= pmName #> entityPM)

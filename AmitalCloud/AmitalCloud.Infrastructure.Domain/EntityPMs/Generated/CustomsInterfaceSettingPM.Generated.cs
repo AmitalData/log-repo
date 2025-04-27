@@ -43,11 +43,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_artemusoutsettings = entity.ArtemusOutSettings !=null ? new FTPDetailPM(entity.ArtemusOutSettings) : null;
 			_artemusInSettingsId = entity.ArtemusInSettingsId;
 		_artemusinsettings = entity.ArtemusInSettings !=null ? new FTPDetailPM(entity.ArtemusInSettings) : null;
-	        _artemusOutSettingsHost = null;
-        _artemusInSettingsHost = null;
-		_aMCAirStartDate = entity.AMCAirStartDate;
+			_aMCAirStartDate = entity.AMCAirStartDate;
 		_aMCOceanStartDate = entity.AMCOceanStartDate;
-        _localCustomsInterfaceName = null;
    }
    #endregion Constructors
    #region Properties

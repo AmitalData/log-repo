@@ -107,6 +107,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _computedLocalName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComputedLocalName  
+	   {
+	     get { return _computedLocalName; }
+		 set
+		 {
+		   if(_computedLocalName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _computedLocalName=value;
+		   }
+		 }
+	   }
 	  private string _countryId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -152,6 +168,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AddedManually",OldValue=_addedManually,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _addedManually=value;
+		   }
+		 }
+	   }
+	  private string _countryEnglishName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CountryEnglishName  
+	   {
+	     get { return _countryEnglishName; }
+		 set
+		 {
+		   if(_countryEnglishName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryEnglishName",OldValue=_countryEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _countryEnglishName=value;
 		   }
 		 }
 	   }
@@ -216,6 +248,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StateId",OldValue=_stateId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _stateId=value;
+		   }
+		 }
+	   }
+	  private string _stateEnglishName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StateEnglishName  
+	   {
+	     get { return _stateEnglishName; }
+		 set
+		 {
+		   if(_stateEnglishName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StateEnglishName",OldValue=_stateEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _stateEnglishName=value;
 		   }
 		 }
 	   }

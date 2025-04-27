@@ -118,6 +118,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private int _order ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Order  
+	   {
+	     get { return _order; }
+		 set
+		 {
+		   if(_order != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Order",OldValue=_order,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _order=value;
+		   }
+		 }
+	   }
 	  private string _code ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

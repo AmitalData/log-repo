@@ -27,9 +27,6 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         private bool GetIsBlockingFromDB()
         {
 
-            var res = new TenantManagementQueryService(0).GetMulti(a => true, "RecurringPeriod,PaymentMethod,PaymentChannel");
-
-
             var result = new GlobalDBQueryService(0).GetMulti(a => true); // a.IsBlocking == true); //,a=>new GlobalDBPM() {Id = a.Id });
             bool isBlocking = result.Count > 0;
             string[] authenticatedIPs = AmitalCloudSettings.CustomerCareIP?.Split(',');

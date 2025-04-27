@@ -43,8 +43,6 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 		{
 			entityPM.Id = IdCounter.GetNumber("DigitalFieldSecurity", entityPM.Tenant); 
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
 		}
 		protected override void FillDefaultValuesOnUpdate(DigitalFieldSecurityPM entityPM)
         {       
