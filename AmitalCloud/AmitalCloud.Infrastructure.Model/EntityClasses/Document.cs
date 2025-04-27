@@ -54,7 +54,6 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
 		public virtual ICollection<DocumentOut> DocumentOuts { get; set; }
 		public virtual ICollection<FilingInboxAttachment> FilingInboxAttachments { get; set; }
 		public virtual ICollection<ImageLibrary> ImageLibrarys { get; set; }
-		public virtual ICollection<OceanInsightsStatuses> OceanInsightsStatusess { get; set; }
 		public virtual ICollection<QuoteTemplate> QuoteTemplates_Footerdocid { get; set; }
 		public virtual ICollection<QuoteTemplate> QuoteTemplates_Headerdocid { get; set; }
 		public virtual ICollection<QuoteTemplateSection> QuoteTemplateSections { get; set; }

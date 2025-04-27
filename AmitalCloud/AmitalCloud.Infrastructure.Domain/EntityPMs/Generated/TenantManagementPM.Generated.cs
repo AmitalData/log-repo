@@ -132,9 +132,9 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_awbmessagesccstype = entity.AWBMessagesCCSType !=null ? new AWBMessagesCCSTypePM(entity.AWBMessagesCCSType) : null;
 			_tenantTypeCode = entity.TenantTypeCode;
 		_tenanttype = entity.TenantType !=null ? new TenantTypePM(entity.TenantType) : null;
-			packagesCodes_PK = null;//entity.PackagesCodes_PK != null ? entity.PackagesCodes_PK.Select(a=>new stringPM(a)).ToList() : null;
-			packagesCodes_BS = null;//entity.PackagesCodes_BS != null ? entity.PackagesCodes_BS.Select(a=>new stringPM(a)).ToList() : null;
-			_hideSharedlogistics = entity.HideSharedlogistics;
+			packagesCodes_PK = null;
+		packagesCodes_BS = null;
+		_hideSharedlogistics = entity.HideSharedlogistics;
 		_contactEmail = entity.ContactEmail;
 		_customerURL = entity.CustomerURL;
 		_silverlightEndDate = entity.SilverlightEndDate;
