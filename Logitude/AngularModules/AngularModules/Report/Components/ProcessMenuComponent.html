@@ -180,7 +180,7 @@
 
                     <div class="TabsContainer" style="border-radius: 5px; overflow: hidden;" [ngStyle]="LayoutDirection == 'rtl' ? {'direction': 'rtl'} : {'direction': 'ltr'}">
                         <div *ngFor="let tab of MenuTypeNames | keyvalue" class="TabHeader"
-                            [class.active]="selectedTab === tab.key" (click)="selectTab(tab.key)"
+                            [class.active]="CurrentSelectedTab === tab.key" (click)="selectTab(tab.key)"
                             style="padding: 8px 15px; font-size: 12px; border-radius: 3px;">
 
                             <span *ngIf="MenuTypeNames && MenuTypeNames[tab.key]">{{ MenuTypeNames[tab.key]}}</span>
@@ -189,11 +189,11 @@
                     <div class="TabContent">
 
                         <ul >
-                            <li *ngIf="!groupedMenuItems[selectedTab]?.length"
+                            <li *ngIf="!groupedMenuItems[CurrentSelectedTab]?.length"
                                 style="width: 100%; padding: 10px;  text-align: center;height: 20px;line-height: 20px; font-size: 18px; color: #1B90CB;">
                                 {{'Accounting.General.O.NoReportsDisplay' | TextCodeTranslationPipe}} </li>
 
-                            <li *ngFor="let item of groupedMenuItems[selectedTab]" style="width: 100%; padding: 10px;padding-bottom: 0px;  font-size: 10px;
+                            <li *ngFor="let item of groupedMenuItems[CurrentSelectedTab]" style="width: 100%; padding: 10px;padding-bottom: 0px;  font-size: 10px;
                                                  color: #312C31; ">
 
                                 <div class="RelatedDocItem" [class.selectedticket]="SelectedMenuItem == item"

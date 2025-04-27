@@ -229,7 +229,7 @@ export class TaxReportMenuButtonsHandler {
                 this.entityArgs.EditComponent.ReloadEntityPM();
                 SessionLocator.HomeComponent.IsProcessMenuVisible = true;
                 SessionLocator.HomeComponent.CurrentProcessId = mm.Result.Id;
-                SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution;;
+                SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution.toString();
 
                 SessionLocator.HomeComponent.isPinned = true;
                 this.BackButtonClicked();
@@ -259,7 +259,7 @@ export class TaxReportMenuButtonsHandler {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Refreshing ...");
                 this.EntityPM.RecalculateData = true;
-                
+                this.EntityPM.IsEdited = false;
                 this.TaxReportPMService.update(this.EntityPM).subscribe((myResult: any) => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
@@ -274,7 +274,7 @@ export class TaxReportMenuButtonsHandler {
                           messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
                           SessionLocator.HomeComponent.IsProcessMenuVisible = true;
                           SessionLocator.HomeComponent.CurrentProcessId = mm.Result.reportKey;
-                          SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution;
+                          SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution.toString();
 
                           SessionLocator.HomeComponent.isPinned = true;
                           this.BackButtonClicked();

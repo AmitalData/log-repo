@@ -7,11 +7,9 @@ import { TaxReportPM } from '../../EntityPMs/TaxReportPM';
 import { TaxReportPMService } from '../../Services/StandardPMs/TaxReportPMService';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { TaxReportExtendedPMService } from '../../Services/ExtendedPMs/TaxReportExtendedPMService';
 import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
@@ -155,7 +153,7 @@ export class NewTaxReportComponent extends BaseComponent {
                           messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
                           SessionLocator.HomeComponent.IsProcessMenuVisible = true;
                           SessionLocator.HomeComponent.CurrentProcessId = myResult.ReportKey;
-                          SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution;
+                          SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution.toString();
                           SessionLocator.HomeComponent.isPinned = true;
                       }
 

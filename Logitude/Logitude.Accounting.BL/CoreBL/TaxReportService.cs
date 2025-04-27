@@ -320,7 +320,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     OutputOrInput = "I",
                     VatAmount = Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
                     VatAmountRound = InputVatAmount.Value - Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
-                    VatableInvoiceAmount = 0, 
+
+                    VatableInvoiceAmount = 0,
                     TotalInvoiceAmount = Math.Round(InputInvoiceAmountNotExcluded.Value, MidpointRounding.AwayFromZero),
                     SubTotalInLocalCurrency = Math.Round(((double)InputInvoiceAmount.Value), MidpointRounding.AwayFromZero),
                     IsEquipment = aPInvoicePM != null ? aPInvoicePM.IsEquipment : account != null ? account.IsEquipmentVendor : false,
@@ -618,6 +619,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
 
+
                     foreach (var oneLine in taxReportLines.Where(ln => !BlockedStatuses.Contains(ln.TransmitStatusCode)))
                     {
                         if (all_dup_line_nos.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
@@ -626,7 +628,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
-                            oneLine.StatusCode = TaxReportLineStatusValues.Readyfortransmit; 
+;
+                            oneLine.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
                         }
 
                         else if (oneLine.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
@@ -647,11 +650,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
+
                             linePM.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
                         }
                         else if (linePM.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
-                            linePM.StatusCode = TaxReportLineStatusValues.Readyfortransmit; 
+                            linePM.StatusCode = TaxReportLineStatusValues.Readyfortransmit;   
                         }
                     }
 
@@ -1134,6 +1138,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     lastLine += "X";
                     lastLine += taxReport.VatNumber?.PadLeft(9, '0');
                     myStringBuilder.Append(lastLine);
+
+
 
 
 

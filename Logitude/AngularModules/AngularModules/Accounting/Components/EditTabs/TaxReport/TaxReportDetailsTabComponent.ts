@@ -1,14 +1,11 @@
 import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TaxReportPM } from '../../../EntityPMs/TaxReportPM';
-import { TaxReportLinePM } from '../../../EntityPMs/TaxReportLinePM';
-import { RatesTableExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/RatesTableExtendedListService';
-import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -20,14 +17,14 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TaxReportExtendedPMService } from '../../../Services/ExtendedPMs/TaxReportExtendedPMService';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
-import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { TaxReportLineTransmitStatusListService } from 'Accounting/Services/StandardLists/TaxReportLineTransmitStatusListService';
-import { HttpResponse } from '@angular/common/http';
 import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
 import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
+import { MenuTypes } from 'Report/Components/ProcessMenuComponent';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 declare var window: any;
 
@@ -774,13 +771,19 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
                             var mm: ServiceResponse = myResult;
                             var entity = mm.Result;
                             this.btePM = entity;
+                            this.CurrentSession.StopBusyIndicator();
 
-
-                            this.timer = setInterval(() => {
-                                this.GetBTE();
-                            }, this.timerInterval);
-
-                        });
+                            var messageWindow = new MessageWindow();
+                            messageWindow.ShowSuccessIcon = true;
+                            messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
+                            SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                            SessionLocator.HomeComponent.CurrentProcessId = mm.Result.reportKey;
+                            SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution.toString();
+  
+                            SessionLocator.HomeComponent.isPinned = true;
+  
+   
+                            });
                     }
                 });
             }

@@ -1,10 +1,10 @@
-import { EventEmitter, HostListener, OnDestroy, Output } from "@angular/core";
+import { EventEmitter, OnDestroy, Output } from "@angular/core";
 import { Component } from "@angular/core";
 import { ReportPM } from "Common/EntityPMs/ReportPM";
 import { ReportExecutionLogPMService } from "Common/Services/StandardPMs/ReportExecutionLogPMService";
 import { ReportPMService } from "Common/Services/StandardPMs/ReportPMService";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { BehaviorSubject, interval, Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { QueryFilterItem } from "./Filters/QueryFilterItem";
 import { ReportFliter } from "./Filters/ReportFliter";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
@@ -37,7 +37,7 @@ export class ProcessMenuComponent implements OnDestroy {
     showExceptionMessage = false
     isProcessMenuVisible: boolean = false;
     public selectedTab: string = '0'; 
-    public currentSelectedTab: number = 0; 
+    public currentSelectedTab: string = '0'; 
 
     currentProcessId: string = "";
     public isPinned: boolean = false;
@@ -61,6 +61,7 @@ export class ProcessMenuComponent implements OnDestroy {
 
     }
     GroupMenuItemsByType() {
+
         this.processMenuService.relatedProcessSubject.subscribe(menuItemList => {
             this.groupedMenuItems = menuItemList.reduce((groups: { [key: string]: MenuItemClass[] }, menuItem: MenuItemClass) => { 
                 const type = menuItem.ItemType; 
@@ -70,14 +71,12 @@ export class ProcessMenuComponent implements OnDestroy {
                 groups[type].push(menuItem); 
                 return groups;
             }, {});
-            this.selectedTab =  (!AppTool.IsNullOrEmpty(this.selectedTab) && AppTool.IsNullOrEmpty(this.CurrentSelectedTab)) ? this.selectedTab: !AppTool.IsNullOrEmpty(this.CurrentSelectedTab) && Object.keys(this.groupedMenuItems)[this.CurrentSelectedTab] ? Object.keys(this.groupedMenuItems)[this.CurrentSelectedTab] : "0";
 
         });
 
     }
     selectTab(tab: string) {
-        this.currentSelectedTab = null;
-        this.selectedTab = tab;
+        this.currentSelectedTab = tab;
     }
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -95,7 +94,7 @@ export class ProcessMenuComponent implements OnDestroy {
         }
     }
     get CurrentSelectedTab() { return this.currentSelectedTab; }
-    set CurrentSelectedTab(newValue: number) {
+    set CurrentSelectedTab(newValue: string) {
 
         if (this.currentSelectedTab != newValue) {
             this.currentSelectedTab = newValue;

@@ -550,7 +550,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                     messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
                 SessionLocator.HomeComponent.IsProcessMenuVisible = true;
                 SessionLocator.HomeComponent.CurrentProcessId  = myResponse.Result.ReportKey;
-                SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog;
+                SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog.toString();
                     SessionLocator.HomeComponent.isPinned = true;
       
                     this.BackButtonClicked()
