@@ -99,7 +99,7 @@ export class ProcessMenuService {
     
     public CheckStatus() {
 
-        const itemIds = this.relatedProcess?.filter(item => item.StatusCode === 'P' || item.StatusCode === 'W')?.map(item => item.Id).join(',');
+        const itemIds = this.relatedProcess?.filter(item => item.StatusCode === 'P' || item.StatusCode === 'W' || item.StatusCode === 'C')?.map(item => item.Id).join(',');
         this.CheckProcessesStatus(itemIds).subscribe(statusResponse => {
             if (statusResponse && !statusResponse.HasError) {
                 statusResponse?.Result?.forEach((status: any) => {
