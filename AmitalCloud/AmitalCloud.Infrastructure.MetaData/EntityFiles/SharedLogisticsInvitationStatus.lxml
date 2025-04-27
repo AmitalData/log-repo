@@ -14,7 +14,6 @@
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="false"
-  IsLock="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -44,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Shared Logistics Invitation Status&quot;"
-  Code="&quot;8eea&quot;"
+  Code="&quot;60be&quot;"
   Name="&quot;SharedLogisticsInvitationStatus&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -199,11 +198,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;Name&quot;"
     DefaultText="&quot;Name&quot;"
-    FullLocalDefaultTextBack_up="&quot;שם&quot;"
     FullLocalDefaultText="&quot;BS64:Itep150i&quot;"
     ListFieldLable="&quot;NameListLable&quot;"
     ListLableDefaultText="&quot;Name&quot;"
-    ListLocalDefaultTextBack_up="&quot;שם&quot;"
     ListLocalDefaultText="&quot;BS64:Itep150i&quot;"
     IsNullable="false"
     IsForeignKey="false"
@@ -346,15 +343,15 @@
   </EventTypes>
   <Records>
     <Record
-      Code="3"
+      Code="&quot;3&quot;"
       SearchFields="&quot;3,Activated&quot;"
       Name="&quot;Activated&quot;" />
     <Record
-      Code="2"
+      Code="&quot;2&quot;"
       SearchFields="&quot;2,Invited&quot;"
       Name="&quot;Invited&quot;" />
     <Record
-      Code="1"
+      Code="&quot;1&quot;"
       SearchFields="&quot;1,Not Invited&quot;"
       Name="&quot;Not Invited&quot;" />
   </Records>

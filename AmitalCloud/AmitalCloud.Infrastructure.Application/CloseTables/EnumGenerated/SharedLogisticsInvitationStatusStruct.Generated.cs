@@ -16,9 +16,9 @@ namespace AmitalCloud.Infrastructure.Application.CloseTables
 {
     public struct SharedLogisticsInvitationStatusValues
     {   
-       public const string Activated = 3;  
-       public const string Invited = 2;  
-       public const string NotInvited = 1;  
+       public const string Activated = "3";  
+       public const string Invited = "2";  
+       public const string NotInvited = "1";  
     }
 }
 
