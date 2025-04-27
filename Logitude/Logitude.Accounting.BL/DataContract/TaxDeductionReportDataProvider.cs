@@ -656,7 +656,14 @@ namespace Logitude.Accounting.BL.DataContract
             if (transaction.OppositeAccountId != null)
             {
 
-                var vendorDict = transactionsVendors.ToDictionary(v => v.GLAccountId);  
+                // Make a distinct copy of transactionsVendors so only the first item remains per GLAccountId
+                var distinctTransactionsVendors = transactionsVendors
+                    .GroupBy(v => v.GLAccountId)
+                    .Select(g => g.First())
+                    .ToList();
+
+                // Then create the dictionary from this filtered list
+                var vendorDict = distinctTransactionsVendors.ToDictionary(v => v.GLAccountId);
 
                 vendorDict.TryGetValue(transaction.OppositeAccountId, out var vendor);
                 return vendor?.GLAccountId ?? transaction.OppositeAccountId;
@@ -664,6 +671,7 @@ namespace Logitude.Accounting.BL.DataContract
             else
                 return null;
         }
+
 
         private string GetVendorIdByMainAccount(string accountId)
         {
