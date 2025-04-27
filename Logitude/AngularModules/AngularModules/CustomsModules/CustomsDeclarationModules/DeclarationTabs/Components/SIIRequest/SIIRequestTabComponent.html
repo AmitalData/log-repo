@@ -1,0 +1,76 @@
+<div class="sii-request-tab" *ngIf="EntityPM != null && EntityPM.Direction === 'E'">
+    <div class="header">
+        <div class="TabTitleRow">בקשות מכון תקנים</div>
+        <button [disabled]="!IsAllowChange" class="Button" id="buttonNewSIIRequest" (click)="onOpenNewRequest()">
+            פתיחת בקשה
+        </button>
+    </div>
+
+    <div *ngIf="IsDisplayOnly" class="DisbleBox">
+        {{ DisplayOnlyMessage }}
+        <span style="padding: 0 16px;">-</span>
+        <span class="hyperlink" (click)="RefreshEntity()">רענן</span>
+    </div>
+
+    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" [SelectedRow]="SelectedRow"
+        (SelectedItemChanged)="onRowSelected($event)">
+
+        <log-column [header]="'#'" [binding]="'ListCounter'" [width]="'35'" [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template>
+                    <div style="text-align:right">
+                        {{ item.ListCounter }}
+                    </div>
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+
+        <log-column [header]="'מס' בקשה'" [binding]="'RequestNo'" [width]="'120'" [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template>
+                    {{ item.RequestNo }}
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+
+        <log-column [header]="'סטטוס'" [binding]="'Status'" [width]="'80'" [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template>
+                    {{ item.Status }}
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+
+        <log-column [header]="'כתובת מחסן'" [binding]="'WareHouseAddress'" [width]="'150'" [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template>
+                    {{ item.WareHouseAddress }}
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+
+        <log-column [header]="'ישוב'" [binding]="'WareHouseCity'" [width]="'100'" [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template>
+                    {{ item.WareHouseCity }}
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+
+        <log-column [header]="'הערות'" [binding]="'Remarks'" [width]="'200'" [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template>
+                    {{ item.Remarks }}
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+
+        <log-column [width]="'35'" [Alignment]="'right'">
+            <ng-template let-item>
+                <log-cell-template>
+                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="onEditRequest(item)"></IconButton>
+                </log-cell-template>
+            </ng-template>
+        </log-column>
+    </logitude-edit-grid>
+</div>
