@@ -1,10 +1,10 @@
-import { EventEmitter, HostListener, OnDestroy, Output } from "@angular/core";
+import { EventEmitter, OnDestroy, Output } from "@angular/core";
 import { Component } from "@angular/core";
 import { ReportPM } from "Common/EntityPMs/ReportPM";
 import { ReportExecutionLogPMService } from "Common/Services/StandardPMs/ReportExecutionLogPMService";
 import { ReportPMService } from "Common/Services/StandardPMs/ReportPMService";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { BehaviorSubject, interval, Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { QueryFilterItem } from "./Filters/QueryFilterItem";
 import { ReportFliter } from "./Filters/ReportFliter";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
@@ -16,7 +16,6 @@ import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { AppTool } from "Infrastructure/Tools";
 import { ProcessMenuService } from "Common/Services/ProcessMenuService";
-import { Console } from "console";
 
 
 @Component({

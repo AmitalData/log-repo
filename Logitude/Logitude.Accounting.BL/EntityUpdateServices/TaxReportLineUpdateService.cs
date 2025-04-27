@@ -414,9 +414,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         entityPM.StatusCode = TaxReportLineStatusValues.MissingConfirmationNumber;
                         JournalPM journal = GetJournalPM(entityPM);
                         ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(entityPM.Tenant);
-                        // var ARInvoice = arInvoiceQuery.GetSinglePM(journal?.AccountingEntityId, entityPM.Tenant);
-                        // if (ARInvoice?.ConfirmationNumberStatus == "6")
-                        //     entityPM.TransmitStatusCode = "3";
+                      
                     }
                     if (validStatuses.Contains(entityPM.LineTypeCode) && entityPM.VatAmount > confirmationNumberDefaultList?.AmountForConfirmationNumber && !string.IsNullOrEmpty(entityPM.ConfirmationNumber))
                     {
