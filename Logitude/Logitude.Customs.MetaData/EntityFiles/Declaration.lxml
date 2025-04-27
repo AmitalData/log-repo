@@ -22806,9 +22806,11 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CooStatusName&quot;"
     DefaultText="&quot;Coo Status Name&quot;"
+    FullLocalDefaultTextBack_up="&quot;תעודת מקור&quot;"
     FullLocalDefaultText="&quot;BS64:Iteq16LXldeT16og157Xp9eV16gi&quot;"
     ListFieldLable="&quot;CooStatusNameListLable&quot;"
     ListLableDefaultText="&quot;Coo Status Code&quot;"
+    ListLocalDefaultTextBack_up="&quot;תעודת מקור&quot;"
     ListLocalDefaultText="&quot;BS64:Iteq16LXldeT16og157Xp9eV16gi&quot;"
     IsNullable="false"
     IsForeignKey="false"
@@ -25132,7 +25134,8 @@
     IsLocked="false" />
   <Tab
     TabName="&quot;SIIRequest&quot;"
-    TabLocalName="&quot;בקשות מכון תקנים&quot;"
+    TabLocalNameBack_up="&quot;בקשות מכון תקנים&quot;"
+    TabLocalName="&quot;BS64:IteR16fXqdeV16og157Xm9eV158g16rXp9eg15nXnSI=&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
     Code="&quot;SIIR&quot;"
     ControlPath="&quot;Logitude.Customs.Views.Tabs.SIIRequestTabComponent&quot;"
@@ -25142,7 +25145,8 @@
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestTabComponent&quot;"
     HtmlComponentName="&quot;SIIRequestTabComponent&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Customs Documents&quot;"
     TabLocalNameBack_up="&quot;צרופות מכס&quot;"
@@ -25516,7 +25520,7 @@
     ControlPath="&quot; &quot;"
     TextCode="&quot;Customs.Declaration.TH.Corrections&quot;"
     IsPackagable="true"
-    IndexOrder="0"
+    IndexOrder="24"
     HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent&quot;"
     HtmlComponentName="&quot;DeclarationCorrectionsComponent&quot;"
     FeatureCode="&quot;CORRECTIONS&quot;"
@@ -29191,7 +29195,8 @@
     <TextCode
       Code="&quot;Customs.Declaration.O.IsExporterConfirmation&quot;"
       DefaultText="&quot;This field is intended to allow marking if the exporter approves transferring the declaration data to the destination country.&quot;"
-      LocalDefaultText="&quot;שדה זה מיועד לאפשר סימון במידה והיצואן מאשר להעביר את נתוני ההצהרה למדינת היעד&quot;"
+      LocalDefaultTextBack_up="&quot;שדה זה מיועד לאפשר סימון במידה והיצואן מאשר להעביר את נתוני ההצהרה למדינת היעד&quot;"
+      LocalDefaultText="&quot;BS64:Itep15PXlCDXlteUINee15nXldei15Mg15zXkNek16nXqCDXodeZ157XldefINeR157XmdeT15Qg15XXlNeZ16bXldeQ158g157XkNep16gg15zXlNei15HXmdeoINeQ16og16DXqteV16DXmSDXlNeU16bXlNeo15Qg15zXnteT15nXoNeqINeU15nXoteTIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -30436,7 +30441,6 @@
       Code="&quot;SlaReport&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.SlaReport&quot;"
-
       FeatureDefaultText="&quot;SLA Report&quot;"
       IsPackagable="true"
       IsOld="false"
