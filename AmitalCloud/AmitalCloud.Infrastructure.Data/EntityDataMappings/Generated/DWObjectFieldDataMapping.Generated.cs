@@ -87,7 +87,13 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         IsMultipleSelection, 
 	         RecordType, 
 	         FactTableCode, 
-	         UseUnitSelection,	      }
+	         UseUnitSelection, 
+	         PartnerOriginalObjectFieldCode, 
+	         PartnerFullNameTextCodeCode, 
+	         Category, 
+	         CategoryIndex, 
+	         TypeCode, 
+	         ParentFactCode,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(DWObjectFieldPM entityPM, POCO.DWObjectField entityPOCO)

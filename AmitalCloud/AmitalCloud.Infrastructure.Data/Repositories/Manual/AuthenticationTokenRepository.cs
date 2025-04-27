@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             {
                 token = token.Replace(" ", "+");
             }
-            return GetMulti(a => a.Token == token).FirstOrDefault();
+            return GetSingle(a => a.Token == token);
         }
         public static AuthenticationToken GetSingleTokenFromCache(string token)
         {

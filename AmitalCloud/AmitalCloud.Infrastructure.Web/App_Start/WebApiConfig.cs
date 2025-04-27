@@ -13,11 +13,11 @@ namespace AmitalCloud.Shipment.WebAPI
             //                            name: "ActionApi",
             //                            routeTemplate: "api/Infra/{controller}/{action}"
             //                            );
+
             config.Routes.MapHttpRoute(
-                                            name: "API Default",
-                                            routeTemplate: "api/{controller}/{action}/{id}",
-                                            defaults: new { id = RouteParameter.Optional }
-                                        );
+                name: "API Default",
+                routeTemplate: "api/{controller}/{action}/{id}",
+                defaults: new { id = RouteParameter.Optional });
         }
     }
 }

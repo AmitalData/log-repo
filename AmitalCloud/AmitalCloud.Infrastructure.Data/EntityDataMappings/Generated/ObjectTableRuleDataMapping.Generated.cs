@@ -62,7 +62,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         ActiveForUpdate, 
 	         Internal, 
 	         AdvancedCondition, 
-	         TriggerFieldCode,	      }
+	         TriggerFieldCode, 
+	         RuleTypeName, 
+	         IsCreatedFromSystemRule,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ObjectTableRulePM entityPM, POCO.ObjectTableRule entityPOCO)

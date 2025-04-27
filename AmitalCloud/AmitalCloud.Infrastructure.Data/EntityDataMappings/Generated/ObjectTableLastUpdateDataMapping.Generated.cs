@@ -36,7 +36,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         Tenant, 
 	         LastUpdateDate, 
 	         UpdatedByUserId, 
-	         ObjectTableId,	      }
+	         ObjectTableId, 
+	         ObjectTableName,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ObjectTableLastUpdatePM entityPM, POCO.ObjectTableLastUpdate entityPOCO)

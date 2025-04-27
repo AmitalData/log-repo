@@ -40,7 +40,8 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         ObjectFieldId, 
 	         Value, 
 	         Operator, 
-	         ObjectFieldCode,	      }
+	         ObjectFieldCode, 
+	         ObjectFieldName,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(RuleConditionFieldPM entityPM, POCO.RuleConditionField entityPOCO)

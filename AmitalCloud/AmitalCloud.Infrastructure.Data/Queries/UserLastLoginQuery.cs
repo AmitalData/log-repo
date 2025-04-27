@@ -1,79 +1,49 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
+using System.Web;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class UserLastLoginQuery
     {
-        UserLastLoginRepository repository;
+        private readonly Repository<UserLastLogin> repository;
 
-
-        public UserLastLoginQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant))
-        {
-        }
-        public UserLastLoginQuery(IAmitalCloudContext context) : this(new UserLastLoginRepository(context))
-        {
-        }
-        public UserLastLoginQuery(UserLastLoginRepository repository)
+        public UserLastLoginQuery(int tenant) : this(AmitalCloudContext.GetContext(tenant)) { }
+        public UserLastLoginQuery(IAmitalCloudContext context) : this(new Repository<UserLastLogin>(context)) { }
+        public UserLastLoginQuery(Repository<UserLastLogin> repository)
         {
             this.repository = repository;
         }
 
-        public UserLastLoginPM GetSinglePM(string id, int tenant)
+        public UserLastLogin UpdateUserLastLogins(UserLastLogin entity, string workEnvironment)
         {
-            UserLastLoginPM entity = (from a in repository.context.UserLastLogins.Include("User")
-                                      where a.Tenant == tenant
-                                      && a.Id == id
-                                      select new UserLastLoginPM()
-                                      {
-                                          LoginDateTime = a.LoginDateTime,
-                                          Tenant = a.Tenant,
-                                          Id = a.Id,
-                                          ComputerId = a.ComputerId,
-                                          WorkEnvironment = a.WorkEnvironment,
-                                          IP = a.IP,
-                                      }).FirstOrDefault();
-            return entity;
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                bool isDSVMobileCall = false;
+                using (TransactionScope globalScope = TransactionFactory.GetNewTransaction())
+                {
+                    string Url = HttpContext.Current.Request.UrlReferrer.ToString();
+                    string privateLabelId = new Repository<GlobalTenant>(GlobalContext.GetContext()).GetSingle(a => a.Id == entity.Tenant).PrivateLabelId;
+                    isDSVMobileCall = !string.IsNullOrEmpty(privateLabelId) && HttpContext.Current.Request.Browser.IsMobileDevice && Url.Contains("Menu=DAPP");
+                }
+                if (!isDSVMobileCall)
+                {
+                    UserLastLogin entityPoco = repository.GetSingle(record => record.Id == entity.Id && record.Tenant == entity.Tenant);
+                    entityPoco.ComputerId = entity.ComputerId;
+                    entityPoco.WorkEnvironment = workEnvironment;
+                    repository.Update(entityPoco);
+                    repository.SubmitChanges();
+                }
+                scope.Complete();
+                return entity;
+            }
         }
-
-        public IQueryable<UserLastLoginPM> GetUserLastLoginPMsByTenant(int tenant)
-        {
-            IQueryable<UserLastLoginPM> userLastLoginPMs = from a in repository.context.UserLastLogins.Include("User")
-                                                           where a.Tenant == tenant
-                                                           select new UserLastLoginPM()
-                                                           {
-                                                               LoginDateTime = a.LoginDateTime,
-                                                               Tenant = a.Tenant,
-                                                               Id = a.Id,
-                                                               ComputerId = a.ComputerId,
-                                                               WorkEnvironment = a.WorkEnvironment,
-                                                               IP = a.IP,
-                                                           };
-            return userLastLoginPMs;
-        }
-
-
-        public IQueryable<UserLastLoginPM> GetUserLastLoginPMsByUserIds(List<string> userIds)
-        {
-            IQueryable<UserLastLoginPM> userLastLoginPMs = from a in repository.context.UserLastLogins
-                                                           where userIds.Contains(a.Id)
-                                                           select new UserLastLoginPM()
-                                                           {
-                                                               LoginDateTime = a.LoginDateTime,
-                                                               Tenant = a.Tenant,
-                                                               Id = a.Id,
-                                                               ComputerId = a.ComputerId,
-                                                               WorkEnvironment = a.WorkEnvironment,
-                                                               IP = a.IP,
-                                                           };
-            return userLastLoginPMs;
-        }
-
     }
 }

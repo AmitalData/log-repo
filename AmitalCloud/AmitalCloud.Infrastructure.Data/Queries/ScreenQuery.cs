@@ -12,14 +12,18 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class ScreenQuery
     {
-        private readonly Repository<Screen> repository;
+        private readonly int tenant;
         private readonly IAmitalCloudContext context;
+        private readonly Repository<Screen> repository;
+
         public ScreenQuery(int tenant)
         {
+            this.tenant = tenant;
             context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<Screen>(context);
         }
-        public List<ScreenPM> GetScreenPMsByTenant(int tenant)
+
+        public List<ScreenPM> GetScreenPMsByTenant()
         {
             List<ScreenPM> screens;
             List<ScreenPM> zeroscreens;
@@ -27,11 +31,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                zeroscreens = repository.GetMulti(a => a.Tenant == 0, a => new ScreenPM(a)
+                zeroscreens = repository.GetMultiFromCache("GetScreen0", a => a.Tenant == 0, "ObjectTable", a => new ScreenPM(a)
                 {
                     ObjectTableName = a.ObjectTable.Name,
                     UserTenant = tenant,
-                }, "ObjectTable");
+                });
 
                 Dictionary<string, ScreenModification> screensDictionary = new Dictionary<string, ScreenModification>();
                 screensDictionary = new Repository<ScreenModification>(context).GetMulti(te => te.Tenant == tenant).ToDictionary(dic => dic.ScreenId, dic => dic);
@@ -52,11 +56,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                currentscreens = repository.GetMulti(a => a.Tenant == tenant, a => new ScreenPM(a)
+                currentscreens = repository.GetMultiFromCache($"screens{tenant}", a => a.Tenant == tenant, "ObjectTable", a => new ScreenPM(a)
                 {
                     ObjectTableName = a.ObjectTable.Name,
                     UserTenant = tenant,
-                }, "ObjectTable");
+                });
             }
             screens = zeroscreens.Concat(currentscreens).ToList();
 

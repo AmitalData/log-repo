@@ -12,17 +12,19 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class ObjectTableTabQuery
     {
-        readonly Repository<ObjectTableTab> repository;
-        readonly IAmitalCloudContext context;
         private readonly int tenantZero = 0;
+        private readonly int tenant;
+        private readonly IAmitalCloudContext context;
+        private readonly Repository<ObjectTableTab> repository;
 
         public ObjectTableTabQuery(int tenant)
         {
+            this.tenant = tenant;
             context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<ObjectTableTab>(context);
         }
 
-        public List<ObjectTableTabPM> GetObjectTableTabPMsByTenant(int tenant)
+        public List<ObjectTableTabPM> GetObjectTableTabPMsByTenant()
         {
             List<ObjectTableTabPM> tenantZeroTabs = GetTenantZeroTabs();
             if (tenant == tenantZero) return tenantZeroTabs;
@@ -35,12 +37,12 @@ namespace AmitalCloud.Infrastructure.Data.Queries
 
         private List<ObjectTableTabPM> GetTenantZeroTabs()
         {
-            return repository.GetMulti(a => a.Tenant == 0, a => new ObjectTableTabPM(a)
+            return repository.GetMultiFromCache("GetTenantZeroTabs", a => a.Tenant == 0, "TabNameTextCode,ObjectTable", a => new ObjectTableTabPM(a)
             {
                 Type = "Predefined",
                 TabNameTextCodeDefaultText = a.TabNameTextCode.DefaultText,
                 ObjectTableName = a.ObjectTable.Name,
-            }, "TabNameTextCode,ObjectTable");
+            });
         }
 
         private void GetEntityChangesFromModification(int tenant, List<ObjectTableTabPM> tabs)

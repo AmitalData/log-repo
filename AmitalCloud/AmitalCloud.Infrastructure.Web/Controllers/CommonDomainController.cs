@@ -15,7 +15,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 TenantPM myResult = new TenantQueryService(tenant).GetSingle(tenant, true, true);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

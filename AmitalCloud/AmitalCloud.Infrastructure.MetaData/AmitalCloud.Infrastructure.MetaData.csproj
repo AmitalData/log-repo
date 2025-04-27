@@ -236,7 +236,7 @@
     <None Include="EntityFiles\AutoCreated\SharedUserQuery.lxml" />
     <None Include="EntityFiles\AutoCreated\SmallDocument.lxml" />
     <None Include="EntityFiles\AutoCreated\SpecialService.lxml" />
-    <None Include="EntityFiles\AutoCreated\SystemMetadataLastUpdate.lxml" />
+    <None Include="EntityFiles\GlobalModel\SystemMetadataLastUpdate.lxml" />
     <None Include="EntityFiles\AutoCreated\TenantSetting.lxml" />
     <None Include="EntityFiles\AutoCreated\TermsofUse.lxml" />
     <None Include="EntityFiles\AutoCreated\TextCodeType.lxml" />

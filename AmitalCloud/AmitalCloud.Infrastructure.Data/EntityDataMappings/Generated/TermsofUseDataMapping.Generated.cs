@@ -24,7 +24,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         DropVersion, 
 	         Date, 
 	         VersionNumber, 
 	         Tenant, 
@@ -36,7 +35,6 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         DropVersion, 
 	         Date, 
 	         VersionNumber, 
 	         Tenant, 
@@ -49,8 +47,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(TermsofUsePM entityPM, POCO.TermsofUse entityPOCO)
         {
-			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropVersion)) { entityPOCO.DropVersion = entityPM.DropVersion;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Date)) { entityPOCO.Date = entityPM.Date;}
+			 		if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Date)) { entityPOCO.Date = entityPM.Date;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VersionNumber)) { entityPOCO.VersionNumber = entityPM.VersionNumber;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant)) { entityPOCO.Tenant = entityPM.Tenant;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VersionDocumentId)) { entityPOCO.VersionDocumentId = entityPM.VersionDocumentId;}
@@ -60,11 +57,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 					}
 		public void POCOToPM(TermsofUsePM entityPM, POCO.TermsofUse entityPOCO)
         {
-			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DropVersion))
-            {
-					entityPM.DropVersion = entityPOCO.DropVersion;
-            }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Date))
+			 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Date))
             {
 					entityPM.Date = entityPOCO.Date;
             }
@@ -100,11 +93,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 		public void PMToOldPM(TermsofUsePM entityPM, TermsofUsePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
-			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DropVersion))
-            {
-                oldEntityPM.DropVersion = entityPM.DropVersion;
-            }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Date))
+			 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Date))
             {
                 oldEntityPM.Date = entityPM.Date;
             }

@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 List<ReportList> reportLists = new ReportListQueryService(tenant).GetList(tenant).Where(d => d.ReportGroupId == groupId).OrderBy(d => d.Name).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, reportLists);
             }

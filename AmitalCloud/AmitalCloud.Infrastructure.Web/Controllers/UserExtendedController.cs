@@ -21,7 +21,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
 
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 var usersReleaseNotesDisplayPM = new UsersReleaseNotesDisplayQueryService(tenant)
                     .GetMulti(a => a.UserId == userId && a.Tenant == tenant)
                     .FirstOrDefault();
