@@ -491,7 +491,29 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloseTables\DetailsClassesGenerated\AccountingInformationIdentifier.cs" />
+
+    <Compile Include="CloseTables\EnumGenerated\AccountingInformationIdentifierStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AWBChargesCodeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AWBCustomsInformationStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AWBInformationStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ContainerStatusSourceStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ContainerStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsTransferTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsTransmissionsStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\HarmonizeCodeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\INTTRABookingStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\INTTRABookingTransStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\INTTRADocumentTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ManifestStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\OBLTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\OtherParticipantIdStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PickUpDeliveryTransportModeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ReferenceTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ShipmentCustomerTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ShipmentCustomsMessageTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ShipmentLevelStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ShipmentPayableStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ShipmentReceivableStatusStruct.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingInformationIdentifierListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AWBAdditionalHandlingInfoListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AWBChargesCodeListQueryService.Generated.cs" />
