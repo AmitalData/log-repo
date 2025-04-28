@@ -129,7 +129,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     GLAcountEnglishName = chartOfAccountList[i].EnglishName,
 									MonthlyBalancesLine= (bool)DetailedForJobs?.FieldValue ? monthlyBalancesLineOfChartOfAccount: new List<MonthlyBalancesLine>(),
 									LocalOpenBalance= monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.LocalOpenBalance) : 0,
-                                    ForeignOpenBalance = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.ForeignOpenBalance) : 0,
 
                                 };
 				dataProvider.ChartOfAccountLine.Add(chartOfAccountLine);
@@ -178,23 +177,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 								GLAcountNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
                                 GLAcountEnglishName= reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
                                 ChartOfAccount = reader["chartOfAccount"] != DBNull.Value ? (string)reader["chartOfAccount"] : null,
-                                AccountId = reader["AccountId"] != DBNull.Value ? (string)reader["AccountId"] : null
+                                AccountId = reader["AccountId"] != DBNull.Value ? (string)reader["AccountId"] : null,
+
+                                LocalOpenBalance = reader["LocalOpenBalance"] != DBNull.Value ? (decimal)reader["LocalOpenBalance"] : 0
                             };
                             results.Add(result);
                         }
                     }
                     connection.Close();
                 }
-                var ac = new AccountBalanceByDateCodeService(null, tenant, results.Select(a => a.AccountId).FirstOrDefault(), results.Select(a => a.AccountId).AsQueryable<string>());
-                ac.CalculateBalance(true, GLAccountTotalDateTypeValues.Accountingdate, new DateTime(year, 1, 1), false, false, true, false, false);
-				foreach (var result in results)
-				{
-					var CurrencySumUntillMounth = ac.AccountBalance.verbose.CurrencySumUntillMounth.Where(A => A.AccountId == result.AccountId).FirstOrDefault();
-
-                    result.LocalOpenBalance = CurrencySumUntillMounth?.LocalAmountDebit - CurrencySumUntillMounth?.LocalAmountCredit;
-                    result.ForeignOpenBalance = CurrencySumUntillMounth?.ForeignAmountDebit - CurrencySumUntillMounth?.ForeignAmountDebit;
-
-                }
+               
                 return results;
             }
 

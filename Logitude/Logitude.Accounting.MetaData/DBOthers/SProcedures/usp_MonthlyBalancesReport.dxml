@@ -29,7 +29,14 @@ SUM(CASE WHEN (gt.Month = 9  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - g
 SUM(CASE WHEN (gt.Month = 10 and  gt.Year =  @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH10,
 SUM(CASE WHEN (gt.Month = 11 and  gt.Year =  @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH11,
 SUM(CASE WHEN (gt.Month = 12 and  gt.Year =  @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH12,
-SUM(gt.LocalAmountDebit - gt.LocalAmountCredit) AS TOTAL_MONTHS
+SUM(gt.LocalAmountDebit - gt.LocalAmountCredit) AS TOTAL_MONTHS,
+(SELECT SUM(LocalAmountDebit - LocalAmountCredit) 
+     FROM GLAccountTotalByMonths 
+     WHERE Tenant = @Tenant 
+AND AccountId = gt.AccountId 
+AND DateTypeCode = '1' 
+AND Year < @Year) AS LocalOpenBalance
+
 FROM
 GLAccounts g
 INNER JOIN
