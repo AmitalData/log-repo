@@ -11,6 +11,9 @@ using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Data.Entity.Core.Objects;
 using System.Runtime.Remoting.Contexts;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -107,6 +110,39 @@ namespace Logitude.Accounting.Data.Repositories
                 .Select(b => b.cheque)
                 .ToList();
         }
+
+        public string CheckARPaymentChequeAlreadyExists(string ChequeNumber, string BankId, string BankAccount, string BankBranch, int tenant)
+        {
+            var existingCheques = new StringBuilder();
+
+                var existingCheque = context.ARPaymentCheques
+                    .FirstOrDefault(a => a.Tenant == tenant &&
+                                         a.ChequeNumber == ChequeNumber &&
+                                         a.BankId == BankId &&
+                                         a.BankAccount == BankAccount &&
+                                         a.BankBranch == BankBranch);
+
+               
+            if (existingCheque != null)
+            {
+                 var invoiceContext = InvoiceContext.GetContext(tenant);
+
+                var paymentNumber = invoiceContext.ARPayments
+                   .Where(a => a.Tenant == tenant && a.Id == existingCheque.PaymentId)
+                   .Select(a => a.PaymentNo)
+                   .FirstOrDefault();
+                string msg = TranslateTextsClass.Translate("ARPaymentCheque.O.ChequeAlreadyexists", tenant);
+                string textCodeAlreadyExist = msg.Replace("%ChequeNumber", existingCheque.ChequeNumber)
+                        .Replace("%PaymentNumber", paymentNumber)
+                        .Replace("%ValueDate", existingCheque.ValueDate.ToString("dd/MM/yyyy"))
+                        .Replace("%LocalAmount", existingCheque.LocalAmount.ToString("F2"));
+                 existingCheques.AppendLine(textCodeAlreadyExist);
+             }
+            
+
+            return existingCheques.ToString();
+        }
+
         public bool IsChequeExists(string paymentId, string arPaymentChequesId, int tenant)
         {
             return context.ARPaymentCheques.Any(a => a.PaymentId == paymentId && a.Id == arPaymentChequesId && a.Tenant == tenant);

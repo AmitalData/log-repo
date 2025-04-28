@@ -542,7 +542,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                 }
 
-                if (arguments.PaymentMethodCode == "CH" && arguments.ChequeReplicas?.Count > 1)
+                if (arguments.PaymentMethodCode == "CH" && arguments.ChequeReplicas?.Count > 0)
                 {
                     errors = ValidateDuplicateChequeNumber(arguments.ChequeReplicas, arguments.Tenant, errors, useLocal);
                 }
@@ -600,14 +600,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
         private static string ValidateDuplicateChequeNumber(List<ARPaymentChequeReplicaPM> aRPaymentChequeReplicas, int tenant, string errors, bool useLocal)
         {
-            foreach (ARPaymentChequeReplicaPM aRPaymentCheque in aRPaymentChequeReplicas)
+            if(aRPaymentChequeReplicas.Count > 1)
             {
-                bool isDuplicateChequeNumber = aRPaymentChequeReplicas.FindAll(c => c.ChequeNumber == aRPaymentCheque.ChequeNumber).Count > 1;
-                if (isDuplicateChequeNumber)
+                foreach (ARPaymentChequeReplicaPM aRPaymentCheque in aRPaymentChequeReplicas)
                 {
-                    errors += TranslateTextsClass.Translate("Accounting.M.MoreThanChequeWithTheSameChequeNumber", tenant, useLocal);
-                    break;
+                    bool isDuplicateChequeNumber = aRPaymentChequeReplicas.FindAll(c => c.ChequeNumber == aRPaymentCheque.ChequeNumber).Count > 1;
+                    if (isDuplicateChequeNumber)
+                    {
+                        errors += TranslateTextsClass.Translate("Accounting.M.MoreThanChequeWithTheSameChequeNumber", tenant, useLocal);
+                        break;
+                    }
                 }
+            }
+            
+            foreach (var item in aRPaymentChequeReplicas)
+            {
+                ARPaymentChequeRepository arPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
+               errors+= arPaymentChequeRepository.CheckARPaymentChequeAlreadyExists(item.ChequeNumber,item.BankId,item.BankAccount,item.BankBranch,tenant);
             }
 
             return errors;

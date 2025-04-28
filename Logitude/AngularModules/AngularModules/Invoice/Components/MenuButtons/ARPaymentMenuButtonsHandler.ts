@@ -494,6 +494,9 @@ export class ARPaymentMenuButtonsHandler {
                 _edit.ValidationErrorsList = [TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines')];
                 return;
             }else{
+                if(_edit.ValidationErrorsList !== null && _edit.ValidationErrorsList.length > 0){ 
+                   return;
+                }
                 _edit.ValidationErrorsList = [];
             }
 
@@ -571,20 +574,7 @@ export class ARPaymentMenuButtonsHandler {
 
     }
     CreateARPaymentCheque() {
-        //var arPaymentcheque: ARPaymentChequePM = new ARPaymentChequePM();
-        //arPaymentcheque.PaymentId = this.EntityPM.Id;
-        //arPaymentcheque.ChequeNumber = this.EntityPM.ChequeOrPaymentRef;
-        //arPaymentcheque.ValueDate = this.EntityPM.ValueDate;
-        //arPaymentcheque.BankBranch = this.EntityPM.BankBranch;
-        //arPaymentcheque.BankAccount = this.EntityPM.Account;
-        //arPaymentcheque.CurrencyId = this.EntityPM.PaymentCurrencyId;
-        //arPaymentcheque.LocalAmount = this.EntityPM.AmountInLocalCurrency;
-        //arPaymentcheque.ForeignAmount = this.EntityPM.AmountInPaymentCurrency;
-
-        //var cashBookLine: CashBookLinePM = new CashBookLinePM(null);
-        //cashBookLine.CashBookId = "";
-        //cashBookLine.ARPChequeId = arPaymentcheque.Id;
-        //cashBookLine.IsDeposited = false;
+        
 
         //// Create Journal
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();

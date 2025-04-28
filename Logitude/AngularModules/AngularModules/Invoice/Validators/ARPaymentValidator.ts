@@ -4,9 +4,12 @@ import {Validator} from '../../Infrastructure/Validators/Validator';
 import {ARPaymentPM} from '../EntityPMs/ARPaymentPM';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { forEach } from 'cypress/types/lodash';
+import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 export class ARPaymentValidator {
-  public Validate(entityPm: ARPaymentPM) {
+   Validate(entityPm: ARPaymentPM) {
 
     var validationResults = [];
 
@@ -50,8 +53,9 @@ export class ARPaymentValidator {
     }
 
     if (entityPm.AccountingPaymentMethodCode == "CH") {
-        if(entityPm.IsFullAccounting)
-            this.ValidatePaymentChequeFields(entityPm, validationResults, msg);
+        if(entityPm.IsFullAccounting){
+          this.ValidatePaymentChequeFields(entityPm, validationResults, msg);
+        }
     }
 
     if (entityPm.AccountingPaymentMethodCode == "BT") {
@@ -141,7 +145,7 @@ export class ARPaymentValidator {
 
     return validationResults;
   }
-    private ValidatePaymentChequeFields(entityPm: ARPaymentPM, validationResults: any[], msg: string) {
+    async ValidatePaymentChequeFields(entityPm: ARPaymentPM, validationResults: any[], msg: string) {
         if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
             validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.S.Details.ChequeRef")));
         }
@@ -154,8 +158,30 @@ export class ARPaymentValidator {
         if (AppTool.IsNullOrEmpty(entityPm.BankBranch)) {
             validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BankBranch")));
         }
+       
     }
+    arPaymentChequeOperationsService:ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService();
 
+    
+    async ValidateDuplicateCheque(bank:string,bankBranch:string,bankAccount:string,chequeOrPaymentRef:string): Promise<string> {
+      return new Promise<string>((resolve) => {
+        if(!AppTool.IsNullOrEmpty(bank) && !AppTool.IsNullOrEmpty(bankBranch) && !AppTool.IsNullOrEmpty(bankAccount) && !AppTool.IsNullOrEmpty(chequeOrPaymentRef)) {
+          this.arPaymentChequeOperationsService.CheckARPaymentChequeAlreadyExists(bank, bankBranch, bankAccount, chequeOrPaymentRef).subscribe((result: any) => {
+            if (result && !result.HasError) {
+                                  
+                  resolve(result);
+                    
+              } else {
+                  resolve("");
+              }
+          });
+        }
+        else {
+          resolve("");
+        }
+      });
+    
+    }
     private ValidateBankTransferFields(entityPm: ARPaymentPM, validationResults: any[], msg: string) {
       if (AppTool.IsNullOrEmpty(entityPm.AmountInPaymentCurrency)) {
         validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.AmountInPaymentCurrency")));
@@ -166,7 +192,7 @@ export class ARPaymentValidator {
       if (AppTool.IsNullOrEmpty(entityPm.BankAccountId)) {
           validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BankAccountId")));
       }
-  }
+}
 
     public static ValidateCurrenctEntity(entityPm: ARPaymentPM) {
         var errors = [];

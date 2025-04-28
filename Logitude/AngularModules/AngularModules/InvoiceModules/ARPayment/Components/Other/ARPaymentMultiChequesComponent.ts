@@ -18,6 +18,7 @@ import { ARPaymentPMService } from 'Invoice/Services/StandardPMs/ARPaymentPMServ
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { JournalValidator } from 'Accounting/Validators/JournalValidator';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { ARPaymentValidator } from 'Invoice/Validators/ARPaymentValidator';
 
 declare var window: any;
 
@@ -116,9 +117,9 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             this.ItemsSource.Insert(new PaymentChequeLine(cheque, this));
         }
     }
-    AddNewCheque() {
+    async AddNewCheque() {
         if (!this.IsDisplayOnly) {
-            if (this.CheckRequiredFileds()) {
+            if (await this.CheckRequiredFileds()) {
                 var latestLineNumber: number = 0;
                 latestLineNumber = this.GetLatestChequeLineNumber()
                 latestLineNumber += 1;
@@ -188,22 +189,32 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             targetEntity[property] = srcEntity[property];
         }
     }
-    CheckRequiredFileds() {
+    async CheckRequiredFileds() {
         this.ValidationErrorsList = [];
         for (let cheque of this.paymentPM.ARPaymentChequeReplicas) {
-            this.ValidateChequeFields(cheque);
+            await this.ValidateChequeFields(cheque);
         }
         if (this.ValidationErrorsList.length == 0) {
             return true;
         }
 
     }
+    ARPaymentValidator :ARPaymentValidator= new ARPaymentValidator();
+
+    async ValidateDuplicateCheques(bank: string, bankBranch: string, bankAccount: string, chequeOrPaymentRef: string) {
+        
+        const validationResult: string | null = await this.ARPaymentValidator.ValidateDuplicateCheque(bank, bankBranch, bankAccount, chequeOrPaymentRef);
+        if (!AppTool.IsNullOrEmpty(validationResult)) {
+            this.ValidationErrorsList.push(validationResult);
+        } 
+       
+    }
     OkButtonClicked() {
         if (this.CheckRequiredFileds()) {
             this.CurrentSession.CloseCurrentWindowEmit('ok');
         }
     }
-    private ValidateChequeFields(cheque: ARPaymentChequeReplicaPM) {
+    async ValidateChequeFields(cheque: ARPaymentChequeReplicaPM) {
         if (AppTool.IsNullOrEmpty(cheque.ChequeNumber)) {
             this.ValidationErrorsList.push(this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.S.Details.ChequeRef")));
         }
@@ -224,7 +235,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         }
 
         this.ValidateDuplicateChequeNumbers(cheque.ChequeNumber);
-
+        await this.ValidateDuplicateCheques(cheque.BankId, cheque.BankBranch, cheque.BankAccount, cheque.ChequeNumber);
     }
 
     ValidateDuplicateChequeNumbers(chequeNumber: string) {
@@ -403,6 +414,9 @@ export class PaymentChequeLine extends BaseComponent {
     set ChequeNumber(value: string) {
         if (this.entityPM.ChequeNumber != value) {
             this.entityPM.ChequeNumber = value;
+            this.parent.ValidationErrorsList = []
+
+            this.parent.ValidateDuplicateCheques(this.entityPM.BankId, this.entityPM.BankBranch, this.entityPM.BankAccount, value);
 
         }
     }
@@ -411,6 +425,9 @@ export class PaymentChequeLine extends BaseComponent {
     set BankAccount(value: string) {
         if (this.entityPM.BankAccount != value) {
             this.entityPM.BankAccount = value;
+            this.parent.ValidationErrorsList = []
+
+            this.parent.ValidateDuplicateCheques(this.entityPM.BankId, this.entityPM.BankBranch, this.entityPM.BankAccount, value);
 
         }
     }
@@ -419,6 +436,9 @@ export class PaymentChequeLine extends BaseComponent {
     set BankBranch(value: string) {
         if (this.entityPM.BankBranch != value) {
             this.entityPM.BankBranch = value;
+            this.parent.ValidationErrorsList = []
+
+            this.parent.ValidateDuplicateCheques(this.entityPM.BankId, this.entityPM.BankBranch, this.entityPM.BankAccount, value);
 
         }
     }
@@ -427,6 +447,8 @@ export class PaymentChequeLine extends BaseComponent {
     set BankNumber(value: string) {
         if (this.entityPM.BankNumber != value) {
             this.entityPM.BankNumber = value;
+            this.parent.ValidationErrorsList = []
+            this.parent.ValidateDuplicateCheques(this.entityPM.BankId, this.entityPM.BankBranch, this.entityPM.BankAccount, value);
 
         }
     }
