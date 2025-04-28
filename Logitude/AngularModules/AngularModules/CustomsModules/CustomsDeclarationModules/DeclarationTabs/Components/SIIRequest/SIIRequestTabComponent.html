@@ -2,21 +2,13 @@
     <tr>
         <td>
             <div class="TableHolder">
-                <table *ngIf="IsVisible">
-                    <tr style="height:20px">
-                        <td class="TabTitleRow" id="SIIRequestHeader" style="width:150px;">
+                <table class="inner-table">
+                    <tr class="header-row">
+                        <td class="TabTitleRow SIIRequestHeader" style="width:150px;">
                             {{'Customs.Declaration.TH.SIIRequest'| TextCodeTranslationPipe}}
                         </td>
-                        <td style="position: absolute; padding-right: 30%;">
-                            <div style="width:100%;text-align:center" *ngIf="IsDisplayOnly">
-                                <div class="DisbleBox">
-                                    {{DisplayOnlyMessage}}
-                                    <span style="padding: 0px 16px;">-</span>
-                                    <span class="hyperlink" (click)="RefreshEntity()"
-                                        style="font-size:12px;">רענן</span>
-                                </div>
-                            </div>
-                            <div *ngIf="!IsDisplayOnly" style="width: 100%;text-align:center">
+                        <td class="centered-content">
+                            <div *ngIf="!IsDisplayOnly" class="centered-div">
                                 <div *ngIf="IsDisplayMessage" class="DisbleBox">
                                     {{DisplayOnlyMessage}}
                                 </div>
@@ -24,9 +16,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="height: 21px;padding: 0px;padding-bottom: 0px;width: 100px;">
+                        <td class="new-request-cell">
                             <div>
-                                <button [disabled]="!IsAllowChange" class="Button" id="buttonNewSIIRequest"
+                                <button [disabled]="!IsAllowChange" class="Button new-request-button"
                                     (click)="onOpenNewRequest()">
                                     <!-- TODO: Replace to code after update action-->
                                     <!-- {{'Customs.SIIRequest.O.NewRequest'| TextCodeTranslationPipe}} -->
@@ -36,15 +28,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5" style="height: 40%;">
-                            <div class="CellContent" style="bottom: 5px;padding:5px">
+                        <td colspan="5" class="grid-container">
+                            <div class="CellContent">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
-                                    (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                                    (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
                                     <log-column [header]="'#'" [binding]="'ListCounter'" [width]="'35'"
-                                        [Alignment]="'right'">
+                                                [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="text-align:right">
+                                                <div class="text-right">
                                                     {{ item.ListCounter }}
                                                 </div>
                                             </log-cell-template>
@@ -52,7 +44,7 @@
                                     </log-column>
 
                                     <log-column [header]="'Customs.SIIRequest.F.RequestNo' | TextCodeTranslationPipe"
-                                        [binding]="'RequestNo'" [width]="'120'" [Alignment]="'right'">
+                                                [binding]="'RequestNo'" [width]="'120'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 {{ item.RequestNo }}
@@ -62,7 +54,7 @@
                                     <!-- TODO: Replace to code after update action-->
                                     <!-- [header]="'Customs.SIIRequest.F.Remarks' | TextCodeTranslationPipe" -->
                                     <log-column [header]="'הערות'" [binding]="'Remarks'" [width]="'200'"
-                                        [Alignment]="'right'">
+                                                [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 {{ item.Remarks }}
@@ -71,33 +63,32 @@
                                     </log-column>
 
                                     <log-column [header]="'Customs.SIIRequest.F.Status' | TextCodeTranslationPipe"
-                                        [binding]="'Status'" [width]="'80'" [Alignment]="'right'">
+                                                [binding]="'Status'" [width]="'80'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 {{ item.Status }}
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
-                                    
+
                                     <log-column [width]="'35'" [Editable]="true" [Alignment]="'right'"
-                                        [visibility]="'visibile'">
+                                                [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <span class="CellSeparator" style="float: right;"></span>
-                                                <div
-                                                    style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
+                                                <span class="CellSeparator float-right"></span>
+                                                <div class="edit-button-container">
                                                     <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                                        (click)="onEditRequest(item)"></IconButton>
+                                                                (click)="onEditRequest(item)"></IconButton>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
                                 </logitude-edit-grid>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </td>
-    </tr>
-</table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>

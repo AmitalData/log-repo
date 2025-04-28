@@ -14,15 +14,70 @@
     font-family: sans-serif;
 }
 
-#SIIRequestHeader {
+#SIIRequestHeader,
+.SIIRequestHeader {
     height: 0px !important;
 }
 
-#buttonNewSIIRequest {
+#buttonNewSIIRequest,
+.new-request-button {
     height: 21px;
     width: 95px !important;
-    height: 21px !important;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.header-row {
+    height: 20px;
+}
+
+.centered-content {
+    position: absolute;
+    padding-right: 30%;
+}
+
+.centered-div {
+    width: 100%;
+    text-align: center;
+}
+
+.separator {
+    padding: 0px 16px;
+}
+
+.new-request-cell {
+    height: 21px;
+    padding: 0px;
+    padding-bottom: 0px;
+    width: 100px;
+}
+
+.grid-container {
+    height: 40%;
+}
+
+.CellContent {
+    bottom: 5px;
+    padding: 5px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.float-right {
+    float: right;
+}
+
+.edit-button-container {
+    width: 22px;
+    float: right;
+    height: 20px;
+    padding-top: 2px;
+    display: block;
+}
+
+.inner-table {
+    width: 100%;
 }
