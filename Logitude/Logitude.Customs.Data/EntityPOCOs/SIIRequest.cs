@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string WareHouseCity { get; set; }
         [Column("IsClosed")]
 	    public bool IsClosed { get; set; }
+        [Column("Remarks")]
+	    public string Remarks { get; set; }
     }
 }
 	 

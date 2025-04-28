@@ -66,6 +66,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Remarks"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Status"
     ReferencedTable="SIIRequestStatuses"

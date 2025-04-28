@@ -109,7 +109,17 @@ export class SIIRequestPM {
         }
     }
     //public SupplierInvoiceItemsReqLists: Array<SupplierInvoiceItemsReqListPM>= [];
- 
+     private remarks: string;
+    public get Remarks() { return this.remarks; }
+    public set Remarks(newValue: string) { if (this.remarks != newValue) { this.remarks = newValue; this.MarkAsDirty("Remarks"); } }
+       
+	 
+    private listCounter: number;
+    public get ListCounter() { return this.listCounter; }
+    public set ListCounter(newValue: number) { if (this.listCounter != newValue) { this.listCounter = newValue; this.MarkAsDirty("ListCounter"); } }
+       
+	 
+
     public OldEntityPM: SIIRequestPM;
 		
     public IsDirty: boolean;
