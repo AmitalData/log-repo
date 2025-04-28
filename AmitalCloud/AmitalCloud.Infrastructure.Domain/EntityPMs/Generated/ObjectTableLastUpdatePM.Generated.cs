@@ -33,7 +33,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_lastUpdateDate = entity.LastUpdateDate;
 		_updatedByUserId = entity.UpdatedByUserId;
 		_objectTableId = entity.ObjectTableId;
-        _objectTableName = null;
    }
    #endregion Constructors
    #region Properties

@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using AmitalCloud.Infrastructure.Data.Security;
+using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using AmitalCloud.Infrastructure.Data.Queries;
 

@@ -54,7 +54,8 @@ namespace AmitalCloud.Infrastructure.Data.Context
             }
             else 
 			{
-				return new AmitalCloudContext(dbConnectionInfo, tenant); ;
+                dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo);
+                return new AmitalCloudContext(dbConnectionInfo, tenant); ;
 			}
         }
 		protected override AmitalCloudDBSchema AmitalCloudDBSchema
@@ -66,6 +67,58 @@ namespace AmitalCloud.Infrastructure.Data.Context
             Database.SetInitializer<AmitalCloudContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 																																																																																																																																																																																																																																																																																																																																																																						            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<APInvoiceLine>().HasKey(x => new { x.APInvoiceId, x.LineNumber });
+            modelBuilder.Entity<AutomationHistory>().HasKey(t => new { t.Version, t.AutomationsId });
+            modelBuilder.Entity<AutomationLastUpdate>().HasKey(t => new { t.Tenant, t.ObjectTableId });
+            modelBuilder.Entity<CommunicationLogStep>().HasKey(t => new { t.StepNumber, t.CommunicationLogId });
+
+            modelBuilder.Entity<ComputingPartnerTable>().HasKey(t => new { t.Tenant, t.ObjectTableId, t.ComputingPartnerId });
+
+            modelBuilder.Entity<CustomerAccountManagerByProduct>().HasKey(t => new { t.ProductTypeCode, t.CustomerId });
+
+            modelBuilder.Entity<CustomerAdditionalService>().HasKey(t => new { t.CustomerId, t.AdditionalServiceId });
+
+
+            modelBuilder.Entity<CustomerCompetitor>().HasKey(t => new { t.CustomerId, t.CompetitorId });
+            modelBuilder.Entity<CustomerCompetitorProduct>().HasKey(t => new { t.ProductTypeCode, t.CustomerId, t.CompetitorId });
+            modelBuilder.Entity<CustomerProductActualData>().HasKey(t => new { t.CustomerId, t.ProductTypeCode, t.Month, t.Year });
+            modelBuilder.Entity<CustomerProductLocationActualData>().HasKey(t => new { t.CustomerId, t.ProductTypeCode, t.Month, t.Year, t.CountryId });
+            modelBuilder.Entity<CustomerProductLocation>().HasKey(t => new { t.CustomerId, t.ProductTypeCode, t.CountryId });
+            modelBuilder.Entity<CustomerProduct>().HasKey(t => new { t.CustomerId, t.ProductTypeCode });
+            modelBuilder.Entity<CustomerTenantAccessCard>().HasKey(t => new { t.CustomerId, t.CustomerTenantAccessId });
+            modelBuilder.Entity<CustomerTenantAccessCardsBatch>().HasKey(t => new { t.CustomerId, t.CustomerTenantAccessId, t.BatchNumber });
+            modelBuilder.Entity<DefaultAndConfigurationKey>().HasKey(t => new { t.Tenant, t.SetKey });
+            modelBuilder.Entity<GeneralLock>().HasKey(t => new { t.Tenant, t.GeneralKey });
+            modelBuilder.Entity<HybridPartnersPermission>().HasKey(t => new { t.HybridPartnerId, t.AllowedByHybridPartnerId });
+            modelBuilder.Entity<HybridTenantThreshold>().HasKey(t => new { t.Tenant, t.TypeCode });
+            modelBuilder.Entity<SharedLogisticsContactLastLogin>().HasKey(t => new { t.ContactId, t.CardId, t.PartnerTypeId, t.Via });
+            modelBuilder.Entity<VATTypesGroup>().HasKey(t => new { t.GroupVATTypeId, t.SingleVATTypeId });
+
+			modelBuilder.Entity<ShipmentPackageItem>().HasKey(t => new { t.PackageId, t.LineNumber });
+
+
+            // Relationships
+            modelBuilder.Entity<ObjectTable>().HasOptional(t => t.MainTip).WithMany().HasForeignKey(d => d.MainTipCode);
+            modelBuilder.Entity<ObjectTable>().HasOptional(t => t.HeaderScreen).WithMany().HasForeignKey(d => d.HeaderScreenId);
+
+            modelBuilder.Entity<Card>().HasRequired(t => t.SharedLogisticsInvitationStatus).WithMany().HasForeignKey(d => d.SharedLogisticsInvitationStatusCode);
+
+
+            //modelBuilder.Entity<ARInvoice>().HasOptional(t => t.CreditedByARInvoice).WithMany(t => t.CreditedARInvoices).HasForeignKey(d => d.CreditedByARInvoiceId);
+            modelBuilder.Entity<ARInvoice>().HasOptional(t => t.CreditedByARInvoice).WithMany().HasForeignKey(d => d.CreditedByARInvoiceId);
+
+            modelBuilder.Entity<DeploymentPackage>().HasRequired(t => t.DeploymentPackagesVersion).WithMany().HasForeignKey(d => d.VersionId);
+
+
+            /*modelBuilder.Entity<>().HasKey(t => new { });
+            modelBuilder.Entity<>().HasKey(t => new { });
+            modelBuilder.Entity<>().HasKey(t => new { });
+            modelBuilder.Entity<>().HasKey(t => new { });
+            modelBuilder.Entity<>().HasKey(t => new { });
+            modelBuilder.Entity<>().HasKey(t => new { });
+            modelBuilder.Entity<>().HasKey(t => new { });
+            modelBuilder.Entity<>().HasKey(t => new { });*/
         }
 
         public void SetAsModified(object entity)

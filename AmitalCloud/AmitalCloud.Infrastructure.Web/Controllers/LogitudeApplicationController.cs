@@ -1,6 +1,5 @@
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
-using AmitalCloud.Infrastructure.Data;
-using AmitalCloud.Infrastructure.Data.Security;
+using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
 using System.Linq;
@@ -8,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {

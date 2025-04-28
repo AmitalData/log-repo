@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {

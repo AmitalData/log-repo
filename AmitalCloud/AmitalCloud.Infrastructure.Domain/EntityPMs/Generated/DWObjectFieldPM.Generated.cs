@@ -42,33 +42,21 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_isPrimaryKey = entity.IsPrimaryKey;
 		_isMeasurement = entity.IsMeasurement;
 		_aggregationTypeCode = entity.AggregationTypeCode;
-        _displayName = null;
 		_displayInQueryBuilder = entity.DisplayInQueryBuilder;
 		_category1 = entity.Category1;
 		_category2 = entity.Category2;
-        _isRequiered = default;
 		_hideTree = entity.HideTree;
-        _dimensionTableDisplayName = null;
 		_helpText = entity.HelpText;
 		_cannotFilter = entity.CannotFilter;
-        _customPickListCode = null;
 		_lOVAdditionalColumns = entity.LOVAdditionalColumns;
 		_isCustom = entity.IsCustom;
 		_originalObjectFieldCode = entity.OriginalObjectFieldCode;
-        _fullNameTextCodeCode = null;
 		_viewFieldDisplayName = entity.ViewFieldDisplayName;
 		_dontDisplayInView = entity.DontDisplayInView;
 		_dimensionDataViewName = entity.DimensionDataViewName;
 		_isMultipleSelection = entity.IsMultipleSelection;
 		_recordType = entity.RecordType;
-        _factTableCode = null;
 		_useUnitSelection = entity.UseUnitSelection;
-        _partnerOriginalObjectFieldCode = null;
-        _partnerFullNameTextCodeCode = null;
-        _category = null;
-        _categoryIndex = default;
-        _typeCode = null;
-        _parentFactCode = null;
    }
    #endregion Constructors
    #region Properties

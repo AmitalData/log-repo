@@ -35,7 +35,7 @@ namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
             Repository = new Repository<POCO.EntityChange>(tenant);
 		}
         public EntityChangeUpdateService(IContext context) :  this(context, null, 0) {}
-		protected override IEntityKeyFields<POCO.EntityChange,string> GetKeys(EntityChangePM entityPM) => new EntityChangeKeys<string>() { Id = entityPM.Id, FollowUpAutomationFailedXml = entityPM.FollowUpAutomationFailedXml, SetSLAAutomationFailedXml = entityPM.SetSLAAutomationFailedXml };
+		protected override IEntityKeyFields<POCO.EntityChange,string> GetKeys(EntityChangePM entityPM) => new EntityChangeKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(EntityChangePM entityPM)
 		{
 		}

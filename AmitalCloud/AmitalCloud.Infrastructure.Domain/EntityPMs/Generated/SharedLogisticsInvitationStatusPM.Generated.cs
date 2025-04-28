@@ -34,18 +34,18 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
    }
    #endregion Constructors
    #region Properties
-   	  private string _code ;
+   	  private int _code ;
 	         [Key]
 	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Code  
+       public int Code  
 	   {
 	     get { return _code; }
 		 set
 		 {
 		   if(_code != value)
 		   {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=_code,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=_code,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   _code=value;
 		   }

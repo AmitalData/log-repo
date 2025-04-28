@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Net;
 using System.Web.Http;
 using AmitalCloud.Infrastructure.Web.Helpers;
-using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Queries;
+using AmitalCloud.Infrastructure.Application.Helpers;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {

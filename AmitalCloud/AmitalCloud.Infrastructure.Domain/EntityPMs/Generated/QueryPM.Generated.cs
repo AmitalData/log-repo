@@ -41,7 +41,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_displayCount = entity.DisplayCount;
 		_isAddNewEntityEnabled = entity.IsAddNewEntityEnabled;
 		_queryGroupCode = entity.QueryGroupCode;
-		_querygroup = entity.QueryGroup !=null ? new QueryGroupPM(entity.QueryGroup) : null;
+		//_querygroup = entity.QueryGroup !=null ? new QueryGroupPM(entity.QueryGroup) : null;
 			_nameTextCodeId = entity.NameTextCodeId;
 		_nametextcode = entity.NameTextCode !=null ? new TextCodePM(entity.NameTextCode) : null;
 			_defaultSortDirection = entity.DefaultSortDirection;
