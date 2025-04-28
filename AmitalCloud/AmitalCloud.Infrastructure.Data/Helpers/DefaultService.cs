@@ -37,7 +37,6 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             if (CacheManager.CacheWrapper == null)
             {
-                Dictionary<int, string> globalDBs = new Dictionary<int, string>();
                 CacheManager.CacheWrapper = new CacheWrapper(HttpRuntime.Cache);
             }
             return CacheManager.GetOrInsertNewObject(
