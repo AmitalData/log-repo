@@ -2,7 +2,7 @@
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +38,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             if (CacheManager.CacheWrapper == null)
             {
                 Dictionary<int, string> globalDBs = new Dictionary<int, string>();
-                CacheManager.CacheWrapper = new CacheWrapper(HttpRuntime.Cache,globalDBs);
+                CacheManager.CacheWrapper = new CacheWrapper(HttpRuntime.Cache);
             }
             return CacheManager.GetOrInsertNewObject(
                 cacheKey,
