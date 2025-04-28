@@ -53,7 +53,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
     public QueryColumns: QueryColumnPM[] = [];
     IsTesterButtonVisibile: boolean = false;
-    IsFixDupButtonVisibile: boolean = false;
+    IsFixDupButtonVisible: boolean = false;
     ReportLines: ObservableCollection;
     OriginalReportLines: ObservableCollection;
     isReady: boolean = false;
@@ -258,7 +258,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     ListFilters: ApiQueryFilters = new ApiQueryFilters();
     FilterLines() {
 
-        this.IsFixDupButtonVisibile = this.SelectedStatusItems.length === 1 && this.SelectedStatusItems.includes("5"); // "Duplicate: There is another transaction with the same VAT No. and Reference"
  
 
         var filters = new ApiQueryFilters;
@@ -395,6 +394,18 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         });
     }
 
+    GetDuplicateInputs() {
+        // Duplicate: There is another Inputs transaction with the same VAT No. and Reference
+
+        const duplicateStatus = "5";
+        if (this.SelectedStatusItems.length === 1 && this.SelectedStatusItems.includes(duplicateStatus)) {
+            this._TaxReportExtendedPMService.getDuplicateInputs(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+                var __duplicateInputsCount = myResult.Result;
+                this.IsFixDupButtonVisible = __duplicateInputsCount >= 1;
+            });
+        }
+    }
+
     GetTransmitStatuses() {
         this.taxReportLineTransmitStatusListService.getAll().subscribe((response: any) => {
             this.TransmitStatuses = response.Result;
@@ -506,7 +517,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
 
 
-        //ameerah
+        
         this.columns.push({
             FieldName: 'SubTotalInLocalCurrency',
             DataTypeCode: 'Number',
@@ -517,7 +528,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        // this
+        
+    
         this.columns.push({
             FieldName: 'TotalInvoiceAmount',
             DataTypeCode: 'Number',
@@ -681,6 +693,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         });
 
         this.GetLinesWithErrorsCount();
+        this.GetDuplicateInputs();
 
     }
 
@@ -714,15 +727,11 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
 
     OnFixDupButtonClicked() {
-debugger;
+
         this.CurrentSession.StartBusyIndicatorCreating();
 
-        //remove duplicates
         this.EntityPM.RemoveDuplicates = true;
-
-        //update report
         this.EntityPM.NeedsRebulid = true;
-
 
         this._TaxReportPMService.update(this.EntityPM)
             .subscribe((response: ServiceResponse) => {
