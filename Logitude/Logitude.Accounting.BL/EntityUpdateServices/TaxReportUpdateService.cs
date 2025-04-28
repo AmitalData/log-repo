@@ -235,7 +235,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         row.StatusCode = TaxReportLineStatusValues.Readyfortransmit; // Just to clear the error
                     }
                 }
-                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
+                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference && row.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                 {
                     if (taxReportPM.RemoveDuplicates && _InputsTaxReportLineTypes.Contains(row.LineTypeCode))
                     {
