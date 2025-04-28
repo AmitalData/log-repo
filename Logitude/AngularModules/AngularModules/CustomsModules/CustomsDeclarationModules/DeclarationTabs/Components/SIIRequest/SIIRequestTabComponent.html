@@ -1,76 +1,103 @@
-<div class="sii-request-tab" *ngIf="EntityPM != null && EntityPM.Direction === 'E'">
-    <div class="header">
-        <div class="TabTitleRow">בקשות מכון תקנים</div>
-        <button [disabled]="!IsAllowChange" class="Button" id="buttonNewSIIRequest" (click)="onOpenNewRequest()">
-            פתיחת בקשה
-        </button>
-    </div>
+<table *ngIf="EntityPM != null && IsLoaded">
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table *ngIf="IsVisible">
+                    <tr style="height:20px">
+                        <td class="TabTitleRow" id="SIIRequestHeader" style="width:150px;">
+                            {{'Customs.Declaration.TH.SIIRequest'| TextCodeTranslationPipe}}
+                        </td>
+                        <td style="position: absolute; padding-right: 30%;">
+                            <div style="width:100%;text-align:center" *ngIf="IsDisplayOnly">
+                                <div class="DisbleBox">
+                                    {{DisplayOnlyMessage}}
+                                    <span style="padding: 0px 16px;">-</span>
+                                    <span class="hyperlink" (click)="RefreshEntity()"
+                                        style="font-size:12px;">רענן</span>
+                                </div>
+                            </div>
+                            <div *ngIf="!IsDisplayOnly" style="width: 100%;text-align:center">
+                                <div *ngIf="IsDisplayMessage" class="DisbleBox">
+                                    {{DisplayOnlyMessage}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 21px;padding: 0px;padding-bottom: 0px;width: 100px;">
+                            <div>
+                                <button [disabled]="!IsAllowChange" class="Button" id="buttonNewSIIRequest"
+                                    (click)="onOpenNewRequest()">
+                                    <!-- TODO: Replace to code after update action-->
+                                    <!-- {{'Customs.SIIRequest.O.NewRequest'| TextCodeTranslationPipe}} -->
+                                    פתיחת בקשה
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="height: 40%;">
+                            <div class="CellContent" style="bottom: 5px;padding:5px">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
+                                    (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                    <log-column [header]="'#'" [binding]="'ListCounter'" [width]="'35'"
+                                        [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    {{ item.ListCounter }}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-    <div *ngIf="IsDisplayOnly" class="DisbleBox">
-        {{ DisplayOnlyMessage }}
-        <span style="padding: 0 16px;">-</span>
-        <span class="hyperlink" (click)="RefreshEntity()">רענן</span>
-    </div>
+                                    <log-column [header]="'Customs.SIIRequest.F.RequestNo' | TextCodeTranslationPipe"
+                                        [binding]="'RequestNo'" [width]="'120'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                {{ item.RequestNo }}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <!-- TODO: Replace to code after update action-->
+                                    <!-- [header]="'Customs.SIIRequest.F.Remarks' | TextCodeTranslationPipe" -->
+                                    <log-column [header]="'הערות'" [binding]="'Remarks'" [width]="'200'"
+                                        [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                {{ item.Remarks }}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
 
-    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" [SelectedRow]="SelectedRow"
-        (SelectedItemChanged)="onRowSelected($event)">
-
-        <log-column [header]="'#'" [binding]="'ListCounter'" [width]="'35'" [Alignment]="'right'">
-            <ng-template let-item>
-                <log-cell-template>
-                    <div style="text-align:right">
-                        {{ item.ListCounter }}
-                    </div>
-                </log-cell-template>
-            </ng-template>
-        </log-column>
-
-        <log-column [header]="'מס' בקשה'" [binding]="'RequestNo'" [width]="'120'" [Alignment]="'right'">
-            <ng-template let-item>
-                <log-cell-template>
-                    {{ item.RequestNo }}
-                </log-cell-template>
-            </ng-template>
-        </log-column>
-
-        <log-column [header]="'סטטוס'" [binding]="'Status'" [width]="'80'" [Alignment]="'right'">
-            <ng-template let-item>
-                <log-cell-template>
-                    {{ item.Status }}
-                </log-cell-template>
-            </ng-template>
-        </log-column>
-
-        <log-column [header]="'כתובת מחסן'" [binding]="'WareHouseAddress'" [width]="'150'" [Alignment]="'right'">
-            <ng-template let-item>
-                <log-cell-template>
-                    {{ item.WareHouseAddress }}
-                </log-cell-template>
-            </ng-template>
-        </log-column>
-
-        <log-column [header]="'ישוב'" [binding]="'WareHouseCity'" [width]="'100'" [Alignment]="'right'">
-            <ng-template let-item>
-                <log-cell-template>
-                    {{ item.WareHouseCity }}
-                </log-cell-template>
-            </ng-template>
-        </log-column>
-
-        <log-column [header]="'הערות'" [binding]="'Remarks'" [width]="'200'" [Alignment]="'right'">
-            <ng-template let-item>
-                <log-cell-template>
-                    {{ item.Remarks }}
-                </log-cell-template>
-            </ng-template>
-        </log-column>
-
-        <log-column [width]="'35'" [Alignment]="'right'">
-            <ng-template let-item>
-                <log-cell-template>
-                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="onEditRequest(item)"></IconButton>
-                </log-cell-template>
-            </ng-template>
-        </log-column>
-    </logitude-edit-grid>
-</div>
+                                    <log-column [header]="'Customs.SIIRequest.F.Status' | TextCodeTranslationPipe"
+                                        [binding]="'Status'" [width]="'80'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                {{ item.Status }}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    
+                                    <log-column [width]="'35'" [Editable]="true" [Alignment]="'right'"
+                                        [visibility]="'visibile'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <span class="CellSeparator" style="float: right;"></span>
+                                                <div
+                                                    style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true"
+                                                        (click)="onEditRequest(item)"></IconButton>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                </logitude-edit-grid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

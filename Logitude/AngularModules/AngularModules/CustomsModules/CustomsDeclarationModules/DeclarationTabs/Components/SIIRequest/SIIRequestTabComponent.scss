@@ -1,0 +1,28 @@
+.subTitle {
+    color: #1b90cb;
+    font-size: 16px;
+}
+
+.DisbleBox {
+    display: inline-block;
+    border: 1px solid #ffd800;
+    border-radius: 5px;
+    background: #faf5c0;
+    padding: 2px 10px;
+    margin: 5px;
+    color: gray;
+    font-family: sans-serif;
+}
+
+#SIIRequestHeader {
+    height: 0px !important;
+}
+
+#buttonNewSIIRequest {
+    height: 21px;
+    width: 95px !important;
+    height: 21px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
