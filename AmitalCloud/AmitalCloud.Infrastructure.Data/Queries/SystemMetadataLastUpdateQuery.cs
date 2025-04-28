@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Transactions;
 using System;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {

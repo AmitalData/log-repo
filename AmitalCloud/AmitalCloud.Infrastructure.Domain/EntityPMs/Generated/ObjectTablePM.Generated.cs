@@ -100,8 +100,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_supportSubEntity = entity.SupportSubEntity;
 		_applyGenericCustomFields = entity.ApplyGenericCustomFields;
 		_fullNameTextCodeId = entity.FullNameTextCodeId;
-		_fullnametextcode = entity.FullNameTextCode !=null ? new TextCodePM(entity.FullNameTextCode) : null;
-			_fullNameTextCodeCode = entity.FullNameTextCodeCode;
+		_fullNameTextCodeCode = entity.FullNameTextCodeCode;
 		_availableInDocumentTypes = entity.AvailableInDocumentTypes;
 		_dBTableShortName = entity.DBTableShortName;
    }
@@ -1228,14 +1227,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private TextCodePM _fullnametextcode;
-		[Include]
-        [DataMember]
-        public virtual TextCodePM FullNameTextCode 
-		{ 
-		get { return _fullnametextcode; } 
-		set { _fullnametextcode = value; }
-		}
 	  private string _fullNameTextCodeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

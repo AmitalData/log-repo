@@ -1,11 +1,9 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Data.Helpers;
- using AmitalCloud.Infrastructure.Data.Queries;
-using AmitalCloud.Infrastructure.Data.Security;
- using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Data.Queries;
 using AmitalCloud.Infrastructure.Model.EntityClasses ;
- using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
 using System.Collections.Generic;
@@ -62,6 +60,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         public List<Translation> GetTranslations(int translationTenant)
         {
             translationTenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            var url = AmitalCloudSecurityUtility.getLoggedDomain();
             List<Translation> AllTranslations = new TranslationQuery(translationTenant).GetTenantTranslations(url);
             return AllTranslations;
         }
@@ -166,8 +165,8 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             var menuTables = new MenusTableQueryService(tenant).GetMultiFromCache($"GetAllMenusTablesByTenant{tenant}", a => a.Tenant == tenant || a.Tenant == 0, "ObjectTable,Feature", a => new MenusTablePM(a)
             {
-                ObjectTableName = a.ObjectTable.Name,
-                FeatureCode = a.Feature.Code,
+                ObjectTableName = a.ObjectTable?.Name,
+                FeatureCode = a.Feature?.Code,
             });
             return menuTables;
         }

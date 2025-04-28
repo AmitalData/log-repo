@@ -27,10 +27,8 @@ public IDbSet<AccountingInformationIdentifier> AccountingInformationIdentifiers 
 	public IDbSet<AWBInformation> AWBInformations  {  get; set; }
 	public IDbSet<AWBOCI> AWBOCIs  {  get; set; }
 	public IDbSet<AWBSpecialHandlingCode> AWBSpecialHandlingCodes  {  get; set; }
-	public IDbSet<CommodityPackage> CommodityPackages  {  get; set; }
 	public IDbSet<Container> Containers  {  get; set; }
 	public IDbSet<ContainerDiscrepancy> ContainerDiscrepancies  {  get; set; }
-	public IDbSet<ContainerFollowUp> ContainerFollowUps  {  get; set; }
 	public IDbSet<ContainersExternalData> ContainersExternalDatas  {  get; set; }
 	public IDbSet<ContainerStatus> ContainerStatuses  {  get; set; }
 	public IDbSet<ContainerStatusSource> ContainerStatusSources  {  get; set; }

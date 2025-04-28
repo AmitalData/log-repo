@@ -1,8 +1,5 @@
 using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Model.EntityClasses ;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

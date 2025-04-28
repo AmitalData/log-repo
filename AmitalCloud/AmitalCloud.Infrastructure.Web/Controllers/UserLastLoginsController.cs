@@ -4,10 +4,10 @@ using System;
 using System.Net.Http;
 using System.Net;
 using System.Web.Http;
-using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Application.EntityQueryServices;
 using System.Linq;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Application.Helpers;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {

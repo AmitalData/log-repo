@@ -102,12 +102,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string EmailAutomationFailedXml  { get; set; }
        [DataMember]
        public int ExecutionTime  { get; set; }
-
-       [Key]
        [DataMember]
        public string FollowUpAutomationFailedXml  { get; set; }
-
-       [Key]
        [DataMember]
        public string SetSLAAutomationFailedXml  { get; set; }
        [DataMember]

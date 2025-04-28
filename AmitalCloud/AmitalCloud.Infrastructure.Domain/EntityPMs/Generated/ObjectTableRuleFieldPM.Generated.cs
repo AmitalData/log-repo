@@ -36,8 +36,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_objecttablerule = entity.ObjectTableRule !=null ? new ObjectTableRulePM(entity.ObjectTableRule) : null;
 			_expression = entity.Expression;
 		_ruleNotificationTypeCode = entity.RuleNotificationTypeCode;
-		_rulenotificationtype = entity.RuleNotificationType !=null ? new RuleNotificationTypePM(entity.RuleNotificationType) : null;
-			_objectFieldCode = entity.ObjectFieldCode;
+		_objectFieldCode = entity.ObjectFieldCode;
    }
    #endregion Constructors
    #region Properties
@@ -162,14 +161,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private RuleNotificationTypePM _rulenotificationtype;
-		[Include]
-        [DataMember]
-        public virtual RuleNotificationTypePM RuleNotificationType 
-		{ 
-		get { return _rulenotificationtype; } 
-		set { _rulenotificationtype = value; }
-		}
 	  private string _objectFieldCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

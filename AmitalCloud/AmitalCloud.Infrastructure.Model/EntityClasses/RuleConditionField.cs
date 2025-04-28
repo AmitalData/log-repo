@@ -28,8 +28,11 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
 	    public string ObjectTableRuleId { get; set; }
 	      
         public virtual ObjectTableRule ObjectTableRule { get; set; }
+        [ForeignKey("ObjectField")]
         [Column("ObjectFieldId")]
 	    public string ObjectFieldId { get; set; }
+	      
+        public virtual ObjectField ObjectField { get; set; }
         [Column("Value")]
 	    public string Value { get; set; }
         [Column("Operator")]

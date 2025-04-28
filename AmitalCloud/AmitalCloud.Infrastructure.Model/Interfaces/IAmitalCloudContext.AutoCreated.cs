@@ -109,7 +109,6 @@ namespace AmitalCloud.Infrastructure.Model.Interfaces
 		 IDbSet<SharedUserQuery> shareduserqueries { get; }
 		 IDbSet<SmallDocument> SmallDocuments { get; }
 		 IDbSet<SpecialService> SpecialServices { get; }
-		 IDbSet<SystemMetadataLastUpdate> SystemMetadataLastUpdates { get; }
 		 IDbSet<TenantSetting> TenantSettings { get; }
 		 IDbSet<TermsofUse> TermsofUses { get; }
 		 IDbSet<TextCodeType> TextCodeTypes { get; }

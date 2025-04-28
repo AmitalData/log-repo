@@ -16,12 +16,10 @@ namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
     public partial class EntityChangeListQueryService  : BaseEntityListQueryService<EntityChangeList,POCO.EntityChange,  EntityChangeKeys<string>,string>
     {
 		public EntityChangeListQueryService(int tenant) : base(tenant) { }
-        public EntityChangeList GetSingle(string id, string followupautomationfailedxml, string setslaautomationfailedxml)
+        public EntityChangeList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;
 				paramList.Append(new KeyValuePair<string, string>("id", id.ToString()));
-		 		paramList.Append(new KeyValuePair<string, string>("followupautomationfailedxml", followupautomationfailedxml.ToString()));
-		 		paramList.Append(new KeyValuePair<string, string>("setslaautomationfailedxml", setslaautomationfailedxml.ToString()));
 		 			return GetSingle(paramList) ; 
 		}
     }

@@ -683,11 +683,25 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             }
             return true;
         }
-        public static int AuthenticationOnTenant()
+        public static int AuthenticateTenant(int? entityTenant = null, string mode = null, string objectTableName = null)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new AutenticationException("missing token");
+            }
+
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             AuthenticationOnTenant(authToken.Tenant);
+
+            if (!string.IsNullOrEmpty(mode) && !string.IsNullOrEmpty(objectTableName))
+            {
+                CheckContactFeature(objectTableName, mode, authToken.Tenant);
+            }
+            if (entityTenant != null)
+            {
+                AuthenticationOnEntityTenant((int)entityTenant, authToken.Tenant);
+            }
             return authToken.Tenant;
         }
         public static void AuthenticationOnTenant(int tenant)
@@ -855,7 +869,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
             return exists;
         }
-        public static void AuthenticationOnEntityTenant(string objectTableName, int entityTenant, int authTokenTenant)
+        public static void AuthenticationOnEntityTenant(int entityTenant, int authTokenTenant)
         {
             if (entityTenant != authTokenTenant)
                 throw new Exception("Sorry! you have no permission to do this operation on Tenant:" + entityTenant + ". Please contact your administrator.");

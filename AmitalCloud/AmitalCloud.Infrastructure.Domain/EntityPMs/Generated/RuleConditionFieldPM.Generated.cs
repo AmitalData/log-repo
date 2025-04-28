@@ -31,12 +31,10 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_id = entity.Id;
 		_tenant = entity.Tenant;
 		_objectTableRuleId = entity.ObjectTableRuleId;
-		_objecttablerule = entity.ObjectTableRule !=null ? new ObjectTableRulePM(entity.ObjectTableRule) : null;
-			_objectFieldId = entity.ObjectFieldId;
+		_objectFieldId = entity.ObjectFieldId;
 		_value = entity.Value;
 		_operator = entity.Operator;
 		_objectFieldCode = entity.ObjectFieldCode;
-        _objectFieldName = null;
    }
    #endregion Constructors
    #region Properties
@@ -89,14 +87,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private ObjectTableRulePM _objecttablerule;
-		[Include]
-        [DataMember]
-        public virtual ObjectTableRulePM ObjectTableRule 
-		{ 
-		get { return _objecttablerule; } 
-		set { _objecttablerule = value; }
-		}
 	  private string _objectFieldId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

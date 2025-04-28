@@ -1,12 +1,11 @@
 ﻿using System.Linq;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Security;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using System;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
@@ -23,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             repository = new Repository<TermsofUse>(AmitalCloudContext.GetContext(tenant));
         }
 
-        public TermsofUseArgs CheckIfGoToTermUseComponent(string userId)
+        public TermsofUseArgs CheckIfGoToTermUseComponent(string userId, string url)
         {
             TermsofUse termofuse = null;
             TermsofUseArgs result = new TermsofUseArgs();
@@ -36,14 +35,14 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 termofuse = repository.GetMulti(a => a.PrivateLabelId == PrivateLabelId, orderBy: d => d.VersionNumber, Domain.Enums.OrderByDirection.Descending).FirstOrDefault();
                 if (termofuse == null)
                 {
-                    if (new Repository<TenantManagmentPrivateLabels>(globalContext).GetSingle(a => a.Id == PrivateLabelId, a => a.PrivateLabelUrl) == AmitalCloudSecurityUtility.getLoggedDomain())
+                    if (new Repository<TenantManagmentPrivateLabels>(globalContext).GetSingle(a => a.Id == PrivateLabelId, a => a.PrivateLabelUrl) == url)
                     {
                         throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
                     }
                 }
             }
 
-            bool isLogboxUrl = AmitalCloudSecurityUtility.getLoggedDomain().IndexOf("logbox") > -1;
+            bool isLogboxUrl = url.IndexOf("logbox") > -1;
 
             if (termofuse == null || isLogboxUrl)
             {
