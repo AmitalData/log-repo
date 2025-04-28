@@ -26,27 +26,20 @@ export class SIIRequestWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CertificateOfOrigin';
     }
 
-    getRequestsByDeclarationId(declarationId: string, tenant: number) {
+    GetRequestsByDeclarationIdIncludeChildrens(requestId: number, declarationId: string, tenant: number) {
         return defer(() => {
-
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
-
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-
-            return this._http.get(this._apiUrl + "/getRequestsByDeclarationId/?declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
+            return this._http.get(this._apiUrl + "/GetRequestsByDeclarationIdIncludeChildrens/?Id=" + requestId + "&declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 var mappedResult: SIIRequestPM = new SIIRequestPM();
                 serviceResponse.Result = mappedResult;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         }
-
         );
     }
-
-
 }

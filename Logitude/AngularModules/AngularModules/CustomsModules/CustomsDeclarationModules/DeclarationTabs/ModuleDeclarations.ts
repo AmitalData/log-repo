@@ -35,6 +35,7 @@ import { DeclarationPendingsGeneralComponent } from './Components/Classification
 import { ComprehensiveUpdateConsignment } from './Components/General/ConsigmentTabContent/ComprehensiveUpdateConsignment';
 import { DigitalCertificateOfOriginTabComponent } from './Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent';
 import { SIIRequestTabComponent } from './Components/SIIRequest/SIIRequestTabComponent';
+import { SIIRequestComponent } from './Components/SIIRequest/SIIRequestTabs/SIIRequestComponent';
 import { CertificateOfOriginComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent';
 import { CertificateOfOriginGeneralTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent';
 import { CertificateOfOriginMoreDetailsTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent';
@@ -79,6 +80,7 @@ export const Components =
         DeclarationExportStorageComponent,
         ComprehensiveUpdateConsignment,
         SIIRequestTabComponent,
+        SIIRequestComponent,
         DigitalCertificateOfOriginTabComponent,
         CertificateOfOriginComponent,
         CertificateOfOriginGeneralTabComponent,
@@ -132,6 +134,7 @@ export class ModuleDeclarations {
             case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
             case "DigitalCertificateOfOriginTabComponent": { myResult = DigitalCertificateOfOriginTabComponent; break; }
             case "SIIRequestTabComponent": { myResult = SIIRequestTabComponent; break; }
+            case "SIIRequestComponent": { myResult = SIIRequestComponent; break; }
             case "CertificateOfOriginComponent": { myResult = CertificateOfOriginComponent; break; }
             case "CertificateOfOriginGeneralTabComponent": { myResult = CertificateOfOriginGeneralTabComponent; break; }
             case "UpdateCertificateOfOriginGeneralFieldComponent": { myResult = UpdateCertificateOfOriginGeneralFieldComponent; break; }
