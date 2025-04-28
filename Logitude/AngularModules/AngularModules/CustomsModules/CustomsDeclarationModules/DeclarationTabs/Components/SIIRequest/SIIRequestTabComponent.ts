@@ -28,7 +28,6 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   public DisplayOnlyMessage: string = '';
   public IsDisplayMessage: string = '';
   public IsDisplayOnly: boolean = false;
-  public IsVisible: boolean = true;
   private CurrentSession = SessionLocator.SelectedSession;
   siiRequestWebService: SIIRequestWebService
   filterAgrs: ApiQueryFilters;
@@ -64,7 +63,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   }
 
   loadRequests(): void {
-      //TODO:change to real call to server getbyfilter - by declarationid + tenant
+    //TODO:change to real call to server getbyfilter - by declarationid + tenant
 
     // TODO: Delete after finish - create moke data for testing to itemsource from type SIIRequestPM[]:
     const mock1 = new SIIRequestPM();
@@ -189,7 +188,8 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         this.IsDisplayOnly = true;
       }
     } else if (this.IsDisplayOnly) {
-      this.DisplayOnlyMessage = 'לתצוגה בלבד';
+      this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
+      ;
     }
   }
 
