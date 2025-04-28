@@ -38,7 +38,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_privateLabelId = entity.PrivateLabelId;
 		_tenantmanagmentprivatelabels = entity.TenantManagmentPrivateLabels !=null ? new TenantManagmentPrivateLabelsPM(entity.TenantManagmentPrivateLabels) : null;
 			_lastUpdateDate = entity.LastUpdateDate;
-		globalContacts = entity.GlobalContacts != null ? entity.GlobalContacts.Select(a=>new GlobalContactPM(a)).ToList() : null;
+		//globalContacts = entity.GlobalContacts != null ? entity.GlobalContacts.Select(a=>new GlobalContactPM(a)).ToList() : null;
 		//tenantManagements = entity.TenantManagements != null ? entity.TenantManagements.Select(a=>new TenantManagementPM(a)).ToList() : null;
    }
    #endregion Constructors

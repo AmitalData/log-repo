@@ -13,9 +13,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class CacheWrapper : ICacheWrapper
     {
-		Dictionary<int, string> GlobalDBs;
 		Cache cache;
-        public CacheWrapper(Cache cache, Dictionary<int, string> globalDBs)
+        public CacheWrapper(Cache cache)
 		{
             this.cache = cache;
             List<GlobalTenant> globalTenants = new Repository<GlobalTenant>(GlobalContext.GetContext()).GetAll(0);
