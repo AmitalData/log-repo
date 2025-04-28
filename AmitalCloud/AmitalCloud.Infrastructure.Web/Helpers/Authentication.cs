@@ -30,17 +30,21 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 {
     public class Authentication
     {
+        readonly private int tenant;
+        readonly private IGlobalContext globalContext;
+        private IAmitalCloudContext amitalCloudContext;
         readonly private GlobalContactQueryService globalContactQueryService;
         readonly private ContactPasswordQueryService contactPasswordQueryService;
         readonly private TenantManagementQueryService tenantManagementQueryService;
-        readonly private int tenant;
 
         public Authentication(int tenant)
         {
-            globalContactQueryService = new GlobalContactQueryService(tenant);
-            contactPasswordQueryService = new ContactPasswordQueryService(tenant);
-            tenantManagementQueryService = new TenantManagementQueryService(tenant);
             this.tenant = tenant;
+            globalContext = GlobalContext.GetContext();
+            amitalCloudContext = AmitalCloudContext.GetContext(tenant);
+            globalContactQueryService = new GlobalContactQueryService(globalContext);
+            contactPasswordQueryService = new ContactPasswordQueryService(globalContext);
+            tenantManagementQueryService = new TenantManagementQueryService(globalContext);
         }
 
         public UserData AuthenticateUser(LoginParameters loginParameters)
@@ -52,7 +56,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
             if (!loginParameters.IsFromPLSignApp && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
             {
-                TenantManagmentPrivateLabelsQueryService tenantManagmentPrivateLabelsQueryService = new TenantManagmentPrivateLabelsQueryService(tenant);
+                TenantManagmentPrivateLabelsQueryService tenantManagmentPrivateLabelsQueryService = new TenantManagmentPrivateLabelsQueryService(globalContext);
                 privatelabel = tenantManagmentPrivateLabelsQueryService.GetMulti(a => a.PrivateLabelUrl == url && a.InActive == false).FirstOrDefault();
             }
             DateTime DateBeforePostUserValidation = DateTime.Now;
@@ -62,10 +66,10 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             List<CompanyLogin> loginsList = new List<CompanyLogin>();
             ContactPasswordPM contactPassword = null;
 
-            CardQueryService cardQueryService = new CardQueryService(tenant);
-            TenantQueryService tenantQueryService = new TenantQueryService(tenant);
-            UserQueryService userQueryService = new UserQueryService(tenant);
-            GlobalTenantQueryService globalTenantQueryService = new GlobalTenantQueryService(tenant);
+            CardQueryService cardQueryService = new CardQueryService(amitalCloudContext);
+            TenantQueryService tenantQueryService = new TenantQueryService(amitalCloudContext);
+            UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
+            GlobalTenantQueryService globalTenantQueryService = new GlobalTenantQueryService(globalContext);
 
             data = CheckCaptchaState(loginParameters);
             if (!data.HasError)
@@ -136,7 +140,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                         if ((loginParameters.IsMobileLogin && currentTenant.IsMobileActivated)
                             || (!loginParameters.IsMobileLogin && (currentTenant.IsWebAccessActivated || currentTenant.IsCargoTrackWebAccessActivated || currentTenant.IsDigitalPortalAccessActivated)))
                         {
-                            CardContactQueryService cardContactQueryService = new CardContactQueryService(tenant);
+                            CardContactQueryService cardContactQueryService = new CardContactQueryService(amitalCloudContext);
                             List<CardContactPM> cardcontactsList = cardContactQueryService.GetMulti(c => c.ContactId == contact.Id && c.InternetAccess == true && c.Tenant == contact.GlobalTenantId);
 
                             cardcontactsList.ForEach(cardContact =>
@@ -380,7 +384,8 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 bool distributor = false;
                 UserPM amitalUser = null;
                 // when accessing from authenticateUser, the context may be regarding another tenant, so need to create a new context
-                UserQueryService userQueryService = new UserQueryService(tenant);
+                amitalCloudContext = AmitalCloudContext.GetContext(tenant);
+                UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
                 GlobalContactPM contact = globalContactQueryService.GetMulti(d => d.GlobalTenantId == 0 && d.Email.ToLower() == parameters.Email.ToLower() && d.InActive == false).FirstOrDefault();
                 if (contact != null)
                 {
@@ -433,7 +438,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 user.Technology = "AG";
 
                 #region KeepUserLoggedIn
-                TenantLoginPolicyQueryService securityPolicyQueryService = new TenantLoginPolicyQueryService(tenant);
+                TenantLoginPolicyQueryService securityPolicyQueryService = new TenantLoginPolicyQueryService(amitalCloudContext);
                 TenantLoginPolicyPM securityPolicy = securityPolicyQueryService.GetMulti(d => d.Tenant == tenant).FirstOrDefault();
 
                 if (securityPolicy != null)
@@ -569,7 +574,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
             if (contact != null)
             {
-                UserQueryService userQueryService = new UserQueryService(tenant);
+                UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
                 amitalUser = userQueryService.GetSingle(contact.Id, false, false);
 
                 if (amitalUser?.Tenant == 0)
@@ -912,13 +917,13 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                         return false;
                     }
 
-                    ContactQueryService contactQueryService = new ContactQueryService(tenant);
+                    ContactQueryService contactQueryService = new ContactQueryService(amitalCloudContext);
                     ContactPM loggedContact = contactQueryService.GetSingle(amitalUser.Id, false, false);
 
                     TwoFactorAuthenticationDevicePM device = null;
                     if (!string.IsNullOrEmpty(TwoFactorkey))
                     {
-                        TwoFactorAuthenticationDeviceQueryService twoFactorAuthenticationDeviceQueryService = new TwoFactorAuthenticationDeviceQueryService(tenant);
+                        TwoFactorAuthenticationDeviceQueryService twoFactorAuthenticationDeviceQueryService = new TwoFactorAuthenticationDeviceQueryService(amitalCloudContext);
                         List<TwoFactorAuthenticationDevicePM> devices = twoFactorAuthenticationDeviceQueryService.GetMulti(record => record.InActive == false && record.UserId == loggedContact.Id && record.Tenant == tenant);
 
                         device = devices.FirstOrDefault(d => TwoFactorkey.Contains(d.TwoFactorkey));
@@ -1057,7 +1062,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             List<string> logboxAccessiblePrivateLabelTenantsIds = new List<string>();
             if (url.Contains("system.logbox.co.il") || url.Contains("pre.logbox.co.il") || url.Contains("localhost"))
             {
-                TenantManagmentPrivateLabelsQueryService tenantManagmentPrivateLabelsQueryService = new TenantManagmentPrivateLabelsQueryService(tenant);
+                TenantManagmentPrivateLabelsQueryService tenantManagmentPrivateLabelsQueryService = new TenantManagmentPrivateLabelsQueryService(globalContext);
                 logboxAccessiblePrivateLabelTenantsIds = tenantManagmentPrivateLabelsQueryService.GetMulti(a => a.InActive == false && a.HasLogboxAccess, a => a.Id);
             }
             return logboxAccessiblePrivateLabelTenantsIds;
@@ -1118,7 +1123,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
                 UserPM amitalUser = null;
                 if (contact != null)
                 {
-                    UserQueryService userQueryService = new UserQueryService(tenant);
+                    UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
                     amitalUser = userQueryService.GetSingle(contact.Id, false, false);
                     if (amitalUser?.Tenant == 0)
                     {
@@ -1199,7 +1204,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             if (!string.IsNullOrEmpty(loggedContact.Mobile) && loggedContact.Mobile.Length > 7)
             {
                 int tenant = device.Tenant;
-                ObjectTableQueryService objectTableQueryService = new ObjectTableQueryService(tenant);
+                ObjectTableQueryService objectTableQueryService = new ObjectTableQueryService(amitalCloudContext);
                 ObjectTablePM objectTable = objectTableQueryService.GetMultiFromCache(nameof(TwoFactorAuthenticationDevice) + 0, d => d.Name == nameof(TwoFactorAuthenticationDevice) && d.Tenant == 0).FirstOrDefault();
 
                 string myObjectTableId = objectTable?.Id;
@@ -1325,7 +1330,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
         private string GetHtmlVersion()
         {
-            SettingQueryService settingQueryService = new SettingQueryService(tenant);
+            SettingQueryService settingQueryService = new SettingQueryService(globalContext);
             Setting mySettings = settingQueryService.GetFirst();
             return mySettings?.HtmlVersion ?? "";
         }
@@ -1344,7 +1349,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
         private void SetSessionPolicy(UserData data)
         {
-            SessionPolicyQueryService sessionPolicyQueryService = new SessionPolicyQueryService(tenant);
+            SessionPolicyQueryService sessionPolicyQueryService = new SessionPolicyQueryService(globalContext);
             SessionPolicy sessionPolicy = sessionPolicyQueryService.GetFirst();
             if (sessionPolicy != null)
             {
@@ -1414,7 +1419,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
 
         private bool IsUserAdmin(string email, int tenant)
         {
-            UserQueryService userQueryService = new UserQueryService(tenant);
+            UserQueryService userQueryService = new UserQueryService(amitalCloudContext);
             List<UserPM> entities = userQueryService.GetMulti(record => record.Contact.Email == email && (record.Tenant == tenant || record.Tenant == 0));
             UserPM loggedUser = entities.Where(a => a.Tenant == tenant).FirstOrDefault() ?? entities.Where(a => a.Tenant == 0).FirstOrDefault();
             return loggedUser?.UserRoles != null && loggedUser.UserRoles.Contains("Administrator");
