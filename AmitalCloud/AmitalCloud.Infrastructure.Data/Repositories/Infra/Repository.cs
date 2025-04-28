@@ -152,7 +152,8 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         public TEntity GetFirst() => GetAll(0, true).FirstOrDefault();
         public List<TEntity> GetAll(int tenant) => GetQuery(tenant).ToList();
         public IQueryable<TEntity> GetQueryable() => _dbSet; // todo: change it to GetQuery()
-        protected IQueryable<TEntity> GetQuery(int tenant)
+
+		protected IQueryable<TEntity> GetQuery(int tenant)
         {
             var type = typeof(TEntity);
             var query = _dbSet.AsQueryable();
