@@ -57,7 +57,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             if (res != null)
                 return res;
 
-            foreach (var item in additionalKey.Split('.'))
+            foreach (var item in additionalKey.Split('.').Reverse())
             {
                 if (additionalKey.Length == item.Length)
                     break;
@@ -79,7 +79,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 		private List<DefaultAndConfiguration_Ext> FetchByTenant(int tenant)
         {
             Repository<DefaultAndConfiguration> repository = new Repository<DefaultAndConfiguration>(AmitalCloudContext.GetContext(tenant));
-			List<DefaultAndConfiguration_Ext> result = (tenant == 0 ? repository.GetQueryable() : repository.GetMulti(a => a.Tenant == tenant || (a.Tenant == 0 && a.AllowInheritance)).AsQueryable()).Select(a => new DefaultAndConfiguration_Ext(a)).ToList();
+			List<DefaultAndConfiguration_Ext> result = (tenant == 0 ? repository.GetQueryable() : repository.GetMulti(a => a.Tenant == tenant || (a.Tenant == 0 && a.AllowInheritance)).AsQueryable()).ToList().Select(a => new DefaultAndConfiguration_Ext(a)).ToList();
             return result;
         }
 
