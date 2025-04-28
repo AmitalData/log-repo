@@ -39,8 +39,8 @@ import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
@@ -67,9 +67,8 @@ import { CustomizationPermissionService } from '../../../InfrastructureModules/I
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
-import { AzureSearchWebService, FastSearchResult, FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
-import { SearchIndexEditHistoryPMService } from 'Common/Services/StandardPMs/SearchIndexEditHistoryPMService';
-import { SearchIndexEditHistoryPM } from 'Common/EntityPMs/SearchIndexEditHistoryPM';
+import { FastSearchResult, FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
+import { FastSearchService } from './FastSearchService';
  
 @Component({
 
@@ -112,7 +111,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsLogisticActionRequestObjectTable: boolean = false;
      WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
     private _declarationWebService: DeclarationWebService = new DeclarationWebService();
-    private readonly azureSearchWebService: AzureSearchWebService = new AzureSearchWebService();
     public onChangeCheckBoxesState: EventEmitter<any> = new EventEmitter();
     public ScreenQueryAction = {};
     private ScreenQueryActions = {
@@ -135,8 +133,6 @@ export class ListComponent implements OnInit, AfterViewInit {
     //public Title: string;
     private title: string;//= "";
     customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
-    fastSearchSettings: FastSearchSettings = null;
-    private indexName: string = '';
     get Title() { return this.title; }
     set Title(newValue: string) {
         if (this.title != newValue) {
@@ -147,16 +143,14 @@ export class ListComponent implements OnInit, AfterViewInit {
     public BackBtnTitle: string;
     public AddButtonTitle: string = "";
     public serviceArgs: ServiceArgs;
-    CurrentQueryFilters: ApiQueryFilters;
-    orginalCurrentAdditionalFilters: FilterItem[] = null;
+    CurrentQueryFilters: ApiQueryFilters;    
     AdvanceFilters: ApiQueryFilters;
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() onRefershQueryEvent = new EventEmitter();
     @Output() onSelectedQueryChangeEvent = new EventEmitter();
-    searchDropdownOptions: FastSearchResult[] = [];
-    recentSearches: FastSearchResult[] = [];
-    displayPattern: string = '';
-    fastSearch: boolean = true;
+    searchDropdownOptions: FastSearchResult[] = [];    
+    fastSearchSettings: FastSearchSettings = null;
+    $fastSearchEnable: BehaviorSubject<boolean> = null;
 
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
@@ -189,7 +183,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     onSearchTextChangeEvent(searchtext) {
-        const timer: number = this.fastSearchSettings.idleSearchTimeMs || 400; 
+        const timer: number = this.fastSearchService.Settings.idleSearchTimeMs || 400;
 
         console.log("Search");
         if ((this.searchFields != searchtext) && !(searchtext == null && this.searchFields == "")) {
@@ -205,17 +199,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         const searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
         this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != searchFieldName);
         
-        if (this.fastSearch) {
-            if(this.searchFields?.length > 0) {
-                this.orginalCurrentAdditionalFilters = [...this.CurrentQueryFilters.AdditionalFilters];
-                const result: FastSearchResult[] = await this.azureSearchWebService.fastSearch(this.CurrentQueryFilters, this.searchFields, this.indexName)
-                this.displayPattern = this.fastSearchSettings.ddlHtmlLine;
-                this.searchDropdownOptions = result;
+        if (this.fastSearchService.$fastSearchEnable.value) {
+            this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
+            if (this.searchDropdownOptions) {
                 this.CD.detectChanges();
-                
                 return;
-            } else if(this.orginalCurrentAdditionalFilters != null)
-                this.CurrentQueryFilters.AdditionalFilters = this.orginalCurrentAdditionalFilters;
+            }            
         }
             
         this.CurrentQueryFilters.addAdditionalFilter(searchFieldName, this.searchFields, null, null, "Contains", false, true, false, "String");
@@ -223,76 +212,25 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.CD.detectChanges();            
     }
 
-    private async initFastSearch() {
-        const havePermission = FeatureLocator.HasFeaturePermession("General", "FASTSEARCH");
-        const enabled = this.ObjectTable.ShowFastSearch;
-        if(!havePermission || !enabled) return;
-
-        let indexName: string = this.ObjectTableName.replace('Customs.', '').toLowerCase();
-        if(!indexName.endsWith('s'))
-            indexName += 's';
-    
-        this.indexName = indexName;
-        if (this.MenuTableQuerySection == "Customs.ExportDeclaration") 
-            indexName = 'exportDeclarations';
-        else return; // Disabled fase search for import declaration
-
-        const settings: FastSearchSettings = await this.azureSearchWebService.GetSettings(indexName);
-        this.fastSearchSettings = settings;
-        this.fastSearch = true;
-
-        this.getRecentSearches();
+    searchDropdownSelected(optionSelected: FastSearchResult | string) {
+        this.fastSearchService.searchDropdownSelected(optionSelected, this.CurrentQueryFilters, this.SelectedQueryCode, this.searchDropdownOptions, this.MethodName, this.onRowSelected.bind(this), this.onQueryChangeEvent);
     }
-
-    fastSearchCheck(check: boolean) {
-        this.fastSearch = check;
-        if(!check && this.orginalCurrentAdditionalFilters != null) {
-            this.CurrentQueryFilters.AdditionalFilters = [...this.orginalCurrentAdditionalFilters];
-            this.orginalCurrentAdditionalFilters = null;
+   
+    fastSearchCheckbox(check: boolean) {
+        this.fastSearchService.$fastSearchEnable.next(check);
+        if(!check && this.fastSearchService.orginalCurrentAdditionalFilters != null) {
+            this.CurrentQueryFilters.AdditionalFilters = [...this.fastSearchService.orginalCurrentAdditionalFilters];
+            this.fastSearchService.orginalCurrentAdditionalFilters = null;
         }
 
         this.SearchMethod();
     }
 
-    searchDropdownSelected(optionSelected: FastSearchResult | string) {
-        if (optionSelected === 'all') {
-            const ids: string[] = this.searchDropdownOptions.map((x: FastSearchResult) => x.id);
-            ids.pop();
-            this.CurrentQueryFilters.AdditionalFilters = [];
-            this.CurrentQueryFilters.addAdditionalFilter("Id", ids.join(','), null, null, "InListExact", false, true, false, "String");
-            this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
-        } else {
-            this._entityListService.getSingle((optionSelected as FastSearchResult).id, this.ObjectTableName, this.MethodName == undefined ? null : this.MethodName).then((res: any) => {
-                res.subscribe(myResponse => {
-                    if (myResponse != null)
-                        this.onRowSelected({ rowData: myResponse instanceof ServiceResponse ? myResponse.Result : myResponse });
-                });
-            });
-
-            const searchIndexEditHistoryPM: SearchIndexEditHistoryPM = new SearchIndexEditHistoryPM();
-            searchIndexEditHistoryPM.Entname = this.getEntname();
-            searchIndexEditHistoryPM.Screen = this.indexName;
-            searchIndexEditHistoryPM.KeyVal = JSON.stringify(optionSelected);
-            searchIndexEditHistoryPM.Tenant = SessionLocator.Tenant;
-            new SearchIndexEditHistoryPMService().insert(searchIndexEditHistoryPM).subscribe();
-        }
-    }
-
-    async showRecentSearches() {
-        this.displayPattern = this.fastSearchSettings.ddlHtmlLine;
-        this.searchDropdownOptions = [...this.recentSearches];
-        this.CD.detectChanges();
-    }
-
-    async getRecentSearches() {        
-        const Entname = this.getEntname();
-        this.recentSearches = await new AzureSearchWebService().getRecentSearches<FastSearchResult>(this.fastSearchSettings.recentEditScreen, Entname, this.fastSearchSettings.recentShowTopResults);
-        if(this.displayPattern)
-            this.showRecentSearches();
-    }
-
-    private getEntname(): string {
-        return this.MenuTableQuerySection == "Customs.ExportDeclaration" ? this.MenuTableQuerySection : this.ObjectTableName;
+    async showRecentSearches() {        
+        this.fastSearchService.$RecentSearches.pipe(take(1)).subscribe(recentSearches => {
+            this.searchDropdownOptions = [...recentSearches];
+            this.CD.detectChanges();
+        });
     }
 
     GetMethodName() {
@@ -599,7 +537,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public _ListComponentArgs: ListComponentArgs, private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+    constructor(public _ListComponentArgs: ListComponentArgs, private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef, private fastSearchService: FastSearchService) {
         var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
 
@@ -852,7 +790,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.EnglishView = true;
         }
 
-        this.MenuHeaderchangeevent.subscribe(() => this.orginalCurrentAdditionalFilters = null);
+        this.fastSearchService.subscribeMenuHeaderchangeevent(this.MenuHeaderchangeevent);
     }
     public ReloadAllListEvent: any = null;
     Listen() {
@@ -985,7 +923,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     private isLoaderReady: boolean;
     DeclarationsTable = false;
     View: string;
-    RunComponent() {
+    async RunComponent() {
 
 
         if (window.Tips) {
@@ -1127,7 +1065,10 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
         }
         
-        this.initFastSearch();
+        await this.fastSearchService.initFastSearch(this.ObjectTable, this.ObjectTableName, this.MenuTableQuerySection);
+        this.$fastSearchEnable = this.fastSearchService.$fastSearchEnable;
+        if (this.fastSearchService.$fastSearchEnable.value)
+            this.fastSearchSettings = this.fastSearchService.Settings;
     }
   
     private Retries: number = 0;

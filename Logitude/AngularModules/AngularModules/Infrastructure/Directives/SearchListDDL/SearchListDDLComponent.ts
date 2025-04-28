@@ -93,6 +93,7 @@ export class SearchListDDLComponent implements OnInit {
     @Input() maxResults: number = null;
     labels: DDLLable[] = [];
     public set displayPattern(pattern: string) {
+        if (!pattern) return;
         this.labels = [];
         const matches = pattern.match(/{(.*?)}/g);
         if (!matches) return;

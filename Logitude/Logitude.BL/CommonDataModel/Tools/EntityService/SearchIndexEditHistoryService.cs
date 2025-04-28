@@ -6,6 +6,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using System;
 using Logitude.BL.Security;
+using Newtonsoft.Json.Linq;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -44,7 +45,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPM.CreateDate = DateTime.Now;
             entityPM.CreatedByUserId = new LoggedContactUtil().GetLoggedContact(tenant)?.Id;
             entityPM.Tenant = tenant;
-            
+            entityPM.KeyVal = RemoveDollarIdProperty(entityPM.KeyVal);
+
             Poco = new SearchIndexEditHistory();
             Poco.Id = this.entityPM.Id;
 
@@ -69,6 +71,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             SearchIndexEditHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+        }
+
+        private static string RemoveDollarIdProperty(string json)
+        {
+            if (string.IsNullOrEmpty(json)) return json;
+
+            JObject jsonObject = JObject.Parse(json);
+            jsonObject.Property("$id")?.Remove();
+            return jsonObject.ToString(Newtonsoft.Json.Formatting.None);
         }
     }
 }
