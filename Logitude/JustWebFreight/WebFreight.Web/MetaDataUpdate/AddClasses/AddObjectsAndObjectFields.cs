@@ -314,7 +314,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     else
                     {
                         newButtonTextCode = new TextCode();
-                        newButtonTextCode.Id = IdCounter.GetNumber("TextCode", 16).ToString();
+                        newButtonTextCode.Id = IdCounter.GetNumber("TextCode", contextTenant).ToString();
                         newButtonTextCode.ObjectTableId = updatedObjectTable.Id;
                         newButtonTextCode.Code = objectTablesDetails.ObjectTableName + ".NewButton";
                         newButtonTextCode.DefaultText = objectTablesDetails.NewButtonDefaultText;
