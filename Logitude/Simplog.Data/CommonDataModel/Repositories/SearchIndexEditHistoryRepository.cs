@@ -2,6 +2,7 @@
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -53,16 +54,20 @@ namespace Simplog.Data.CommonDataModel.Repositories
             throw new NotImplementedException();
         }
 
-        public SearchIndexEditHistory GetSingleSearchIndexEditHistory(int tenant, string id) =>
-            Context.SearchIndexEditHistories.FirstOrDefault(x => x.Id == id && x.Tenant == tenant);
+        public SearchIndexEditHistory GetSingleSearchIndexEditHistory(string id, int tenant) =>
+            Context.SearchIndexEditHistories.AsNoTracking().FirstOrDefault(x => x.Id == id && x.Tenant == tenant);
 
         public void SubmitChanges()
         {
             Context.SaveChanges();
         }
 
+        public IQueryable<SearchIndexEditHistory> GetSearchIndexEditHistories(int tenant) =>
+            Context.SearchIndexEditHistories.AsNoTracking().Where(x => x.Tenant == tenant);
+
         public List<string> GetRecent(int tenant, string screen, string entname, string userId, int size = 50) =>
             Context.SearchIndexEditHistories
+                .AsNoTracking()
                 .Where(x => x.Tenant == tenant && x.Screen == screen && x.Entname == entname && x.CreatedByUserId == userId)
                 .OrderByDescending(x => x.CreateDate)
                 .Select(x => x.KeyVal)

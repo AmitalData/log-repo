@@ -6,7 +6,6 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using System;
 using Logitude.BL.Security;
-using System.Collections.Generic;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -62,7 +61,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             isNewEntity = false;
             entityPM = theEntityPm;
-            Poco = entityRepository.GetSingleSearchIndexEditHistory(theEntityPm.Tenant, theEntityPm.Id);
+            Poco = entityRepository.GetSingleSearchIndexEditHistory(theEntityPm.Id, theEntityPm.Tenant);
 
             if (Poco == null)
                 throw new InvalidOperationException($"Poco with Id {entityPM.Id} not found.");
@@ -70,20 +69,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             SearchIndexEditHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-        }
-
-        public List<string> GetRecent(int tenant, string screen, string entname, string userId, int size = 50)
-        {
-            if (tenant == null)
-                throw new ArgumentNullException("tenant", "tenant cannot be null");
-            if (string.IsNullOrEmpty(screen))
-                throw new ArgumentNullException("screen", "screen cannot be null or empty");
-            if (string.IsNullOrEmpty(entname))
-                throw new ArgumentNullException("entname", "entname cannot be null or empty");
-            if (string.IsNullOrEmpty(userId))
-                throw new ArgumentNullException("userId", "userId cannot be null or empty");
-
-            return entityRepository.GetRecent(tenant, screen, entname, userId, size);
         }
     }
 }

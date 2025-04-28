@@ -508,6 +508,7 @@
     <Compile Include="CommonDataModel\EntityQueries\ProductItemQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PostalCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ReportExecutionLogQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\SearchIndexEditHistoryQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\UnassignedEntityQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\RegimenFiscalQuery.cs" />
     <Compile Include="CommonDataModel\ExternalService\CommunicationLogExtendedService.cs" />

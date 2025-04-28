@@ -153,7 +153,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() onRefershQueryEvent = new EventEmitter();
     @Output() onSelectedQueryChangeEvent = new EventEmitter();
-    searchDropdownOptions: any[] = [];
+    searchDropdownOptions: FastSearchResult[] = [];
+    recentSearches: FastSearchResult[] = [];
     displayPattern: string = '';
     fastSearch: boolean = true;
 
@@ -210,7 +211,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                 const result: FastSearchResult[] = await this.azureSearchWebService.fastSearch(this.CurrentQueryFilters, this.searchFields, this.indexName)
                 this.displayPattern = this.fastSearchSettings.ddlHtmlLine;
                 this.searchDropdownOptions = result;
-                this.CD.detectChanges();                    
+                this.CD.detectChanges();
                 
                 return;
             } else if(this.orginalCurrentAdditionalFilters != null)
@@ -239,6 +240,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         const settings: FastSearchSettings = await this.azureSearchWebService.GetSettings(indexName);
         this.fastSearchSettings = settings;
         this.fastSearch = true;
+
+        this.getRecentSearches();
     }
 
     fastSearchCheck(check: boolean) {
@@ -267,15 +270,29 @@ export class ListComponent implements OnInit, AfterViewInit {
             });
 
             const searchIndexEditHistoryPM: SearchIndexEditHistoryPM = new SearchIndexEditHistoryPM();
-            searchIndexEditHistoryPM.Entname =  this.MenuTableQuerySection == "Customs.ExportDeclaration" ? this.MenuTableQuerySection : this.ObjectTableName;
+            searchIndexEditHistoryPM.Entname = this.getEntname();
             searchIndexEditHistoryPM.Screen = this.indexName;
             searchIndexEditHistoryPM.KeyVal = JSON.stringify(optionSelected);
+            searchIndexEditHistoryPM.Tenant = SessionLocator.Tenant;
             new SearchIndexEditHistoryPMService().insert(searchIndexEditHistoryPM).subscribe();
         }
     }
 
-    onSearchFocus() {
+    async showRecentSearches() {
+        this.displayPattern = this.fastSearchSettings.ddlHtmlLine;
+        this.searchDropdownOptions = [...this.recentSearches];
+        this.CD.detectChanges();
+    }
 
+    async getRecentSearches() {        
+        const Entname = this.getEntname();
+        this.recentSearches = await new AzureSearchWebService().getRecentSearches<FastSearchResult>(this.fastSearchSettings.recentEditScreen, Entname, this.fastSearchSettings.recentShowTopResults);
+        if(this.displayPattern)
+            this.showRecentSearches();
+    }
+
+    private getEntname(): string {
+        return this.MenuTableQuerySection == "Customs.ExportDeclaration" ? this.MenuTableQuerySection : this.ObjectTableName;
     }
 
     GetMethodName() {

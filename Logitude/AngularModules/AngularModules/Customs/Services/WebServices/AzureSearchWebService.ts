@@ -40,6 +40,19 @@ export class AzureSearchWebService {
         const res: Observable<ServiceResponse> = this.logtuideTableDataService.standartSendAjax(ajax);
         return this.logtuideTableDataService.getDataFromService(res)
     }
+
+    getRecentSearches<T>(screen: string, entname: string, size: number): Promise<T[]> {
+        const ajax: Observable<any> = this._http.get(
+            this._apiUrl + '/GetRecentSearches',
+            {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+                params: { screen, entname, size: size.toString() }
+            }
+        );
+
+        const res: Observable<ServiceResponse> = this.logtuideTableDataService.standartSendAjax(ajax);
+        return this.logtuideTableDataService.getDataFromService(res)
+    }
 }
 
 

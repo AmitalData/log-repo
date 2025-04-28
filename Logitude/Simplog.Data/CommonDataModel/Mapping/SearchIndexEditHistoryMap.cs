@@ -15,7 +15,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Screen).IsRequired().HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ScreenParam).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Entname).IsRequired().HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.KeyVal).IsRequired().HasMaxLength(50).IsUnicode(true);
+            this.Property(t => t.KeyVal).IsRequired().HasMaxLength(1000).IsUnicode(true);
 
             this.ToTable("SearchIndexEditHistories");
             this.Property(t => t.Id).HasColumnName(columnName: "Id");

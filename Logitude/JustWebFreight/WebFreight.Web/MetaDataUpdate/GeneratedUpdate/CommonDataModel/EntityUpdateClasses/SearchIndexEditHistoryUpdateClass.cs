@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class SearchIndexEditHistoryUpdateClass
    {  		
-		public const string HashString = "2cca163fb792d36c37b266f6783cf969";
+		public const string HashString = "7b14d05004bc11cdd389a1bdc0caf2fd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,13 +126,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Search Index Edit History",
-			      				    Code =  "5d00",
+			      				    Code =  "fbb6",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -600,7 +600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "SearchIndexEditHistory",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  50,
+					  						MaxLength =  1000,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -608,7 +608,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  50,
+					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,

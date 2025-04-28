@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.Customs.BL.AzureSearch;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -58,7 +58,7 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
-        public HttpResponseMessage GetLastSearch(string screen, string entname, int size = 20)
+        public HttpResponseMessage GetRecentSearches(string screen, string entname, int size = 20)
         {
             int tenant = HeaderHelper.Authenticate().Tenant;
 
@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.WebServices
             try
             {
                 ContactPM loggedUser = new LoggedContactUtil().GetLoggedContact(tenant);
-                List<string> result = new SearchIndexEditHistoryService(tenant).GetRecent(tenant, screen, entname, loggedUser.Id, size);
+                List<dynamic> result = new SearchIndexEditHistoryQuery(tenant).GetRecent(tenant, screen, entname, loggedUser.Id, size);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)

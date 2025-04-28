@@ -9,5 +9,6 @@
 export class SearchIndexEditHistoryList {
    		Id: string;
 		Tenant: number;
+		CreateDate: Date;
 	
 }

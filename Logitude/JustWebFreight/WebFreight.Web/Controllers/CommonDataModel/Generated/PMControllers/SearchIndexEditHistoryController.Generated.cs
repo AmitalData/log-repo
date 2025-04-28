@@ -57,8 +57,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                SecurityUtility.CheckContactFeature("SearchIndexEditHistory", "READ", authToken.Tenant);
                 SearchIndexEditHistoryQuery searchIndexEditHistoryQuery = new SearchIndexEditHistoryQuery(authToken.Tenant);
                 SearchIndexEditHistoryPM searchIndexEditHistoryPM = searchIndexEditHistoryQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -89,8 +87,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("SearchIndexEditHistory", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("SearchIndexEditHistory", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         SearchIndexEditHistoryService service = new SearchIndexEditHistoryService(MyContext, entityPM.Tenant);
@@ -137,8 +133,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("SearchIndexEditHistory", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("SearchIndexEditHistory", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "SearchIndexEditHistory" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "SearchIndexEditHistoryPM" + entityPM.Id + entityPM.Tenant;
