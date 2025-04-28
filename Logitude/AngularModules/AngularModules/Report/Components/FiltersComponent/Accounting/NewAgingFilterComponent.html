@@ -361,7 +361,8 @@
                             </td>
                             <td>
                                 <ComboBox style="display: block;width: 200px;" [ItemsSource]="operatorsList"
-                                    [Binding]="'LocalName'" [SelectedValue]="Obligo"></ComboBox>
+                                    [Binding]="'LocalName'"  [SelectedItem]="SelectedObligo"
+                                    (SelectedItemChanged)="SelectedObligoChanged($event)"></ComboBox>
                             </td>
                             <td style="width: 35px;"></td>
 

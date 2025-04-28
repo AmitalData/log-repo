@@ -229,7 +229,7 @@ LEFT JOIN
 	 C ON GL.CardsDataId = C.Id
 	 LEFT JOIN 
 (SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant) 
-     CURRENCY ON GL.CurrencyId = CURRENCY.Id 
+     CURRENCY ON T.CurrencyId = CURRENCY.Id 
      WHERE 
     GL.tenant = @Tenant 
 	

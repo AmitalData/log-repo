@@ -149,7 +149,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         {
             switch (obligoOperator)
             {
-                case "GreaterThan":
+                case "LargerThan":
                     return agingDataLine.Where(line => line.Obligo > 0).ToList();
                 case "LessThan":
                     return agingDataLine.Where(line => line.Obligo < 0).ToList();

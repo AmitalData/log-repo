@@ -373,6 +373,10 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
                     this.DataContext[this.SelectedCategory?.replace(' ', '')] = queryFilterItem.FieldValue;
                     break;
                 }
+                case "Obligo":{
+                    this.SelectedObligo =this.operatorsList.find(a=>a.Code === queryFilterItem.FieldValue); ;
+                    break;
+                }
 
 
             }
@@ -423,7 +427,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
         myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
         myFilterItems.push(new QueryFilterItem("CurrencyId", this.CurrencyId, "string"));
-        myFilterItems.push(new QueryFilterItem("Obligo",this.Obligo, "string"));
+        myFilterItems.push(new QueryFilterItem("Obligo",this.SelectedObligo?.Code, "string"));
         myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
         myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
         myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex));
@@ -508,7 +512,10 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
     SelectedCategoryChanged(item) {
         this.SelectedCategory = item;
     }
-
+    SelectedObligo: { Code: string, EnglishName: string, LocalName: string };
+    SelectedObligoChanged(item){
+        this.SelectedObligo = item;
+    }
     public customerOrVendorFilterSelected: string = 'filter_customer';
     public AccountTypeCode: string = '2';
     FilterCustomerOrVendorClicked(itemValue: string) {
@@ -593,7 +600,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         'Category 4',
         'Category 5'
     ];
-    operatorsList =
+    public operatorsList =
         [
             { Code: Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") + " 0" },
             { Code: Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") + " 0" },
