@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "4234553f4af3d318fc36a093d8b0209b";
+		public const string HashString = "13b8e42a0fd7b250163abd2482b4d4e1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,8 +131,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
+			      				    LocalDefaultText =  "בקשות למכון תקנים",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "830d",
+			      				    Code =  "baaf",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -816,6 +817,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SupplierInvoiceItemsReqLists",
 					  						ListPropertyPath =  "SupplierInvoiceItemsReqLists",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -937,7 +939,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable SIIRequestObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SIIRequest" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestONewRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.NewRequest", DefaultText = "New Request",LocalDefaultText = @"פתיחת בקשה", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOCompletData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.CompletData", DefaultText = "Completing application data",LocalDefaultText = @"השלמת נתוני בקשה", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOOpenRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.OpenRequest", DefaultText = "Open SIIRequests",LocalDefaultText = @"רשימת בקשות פתוחות", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOClosedRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.ClosedRequest", DefaultText = "Closed SIIRequests",LocalDefaultText = @"רשימת בקשות סגורות", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOAllRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.AllRequest", DefaultText = "All SIIRequests",LocalDefaultText = @"הכל ", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
