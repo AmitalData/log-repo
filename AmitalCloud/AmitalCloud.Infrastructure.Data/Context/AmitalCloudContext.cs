@@ -68,18 +68,13 @@ namespace AmitalCloud.Infrastructure.Data.Context
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 																																																																																																																																																																																																																																																																																																																																																																						            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<APInvoiceLine>().HasKey(x => new { x.APInvoiceId, x.LineNumber });
+            // temporary fixe for tables with multiple primary keys
             modelBuilder.Entity<AutomationHistory>().HasKey(t => new { t.Version, t.AutomationsId });
             modelBuilder.Entity<AutomationLastUpdate>().HasKey(t => new { t.Tenant, t.ObjectTableId });
             modelBuilder.Entity<CommunicationLogStep>().HasKey(t => new { t.StepNumber, t.CommunicationLogId });
-
             modelBuilder.Entity<ComputingPartnerTable>().HasKey(t => new { t.Tenant, t.ObjectTableId, t.ComputingPartnerId });
-
             modelBuilder.Entity<CustomerAccountManagerByProduct>().HasKey(t => new { t.ProductTypeCode, t.CustomerId });
-
             modelBuilder.Entity<CustomerAdditionalService>().HasKey(t => new { t.CustomerId, t.AdditionalServiceId });
-
-
             modelBuilder.Entity<CustomerCompetitor>().HasKey(t => new { t.CustomerId, t.CompetitorId });
             modelBuilder.Entity<CustomerCompetitorProduct>().HasKey(t => new { t.ProductTypeCode, t.CustomerId, t.CompetitorId });
             modelBuilder.Entity<CustomerProductActualData>().HasKey(t => new { t.CustomerId, t.ProductTypeCode, t.Month, t.Year });
@@ -95,30 +90,16 @@ namespace AmitalCloud.Infrastructure.Data.Context
             modelBuilder.Entity<SharedLogisticsContactLastLogin>().HasKey(t => new { t.ContactId, t.CardId, t.PartnerTypeId, t.Via });
             modelBuilder.Entity<VATTypesGroup>().HasKey(t => new { t.GroupVATTypeId, t.SingleVATTypeId });
 
-			modelBuilder.Entity<ShipmentPackageItem>().HasKey(t => new { t.PackageId, t.LineNumber });
+            modelBuilder.Entity<APInvoiceLine>().HasKey(x => new { x.APInvoiceId, x.LineNumber });
 
+            modelBuilder.Entity<ShipmentPackageItem>().HasKey(t => new { t.PackageId, t.LineNumber });
 
-            // Relationships
+            // temporary fixes about relationships
             modelBuilder.Entity<ObjectTable>().HasOptional(t => t.MainTip).WithMany().HasForeignKey(d => d.MainTipCode);
             modelBuilder.Entity<ObjectTable>().HasOptional(t => t.HeaderScreen).WithMany().HasForeignKey(d => d.HeaderScreenId);
-
             modelBuilder.Entity<Card>().HasRequired(t => t.SharedLogisticsInvitationStatus).WithMany().HasForeignKey(d => d.SharedLogisticsInvitationStatusCode);
-
-
-            //modelBuilder.Entity<ARInvoice>().HasOptional(t => t.CreditedByARInvoice).WithMany(t => t.CreditedARInvoices).HasForeignKey(d => d.CreditedByARInvoiceId);
             modelBuilder.Entity<ARInvoice>().HasOptional(t => t.CreditedByARInvoice).WithMany().HasForeignKey(d => d.CreditedByARInvoiceId);
-
             modelBuilder.Entity<DeploymentPackage>().HasRequired(t => t.DeploymentPackagesVersion).WithMany().HasForeignKey(d => d.VersionId);
-
-
-            /*modelBuilder.Entity<>().HasKey(t => new { });
-            modelBuilder.Entity<>().HasKey(t => new { });
-            modelBuilder.Entity<>().HasKey(t => new { });
-            modelBuilder.Entity<>().HasKey(t => new { });
-            modelBuilder.Entity<>().HasKey(t => new { });
-            modelBuilder.Entity<>().HasKey(t => new { });
-            modelBuilder.Entity<>().HasKey(t => new { });
-            modelBuilder.Entity<>().HasKey(t => new { });*/
         }
 
         public void SetAsModified(object entity)
