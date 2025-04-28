@@ -16,6 +16,8 @@ export class SIIRequestList {
 	WareHouseCity: string;
 	IsClosed: boolean;
 	WareHouseCityName: string;
+	Remarks: string;
+	ListCounter: number;
 	
 }
  

@@ -292,7 +292,53 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedSupplierInvoiceItemsReqLists = value; }
 	    }
-	  	    }
+	  	  private string remarks ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Remarks  
+	   {
+	    
+	     get
+		{
+		   return remarks;
+		 }
+		 set
+		 {
+		   if(remarks != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Remarks",OldValue=remarks,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   remarks=value;
+		   }
+			
+		 }
+	   }
+	  private int listCounter ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ListCounter  
+	   {
+	    
+	     get
+		{
+		   return listCounter;
+		 }
+		 set
+		 {
+		   if(listCounter != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ListCounter",OldValue=listCounter,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   listCounter=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

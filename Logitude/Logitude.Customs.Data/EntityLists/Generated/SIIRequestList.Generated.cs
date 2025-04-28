@@ -37,6 +37,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsClosed  { get; set; }
        [DataMember]
        public string WareHouseCityName  { get; set; }
+       [DataMember]
+       public string Remarks  { get; set; }
+       [DataMember]
+       public int ListCounter  { get; set; }
    }
 
 }

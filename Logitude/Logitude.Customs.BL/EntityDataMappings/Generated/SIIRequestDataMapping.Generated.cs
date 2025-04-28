@@ -36,7 +36,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Status, 
 	         WareHouseAddress, 
 	         WareHouseCity, 
-	         IsClosed,
+	         IsClosed, 
+	         Remarks,
 	      }
 
 
@@ -52,7 +53,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         WareHouseAddress, 
 	         WareHouseCity, 
 	         IsClosed, 
-	         WareHouseCityName,
+	         WareHouseCityName, 
+	         Remarks, 
+	         ListCounter,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -99,6 +102,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsClosed))
             {
 				entityPOCO.IsClosed = entityPM.IsClosed;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))
+            {
+				entityPOCO.Remarks = entityPM.Remarks;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -152,6 +160,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsClosed = entityPOCO.IsClosed;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Remarks))
+            {
+					entityPM.Remarks = entityPOCO.Remarks;
+            }
+
 		}
 
 		public void PMToOldPM(SIIRequestPM entityPM, SIIRequestPM oldEntityPM)
@@ -198,6 +211,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.IsClosed = entityPM.IsClosed;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Remarks))
+            {
+                oldEntityPM.Remarks = entityPM.Remarks;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(SIIRequestPM entityPM)
@@ -218,6 +236,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.WareHouseCity)) //T4 find type == nText 
             {
                 entityPM.WareHouseCity = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.WareHouseCity));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Remarks)) //T4 find type == nText 
+            {
+                entityPM.Remarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Remarks));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
