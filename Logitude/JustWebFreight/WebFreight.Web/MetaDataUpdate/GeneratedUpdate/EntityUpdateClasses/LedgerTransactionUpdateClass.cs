@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "9491dad0b06b488ad14a1b32a50da860";
+		public const string HashString = "068375e5dcfd272a0aa989c0fa5c02b8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1606,11 +1606,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Journal No. / Reference",
-					  						FullLocalDefaultText =  "מס פקודת יומן/ אסמכתא",
+					  						DefaultText =  "Journal No. / Reference / Amount",
+					  						FullLocalDefaultText =  "מס פקודת יומן/ אסמכתא/ סכום",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Journal No. / Reference",
-					  						ListLocalDefaultText =  "מס פקודת יומן/ אסמכתא",
+					  						ListLableDefaultText =  "Journal No. / Reference / Amount",
+					  						ListLocalDefaultText =  "מס פקודת יומן/ אסמכתא/ סכום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5303,7 +5303,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsExternalEntity",
 					  						ListPropertyPath =  "IsExternalEntity",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

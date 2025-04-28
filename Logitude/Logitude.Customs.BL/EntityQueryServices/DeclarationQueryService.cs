@@ -2346,6 +2346,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             return decPm;
         }
+        public DeclarationPM GetDeclarationAmendmentByAmendmentRequestNumber(int tenant, string requestNumber)
+        {
+            Declaration declaration = repository.GetDeclarationAmendmentByAmendmentRequestNumber(tenant, requestNumber);
+            DeclarationPM declarationPM = new DeclarationPM();
+            DeclarationDataMapping mapping = new DeclarationDataMapping();
+            if (declaration == null) return null;
+            mapping.CustomPOCOToPM(declarationPM, declaration);
+            mapping.POCOToPM(declarationPM, declaration);
+            return declarationPM;
+        }
 
         public List<Declaration> GetDeclarationById(int tenant, string id)
         {

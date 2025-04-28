@@ -229,6 +229,11 @@ export class NotificationPM {
     public set ResponseToMessage(newValue: string) { if (this.responseToMessage != newValue) { this.responseToMessage = newValue; this.MarkAsDirty("ResponseToMessage"); } }
        
 	 
+    private senderName: string;
+    public get SenderName() { return this.senderName; }
+    public set SenderName(newValue: string) { if (this.senderName != newValue) { this.senderName = newValue; this.MarkAsDirty("SenderName"); } }
+       
+	 
 
     public OldEntityPM: NotificationPM;
 		

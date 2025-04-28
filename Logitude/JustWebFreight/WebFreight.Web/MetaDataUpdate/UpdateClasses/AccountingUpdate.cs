@@ -1754,8 +1754,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalsCSV.O.EndDate", DefaultText = "End Date", LocalDefaultText = "תאריך סיום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalsCSV.O.FailedWhilePerforming", DefaultText = "failed while performing", LocalDefaultText = "תקלה בביצוע", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalsCSV.O.NoLinesProcessed", DefaultText = "No Lines Processed", LocalDefaultText = "אין שורות לעיבוד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
-        }
-        #endregion
+			AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalsCSV.O.TotalCreditDebitNotEqual", DefaultText = "Total debit lines (after rounding) is different from total credit lines (after rounding). Please make sure that the rounded amounts are correct in the file and try again.", LocalDefaultText = $"סה\"כ שורות חובה (לאחר עיגול) שונה מסה\"כ שורות זכות (לאחר עיגול). יש לוודא שהסכומים המעוגלים תקינים בקובץ ולנסות שנית.\r\n", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+		
+		}
+		#endregion
 
 
 
@@ -1763,8 +1765,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
 
 
-        #region LoadTextCodes_AutomaticReconcileMethod
-        private void LoadTextCodes_AutomaticReconcileMethod(Dictionary<string, TextCode> textcodes)
+		#region LoadTextCodes_AutomaticReconcileMethod
+		private void LoadTextCodes_AutomaticReconcileMethod(Dictionary<string, TextCode> textcodes)
         {
             ObjectTable objectTable = objectContext.ObjectTables.Where(f => f.Name == "AutomaticReconcileMethod" && f.Tenant == 0).FirstOrDefault();
 
