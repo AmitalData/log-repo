@@ -25134,7 +25134,8 @@
     IsLocked="false" />
   <Tab
     TabName="&quot;SIIRequest&quot;"
-    TabLocalName="&quot;מכון תקנים&quot;"
+    TabLocalNameBack_up="&quot;מכון תקנים&quot;"
+    TabLocalName="&quot;BS64:Itee15vXldefINeq16fXoNeZ150i&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
     Code="&quot;SIIR&quot;"
     ControlPath="&quot;Logitude.Customs.Views.Tabs.SIIRequestTabComponent&quot;"

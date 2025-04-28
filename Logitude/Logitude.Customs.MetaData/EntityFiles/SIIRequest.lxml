@@ -41,9 +41,10 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  LocalDefaultText="&quot;בקשות למכון תקנים&quot;"
+  LocalDefaultTextBack_up="&quot;בקשות למכון תקנים&quot;"
+  LocalDefaultText="&quot;BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;baaf&quot;"
+  Code="&quot;360d&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -947,31 +948,36 @@
     <TextCode
       Code="&quot;Customs.SIIRequest.O.NewRequest&quot;"
       DefaultText="&quot;New Request&quot;"
-      LocalDefaultText="&quot;פתיחת בקשה&quot;"
+      LocalDefaultTextBack_up="&quot;פתיחת בקשה&quot;"
+      LocalDefaultText="&quot;BS64:Itek16rXmdeX16og15HXp9ep15Qi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.SIIRequest.O.CompletData&quot;"
       DefaultText="&quot;Completing application data&quot;"
-      LocalDefaultText="&quot;השלמת נתוני בקשה&quot;"
+      LocalDefaultTextBack_up="&quot;השלמת נתוני בקשה&quot;"
+      LocalDefaultText="&quot;BS64:IteU16nXnNee16og16DXqteV16DXmSDXkden16nXlCI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.SIIRequest.O.OpenRequest&quot;"
       DefaultText="&quot;Open SIIRequests&quot;"
-      LocalDefaultText="&quot;רשימת בקשות פתוחות&quot;"
+      LocalDefaultTextBack_up="&quot;רשימת בקשות פתוחות&quot;"
+      LocalDefaultText="&quot;BS64:Iteo16nXmdee16og15HXp9ep15XXqiDXpNeq15XXl9eV16oi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.SIIRequest.O.ClosedRequest&quot;"
       DefaultText="&quot;Closed SIIRequests&quot;"
-      LocalDefaultText="&quot;רשימת בקשות סגורות&quot;"
+      LocalDefaultTextBack_up="&quot;רשימת בקשות סגורות&quot;"
+      LocalDefaultText="&quot;BS64:Iteo16nXmdee16og15HXp9ep15XXqiDXodeS15XXqNeV16oi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.SIIRequest.O.AllRequest&quot;"
       DefaultText="&quot;All SIIRequests&quot;"
-      LocalDefaultText="&quot;הכל &quot;"
+      LocalDefaultTextBack_up="&quot;הכל &quot;"
+      LocalDefaultText="&quot;BS64:IteU15vXnCAi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
