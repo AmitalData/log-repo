@@ -10,10 +10,10 @@ namespace Logitude.Accounting.BL.CloseTables
 {
     public struct InterestEntityTypeValues
     {   
-       public const string חשבונית = "1";  
-       public const string קבלה = "2";  
-       public const string פקודתיומן = "3";  
-       public const string יתרתפתיחה = "4";  
+       public const string ARInvoice = "1";  
+       public const string ARPayment = "2";  
+       public const string Journal = "3";  
+       public const string OpenBalance = "4";  
     }
 }
 

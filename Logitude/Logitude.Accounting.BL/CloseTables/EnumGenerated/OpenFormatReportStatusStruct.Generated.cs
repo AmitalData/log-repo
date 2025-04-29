@@ -10,10 +10,10 @@ namespace Logitude.Accounting.BL.CloseTables
 {
     public struct OpenFormatReportStatusValues
     {   
-       public const string נוצר = "1";  
-       public const string בתהליך = "2";  
-       public const string הושלם = "3";  
-       public const string נכשל = "4";  
+       public const string Created = "1";  
+       public const string InProgress = "2";  
+       public const string Completed = "3";  
+       public const string Failed = "4";  
     }
 }
 

@@ -27,6 +27,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "1,כללי", 
                 Inactive = false, 
                 LocalName = "כללי", 
+                EnglishName = "general", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -35,6 +36,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "10,סלובקיה", 
                 Inactive = false, 
                 LocalName = "סלובקיה", 
+                EnglishName = "Slovakia", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -43,6 +45,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "11,הונגריה", 
                 Inactive = false, 
                 LocalName = "הונגריה", 
+                EnglishName = "Hungary", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -51,6 +54,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "12,פולין", 
                 Inactive = false, 
                 LocalName = "פולין", 
+                EnglishName = "Poland", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -59,6 +63,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "13,סלובניה", 
                 Inactive = false, 
                 LocalName = "סלובניה", 
+                EnglishName = "Slovenia", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -67,6 +72,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "14,מקסיקו", 
                 Inactive = false, 
                 LocalName = "מקסיקו", 
+                EnglishName = "Mexico", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -75,6 +81,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "15,רומניה", 
                 Inactive = false, 
                 LocalName = "רומניה", 
+                EnglishName = "Rumania", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -83,6 +90,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "16,בולגריה", 
                 Inactive = false, 
                 LocalName = "בולגריה", 
+                EnglishName = "Bulgaria", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -91,6 +99,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "17,איחוד", 
                 Inactive = false, 
                 LocalName = "איחוד", 
+                EnglishName = "ihud", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -99,6 +108,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "18,WTO", 
                 Inactive = false, 
                 LocalName = "WTO", 
+                EnglishName = "WTO", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -107,6 +117,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "19,ברזיל", 
                 Inactive = false, 
                 LocalName = "ברזיל", 
+                EnglishName = "Brazil", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -115,6 +126,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "2,איחוד מכסה", 
                 Inactive = false, 
                 LocalName = "איחוד מכסה", 
+                EnglishName = "Union Quota", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -123,6 +135,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "20,אורוגוואי", 
                 Inactive = false, 
                 LocalName = "אורוגוואי", 
+                EnglishName = "Uruguay", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -131,6 +144,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "21,פרגוואי", 
                 Inactive = false, 
                 LocalName = "פרגוואי", 
+                EnglishName = "Paraguay", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -139,6 +153,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "22,ארגנטינה", 
                 Inactive = false, 
                 LocalName = "ארגנטינה", 
+                EnglishName = "Argentina", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -147,6 +162,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "23,מדינות להסכם בנושא יצואן מאושר לתעודות מקור", 
                 Inactive = false, 
                 LocalName = "מדינות להסכם בנושא יצואן מאושר לתעודות מקור", 
+                EnglishName = "Countries to agree on approved exporter for certificates of origin", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -155,6 +171,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "24,מדינות שלא מתאימות להישבון", 
                 Inactive = false, 
                 LocalName = "מדינות שלא מתאימות להישבון", 
+                EnglishName = "Countries not suitable for settlement", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -163,6 +180,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "25,מדינות קרנה", 
                 Inactive = false, 
                 LocalName = "מדינות קרנה", 
+                EnglishName = "Karana countries", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -171,6 +189,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "26,מדינות רווחה", 
                 Inactive = false, 
                 LocalName = "מדינות רווחה", 
+                EnglishName = "Welfare States", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -179,6 +198,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "27,כל העולם", 
                 Inactive = false, 
                 LocalName = "כל העולם", 
+                EnglishName = "The whole world", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -187,6 +207,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "28,האיחוד האירופי", 
                 Inactive = false, 
                 LocalName = "האיחוד האירופי", 
+                EnglishName = "European Union", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -195,6 +216,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "29,מרקוסור", 
                 Inactive = false, 
                 LocalName = "מרקוסור", 
+                EnglishName = "Mercosur", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -203,6 +225,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "3,ארה''ב", 
                 Inactive = false, 
                 LocalName = "ארה''ב", 
+                EnglishName = "U_S", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -211,6 +234,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "4,ארצות ערב", 
                 Inactive = false, 
                 LocalName = "ארצות ערב", 
+                EnglishName = "Arab countries", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -219,6 +243,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "5,ירדן", 
                 Inactive = false, 
                 LocalName = "ירדן", 
+                EnglishName = "Jordan", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -227,6 +252,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "6,קנדה", 
                 Inactive = false, 
                 LocalName = "קנדה", 
+                EnglishName = "Canada", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -235,6 +261,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "7,אפט''א", 
                 Inactive = false, 
                 LocalName = "אפט''א", 
+                EnglishName = "Afta", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -243,6 +270,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "8,טורקיה", 
                 Inactive = false, 
                 LocalName = "טורקיה", 
+                EnglishName = "Turkey", 
 			});
 			 
             all.Add(new CountryGroupDetails()
@@ -251,6 +279,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "9,צכיה", 
                 Inactive = false, 
                 LocalName = "צכיה", 
+                EnglishName = "Czech Republic", 
 			});
 			
             return all;
@@ -261,12 +290,13 @@ namespace Logitude.Customs.BL
 		    newPoco.Code = this.Code;  
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Inactive = this.Inactive;  
-		    newPoco.LocalName = this.LocalName;   
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;   
         }
 
 		public string GetSearchFields(CountryGroup rec)
         {   
-           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
         }
    }
 }

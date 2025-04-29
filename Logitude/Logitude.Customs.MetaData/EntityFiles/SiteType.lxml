@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;84b8&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -136,6 +140,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -213,6 +218,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -290,6 +296,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -368,6 +375,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -444,6 +452,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -531,298 +540,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records>
-    <Record
-      Code="&quot;1&quot;"
-      SearchFields="&quot;1,נמל ימי&quot;"
-      Inactive="false"
-      LocalName="&quot;נמל ימי&quot;" />
-    <Record
-      Code="&quot;10&quot;"
-      SearchFields="&quot;10,מחסן מסירה לחוזרים מחו&quot;ל(פטור ושמור)&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן מסירה לחוזרים מחו&quot;ל(פטור ושמור)&quot;" />
-    <Record
-      Code="&quot;100&quot;"
-      SearchFields="&quot;100,אתר בדיקה לבית המכס&quot;"
-      Inactive="false"
-      LocalName="&quot;אתר בדיקה לבית המכס&quot;" />
-    <Record
-      Code="&quot;12&quot;"
-      SearchFields="&quot;12,משקף מכולות - רמפה&quot;"
-      Inactive="false"
-      LocalName="&quot;משקף מכולות - רמפה&quot;" />
-    <Record
-      Code="&quot;13&quot;"
-      SearchFields="&quot;13,מעבר יבשתי פנימי&quot;"
-      Inactive="false"
-      LocalName="&quot;מעבר יבשתי פנימי&quot;" />
-    <Record
-      Code="&quot;14&quot;"
-      SearchFields="&quot;14,תחנת מכס מעבר גבול בינלאומי&quot;"
-      Inactive="false"
-      LocalName="&quot;תחנת מכס מעבר גבול בינלאומי&quot;" />
-    <Record
-      Code="&quot;15&quot;"
-      SearchFields="&quot;15,מעבר גבול בינלאומי צבאי&quot;"
-      Inactive="false"
-      LocalName="&quot;מעבר גבול בינלאומי צבאי&quot;" />
-    <Record
-      Code="&quot;16&quot;"
-      SearchFields="&quot;16,תחנת מכס מעבר יבשתי פנימי קו תפר&quot;"
-      Inactive="false"
-      LocalName="&quot;תחנת מכס מעבר יבשתי פנימי קו תפר&quot;" />
-    <Record
-      Code="&quot;17&quot;"
-      SearchFields="&quot;17,תחנת מכס מעבר פנימי אס&quot;ח&quot;"
-      Inactive="false"
-      LocalName="&quot;תחנת מכס מעבר פנימי אס&quot;ח&quot;" />
-    <Record
-      Code="&quot;19&quot;"
-      SearchFields="&quot;19,בור בידוק כלי רכב במעבר גבול&quot;"
-      Inactive="false"
-      LocalName="&quot;בור בידוק כלי רכב במעבר גבול&quot;" />
-    <Record
-      Code="&quot;2&quot;"
-      SearchFields="&quot;2,בית מכס&quot;"
-      Inactive="false"
-      LocalName="&quot;בית מכס&quot;" />
-    <Record
-      Code="&quot;20&quot;"
-      SearchFields="&quot;20,מסוף דואר בנמל אווירי&quot;"
-      Inactive="false"
-      LocalName="&quot;מסוף דואר בנמל אווירי&quot;" />
-    <Record
-      Code="&quot;21&quot;"
-      SearchFields="&quot;21,בית מכס דואר חבילות&quot;"
-      Inactive="false"
-      LocalName="&quot;בית מכס דואר חבילות&quot;" />
-    <Record
-      Code="&quot;22&quot;"
-      SearchFields="&quot;22,אולם בדיקות במסוף מטען אווירי&quot;"
-      Inactive="false"
-      LocalName="&quot;אולם בדיקות במסוף מטען אווירי&quot;" />
-    <Record
-      Code="&quot;23&quot;"
-      SearchFields="&quot;23,שער נמל ימי&quot;"
-      Inactive="false"
-      LocalName="&quot;שער נמל ימי&quot;" />
-    <Record
-      Code="&quot;24&quot;"
-      SearchFields="&quot;24,מסוף מטען אווירי קדמי פנימי&quot;"
-      Inactive="false"
-      LocalName="&quot;מסוף מטען אווירי קדמי פנימי&quot;" />
-    <Record
-      Code="&quot;25&quot;"
-      SearchFields="&quot;25,תחנת מכס&quot;"
-      Inactive="false"
-      LocalName="&quot;תחנת מכס&quot;" />
-    <Record
-      Code="&quot;27&quot;"
-      SearchFields="&quot;27,תחנת מכס אולם נוסעים&quot;"
-      Inactive="false"
-      LocalName="&quot;תחנת מכס אולם נוסעים&quot;" />
-    <Record
-      Code="&quot;29&quot;"
-      SearchFields="&quot;29,אזור בידוק יבוא אישי באולם נוסעים&quot;"
-      Inactive="false"
-      LocalName="&quot;אזור בידוק יבוא אישי באולם נוסעים&quot;" />
-    <Record
-      Code="&quot;3&quot;"
-      SearchFields="&quot;3,מעבר גבול בינלאומי אזרחי&quot;"
-      Inactive="false"
-      LocalName="&quot;מעבר גבול בינלאומי אזרחי&quot;" />
-    <Record
-      Code="&quot;30&quot;"
-      SearchFields="&quot;30,מחסן מטענים כללי&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן מטענים כללי&quot;" />
-    <Record
-      Code="&quot;31&quot;"
-      SearchFields="&quot;31,מחסן רכב&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן רכב&quot;" />
-    <Record
-      Code="&quot;32&quot;"
-      SearchFields="&quot;32,אולם תצוגה/מחסן תצוגת כלי רכב&quot;"
-      Inactive="false"
-      LocalName="&quot;אולם תצוגה/מחסן תצוגת כלי רכב&quot;" />
-    <Record
-      Code="&quot;34&quot;"
-      SearchFields="&quot;34,אתר בדיקה&quot;"
-      Inactive="false"
-      LocalName="&quot;אתר בדיקה&quot;" />
-    <Record
-      Code="&quot;37&quot;"
-      SearchFields="&quot;37,מחסן כימיקלים&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן כימיקלים&quot;" />
-    <Record
-      Code="&quot;38&quot;"
-      SearchFields="&quot;38,מחסן דלק&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן דלק&quot;" />
-    <Record
-      Code="&quot;39&quot;"
-      SearchFields="&quot;39,ממגורות&quot;"
-      Inactive="false"
-      LocalName="&quot;ממגורות&quot;" />
-    <Record
-      Code="&quot;4&quot;"
-      SearchFields="&quot;4,נמל אוירי&quot;"
-      Inactive="false"
-      LocalName="&quot;נמל אוירי&quot;" />
-    <Record
-      Code="&quot;40&quot;"
-      SearchFields="&quot;40,מחסן לצידת אוניות וכלי טיס&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן לצידת אוניות וכלי טיס&quot;" />
-    <Record
-      Code="&quot;41&quot;"
-      SearchFields="&quot;41,מחסן מכירה ליוצאים מישראל&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן מכירה ליוצאים מישראל&quot;" />
-    <Record
-      Code="&quot;42&quot;"
-      SearchFields="&quot;42,מחסן בלדר בתוך נמל אווירי&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן בלדר בתוך נמל אווירי&quot;" />
-    <Record
-      Code="&quot;43&quot;"
-      SearchFields="&quot;43,מחסן בלדר מחוץ לנמל אווירי&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן בלדר מחוץ לנמל אווירי&quot;" />
-    <Record
-      Code="&quot;44&quot;"
-      SearchFields="&quot;44,מחסן תפיסות&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן תפיסות&quot;" />
-    <Record
-      Code="&quot;45&quot;"
-      SearchFields="&quot;45,אתר מכירה (סבנים)&quot;"
-      Inactive="false"
-      LocalName="&quot;אתר מכירה (סבנים)&quot;" />
-    <Record
-      Code="&quot;46&quot;"
-      SearchFields="&quot;46,תחנת מעבר מטעני רכבת&quot;"
-      Inactive="false"
-      LocalName="&quot;תחנת מעבר מטעני רכבת&quot;" />
-    <Record
-      Code="&quot;47&quot;"
-      SearchFields="&quot;47,רמפת בידוק מכולות/מטענים&quot;"
-      Inactive="false"
-      LocalName="&quot;רמפת בידוק מכולות/מטענים&quot;" />
-    <Record
-      Code="&quot;48&quot;"
-      SearchFields="&quot;48,אתר בידוק באתר אחסון בפיקוח המכס&quot;"
-      Inactive="false"
-      LocalName="&quot;אתר בידוק באתר אחסון בפיקוח המכס&quot;" />
-    <Record
-      Code="&quot;49&quot;"
-      SearchFields="&quot;49,אתר בידוק באתר בפיקוח המכס&quot;"
-      Inactive="false"
-      LocalName="&quot;אתר בידוק באתר בפיקוח המכס&quot;" />
-    <Record
-      Code="&quot;5&quot;"
-      SearchFields="&quot;5,דואר חבילות מרכזי&quot;"
-      Inactive="false"
-      LocalName="&quot;דואר חבילות מרכזי&quot;" />
-    <Record
-      Code="&quot;51&quot;"
-      SearchFields="&quot;51,משקף מכולות - משקף&quot;"
-      Inactive="false"
-      LocalName="&quot;משקף מכולות - משקף&quot;" />
-    <Record
-      Code="&quot;53&quot;"
-      SearchFields="&quot;53,מחסן דיוטיפרי&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן דיוטיפרי&quot;" />
-    <Record
-      Code="&quot;54&quot;"
-      SearchFields="&quot;54,מרינה/מעגן סירות&quot;"
-      Inactive="false"
-      LocalName="&quot;מרינה/מעגן סירות&quot;" />
-    <Record
-      Code="&quot;55&quot;"
-      SearchFields="&quot;55,מחסן לוגיסטי&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן לוגיסטי&quot;" />
-    <Record
-      Code="&quot;56&quot;"
-      SearchFields="&quot;56,מחסן קרור&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן קרור&quot;" />
-    <Record
-      Code="&quot;57&quot;"
-      SearchFields="&quot;57,מחסן להספקת ציוד אלקטרוני לאניות&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן להספקת ציוד אלקטרוני לאניות&quot;" />
-    <Record
-      Code="&quot;58&quot;"
-      SearchFields="&quot;58,נמל פריקה דלק&quot;"
-      Inactive="false"
-      LocalName="&quot;נמל פריקה דלק&quot;" />
-    <Record
-      Code="&quot;59&quot;"
-      SearchFields="&quot;59,מחסן מסוף קירור&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן מסוף קירור&quot;" />
-    <Record
-      Code="&quot;6&quot;"
-      SearchFields="&quot;6,מחסן רשוי&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן רשוי&quot;" />
-    <Record
-      Code="&quot;60&quot;"
-      SearchFields="&quot;60,מחסן מטעני עולים&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן מטעני עולים&quot;" />
-    <Record
-      Code="&quot;61&quot;"
-      SearchFields="&quot;61,דואר משרד הבטחון&quot;"
-      Inactive="false"
-      LocalName="&quot;דואר משרד הבטחון&quot;" />
-    <Record
-      Code="&quot;62&quot;"
-      SearchFields="&quot;62,דואר דיפלומטים&quot;"
-      Inactive="false"
-      LocalName="&quot;דואר דיפלומטים&quot;" />
-    <Record
-      Code="&quot;63&quot;"
-      SearchFields="&quot;63,מחסן מתכות יקרות&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן מתכות יקרות&quot;" />
-    <Record
-      Code="&quot;64&quot;"
-      SearchFields="&quot;64,נמל פריקה פחם&quot;"
-      Inactive="false"
-      LocalName="&quot;נמל פריקה פחם&quot;" />
-    <Record
-      Code="&quot;65&quot;"
-      SearchFields="&quot;65,מחסן צידה לדיפלומטים&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן צידה לדיפלומטים&quot;" />
-    <Record
-      Code="&quot;66&quot;"
-      SearchFields="&quot;66,מסוף מטען אווירי חיצוני&quot;"
-      Inactive="false"
-      LocalName="&quot;מסוף מטען אווירי חיצוני&quot;" />
-    <Record
-      Code="&quot;7&quot;"
-      SearchFields="&quot;7,מסוף מטען עורפי חיצוני ימי&quot;"
-      Inactive="false"
-      LocalName="&quot;מסוף מטען עורפי חיצוני ימי&quot;" />
-    <Record
-      Code="&quot;70&quot;"
-      SearchFields="&quot;70,מסוף מטען עורפי חיצוני יבשתי&quot;"
-      Inactive="false"
-      LocalName="&quot;מסוף מטען עורפי חיצוני יבשתי&quot;" />
-    <Record
-      Code="&quot;8&quot;"
-      SearchFields="&quot;8,מחסן משהב&quot;ט&quot;"
-      Inactive="false"
-      LocalName="&quot;מחסן משהב&quot;ט&quot;" />
-  </Records>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

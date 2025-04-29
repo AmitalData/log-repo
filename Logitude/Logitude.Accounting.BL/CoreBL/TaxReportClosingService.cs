@@ -307,7 +307,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private void SetTaxReportAsTransmittedAndClosingJournal()
         {
-            taxReportPM.StatusCode = VatReportStatusValues.TransmittedAndClosingJournal;
+            taxReportPM.StatusCode = VatReportStatusValues.Transmittedandaclosingjournalwascreated;
 
             DateTime stopLogAt = new DateTime(2023, 06, 01);
             string text = "TaxReportClosingservice.SetTaxReportAsTransmittedAndClosingJournal(*1*): " + taxReportPM.Id + " taxReportPM.StatusCode : " + taxReportPM.StatusCode;

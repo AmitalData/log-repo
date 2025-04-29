@@ -10,8 +10,9 @@ namespace Logitude.Accounting.BL.CloseTables
 {
     public struct RevaluationStatusValues
     {   
-       public const string בתהליך = "1";  
-       public const string הסתיים = "2";  
+       public const string InProgress = "1";  
+       public const string Done = "2";  
+       public const string Failed = "3";  
     }
 }
 

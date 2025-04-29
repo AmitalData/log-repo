@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct CheckQueueTypeValues
     {   
+       public const string Reflect = "1";  
+       public const string Customs = "2";  
+       public const string ReflectANDCustoms = "3";  
     }
 }
 

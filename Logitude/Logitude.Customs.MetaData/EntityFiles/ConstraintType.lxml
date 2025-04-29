@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -58,6 +61,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;a1dc&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -136,6 +140,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -212,6 +217,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -288,6 +294,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -361,6 +368,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -437,6 +445,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -524,468 +533,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records>
-    <Record
-      Code="&quot;1&quot;"
-      SearchFields="&quot;1,לא קיימת רשומת שטר מטען במצהר ימי&quot;"
-      Inactive="false"
-      LocalName="&quot;לא קיימת רשומת שטר מטען במצהר ימי&quot;" />
-    <Record
-      Code="&quot;10&quot;"
-      SearchFields="&quot;10,יבואן שח&quot;מ אינו זהה ליבואן כנ&quot;מ&quot;"
-      Inactive="false"
-      LocalName="&quot;יבואן שח&quot;מ אינו זהה ליבואן כנ&quot;מ&quot;" />
-    <Record
-      Code="&quot;1024&quot;"
-      SearchFields="&quot;1024,בדיקת חובות יבואן  - מס רכוש&quot;"
-      Inactive="false"
-      LocalName="&quot;בדיקת חובות יבואן  - מס רכוש&quot;" />
-    <Record
-      Code="&quot;1025&quot;"
-      SearchFields="&quot;1025,בדיקת חובות יבואן  - מס שבח&quot;"
-      Inactive="false"
-      LocalName="&quot;בדיקת חובות יבואן  - מס שבח&quot;" />
-    <Record
-      Code="&quot;1026&quot;"
-      SearchFields="&quot;1026,יבואן/יבואן מעביר חייב ניכויים&quot;"
-      Inactive="false"
-      LocalName="&quot;יבואן/יבואן מעביר חייב ניכויים&quot;" />
-    <Record
-      Code="&quot;1027&quot;"
-      SearchFields="&quot;1027,יבואן/יבואן מעביר חייב מס הכנסה&quot;"
-      Inactive="false"
-      LocalName="&quot;יבואן/יבואן מעביר חייב מס הכנסה&quot;" />
-    <Record
-      Code="&quot;1028&quot;"
-      SearchFields="&quot;1028,יבואן/יבואן מעביר בהצהרה חייב מע&quot;מ&quot;"
-      Inactive="false"
-      LocalName="&quot;יבואן/יבואן מעביר בהצהרה חייב מע&quot;מ&quot;" />
-    <Record
-      Code="&quot;1034&quot;"
-      SearchFields="&quot;1034,1034&quot;"
-      Inactive="false"
-      LocalName="&quot;1034&quot;" />
-    <Record
-      Code="&quot;1036&quot;"
-      SearchFields="&quot;1036,1036&quot;"
-      Inactive="false"
-      LocalName="&quot;1036&quot;" />
-    <Record
-      Code="&quot;1043&quot;"
-      SearchFields="&quot;1043,אין התאמה בין בית מכס מטפל בהצהרה לבין בית המכס האחראי על אתר האחסון&quot;"
-      Inactive="false"
-      LocalName="&quot;אין התאמה בין בית מכס מטפל בהצהרה לבין בית המכס האחראי על אתר האחסון&quot;" />
-    <Record
-      Code="&quot;1052&quot;"
-      SearchFields="&quot;1052,1052&quot;"
-      Inactive="false"
-      LocalName="&quot;1052&quot;" />
-    <Record
-      Code="&quot;1061&quot;"
-      SearchFields="&quot;1061,1061&quot;"
-      Inactive="false"
-      LocalName="&quot;1061&quot;" />
-    <Record
-      Code="&quot;1068&quot;"
-      SearchFields="&quot;1068,1068&quot;"
-      Inactive="false"
-      LocalName="&quot;1068&quot;" />
-    <Record
-      Code="&quot;1085011&quot;"
-      SearchFields="&quot;1085011,1085011&quot;"
-      Inactive="false"
-      LocalName="&quot;1085011&quot;" />
-    <Record
-      Code="&quot;1085041&quot;"
-      SearchFields="&quot;1085041,1085041&quot;"
-      Inactive="false"
-      LocalName="&quot;1085041&quot;" />
-    <Record
-      Code="&quot;108525&quot;"
-      SearchFields="&quot;108525,108525&quot;"
-      Inactive="false"
-      LocalName="&quot;108525&quot;" />
-    <Record
-      Code="&quot;11&quot;"
-      SearchFields="&quot;11,קוד מטבע בשח&quot;מ שונה מהקוד בכנ&quot;מ&quot;"
-      Inactive="false"
-      LocalName="&quot;קוד מטבע בשח&quot;מ שונה מהקוד בכנ&quot;מ&quot;" />
-    <Record
-      Code="&quot;1103&quot;"
-      SearchFields="&quot;1103,1103&quot;"
-      Inactive="false"
-      LocalName="&quot;1103&quot;" />
-    <Record
-      Code="&quot;1181&quot;"
-      SearchFields="&quot;1181,קוד מטבע ברשימון כנ&quot;ם שונה מהקוד בשח&quot;ם&quot;"
-      Inactive="false"
-      LocalName="&quot;קוד מטבע ברשימון כנ&quot;ם שונה מהקוד בשח&quot;ם&quot;" />
-    <Record
-      Code="&quot;1199&quot;"
-      SearchFields="&quot;1199,יבואן בהצהרת שח&quot;ם אינו זהה ליבואן כנ&quot;ם&quot;"
-      Inactive="false"
-      LocalName="&quot;יבואן בהצהרת שח&quot;ם אינו זהה ליבואן כנ&quot;ם&quot;" />
-    <Record
-      Code="&quot;12&quot;"
-      SearchFields="&quot;12,בגוש במחסן נשארות אריזות והמט&quot;ח התאפס או אין אריזות&quot;"
-      Inactive="false"
-      LocalName="&quot;בגוש במחסן נשארות אריזות והמט&quot;ח התאפס או אין אריזות&quot;" />
-    <Record
-      Code="&quot;1210&quot;"
-      SearchFields="&quot;1210,אי-התאמה בפרט בין הצהרת הכנ&quot;מ לשח&quot;מ&quot;"
-      Inactive="false"
-      LocalName="&quot;אי-התאמה בפרט בין הצהרת הכנ&quot;מ לשח&quot;מ&quot;" />
-    <Record
-      Code="&quot;1215&quot;"
-      SearchFields="&quot;1215,1215&quot;"
-      Inactive="false"
-      LocalName="&quot;1215&quot;" />
-    <Record
-      Code="&quot;1217&quot;"
-      SearchFields="&quot;1217,שימוש כפול במזהה רכב בהצהרות שונות&quot;"
-      Inactive="false"
-      LocalName="&quot;שימוש כפול במזהה רכב בהצהרות שונות&quot;" />
-    <Record
-      Code="&quot;1237&quot;"
-      SearchFields="&quot;1237,היבואן הוא יבואן שחייב לשדר את זיהוי הרכב עם רכבית&quot;"
-      Inactive="false"
-      LocalName="&quot;היבואן הוא יבואן שחייב לשדר את זיהוי הרכב עם רכבית&quot;" />
-    <Record
-      Code="&quot;1248&quot;"
-      SearchFields="&quot;1248,שגיאה במלל ופלט השגיאה בבדיקת הצהרה&quot;"
-      Inactive="false"
-      LocalName="&quot;שגיאה במלל ופלט השגיאה בבדיקת הצהרה&quot;" />
-    <Record
-      Code="&quot;1249&quot;"
-      SearchFields="&quot;1249,1249&quot;"
-      Inactive="false"
-      LocalName="&quot;1249&quot;" />
-    <Record
-      Code="&quot;13&quot;"
-      SearchFields="&quot;13,יבואן/יבואן מעביר חייב מע&quot;מ&quot;"
-      Inactive="false"
-      LocalName="&quot;יבואן/יבואן מעביר חייב מע&quot;מ&quot;" />
-    <Record
-      Code="&quot;1320&quot;"
-      SearchFields="&quot;1320,1320&quot;"
-      Inactive="false"
-      LocalName="&quot;1320&quot;" />
-    <Record
-      Code="&quot;1377&quot;"
-      SearchFields="&quot;1377,1377&quot;"
-      Inactive="false"
-      LocalName="&quot;1377&quot;" />
-    <Record
-      Code="&quot;1379&quot;"
-      SearchFields="&quot;1379,1379&quot;"
-      Inactive="false"
-      LocalName="&quot;1379&quot;" />
-    <Record
-      Code="&quot;1393&quot;"
-      SearchFields="&quot;1393,1393&quot;"
-      Inactive="false"
-      LocalName="&quot;1393&quot;" />
-    <Record
-      Code="&quot;14&quot;"
-      SearchFields="&quot;14,יבואן/יבואן מעביר לא ברשת מע&quot;מ&quot;"
-      Inactive="false"
-      LocalName="&quot;יבואן/יבואן מעביר לא ברשת מע&quot;מ&quot;" />
-    <Record
-      Code="&quot;1401&quot;"
-      SearchFields="&quot;1401,נתוני פקודת מסירה חסרים&quot;"
-      Inactive="false"
-      LocalName="&quot;נתוני פקודת מסירה חסרים&quot;" />
-    <Record
-      Code="&quot;1402&quot;"
-      SearchFields="&quot;1402,נתוני פקודת מסירה חסרים שגויים&quot;"
-      Inactive="false"
-      LocalName="&quot;נתוני פקודת מסירה חסרים שגויים&quot;" />
-    <Record
-      Code="&quot;1426&quot;"
-      SearchFields="&quot;1426,1426&quot;"
-      Inactive="false"
-      LocalName="&quot;1426&quot;" />
-    <Record
-      Code="&quot;1427&quot;"
-      SearchFields="&quot;1427,1427&quot;"
-      Inactive="false"
-      LocalName="&quot;1427&quot;" />
-    <Record
-      Code="&quot;1433&quot;"
-      SearchFields="&quot;1433,1433&quot;"
-      Inactive="false"
-      LocalName="&quot;1433&quot;" />
-    <Record
-      Code="&quot;1435&quot;"
-      SearchFields="&quot;1435,1435&quot;"
-      Inactive="false"
-      LocalName="&quot;1435&quot;" />
-    <Record
-      Code="&quot;1489&quot;"
-      SearchFields="&quot;1489,1489&quot;"
-      Inactive="false"
-      LocalName="&quot;1489&quot;" />
-    <Record
-      Code="&quot;15&quot;"
-      SearchFields="&quot;15,יבואן חייב מס הכנסה&quot;"
-      Inactive="false"
-      LocalName="&quot;יבואן חייב מס הכנסה&quot;" />
-    <Record
-      Code="&quot;1535&quot;"
-      SearchFields="&quot;1535,1535&quot;"
-      Inactive="false"
-      LocalName="&quot;1535&quot;" />
-    <Record
-      Code="&quot;1536&quot;"
-      SearchFields="&quot;1536,1536&quot;"
-      Inactive="false"
-      LocalName="&quot;1536&quot;" />
-    <Record
-      Code="&quot;1537&quot;"
-      SearchFields="&quot;1537,1537&quot;"
-      Inactive="false"
-      LocalName="&quot;1537&quot;" />
-    <Record
-      Code="&quot;16&quot;"
-      SearchFields="&quot;16,יבואן חייב ניכויים&quot;"
-      Inactive="false"
-      LocalName="&quot;יבואן חייב ניכויים&quot;" />
-    <Record
-      Code="&quot;1622&quot;"
-      SearchFields="&quot;1622,1622&quot;"
-      Inactive="false"
-      LocalName="&quot;1622&quot;" />
-    <Record
-      Code="&quot;1628&quot;"
-      SearchFields="&quot;1628,תאימות בין מדינת חשבון לקוד הסכם&quot;"
-      Inactive="false"
-      LocalName="&quot;תאימות בין מדינת חשבון לקוד הסכם&quot;" />
-    <Record
-      Code="&quot;1675&quot;"
-      SearchFields="&quot;1675,1675&quot;"
-      Inactive="false"
-      LocalName="&quot;1675&quot;" />
-    <Record
-      Code="&quot;1698&quot;"
-      SearchFields="&quot;1698,1698&quot;"
-      Inactive="false"
-      LocalName="&quot;1698&quot;" />
-    <Record
-      Code="&quot;17&quot;"
-      SearchFields="&quot;17,יבואן חייב מס שבח&quot;"
-      Inactive="false"
-      LocalName="&quot;יבואן חייב מס שבח&quot;" />
-    <Record
-      Code="&quot;1700&quot;"
-      SearchFields="&quot;1700,לא ניתן להגיש הצהרה יבוא הממירה קרנה לאחר שתם תוקף הקרנה&quot;"
-      Inactive="false"
-      LocalName="&quot;לא ניתן להגיש הצהרה יבוא הממירה קרנה לאחר שתם תוקף הקרנה&quot;" />
-    <Record
-      Code="&quot;1712&quot;"
-      SearchFields="&quot;1712,1712&quot;"
-      Inactive="false"
-      LocalName="&quot;1712&quot;" />
-    <Record
-      Code="&quot;1720&quot;"
-      SearchFields="&quot;1720,1720&quot;"
-      Inactive="false"
-      LocalName="&quot;1720&quot;" />
-    <Record
-      Code="&quot;1721&quot;"
-      SearchFields="&quot;1721,1721&quot;"
-      Inactive="false"
-      LocalName="&quot;1721&quot;" />
-    <Record
-      Code="&quot;1728&quot;"
-      SearchFields="&quot;1728,1728&quot;"
-      Inactive="false"
-      LocalName="&quot;1728&quot;" />
-    <Record
-      Code="&quot;1739&quot;"
-      SearchFields="&quot;1739,1739&quot;"
-      Inactive="false"
-      LocalName="&quot;1739&quot;" />
-    <Record
-      Code="&quot;1754&quot;"
-      SearchFields="&quot;1754,הצרופה איננה מקורית&quot;"
-      Inactive="false"
-      LocalName="&quot;הצרופה איננה מקורית&quot;" />
-    <Record
-      Code="&quot;1755&quot;"
-      SearchFields="&quot;1755,סוג האריזה  אסור ליבוא במסירה ישירה למצהר ימי&quot;"
-      Inactive="false"
-      LocalName="&quot;סוג האריזה  אסור ליבוא במסירה ישירה למצהר ימי&quot;" />
-    <Record
-      Code="&quot;1757&quot;"
-      SearchFields="&quot;1757,פרט המכס הינו חומר מסוכן אשר אסור לשהייה בנמל והינו אסור למסירה ישירה&quot;"
-      Inactive="false"
-      LocalName="&quot;פרט המכס הינו חומר מסוכן אשר אסור לשהייה בנמל והינו אסור למסירה ישירה&quot;" />
-    <Record
-      Code="&quot;1768&quot;"
-      SearchFields="&quot;1768,1768&quot;"
-      Inactive="false"
-      LocalName="&quot;1768&quot;" />
-    <Record
-      Code="&quot;1773&quot;"
-      SearchFields="&quot;1773,יש למלא את פרטי הגופה בשדות שם יבואן וכתובת יבואן&quot;"
-      Inactive="false"
-      LocalName="&quot;יש למלא את פרטי הגופה בשדות שם יבואן וכתובת יבואן&quot;" />
-    <Record
-      Code="&quot;1791&quot;"
-      SearchFields="&quot;1791,אילוץ מסירה ישירה&quot;"
-      Inactive="false"
-      LocalName="&quot;אילוץ מסירה ישירה&quot;" />
-    <Record
-      Code="&quot;1793&quot;"
-      SearchFields="&quot;1793,מספר זיהוי הרכב בהצהרה שונה ממספר זיהוי הרכב במ.ב. 161&quot;"
-      Inactive="false"
-      LocalName="&quot;מספר זיהוי הרכב בהצהרה שונה ממספר זיהוי הרכב במ.ב. 161&quot;" />
-    <Record
-      Code="&quot;1794&quot;"
-      SearchFields="&quot;1794,זיהוי היבואן בהצהרה שונה מזיהוי היבואן  במ.ב. 161&quot;"
-      Inactive="false"
-      LocalName="&quot;זיהוי היבואן בהצהרה שונה מזיהוי היבואן  במ.ב. 161&quot;" />
-    <Record
-      Code="&quot;1797&quot;"
-      SearchFields="&quot;1797,תהליך מסירה ישירה באוויר מחייב אילוץ הגשה&quot;"
-      Inactive="false"
-      LocalName="&quot;תהליך מסירה ישירה באוויר מחייב אילוץ הגשה&quot;" />
-    <Record
-      Code="&quot;18&quot;"
-      SearchFields="&quot;18,לא עמד בתנאי הרישיון&quot;"
-      Inactive="false"
-      LocalName="&quot;לא עמד בתנאי הרישיון&quot;" />
-    <Record
-      Code="&quot;1807&quot;"
-      SearchFields="&quot;1807,בהצהרה קיים אישור זכאות מילולית המחייב בדיקה ידנית&quot;"
-      Inactive="false"
-      LocalName="&quot;בהצהרה קיים אישור זכאות מילולית המחייב בדיקה ידנית&quot;" />
-    <Record
-      Code="&quot;1819&quot;"
-      SearchFields="&quot;1819,1819&quot;"
-      Inactive="false"
-      LocalName="&quot;1819&quot;" />
-    <Record
-      Code="&quot;1843&quot;"
-      SearchFields="&quot;1843,1843&quot;"
-      Inactive="false"
-      LocalName="&quot;1843&quot;" />
-    <Record
-      Code="&quot;19&quot;"
-      SearchFields="&quot;19,לא עמד בתנאי יצוא מוחזר&quot;"
-      Inactive="false"
-      LocalName="&quot;לא עמד בתנאי יצוא מוחזר&quot;" />
-    <Record
-      Code="&quot;2&quot;"
-      SearchFields="&quot;2,ארץ אסורה ביבוא&quot;"
-      Inactive="false"
-      LocalName="&quot;ארץ אסורה ביבוא&quot;" />
-    <Record
-      Code="&quot;20&quot;"
-      SearchFields="&quot;20,בדיקת קיום אישור פטור (תרומות לרש&quot;פ)&quot;"
-      Inactive="false"
-      LocalName="&quot;בדיקת קיום אישור פטור (תרומות לרש&quot;פ)&quot;" />
-    <Record
-      Code="&quot;21&quot;"
-      SearchFields="&quot;21,לשכת שירות ת&quot;א&quot;"
-      Inactive="false"
-      LocalName="&quot;לשכת שירות ת&quot;א&quot;" />
-    <Record
-      Code="&quot;22&quot;"
-      SearchFields="&quot;22,ציוד תקשורת בפט&quot;מ&quot;"
-      Inactive="false"
-      LocalName="&quot;ציוד תקשורת בפט&quot;מ&quot;" />
-    <Record
-      Code="&quot;23&quot;"
-      SearchFields="&quot;23,שחרור מפוצל בנמלים שונים&quot;"
-      Inactive="false"
-      LocalName="&quot;שחרור מפוצל בנמלים שונים&quot;" />
-    <Record
-      Code="&quot;24&quot;"
-      SearchFields="&quot;24,אי-התאמה בין ש/מ פרטני לנתוני הרשימון&quot;"
-      Inactive="false"
-      LocalName="&quot;אי-התאמה בין ש/מ פרטני לנתוני הרשימון&quot;" />
-    <Record
-      Code="&quot;25&quot;"
-      SearchFields="&quot;25,רשימון עם פרט מהותי פט&quot;מ&quot;"
-      Inactive="false"
-      LocalName="&quot;רשימון עם פרט מהותי פט&quot;מ&quot;" />
-    <Record
-      Code="&quot;26&quot;"
-      SearchFields="&quot;26,אי-הזנת רישיון ברשימון&quot;"
-      Inactive="false"
-      LocalName="&quot;אי-הזנת רישיון ברשימון&quot;" />
-    <Record
-      Code="&quot;27&quot;"
-      SearchFields="&quot;27,תאריך תוקף גדול מתאריך גמר פריקה&quot;"
-      Inactive="false"
-      LocalName="&quot;תאריך תוקף גדול מתאריך גמר פריקה&quot;" />
-    <Record
-      Code="&quot;28&quot;"
-      SearchFields="&quot;28,שחרור לפי סיווג רכב בתהליך ברמת סחורה שאינו רכב&quot;"
-      Inactive="false"
-      LocalName="&quot;שחרור לפי סיווג רכב בתהליך ברמת סחורה שאינו רכב&quot;" />
-    <Record
-      Code="&quot;29&quot;"
-      SearchFields="&quot;29,הצהרת היבוא בתהליך כנ&quot;מ/אח&quot;מ הינו בסטטוס שאינו מאפשר הגשת הצהרת היבוא בתהליך שח&quot;מ&quot;"
-      Inactive="false"
-      LocalName="&quot;הצהרת היבוא בתהליך כנ&quot;מ/אח&quot;מ הינו בסטטוס שאינו מאפשר הגשת הצהרת היבוא בתהליך שח&quot;מ&quot;" />
-    <Record
-      Code="&quot;3&quot;"
-      SearchFields="&quot;3,מסירה ישירה&quot;"
-      Inactive="false"
-      LocalName="&quot;מסירה ישירה&quot;" />
-    <Record
-      Code="&quot;30&quot;"
-      SearchFields="&quot;30,אילוץ לבדיקה 1516 - כמות בפרט אינה תואמת ליחידת מידה (שבר עשרוני)&quot;"
-      Inactive="false"
-      LocalName="&quot;אילוץ לבדיקה 1516 - כמות בפרט אינה תואמת ליחידת מידה (שבר עשרוני)&quot;" />
-    <Record
-      Code="&quot;31&quot;"
-      SearchFields="&quot;31,אילוץ לבדיקה 1526 - פרטי מכס מסוג רכב ניתן לשחרר רק כאשר התהליך הוא רכב&quot;"
-      Inactive="false"
-      LocalName="&quot;אילוץ לבדיקה 1526 - פרטי מכס מסוג רכב ניתן לשחרר רק כאשר התהליך הוא רכב&quot;" />
-    <Record
-      Code="&quot;32&quot;"
-      SearchFields="&quot;32,אילוץ לבדיקה 1418 - נעשה שימוש במזהה עסקה יבשתי בהצהרת יבוא קודמת&quot;"
-      Inactive="false"
-      LocalName="&quot;אילוץ לבדיקה 1418 - נעשה שימוש במזהה עסקה יבשתי בהצהרת יבוא קודמת&quot;" />
-    <Record
-      Code="&quot;33&quot;"
-      SearchFields="&quot;33,אילוץ לבדיקה 1403 - לעסקה קיימת תנועה שהוגשה בעבר&quot;"
-      Inactive="false"
-      LocalName="&quot;אילוץ לבדיקה 1403 - לעסקה קיימת תנועה שהוגשה בעבר&quot;" />
-    <Record
-      Code="&quot;34&quot;"
-      SearchFields="&quot;34,סחורה מסוג בעלי חיים חייבת באישור וטרינרי של משרד החקלאות על מנת לקבל התרה&quot;"
-      Inactive="false"
-      LocalName="&quot;סחורה מסוג בעלי חיים חייבת באישור וטרינרי של משרד החקלאות על מנת לקבל התרה&quot;" />
-    <Record
-      Code="&quot;4&quot;"
-      SearchFields="&quot;4,חוסר בצרופה&quot;"
-      Inactive="false"
-      LocalName="&quot;חוסר בצרופה&quot;" />
-    <Record
-      Code="&quot;5&quot;"
-      SearchFields="&quot;5,חוסר ברשיון&quot;"
-      Inactive="false"
-      LocalName="&quot;חוסר ברשיון&quot;" />
-    <Record
-      Code="&quot;6&quot;"
-      SearchFields="&quot;6,לשטר מטען הוגש רשימון&quot;"
-      Inactive="false"
-      LocalName="&quot;לשטר מטען הוגש רשימון&quot;" />
-    <Record
-      Code="&quot;7&quot;"
-      SearchFields="&quot;7,תחנת מכס להגשה שונה מזו שמטפלת באתר אחסון&quot;"
-      Inactive="false"
-      LocalName="&quot;תחנת מכס להגשה שונה מזו שמטפלת באתר אחסון&quot;" />
-    <Record
-      Code="&quot;8&quot;"
-      SearchFields="&quot;8,קביעת ערבות ע&quot;י ממונה תש&quot;ר&quot;"
-      Inactive="false"
-      LocalName="&quot;קביעת ערבות ע&quot;י ממונה תש&quot;ר&quot;" />
-  </Records>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

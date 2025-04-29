@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct AutonomyTypeValues
     {   
+       public const string PAStaffingAutonomy = "1";  
+       public const string Otonomyareshpeaza = "2";  
+       public const string Israel_notautonomy = "3";  
     }
 }
 

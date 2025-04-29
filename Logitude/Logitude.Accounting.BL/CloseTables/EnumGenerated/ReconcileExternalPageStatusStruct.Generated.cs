@@ -10,9 +10,9 @@ namespace Logitude.Accounting.BL.CloseTables
 {
     public struct ReconcileExternalPageStatusValues
     {   
-       public const string טיוטה = "1";  
-       public const string מאושר = "2";  
-       public const string מבוטל = "3";  
+       public const string Draft = "1";  
+       public const string Approved = "2";  
+       public const string Cancelled = "3";  
     }
 }
 

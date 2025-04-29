@@ -27,7 +27,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "1", 
                 Inactive = false, 
                 LocalName = "111", 
-                EnglishName = "11", 
+                EnglishName = "One", 
 			});
 			 
             all.Add(new CommunicationTypeDetails()
@@ -36,6 +36,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "AH,אתר אינטרנט", 
                 Inactive = false, 
                 LocalName = "אתר אינטרנט", 
+                EnglishName = "website", 
 			});
 			 
             all.Add(new CommunicationTypeDetails()
@@ -44,6 +45,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "AL,נייד", 
                 Inactive = false, 
                 LocalName = "נייד", 
+                EnglishName = "Mobile", 
 			});
 			 
             all.Add(new CommunicationTypeDetails()
@@ -52,6 +54,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "EM,דואר אלקטרוני", 
                 Inactive = false, 
                 LocalName = "דואר אלקטרוני", 
+                EnglishName = "Email", 
 			});
 			 
             all.Add(new CommunicationTypeDetails()
@@ -60,6 +63,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "FX,פקס", 
                 Inactive = false, 
                 LocalName = "פקס", 
+                EnglishName = "fax", 
 			});
 			 
             all.Add(new CommunicationTypeDetails()
@@ -68,6 +72,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "TE,נייח", 
                 Inactive = false, 
                 LocalName = "נייח", 
+                EnglishName = "landline", 
 			});
 			
             return all;

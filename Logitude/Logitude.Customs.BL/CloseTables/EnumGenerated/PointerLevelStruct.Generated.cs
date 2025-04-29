@@ -10,6 +10,9 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct PointerLevelValues
     {   
+       public const string Supplierinvoice = "I";  
+       public const string Classifaicationcode = "P";  
+       public const string Declaration = "D";  
     }
 }
 

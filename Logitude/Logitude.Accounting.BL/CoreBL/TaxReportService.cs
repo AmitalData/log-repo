@@ -1125,8 +1125,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     //update entity
                     TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                     taxReport.ChangeSetOp = ChangeSetOperation.Update;
-                    if (taxReport.StatusCode != VatReportStatusValues.TransmittedAndClosingJournal)
-                    {
+                    if (taxReport.StatusCode != VatReportStatusValues.Transmittedandaclosingjournalwascreated)
+                    {   
                         taxReport.StatusCode = VatReportStatusValues.Transmitted;
 
                         DateTime stopLogAt = new DateTime(2023, 06, 01);
@@ -1144,7 +1144,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                     taxReport.ChangeSetOp = ChangeSetOperation.Update;
                     taxReport.NeedsRebulid = true;
-                    if (taxReport.StatusCode != VatReportStatusValues.TransmittedAndClosingJournal)
+                    if (taxReport.StatusCode != VatReportStatusValues.Transmittedandaclosingjournalwascreated)
                     {
                         taxReport.StatusCode = VatReportStatusValues.Transmitted;
 

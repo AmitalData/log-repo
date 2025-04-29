@@ -27,6 +27,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "1,אוטונומיה רש''פ איוש", 
                 Inactive = false, 
                 LocalName = "אוטונומיה רש''פ איוש", 
+                EnglishName = "PA Staffing Autonomy", 
 			});
 			 
             all.Add(new AutonomyTypeDetails()
@@ -35,6 +36,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "2,אוטונומיה רש''פ עזה", 
                 Inactive = false, 
                 LocalName = "אוטונומיה רש''פ עזה", 
+                EnglishName = "Otonomya reshpe aza", 
 			});
 			 
             all.Add(new AutonomyTypeDetails()
@@ -43,6 +45,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "3,ישראל (לא אוטונומיה)", 
                 Inactive = false, 
                 LocalName = "ישראל (לא אוטונומיה)", 
+                EnglishName = "Israel_not autonomy", 
 			});
 			
             return all;
@@ -53,12 +56,13 @@ namespace Logitude.Customs.BL
 		    newPoco.Code = this.Code;  
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Inactive = this.Inactive;  
-		    newPoco.LocalName = this.LocalName;   
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;   
         }
 
 		public string GetSearchFields(AutonomyType rec)
         {   
-           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
         }
    }
 }

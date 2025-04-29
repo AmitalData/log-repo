@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -42,7 +45,7 @@
   Code="&quot;COGR&quot;"
   Name="&quot;Customs.CountryGroup&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;LocalName&quot;"
+  CloseTableName="&quot;EnglishName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;c7b8&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -136,6 +140,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -213,6 +218,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -290,6 +296,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -368,6 +375,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -444,6 +452,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -536,147 +545,176 @@
       Code="&quot;1&quot;"
       SearchFields="&quot;1,כללי&quot;"
       Inactive="false"
-      LocalName="&quot;כללי&quot;" />
+      LocalName="&quot;כללי&quot;"
+      EnglishName="&quot;general&quot;" />
     <Record
       Code="&quot;10&quot;"
       SearchFields="&quot;10,סלובקיה&quot;"
       Inactive="false"
-      LocalName="&quot;סלובקיה&quot;" />
+      LocalName="&quot;סלובקיה&quot;"
+      EnglishName="&quot;Slovakia&quot;" />
     <Record
       Code="&quot;11&quot;"
       SearchFields="&quot;11,הונגריה&quot;"
       Inactive="false"
-      LocalName="&quot;הונגריה&quot;" />
+      LocalName="&quot;הונגריה&quot;"
+      EnglishName="&quot;Hungary&quot;" />
     <Record
       Code="&quot;12&quot;"
       SearchFields="&quot;12,פולין&quot;"
       Inactive="false"
-      LocalName="&quot;פולין&quot;" />
+      LocalName="&quot;פולין&quot;"
+      EnglishName="&quot;Poland&quot;" />
     <Record
       Code="&quot;13&quot;"
       SearchFields="&quot;13,סלובניה&quot;"
       Inactive="false"
-      LocalName="&quot;סלובניה&quot;" />
+      LocalName="&quot;סלובניה&quot;"
+      EnglishName="&quot;Slovenia&quot;" />
     <Record
       Code="&quot;14&quot;"
       SearchFields="&quot;14,מקסיקו&quot;"
       Inactive="false"
-      LocalName="&quot;מקסיקו&quot;" />
+      LocalName="&quot;מקסיקו&quot;"
+      EnglishName="&quot;Mexico&quot;" />
     <Record
       Code="&quot;15&quot;"
       SearchFields="&quot;15,רומניה&quot;"
       Inactive="false"
-      LocalName="&quot;רומניה&quot;" />
+      LocalName="&quot;רומניה&quot;"
+      EnglishName="&quot;Rumania&quot;" />
     <Record
       Code="&quot;16&quot;"
       SearchFields="&quot;16,בולגריה&quot;"
       Inactive="false"
-      LocalName="&quot;בולגריה&quot;" />
+      LocalName="&quot;בולגריה&quot;"
+      EnglishName="&quot;Bulgaria&quot;" />
     <Record
       Code="&quot;17&quot;"
       SearchFields="&quot;17,איחוד&quot;"
       Inactive="false"
-      LocalName="&quot;איחוד&quot;" />
+      LocalName="&quot;איחוד&quot;"
+      EnglishName="&quot;ihud&quot;" />
     <Record
       Code="&quot;18&quot;"
       SearchFields="&quot;18,WTO&quot;"
       Inactive="false"
-      LocalName="&quot;WTO&quot;" />
+      LocalName="&quot;WTO&quot;"
+      EnglishName="&quot;WTO&quot;" />
     <Record
       Code="&quot;19&quot;"
       SearchFields="&quot;19,ברזיל&quot;"
       Inactive="false"
-      LocalName="&quot;ברזיל&quot;" />
+      LocalName="&quot;ברזיל&quot;"
+      EnglishName="&quot;Brazil&quot;" />
     <Record
       Code="&quot;2&quot;"
       SearchFields="&quot;2,איחוד מכסה&quot;"
       Inactive="false"
-      LocalName="&quot;איחוד מכסה&quot;" />
+      LocalName="&quot;איחוד מכסה&quot;"
+      EnglishName="&quot;Union Quota&quot;" />
     <Record
       Code="&quot;20&quot;"
       SearchFields="&quot;20,אורוגוואי&quot;"
       Inactive="false"
-      LocalName="&quot;אורוגוואי&quot;" />
+      LocalName="&quot;אורוגוואי&quot;"
+      EnglishName="&quot;Uruguay&quot;" />
     <Record
       Code="&quot;21&quot;"
       SearchFields="&quot;21,פרגוואי&quot;"
       Inactive="false"
-      LocalName="&quot;פרגוואי&quot;" />
+      LocalName="&quot;פרגוואי&quot;"
+      EnglishName="&quot;Paraguay&quot;" />
     <Record
       Code="&quot;22&quot;"
       SearchFields="&quot;22,ארגנטינה&quot;"
       Inactive="false"
-      LocalName="&quot;ארגנטינה&quot;" />
+      LocalName="&quot;ארגנטינה&quot;"
+      EnglishName="&quot;Argentina&quot;" />
     <Record
       Code="&quot;23&quot;"
       SearchFields="&quot;23,מדינות להסכם בנושא יצואן מאושר לתעודות מקור&quot;"
       Inactive="false"
-      LocalName="&quot;מדינות להסכם בנושא יצואן מאושר לתעודות מקור&quot;" />
+      LocalName="&quot;מדינות להסכם בנושא יצואן מאושר לתעודות מקור&quot;"
+      EnglishName="&quot;Countries to agree on approved exporter for certificates of origin&quot;" />
     <Record
       Code="&quot;24&quot;"
       SearchFields="&quot;24,מדינות שלא מתאימות להישבון&quot;"
       Inactive="false"
-      LocalName="&quot;מדינות שלא מתאימות להישבון&quot;" />
+      LocalName="&quot;מדינות שלא מתאימות להישבון&quot;"
+      EnglishName="&quot;Countries not suitable for settlement&quot;" />
     <Record
       Code="&quot;25&quot;"
       SearchFields="&quot;25,מדינות קרנה&quot;"
       Inactive="false"
-      LocalName="&quot;מדינות קרנה&quot;" />
+      LocalName="&quot;מדינות קרנה&quot;"
+      EnglishName="&quot;Karana countries&quot;" />
     <Record
       Code="&quot;26&quot;"
       SearchFields="&quot;26,מדינות רווחה&quot;"
       Inactive="false"
-      LocalName="&quot;מדינות רווחה&quot;" />
+      LocalName="&quot;מדינות רווחה&quot;"
+      EnglishName="&quot;Welfare States&quot;" />
     <Record
       Code="&quot;27&quot;"
       SearchFields="&quot;27,כל העולם&quot;"
       Inactive="false"
-      LocalName="&quot;כל העולם&quot;" />
+      LocalName="&quot;כל העולם&quot;"
+      EnglishName="&quot;The whole world&quot;" />
     <Record
       Code="&quot;28&quot;"
       SearchFields="&quot;28,האיחוד האירופי&quot;"
       Inactive="false"
-      LocalName="&quot;האיחוד האירופי&quot;" />
+      LocalName="&quot;האיחוד האירופי&quot;"
+      EnglishName="&quot;European Union&quot;" />
     <Record
       Code="&quot;29&quot;"
       SearchFields="&quot;29,מרקוסור&quot;"
       Inactive="false"
-      LocalName="&quot;מרקוסור&quot;" />
+      LocalName="&quot;מרקוסור&quot;"
+      EnglishName="&quot;Mercosur&quot;" />
     <Record
       Code="&quot;3&quot;"
       SearchFields="&quot;3,ארה&quot;ב&quot;"
       Inactive="false"
-      LocalName="&quot;ארה&quot;ב&quot;" />
+      LocalName="&quot;ארה&quot;ב&quot;"
+      EnglishName="&quot;U_S&quot;" />
     <Record
       Code="&quot;4&quot;"
       SearchFields="&quot;4,ארצות ערב&quot;"
       Inactive="false"
-      LocalName="&quot;ארצות ערב&quot;" />
+      LocalName="&quot;ארצות ערב&quot;"
+      EnglishName="&quot;Arab countries&quot;" />
     <Record
       Code="&quot;5&quot;"
       SearchFields="&quot;5,ירדן&quot;"
       Inactive="false"
-      LocalName="&quot;ירדן&quot;" />
+      LocalName="&quot;ירדן&quot;"
+      EnglishName="&quot;Jordan&quot;" />
     <Record
       Code="&quot;6&quot;"
       SearchFields="&quot;6,קנדה&quot;"
       Inactive="false"
-      LocalName="&quot;קנדה&quot;" />
+      LocalName="&quot;קנדה&quot;"
+      EnglishName="&quot;Canada&quot;" />
     <Record
       Code="&quot;7&quot;"
       SearchFields="&quot;7,אפט&quot;א&quot;"
       Inactive="false"
-      LocalName="&quot;אפט&quot;א&quot;" />
+      LocalName="&quot;אפט&quot;א&quot;"
+      EnglishName="&quot;Afta&quot;" />
     <Record
       Code="&quot;8&quot;"
       SearchFields="&quot;8,טורקיה&quot;"
       Inactive="false"
-      LocalName="&quot;טורקיה&quot;" />
+      LocalName="&quot;טורקיה&quot;"
+      EnglishName="&quot;Turkey&quot;" />
     <Record
       Code="&quot;9&quot;"
       SearchFields="&quot;9,צכיה&quot;"
       Inactive="false"
-      LocalName="&quot;צכיה&quot;" />
+      LocalName="&quot;צכיה&quot;"
+      EnglishName="&quot;Czech Republic&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

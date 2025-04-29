@@ -12,6 +12,8 @@ namespace Logitude.Customs.BL.CloseTables
     {   
        public const string AEO = "1";  
        public const string יבואןמאושר = "2";  
+       public const string יצואןמאושר = "3";  
+       public const string יבואן/יצואןמאושר = "4";  
     }
 }
 

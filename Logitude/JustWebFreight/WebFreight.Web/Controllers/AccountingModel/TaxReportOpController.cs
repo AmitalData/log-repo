@@ -140,7 +140,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 catch (Exception ex)
                 {
                     taxReportPM.IsCancelled = false;
-                    taxReportPM.StatusCode = VatReportStatusValues.CancelationFailed;
+                    taxReportPM.StatusCode = VatReportStatusValues.Cancelationfailed;
                     taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
                     taxReportUpdateService.Update(taxReportPM, true);
                 }

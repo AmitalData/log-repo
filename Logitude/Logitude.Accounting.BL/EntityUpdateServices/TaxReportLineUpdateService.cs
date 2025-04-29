@@ -460,7 +460,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             if (entityPM.LineTypeCode == LineType_SmallCashbookAPInvoice && entityPM.ReferenceDate.Value.Month < entityPM.TaxReportDate.Value.Month)
             {
-                entityPM.StatusCode = TaxReportLineStatusValues.SmallCashAPinvoiceFromThePreviousMonth;
+                entityPM.StatusCode = TaxReportLineStatusValues.SmallCashAPinvoicefromthepreviousmonth;
             }
         }
         private void UpdateStatusByTransmitStatusCode(TaxReportLinePM taxReportLinePM, TaxReportLine taxReportLine)

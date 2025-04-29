@@ -10,9 +10,9 @@ namespace Logitude.Accounting.BL.CloseTables
 {
     public struct RevenueExpenseTypeValues
     {   
+       public const string Revenue = "1";  
        public const string Expense = "2";  
        public const string Other = "3";  
-       public const string Revenue = "1";  
     }
 }
 
