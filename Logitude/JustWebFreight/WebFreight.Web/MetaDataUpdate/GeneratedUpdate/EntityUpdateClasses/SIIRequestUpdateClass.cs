@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "18389fb678340ac61d65c5d988264089";
+		public const string HashString = "ec2c903f7116c7048c403f96f32e41fb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -67,8 +67,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
+			      				    LocalDefaultTextBack_up =  "בקשות למכון תקנים",
+			      				    LocalDefaultText =  "BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "b9a8",
+			      				    Code =  "360d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -763,6 +765,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SupplierInvoiceItemsReqLists",
 					  						ListPropertyPath =  "SupplierInvoiceItemsReqLists",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -884,7 +887,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable SIIRequestObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SIIRequest" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestONewRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.NewRequest", DefaultText = "New Request",LocalDefaultText = @"BS64:Itek16rXmdeX16og15HXp9ep15Qi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOCompletData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.CompletData", DefaultText = "Completing application data",LocalDefaultText = @"BS64:IteU16nXnNee16og16DXqteV16DXmSDXkden16nXlCI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOOpenRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.OpenRequest", DefaultText = "Open SIIRequests",LocalDefaultText = @"BS64:Iteo16nXmdee16og15HXp9ep15XXqiDXpNeq15XXl9eV16oi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOClosedRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.ClosedRequest", DefaultText = "Closed SIIRequests",LocalDefaultText = @"BS64:Iteo16nXmdee16og15HXp9ep15XXqiDXodeS15XXqNeV16oi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOAllRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.AllRequest", DefaultText = "All SIIRequests",LocalDefaultText = @"BS64:IteU15vXnCAi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

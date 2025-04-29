@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "477a7919d0372fa258c5bbde477a9e5d";
+		public const string HashString = "728f2bc9dc241d76954830326905d08f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -20601,7 +20601,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature DeclarationCertificatesFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CERTIFICATE", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Certificates", NameTextCodeDefaultText = "Certificates", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationSIIRequestTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.SIIRequest", DefaultText = "SIIRequest",LocalDefaultText = "BS64:IteR16fXqdeV16og157Xm9eV158g16rXp9eg15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationSIIRequestTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.SIIRequest", DefaultText = "SIIRequest",LocalDefaultText = "BS64:Itee15vXldefINeq16fXoNeZ150i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationSIIRequestFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.SIIRequest", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.SIIR", NameTextCodeDefaultText = "SIIRequest", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  

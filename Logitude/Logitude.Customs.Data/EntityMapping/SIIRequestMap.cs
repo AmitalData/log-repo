@@ -47,6 +47,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.WareHouseCity).HasColumnName("WareHouseCity").HasMaxLength(4).IsUnicode(true);
 
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
+
+            this.Property(t => t.Remarks).HasColumnName("Remarks").HasMaxLength(200).IsUnicode(true);
         }
     }
 }
