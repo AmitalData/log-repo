@@ -2,13 +2,13 @@
     <tr>
         <td>
             <div class="TableHolder">
-                <table class="inner-table">
-                    <tr class="header-row">
-                        <td class="TabTitleRow SIIRequestHeader" style="width:150px;">
+                <table class="innerTable">
+                    <tr class="headerRow">
+                        <td class="TabTitleRow SIIRequestHeader">
                             {{'Customs.Declaration.TH.SIIRequest'| TextCodeTranslationPipe}}
                         </td>
-                        <td class="centered-content">
-                            <div *ngIf="!IsDisplayOnly" class="centered-div">
+                        <td class="centeredContent">
+                            <div *ngIf="!IsDisplayOnly" class="centeredDiv">
                                 <div *ngIf="IsDisplayMessage" class="DisbleBox">
                                     {{DisplayOnlyMessage}}
                                 </div>
@@ -16,9 +16,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="new-request-cell">
+                        <td class="newRequestCell">
                             <div>
-                                <button [disabled]="!IsAllowChange" class="Button new-request-button"
+                                <button [disabled]="!IsAllowChange" class="Button newRequestButton"
                                     (click)="onOpenNewRequest()">
                                     <!-- TODO: Replace to code after update action-->
                                     <!-- {{'Customs.SIIRequest.O.NewRequest'| TextCodeTranslationPipe}} -->
@@ -28,7 +28,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5" class="grid-container">
+                        <td colspan="5" class="gridContainer">
                             <div class="CellContent">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
                                                     (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
@@ -36,7 +36,7 @@
                                                 [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div class="text-right">
+                                                <div class="textRight">
                                                     {{ item.ListCounter }}
                                                 </div>
                                             </log-cell-template>
@@ -75,8 +75,8 @@
                                                 [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <span class="CellSeparator float-right"></span>
-                                                <div class="edit-button-container">
+                                                <span class="CellSeparator floatRight"></span>
+                                                <div class="editButtonContainer">
                                                     <IconButton [Name]="'Edit'" [IsSmall]="true"
                                                                 (click)="onEditRequest(item)"></IconButton>
                                                 </div>
