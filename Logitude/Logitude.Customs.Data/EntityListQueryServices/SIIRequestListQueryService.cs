@@ -38,6 +38,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          WareHouseCity = a.WareHouseCity,
 					
 					                          IsClosed = a.IsClosed,
+											  Remarks = a.Remarks,
+											  
+
 					
 		                    	            });
             return query;

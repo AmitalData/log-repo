@@ -14,6 +14,7 @@ import { AppTool } from 'Infrastructure/Tools';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { SIIRequestListService } from 'Customs/Services/StandardLists/SIIRequestListService';
 
 @Component({
   selector: 'SIIRequestTabComponent',
@@ -36,6 +37,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   public entityResourceService: EntityResourceService = new EntityResourceService();
   public ObjectTableName: string = null;
   siiRequestPMService: SIIRequestPMService;
+  siiRequestListService: SIIRequestListService;
   IsLoaded: boolean = false;
   selectedSIIRequest = new SIIRequestPM();
   isOpen: boolean;
@@ -45,6 +47,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.EntityPM = this.CurrentSession?.CurrentEditComponent?.EntityPM;
     this.currentDeclaration = this.EntityPM;
     this.siiRequestWebService = new SIIRequestWebService();
+    this.siiRequestListService = new SIIRequestListService();
   }
 
 
@@ -63,39 +66,25 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   }
 
   loadRequests(): void {
-    //TODO:change to real call to server getbyfilter - by declarationid + tenant
+    let filters = new ApiQueryFilters();
 
-    // TODO: Delete after finish - create moke data for testing to itemsource from type SIIRequestPM[]:
-    const mock1 = new SIIRequestPM();
-    mock1.Id = '1';
-    mock1.ListCounter = 1;
-    mock1.Remarks = 'test 1';
-    mock1.RequestNo = 'REQ-1001';
-    mock1.Status = 'Open';
-    mock1.WareHouseAddress = 'רח\' הגפן 12';
-    mock1.WareHouseCity = 'ת\"א';
-    mock1.IsClosed = false;
 
-    const mock2 = new SIIRequestPM();
-    mock2.Id = '2';
-    mock2.ListCounter = 2;
-    mock2.Remarks = 'test 2';
-    mock2.RequestNo = 'REQ-1002';
-    mock2.Status = 'Closed';
-    mock2.WareHouseAddress = 'הרצל 45';
-    mock2.WareHouseCity = 'חיפה';
-    mock2.IsClosed = true;
+    filters.PageSize = 200;
+    filters.PageIndex = 0;
+    filters.GetAll = false;
+    filters.GetCount = true;
 
-    const mock3 = new SIIRequestPM();
-    mock3.Id = '3';
-    mock3.ListCounter = 3;
-    mock3.Remarks = 'test 3';
-    mock3.RequestNo = 'REQ-1003';
-    mock3.Status = 'Open';
-    mock3.WareHouseAddress = 'דרך מנחם בגין 78';
-    mock3.WareHouseCity = 'ירושלים';
-    mock3.IsClosed = false;
-    this.ItemsSource = new ObservableCollection([mock1, mock2, mock3]);
+    filters.addAdditionalFilter("DeclarationId", this.currentDeclaration?.Id, null, null, "Equals", false, false, false, "string", false);
+    filters.addAdditionalFilter("Tenant", this.currentDeclaration?.Tenant, null, null, "Equals", true, false, false, "string");
+
+
+    this.siiRequestListService.getByFilters(filters).subscribe((response: ServiceResponse) => {
+      if (!response?.HasError && response?.Result !== null) {
+        this.ItemsSource = new ObservableCollection(response.Result);
+      }
+      // TODO: ADD TRY CATCH
+    });
+
   }
 
   onOpenNewRequest(): void {
