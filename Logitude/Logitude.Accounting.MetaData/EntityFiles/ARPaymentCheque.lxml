@@ -1722,6 +1722,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UnRedeemedChequeStatus&quot;"
     ListPropertyPath="&quot;UnRedeemedChequeStatus&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2216,6 +2217,12 @@
       Code="&quot;ARPaymentCheque.O.Cheques&quot;"
       DefaultText="&quot;Cheques&quot;"
       LocalDefaultText="&quot;המחאה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARPaymentCheque.O.ChequeAlreadyexists&quot;"
+      DefaultText="&quot;Check number ChequeNumber already exists in ARPayment PaymentNumber(due date: ValueDate, amount: LocalAmount). Please correct the check number.&quot;"
+      LocalDefaultText="&quot;המחאה מספר ChequeNumber כבר קיימת בקבלה PaymentNumber (תאריך פרעון: ValueDate, סכום: LocalAmount). נא לתקן את מספר ההמחאה.&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

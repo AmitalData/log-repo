@@ -26,6 +26,8 @@ using WebFreight.Web.DataContracts;
 using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.Accounting.Data.Repositories;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated 
 {
@@ -82,12 +84,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
+       
 
-
-
-
-
-        //[Route("{obj:PostDatedChequesRedemptionPM}/InsertPostDatedChequesRedemption")]
         public HttpResponseMessage PostInsertPostDatedChequesRedemption(ARPaymentChequePM entityPm)
         {
             try
@@ -187,6 +185,28 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
+        [HttpGet]
+        public HttpResponseMessage CheckARPaymentChequeAlreadyExists(string bank, string bankBranch, string bankAccount, string chequeOrPaymentRef)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ARPaymentChequeQueryService arPaymentChequeQueryService = new ARPaymentChequeQueryService(authToken.Tenant);
+                var error = arPaymentChequeQueryService.CheckARPaymentChequeAlreadyExists(chequeOrPaymentRef, bank, bankAccount, bankBranch, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, error);
+              
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
 
         private static void AuthinticateTenant()
         {

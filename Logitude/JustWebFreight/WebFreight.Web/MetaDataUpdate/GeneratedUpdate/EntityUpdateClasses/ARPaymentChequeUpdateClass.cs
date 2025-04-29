@@ -24,7 +24,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ARPaymentChequeUpdateClass
    {  		
-		public const string HashString = "e570295612a34ebbcdd407e57f7a4aea";
+		public const string HashString = "0ab4057cecb810103bb9c316c295fc8f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1509,6 +1509,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UnRedeemedChequeStatus",
 					  						ListPropertyPath =  "UnRedeemedChequeStatus",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1778,6 +1779,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable ARPaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARPaymentCheque" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode ARPaymentChequeTextCode_ARPaymentChequeOCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.O.Cheques", DefaultText = "Cheques",LocalDefaultText = @"המחםה", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentChequeTextCode_ARPaymentChequeOChequeAlreadyexists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPaymentCheque.O.ChequeAlreadyexists", DefaultText = "Check number ChequeNumber already exists in ARPayment PaymentNumber(due date: ValueDate, amount: LocalAmount). Please correct the check number.",LocalDefaultText = @"המחםה מספר ChequeNumber כבר קיימת בקבלה PaymentNumber (תםריך פרעון: ValueDate, סכום: LocalAmount). נם לתקן םת מספר ההמחםה.", ObjectTableId = ARPaymentChequeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
