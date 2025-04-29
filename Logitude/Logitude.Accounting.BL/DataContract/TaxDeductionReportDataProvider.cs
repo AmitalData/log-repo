@@ -792,9 +792,45 @@ namespace Logitude.Accounting.BL.DataContract
                 ByVendorList  emptyVendor = new ByVendorList();
                 byVendorList.Add(emptyVendor);
             }
-            
-            return byVendorList;
+
+            var byVendorsGroups = byVendorList
+                .GroupBy(x => new { x.DeductionFileNumber, x.VATNumber, x.TaxDeductionPercentage });
+
+            var byVendors = byVendorsGroups
+                .Select(g => CombineByVendorItems(g))
+                .ToList();
+
+            return byVendors;
         }
+
+        private ByVendorList CombineByVendorItems(IEnumerable<ByVendorList> gr)
+        {
+             var group = gr.ToList();  // Materialization
+             
+             var combined = group.First();
+
+
+            if (group.Count() > 1)
+            {
+                // Those variables are there to eliminate update 'in the place' while summing
+                double sumOfAmountInLocalCurrency = group.Sum(x => x.SumOfAmountInLocalCurrency ?? 0);
+                combined.SumOfAmountInLocalCurrency = sumOfAmountInLocalCurrency;
+
+                decimal sumOfTaxDeductionLocalAmount = group.Sum(x => x.SumOfTaxDeductionLocalAmount ?? 0);
+                combined.SumOfTaxDeductionLocalAmount = sumOfTaxDeductionLocalAmount;
+
+                decimal totalAmount = group.Sum(x => x.TotalAmount ?? 0);
+                combined.TotalAmount = totalAmount;
+
+                if (group.Select(x => x.VendorLocalName).Distinct().Count() > 1 &&
+                     !string.IsNullOrEmpty(combined.GLAccountLocalName))
+                {
+                    combined.VendorLocalName = combined.GLAccountLocalName;
+                }
+            }
+            return combined;
+        }
+
         private List<CardList> GetMainAccountsCards()
         {
             var mainAccountsIds = mainGLAccounts.Select(d => d.Id).ToHashSet();
