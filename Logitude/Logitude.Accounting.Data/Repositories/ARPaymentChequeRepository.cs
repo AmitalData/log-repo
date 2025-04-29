@@ -19,8 +19,11 @@ namespace Logitude.Accounting.Data.Repositories
 {
    public partial class ARPaymentChequeRepository:IRepository<ARPaymentCheque>
    {
-        
-		public List<ARPaymentCheque> GetMulti(EntityKeyFields entityKeys)
+        private const string DateFormat = "yyyy-MM-dd";
+        private const string AmountFormat = "F2";
+
+
+        public List<ARPaymentCheque> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();
@@ -115,30 +118,35 @@ namespace Logitude.Accounting.Data.Repositories
         {
             var existingCheques = new StringBuilder();
 
-                var existingCheque = context.ARPaymentCheques
-                    .FirstOrDefault(a => a.Tenant == tenant &&
-                                         a.ChequeNumber == ChequeNumber &&
-                                         a.BankId == BankId &&
-                                         a.BankAccount == BankAccount &&
-                                         a.BankBranch == BankBranch);
+            var existingCheque = context.ARPaymentCheques
+                .FirstOrDefault(a => a.Tenant == tenant &&
+                                     a.ChequeNumber == ChequeNumber &&
+                                     a.BankId == BankId &&
+                                     a.BankAccount == BankAccount &&
+                                     a.BankBranch == BankBranch);
 
-               
             if (existingCheque != null)
             {
-                 var invoiceContext = InvoiceContext.GetContext(tenant);
+                var invoiceContext = InvoiceContext.GetContext(tenant);
 
                 var paymentNumber = invoiceContext.ARPayments
                    .Where(a => a.Tenant == tenant && a.Id == existingCheque.PaymentId)
                    .Select(a => a.PaymentNo)
                    .FirstOrDefault();
-                string msg = TranslateTextsClass.Translate("ARPaymentCheque.O.ChequeAlreadyexists", tenant);
+
+
+        string msg = TranslateTextsClass.Translate("ARPaymentCheque.O.ChequeAlreadyexists", tenant);
                 string textCodeAlreadyExist = msg.Replace("%ChequeNumber", existingCheque.ChequeNumber)
-                        .Replace("%PaymentNumber", paymentNumber)
-                        .Replace("%ValueDate", existingCheque.ValueDate.ToString("dd/MM/yyyy"))
-                        .Replace("%LocalAmount", existingCheque.LocalAmount.ToString("F2"));
-                 existingCheques.AppendLine(textCodeAlreadyExist);
-             }
-            
+                    .Replace("%PaymentNumber", paymentNumber)
+                    .Replace("%LocalAmount", existingCheque.LocalAmount.ToString(AmountFormat));
+
+                if (existingCheque.ValueDate != null)
+                {
+                    textCodeAlreadyExist = textCodeAlreadyExist.Replace("%ValueDate", existingCheque.ValueDate.ToString(DateFormat) ?? " " );
+                }
+
+                existingCheques.AppendLine(textCodeAlreadyExist);
+            }
 
             return existingCheques.ToString();
         }

@@ -2506,11 +2506,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     ValidateChequeFields() {
         if(this.CurrentSession.CurrentEditComponent.ValidationErrorsList === null && this.CurrentSession.CurrentEditComponent.ValidationErrorsList.length === 0) {
-            var errors: string[];
-            errors = this.ARPaymentValidator.Validate(this.EntityPM);
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-            return errors;
-            
+            return this.CurrentSession.CurrentEditComponent.ValidationErrorsList = this.ARPaymentValidator.Validate(this.EntityPM);
         }
         return this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
     }
@@ -2519,9 +2515,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         const validationResult = await this.ARPaymentValidator.ValidateDuplicateCheque(bank, bankBranch, bankAccount, chequeOrPaymentRef);
         if (!AppTool.IsNullOrEmpty(validationResult)) {
             errors.push(validationResult);
-        }
-        else{
-            errors = [];
         }
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         return errors;

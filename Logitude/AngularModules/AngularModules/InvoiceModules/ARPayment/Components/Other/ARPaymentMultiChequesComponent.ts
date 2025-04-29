@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { Component } from '@angular/core';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ARPaymentPM } from '../../../../Invoice/EntityPMs/ARPaymentPM';
 import { ARPaymentChequeReplicaPM } from '../../../../Invoice/EntityPMs/ARPaymentChequeReplicaPM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { AccountingPeriodListService } from '../../../../Accounting/Services/StandardLists/AccountingPeriodListService';
 import { AccountingPeriodList } from '../../../../Accounting/EntityLists/AccountingPeriodList';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -16,7 +14,6 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
 import { ARPaymentPMService } from 'Invoice/Services/StandardPMs/ARPaymentPMService';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { JournalValidator } from 'Accounting/Validators/JournalValidator';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { ARPaymentValidator } from 'Invoice/Validators/ARPaymentValidator';
 

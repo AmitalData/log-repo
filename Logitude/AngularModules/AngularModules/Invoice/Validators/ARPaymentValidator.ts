@@ -4,9 +4,7 @@ import {Validator} from '../../Infrastructure/Validators/Validator';
 import {ARPaymentPM} from '../EntityPMs/ARPaymentPM';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { forEach } from 'cypress/types/lodash';
 import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 export class ARPaymentValidator {
    Validate(entityPm: ARPaymentPM) {
@@ -37,13 +35,7 @@ export class ARPaymentValidator {
 
           isAllowed = true;
 
-          //if (entityPm.PaymentInvoices.length == 0) {
-          //    validationResults.push("You should have 1 Invoice line at least");
-          //}
-
-          //else {
-          //    isAllowed = true;
-          //}
+          
         }
       }
 
@@ -166,7 +158,7 @@ export class ARPaymentValidator {
     async ValidateDuplicateCheque(bank:string,bankBranch:string,bankAccount:string,chequeOrPaymentRef:string): Promise<string> {
       return new Promise<string>((resolve) => {
         if(!AppTool.IsNullOrEmpty(bank) && !AppTool.IsNullOrEmpty(bankBranch) && !AppTool.IsNullOrEmpty(bankAccount) && !AppTool.IsNullOrEmpty(chequeOrPaymentRef)) {
-          this.arPaymentChequeOperationsService.CheckARPaymentChequeAlreadyExists(bank, bankBranch, bankAccount, chequeOrPaymentRef).subscribe((result: any) => {
+          this.arPaymentChequeOperationsService.CheckARPaymentChequeAlreadyExists(bank, bankBranch, bankAccount, chequeOrPaymentRef).subscribe((result) => {
             if (result && !result.HasError) {
                                   
                   resolve(result);
@@ -219,13 +211,7 @@ export class ARPaymentValidator {
 
                     isAllowed = true;
 
-                    //if (entityPm.PaymentInvoices.length == 0) {
-                    //    errors.push("You should have 1 Invoice line at least");
-                    //}
-
-                    //else {
-                    //    isAllowed = true;
-                    //}
+                  
                 }
             }
 
