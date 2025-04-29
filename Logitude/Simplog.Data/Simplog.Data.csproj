@@ -748,6 +748,8 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\EntityStatusType.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ReferenceCustomObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ReleaseArgs.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\SearchIndex.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\SearchIndexTenantHistory.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\TabModification.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ScreenSection.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />
@@ -779,6 +781,7 @@
     <Compile Include="InfrastructureModel\Mapping\QueryExportExecutionLogMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\QuoteChargesGroupMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ReferenceCustomObjectMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\SearchIndexTenantHistoryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\TabModificationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ScreenSectionMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\WokerRoleNameMap.cs" />
@@ -810,6 +813,8 @@
     <Compile Include="InfrastructureModel\Repositories\QuoteChargesGroupRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ReferenceCustomObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ScreenSectionRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\SearchIndexRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\SearchIndexTenantHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\TabModificationRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\WorkerRoleNameRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
@@ -817,6 +822,7 @@
     <Compile Include="InfrastructureModel\Repositories\RuleUpdateHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SchedulerProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
+    <Compile Include="InfrastructureModel\Mapping\SearchIndexMap.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ConfirmationNumberDefault.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ConfirmationNumberStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceAnalytic.cs" />

@@ -393,6 +393,8 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new DeploymentPackagesVersionMap());
             modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
             modelBuilder.Configurations.Add(new DeploymentPackageExecutionLogMap());
+            modelBuilder.Configurations.Add(new SearchIndexMap());
+            modelBuilder.Configurations.Add(new SearchIndexTenantHistoryMap());
 
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
@@ -1134,6 +1136,18 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<SearchIndex> SearchIndexes
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<SearchIndexTenantHistory> SearchIndexTenantHistories
         {
             get;
             set;

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="SearchIndexTenantHistories"
+  Schema="dbo"
+  DBType="Main"
+  Module="Infrastructure">
+  <Column
+    Name="Index"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TtlMonth"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>
