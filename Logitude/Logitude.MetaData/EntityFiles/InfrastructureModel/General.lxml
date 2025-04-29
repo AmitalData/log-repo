@@ -40,8 +40,8 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;6063&quot;"
-  Name="&quot;General&quot;"
+   Code="&quot;b0fc&quot;"
+   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
   ServerModuleName="&quot;Generals&quot;"
@@ -5750,6 +5750,24 @@
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;General.MC.ShaamTokenManagement&quot;"
+      DefaultText="&quot;SHAAM Token Management&quot;"
+      LocalDefaultText="&quot;&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.TokenManagement&quot;"
+      DefaultText="&quot;Token Management&quot;"
+      LocalDefaultText="&quot;&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Logs&quot;"
+      DefaultText="&quot;Logs&quot;"
+      LocalDefaultText="&quot;&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;General.O.UpdateFailed&quot;"
       DefaultText="&quot;Update failed&quot;"
       LocalDefaultTextBack_up="&quot;עידכון נכשל&quot;"
@@ -6593,24 +6611,6 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;General.MC.TokenManagement&quot;"
-      DefaultText="&quot;Token Management&quot;"
-      LocalDefaultText="&quot;&quot;"
-      TextCodeTypeCode="&quot;MC&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;General.MC.Logs&quot;"
-      DefaultText="&quot;Logs&quot;"
-      LocalDefaultText="&quot;&quot;"
-      TextCodeTypeCode="&quot;MC&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;General.MC.ShaamTokenManagement&quot;"
-      DefaultText="&quot;SHAAM Token Management&quot;"
-      LocalDefaultText="&quot;&quot;"
-      TextCodeTypeCode="&quot;MC&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;General.O.Mine&quot;"
       DefaultText="&quot;Mine&quot;"
       LocalDefaultTextBack_up="&quot;שלי&quot;"
@@ -6662,7 +6662,8 @@
     <TextCode
       Code="&quot;Accounting.O.AlreadyRedeemed&quot;"
       DefaultText="&quot;A check has already been cashed and adjusted by bank reconciliation. Should I mark it as &amp;quot;check returned from bank&quot;"
-      LocalDefaultText="&quot;צ'ק כבר נפרע והותאם בהתאמת בנק. האם לסמן בתור &quot;צ'ק חזר מהבנק&quot;?&quot;"
+      LocalDefaultTextBack_up="&quot;צ'ק כבר נפרע והותאם בהתאמת בנק. האם לסמן בתור &quot;צ'ק חזר מהבנק&quot;?&quot;"
+      LocalDefaultText="&quot;BS64:ItemJ9enINeb15HXqCDXoNek16jXoiDXldeU15XXqteQ150g15HXlNeq15DXnteqINeR16DXpy4g15TXkNedINec16HXntefINeR16rXldeoICLXpifXpyDXl9eW16gg157XlNeR16DXpyI/Ig==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6689,7 +6690,8 @@
     <TextCode
       Code="&quot;General.MH.Cards&quot;"
       DefaultText="&quot;Cards&quot;"
-      LocalDefaultText="&quot;כרטיסים&quot;"
+      LocalDefaultTextBack_up="&quot;כרטיסים&quot;"
+      LocalDefaultText="&quot;BS64:Iteb16jXmNeZ16HXmdedIg==&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6707,11 +6709,12 @@
     <TextCode
       Code="&quot;Accounting.General.O.NoReportsDisplay&quot;"
       DefaultText="&quot;No reports to display&quot;"
-      LocalDefaultText="&quot;אין דוחות להצגה&quot;"
+      LocalDefaultTextBack_up="&quot;אין דוחות להצגה&quot;"
+      LocalDefaultText="&quot;BS64:IteQ15nXnyDXk9eV15fXldeqINec15TXpteS15Qi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;General.O.ReportInProcess&quot;"
+       Code="&quot;General.O.ReportInProcess&quot;"
       DefaultText="&quot;The report was created successfully and will be built in a background process.&quot;"
       LocalDefaultText="&quot;הדוח נוצר בהצלחה ויבנה בתהליך רקע&quot;"
       TextCodeTypeCode="&quot;O&quot;"
@@ -6730,16 +6733,15 @@
       Code="&quot;Accounting.General.O.CreateANewTaxReport&quot;"
       DefaultText="&quot;Tax Report&quot;"
       LocalDefaultText="&quot;דוח מעמ&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
+       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Accounting.General.O.CancelTaxReport&quot;"
+       Code="&quot;Accounting.General.O.CancelTaxReport&quot;"
       DefaultText="&quot;Cancel Tax Report&quot;"
       LocalDefaultText="&quot;ביטול דוח מעמ&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
+       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-
   <AdditionalFeatures>
     <Feature
       Code="&quot;DASHBOARD&quot;"

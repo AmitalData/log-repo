@@ -23,9 +23,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsSettingUpdateClass
    {  		
-		public const string HashString = "a7063c37d7f9233eb3d9653d6847b1da";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
-        {                     
+ 		public const string HashString = "341e5e1941aaff2fac47be30ff75577e";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
+         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -84,10 +84,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsTabsHidden =  false,
 			      				    HashString =  CustomsSettingUpdateClass.HashString,
 			                    
-            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes,contextTenant);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes,int contextTenant)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -147,7 +147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -215,7 +215,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -282,7 +282,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -350,7 +350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -418,7 +418,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -486,7 +486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -546,7 +546,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -614,7 +614,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -682,7 +682,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -730,11 +730,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DefaultNotificationAssignee",
 					  						DefaultText =  "Default Notification Assignee",
-					  						FullLocalDefaultTextBack_up =  "משתמש ברירת מחדל להתראות",
+					  						FullLocalDefaultTextBack_up =  "משתמש ברירת מחדל להתרםות",
 					  						FullLocalDefaultText =  "BS64:Itee16nXqtee16kg15HXqNeZ16jXqiDXnteX15PXnCDXnNeU16rXqNeQ15XXqiI=",
 					  						ListFieldLable =  "DefaultNotificationAssigneeListLable",
 					  						ListLableDefaultText =  "Default Notification Assignee",
-					  						ListLocalDefaultTextBack_up =  "משתמש ברירת מחדל להתראות",
+					  						ListLocalDefaultTextBack_up =  "משתמש ברירת מחדל להתרםות",
 					  						ListLocalDefaultText =  "BS64:Itee16nXqtee16kg15HXqNeZ16jXqiDXnteX15PXnCDXnNeU16rXqNeQ15XXqiI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
@@ -753,7 +753,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -800,11 +800,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DefaultNotificationAssigneeName",
 					  						DefaultText =  "Default Notification Assignee",
-					  						FullLocalDefaultTextBack_up =  "משתמש ברירת מחדל להתראות",
+					  						FullLocalDefaultTextBack_up =  "משתמש ברירת מחדל להתרםות",
 					  						FullLocalDefaultText =  "BS64:Itee16nXqtee16kg15HXqNeZ16jXqiDXnteX15PXnCDXnNeU16rXqNeQ15XXqiI=",
 					  						ListFieldLable =  "DefaultNotificationAssigneeNameListLable",
 					  						ListLableDefaultText =  "Default Notification Assignee",
-					  						ListLocalDefaultTextBack_up =  "משתמש ברירת מחדל להתראות",
+					  						ListLocalDefaultTextBack_up =  "משתמש ברירת מחדל להתרםות",
 					  						ListLocalDefaultText =  "BS64:Itee16nXqtee16kg15HXqNeZ16jXqiDXnteX15PXnCDXnNeU16rXqNeQ15XXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -821,7 +821,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -889,7 +889,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -960,7 +960,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1027,7 +1027,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1091,7 +1091,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1155,7 +1155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1220,7 +1220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1288,7 +1288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1333,7 +1333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentOrderAccCard",
 					  						DefaultText =  "Payment Order Acc Card",
-					  						FullLocalDefaultTextBack_up =  "כרטיס מעבר הוראות תשלום",
+					  						FullLocalDefaultTextBack_up =  "כרטיס מעבר הורםות תשלום",
 					  						FullLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg157XoteR16gg15TXldeo15DXldeqINeq16nXnNeV150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1350,7 +1350,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1395,7 +1395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UnifreightCertificateActivated",
 					  						DefaultText =  "Unifreight Certificate Activated",
-					  						FullLocalDefaultTextBack_up =  "מערכת אישורים פעילה",
+					  						FullLocalDefaultTextBack_up =  "מערכת םישורים פעילה",
 					  						FullLocalDefaultText =  "BS64:Itee16LXqNeb16og15DXmdep15XXqNeZ150g16TXoteZ15zXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1412,7 +1412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1457,7 +1457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutoFillPaymentScreen",
 					  						DefaultText =  "Auto Fill Payment Screen",
-					  						FullLocalDefaultTextBack_up =  "מילוי אוטומטי של מסך הגשת תשלום",
+					  						FullLocalDefaultTextBack_up =  "מילוי םוטומטי של מסך הגשת תשלום",
 					  						FullLocalDefaultText =  "BS64:Itee15nXnNeV15kg15DXldeY15XXnteY15kg16nXnCDXnteh15og15TXktep16og16rXqdec15XXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1474,7 +1474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1521,11 +1521,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutoFillAccountType",
 					  						DefaultText =  "Auto Fill Account Type",
-					  						FullLocalDefaultTextBack_up =  "קבע אוטומטית סוג חשבון",
+					  						FullLocalDefaultTextBack_up =  "קבע םוטומטית סוג חשבון",
 					  						FullLocalDefaultText =  "BS64:Iten15HXoiDXkNeV15jXldee15jXmdeqINeh15XXkiDXl9ep15HXldefIg==",
 					  						ListFieldLable =  "AutoFillAccountTypeListLable",
 					  						ListLableDefaultText =  "Auto Fill Account Type",
-					  						ListLocalDefaultTextBack_up =  "קבע אוטומטית סוג חשבון",
+					  						ListLocalDefaultTextBack_up =  "קבע םוטומטית סוג חשבון",
 					  						ListLocalDefaultText =  "BS64:Iten15HXoiDXkNeV15jXldee15jXmdeqINeh15XXkiDXl9ep15HXldefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1542,7 +1542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1589,11 +1589,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutoUnitMeasurement",
 					  						DefaultText =  "Auto Unit Measurement",
-					  						FullLocalDefaultTextBack_up =  "עדכון אוטומטי של יחידת מידה",
+					  						FullLocalDefaultTextBack_up =  "עדכון םוטומטי של יחידת מידה",
 					  						FullLocalDefaultText =  "BS64:Itei15PXm9eV158g15DXldeY15XXnteY15kg16nXnCDXmdeX15nXk9eqINee15nXk9eUIg==",
 					  						ListFieldLable =  "AutoUnitMeasurementListLable",
 					  						ListLableDefaultText =  "Auto Unit Measurement",
-					  						ListLocalDefaultTextBack_up =  "עדכון אוטומטי של יחידת מידה",
+					  						ListLocalDefaultTextBack_up =  "עדכון םוטומטי של יחידת מידה",
 					  						ListLocalDefaultText =  "BS64:Itei15PXm9eV158g15DXldeY15XXnteY15kg16nXnCDXmdeX15nXk9eqINee15nXk9eUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1610,7 +1610,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1675,7 +1675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1720,7 +1720,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMessagesPending",
 					  						DefaultText =  "Is Messages Pending",
-					  						FullLocalDefaultTextBack_up =  "לאפשר הודעות ממתינות",
+					  						FullLocalDefaultTextBack_up =  "לםפשר הודעות ממתינות",
 					  						FullLocalDefaultText =  "BS64:Itec15DXpNep16gg15TXldeT16LXldeqINee157XqteZ16DXldeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1737,7 +1737,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1799,7 +1799,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1844,7 +1844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastRunningDCAWS",
 					  						DefaultText =  "Last Running",
-					  						FullLocalDefaultTextBack_up =  "ריצה אחרונה",
+					  						FullLocalDefaultTextBack_up =  "ריצה םחרונה",
 					  						FullLocalDefaultText =  "BS64:Iteo15nXpteUINeQ15fXqNeV16DXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1861,7 +1861,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1923,7 +1923,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1968,7 +1968,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ServiceScript",
 					  						DefaultText =  "Restart Service Script",
-					  						FullLocalDefaultTextBack_up =  "אתחול סרוויסים",
+					  						FullLocalDefaultTextBack_up =  "םתחול סרוויסים",
 					  						FullLocalDefaultText =  "BS64:IteQ16rXl9eV15wg16HXqNeV15XXmdeh15nXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1985,7 +1985,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2030,7 +2030,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SuppressIIGMessageFromDate",
 					  						DefaultText =  "Suppress IIG Message From Date Time",
-					  						FullLocalDefaultTextBack_up =  "השבת מסרי מכס מתאריך",
+					  						FullLocalDefaultTextBack_up =  "השבת מסרי מכס מתםריך",
 					  						FullLocalDefaultText =  "BS64:IteU16nXkdeqINee16HXqNeZINee15vXoSDXnteq15DXqNeZ15oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -2047,7 +2047,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2107,7 +2107,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2167,7 +2167,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2227,7 +2227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2294,7 +2294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2354,7 +2354,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2416,7 +2416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2478,7 +2478,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2538,7 +2538,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2585,11 +2585,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForbiddenSigns",
 					  						DefaultText =  "Forbidden Signs",
-					  						FullLocalDefaultTextBack_up =  "סימנים אסורים בשימוש",
+					  						FullLocalDefaultTextBack_up =  "סימנים םסורים בשימוש",
 					  						FullLocalDefaultText =  "BS64:Iteh15nXnteg15nXnSDXkNeh15XXqNeZ150g15HXqdeZ157XldepIg==",
 					  						ListFieldLable =  "ForbiddenSignsListLable",
 					  						ListLableDefaultText =  "Forbidden Signs",
-					  						ListLocalDefaultTextBack_up =  "סימנים אסורים בשימוש",
+					  						ListLocalDefaultTextBack_up =  "סימנים םסורים בשימוש",
 					  						ListLocalDefaultText =  "BS64:Iteh15nXnteg15nXnSDXkNeh15XXqNeZ150g15HXqdeZ157XldepIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -2606,22 +2606,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
 
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
 	    {  
-	        //FeatureRepository featureRepository = new FeatureRepository(0); 
-            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        //FeatureRepository featureRepository = new FeatureRepository(contextTenant); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(contextTenant).ToList();
 	        QueryGroup CustomsSettingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CSQG", Name = "Customs.CustomsSetting" }, queryGroupRepository,tenantQueryGroups);
 						QueryGroup CustomsSettingQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "80e5", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable CustomsSettingObjectTable = objectTables.ContainsKey("Customs.CustomsSetting") ? objectTables["Customs.CustomsSetting"] : null;
             if (CustomsSettingObjectTable == null)
             {
-                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+                IWebFreightContext objectContext = WebFreightContext.GetContext(contextTenant);  
 
                 CustomsSettingObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsSetting" && d.Tenant == 0).FirstOrDefault();
             }
@@ -2634,37 +2634,37 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode CustomsSettingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.Q.CustomsSettingQuery", DefaultText = @"Customs Settings",LocalDefaultText = "BS64:IteU15LXk9eo16og157Xm9ehIg==", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomsSettingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSETTING", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.CustomsSetting", NameTextCodeDefaultText = "Customs Settings", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomsSettingObjectTable, addedFeatures, addedTextCodes);
-
+ 			   TextCode CustomsSettingTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.Q.CustomsSettingQuery", DefaultText = @"Customs Settings",LocalDefaultText = "הגדרת מכס", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   Feature CustomsSettingFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSETTING", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.CustomsSetting", NameTextCodeDefaultText = "Customs Settings", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomsSettingObjectTable, addedFeatures, addedTextCodes,contextTenant);
+ 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomsSettingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsSettingTextCode_0.Id, NameTextCodeCode = CustomsSettingTextCode_0.Code, ObjectTableName = "Customs.CustomsSetting", Code = "CustomsSettings",  QueryGroupCode = "CSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsSettingObjectTable.Id, QuerySection = "CustomsSetting", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsSettingFeature_0.Id,FeatureUniqeCode= CustomsSettingFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query CustomsSettingsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsSettingTextCode_0.Id, NameTextCodeCode = CustomsSettingTextCode_0.Code, ObjectTableName = "Customs.CustomsSetting", Code = "CustomsSettings",  QueryGroupCode = "CSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsSettingObjectTable.Id, QuerySection = "CustomsSetting", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomsSettingFeature_0.Id,FeatureUniqeCode= CustomsSettingFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn CustomsSettingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsSetting.SignServiceAddress" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CustomsSetting.SignServiceAddress" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CustomsSettingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsSetting.IIGServiceAddress" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CustomsSetting.IIGServiceAddress" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CustomsSettingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsSetting.DCAServiceAddress" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CustomsSetting.DCAServiceAddress" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CustomsSettingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsSetting.DCAPartnerVault" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CustomsSetting.DCAPartnerVault" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CustomsSettingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CustomsSetting.UServerServiceAddress" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CustomsSetting.UServerServiceAddress" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CustomsSettingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CustomsSetting.DefaultNotificationAssigneeName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn CustomsSettingsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CustomsSetting.DefaultNotificationAssigneeName" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn CustomsSettingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CustomsSetting.IsConnectedToUniFreight" , ColumnWidth = 130 }, addedQueryColumns);
-			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
-			SqlBulkInsert.BulkInsert("Features", addedFeatures);
-			SqlBulkInsert.BulkInsert("Queries", addedQueries);
-			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
-			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+			 QueryColumn CustomsSettingsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsSettingsQuery.Id,QueryCode = CustomsSettingsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CustomsSetting.IsConnectedToUniFreight" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns,contextTenant);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters,contextTenant);	 
   
 	    }
 
-	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
+	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext,int contextTenant)
 	    {   
 
 		   ObjectTable CustomsSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsSetting" && d.Tenant == 0).FirstOrDefault();
@@ -2672,11 +2672,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen CustomsSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsSetting.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CustomsSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsSetting.HeaderScreen", Name = "Header Screen", ObjectTableId = CustomsSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsSettingHeaderScreenScreen0.Id,ScreenCode = CustomsSettingHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CustomsSetting.CustomsAgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsSettingHeaderScreenScreen0.Id,ScreenCode = CustomsSettingHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CustomsSetting.CustomsAgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsSettingHeaderScreenScreen0.Id,ScreenCode = CustomsSettingHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CustomsSetting.DCAPartnerVault", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsSettingHeaderScreenScreen0.Id,ScreenCode = CustomsSettingHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.CustomsSetting.DCAPartnerVault", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          	
 		    CustomsSettingObjectTable.HeaderScreenId = CustomsSettingHeaderScreenScreen0.Id;
 		    CustomsSettingObjectTable.HeaderScreenCode = CustomsSettingHeaderScreenScreen0.Code;
@@ -2684,63 +2684,63 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	   		  
 	      
 
-	         Screen CustomsSettingGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsSetting.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomsSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen CustomsSettingGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.CustomsSetting.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = CustomsSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.CustomsAgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.CustomsAgentId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.DCAPartnerVault", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.DCAPartnerVault", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.DefaultNotificationAssignee", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.DefaultNotificationAssignee", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.CustomsEnvoirmentTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.CustomsEnvoirmentTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.IsConnectedToUniFreight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.IsConnectedToUniFreight", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.SignServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.SignServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.IIGServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.IIGServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.DCAServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.DCAServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.UServerServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCustomsSettingCustomsCustomsSettingGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = CustomsSettingGeneralTabScreenScreen1.Id,ScreenCode = CustomsSettingGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.CustomsSetting.UServerServiceAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	            
 
 	    }
 
-	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
+	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext,int contextTenant)
 	    {                
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable CustomsSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsSetting" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode CustomsSettingGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.TH.General", DefaultText = "General",LocalDefaultText = "BS64:Iteb15zXnNeZIg==", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsSettingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsSettingObjectTable);
+ 			   TextCode CustomsSettingGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature CustomsSettingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsSettingObjectTable,contextTenant);
  
                  
-			   TextCode CustomsSettingEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomsSettingEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsSettingObjectTable);
-			 TextCodeRepository.SubmitChanges();
+			   TextCode CustomsSettingEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature CustomsSettingEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsSettingObjectTable,contextTenant);
+ 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomsSettingGeneralFeature_TH0.Id,FeatureUniqeCode = CustomsSettingGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomsSettingObjectTable.Id, TabNameTextCodeId = CustomsSettingGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomsSettingGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomsSettingGeneralFeature_TH0.Id,FeatureUniqeCode = CustomsSettingGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomsSettingObjectTable.Id, TabNameTextCodeId = CustomsSettingGeneralTextCode_TH0.Id, TabNameTextCodeCode = CustomsSettingGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CMSE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomsSettingEventsFeature_TH1.Id,FeatureUniqeCode = CustomsSettingEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsSettingObjectTable.Id, TabNameTextCodeId = CustomsSettingEventsTextCode_TH1.Id, TabNameTextCodeCode = CustomsSettingEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CMSE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomsSettingEventsFeature_TH1.Id,FeatureUniqeCode = CustomsSettingEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsSettingObjectTable.Id, TabNameTextCodeId = CustomsSettingEventsTextCode_TH1.Id, TabNameTextCodeCode = CustomsSettingEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
-	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
 	    {  
 		   ObjectTable CustomsSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsSetting" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CustomsSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable);
-		   Feature CustomsSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable);
-		   Feature CustomsSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable);
-		   Feature CustomsSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.PackageFeature", NameTextCodeDefaultText = "CustomsSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable);    
+		   Feature CustomsSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable,contextTenant);
+		   Feature CustomsSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable,contextTenant);
+		   Feature CustomsSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable,contextTenant);
+		   Feature CustomsSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsSetting.Features.PackageFeature", NameTextCodeDefaultText = "CustomsSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsSettingObjectTable,contextTenant);    
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses,int contextTenant)
 	    {   
 			ObjectTable CustomsSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsSetting" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
@@ -2759,7 +2759,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 IsFollowUp =  false,
                 ObjectTableId = CustomsSettingObjectTable.Id,
 				 
-            }, EventTypeRepository, tenantEventTypes);
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
@@ -2778,7 +2778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 IsFollowUp =  false,
                 ObjectTableId = CustomsSettingObjectTable.Id,
 				 
-            }, EventTypeRepository, tenantEventTypes);
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
@@ -2797,26 +2797,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 IsFollowUp =  false,
                 ObjectTableId = CustomsSettingObjectTable.Id,
 				 
-            }, EventTypeRepository, tenantEventTypes);
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
 
 
 	    }
 	
-	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
+	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext,int contextTenant)
 	    {  
 	    }
 
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
 	    {  
 
 		   		   //--------------> Additional TextCodes <--------------\\
 
  		   ObjectTable CustomsSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsSetting" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode CustomsSettingTextCode_CustomsSettingONewValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsSetting.O.NewValue", DefaultText = "New Value",LocalDefaultText = @"BS64:Itei16jXmiDXl9eT16ki", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+  		   TextCode CustomsSettingTextCode_CustomsSettingONewValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsSetting.O.NewValue", DefaultText = "New Value",LocalDefaultText = @"ערך חדש", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CustomsSettingTextCode_CustomsSettingOOldValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsSetting.O.OldValue", DefaultText = "Old Value",LocalDefaultText = @"BS64:Itei16jXmiDXp9eV15PXnSI=", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
+ 		   TextCode CustomsSettingTextCode_CustomsSettingOOldValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsSetting.O.OldValue", DefaultText = "Old Value",LocalDefaultText = @"ערך קודם", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 
    
 	    
 }

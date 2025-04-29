@@ -13,6 +13,7 @@
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="false"
+  IsLock="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -43,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Transport Mode&quot;"
-  Code="&quot;93d8&quot;"
+  Code="&quot;d3ee&quot;"
   Name="&quot;TransportMode&quot;"
   CloseTableCode="&quot;Id&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -496,12 +497,18 @@
   </EventTypes>
   <Records>
     <Record
+      Id="&quot;A&quot;"
+      LocalName="&quot;אויר&quot;"
       SearchFields="&quot;a,air&quot;"
       Name="&quot;Air&quot;" />
     <Record
+      Id="&quot;I&quot;"
+      LocalName="&quot;יבשה&quot;"
       SearchFields="&quot;i,inland&quot;"
       Name="&quot;Inland&quot;" />
     <Record
+      Id="&quot;O&quot;"
+      LocalName="&quot;ים&quot;"
       SearchFields="&quot;o,ocean&quot;"
       Name="&quot;Ocean&quot;" />
   </Records>

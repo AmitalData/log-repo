@@ -124,7 +124,6 @@ namespace Logitude.Server.Tools.Counters
         // private static Dictionary<string, Queue<string>> TablesIdsRange = new Dictionary<string, Queue<string>>();
         public static string GetIdWithIdsRange(string tableName, int numberOfIds, int tenant)
         {
-
             if (TablesIdsRange.ContainsKey(tableName) && TablesIdsRange[tableName].Count > 0)
             {
                 string id = TablesIdsRange[tableName].Dequeue();
@@ -418,6 +417,7 @@ namespace Logitude.Server.Tools.Counters
         {
             GlobalDBRepository globalDbRep;
             GlobalDB currentDb;
+
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 //GlobalDBRep = new GlobalDBRepository();

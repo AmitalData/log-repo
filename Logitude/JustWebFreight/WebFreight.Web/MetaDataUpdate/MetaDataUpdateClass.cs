@@ -23,10 +23,10 @@ namespace WebFreight.Web.MetaDataUpdate
         private ObjectFieldQuery objectFieldsQuery;
         private ObjectTableQuery objectTabelQuery;
 
-        public void LoadUpdateTenantZero(IWebFreightContext context, bool updateMetadatafields = true)
+        public void LoadUpdateTenantZero(IWebFreightContext context, bool updateMetadatafields = true,int tenant=0)
         {
             isUpdate = true;
-            LoadObjectsTenantZero(context, updateMetadatafields);
+            LoadObjectsTenantZero(context, updateMetadatafields,tenant);
         }
 
         public void CreateJustOT(IWebFreightContext context)
@@ -68,7 +68,7 @@ namespace WebFreight.Web.MetaDataUpdate
         }
         bool isUpdate = false;
         Dictionary<string, TextCode> textCodes = null;
-        public void LoadObjectsTenantZero(IWebFreightContext context, bool updateMetadatafields = true)
+        public void LoadObjectsTenantZero(IWebFreightContext context, bool updateMetadatafields = true,int tenant=0)
         {
             InitializeService(context);
 
@@ -103,10 +103,11 @@ namespace WebFreight.Web.MetaDataUpdate
             CreateAllTablesTips(tips, textCodes);
 
             if (updateMetadatafields)
-            {
+            {               
             
-                LoadRolesAndFeatures(0);
-                CreateMenuButtonsForTenant(0);
+                LoadRolesAndFeatures(tenant);
+                CreateMenuButtonsForTenant(tenant);
+
             }
 
         
