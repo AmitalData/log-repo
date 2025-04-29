@@ -540,16 +540,16 @@ namespace Logitude.Accounting.BL.DataContract
             var processedKeys = new HashSet<string>();
             
 
-            foreach (var group in groupedCreditTransactions)
+            foreach (var grp in groupedCreditTransactions)
             {
-                var groupKey = $"{group.OppositeAccountId}~{group.JournalId}~{group.Reference1}";
+                var groupKey = $"{grp.OppositeAccountId}~{grp.JournalId}~{grp.Reference1}";
                 if (processedKeys.Contains(groupKey)) 
                     continue;
 
                 processedKeys.Add(groupKey);
 
 
-                var firstTransaction = group.Transactions.First();
+                var firstTransaction = grp.Transactions.First();
 
                 var taxDeductionReportLine = new TaxDeductionReportLine
                 {
@@ -557,7 +557,7 @@ namespace Logitude.Accounting.BL.DataContract
                     MonthOfRegisterDate = firstTransaction.AccountingDate.Month
                 };
 
-                var transactionsTaxWhLookup = group.Transactions.ToLookup(tr => tr.AccountId == setting.TaxWithholdingGLAccountId);
+                var transactionsTaxWhLookup = grp.Transactions.ToLookup(tr => tr.AccountId == setting.TaxWithholdingGLAccountId);
 
                 var whTransactions = transactionsTaxWhLookup[true]; 
 
@@ -584,7 +584,7 @@ namespace Logitude.Accounting.BL.DataContract
                 }
                 else
                 {
-                    taxDeductionReportLine.AmountInLocalCurrency = Math.Round((double)group.Transactions.Sum(tr => tr.LocalAmountCredit), 0);
+                    taxDeductionReportLine.AmountInLocalCurrency = Math.Round((double)grp.Transactions.Sum(tr => tr.LocalAmountCredit), 0);
                     taxDeductionReportLine.TaxDeductionLocalAmount = 0;
                     taxDeductionReportLine.TaxDeductionPercentage = 0;
                 }
@@ -805,24 +805,24 @@ namespace Logitude.Accounting.BL.DataContract
 
         private ByVendorList CombineByVendorItems(IEnumerable<ByVendorList> gr)
         {
-             var group = gr.ToList();  // Materialization
+             var grp = gr.ToList();  // Materialization
              
-             var combined = group.First();
+             var combined = grp.First();
 
 
-            if (group.Count() > 1)
+            if (grp.Count() > 1)
             {
                 // Those variables are there to eliminate update 'in the place' while summing
-                double sumOfAmountInLocalCurrency = group.Sum(x => x.SumOfAmountInLocalCurrency ?? 0);
+                double sumOfAmountInLocalCurrency = grp.Sum(x => x.SumOfAmountInLocalCurrency ?? 0);
                 combined.SumOfAmountInLocalCurrency = sumOfAmountInLocalCurrency;
 
-                decimal sumOfTaxDeductionLocalAmount = group.Sum(x => x.SumOfTaxDeductionLocalAmount ?? 0);
+                decimal sumOfTaxDeductionLocalAmount = grp.Sum(x => x.SumOfTaxDeductionLocalAmount ?? 0);
                 combined.SumOfTaxDeductionLocalAmount = sumOfTaxDeductionLocalAmount;
 
-                decimal totalAmount = group.Sum(x => x.TotalAmount ?? 0);
+                decimal totalAmount = grp.Sum(x => x.TotalAmount ?? 0);
                 combined.TotalAmount = totalAmount;
 
-                if (group.Select(x => x.VendorLocalName).Distinct().Count() > 1 &&
+                if (grp.Select(x => x.VendorLocalName).Distinct().Count() > 1 &&
                      !string.IsNullOrEmpty(combined.GLAccountLocalName))
                 {
                     combined.VendorLocalName = combined.GLAccountLocalName;
