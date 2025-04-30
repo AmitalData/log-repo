@@ -233,13 +233,15 @@ export class TaxReportPM {
     public get CanRecalculate() { return this.canRecalculate; }
     public set CanRecalculate(newValue: boolean) { if (this.canRecalculate != newValue) { this.canRecalculate = newValue; this.MarkAsDirty("CanRecalculate"); } }
        
-	 
+	 	 
+    private removeDuplicates: boolean;
+    public get RemoveDuplicates() { return this.removeDuplicates; }
+    public set RemoveDuplicates(newValue: boolean) { if (this.removeDuplicates != newValue) { this.removeDuplicates = newValue; this.MarkAsDirty("RemoveDuplicates"); } }
+
     private isEdited: boolean;
     public get IsEdited() { return this.isEdited; }
     public set IsEdited(newValue: boolean) { if (this.isEdited != newValue) { this.isEdited = newValue; this.MarkAsDirty("IsEdited"); } }
        
-	 
-
     public OldEntityPM: TaxReportPM;
 		
     public IsDirty: boolean;
@@ -267,4 +269,4 @@ export class TaxReportPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

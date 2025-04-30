@@ -427,12 +427,13 @@
     <Compile Include="Enums\ChartOfAccountsTypes.cs" />
     <Compile Include="Enums\GLAccountTypes.cs" />
     <Compile Include="Enums\InterestEntityTypeCodes.cs" />
+    <Compile Include="Enums\InputsTaxReportLineTypes.cs" />
     <Compile Include="Enums\InterestEntityTypes.cs" />
     <Compile Include="Enums\InterestPeriodLineTypes.cs" />
     <Compile Include="Enums\InterestReportStatusCodes.cs" />
-     <Compile Include="Enums\OpenFormatDocumentTypes.cs" />
-     <Compile Include="Enums\JournalActionTypes.cs" />
-     <Compile Include="Enums\RevaluationStatusEnum.cs" />
+    <Compile Include="Enums\OpenFormatDocumentTypes.cs" />
+    <Compile Include="Enums\JournalActionTypes.cs" />
+    <Compile Include="Enums\RevaluationStatusEnum.cs" />
     <Compile Include="Repositories\AccountingEntityJournalRepository.cs" />
     <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
     <Compile Include="Repositories\Aur_ItemRepository.cs" />

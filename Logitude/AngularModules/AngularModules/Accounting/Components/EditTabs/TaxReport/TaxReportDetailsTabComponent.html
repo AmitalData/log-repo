@@ -603,6 +603,7 @@
                                         </div>
                                     </div>
                                 </dropdown-button>
+
                             </div>
 
                             <!-- Search -->
@@ -623,6 +624,12 @@
                             <div style="padding: 4px;width: 128px;" [style.float]="isRTL ? 'left' : 'right'">
                                 <button class="Button" (click)="DownloadPa()">
                                     {{'TaxReport.O.DownloadPa' | TextCodeTranslationPipe}}
+                                </button>
+                            </div>
+
+                            <div *ngIf="IsFixDupButtonVisible" style="padding: 4px;width: 200px;" [style.float]="isRTL ? 'left' : 'right'">
+                                <button class="Button" (click)="OnFixDupButtonClicked()">
+                                    {{'Accounting.O.FixDuplicates' | TextCodeTranslationPipe}}
                                 </button>
                             </div>
                         </td>
