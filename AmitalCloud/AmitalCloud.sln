@@ -66,13 +66,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Invoice.Web", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.APITools", "AmitalCloud.Infrastructure.APITools\AmitalCloud.Infrastructure.APITools.csproj", "{18E5126B-FC12-4521-A74A-8D57B02FB0D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.WebCore", "AmitalCloud.Infrastructure.WebCore\AmitalCloud.Infrastructure.WebCore.csproj", "{74D42AB8-0B5F-4286-9F7B-699EC754FC9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmitalCloud.Infrastructure.WebCore", "AmitalCloud.Infrastructure.WebCore\AmitalCloud.Infrastructure.WebCore.csproj", "{74D42AB8-0B5F-4286-9F7B-699EC754FC9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.DomainCore", "AmitalCloud.Infrastructure.DomainCore\AmitalCloud.Infrastructure.DomainCore.csproj", "{8C2BA7C1-A1CD-4A89-AC1C-766D618DE1BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmitalCloud.Infrastructure.DomainCore", "AmitalCloud.Infrastructure.DomainCore\AmitalCloud.Infrastructure.DomainCore.csproj", "{8C2BA7C1-A1CD-4A89-AC1C-766D618DE1BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.DataCore", "AmitalCloud.Infrastructure.DataCore\AmitalCloud.Infrastructure.DataCore.csproj", "{EBE5DF04-6FE2-4518-8EF3-7C3ECA262321}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmitalCloud.Infrastructure.DataCore", "AmitalCloud.Infrastructure.DataCore\AmitalCloud.Infrastructure.DataCore.csproj", "{EBE5DF04-6FE2-4518-8EF3-7C3ECA262321}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.ApplicationCore", "AmitalCloud.Infrastructure.ApplicationCore\AmitalCloud.Infrastructure.ApplicationCore.csproj", "{20DD7F50-B3FC-4853-A8D9-38034E380645}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmitalCloud.Infrastructure.ApplicationCore", "AmitalCloud.Infrastructure.ApplicationCore\AmitalCloud.Infrastructure.ApplicationCore.csproj", "{20DD7F50-B3FC-4853-A8D9-38034E380645}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InfrastructureCore", "InfrastructureCore", "{225B470B-8DFD-4FA8-BA49-AC1841BEC9AE}"
 EndProject
@@ -83,6 +83,19 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{07BD4F66-7E04-46BA-AEA6-C708E889EC7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.Model", "AmitalCloud.Infrastructure.Model\AmitalCloud.Infrastructure.Model.csproj", "{B03864C5-0C52-465B-9206-3FFF150413B9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure.Core", "Infrastructure.Core", "{69B9B197-F47F-421C-8BBA-636A42002B9D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{D1BCB4A9-960E-43AB-BF63-EFE494361871}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmitalCloud.Infrastructure.Model.Core", "AmitalCloud.Infrastructure.Model.Core\AmitalCloud.Infrastructure.Model.Core.csproj", "{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.Domain", "AmitalCloud.Infrastructure.Domain.Core\AmitalCloud.Infrastructure.Domain.csproj", "{D4EF9158-DC26-47E5-91C9-299449AAC2DD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235} = {E83CE031-ED1B-43C4-AB1C-27EBBF2FB235}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.Data", "AmitalCloud.Infrastructure.Data.Core\AmitalCloud.Infrastructure.Data.csproj", "{6FC95BE2-1BAA-49FC-944F-7B3859044124}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -265,6 +278,30 @@ Global
 		{B03864C5-0C52-465B-9206-3FFF150413B9}.None|Any CPU.Build.0 = Debug|Any CPU
 		{B03864C5-0C52-465B-9206-3FFF150413B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B03864C5-0C52-465B-9206-3FFF150413B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235}.All Projects|Any CPU.ActiveCfg = Debug|Any CPU
+		{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235}.All Projects|Any CPU.Build.0 = Debug|Any CPU
+		{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235}.None|Any CPU.ActiveCfg = Debug|Any CPU
+		{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235}.None|Any CPU.Build.0 = Debug|Any CPU
+		{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4EF9158-DC26-47E5-91C9-299449AAC2DD}.All Projects|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4EF9158-DC26-47E5-91C9-299449AAC2DD}.All Projects|Any CPU.Build.0 = Debug|Any CPU
+		{D4EF9158-DC26-47E5-91C9-299449AAC2DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4EF9158-DC26-47E5-91C9-299449AAC2DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4EF9158-DC26-47E5-91C9-299449AAC2DD}.None|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4EF9158-DC26-47E5-91C9-299449AAC2DD}.None|Any CPU.Build.0 = Debug|Any CPU
+		{D4EF9158-DC26-47E5-91C9-299449AAC2DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4EF9158-DC26-47E5-91C9-299449AAC2DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FC95BE2-1BAA-49FC-944F-7B3859044124}.All Projects|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FC95BE2-1BAA-49FC-944F-7B3859044124}.All Projects|Any CPU.Build.0 = Debug|Any CPU
+		{6FC95BE2-1BAA-49FC-944F-7B3859044124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FC95BE2-1BAA-49FC-944F-7B3859044124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FC95BE2-1BAA-49FC-944F-7B3859044124}.None|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FC95BE2-1BAA-49FC-944F-7B3859044124}.None|Any CPU.Build.0 = Debug|Any CPU
+		{6FC95BE2-1BAA-49FC-944F-7B3859044124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FC95BE2-1BAA-49FC-944F-7B3859044124}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -293,6 +330,10 @@ Global
 		{95C8FC5E-E864-436F-AC95-A0A81A801D30} = {213C3B89-F127-4844-A59A-430653207DE3}
 		{07BD4F66-7E04-46BA-AEA6-C708E889EC7D} = {9697D8D9-104B-4B72-940D-6ABD39870532}
 		{B03864C5-0C52-465B-9206-3FFF150413B9} = {07BD4F66-7E04-46BA-AEA6-C708E889EC7D}
+		{D1BCB4A9-960E-43AB-BF63-EFE494361871} = {69B9B197-F47F-421C-8BBA-636A42002B9D}
+		{E83CE031-ED1B-43C4-AB1C-27EBBF2FB235} = {D1BCB4A9-960E-43AB-BF63-EFE494361871}
+		{D4EF9158-DC26-47E5-91C9-299449AAC2DD} = {69B9B197-F47F-421C-8BBA-636A42002B9D}
+		{6FC95BE2-1BAA-49FC-944F-7B3859044124} = {69B9B197-F47F-421C-8BBA-636A42002B9D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA00D447-9E1A-43C0-9284-15DB58AED53D}
