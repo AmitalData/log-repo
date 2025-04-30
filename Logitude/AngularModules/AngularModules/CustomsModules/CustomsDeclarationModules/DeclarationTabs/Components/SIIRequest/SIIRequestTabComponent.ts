@@ -65,27 +65,44 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.loadRequests();
   }
 
+  initFilterArgs() {
+    let filter = new ApiQueryFilters();
+    filter.PageSize = 200;
+    filter.PageIndex = 0;
+    filter.GetAll = false;
+    filter.GetCount = true;
+    return filter;
+  }
+
+  isCloseRequests: SiiRequestIsClosed = SiiRequestIsClosed.All;
+
   loadRequests(): void {
-    let filters = new ApiQueryFilters();
+    this.filterAgrs = this.initFilterArgs();
+    this.filterAgrs.addAdditionalFilter("DeclarationId", this.currentDeclaration?.Id, null, null, "Equals", false, false, false, "string", false);
+    this.filterAgrs.addAdditionalFilter("Tenant", this.currentDeclaration?.Tenant, null, null, "Equals", true, false, false, "string");
+    if (SiiRequestIsClosed.IsClosed === this.isCloseRequests) {
+      this.filterAgrs.addAdditionalFilter("IsClosed", true, null, null, "Equals", false, false, false, "boolean", false);
+    }
+    else if (SiiRequestIsClosed.IsOpen === this.isCloseRequests) {
+      this.filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", false, false, false, "boolean", false);
+    }
 
-
-    filters.PageSize = 200;
-    filters.PageIndex = 0;
-    filters.GetAll = false;
-    filters.GetCount = true;
-
-    filters.addAdditionalFilter("DeclarationId", this.currentDeclaration?.Id, null, null, "Equals", false, false, false, "string", false);
-    filters.addAdditionalFilter("Tenant", this.currentDeclaration?.Tenant, null, null, "Equals", true, false, false, "string");
-
-
-    this.siiRequestListService.getByFilters(filters).subscribe((response: ServiceResponse) => {
+    this.siiRequestListService.getByFilters(this.filterAgrs).subscribe((response: ServiceResponse) => {
       if (!response?.HasError && response?.Result !== null) {
         this.ItemsSource = new ObservableCollection(response.Result);
+        console.log(response.Result);
+
       }
       // TODO: ADD TRY CATCH
     });
+    }
 
+  // TODO: add html element LOV of the options WITH CSS
+  editRequestFilterClosed(data: SiiRequestIsClosed) {
+    this.isCloseRequests = data
+    this.loadRequests();
   }
+
 
   onOpenNewRequest(): void {
     this.AddNewSIIRequest(SiiRequestMode.IsNew);
@@ -190,4 +207,10 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
 export enum SiiRequestMode {
   IsNew = 'IsNew',
   IsEdit = 'IsEdit',
+}
+
+export enum SiiRequestIsClosed {
+  IsClosed = 'IsClosed',
+  IsOpen = 'IsOpen',
+  All = 'All',
 }

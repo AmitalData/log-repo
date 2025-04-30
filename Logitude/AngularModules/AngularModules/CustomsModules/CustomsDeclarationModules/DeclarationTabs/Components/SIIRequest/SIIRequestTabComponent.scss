@@ -80,3 +80,14 @@
 .innerTable {
     width: 100%;
 }
+
+.filterContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filterDropdown {
+    padding: 5px;
+    font-size: 14px;
+}

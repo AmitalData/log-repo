@@ -26,6 +26,26 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="filterRow">
+                            <div class="filterContainer">
+                                <label for="requestStatusFilter">
+                                    {{ 'Customs.SIIRequest.Filter.Status' | TextCodeTranslationPipe }}
+                                </label>
+                                <select id="requestStatusFilter" class="filterDropdown" (change)="editRequestFilterClosed($event.target.value)">
+                                    <option [value]="'All'" [selected]="isCloseRequests === 'All'">
+                                        {{ 'Customs.SIIRequest.O.AllRequest' | TextCodeTranslationPipe }}
+                                    </option>
+                                    <option [value]="'IsOpen'" [selected]="isCloseRequests === 'IsOpen'">
+                                        {{ 'Customs.SIIRequest.O.OpenRequest' | TextCodeTranslationPipe }}
+                                    </option>
+                                    <option [value]="'IsClosed'" [selected]="isCloseRequests === 'IsClosed'">
+                                        {{ 'Customs.SIIRequest.O.ClosedRequest' | TextCodeTranslationPipe }}
+                                    </option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="5" class="gridContainer">
                             <div class="CellContent">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
