@@ -1203,17 +1203,23 @@ export class HomeComponent implements OnDestroy{
         }
     } 
     ngOnInit() {
-        //this.StartTimer();
-        //window.addEventListener('mousemove', () => this.ResetTimer());
-        //window.addEventListener('keypress', () => this.ResetTimer());
+        if(false) //no delete it
+        {
+           this.StartTimer();
+           window.addEventListener('mousemove', () => this.ResetTimer());
+           window.addEventListener('keypress', () => this.ResetTimer());
+        }
     }
     private SaveCompletedEvent: any = null;
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         this.SaveCompletedEvent = null;
-        //clearTimeout(this.InactivityTimeout);
-        //window.removeEventListener('mousemove', this.ResetTimer);
-        //window.removeEventListener('keypress', this.ResetTimer);
+        if(false) //no delete it
+        {
+           clearTimeout(this.InactivityTimeout);
+           window.removeEventListener('mousemove', this.ResetTimer);
+           window.removeEventListener('keypress', this.ResetTimer);
+        }
     }
     StartTimer() {
         this.InactivityTimeout = setTimeout(() => {
@@ -1267,10 +1273,13 @@ export class HomeComponent implements OnDestroy{
 
         const closeWarningMessage = () => {          
             confirmWindow.Close();    
-            //this.WarningShown = false;
-            //clearInterval(timer);
-            //this.ResetTimer();  
-            //ServiceHelper.DeleteGeneralLockBySessionId();
+            if(false) //no delete it
+            {
+              this.WarningShown = false;
+              clearInterval(timer);
+              this.ResetTimer();  
+              ServiceHelper.DeleteGeneralLockBySessionId();
+            }
                 
         }
 
