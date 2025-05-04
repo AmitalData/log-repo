@@ -57,6 +57,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.IBANNumber = entityPM.IBANNumber;
             entityCard.Swift = entityPM.Swift;
             entityCard.ExternalSystem = entityPM.IsHybrid ? HybridExternalSystem.HybridExternalSystemCode : null;
+            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
 
             if (!entityPM.IsFirstContactToAdd)
             {

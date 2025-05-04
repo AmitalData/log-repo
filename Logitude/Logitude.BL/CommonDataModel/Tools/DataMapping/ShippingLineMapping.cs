@@ -74,6 +74,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.IsAutomaticRequestsSent = entityPM.IsAutomaticRequestsSent;
             entityPOCO.IsSupportsContainerTracking = entityPM.IsSupportsContainerTracking;
             entityCard.ExternalSystem = entityPM.IsHybrid ? HybridExternalSystem.HybridExternalSystemCode : null;
+            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
 
             entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entityCard.SATCustomerName = entityPM.SATReceptorName;

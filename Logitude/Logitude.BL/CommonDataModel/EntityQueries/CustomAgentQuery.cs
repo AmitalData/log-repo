@@ -99,6 +99,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Code = a.Card.Code,
                                            GLAccountId=a.Card.GLAccountId,
                                            ExternalSystem = a.Card.ExternalSystem,
+                                           IsAutonomy = a.Card.IsAutonomy
+
                                        },
                                        BillToId = a.Card.BillToId,
                                    }).FirstOrDefault();
@@ -195,6 +197,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Code = a.Card.Code,
                                            GLAccountId = a.Card.GLAccountId,
                                            ExternalSystem = a.Card.ExternalSystem,
+                                           IsAutonomy = a.Card.IsAutonomy
+
                                        },
                                        BillToId = a.Card.BillToId,
                                    }).FirstOrDefault();
@@ -294,6 +298,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SendingInterestReport = a.Card.SendingInterestReport,
                                            GLAccountId= a.Card.GLAccountId,
                                            ExternalSystem = a.Card.ExternalSystem,
+                                           IsAutonomy = a.Card.IsAutonomy
+
                                        },
                                        BillToId = a.Card.BillToId,
                                    }).FirstOrDefault();

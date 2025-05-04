@@ -113,6 +113,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      Code = a.Card.Code,
                                      GLAccountId=a.Card.GLAccountId,
                                      ExternalSystem = a.Card.ExternalSystem,
+                                     IsAutonomy = a.Card.IsAutonomy
                                  },
                                  BillToId = a.Card.BillToId,
                                  ImageDetailId = a.Card.ImageDetailId,

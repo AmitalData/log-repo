@@ -27,7 +27,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public IsAccountingActivated: boolean;
     public SatInterfaceSettingCode: string;
     public Profact4Enabled: boolean = false;
-
+    public IsBlockMessageVisible: boolean = false;
     @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     @ViewChild('ARInvoiceDocumentTypeTemplateArea', { read: ViewContainerRef, static: false }) documentTemplateViewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
@@ -199,6 +199,11 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         this.UIProperties.SetRequired("CreditLimitWarningPercentage", this.ObjectTableName, false);
         this.UIProperties.SetValidity("CreditLimitWarningPercentage", this.ObjectTableName, true, null);
 
+        if (this.EntityPM?.Card?.ExternalSystem == "UNIFREIGHT") {
+            this.IsBlockMessageVisible = true;
+            this.UIProperties.SetEnabled("IsAutonomy", "Card", false);
+
+        }
         if (isWarningPercentageRequired) {
             this.UIProperties.SetRequired("CreditLimitWarningPercentage", this.ObjectTableName, isWarningPercentageRequired);
         }
@@ -303,7 +308,13 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
             this.SetUIProperties();
         }
     }
-
+    get IsAutonomy() { return this.EntityPM.Card?.IsAutonomy; }
+    set IsAutonomy(newValue: boolean) {
+        if (this.EntityPM?.Card != null && this.EntityPM.Card?.IsAutonomy != newValue) {
+            this.EntityPM.Card.IsAutonomy = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }   
     ComputeActualBalance() {        
         this.CreditLimitActualBalance = AppTool.AddAmounts(this.CreditLimitLoadedAmount, this.CreditLimitOpenBalance);
     }

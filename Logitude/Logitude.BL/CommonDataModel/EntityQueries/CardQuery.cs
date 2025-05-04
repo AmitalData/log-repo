@@ -290,6 +290,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       EmailForSendingSingArinvoice=a.EmailForSendingSingArinvoice,
                                       SendingInterestReport=a.SendingInterestReport,
                                       ExternalSystem = a.ExternalSystem,
+                                      
                                   }).FirstOrDefault();
 
 
