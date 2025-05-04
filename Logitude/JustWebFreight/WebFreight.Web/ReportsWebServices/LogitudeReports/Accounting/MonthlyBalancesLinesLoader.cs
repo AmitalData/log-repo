@@ -172,7 +172,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 QuantityForOctober = reader["MONTH10"] != DBNull.Value ? (decimal)reader["MONTH10"] : 0,
                                 QuantityForNovember = reader["MONTH11"] != DBNull.Value ? (decimal)reader["MONTH11"] : 0,
                                 QuantityForDecember= reader["MONTH12"] != DBNull.Value ? (decimal)reader["MONTH12"] : 0,
-                                TotalReport = reader["MONTH12"] != DBNull.Value ? (decimal)reader["TOTAL_MONTHS"] : 0,
+                                TotalReport = reader["TOTAL_MONTHS"] != DBNull.Value ? (decimal)reader["TOTAL_MONTHS"] : 0,
 								GLAcountLocalName = reader["LocalName"] != DBNull.Value ? (string)reader["LocalName"] : null,
 								GLAcountNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
                                 GLAcountEnglishName= reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
