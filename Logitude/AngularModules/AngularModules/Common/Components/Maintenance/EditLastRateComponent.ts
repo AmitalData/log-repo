@@ -105,12 +105,10 @@ export class EditLastRateComponent extends BaseComponent {
     get Rate() { return this.RatesTable.Rate; }
     set Rate(value: number) {
         if (this.RatesTable.Rate != value) {
-            this.RatesTable.Rate = AppTool.Round(value, 5);
-            this.ValidateRateWarningMethod(this.Rate, this.OldRate);
-
+           
             for (var id in this.CurrencyRates) {
                 if (this.CurrencyRates[id].RateCoefficient) {
-                    this.CurrencyRates[id].Rate = AppTool.Round(this.RatesTable.Rate * this.CurrencyRates[id].RateCoefficient, 5);
+                    this.CurrencyRates[id].Rate = AppTool.Round(value * this.CurrencyRates[id].RateCoefficient, 5);
                 }
             }
         }
@@ -121,7 +119,18 @@ export class EditLastRateComponent extends BaseComponent {
 
         this.ValidateRateWarningMethod(this.CurrencyRates[id].Rate, this.CurrencyRates[id].OldRate);
     }
+     OnRateChange(value) {
+        if (this.RatesTable.Rate != value) {
+           this.RatesTable.Rate = AppTool.Round(value, 5);
+           this.ValidateRateWarningMethod(this.Rate, this.OldRate);
 
+            for (var id in this.CurrencyRates) {
+                if (this.CurrencyRates[id].RateCoefficient) {
+                    this.CurrencyRates[id].Rate = AppTool.Round(this.RatesTable.Rate * this.CurrencyRates[id].RateCoefficient, 5);
+                }
+            }
+        }
+     }
     ValidateRateWarningMethod(rate, oldRate) {
         var warnings: string[] = [];
 
