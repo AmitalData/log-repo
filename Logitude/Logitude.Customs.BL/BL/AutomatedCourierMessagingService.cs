@@ -17,6 +17,8 @@ using Devart.Data.Oracle;
 using Simplog.Data.Helpers;
 using System.Data.SqlClient;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data;
+using System.Data.Entity;
 
 
 namespace Logitude.Customs.BL.BL
@@ -54,11 +56,14 @@ namespace Logitude.Customs.BL.BL
 
             var courierMasterRepo = new CourierMasterRepository(declarationCourierStatusPM.Tenant);
             var declarationPendingRepo = new DeclarationPendingRepository(declarationCourierStatusPM.Tenant);
-            var declarationRepo = new DeclarationRepository(declarationCourierStatusPM.Tenant);
 
-            var declaration = declarationRepo.GetSingle(
-                                declarationCourierStatusPM.DeclarationId,
-                                declarationCourierStatusPM.Tenant);
+            Declaration declaration;
+            using (var ctx = (CustomContext)CustomContext.GetContext(declarationCourierStatusPM.Tenant))
+            {
+                declaration = ctx.Declarations      
+                                 .AsNoTracking()
+                                 .FirstOrDefault(d => d.Id == declarationCourierStatusPM.DeclarationId && d.Tenant == declarationCourierStatusPM.Tenant);
+            }
 
             if(declaration == null || declaration.IsAmendment == true)
             {
@@ -103,12 +108,6 @@ namespace Logitude.Customs.BL.BL
                     return;
                 }
 
-                if (declaration == null)
-                {
-                    declaration = declarationRepo.GetSingle(
-                        declarationCourierStatusPM.DeclarationId,
-                        declarationCourierStatusPM.Tenant);
-                }
 
                 if (declarationCourierStatusPM.CourierDeclarationStatusCode == "V")
                 {
@@ -133,7 +132,7 @@ namespace Logitude.Customs.BL.BL
             {
                 var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
                 var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2755", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
-                if (requestInProgressList != null && requestInProgressList.Any())
+                if (requestInProgressList?.Exists(x => x.InterfaceTypeCode == "2755") == true)
                 {
                     return;
                 }
@@ -149,6 +148,7 @@ namespace Logitude.Customs.BL.BL
                         InterfaceTypeCode = "2755",
                         LoggingUserId = userId,
                         RequestVIA = SendRequestVIA.WebServiceBatch,
+                        FutureSendDateTime = DateTime.Now.AddMinutes(5),
                     };
                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
 

@@ -697,7 +697,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             catch (Exception ex)
             {
                 LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] ERROR DeclId={pm.DeclarationId} - {ex.Message} - {ex.StackTrace}");
-                throw;
             }
         }
 
