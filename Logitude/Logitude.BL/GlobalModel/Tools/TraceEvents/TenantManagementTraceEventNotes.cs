@@ -84,10 +84,6 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                 return;
             string description = objectField.FullNameTextCodeDefaultText;
 
-            
-
-			string description = objectField.FullNameTextCodeDefaultText;
-
 			if (objectField.LookUpTableId != null)
             {
                 string lookupTableName = new ObjectTableRepository(tenantId).GetObjectTableById(objectField.LookUpTableId, tenantId).Name;
