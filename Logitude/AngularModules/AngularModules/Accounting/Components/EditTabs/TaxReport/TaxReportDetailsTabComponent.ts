@@ -21,7 +21,6 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { TaxReportLineTransmitStatusListService } from 'Accounting/Services/StandardLists/TaxReportLineTransmitStatusListService';
-import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
 import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
 import { MenuTypes } from 'Report/Components/ProcessMenuComponent';
