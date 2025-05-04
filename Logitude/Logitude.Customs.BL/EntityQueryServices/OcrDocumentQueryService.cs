@@ -32,10 +32,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             OcrDocumentRepository ocrDocumentRepository = new OcrDocumentRepository(tenant);
 
             return ocrDocumentRepository.GetSingleByDocId(documentFilingId, tenant);
-        }
-
-
-
+        }       
         public string RemoveFromTypingQueue(
            int tenant,
            string OcrId
@@ -45,9 +42,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
                 var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM();
-                var settingService = new CustomsSettingQueryService(tenant);
+                var (ocrServiceUrl, tenantFromUrl) = ParseOcrServiceUrl(environmentSettingPM.UpdateDocOcrServiceUrl, tenant);
+                environmentSettingPM.UpdateDocOcrServiceUrl= ocrServiceUrl;                                 
+               var settingService = new CustomsSettingQueryService(tenant);
                 var tenantSetting = settingService.GetSettingByTenantN(tenant);
-
 
                 var res = this.RemoveFromTyping(
                      environmentSettingPM.UpdateDocOcrServiceUrl,
@@ -55,7 +53,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                      tenantSetting.OcrToken,
                      new RemoveFromTypingOcr
                      {
-                        tenant = tenant,
+                        tenant = tenantFromUrl ,
                         UpdateTypingQueue = "UnsetTyping",
                         RequestFileId = OcrId,
 
@@ -124,9 +122,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(responseString);
 
                         return responseString;
-
-
-
                     }
                 }
 
@@ -140,10 +135,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
         }
 
+        private (string url, int tenant) ParseOcrServiceUrl(string urlWithTenant, int defaultTenant)
+        {
+            string url = urlWithTenant;
+            int tenant = defaultTenant;
+            bool isNumeric = false;
 
+            var parts = urlWithTenant.Split(';');
+            if (parts.Length > 1)
+            {
+                url = parts[0];
+                isNumeric = int.TryParse(parts[1], out  defaultTenant);
+                tenant = defaultTenant; 
+            }
 
-      
-
+            return (url, defaultTenant);
+        }
     }
 
     public class RemoveFromTypingOcr
@@ -153,4 +160,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public string RequestFileId { get; set; }
         
     }
+    
+
 }
