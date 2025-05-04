@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -8,5 +9,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Index { get; set; }
         public int Tenant { get; set; }
         public int TtlMonth { get; set; }
+        public DateTime LastUpdate { get; set; }
     }
 }

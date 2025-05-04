@@ -12,6 +12,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             Property(t => t.Index).HasColumnName("Index").IsRequired().HasMaxLength(50);
             Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
             Property(t => t.TtlMonth).HasColumnName("TtlMonth").IsRequired();
+            Property(t => t.LastUpdate).HasColumnName("LastUpdate");
         }
     }
 }
