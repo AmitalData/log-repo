@@ -55,7 +55,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 				}
 			}
 			TenantManagement result = context.TenantManagements.Include("GlobalTenant").Where(x => x.Id == id).FirstOrDefault();
-			if (getFromCache)
+			if (getFromCache && result!=null)
 			{
 				CacheManager.CacheWrapper.Insert(cacheKey, result, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
 			}
