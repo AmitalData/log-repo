@@ -24,23 +24,26 @@ import { SIIRequestListService } from 'Customs/Services/StandardLists/SIIRequest
 })
 export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   public ItemsSource: ObservableCollection = new ObservableCollection([]);
+  public siiRequestList: SIIRequestPM[] = [];
   public currentDeclaration: DeclarationPM;
   public FilterStatus: 'All' | 'Open' | 'Closed' = 'Open';
   public DisplayOnlyMessage: string = '';
   public IsDisplayMessage: string = '';
   public IsDisplayOnly: boolean = false;
   private CurrentSession = SessionLocator.SelectedSession;
-  siiRequestWebService: SIIRequestWebService
-  filterAgrs: ApiQueryFilters;
+  public siiRequestWebService: SIIRequestWebService
+  public filterAgrs: ApiQueryFilters;
   public SelectedRow: SIIRequestPM = null;
-  @Output() MenuHeaderchangeevent = new EventEmitter();
   public entityResourceService: EntityResourceService = new EntityResourceService();
   public ObjectTableName: string = null;
-  siiRequestPMService: SIIRequestPMService;
-  siiRequestListService: SIIRequestListService;
-  IsLoaded: boolean = false;
-  selectedSIIRequest = new SIIRequestPM();
-  isOpen: boolean;
+  public siiRequestPMService: SIIRequestPMService;
+  public siiRequestListService: SIIRequestListService;
+  public IsLoaded: boolean = false;
+  public selectedSIIRequest = new SIIRequestPM();
+  public isOpen: boolean;
+  public isCloseRequests: SiiRequestIsClosed = SiiRequestIsClosed.All;
+  public querySelectionList: QueryOption[] = [];
+  @Output() MenuHeaderchangeevent = new EventEmitter();
 
   constructor(public entityArgs: EntityArgs) {
     super();
@@ -50,7 +53,6 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.siiRequestListService = new SIIRequestListService();
   }
 
-
   ngOnInit() {
     this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
       this.entityResourceService.getEntityResourceByTableName("Customs.SIIRequest").subscribe((response: any) => {
@@ -58,11 +60,20 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
           this.siiRequestPMService = new SIIRequestPMService();
           this.ObjectTableName = this.entityArgs.ObjectTableName;
           this.IsLoaded = true;
+          this.initQuerySelectionList();
         });
       });
     });
     this.DisplayOnlyCheck();
     this.loadRequests();
+  }
+
+  initQuerySelectionList() {
+    this.querySelectionList = [
+      new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.AllRequest'), SiiRequestIsClosed.All),
+      new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.OpenRequest'), SiiRequestIsClosed.IsOpen),
+      new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.ClosedRequest'), SiiRequestIsClosed.IsClosed)
+    ];
   }
 
   initFilterArgs() {
@@ -74,35 +85,33 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     return filter;
   }
 
-  isCloseRequests: SiiRequestIsClosed = SiiRequestIsClosed.All;
-
   loadRequests(): void {
     this.filterAgrs = this.initFilterArgs();
     this.filterAgrs.addAdditionalFilter("DeclarationId", this.currentDeclaration?.Id, null, null, "Equals", false, false, false, "string", false);
     this.filterAgrs.addAdditionalFilter("Tenant", this.currentDeclaration?.Tenant, null, null, "Equals", true, false, false, "string");
-    if (SiiRequestIsClosed.IsClosed === this.isCloseRequests) {
+    if (SiiRequestIsClosed.IsClosed === this.isCloseRequests)
       this.filterAgrs.addAdditionalFilter("IsClosed", true, null, null, "Equals", false, false, false, "boolean", false);
-    }
-    else if (SiiRequestIsClosed.IsOpen === this.isCloseRequests) {
+    else if (SiiRequestIsClosed.IsOpen === this.isCloseRequests)
       this.filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", false, false, false, "boolean", false);
-    }
 
     this.siiRequestListService.getByFilters(this.filterAgrs).subscribe((response: ServiceResponse) => {
       if (!response?.HasError && response?.Result !== null) {
-        this.ItemsSource = new ObservableCollection(response.Result);
-        console.log(response.Result);
-
+        this.siiRequestList = response.Result;
+        this.ItemsSource.Clear();
+        let counter = 0;
+        this.siiRequestList.forEach(item => {
+          item.ListCounter = ++counter;
+          this.ItemsSource.Insert(item, true);
+        });
       }
-      // TODO: ADD TRY CATCH
+      else this.ItemsSource.Clear();
     });
-    }
-
-  // TODO: add html element LOV of the options WITH CSS
-  editRequestFilterClosed(data: SiiRequestIsClosed) {
-    this.isCloseRequests = data
-    this.loadRequests();
   }
 
+  editRequestFilterClosed(data: SiiRequestIsClosed) {
+    this.isCloseRequests = data;
+    this.loadRequests();
+  }
 
   onOpenNewRequest(): void {
     this.AddNewSIIRequest(SiiRequestMode.IsNew);
@@ -118,20 +127,16 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     const newSIIRequestPM = new SIIRequestPM();
     newSIIRequestPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.Id : this.EntityPM.AmendmentOriginalDeclartation;
     newSIIRequestPM.Tenant = this.EntityPM.Tenant;
-
     let args: any = {
       Decalaration: this.EntityPM,
       SIIRequest: SiiRequestMode.IsEdit === siiRequestMode ? this.selectedSIIRequest : newSIIRequestPM,
       IsNewOrEdit: siiRequestMode
     };
-
-    if (siiRequestMode === SiiRequestMode.IsNew) {
+    
+    if (siiRequestMode === SiiRequestMode.IsNew) 
       this.openLogWindow(siiRequestMode, args);
-    }
-    else {
+    else 
       this.getSIIRequestByIDAndopenLogWindow(args.SIIRequest.Id, this.EntityPM.Id, siiRequestMode, args);
-    }
-
   }
 
   getSIIRequestByIDAndopenLogWindow(requestId: number, declarationId: string, siiRequestMode: SiiRequestMode, args: any) {
@@ -213,4 +218,13 @@ export enum SiiRequestIsClosed {
   IsClosed = 'IsClosed',
   IsOpen = 'IsOpen',
   All = 'All',
+}
+
+class QueryOption {
+  public name: string;
+  public value: string;
+  constructor(name: string, value: string) {
+    this.name = name;
+    this.value = value;
+  }
 }

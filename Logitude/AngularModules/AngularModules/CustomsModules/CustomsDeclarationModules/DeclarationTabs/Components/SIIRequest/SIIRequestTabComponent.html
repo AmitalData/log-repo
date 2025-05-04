@@ -24,23 +24,15 @@
                                 </button>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
                         <td class="filterRow">
                             <div class="filterContainer">
                                 <label for="requestStatusFilter">
                                     {{ 'Customs.SIIRequest.Filter.Status' | TextCodeTranslationPipe }}
                                 </label>
-                                <select id="requestStatusFilter" class="filterDropdown" (change)="editRequestFilterClosed($event.target.value)">
-                                    <option [value]="'All'" [selected]="isCloseRequests === 'All'">
-                                        {{ 'Customs.SIIRequest.O.AllRequest' | TextCodeTranslationPipe }}
-                                    </option>
-                                    <option [value]="'IsOpen'" [selected]="isCloseRequests === 'IsOpen'">
-                                        {{ 'Customs.SIIRequest.O.OpenRequest' | TextCodeTranslationPipe }}
-                                    </option>
-                                    <option [value]="'IsClosed'" [selected]="isCloseRequests === 'IsClosed'">
-                                        {{ 'Customs.SIIRequest.O.ClosedRequest' | TextCodeTranslationPipe }}
-                                    </option>
+                                <select id="selectedValueQueryBox"
+                                    class="LogLovContainer LogLOVControl LogLovInputDiv querySelectBox"
+                                    (change)="editRequestFilterClosed($event.target.value)">
+                                    <option *ngFor="let item of querySelectionList" [value]="item.value">{{item.name}} </option>
                                 </select>
                             </div>
                         </td>
@@ -49,9 +41,9 @@
                         <td colspan="5" class="gridContainer">
                             <div class="CellContent">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
-                                                    (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                    (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
                                     <log-column [header]="'#'" [binding]="'ListCounter'" [width]="'35'"
-                                                [Alignment]="'right'">
+                                        [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div class="textRight">
@@ -62,7 +54,7 @@
                                     </log-column>
 
                                     <log-column [header]="'Customs.SIIRequest.F.RequestNo' | TextCodeTranslationPipe"
-                                                [binding]="'RequestNo'" [width]="'120'" [Alignment]="'right'">
+                                        [binding]="'RequestNo'" [width]="'120'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 {{ item.RequestNo }}
@@ -72,7 +64,7 @@
                                     <!-- TODO: Replace to code after update action-->
                                     <!-- [header]="'Customs.SIIRequest.F.Remarks' | TextCodeTranslationPipe" -->
                                     <log-column [header]="'הערות'" [binding]="'Remarks'" [width]="'200'"
-                                                [Alignment]="'right'">
+                                        [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 {{ item.Remarks }}
@@ -81,7 +73,7 @@
                                     </log-column>
 
                                     <log-column [header]="'Customs.SIIRequest.F.Status' | TextCodeTranslationPipe"
-                                                [binding]="'Status'" [width]="'80'" [Alignment]="'right'">
+                                        [binding]="'Status'" [width]="'80'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 {{ item.Status }}
@@ -90,23 +82,23 @@
                                     </log-column>
 
                                     <log-column [width]="'35'" [Editable]="true" [Alignment]="'right'"
-                                                [visibility]="'visibile'">
+                                        [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <span class="CellSeparator floatRight"></span>
                                                 <div class="editButtonContainer">
                                                     <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                                                (click)="onEditRequest(item)"></IconButton>
+                                                        (click)="onEditRequest(item)"></IconButton>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
                                 </logitude-edit-grid>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </td>
-        </tr>
-    </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
