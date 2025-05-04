@@ -161,7 +161,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     args.isAllowChange = this.IsAllowChange;
     logWindow.WindowArgs = args;
     logWindow.ShowCloseButton = true;
-    logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestTabs/SIIRequestTabComponent');
+    logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestTabs/SIIRequestComponent');
     args.logWindow = logWindow;
     if (isNewOrEditMode === SiiRequestMode.IsNew) this.SelectedRow = null
 
