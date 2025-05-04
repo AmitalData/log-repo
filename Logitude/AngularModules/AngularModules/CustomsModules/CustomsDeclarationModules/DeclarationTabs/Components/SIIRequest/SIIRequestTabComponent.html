@@ -57,17 +57,21 @@
                                         [binding]="'RequestNo'" [width]="'120'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                {{ item.RequestNo }}
+                                                <div class="textRight">
+                                                    {{ item.RequestNo }}
+                                                </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
                                     <!-- TODO: Replace to code after update action-->
                                     <!-- [header]="'Customs.SIIRequest.F.Remarks' | TextCodeTranslationPipe" -->
-                                    <log-column [header]="'הערות'" [binding]="'Remarks'" [width]="'200'"
+                                    <log-column [header]="'הערות'" [binding]="'Remarks'" [width]="'300'"
                                         [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                {{ item.Remarks }}
+                                                <div class="textRight">
+                                                    {{ item.Remarks }}
+                                                </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
@@ -76,7 +80,9 @@
                                         [binding]="'Status'" [width]="'80'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                {{ item.Status }}
+                                                <div class="textRight">
+                                                    {{ item.Status }}
+                                                </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
