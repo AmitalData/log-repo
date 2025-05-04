@@ -21,6 +21,10 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
+       public string RequestNo  { get; set; }
+       [DataMember]
+       public string DeclarationId  { get; set; }
+       [DataMember]
        public string Status  { get; set; }
        [DataMember]
        public string WareHouseAddress  { get; set; }

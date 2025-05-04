@@ -11,6 +11,8 @@ export class SIIRequestList {
 	Id: string;
 	Tenant: number;
 	SearchFields: string;
+	RequestNo: string;
+	DeclarationId: string;
 	Status: string;
 	WareHouseAddress: string;
 	WareHouseCity: string;
