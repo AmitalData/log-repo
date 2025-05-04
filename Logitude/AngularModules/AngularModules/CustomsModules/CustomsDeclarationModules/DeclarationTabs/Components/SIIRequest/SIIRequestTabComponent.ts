@@ -14,6 +14,7 @@ import { AppTool } from 'Infrastructure/Tools';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { SIIRequestListService } from 'Customs/Services/StandardLists/SIIRequestListService';
 
 @Component({
   selector: 'SIIRequestTabComponent',
@@ -23,30 +24,34 @@ import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/Text
 })
 export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   public ItemsSource: ObservableCollection = new ObservableCollection([]);
+  public siiRequestList: SIIRequestPM[] = [];
   public currentDeclaration: DeclarationPM;
   public FilterStatus: 'All' | 'Open' | 'Closed' = 'Open';
   public DisplayOnlyMessage: string = '';
   public IsDisplayMessage: string = '';
   public IsDisplayOnly: boolean = false;
   private CurrentSession = SessionLocator.SelectedSession;
-  siiRequestWebService: SIIRequestWebService
-  filterAgrs: ApiQueryFilters;
+  public siiRequestWebService: SIIRequestWebService
+  public filterAgrs: ApiQueryFilters;
   public SelectedRow: SIIRequestPM = null;
-  @Output() MenuHeaderchangeevent = new EventEmitter();
   public entityResourceService: EntityResourceService = new EntityResourceService();
   public ObjectTableName: string = null;
-  siiRequestPMService: SIIRequestPMService;
-  IsLoaded: boolean = false;
-  selectedSIIRequest = new SIIRequestPM();
-  isOpen: boolean;
+  public siiRequestPMService: SIIRequestPMService;
+  public siiRequestListService: SIIRequestListService;
+  public IsLoaded: boolean = false;
+  public selectedSIIRequest = new SIIRequestPM();
+  public isOpen: boolean;
+  public isCloseRequests: SiiRequestIsClosed = SiiRequestIsClosed.All;
+  public querySelectionList: QueryOption[] = [];
+  @Output() MenuHeaderchangeevent = new EventEmitter();
 
   constructor(public entityArgs: EntityArgs) {
     super();
     this.EntityPM = this.CurrentSession?.CurrentEditComponent?.EntityPM;
     this.currentDeclaration = this.EntityPM;
     this.siiRequestWebService = new SIIRequestWebService();
+    this.siiRequestListService = new SIIRequestListService();
   }
-
 
   ngOnInit() {
     this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
@@ -55,6 +60,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
           this.siiRequestPMService = new SIIRequestPMService();
           this.ObjectTableName = this.entityArgs.ObjectTableName;
           this.IsLoaded = true;
+          this.initQuerySelectionList();
         });
       });
     });
@@ -62,40 +68,49 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.loadRequests();
   }
 
+  initQuerySelectionList() {
+    this.querySelectionList = [
+      new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.AllRequest'), SiiRequestIsClosed.All),
+      new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.OpenRequest'), SiiRequestIsClosed.IsOpen),
+      new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.ClosedRequest'), SiiRequestIsClosed.IsClosed)
+    ];
+  }
+
+  initFilterArgs() {
+    let filter = new ApiQueryFilters();
+    filter.PageSize = 200;
+    filter.PageIndex = 0;
+    filter.GetAll = false;
+    filter.GetCount = true;
+    return filter;
+  }
+
   loadRequests(): void {
-    //TODO:change to real call to server getbyfilter - by declarationid + tenant
+    this.filterAgrs = this.initFilterArgs();
+    this.filterAgrs.addAdditionalFilter("DeclarationId", this.currentDeclaration?.Id, null, null, "Equals", false, false, false, "string", false);
+    this.filterAgrs.addAdditionalFilter("Tenant", this.currentDeclaration?.Tenant, null, null, "Equals", true, false, false, "string");
+    if (SiiRequestIsClosed.IsClosed === this.isCloseRequests)
+      this.filterAgrs.addAdditionalFilter("IsClosed", true, null, null, "Equals", false, false, false, "boolean", false);
+    else if (SiiRequestIsClosed.IsOpen === this.isCloseRequests)
+      this.filterAgrs.addAdditionalFilter("IsClosed", false, null, null, "Equals", false, false, false, "boolean", false);
 
-    // TODO: Delete after finish - create moke data for testing to itemsource from type SIIRequestPM[]:
-    const mock1 = new SIIRequestPM();
-    mock1.Id = '1';
-    mock1.ListCounter = 1;
-    mock1.Remarks = 'test 1';
-    mock1.RequestNo = 'REQ-1001';
-    mock1.Status = 'Open';
-    mock1.WareHouseAddress = 'רח\' הגפן 12';
-    mock1.WareHouseCity = 'ת\"א';
-    mock1.IsClosed = false;
+    this.siiRequestListService.getByFilters(this.filterAgrs).subscribe((response: ServiceResponse) => {
+      if (!response?.HasError && response?.Result !== null) {
+        this.siiRequestList = response.Result;
+        this.ItemsSource.Clear();
+        let counter = 0;
+        this.siiRequestList.forEach(item => {
+          item.ListCounter = ++counter;
+          this.ItemsSource.Insert(item, true);
+        });
+      }
+      else this.ItemsSource.Clear();
+    });
+  }
 
-    const mock2 = new SIIRequestPM();
-    mock2.Id = '2';
-    mock2.ListCounter = 2;
-    mock2.Remarks = 'test 2';
-    mock2.RequestNo = 'REQ-1002';
-    mock2.Status = 'Closed';
-    mock2.WareHouseAddress = 'הרצל 45';
-    mock2.WareHouseCity = 'חיפה';
-    mock2.IsClosed = true;
-
-    const mock3 = new SIIRequestPM();
-    mock3.Id = '3';
-    mock3.ListCounter = 3;
-    mock3.Remarks = 'test 3';
-    mock3.RequestNo = 'REQ-1003';
-    mock3.Status = 'Open';
-    mock3.WareHouseAddress = 'דרך מנחם בגין 78';
-    mock3.WareHouseCity = 'ירושלים';
-    mock3.IsClosed = false;
-    this.ItemsSource = new ObservableCollection([mock1, mock2, mock3]);
+  editRequestFilterClosed(data: SiiRequestIsClosed) {
+    this.isCloseRequests = data;
+    this.loadRequests();
   }
 
   onOpenNewRequest(): void {
@@ -112,20 +127,16 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     const newSIIRequestPM = new SIIRequestPM();
     newSIIRequestPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.Id : this.EntityPM.AmendmentOriginalDeclartation;
     newSIIRequestPM.Tenant = this.EntityPM.Tenant;
-
     let args: any = {
       Decalaration: this.EntityPM,
       SIIRequest: SiiRequestMode.IsEdit === siiRequestMode ? this.selectedSIIRequest : newSIIRequestPM,
       IsNewOrEdit: siiRequestMode
     };
-
-    if (siiRequestMode === SiiRequestMode.IsNew) {
+    
+    if (siiRequestMode === SiiRequestMode.IsNew) 
       this.openLogWindow(siiRequestMode, args);
-    }
-    else {
+    else 
       this.getSIIRequestByIDAndopenLogWindow(args.SIIRequest.Id, this.EntityPM.Id, siiRequestMode, args);
-    }
-
   }
 
   getSIIRequestByIDAndopenLogWindow(requestId: number, declarationId: string, siiRequestMode: SiiRequestMode, args: any) {
@@ -201,4 +212,19 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
 export enum SiiRequestMode {
   IsNew = 'IsNew',
   IsEdit = 'IsEdit',
+}
+
+export enum SiiRequestIsClosed {
+  IsClosed = 'IsClosed',
+  IsOpen = 'IsOpen',
+  All = 'All',
+}
+
+class QueryOption {
+  public name: string;
+  public value: string;
+  constructor(name: string, value: string) {
+    this.name = name;
+    this.value = value;
+  }
 }
