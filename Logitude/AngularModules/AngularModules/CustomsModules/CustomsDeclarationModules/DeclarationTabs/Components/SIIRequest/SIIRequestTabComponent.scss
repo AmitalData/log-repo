@@ -14,13 +14,12 @@
     font-family: sans-serif;
 }
 
-#SIIRequestHeader,
 .SIIRequestHeader {
+    width: 150px;
     height: 0px !important;
 }
 
-#buttonNewSIIRequest,
-.new-request-button {
+.newRequestButton {
     height: 21px;
     width: 95px !important;
     display: flex;
@@ -28,16 +27,16 @@
     justify-content: center;
 }
 
-.header-row {
+.headerRow {
     height: 20px;
 }
 
-.centered-content {
+.centeredContent {
     position: absolute;
     padding-right: 30%;
 }
 
-.centered-div {
+.centeredDiv {
     width: 100%;
     text-align: center;
 }
@@ -46,14 +45,14 @@
     padding: 0px 16px;
 }
 
-.new-request-cell {
+.newRequestCell {
     height: 21px;
     padding: 0px;
     padding-bottom: 0px;
     width: 100px;
 }
 
-.grid-container {
+.gridContainer {
     height: 40%;
 }
 
@@ -62,15 +61,15 @@
     padding: 5px;
 }
 
-.text-right {
+.textRight {
     text-align: right;
 }
 
-.float-right {
+.floatRight {
     float: right;
 }
 
-.edit-button-container {
+.editButtonContainer {
     width: 22px;
     float: right;
     height: 20px;
@@ -78,6 +77,80 @@
     display: block;
 }
 
-.inner-table {
+.innerTable {
     width: 100%;
+}
+
+.filterContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filterDropdown {
+    padding: 5px;
+    font-size: 14px;
+}
+
+#selectedValueQueryBox {}
+
+
+.LogLovContainer {
+    height: 100%;
+    width: 100%;
+    background: white;
+    font-size: 11px;
+    color: #45494A;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    position: relative;
+}
+
+.LogLOVControl {
+    display: block;
+    height: 22px;
+    min-height: 22px;
+    max-height: 22px;
+    line-height: 22px;
+    width: 100%;
+    position: relative;
+}
+
+.LogLovInputDiv {
+    height: 100%;
+    width: 100%;
+    line-height: 22px;
+    width: 100%;
+    border: 1px solid #AAAAAA;
+    outline: none;
+    font-size: 11px;
+    color: #45494A;
+    background: white;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -moz-box-shadow: inset 0 0 3px #AAAAAA;
+    -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+    box-shadow: inset 0 0 3px #AAAAAA;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+.LogLovInputDiv:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.LogLovInputDiv:hover:not(:disabled),
+.LogLovInputDiv:focus:not(:disabled) {
+    border: 1px solid #3BB3E2;
+}
+
+.querySelectBox {
+    width: 115px;
+    height: 100%;
+    margin-right: 4px;
+    margin-left: 4px;
+    cursor: pointer;
 }

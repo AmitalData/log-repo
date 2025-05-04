@@ -2,13 +2,13 @@
     <tr>
         <td>
             <div class="TableHolder">
-                <table class="inner-table">
-                    <tr class="header-row">
-                        <td class="TabTitleRow SIIRequestHeader" style="width:150px;">
+                <table class="innerTable">
+                    <tr class="headerRow">
+                        <td class="TabTitleRow SIIRequestHeader">
                             {{'Customs.Declaration.TH.SIIRequest'| TextCodeTranslationPipe}}
                         </td>
-                        <td class="centered-content">
-                            <div *ngIf="!IsDisplayOnly" class="centered-div">
+                        <td class="centeredContent">
+                            <div *ngIf="!IsDisplayOnly" class="centeredDiv">
                                 <div *ngIf="IsDisplayMessage" class="DisbleBox">
                                     {{DisplayOnlyMessage}}
                                 </div>
@@ -16,27 +16,37 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="new-request-cell">
+                        <td class="newRequestCell">
                             <div>
-                                <button [disabled]="!IsAllowChange" class="Button new-request-button"
+                                <button [disabled]="!IsAllowChange" class="Button newRequestButton"
                                     (click)="onOpenNewRequest()">
-                                    <!-- TODO: Replace to code after update action-->
-                                    <!-- {{'Customs.SIIRequest.O.NewRequest'| TextCodeTranslationPipe}} -->
-                                    פתיחת בקשה
+                                    {{'Customs.SIIRequest.O.NewRequest'| TextCodeTranslationPipe}}
                                 </button>
+                            </div>
+                        </td>
+                        <td class="filterRow">
+                            <div class="filterContainer">
+                                <label for="requestStatusFilter">
+                                    {{ 'Customs.SIIRequest.Filter.Status' | TextCodeTranslationPipe }}
+                                </label>
+                                <select id="selectedValueQueryBox"
+                                    class="LogLovContainer LogLOVControl LogLovInputDiv querySelectBox"
+                                    (change)="editRequestFilterClosed($event.target.value)">
+                                    <option *ngFor="let item of querySelectionList" [value]="item.value">{{item.name}} </option>
+                                </select>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5" class="grid-container">
+                        <td colspan="5" class="gridContainer">
                             <div class="CellContent">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
-                                                    (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                    (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
                                     <log-column [header]="'#'" [binding]="'ListCounter'" [width]="'35'"
-                                                [Alignment]="'right'">
+                                        [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div class="text-right">
+                                                <div class="textRight">
                                                     {{ item.ListCounter }}
                                                 </div>
                                             </log-cell-template>
@@ -44,51 +54,57 @@
                                     </log-column>
 
                                     <log-column [header]="'Customs.SIIRequest.F.RequestNo' | TextCodeTranslationPipe"
-                                                [binding]="'RequestNo'" [width]="'120'" [Alignment]="'right'">
+                                        [binding]="'RequestNo'" [width]="'120'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                {{ item.RequestNo }}
+                                                <div class="textRight">
+                                                    {{ item.RequestNo }}
+                                                </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
                                     <!-- TODO: Replace to code after update action-->
                                     <!-- [header]="'Customs.SIIRequest.F.Remarks' | TextCodeTranslationPipe" -->
-                                    <log-column [header]="'הערות'" [binding]="'Remarks'" [width]="'200'"
-                                                [Alignment]="'right'">
+                                    <log-column [header]="'הערות'" [binding]="'Remarks'" [width]="'300'"
+                                        [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                {{ item.Remarks }}
+                                                <div class="textRight">
+                                                    {{ item.Remarks }}
+                                                </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
 
                                     <log-column [header]="'Customs.SIIRequest.F.Status' | TextCodeTranslationPipe"
-                                                [binding]="'Status'" [width]="'80'" [Alignment]="'right'">
+                                        [binding]="'Status'" [width]="'80'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                {{ item.Status }}
+                                                <div class="textRight">
+                                                    {{ item.Status }}
+                                                </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
 
                                     <log-column [width]="'35'" [Editable]="true" [Alignment]="'right'"
-                                                [visibility]="'visibile'">
+                                        [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <span class="CellSeparator float-right"></span>
-                                                <div class="edit-button-container">
+                                                <span class="CellSeparator floatRight"></span>
+                                                <div class="editButtonContainer">
                                                     <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                                                (click)="onEditRequest(item)"></IconButton>
+                                                        (click)="onEditRequest(item)"></IconButton>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
                                 </logitude-edit-grid>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </td>
-        </tr>
-    </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
