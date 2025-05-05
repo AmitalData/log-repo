@@ -55,12 +55,12 @@
     Name="LastUpdate"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="LastRemove"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
 </Table>

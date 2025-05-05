@@ -29,6 +29,6 @@
     Name="LastUpdate"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
 </Table>

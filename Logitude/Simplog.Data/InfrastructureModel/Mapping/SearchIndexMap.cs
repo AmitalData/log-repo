@@ -7,7 +7,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
     {
         public SearchIndexMap()
         {
-            ToTable("SearchIndex");
+            ToTable("SearchIndexes");
             HasKey(x => x.Index);
             Property(x => x.Index).HasColumnName("Index").IsRequired().HasMaxLength(50);
             Property(x => x.Indexer).HasColumnName("Indexer").IsRequired().HasMaxLength(50);
