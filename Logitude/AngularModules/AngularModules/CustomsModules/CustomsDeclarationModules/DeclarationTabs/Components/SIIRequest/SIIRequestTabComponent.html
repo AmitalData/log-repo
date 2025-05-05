@@ -63,9 +63,7 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
-                                    <!-- TODO: Replace to code after update action-->
-                                    <!-- [header]="'Customs.SIIRequest.F.Remarks' | TextCodeTranslationPipe" -->
-                                    <log-column [header]="'הערות'" [binding]="'Remarks'" [width]="'300'"
+                                    <log-column [header]="'Customs.SIIRequest.F.Remarks' | TextCodeTranslationPipe" [binding]="'Remarks'" [width]="'300'"
                                         [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
